@@ -1,0 +1,3332 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Configuration>
+  <Components>
+    <UniqueComponent dnOrder="0" id="afec0">
+      <Symbols dnOrder="0">
+        <Combo dnOrder="0" id="AFEC_0_CGR_GAIN">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Combo>
+        <Boolean dnOrder="1" id="AFEC_0_CHER">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="2" id="AFEC_0_COCR_AOFF">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Comment dnOrder="3" id="AFEC_0_DUAL_CHANNEL">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+        <Boolean dnOrder="4" id="AFEC_0_IER_EOC">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="false"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="5" id="AFEC_0_NAME">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="PH_U_CURRENT_ADC_CH"/>
+          </Values>
+        </String>
+        <Combo dnOrder="6" id="AFEC_0_NEG_INP">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Combo>
+        <String dnOrder="7" id="AFEC_0_POS_INP">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </String>
+        <Boolean dnOrder="8" id="AFEC_0_SHMR_DUAL">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Combo dnOrder="9" id="AFEC_10_CGR_GAIN">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Combo>
+        <Boolean dnOrder="10" id="AFEC_10_CHER">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="11" id="AFEC_10_COCR_AOFF">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Boolean dnOrder="12" id="AFEC_10_IER_EOC">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <String dnOrder="13" id="AFEC_10_NAME">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="POT_ADC_CH"/>
+          </Values>
+        </String>
+        <Combo dnOrder="14" id="AFEC_10_NEG_INP">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Combo>
+        <String dnOrder="15" id="AFEC_10_POS_INP">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </String>
+        <Combo dnOrder="16" id="AFEC_6_CGR_GAIN">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Combo>
+        <Boolean dnOrder="17" id="AFEC_6_CHER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="afec0" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="18" id="AFEC_6_COCR_AOFF">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Boolean dnOrder="19" id="AFEC_6_IER_EOC">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <String dnOrder="20" id="AFEC_6_NAME">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="PH_V_CURRENT_ADC_CH"/>
+          </Values>
+        </String>
+        <Combo dnOrder="21" id="AFEC_6_NEG_INP">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Combo>
+        <String dnOrder="22" id="AFEC_6_POS_INP">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </String>
+        <Combo dnOrder="23" id="AFEC_7_CGR_GAIN">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Combo>
+        <Boolean dnOrder="24" id="AFEC_7_CHER">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="25" id="AFEC_7_COCR_AOFF">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Boolean dnOrder="26" id="AFEC_7_IER_EOC">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="27" id="AFEC_7_NAME">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="DC_BUS_VOLTAGE_ADC_CH"/>
+          </Values>
+        </String>
+        <Combo dnOrder="28" id="AFEC_7_NEG_INP">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Combo>
+        <String dnOrder="29" id="AFEC_7_POS_INP">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </String>
+        <KeyValueSet dnOrder="30" id="AFEC_CONV_MODE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="2"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="31" id="AFEC_MR_TRGSEL_VALUE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="4"/>
+          </Values>
+        </KeyValueSet>
+      </Symbols>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="1" id="cmsis"/>
+    <UniqueComponent dnOrder="2" id="core">
+      <Symbols dnOrder="0">
+        <Boolean dnOrder="0" id="AFEC0_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="afec0" priority="2" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="1" id="AFEC0_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="afec0" priority="2" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="2" id="AFEC0_INTERRUPT_ENABLE_UPDATE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <String dnOrder="3" id="AFEC0_INTERRUPT_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="afec0" priority="2" value="AFEC0_InterruptHandler"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Boolean dnOrder="4" id="AFEC0_INTERRUPT_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="afec0" priority="2" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Combo dnOrder="5" id="COMPONENT_PACKAGE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="LQFP144"/>
+          </Values>
+        </Combo>
+        <KeyValueSet dnOrder="6" id="DEVICE_BOOT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="1" value="1"/>
+            </Dynamic>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="7" id="DEVICE_SECURITY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="1" value="0"/>
+            </Dynamic>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="8" id="DEVICE_TCM_SIZE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="1" value="0"/>
+            </Dynamic>
+          </Values>
+        </KeyValueSet>
+        <String dnOrder="9" id="EEFC_FMR_FWS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="1" value="6"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Boolean dnOrder="10" id="NVIC_29_0_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <String dnOrder="11" id="NVIC_29_0_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="AFEC0_InterruptHandler"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Boolean dnOrder="12" id="NVIC_29_0_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="13" id="NVIC_4_0_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <String dnOrder="14" id="NVIC_4_0_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="WDT_Handler"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Boolean dnOrder="15" id="NVIC_4_0_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="16" id="NVIC_63_0_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <String dnOrder="17" id="NVIC_63_0_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="RSWDT_Handler"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Boolean dnOrder="18" id="NVIC_63_0_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="19" id="NVIC_7_0_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <String dnOrder="20" id="NVIC_7_0_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="UART0_Handler"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Boolean dnOrder="21" id="NVIC_7_0_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <String dnOrder="22" id="PIN_100_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="23" id="PIN_100_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="16"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="24" id="PIN_101_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="25" id="PIN_101_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="10"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="26" id="PIN_102_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="27" id="PIN_102_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="28" id="PIN_103_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="29" id="PIN_103_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="17"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="30" id="PIN_104_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="31" id="PIN_104_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="32" id="PIN_105_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="B"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="33" id="PIN_105_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="4"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="34" id="PIN_106_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="35" id="PIN_106_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="15"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="36" id="PIN_107_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="37" id="PIN_107_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="38" id="PIN_108_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="39" id="PIN_108_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="29"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="40" id="PIN_109_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="B"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="41" id="PIN_109_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="5"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="42" id="PIN_10_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="E"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="43" id="PIN_10_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="3"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="44" id="PIN_110_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="PWM0_PWMFI2"/>
+          </Values>
+        </String>
+        <String dnOrder="45" id="PIN_110_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="B"/>
+          </Values>
+        </String>
+        <String dnOrder="46" id="PIN_110_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="47" id="PIN_110_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="9"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="48" id="PIN_111_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="49" id="PIN_111_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="18"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="50" id="PIN_112_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="51" id="PIN_112_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="28"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="52" id="PIN_113_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="53" id="PIN_113_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="8"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="54" id="PIN_114_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="55" id="PIN_114_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="6"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="56" id="PIN_115_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="57" id="PIN_115_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="58" id="PIN_116_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="59" id="PIN_116_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="30"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="60" id="PIN_117_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="61" id="PIN_117_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="19"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="62" id="PIN_118_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="63" id="PIN_118_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="31"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="64" id="PIN_119_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="65" id="PIN_119_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="7"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="66" id="PIN_11_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="67" id="PIN_11_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="68" id="PIN_120_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="69" id="PIN_120_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="20"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="70" id="PIN_121_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="71" id="PIN_121_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="6"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="72" id="PIN_122_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="73" id="PIN_122_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="21"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="74" id="PIN_123_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="75" id="PIN_123_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="76" id="PIN_124_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="77" id="PIN_124_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="22"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="78" id="PIN_125_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="79" id="PIN_125_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="5"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="80" id="PIN_126_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="81" id="PIN_126_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="4"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="82" id="PIN_127_DIR">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="Out"/>
+          </Values>
+        </String>
+        <String dnOrder="83" id="PIN_127_FUNCTION_NAME">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="LED"/>
+          </Values>
+        </String>
+        <String dnOrder="84" id="PIN_127_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="GPIO"/>
+          </Values>
+        </String>
+        <String dnOrder="85" id="PIN_127_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="GPIO"/>
+          </Values>
+        </String>
+        <String dnOrder="86" id="PIN_127_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="87" id="PIN_127_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="23"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="88" id="PIN_128_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="89" id="PIN_128_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="3"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="90" id="PIN_129_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="91" id="PIN_129_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="29"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="92" id="PIN_12_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="93" id="PIN_12_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="27"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="94" id="PIN_130_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="95" id="PIN_130_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="24"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="96" id="PIN_131_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="97" id="PIN_131_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="2"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="98" id="PIN_132_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="99" id="PIN_132_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="100" id="PIN_133_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="101" id="PIN_133_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="25"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="102" id="PIN_134_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="103" id="PIN_134_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="104" id="PIN_135_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="105" id="PIN_135_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="106" id="PIN_136_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="107" id="PIN_136_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="108" id="PIN_137_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="109" id="PIN_137_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="110" id="PIN_138_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="111" id="PIN_138_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="112" id="PIN_139_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="113" id="PIN_139_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="114" id="PIN_13_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="115" id="PIN_13_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="26"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="116" id="PIN_140_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="117" id="PIN_140_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="118" id="PIN_141_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="B"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="119" id="PIN_141_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="8"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="120" id="PIN_142_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="B"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="121" id="PIN_142_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="9"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="122" id="PIN_143_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="123" id="PIN_143_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="124" id="PIN_144_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="B"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="125" id="PIN_144_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="13"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="126" id="PIN_14_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="127" id="PIN_14_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="31"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="128" id="PIN_15_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="129" id="PIN_15_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="30"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="130" id="PIN_16_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="131" id="PIN_16_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="29"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="132" id="PIN_17_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="133" id="PIN_17_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="12"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="134" id="PIN_18_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="135" id="PIN_18_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="15"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="136" id="PIN_19_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="137" id="PIN_19_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="13"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="138" id="PIN_1_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="139" id="PIN_1_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="140" id="PIN_20_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="B"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="141" id="PIN_20_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="142" id="PIN_21_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="AFEC0_AD10"/>
+          </Values>
+        </String>
+        <String dnOrder="143" id="PIN_21_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="Alternate"/>
+          </Values>
+        </String>
+        <String dnOrder="144" id="PIN_21_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="B"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="145" id="PIN_21_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="146" id="PIN_22_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="147" id="PIN_22_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="20"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="148" id="PIN_23_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="149" id="PIN_23_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="19"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="150" id="PIN_24_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="AFEC0_AD7"/>
+          </Values>
+        </String>
+        <String dnOrder="151" id="PIN_24_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="Alternate"/>
+          </Values>
+        </String>
+        <String dnOrder="152" id="PIN_24_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="153" id="PIN_24_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="18"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="154" id="PIN_25_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="AFEC0_AD6"/>
+          </Values>
+        </String>
+        <String dnOrder="155" id="PIN_25_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="Alternate"/>
+          </Values>
+        </String>
+        <String dnOrder="156" id="PIN_25_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="157" id="PIN_25_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="17"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="158" id="PIN_26_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="B"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="159" id="PIN_26_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="2"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="160" id="PIN_27_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="E"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="161" id="PIN_27_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="4"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="162" id="PIN_28_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="E"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="163" id="PIN_28_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="5"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="164" id="PIN_29_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="165" id="PIN_29_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="166" id="PIN_2_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="167" id="PIN_2_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="31"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="168" id="PIN_30_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="169" id="PIN_30_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="170" id="PIN_31_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="B"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="171" id="PIN_31_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="3"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="172" id="PIN_32_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="173" id="PIN_32_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="21"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="174" id="PIN_33_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="175" id="PIN_33_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="176" id="PIN_34_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="AFEC0_AD0"/>
+          </Values>
+        </String>
+        <String dnOrder="177" id="PIN_34_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="Alternate"/>
+          </Values>
+        </String>
+        <String dnOrder="178" id="PIN_34_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="179" id="PIN_34_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="30"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="180" id="PIN_35_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="181" id="PIN_35_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="7"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="182" id="PIN_36_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="183" id="PIN_36_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="8"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="184" id="PIN_37_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="185" id="PIN_37_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="22"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="186" id="PIN_38_FUNCTION_NAME">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="187" id="PIN_38_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="188" id="PIN_38_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="189" id="PIN_38_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <String dnOrder="190" id="PIN_38_PIO_FILTER">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <Integer dnOrder="191" id="PIN_38_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="192" id="PIN_38_PU">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="193" id="PIN_39_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="194" id="PIN_39_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="2"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="195" id="PIN_3_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="196" id="PIN_3_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="197" id="PIN_40_FUNCTION_NAME">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="SWITCH"/>
+          </Values>
+        </String>
+        <String dnOrder="198" id="PIN_40_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="GPIO"/>
+          </Values>
+        </String>
+        <String dnOrder="199" id="PIN_40_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="GPIO"/>
+          </Values>
+        </String>
+        <String dnOrder="200" id="PIN_40_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <String dnOrder="201" id="PIN_40_PIO_FILTER">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="Debounce Filter"/>
+          </Values>
+        </String>
+        <Integer dnOrder="202" id="PIN_40_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="3"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="203" id="PIN_40_PU">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="204" id="PIN_41_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="205" id="PIN_41_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="4"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="206" id="PIN_42_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="PWM0_PWMH2"/>
+          </Values>
+        </String>
+        <String dnOrder="207" id="PIN_42_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="B"/>
+          </Values>
+        </String>
+        <String dnOrder="208" id="PIN_42_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="209" id="PIN_42_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="13"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="210" id="PIN_43_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="211" id="PIN_43_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="212" id="PIN_44_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="213" id="PIN_44_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="214" id="PIN_45_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="215" id="PIN_45_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="16"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="216" id="PIN_46_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="217" id="PIN_46_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="23"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="218" id="PIN_47_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="219" id="PIN_47_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="27"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="220" id="PIN_48_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="221" id="PIN_48_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="7"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="222" id="PIN_49_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="223" id="PIN_49_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="15"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="224" id="PIN_4_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="E"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="225" id="PIN_4_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="226" id="PIN_50_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="227" id="PIN_50_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="228" id="PIN_51_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="229" id="PIN_51_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="14"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="230" id="PIN_52_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="PWM0_PWML1"/>
+          </Values>
+        </String>
+        <String dnOrder="231" id="PIN_52_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="A"/>
+          </Values>
+        </String>
+        <String dnOrder="232" id="PIN_52_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="233" id="PIN_52_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="25"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="234" id="PIN_53_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="PWM0_PWML2"/>
+          </Values>
+        </String>
+        <String dnOrder="235" id="PIN_53_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="A"/>
+          </Values>
+        </String>
+        <String dnOrder="236" id="PIN_53_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="237" id="PIN_53_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="26"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="238" id="PIN_54_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="239" id="PIN_54_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="6"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="240" id="PIN_55_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="PWM0_PWML0"/>
+          </Values>
+        </String>
+        <String dnOrder="241" id="PIN_55_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="A"/>
+          </Values>
+        </String>
+        <String dnOrder="242" id="PIN_55_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="243" id="PIN_55_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="24"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="244" id="PIN_56_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="245" id="PIN_56_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="24"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="246" id="PIN_57_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="247" id="PIN_57_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="23"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="248" id="PIN_58_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="249" id="PIN_58_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="5"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="250" id="PIN_59_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="251" id="PIN_59_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="25"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="252" id="PIN_5_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="253" id="PIN_5_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="254" id="PIN_60_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="255" id="PIN_60_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="22"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="256" id="PIN_61_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="257" id="PIN_61_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="258" id="PIN_62_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="259" id="PIN_62_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="26"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="260" id="PIN_63_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="261" id="PIN_63_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="21"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="262" id="PIN_64_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="PWM0_PWMH0"/>
+          </Values>
+        </String>
+        <String dnOrder="263" id="PIN_64_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="B"/>
+          </Values>
+        </String>
+        <String dnOrder="264" id="PIN_64_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="265" id="PIN_64_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="11"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="266" id="PIN_65_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="267" id="PIN_65_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="20"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="268" id="PIN_66_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="UART0_UTXD0"/>
+          </Values>
+        </String>
+        <String dnOrder="269" id="PIN_66_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="A"/>
+          </Values>
+        </String>
+        <String dnOrder="270" id="PIN_66_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="271" id="PIN_66_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="10"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="272" id="PIN_67_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="273" id="PIN_67_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="19"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="274" id="PIN_68_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="PWM0_PWMH1"/>
+          </Values>
+        </String>
+        <String dnOrder="275" id="PIN_68_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="B"/>
+          </Values>
+        </String>
+        <String dnOrder="276" id="PIN_68_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="277" id="PIN_68_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="12"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="278" id="PIN_69_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="279" id="PIN_69_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="18"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="280" id="PIN_6_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="E"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="281" id="PIN_6_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="282" id="PIN_70_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="283" id="PIN_70_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="27"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="284" id="PIN_71_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="285" id="PIN_71_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="28"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="286" id="PIN_72_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="287" id="PIN_72_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="288" id="PIN_73_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="289" id="PIN_73_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="5"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="290" id="PIN_74_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="291" id="PIN_74_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="17"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="292" id="PIN_75_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="UART0_URXD0"/>
+          </Values>
+        </String>
+        <String dnOrder="293" id="PIN_75_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="A"/>
+          </Values>
+        </String>
+        <String dnOrder="294" id="PIN_75_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="295" id="PIN_75_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="9"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="296" id="PIN_76_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="297" id="PIN_76_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="28"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="298" id="PIN_77_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="299" id="PIN_77_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="4"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="300" id="PIN_78_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="301" id="PIN_78_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="16"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="302" id="PIN_79_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="ICE_TMS/SWDIO"/>
+          </Values>
+        </String>
+        <String dnOrder="303" id="PIN_79_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="Alternate"/>
+          </Values>
+        </String>
+        <String dnOrder="304" id="PIN_79_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="B"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="305" id="PIN_79_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="6"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="306" id="PIN_7_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="E"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="307" id="PIN_7_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="2"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="308" id="PIN_80_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="309" id="PIN_80_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="310" id="PIN_81_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="311" id="PIN_81_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="312" id="PIN_82_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="313" id="PIN_82_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="8"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="314" id="PIN_83_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="315" id="PIN_83_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="316" id="PIN_84_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="317" id="PIN_84_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="14"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="318" id="PIN_85_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="319" id="PIN_85_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="320" id="PIN_86_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="321" id="PIN_86_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="9"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="322" id="PIN_87_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="B"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="323" id="PIN_87_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="12"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="324" id="PIN_88_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="325" id="PIN_88_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="13"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="326" id="PIN_89_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="ICE_TCK/SWDCLK"/>
+          </Values>
+        </String>
+        <String dnOrder="327" id="PIN_89_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="Alternate"/>
+          </Values>
+        </String>
+        <String dnOrder="328" id="PIN_89_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="B"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="329" id="PIN_89_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="7"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="330" id="PIN_8_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="331" id="PIN_8_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="332" id="PIN_90_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="333" id="PIN_90_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="10"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="334" id="PIN_91_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="335" id="PIN_91_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="3"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="336" id="PIN_92_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="337" id="PIN_92_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="12"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="338" id="PIN_93_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="339" id="PIN_93_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="2"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="340" id="PIN_94_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="341" id="PIN_94_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="11"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="342" id="PIN_95_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="343" id="PIN_95_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="344" id="PIN_96_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="345" id="PIN_96_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="346" id="PIN_97_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="C"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="347" id="PIN_97_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="14"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="348" id="PIN_98_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="D"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="349" id="PIN_98_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="11"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="350" id="PIN_99_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="A"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="351" id="PIN_99_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <String dnOrder="352" id="PIN_9_PIO_CHANNEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value=""/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="353" id="PIN_9_PIO_PIN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="-1"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <Hex dnOrder="354" id="PIOA_ABCDSR1_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="14336"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Hex dnOrder="355" id="PIOA_ABCDSR2_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Boolean dnOrder="356" id="PIOA_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Hex dnOrder="357" id="PIOA_PDR_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="15872"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Hex dnOrder="358" id="PIOB_ABCDSR1_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Hex dnOrder="359" id="PIOB_ABCDSR2_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Boolean dnOrder="360" id="PIOB_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Hex dnOrder="361" id="PIOB_PDR_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Hex dnOrder="362" id="PIOC_ABCDSR1_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Hex dnOrder="363" id="PIOC_ABCDSR2_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Boolean dnOrder="364" id="PIOC_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Hex dnOrder="365" id="PIOC_IFER_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="8"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Hex dnOrder="366" id="PIOC_IFSCER_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="8"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Hex dnOrder="367" id="PIOC_OER_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="8388608"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Hex dnOrder="368" id="PIOC_PDR_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Hex dnOrder="369" id="PIOC_PUER_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Hex dnOrder="370" id="PIOD_ABCDSR1_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="512"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Hex dnOrder="371" id="PIOD_ABCDSR2_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Boolean dnOrder="372" id="PIOD_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Hex dnOrder="373" id="PIOD_PDR_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="117441024"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Boolean dnOrder="374" id="PIOE_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Hex dnOrder="375" id="PIO_CCFG_SYSIO_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <Hex dnOrder="376" id="PMC_PCER0">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="1" value="2684558464"/>
+            </Dynamic>
+          </Values>
+        </Hex>
+        <KeyValueSet dnOrder="377" id="PMC_PCR_GCLK0CSS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="1" value="0"/>
+            </Dynamic>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="378" id="PMC_PCR_GCLK1CSS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="1" value="0"/>
+            </Dynamic>
+          </Values>
+        </KeyValueSet>
+        <Boolean dnOrder="379" id="PMC_SCER_PCK4">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="380" id="PWM0_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="pwm0" priority="2" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="381" id="RSWDT_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="382" id="RSWDT_INTERRUPT_ENABLE_UPDATE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <String dnOrder="383" id="RSWDT_INTERRUPT_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="RSWDT_Handler"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Boolean dnOrder="384" id="RSWDT_INTERRUPT_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="385" id="UART0_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="uart0" priority="2" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="386" id="UART0_CLOCK_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="150000000"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="387" id="UART0_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="uart0" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="388" id="UART0_INTERRUPT_ENABLE_UPDATE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <String dnOrder="389" id="UART0_INTERRUPT_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="uart0" priority="2" value="UART0_Handler"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Boolean dnOrder="390" id="UART0_INTERRUPT_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="uart0" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="391" id="WDT_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="392" id="WDT_INTERRUPT_ENABLE_UPDATE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <String dnOrder="393" id="WDT_INTERRUPT_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="WDT_Handler"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Boolean dnOrder="394" id="WDT_INTERRUPT_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+      </Symbols>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="3" id="dfp"/>
+    <UniqueComponent dnOrder="4" id="pwm0">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="PWM_CH_0_CDTY">
+          <Attributes dnOrder="0">
+            <Integer dnOrder="0" id="max">
+              <Value dnOrder="0">3750</Value>
+            </Integer>
+            <Boolean dnOrder="1" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="0"/>
+          </Values>
+        </Integer>
+        <KeyValueSet dnOrder="1" id="PWM_CH_0_CMR_CALG">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="2" id="PWM_CH_0_CMR_CPOL">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="3" id="PWM_CH_0_CMR_CPRE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <Boolean dnOrder="4" id="PWM_CH_0_CMR_DTE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Integer dnOrder="5" id="PWM_CH_0_CPRD">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="3750"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="6" id="PWM_CH_0_ENABLE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="7" id="PWM_CH_0_FAULT_ENABLE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <KeyValueSet dnOrder="8" id="PWM_CH_0_FPE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="2"/>
+          </Values>
+        </KeyValueSet>
+        <Comment dnOrder="9" id="PWM_CH_0_FREQ_COMMENT">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="text">
+              <Value dnOrder="0">****&amp;#160;PWM&amp;#160;Frequency&amp;#160;is&amp;#160;20000.0&amp;#160;Hz&amp;#160;****</Value>
+            </String>
+            <Boolean dnOrder="1" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+        <Boolean dnOrder="10" id="PWM_CH_0_IER1_CHID">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Integer dnOrder="11" id="PWM_CH_1_CDTY">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="0"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="12" id="PWM_CH_1_CMR_DTE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Boolean dnOrder="13" id="PWM_CH_1_ENABLE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="14" id="PWM_CH_1_FAULT_ENABLE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <KeyValueSet dnOrder="15" id="PWM_CH_1_FPE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="2"/>
+          </Values>
+        </KeyValueSet>
+        <Comment dnOrder="16" id="PWM_CH_1_FREQ_COMMENT">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="text">
+              <Value dnOrder="0">****&amp;#160;PWM&amp;#160;Frequency&amp;#160;is&amp;#160;10000.0&amp;#160;Hz&amp;#160;****</Value>
+            </String>
+          </Attributes>
+        </Comment>
+        <Boolean dnOrder="17" id="PWM_CH_1_IER1_CHID">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Boolean dnOrder="18" id="PWM_CH_1_SYNCENABLE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Comment dnOrder="19" id="PWM_CH_1_SYNC_COMMENT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+        <Integer dnOrder="20" id="PWM_CH_2_CDTY">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="0"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="21" id="PWM_CH_2_CMR_DTE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Boolean dnOrder="22" id="PWM_CH_2_ENABLE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="23" id="PWM_CH_2_FAULT_ENABLE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <KeyValueSet dnOrder="24" id="PWM_CH_2_FPE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="2"/>
+          </Values>
+        </KeyValueSet>
+        <Comment dnOrder="25" id="PWM_CH_2_FREQ_COMMENT">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="text">
+              <Value dnOrder="0">****&amp;#160;PWM&amp;#160;Frequency&amp;#160;is&amp;#160;10000.0&amp;#160;Hz&amp;#160;****</Value>
+            </String>
+          </Attributes>
+        </Comment>
+        <Boolean dnOrder="26" id="PWM_CH_2_IER1_CHID">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Boolean dnOrder="27" id="PWM_CH_2_SYNCENABLE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Comment dnOrder="28" id="PWM_CH_2_SYNC_COMMENT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+        <Boolean dnOrder="29" id="PWM_COMP_0_CMPM_CEN">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="30" id="PWM_COMP_0_CMPV_CV">
+          <Attributes dnOrder="0">
+            <Integer dnOrder="0" id="max">
+              <Value dnOrder="0">3750</Value>
+            </Integer>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="10"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="31" id="PWM_COMP_0_ELMR0_CSEL">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="32" id="PWM_COMP_1_CMPV_CV">
+          <Attributes dnOrder="0">
+            <Integer dnOrder="0" id="max">
+              <Value dnOrder="0">3750</Value>
+            </Integer>
+          </Attributes>
+        </Integer>
+        <Integer dnOrder="33" id="PWM_COMP_2_CMPV_CV">
+          <Attributes dnOrder="0">
+            <Integer dnOrder="0" id="max">
+              <Value dnOrder="0">3750</Value>
+            </Integer>
+          </Attributes>
+        </Integer>
+        <Integer dnOrder="34" id="PWM_COMP_3_CMPV_CV">
+          <Attributes dnOrder="0">
+            <Integer dnOrder="0" id="max">
+              <Value dnOrder="0">3750</Value>
+            </Integer>
+          </Attributes>
+        </Integer>
+        <Integer dnOrder="35" id="PWM_COMP_4_CMPV_CV">
+          <Attributes dnOrder="0">
+            <Integer dnOrder="0" id="max">
+              <Value dnOrder="0">3750</Value>
+            </Integer>
+          </Attributes>
+        </Integer>
+        <Integer dnOrder="36" id="PWM_COMP_5_CMPV_CV">
+          <Attributes dnOrder="0">
+            <Integer dnOrder="0" id="max">
+              <Value dnOrder="0">3750</Value>
+            </Integer>
+          </Attributes>
+        </Integer>
+        <Integer dnOrder="37" id="PWM_COMP_6_CMPV_CV">
+          <Attributes dnOrder="0">
+            <Integer dnOrder="0" id="max">
+              <Value dnOrder="0">3750</Value>
+            </Integer>
+          </Attributes>
+        </Integer>
+        <Integer dnOrder="38" id="PWM_COMP_7_CMPV_CV">
+          <Attributes dnOrder="0">
+            <Integer dnOrder="0" id="max">
+              <Value dnOrder="0">3750</Value>
+            </Integer>
+          </Attributes>
+        </Integer>
+        <Menu dnOrder="39" id="PWM_FAULT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+        <KeyValueSet dnOrder="40" id="PWM_FAULT_0_FPV_FPVH">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="41" id="PWM_FAULT_0_FPV_FPVL">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="42" id="PWM_FAULT_1_FPV_FPVH">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="43" id="PWM_FAULT_1_FPV_FPVL">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="44" id="PWM_FAULT_2_FPV_FPVH">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="45" id="PWM_FAULT_2_FPV_FPVL">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <Menu dnOrder="46" id="PWM_SYNC_CHANNELS">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+      </Symbols>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="5" id="uart0">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="BAUD_RATE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="115200"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="1" id="BRG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="uart0" priority="2" value="81"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="2" id="USART_INTERRUPT_MODE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="false"/>
+          </Values>
+        </Boolean>
+      </Symbols>
+    </UniqueComponent>
+  </Components>
+  <UserData>
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+      <ElementPositions dnOrder="0">
+        <ElementPosition dnOrder="0" id="afec0" x="171" y="60"/>
+        <ElementPosition dnOrder="1" id="cmsis" x="340" y="20"/>
+        <ElementPosition dnOrder="2" id="core" x="240" y="20"/>
+        <ElementPosition dnOrder="3" id="dfp" x="20" y="20"/>
+        <ElementPosition dnOrder="4" id="pwm0" x="20" y="57"/>
+        <ElementPosition dnOrder="5" id="uart0" x="330" y="60"/>
+      </ElementPositions>
+    </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
+  </UserData>
+</Configuration>
