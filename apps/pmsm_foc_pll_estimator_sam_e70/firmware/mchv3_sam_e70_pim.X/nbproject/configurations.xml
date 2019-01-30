@@ -33,7 +33,6 @@
             </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/mchv3_sam_e70_pim/userparams.h</itemPath>
-          <itemPath>../src/config/mchv3_sam_e70_pim/device_cache.h</itemPath>
           <itemPath>../src/config/mchv3_sam_e70_pim/definitions.h</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -91,8 +90,8 @@
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
@@ -150,7 +149,7 @@
           <itemPath>../src/config/mchv3_sam_e70_pim/initialization.c</itemPath>
           <itemPath>../src/config/mchv3_sam_e70_pim/interrupts.c</itemPath>
           <itemPath>../src/config/mchv3_sam_e70_pim/exceptions.c</itemPath>
-          <itemPath>../src/config/mchv3_sam_e70_pim/startup_xc32.c</itemPath>
+          <itemPath>../src/config/mchv3_sam_e70_pim/startup.c</itemPath>
           <itemPath>../src/config/mchv3_sam_e70_pim/libc_syscalls.c</itemPath>
         </logicalFolder>
       </logicalFolder>
