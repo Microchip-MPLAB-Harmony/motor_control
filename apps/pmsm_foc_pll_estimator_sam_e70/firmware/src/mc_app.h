@@ -90,6 +90,25 @@ typedef enum
     MC_APP_STATE_STOP,
 }MC_APP_STATE;
 
+/* Switch state enum
+
+  Summary:
+    Identifies state of the switch
+
+  Description:
+    Enum for the switch states
+
+  Remarks:
+    None.
+*/
+typedef enum 
+{
+   
+    MC_APP_SWITCH_RELEASED,
+	MC_APP_SWITCH_PRESSED
+
+}MC_APP_SWITCH_STATE;
+
 /* Motor control structure
 
   Summary:
@@ -104,6 +123,8 @@ typedef enum
 typedef struct 
 {
   MC_APP_STATE mcState;
+  uint32_t switchCount;
+  MC_APP_SWITCH_STATE switchState;
 }MC_APP_DATA;
 
 /* Motor command

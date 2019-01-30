@@ -75,6 +75,7 @@ static void MCAPP_ADCOffsetCalibration(void);
 static void MCAPP_MotorControlParamInit(void);
 static inline bool MCAPP_SlowLoopTimeIsFinished(void);
 static inline void MCAPP_SlowControlLoop(void);
+static void MCAPP_SwitchDebounce(MC_APP_STATE state);
 
 #if(TORQUE_MODE == 0)
 static inline void MCAPP_SpeedRamp(void);
@@ -725,6 +726,36 @@ void MCAPP_MotorStop(void)
 }
 
 /******************************************************************************/
+/* Function name: MCAPP_SwitchDebounce                                                   */
+/* Function parameters: state                                                  */
+/* Function return: None                                                      */
+/* Description: Switch button debounce logic                                         */
+/******************************************************************************/
+static void MCAPP_SwitchDebounce(MC_APP_STATE state)
+{
+    if (!SWITCH_Get())
+    {
+        gMCAPPData.switchCount++;
+        if (gMCAPPData.switchCount >= 0xFF)            
+        {
+           gMCAPPData.switchCount = 0;
+           gMCAPPData.switchState = MC_APP_SWITCH_PRESSED;
+        }           
+    }
+    if (gMCAPPData.switchState == MC_APP_SWITCH_PRESSED)
+    {
+        if (SWITCH_Get())
+        {
+            gMCAPPData.switchCount = 0;
+            gMCAPPData.switchState = MC_APP_SWITCH_RELEASED;
+            gMCAPPData.mcState = state;
+            
+        }
+    }         
+        
+}
+
+/******************************************************************************/
 /* Function name: mcapp_tasks                                                   */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
@@ -732,47 +763,39 @@ void MCAPP_MotorStop(void)
 /******************************************************************************/
 void MCAPP_Tasks()
 {
-  switch (gMCAPPData.mcState)
-  {
-      case MC_APP_STATE_INIT:
-          ((pio_registers_t*)PIO_PORT_D)->PIO_PER = ~0xF8FFFFFF; // Disable PWML output. 
-          NVIC_DisableIRQ(AFEC0_IRQn);
-          NVIC_ClearPendingIRQ(AFEC0_IRQn);
-          AFEC0_ChannelsInterruptDisable(AFEC_INTERRUPT_EOC_7_MASK);
-          MCAPP_ADCOffsetCalibration();
-          MCAPP_MotorControlParamInit();
-          if (!SWITCH_Get())
-          {
-            gMCAPPData.mcState = MC_APP_STATE_START;
-          }
-          break;
-          
-      case MC_APP_STATE_START:
-          MCAPP_MotorStart();
-          gMCAPPData.mcState = MC_APP_STATE_RUNNING;
-          break;
-          
-      case MC_APP_STATE_RUNNING:
-          if(MCAPP_SlowLoopTimeIsFinished())
-		  {  
-			MCAPP_SlowControlLoop();
-		  }
-          if (!SWITCH_Get())
-          {
-            gMCAPPData.mcState = MC_APP_STATE_STOP;
-          }          
-          break;
-          
-      case MC_APP_STATE_STOP:
-          MCAPP_MotorStop();
-          if (!SWITCH_Get())
-          {
-            gMCAPPData.mcState = MC_APP_STATE_START;
-          }  
-          break;
-          
-      default:
-          break;
+switch (gMCAPPData.mcState)
+{
+    case MC_APP_STATE_INIT:
+        ((pio_registers_t*)PIO_PORT_D)->PIO_PER = ~0xF8FFFFFF; // Disable PWML output. 
+        NVIC_DisableIRQ(AFEC0_IRQn);
+        NVIC_ClearPendingIRQ(AFEC0_IRQn);
+        AFEC0_ChannelsInterruptDisable(AFEC_INTERRUPT_EOC_7_MASK);
+        MCAPP_ADCOffsetCalibration();
+        MCAPP_MotorControlParamInit();
+        gMCAPPData.switchCount = 0xFF;
+        MCAPP_SwitchDebounce(MC_APP_STATE_START);
+        break;
+
+    case MC_APP_STATE_START:
+        MCAPP_MotorStart();
+        gMCAPPData.mcState = MC_APP_STATE_RUNNING;
+        break;
+
+    case MC_APP_STATE_RUNNING:
+        if(MCAPP_SlowLoopTimeIsFinished())
+        {  
+          MCAPP_SlowControlLoop();
+        }
+        MCAPP_SwitchDebounce(MC_APP_STATE_STOP);
+        break;
+
+    case MC_APP_STATE_STOP:
+        MCAPP_MotorStop();
+        MCAPP_SwitchDebounce(MC_APP_STATE_START);
+        break;
+
+    default:
+        break;
   }
     
     
