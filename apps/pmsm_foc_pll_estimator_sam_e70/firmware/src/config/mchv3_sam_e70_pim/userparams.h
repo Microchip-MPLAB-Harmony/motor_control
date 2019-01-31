@@ -65,7 +65,7 @@
 /***********************************************************************************************/
 #define OPEN_LOOP_FUNCTIONING                            (0U)  /* If enabled - Keep running in open loop */
 #define TORQUE_MODE                                      (0U)  /* If enabled - torque control */
-#define FIELD_WEAKENING                                  (1U)  /* If enabled - Field weakening */
+#define FIELD_WEAKENING                                  (0U)  /* If enabled - Field weakening */
 
 /***********************************************************************************************/
 /* Motor Configuration Parameters */
@@ -81,7 +81,7 @@
 #define MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH                ((float)44.38)
 #define NUM_POLE_PAIRS                                      ((float)5)
 #define RATED_SPEED_RPM                                     ((float)3000)
-#define MAX_SPEED_RPM                                       ((float)3000)
+#define MAX_SPEED_RPM                                       ((float)5000)
 #define MAX_MOTOR_CURRENT                                   ((float)(5))
 #endif
 /*****************************************************************************/
