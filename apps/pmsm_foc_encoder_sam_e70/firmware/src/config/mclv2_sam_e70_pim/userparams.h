@@ -236,7 +236,7 @@
 
 /* Rated speed of the motor in RPM */
 #define RATED_SPEED_RAD_PER_SEC_ELEC                     (float)(RATED_SPEED_RPM *(2*(float)M_PI/60) * NUM_POLE_PAIRS)
-#define CLOSE_LOOP_RAMP_RATE                              (600) /* RPM per sec */
+#define CLOSE_LOOP_RAMP_RATE                              (200) /* RPM per sec */
 #define RAMP_RAD_PER_SEC_ELEC                             (float)(CLOSE_LOOP_RAMP_RATE * NUM_POLE_PAIRS * PI/30.0)
 #define SPEED_RAMP_INC_SLOW_LOOP                          (float)(RAMP_RAD_PER_SEC_ELEC*SLOW_LOOP_TIME_SEC)
 
