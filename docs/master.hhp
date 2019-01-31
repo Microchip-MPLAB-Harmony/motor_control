@@ -1,0 +1,67 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\chm\help_harmony_mc.chm
+Contents file=E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\master.hhc
+Default topic=E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00001.html
+Index file=E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\master.hhk
+Language=0x0409 0x0 0x0 ; 
+Title=Microchip 32-bit Motor Control
+Display compile progress=No
+Flat=Yes
+Enhanced decompilation=No
+Full-text search=Yes
+Binary Index=Yes
+Binary TOC=No
+Default Window=main
+
+[WINDOWS]
+main="Microchip 32-bit Motor Control","E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\master.hhc","E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\master.hhk","E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00001.html",,,,,,0x63520,,0x384e,,,,,,,,0
+
+[FILES]
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00000.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00001.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00002.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00003.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00004.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00005.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00006.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00007.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00008.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00009.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00010.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00011.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00012.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00013.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00014.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00015.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\00016.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\contents.htm
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\idx.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\index.html
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\scripts.js
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\MICH4C_top.png
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\MICH4CB_left.png
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_collapse.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_expand.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\indicator_external_link.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_collapse_large.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_expand_large.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_toc_leaf.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_toc_collapse.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_toc_expand.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_globals_contents_midblue_hover.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_globals_glossary_midblue_hover.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_globals_home_midblue_hover.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_globals_index_midblue_hover.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_globals_reference_midblue_hover.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_globals_search_midblue_hover.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_next_midblue_hover.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_prev_midblue_hover.gif
+E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\btn_up_midblue_hover.gif
+
+[ALIAS]
+#include E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\chm\help_harmony_mc_html_alias.h
+
+[MAP]
+#include E:\Harmony3_SAME70\doc_o_matic_h3\motor_control\master\output\chm\help_harmony_mc_html_map.h
+

@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Hardware Setup</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00001.html">Motor Control Overview</a> &gt; <a href="00000.html">Applications Help</a> &gt; <a href="00002.html">PMSM FOC Using PLL Estimator</a> &gt; <a href="00003.html">pmsm_foc_pll_estimator_sam_e70</a> &gt; <a href="00006.html">Hardware Setup</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+Microchip 32-bit Motor Control</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00001.html">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00005.html">Previous</a> | <a href="00003.html">Up</a> | <a href="00008.html">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc pmsm_foc_pll_estimator_sam_e70 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Hardware Setup</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+
+<ol class="Element630">
+<li value="1" class="Element600"><strong>Project mchv3_sam_e70_pim.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/dm330023-3');"><img src="indicator_external_link.gif" border="0" alt="" title="">MCHV3 Development Board (High Voltage)</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated Embedded Debugger Interface</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/ATSAME70-100-Pin-Motor-Control-Plug-In%20Module-Information-Sheet-DS50002776A.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">ATSAME70 PIM</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/AC300025');"><img src="indicator_external_link.gif" border="0" alt="" title="">Leadshine EL5-M0400-1-24 Motor</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup</strong>
+<ol class="Element632">
+<li value="1" class="Element602"> Mount the SAME70 144-pin Motor Control PIM on the dsPICDEM MCHV-3 Development Board, as shown in the following figure.</li>
+<li value="2" class="Element602">Connect the three-phase wires of the PMSM motor to M1, M2 and M3 ports.</li>
+<li value="3" class="Element602">Connect the AC mains using J1.</li>
+<li value="4" class="Element602">This application supports communication with the X2C-Scope plug-in to monitor and plot any variables used in the application. The communication between the target and the X2C-Scope plug-in can be established using the RS-232 serial port. Refer to the jumper positions marked on the development board chassis to select between the RS-232 serial port (J8) and the mini-USB port (J6). Refer to <a href="00016.html">Using the X2C-Scope Plug-in</a> for details on how to use the X2C-Scope in this demonstration.</li>
+</ol></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="Pll_same70_hv_drive_hardware_set_up.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="2" class="Element600"><strong>Project mclv2_sam_e70_pim.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2');"><img src="indicator_external_link.gif" border="0" alt="" title="">MCLV2 Development Board (Low Voltage)</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/ATSAME70-100-Pin-Motor-Control-Plug-In%20Module-Information-Sheet-DS50002776A.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">ATSAME70 PIM</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNo/AC300022');"><img src="indicator_external_link.gif" border="0" alt="" title="">Long Hurst DMA0204024B101 Motor</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup</strong>
+<ol class="Element632">
+<li value="1" class="Element602">Mount the SAME70 144-pin Motor Control PIM on the dsPICDEM MCLV-2 Development Board, as shown in the following figure.</li>
+<li value="2" class="Element602">Connect the External Op amp Configuration Matrix Board to header J14.</li>
+<li value="3" class="Element602">Connect the three-phase wires coming from P1 header of the long Hurst motor (i.e., Red, White and Black to M1, M2 and M3 ports,respectively). Leave the green wire from the motor unconnected.</li>
+<li value="4" class="Element602">Apply 24V DC at BP1-BP2/J2.</li>
+<li value="5" class="Element602">This application supports communication with the X2C-Scope plug-in to monitor or plot any variables used in the application. The communication between the target and the X2C-Scope plug-in can be established using the RS-232 serial port (J10). To use the RS-232 serial port, connect JP4 and JP5 to the UART position.</li>
+<li value="6" class="Element602">Refer to <a href="00016.html">Using the X2C Scope</a> for details on how to use X2C Scope in this demonstration.</li>
+</ol></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="Pll_same70_lv_drive_hardware_set_up.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00001.html">Motor Control Overview</a> &gt; <a href="00000.html">Applications Help</a> &gt; <a href="00002.html">PMSM FOC Using PLL Estimator</a> &gt; <a href="00003.html">pmsm_foc_pll_estimator_sam_e70</a> &gt; <a href="00006.html">Hardware Setup</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="100%">
+<div class="Element3">
+ Microchip 32-bit Motor Control</div>
+</td></tr><tr><td width="100%">
+<div class="Element4">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00001.html">Home</a></div>
+</td></tr><tr><td width="100%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc pmsm_foc_pll_estimator_sam_e70 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>
