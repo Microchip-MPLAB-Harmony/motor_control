@@ -77,7 +77,7 @@ extern "C" {
 */
 
 
-typedef void (*PWM_CALLBACK)( uintptr_t context );
+typedef void (*PWM_CALLBACK)(uint32_t status, uintptr_t context );
 // *****************************************************************************
 
 typedef enum

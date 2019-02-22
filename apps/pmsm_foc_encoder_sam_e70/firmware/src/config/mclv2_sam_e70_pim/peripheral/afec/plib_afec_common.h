@@ -134,7 +134,7 @@ typedef enum
 
 // *****************************************************************************
 
-typedef void (*AFEC_CALLBACK)( uintptr_t context);
+typedef void (*AFEC_CALLBACK)(uint32_t status, uintptr_t context);
 // *****************************************************************************
 
 typedef struct
@@ -159,4 +159,3 @@ typedef struct
 /**
  End of File
 */
-

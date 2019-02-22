@@ -1,24 +1,26 @@
 /*******************************************************************************
-  Main Source File
-
-  Company:
-    Microchip Technology Inc.
+  Cortex-M L1 Cache Header
 
   File Name:
-    main.c
+    device_cache.h
 
   Summary:
-    This file contains the "main" function for a project.
+    Preprocessor definitions to provide L1 Cache control.
 
   Description:
-    This file contains the "main" function for a project.  The
-    "main" function calls the "SYS_Initialize" function to initialize the state
-    machines of all modules in the system
- *******************************************************************************/
+    An MPLAB PLIB or Project can include this header to perform cache cleans,
+    invalidates etc. For the DCache and ICache.
+
+  Remarks:
+    This header should not define any prototypes or data definitions, or 
+    include any files that do.  The file only provides macro definitions for 
+    build-time.
+
+*******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -41,45 +43,50 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
+#ifndef DEVICE_CACHE_H
+#define DEVICE_CACHE_H
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
-#include <stddef.h>                     // Defines NULL
-#include <stdbool.h>                    // Defines true
-#include <stdlib.h>                     // Defines EXIT_FAILURE
-#include "definitions.h"                // SYS function prototypes
-#include "mc_app.h"
-#include "X2CScope.h"
-#include "X2CScopeCommunication.h"
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Main Entry Point
-// *****************************************************************************
-// *****************************************************************************
-int main ( void )
-{
-    /* Initialize all modules */
-    SYS_Initialize ( NULL );
-    X2CScope_Init();
-    while ( true )
-    {
-        MCAPP_Tasks();
-        X2CScope_Communicate();
-    }
-
-    /* Execution should not come here during normal operation */
-
-    return ( EXIT_FAILURE );
-}
-
-
-/*******************************************************************************
- End of File
+/*  This section Includes other configuration headers necessary to completely
+    define this configuration.
 */
 
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+extern "C" {
+
+#endif
+// DOM-IGNORE-END
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: L1 Cache Configuration
+// *****************************************************************************
+// *****************************************************************************
+#define ICACHE_ENABLE()                                SCB_EnableICache()
+#define ICACHE_DISABLE()                               SCB_DisableICache()
+#define ICACHE_INVALIDATE()                            SCB_InvalidateICache()
+#define INSTRUCTION_CACHE_ENABLED                      true
+
+#define DCACHE_ENABLE()                                SCB_EnableDCache()
+#define DCACHE_DISABLE()                               SCB_DisableDCache()
+#define DCACHE_INVALIDATE()                            SCB_InvalidateDCache()
+#define DCACHE_CLEAN()                                 SCB_CleanDCache()
+#define DCACHE_CLEAN_INVALIDATE()                      SCB_CleanInvalidateDCache()
+#define DCACHE_CLEAN_BY_ADDR(addr,sz)                  SCB_CleanDCache_by_Addr(addr,sz)
+#define DCACHE_INVALIDATE_BY_ADDR(addr,sz)             SCB_InvalidateDCache_by_Addr(addr,sz)
+#define DCACHE_CLEAN_INVALIDATE_BY_ADDR(addr,sz)       SCB_CleanInvalidateDCache_by_Addr(addr,sz)
+#define DATA_CACHE_ENABLED                             true
+
+//DOM-IGNORE-BEGIN
+#ifdef __cplusplus
+}
+#endif
+//DOM-IGNORE-END
+
+#endif // #ifndef DEVICE_CACHE_H

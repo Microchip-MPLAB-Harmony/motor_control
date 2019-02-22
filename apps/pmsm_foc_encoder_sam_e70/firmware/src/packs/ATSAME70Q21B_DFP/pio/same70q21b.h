@@ -1,7 +1,7 @@
 /**
  * \brief Peripheral I/O description for SAME70Q21B
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-06T08:17:04Z */
+/* file generated from device description version 2019-01-18T21:19:59Z */
 #ifndef _SAME70Q21B_GPIO_H_
 #define _SAME70Q21B_GPIO_H_
 
@@ -746,9 +746,6 @@
 #define PIN_PC12C_MCAN1_CANRX1                     _L_(76)      /**< MCAN1 signal: MCAN1_CANRX1 on PC12 mux C */
 #define MUX_PC12C_MCAN1_CANRX1                     _L_(2)       /**< MCAN1 signal line function value: MCAN1_CANRX1 */
 #define PIO_PC12C_MCAN1_CANRX1                     _UL_(1 << 12) /**< MCAN1 signal: MCAN1_CANRX1 */
-#define PIN_PD28B_MCAN1_CANRX1                     _L_(124)     /**< MCAN1 signal: MCAN1_CANRX1 on PD28 mux B */
-#define MUX_PD28B_MCAN1_CANRX1                     _L_(1)       /**< MCAN1 signal line function value: MCAN1_CANRX1 */
-#define PIO_PD28B_MCAN1_CANRX1                     _UL_(1 << 28) /**< MCAN1 signal: MCAN1_CANRX1 */
 #define PIN_PC14C_MCAN1_CANTX1                     _L_(78)      /**< MCAN1 signal: MCAN1_CANTX1 on PC14 mux C */
 #define MUX_PC14C_MCAN1_CANTX1                     _L_(2)       /**< MCAN1 signal line function value: MCAN1_CANTX1 */
 #define PIO_PC14C_MCAN1_CANTX1                     _UL_(1 << 14) /**< MCAN1 signal: MCAN1_CANTX1 */

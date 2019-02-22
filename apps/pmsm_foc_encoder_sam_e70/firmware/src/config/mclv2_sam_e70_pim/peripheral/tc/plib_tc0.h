@@ -86,6 +86,7 @@ extern "C" {
 */
 
 // *****************************************************************************
+
 void TC0_QuadratureInitialize (void);
 
 void TC0_QuadratureStart (void);

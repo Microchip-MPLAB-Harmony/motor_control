@@ -55,8 +55,6 @@
 #include "plib_pwm0.h"
 
 
-static uint32_t PWM0_status;  /* Saves interrupt status */
-
 
 /* Initialize enabled PWM channels */
 void PWM0_Initialize (void)
@@ -170,16 +168,6 @@ void PWM0_ChannelCounterEventDisable (PWM_CHANNEL_MASK channelMask)
     PWM0_REGS->PWM_IDR1 = channelMask;
 }
 
-/* Check the status of counter event */
-bool PWM0_ChannelCounterEventStatusGet (PWM_CHANNEL_NUM channel)
-{
-    bool status;
-    NVIC_DisableIRQ(PWM0_IRQn);
-    status = ((PWM0_status | PWM0_REGS->PWM_ISR1) >> channel) & 0x1U;
-    PWM0_status = 0x0U;
-    NVIC_EnableIRQ(PWM0_IRQn);
-    return status;
-}
 
 /* Enable synchronous update */
 void PWM0_SyncUpdateEnable (void)
@@ -193,6 +181,14 @@ void PWM0_FaultStatusClear(PWM_FAULT_ID fault_id)
     PWM0_REGS->PWM_FCR = 0x1U << fault_id;
 }
 
+
+/* Check the status of counter event */
+bool PWM0_ChannelCounterEventStatusGet (PWM_CHANNEL_NUM channel)
+{
+    bool status;
+    status = (PWM0_REGS->PWM_ISR1 >> channel) & 0x1U;
+    return status;
+}
 
 /**
  End of File

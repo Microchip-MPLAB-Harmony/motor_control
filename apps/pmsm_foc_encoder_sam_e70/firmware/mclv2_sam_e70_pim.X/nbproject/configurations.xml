@@ -4,9 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f2" displayName="arm" projectFiles="true">
-        <itemPath>../src/arm/toolchain_specifics.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mclv2_sam_e70_pim" projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
@@ -37,13 +34,16 @@
             </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/mclv2_sam_e70_pim/userparams.h</itemPath>
+          <itemPath>../src/config/mclv2_sam_e70_pim/device_cache.h</itemPath>
+          <itemPath>../src/config/mclv2_sam_e70_pim/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/mclv2_sam_e70_pim/definitions.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f4" displayName="MotorControl" projectFiles="true">
         <itemPath>../src/mc_app.h</itemPath>
+        <itemPath>../src/mclib_generic_float.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="packs" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME70Q21B_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAME70Q21B_DFP/component/acc.h</itemPath>
@@ -94,6 +94,7 @@
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
@@ -154,12 +155,13 @@
           <itemPath>../src/config/mclv2_sam_e70_pim/initialization.c</itemPath>
           <itemPath>../src/config/mclv2_sam_e70_pim/interrupts.c</itemPath>
           <itemPath>../src/config/mclv2_sam_e70_pim/exceptions.c</itemPath>
-          <itemPath>../src/config/mclv2_sam_e70_pim/startup.c</itemPath>
+          <itemPath>../src/config/mclv2_sam_e70_pim/startup_xc32.c</itemPath>
           <itemPath>../src/config/mclv2_sam_e70_pim/libc_syscalls.c</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f2" displayName="MotorControl" projectFiles="true">
         <itemPath>../src/mc_app.c</itemPath>
+        <itemPath>../src/mclib_generic_float.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="X2CScope" projectFiles="true">
         <itemPath>../src/X2CScope.c</itemPath>
@@ -190,7 +192,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME70_DFP" vendor="Atmel" version="2.4.133"/>
+        <pack name="SAME70_DFP" vendor="Atmel" version="2.4.156"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>

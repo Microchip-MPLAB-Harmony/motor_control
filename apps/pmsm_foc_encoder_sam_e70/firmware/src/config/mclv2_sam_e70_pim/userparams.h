@@ -57,7 +57,7 @@
 /***********************************************************************************************/
 
 #define TORQUE_MODE                                      (0U)  /* If enabled - torque control */
-#define MOTOR_DIRECTION                                  (MOTOR_DIRECTION_POSITIVE)
+#define MOTOR_DIRECTION                                  (MOTOR_DIRECTION_NEGATIVE)
 
 /***********************************************************************************************/
 /* Motor Configuration Parameters */

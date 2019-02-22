@@ -85,7 +85,7 @@ extern "C" {
    this interface.
 */
 
-__INLINE void PWM0_ChannelDutySet(PWM_CHANNEL_NUM channel, uint16_t duty)
+__STATIC_INLINE void PWM0_ChannelDutySet(PWM_CHANNEL_NUM channel, uint16_t duty)
 {
   PWM0_REGS->PWM_CH_NUM[channel].PWM_CDTYUPD= duty;
 }
@@ -108,12 +108,11 @@ void PWM0_ChannelCounterEventEnable (PWM_CHANNEL_MASK channelMask);
 
 void PWM0_ChannelCounterEventDisable (PWM_CHANNEL_MASK  channelMask);
 
-bool PWM0_ChannelCounterEventStatusGet (PWM_CHANNEL_NUM channel);
-
 void PWM0_SyncUpdateEnable (void);
 
 void PWM0_FaultStatusClear(PWM_FAULT_ID fault_id);
 
+bool PWM0_ChannelCounterEventStatusGet (PWM_CHANNEL_NUM channel);
 
 #endif //PLIB_PWM0_H
 

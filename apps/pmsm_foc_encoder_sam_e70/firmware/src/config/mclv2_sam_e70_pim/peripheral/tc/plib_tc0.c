@@ -53,12 +53,10 @@
 */
 #include "device.h"
 #include "plib_tc0.h"
-
-
-
 /* Callback object for channel 0 */
 TC_QUADRATURE_CALLBACK_OBJECT TC0_CallbackObj;
-/* Initialize channel in timer mode */
+
+/* Initialize channel in quadrature mode */
 void TC0_QuadratureInitialize (void)
 {
     uint32_t status;
@@ -99,7 +97,7 @@ void TC0_QuadratureCallbackRegister(TC_QUADRATURE_CALLBACK callback, uintptr_t c
 
 void TC0_CH0_InterruptHandler(void)
 {
-    TC_QUADRATURE_STATUS quadrature_status = TC0_REGS->TC_QISR & TC_QUADRATURE_STATUS_MSK;
+    TC_QUADRATURE_STATUS quadrature_status = (TC_QUADRATURE_STATUS)(TC0_REGS->TC_QISR & TC_QUADRATURE_STATUS_MSK);
     /* Call registered callback function */
     if (TC0_CallbackObj.callback_fn != NULL)
     {
@@ -116,6 +114,7 @@ void TC0_CH0_InterruptHandler(void)
 
  
 
+ 
 /**
  End of File
 */

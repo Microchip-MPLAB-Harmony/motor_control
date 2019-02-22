@@ -61,6 +61,7 @@
 // *****************************************************************************
 // *****************************************************************************
 #include "userparams.h"
+#include "mclib_generic_float.h"
 
 /*  This section lists the other files that are included in this file.
 */
@@ -136,7 +137,7 @@ typedef struct
   MC_APP_STATE mcState;
   uint32_t switchCount;
   MC_APP_SWITCH_STATE switchState;  
-}tMC_APP_DATA;
+}MCAPP_DATA;
 
 
 typedef enum
@@ -146,101 +147,50 @@ typedef enum
 	
 }tMotorCtrlCmd;
 
-typedef enum
-{
-	MOTOR_STATUS_STOPPED,
-	MOTOR_STATUS_RUNNING
-	
-}tMotorStatus;
-
-
 typedef struct 
 {
-    float    VelRef;        /* Reference velocity from Ramp */
-    float    IdRef;         /* Vd flux reference value */
-	float    IdRefFF;       /* Id reference value from feed forward */
-	float    IdRefPI;       /* Id reference correction value from FW PI controller */
-    float    IqRef;         /* Vq torque reference value */
-	float	 EndSpeed;      /* End speed reference value for ramp */
-	float    RampIncStep;   /* Speed increment per slow loop execution */
-	tMotorStatus MotorStatus;   /* Motor status, STOPPED - 0, RUNNING -1 */
-	bool         OpenLoop;      /* Indicated motor running in open loop; */
-	bool         ChangeMode;    /* Switch from open loop to close loop */     
+    float    velRef;        /* Reference velocity from Ramp */
+    float    idRef;         /* Vd flux reference value */
+	float    idRefFF;       /* Id reference value from feed forward */
+    float    iqRef;         /* Vq torque reference value */
+	float	 endSpeed;      /* End speed reference value for ramp */
+	float    rampIncStep;   /* Speed increment per slow loop execution */
+    float    startup_angle_ramp_rads_per_sec;  /* ramp angle variable for initial ramp */
+    uint32_t startup_lock_count; /* lock variable for initial ramp */
+    uint32_t open_loop_stab_counter;
+    uint32_t sync_cnt;   /* counter in main loop (5ms) synchronization function */
+	tMotorStatus motorStatus;   /* Motor status, STOPPED - 0, RUNNING -1 */
+	bool         openLoop;      /* Indicated motor running in open loop; */
+	bool         changeMode;    /* Switch from open loop to close loop */  
 	
-} tCtrlParm;
+} MCAPP_CONTROL_PARAM;
 
 typedef struct 
 {
-    float   Angle;
-    float   Sin;
-    float   Cos;
-    float   Iu;
-    float   Iv;
-    float   Ialpha;
-    float   Ibeta;
-    float   Id;
-    float   Iq;
-	float   DIqRefdt;
-	float   LastIqRef;
-    float   Vd;
-	float   LastVd;
-    float   FwVd;
-    float   Vq;
-    float   FwVqRefFiltered;
-    float   Valpha;
-    float   Vbeta;
-    float   V1;
-    float   V2;
-    float   V3;
-    float   DCBusVoltage;
-    float   DCBusVoltageBySqrt3;
-} tParkParm;
-typedef struct 
-{
-	float				   Rs;			/* Rs value - stator resistance */
-	float				   LsDt;		/* Ls/dt value - stator inductance / dt - variable with speed */
-	float				   InvKFi;	    /* InvKfi constant value ( InvKfi = Omega/BEMF ) */
-	
-} tMotorEstimParm;
-
-typedef struct 
-{
-    float   dSum;          
-    float   Kp;
-    float   Ki;
-    float   Kc;
-    float   OutMax;
-    float   OutMin;
-    float   InRef; 
-    float   InMeas;
-    float   Out;
-	
-} tPIParm;
+    float   angle;
+	float   dIqRefdt;
+	float   lastIqRef;
+	float   lastVd;
+    float   fwVd;
+    float   fwVqRefFiltered;
+    float   dcBusVoltage;
+    float   dcBusVoltageBySqrt3;
+} MCAPP_FOC_PARAM;
 
 typedef struct
 {
-	float   Angle;
-	float   Sin;
-	float   Cos;
-} tSincosParm;
+  volatile uint16_t elec_rotation_count;
+  int16_t encoder_pulse_count_int16_t;
+  float rotor_angle_rad_per_sec;
+  float prev_position_count;
+  float present_position_count;
+}MCAPP_POSITION_CALC;
 
-typedef struct 
-{
-    float   PWMPeriod;
-    float   Vr1;
-    float   Vr2;
-    float   Vr3;
-
-} tSVGenParm;
-
-
-
-void app_tasks(void);
-void motor_start(void);
-void motor_stop(void);
-
-void init_pi_ctrl_param(void);
-void init_pi( tPIParm *pParm);
+void MCAPP_Tasks(void);
+void MCAPP_MotorStart(void);
+void MCAPP_MotorStop(void);
+void MCAPP_MotorPIParamInit(void);
+void MCAPP_PIOutputInit( MCLIB_PI *pParm);
 
     
 // DOM-IGNORE-BEGIN
