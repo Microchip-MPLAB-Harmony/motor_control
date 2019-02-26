@@ -836,7 +836,7 @@ void speed_filter_init(int16_t speed)
 Function:  delay_comp
 Description: calculation of the phase error due to algorithm medium delay
 Input:   nothing (uses internal speed filter memory)
-Output:   phase delay (medium time delay is 1.5 sampling periods)
+Output:   phase delay (medium time delay is 1 sampling periods)
 ******************************************************************************/
 #ifdef RAM_EXECUTE
 uint16_t __ramfunc__ delay_comp(void)
@@ -848,8 +848,9 @@ uint16_t delay_comp(void)
  int16_t s16a;
  uint16_t retval;
 
+ /*sp_iir3_mem = change in angle per sample*2^14
+  *s32a = sp_iir3_mem for  1 sampling period delay.  s32a= 2*sp_iir3_mem for 2 sampling period delay*/
  s32a = sp_iir3_mem;  /* always positive */
- s32a += (s32a >> 1); /* 1.5 */
  if((int32_t)BASE_VALUE_INT <= s32a)
  {
   if(0 > speed_sgn)

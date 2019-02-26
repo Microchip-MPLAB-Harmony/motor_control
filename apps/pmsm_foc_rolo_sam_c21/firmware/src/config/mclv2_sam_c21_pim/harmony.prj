@@ -59,8 +59,8 @@
           <Name dnOrder="1">plib_adc1.c</Name>
           <LogicalPath dnOrder="2">config/mclv2_sam_c21_pim/peripheral/adc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/adc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5238E7ED9F5F2E45796B5E17DD9143E0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5238E7ED9F5F2E45796B5E17DD9143E0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C297DAF1C07096DC780D967E45FB68D9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C297DAF1C07096DC780D967E45FB68D9</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>

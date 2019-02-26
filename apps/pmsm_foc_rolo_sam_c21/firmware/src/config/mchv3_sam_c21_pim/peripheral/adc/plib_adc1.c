@@ -180,6 +180,9 @@ bool ADC1_ConversionStatusGet( void )
 {
     bool status;
     status =  (bool)((ADC1_REGS->ADC_INTFLAG & ADC_INTFLAG_RESRDY_Msk) >> ADC_INTFLAG_RESRDY_Pos);
-    ADC1_REGS->ADC_INTFLAG = ADC_INTFLAG_RESRDY_Msk;
+    if (status == true)
+    {
+        ADC1_REGS->ADC_INTFLAG = ADC_INTFLAG_RESRDY_Msk;
+    }
     return status;
 }

@@ -217,6 +217,7 @@ static vec2_t
     curdqm,      /* two-phases (d, q) vector of current measurement [internal current unit] */
     curdqr,      /* two-phases (d, q) vector of current reference [internal voltage unit] */
     outvab,      /* two-phases (a, b) vector of output voltage reference [internal voltage unit] */
+    prev_outvab, /* two-phases (a, b) vector of output voltage reference of previous cycle [internal voltage unit] */
     outvdq;      /* two-phases (d, q) vector of output voltage reference [internal voltage unit] */
 
 static uint16_t
@@ -617,7 +618,7 @@ Note2:        the routine has to be called every 10ms to assure correct ramps
             #endif
         }
         else
-        {
+        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
             ext_speed_ref_rpm = -((int16_t)rpm_ref_abs);
             #ifdef TORQUE_MODE
                 torque_adc_ref = -((int16_t)torque_adc_ref_abs); 
@@ -1286,44 +1287,7 @@ void motorcontrol(void)
         /* current transformations (previous angle) */
         library_ab_dq(&sysph, &curabm, &curdqm);
 
-        /* angle update */
-        sysph.ang = newsysph;
-        library_sincos(&sysph);
-         /* direct current control */
-        s32a =(int32_t)outvmax * DVOL_MARG;
-        id_pi.hlim = (int16_t)(s32a >> SH_BASE_VALUE);      /* vd max */
-        id_pi.llim = -id_pi.hlim;
-        s32a = curdqr.x;
-        s32a -= curdqm.x;
-        outvdq.x = library_pi_control(s32a, &id_pi);
-
-        /* quadrature current control */
-#ifdef USE_DIVAS
-        if(outvmax > outvdq.x)
-        {
-            iq_pi.hlim = (int16_t)DIVAS_SquareRoot((uint32_t)((uint32_t)(outvmax*outvmax)- (uint32_t)(outvdq.x*outvdq.x))); /* vq max */
-        }
-        else
-        {
-            iq_pi.hlim = 0;
-        }
-#else        
-        iq_pi.hlim = library_scat(outvmax, outvdq.x);  /* vq max */
-#endif
-        iq_pi.llim = -iq_pi.hlim;
-        s32a = curdqr.y;
-        s32a -= curdqm.y;
-        outvdq.y =  library_pi_control(s32a, &iq_pi);
-
-        /* voltage reverse-Park transformation */
-        library_dq_ab(&sysph, &outvdq, &outvab);
-               
-        /* modulation (uses vbus and outvab to calculate duties, 
-           and sets directly pwm registers) */
-
-
-            pwm_modulation();
-       
+    
         
         #ifndef  CURPI_TUN
         /* motor control state machine */
@@ -1450,7 +1414,7 @@ void motorcontrol(void)
                 }
                 else
                 {
-                  position_and_speed_estimation(spe_ref_sgn, &outvab, &curabm);
+                  position_and_speed_estimation(spe_ref_sgn, &prev_outvab, &curabm);
                 }
 
                 /* speed rising ramp */
@@ -1506,7 +1470,7 @@ void motorcontrol(void)
             case CLOSINGLOOP:
                 state_closingloop = state_count;
                 /* position and speed estimation (Luenberger) */
-                position_and_speed_estimation(spe_ref_sgn, &outvab, &curabm);
+                position_and_speed_estimation(spe_ref_sgn, &prev_outvab, &curabm);
                 newsysph = position_offset + get_angular_position();
                 #ifdef  SPREF_FIL_ALIGN
                 elespeed = get_angular_speed();
@@ -1587,7 +1551,7 @@ void motorcontrol(void)
                 spe_ref_fil = (uint16_t)(spe_ref_mem >> SH_REFSPEED_FIL);
 
                 /* position and speed estimation (Luenberger) */
-                position_and_speed_estimation(spe_ref_sgn, &outvab, &curabm);
+                position_and_speed_estimation(spe_ref_sgn, &prev_outvab, &curabm);
                 /* estimated position */
                 newsysph = position_offset + get_angular_position();    
                 /* estimated speed */
@@ -1680,7 +1644,43 @@ void motorcontrol(void)
         curabr.x = 0; // This assignment has no impact in CURPI_TUN mode. It is done to avoid build warning of unused variable in CURPI_TUN mode
         curabr.y = 0; // This assignment has no impact in CURPI_TUN mode. It is done to avoid build warning of unused variable in CURPI_TUN mode
         #endif  /* else ifndef CURPI_TUN */
+        /* angle update */
+        sysph.ang = newsysph;
+        library_sincos(&sysph);
+         /* direct current control */
+        s32a =(int32_t)outvmax * DVOL_MARG;
+        id_pi.hlim = (int16_t)(s32a >> SH_BASE_VALUE);      /* vd max */
+        id_pi.llim = -id_pi.hlim;
+        s32a = curdqr.x;
+        s32a -= curdqm.x;
+        outvdq.x = library_pi_control(s32a, &id_pi);
 
+        /* quadrature current control */
+#ifdef USE_DIVAS
+        if(outvmax > outvdq.x)
+        {
+            iq_pi.hlim = (int16_t)DIVAS_SquareRoot((uint32_t)((uint32_t)(outvmax*outvmax)- (uint32_t)(outvdq.x*outvdq.x))); /* vq max */
+        }
+        else
+        {
+            iq_pi.hlim = 0;
+        }
+#else        
+        iq_pi.hlim = library_scat(outvmax, outvdq.x);  /* vq max */
+#endif
+        iq_pi.llim = -iq_pi.hlim;
+        s32a = curdqr.y;
+        s32a -= curdqm.y;
+        outvdq.y =  library_pi_control(s32a, &iq_pi);
+        prev_outvab = outvab; // save the outvab from previous cycle before updating them in the current cycle
+        /* voltage reverse-Park transformation */
+        library_dq_ab(&sysph, &outvdq, &outvab);
+               
+        /* modulation (uses vbus and outvab to calculate duties, 
+           and sets directly pwm registers) */
+
+
+            pwm_modulation();
         /* filters */
         idfil_mem += curdqm.x;          /* direct current */
         idfil_mem -= idfil;
