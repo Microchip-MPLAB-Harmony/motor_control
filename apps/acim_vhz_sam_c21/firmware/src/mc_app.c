@@ -82,6 +82,8 @@ uint16_t     acc_ramp;
 uint16_t     dec_ramp;
 uint8_t      direction_changed;
 uint8_t      demand_dir;
+uint16_t     speed_ref_filter;
+
 
 
 /******************************************************************************
@@ -134,15 +136,14 @@ void motorcontrol_vars_init(void)
   switch_state = 0;
   acc_ramp = ACC_RAMP;
   dec_ramp = DEC_RAMP;
-  
+    
 }
-
 
 
 /******************************************************************************
 Function:     pwm_modulation_reset
 Description:  resets internal variables used in pwm modulation, and sets
-              the unactive value into the pwm registers
+              the inactive value into the pwm registers
 Input:        nothing
 Output:       nothing
 ******************************************************************************/
@@ -269,22 +270,24 @@ void motorcontrol(void)
 {
   uint32_t	s32a;      
   
-  if(speed_ref_pot <= 1898) // 1898 or 1848 
+  speed_ref_filter = (uint16_t)(((SPEED_FILTER_COEFF*speed_ref_pot) + ((16-SPEED_FILTER_COEFF)*speed_ref_filter))>>4);  
+  
+  if(speed_ref_filter <= 1898) // 1898 or 1848 
   {
 	  demand_dir = 0x00;
   }
-  else if(speed_ref_pot > 2198)  // 2198 or 2248
+  else if(speed_ref_filter > 2198)  // 2198 or 2248
   {
 	  demand_dir = 0x08;
   }
     
-  if(speed_ref_pot <= 2048)
+  if(speed_ref_filter <= 2048)
   {
-	  set_speed = ((2048 - speed_ref_pot)*MAX_MOTOR_SPEED)>>11;
+	  set_speed = ((2048 - speed_ref_filter)*MAX_MOTOR_SPEED)>>11;
   }
   else if(speed_ref_pot > 2048)
   {
-      set_speed = ((speed_ref_pot - 2048)*MAX_MOTOR_SPEED)>>11;
+      set_speed = ((speed_ref_filter - 2048)*MAX_MOTOR_SPEED)>>11;
   }
     
   if(set_speed > MAX_MOTOR_SPEED)
@@ -295,14 +298,15 @@ void motorcontrol(void)
   if((demand_dir != direction) && (state_halt == 0U))
   {
   	 direction_changed = 1;
-  		   	   
-	 if(ram_abs == 0U)
-	 {
+  		   	    
+  } 
+  if(( ram_abs == 0U) && (1U == direction_changed ))
+  {
+        
 		  direction_changed = 0;
 		  direction = demand_dir;
 		  sysph.ang = 0;
-	 }  
-  }  
+  } 
       
   /* performs motor control if needed */
   if (0U != state_run)
@@ -310,7 +314,7 @@ void motorcontrol(void)
 	  	if(direction_changed == 0U)
 		{
 			  ext_speed_ref_rpm = set_speed;
-			  s32a = ext_speed_ref_rpm * BASE_VALUE_INT;
+			  s32a = ext_speed_ref_rpm * MAX_SPEED_SCALED;
 			  ref_abs =  (uint32_t) s32a / (uint32_t) MAX_MOTOR_SPEED;			  			  
 		}
 		else
@@ -365,7 +369,7 @@ void motorcontrol(void)
 	if(0U == state_halt)
 	{	
 		/* Computing the angle to be incremented for the current speed level */ 
-		angle_incr = (uint32_t) ((uint32_t) (POLE_PAIRS * 4 * ram_abs * MAX_MOTOR_SPEED)/(uint32_t)(60000 * PWM_FREQUENCY));
+		angle_incr = (uint32_t) ((uint32_t) (NUMBER_OF_POLES * ram_abs * MAX_MOTOR_SPEED)/(uint32_t)(30000 * PWM_FREQUENCY));
  	
 		sysph.ang = sysph.ang + angle_incr;
 		

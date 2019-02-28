@@ -66,15 +66,6 @@
 // *****************************************************************************
 
 
-/*** Macros for BTN_START_STOP pin ***/
-#define BTN_START_STOP_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 11)
-#define BTN_START_STOP_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 11)
-#define BTN_START_STOP_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 11)
-#define BTN_START_STOP_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 11)) & 0x01)
-#define BTN_START_STOP_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 11)
-#define BTN_START_STOP_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 11)
-#define BTN_START_STOP_PIN                  PORT_PIN_PA11
-
 /*** Macros for LED2_START_STOP pin ***/
 #define LED2_START_STOP_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 12)
 #define LED2_START_STOP_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 12)

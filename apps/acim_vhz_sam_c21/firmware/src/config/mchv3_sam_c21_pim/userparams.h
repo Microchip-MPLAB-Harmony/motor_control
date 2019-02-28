@@ -63,28 +63,34 @@ Macro definitions
 /* Note: only one motor has to be selected! */
 
 #ifdef  AC_IM_1                     /* ACIM Example motor */
-#define MOTOR_VOLTAGE   (230)			/* Motor Voltage [Volts] */
-#define MAX_MOTOR_SPEED (1800)			/* maximum motor speed [RPM] */
-#define VF_CONSTANT     (300)			/* Voltage/Frequency ratio * 2^12 */
-#define VF_OFFSET       (104)			/* Voltage offset at starting zero freq */
-#define START_SPEED_DEFAULT    (200U)   /* Default startup speed */
-#define POLE_PAIRS		(2)             /* number of pole pairs  */
-#define ACC_RAMP        (1)             /* acceleration ramp count in internal unit */
-#define DEC_RAMP        (1)             /* deceleration ramp count in internal unit */
+
+#define MOTOR_VOLTAGE           (230)                   /* Motor Voltage [Volts] */
+#define MAX_MOTOR_SPEED         (1800)                  /* maximum motor speed [RPM] */
+#define NUMBER_OF_POLES         (4)                     /* number of poles  */
+#define MAX_SPEED_SCALED        (16384U)                /* Max speed in internal Units */
+#define VF_CONSTANT             ((PWM_HPER_TICKS << 12) /MAX_SPEED_SCALED)      /* (PWM_HPER_TICKS/MAX_SPEED_SCALED) * 2^12 */
+#define VF_OFFSET               (0.09f * PWM_HPER_TICKS)/* Voltage offset at starting zero freq; Approx (0.09 * PWM_HPER_TICKS)  */
+#define START_SPEED_DEFAULT     (200U)                  /* Default startup speed */
+#define ACC_RAMP                (1)                     /* acceleration ramp count in internal unit */
+#define DEC_RAMP                (1)                     /* deceleration ramp count in internal unit */
+#define SPEED_FILTER_COEFF      (10)                    /* Speed filter coefficient range [1-16]    */
 
 #endif  /* ifdef AC_IM_1 */
 
-#ifdef  SMALL_HURST                     /* DMB0224C10002 motor */
-#define MOTOR_VOLTAGE   (24)			/* Motor Voltage [Volts] */
-#define MAX_MOTOR_SPEED (2400)			/* maximum motor speed [RPM] */
-#define VF_CONSTANT     (300)			/* Voltage/Frequency ratio * 2^12 */
-#define VF_OFFSET       (100)		    /* Voltage offset at starting zero freq */
-#define START_SPEED_DEFAULT    (800U)   /* Default startup speed */
-#define POLE_PAIRS		(4)             /* number of pole pairs */
-#define ACC_RAMP        (1)             /* acceleration ramp count in internal unit */
-#define DEC_RAMP        (1)             /* deceleration ramp count in internal unit */
+#ifdef  AC_IM_2                     /* ACIM Example motor */
 
-#endif  /* ifdef SMALL_HURST */
+#define MOTOR_VOLTAGE           (230)                   /* Motor Voltage [Volts] */
+#define MAX_MOTOR_SPEED         (3600)                  /* maximum motor speed [RPM] */
+#define NUMBER_OF_POLES         (2)                     /* number of poles  */
+#define MAX_SPEED_SCALED        (16384U)                /* Max speed in internal Units */
+#define VF_CONSTANT             ((PWM_HPER_TICKS << 12)/MAX_SPEED_SCALED)       /* (PWM_HPER_TICKS/MAX_SPEED_SCALED) * 2^12 */
+#define VF_OFFSET               (0.09f * PWM_HPER_TICKS)/* Voltage offset at starting zero freq; Approx (0.09 * PWM_HPER_TICKS)  */
+#define START_SPEED_DEFAULT     (200U)                  /* Default startup speed */
+#define ACC_RAMP                (1)                     /* acceleration ramp count in internal unit */
+#define DEC_RAMP                (1)                     /* deceleration ramp count in internal unit */
+#define SPEED_FILTER_COEFF      (10)                    /* Speed filter coefficient range [1-16]    */
+
+#endif  /* ifdef AC_IM_1 */
 
 
 #endif // USERPARAMS_H

@@ -69,6 +69,8 @@ extern int16_t      ext_speed_ref_rpm;
 
 extern uint16_t     ref_abs; 
 
+extern uint16_t   speed_ref_filter;
+
 /*******************************************************************************
 Public variables definition
 *******************************************************************************/

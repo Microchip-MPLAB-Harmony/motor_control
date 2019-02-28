@@ -74,7 +74,7 @@ void PORT_Initialize(void)
    /************************** GROUP 0 Initialization *************************/
    PORT_REGS->GROUP[0].PORT_PINCFG[5] = 0x1;
    PORT_REGS->GROUP[0].PORT_PINCFG[10] = 0x1;
-   PORT_REGS->GROUP[0].PORT_PINCFG[11] = 0x2;
+   PORT_REGS->GROUP[0].PORT_PINCFG[11] = 0x1;
    PORT_REGS->GROUP[0].PORT_PINCFG[14] = 0x1;
    PORT_REGS->GROUP[0].PORT_PINCFG[15] = 0x1;
    PORT_REGS->GROUP[0].PORT_PINCFG[16] = 0x1;
@@ -90,9 +90,7 @@ void PORT_Initialize(void)
    /************************** GROUP 1 Initialization *************************/
    PORT_REGS->GROUP[1].PORT_DIR = 0x3000;
    PORT_REGS->GROUP[1].PORT_PINCFG[0] = 0x1;
-   PORT_REGS->GROUP[1].PORT_PINCFG[16] = 0x1;
    PORT_REGS->GROUP[1].PORT_PINCFG[30] = 0x1;
-   PORT_REGS->GROUP[1].PORT_PINCFG[31] = 0x2;
 
    PORT_REGS->GROUP[1].PORT_PMUX[0] = 0x1;
    PORT_REGS->GROUP[1].PORT_PMUX[15] = 0x4;

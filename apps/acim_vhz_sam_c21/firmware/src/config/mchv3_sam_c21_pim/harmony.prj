@@ -75,8 +75,8 @@
           <Name dnOrder="1">plib_eic.c</Name>
           <LogicalPath dnOrder="2">config/mchv3_sam_c21_pim/peripheral/eic/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/eic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A09ACB5F554E79AEBE80AF529DD20F9B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A09ACB5F554E79AEBE80AF529DD20F9B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B1C0175DD3AE60101E368DAE1A07D225</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B1C0175DD3AE60101E368DAE1A07D225</UserChecksum>
         </File>
         <File dnOrder="9">
           <Type dnOrder="0">SOURCE</Type>
@@ -99,8 +99,8 @@
           <Name dnOrder="1">plib_port.c</Name>
           <LogicalPath dnOrder="2">config/mchv3_sam_c21_pim/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0A4FBE8F5D0B1017B6584CC90DB358AF</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0A4FBE8F5D0B1017B6584CC90DB358AF</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D3F8C4CCBDD1D6FA0DD95BC70271D521</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D3F8C4CCBDD1D6FA0DD95BC70271D521</UserChecksum>
         </File>
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
@@ -427,8 +427,8 @@
           <Name dnOrder="1">plib_eic.h</Name>
           <LogicalPath dnOrder="2">config/mchv3_sam_c21_pim/peripheral/eic/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/eic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">93F8BDE0F09A9AFE04A65E15246575C2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">93F8BDE0F09A9AFE04A65E15246575C2</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8161AAC98BB2A3D3F355E45E2BFC5EEB</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8161AAC98BB2A3D3F355E45E2BFC5EEB</UserChecksum>
         </File>
         <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
@@ -451,8 +451,8 @@
           <Name dnOrder="1">plib_port.h</Name>
           <LogicalPath dnOrder="2">config/mchv3_sam_c21_pim/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9EAFC2DBDCF3AB113C7758F97D2337DB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9EAFC2DBDCF3AB113C7758F97D2337DB</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1B08171C474ED7FC2853AAB166880DA9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1B08171C474ED7FC2853AAB166880DA9</UserChecksum>
         </File>
         <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>
@@ -618,7 +618,7 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMC21_DFP\1.2.179\samc21\atdf\ATSAMC21J18A.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
       <Setting dnOrder="5" key="PackageFilter" value="core;csp;"/>
     </Settings>
   </Configurator>

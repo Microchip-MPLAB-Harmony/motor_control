@@ -77,7 +77,7 @@ int main ( void )
     SYS_Initialize ( NULL );
     ADC1_CallbackRegister((ADC_CALLBACK) ADC_ISR, (uintptr_t)NULL);
     EIC_CallbackRegister ((EIC_PIN)EIC_PIN_2, (EIC_CALLBACK) OC_FAULT_ISR,(uintptr_t)NULL);
-    EIC_CallbackRegister ((EIC_PIN)EIC_PIN_0, (EIC_CALLBACK) motor_start_stop,(uintptr_t)NULL);
+    EIC_CallbackRegister ((EIC_PIN)EIC_PIN_11, (EIC_CALLBACK) motor_start_stop,(uintptr_t)NULL);
     motorcontrol_vars_init();
     ADC1_Enable();
     X2CScope_Init();
@@ -135,7 +135,8 @@ void motor_start_stop(void)
 		state_run = 1;
 		state_halt = 0;	
 		ref_abs = 0;
-		direction = 0;	
+		direction = 0;
+        speed_ref_filter = speed_ref_pot;
 	}
 	else
 	{
