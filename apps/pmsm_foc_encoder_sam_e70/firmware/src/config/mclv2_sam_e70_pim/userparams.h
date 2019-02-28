@@ -35,19 +35,16 @@
 #define _USER_HEADER
 
 /***********************************************************************************************/
-/*                    include files                                                            */
+/*                    INCLUDE FILES                                                            */
 /***********************************************************************************************/
 
 /***********************************************************************************************/
-/*                    DEFINATIONS                                                              */
+/*                    DEFINITIONS                                                              */
 /***********************************************************************************************/
-#define MOTOR_1_ATBLDC24V_42BL02402                      (1U)    /* Default motor comes with ATBLDC24V LV board */
-#define MOTOR_2_HURST_DMB0224C10002                      (2U)    /* Small Hurst Motor */
+#define MOTOR_1_CUSTOM_MOTOR                             (1U)    /* Custom Motor 1 */
+#define MOTOR_2_CUSTOM_MOTOR                             (2U)    /* Custom Motor 2 */
 #define MOTOR_3_HURST_DMA0204024B101                     (3U)    /* Long Hurst Motor */
 
-
-#define MOTOR_DIRECTION_POSITIVE                         (0U)
-#define MOTOR_DIRECTION_NEGATIVE                         (1U)
 /***********************************************************************************************/
 /* USER CONFIGURABLE PARAMETERS - START                                                        */
 /***********************************************************************************************/
@@ -57,8 +54,7 @@
 /***********************************************************************************************/
 
 #define TORQUE_MODE                                      (0U)  /* If enabled - torque control */
-#define MOTOR_DIRECTION                                  (MOTOR_DIRECTION_NEGATIVE)
-
+                                                               /* If disabled (default) - speed control*/
 /***********************************************************************************************/
 /* Motor Configuration Parameters */
 /***********************************************************************************************/
@@ -66,8 +62,8 @@
 /* Motor selection from above mentioned predefined motors */
 #define MOTOR                                               (MOTOR_3_HURST_DMA0204024B101)
 
-#if(MOTOR == MOTOR_1_ATBLDC24V_42BL02402)
-/* Atmel motor part number - 42BL02402-0026B-002 */
+#if(MOTOR == MOTOR_1_CUSTOM_MOTOR)
+
 #define MOTOR_PER_PHASE_RESISTANCE                          ((float)0.9)
 #define MOTOR_PER_PHASE_INDUCTANCE                          ((float)0.0012)
 #define MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH                ((float)3.6)
@@ -76,8 +72,8 @@
 #define MAX_SPEED_RPM                                       ((float)4000)
 #define ENCODER_PULSES_PER_REV                              ((float)1024)
 
-#elif(MOTOR == MOTOR_2_HURST_DMB0224C10002)
-/* Hurst motor part number - DMB0224C10002 */
+#elif(MOTOR == MOTOR_2_CUSTOM_MOTOR)
+
 #define MOTOR_PER_PHASE_RESISTANCE                          ((float)2.10)
 #define MOTOR_PER_PHASE_INDUCTANCE                          ((float)0.00192)
 #define MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH                ((float)7.24)
@@ -99,7 +95,7 @@
 
 /******************************************************************************/
 /* PI controllers tuning values - */
-#if(MOTOR == MOTOR_1_ATBLDC24V_42BL02402)
+#if(MOTOR == MOTOR_1_CUSTOM_MOTOR)
 /********* D Control Loop Coefficients ****************************************/
 #define     D_CURRCNTR_PTERM           ((float)(0.5)/MAX_CURRENT)
 #define     D_CURRCNTR_ITERM           ((float)(0.0005) /MAX_CURRENT)
@@ -118,7 +114,7 @@
 #define     SPEEDCNTR_CTERM            ((float)(0.1))
 #define     SPEEDCNTR_OUTMAX           ((float)MAX_CURRENT)
 
-#elif(MOTOR == MOTOR_2_HURST_DMB0224C10002)
+#elif(MOTOR == MOTOR_2_CUSTOM_MOTOR)
 ///* PI controllers tuning values - */
 /********* D Control Loop Coefficients ****************************************/
 #define     D_CURRCNTR_PTERM           (float)(0.035798/MAX_CURRENT)
@@ -155,7 +151,7 @@
 #define     Q_CURRCNTR_OUTMAX                                   0.999
 
 //*** Velocity Control Loop Coefficients *****
-#define     SPEEDCNTR_PTERM                                      (0.005)
+#define     SPEEDCNTR_PTERM                                      (0.01)
 #define     SPEEDCNTR_ITERM                                      (0.000020) 
 #define     SPEEDCNTR_CTERM                                      0.5
 #define     SPEEDCNTR_OUTMAX                                     MAX_CURRENT
@@ -236,7 +232,7 @@
 
 /* Rated speed of the motor in RPM */
 #define RATED_SPEED_RAD_PER_SEC_ELEC                     (float)(RATED_SPEED_RPM *(2*(float)M_PI/60) * NUM_POLE_PAIRS)
-#define CLOSE_LOOP_RAMP_RATE                              (200) /* RPM per sec */
+#define CLOSE_LOOP_RAMP_RATE                              (500) /* RPM per sec */
 #define RAMP_RAD_PER_SEC_ELEC                             (float)(CLOSE_LOOP_RAMP_RATE * NUM_POLE_PAIRS * PI/30.0)
 #define SPEED_RAMP_INC_SLOW_LOOP                          (float)(RAMP_RAD_PER_SEC_ELEC*SLOW_LOOP_TIME_SEC)
 
@@ -252,10 +248,15 @@
 #define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_PER_RPM_MECH * (float)(2.0 * M_PI/60.0))
 #define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH * NUM_POLE_PAIRS)
 
-#define ENCODER_PULSES_PER_EREV                          (float)(ENCODER_PULSES_PER_REV/NUM_POLE_PAIRS)
+#define ENCODER_PULSES_PER_EREV                          (uint16_t)(ENCODER_PULSES_PER_REV/NUM_POLE_PAIRS)
 
 #define MAX_SPEED_RAD_PER_SEC_ELEC          (float)(((RATED_SPEED_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)
 
 #define MAX_STATOR_VOLT_SQUARE              (float)(0.98 * 0.98)
 #define POT_ADC_COUNT_FW_SPEED_RATIO        (float)(MAX_SPEED_RAD_PER_SEC_ELEC/MAX_ADC_COUNT)
+#define QDEC_RC 65536u              
+#define QDEC_UPPER_THRESHOLD 49151u   
+#define QDEC_LOWER_THRESHOLD 16384u  
+#define QDEC_OVERFLOW  (uint16_t)(QDEC_RC % ENCODER_PULSES_PER_EREV) 
+#define QDEC_UNDERFLOW  (uint16_t)(ENCODER_PULSES_PER_EREV - QDEC_OVERFLOW)
 #endif

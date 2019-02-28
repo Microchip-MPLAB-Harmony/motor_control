@@ -99,8 +99,7 @@ __INLINE int16_t TC0_QuadraturePositionGet (void)
     return (TC0_REGS->TC_CHANNEL[0].TC_CV);
 }
 
-/* Register callback for quadrature interrupt */
-void TC0_QuadratureCallbackRegister(TC_QUADRATURE_CALLBACK callback, uintptr_t context);
+TC_QUADRATURE_STATUS TC0_QuadratureStatusGet(void);
  
 
  

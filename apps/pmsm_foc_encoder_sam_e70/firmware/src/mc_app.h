@@ -180,15 +180,19 @@ typedef struct
 typedef struct
 {
   volatile uint16_t elec_rotation_count;
-  int16_t encoder_pulse_count_int16_t;
   float rotor_angle_rad_per_sec;
-  float prev_position_count;
-  float present_position_count;
+  int16_t prev_position_count;
+  int16_t present_position_count;
+  uint16_t QDECcnt;
+  uint16_t QDECcntZ;
+  uint16_t posCnt;
+  uint16_t posCompensation;
+  uint32_t posCntTmp;
+  
 }MCAPP_POSITION_CALC;
 
 void MCAPP_Tasks(void);
 void MCAPP_MotorStart(void);
-void MCAPP_MotorStop(void);
 void MCAPP_MotorPIParamInit(void);
 void MCAPP_PIOutputInit( MCLIB_PI *pParm);
 

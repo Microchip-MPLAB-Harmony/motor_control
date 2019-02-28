@@ -53,8 +53,6 @@
 */
 #include "device.h"
 #include "plib_tc0.h"
-/* Callback object for channel 0 */
-TC_QUADRATURE_CALLBACK_OBJECT TC0_CallbackObj;
 
 /* Initialize channel in quadrature mode */
 void TC0_QuadratureInitialize (void)
@@ -63,15 +61,13 @@ void TC0_QuadratureInitialize (void)
 
     /* clock selection and waveform selection */
     TC0_REGS->TC_CHANNEL[0].TC_CMR = TC_CMR_TCCLKS_XC0 | TC_CMR_CAPTURE_LDRA_RISING | TC_CMR_CAPTURE_CPCTRG_Msk;
-    TC0_REGS->TC_CHANNEL[0].TC_RC = 200U;
-    TC0_REGS->TC_CHANNEL[0].TC_IER = TC_IER_CPCS_Msk;
+    TC0_REGS->TC_CHANNEL[0].TC_RC = 65535U;
 
 
     /*Enable quadrature mode */
     TC0_REGS->TC_BMR = TC_BMR_QDEN_Msk  | TC_BMR_MAXFILT(2U) | TC_BMR_EDGPHA_Msk
         | (TC_BMR_POSEN_Msk);
 
-    TC0_CallbackObj.callback_fn = NULL;
     status = TC0_REGS->TC_QISR;  /* Clear interrupt status */
 
     /* Ignore warning */
@@ -88,23 +84,10 @@ void TC0_QuadratureStop (void)
     TC0_REGS->TC_CHANNEL[0].TC_CCR = (TC_CCR_CLKDIS_Msk);
 }
 
-/* Register callback for quadrature interrupt */
-void TC0_QuadratureCallbackRegister(TC_QUADRATURE_CALLBACK callback, uintptr_t context)
+TC_QUADRATURE_STATUS TC0_QuadratureStatusGet(void)
 {
-    TC0_CallbackObj.callback_fn = callback;
-    TC0_CallbackObj.context = context;
+    return (TC_QUADRATURE_STATUS)(TC0_REGS->TC_QISR & TC_QUADRATURE_STATUS_MSK);
 }
-
-void TC0_CH0_InterruptHandler(void)
-{
-    TC_QUADRATURE_STATUS quadrature_status = (TC_QUADRATURE_STATUS)(TC0_REGS->TC_QISR & TC_QUADRATURE_STATUS_MSK);
-    /* Call registered callback function */
-    if (TC0_CallbackObj.callback_fn != NULL)
-    {
-        TC0_CallbackObj.callback_fn(quadrature_status, TC0_CallbackObj.context);
-    }
-}
-
  
 
  

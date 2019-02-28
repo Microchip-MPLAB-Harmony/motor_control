@@ -323,21 +323,21 @@
         <Boolean dnOrder="11" id="NVIC_23_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="true"/>
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
             </Dynamic>
           </Values>
         </Boolean>
         <String dnOrder="12" id="NVIC_23_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="TC0_CH0_InterruptHandler"/>
+              <Value dnOrder="0" id="core" priority="2" value="TC0_CH0_Handler"/>
             </Dynamic>
           </Values>
         </String>
         <Boolean dnOrder="13" id="NVIC_23_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="true"/>
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
             </Dynamic>
           </Values>
         </Boolean>
@@ -2920,28 +2920,28 @@
         <Boolean dnOrder="394" id="TC0_CH0_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="tc0" priority="2" value="true"/>
+              <Value dnOrder="0" id="tc0" priority="2" value="false"/>
             </Dynamic>
           </Values>
         </Boolean>
         <Boolean dnOrder="395" id="TC0_CH0_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="false"/>
+              <Value dnOrder="0" id="core" priority="2" value="true"/>
             </Dynamic>
           </Values>
         </Boolean>
         <String dnOrder="396" id="TC0_CH0_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="tc0" priority="2" value="TC0_CH0_InterruptHandler"/>
+              <Value dnOrder="0" id="tc0" priority="2" value="TC0_CH0_Handler"/>
             </Dynamic>
           </Values>
         </String>
         <Boolean dnOrder="397" id="TC0_CH0_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="tc0" priority="2" value="true"/>
+              <Value dnOrder="0" id="tc0" priority="2" value="false"/>
             </Dynamic>
           </Values>
         </Boolean>
@@ -3505,12 +3505,12 @@
         </Boolean>
         <Boolean dnOrder="5" id="TC_QEI_IER_CPCS">
           <Values dnOrder="0">
-            <User dnOrder="0" value="true"/>
+            <User dnOrder="0" value="false"/>
           </Values>
         </Boolean>
         <Long dnOrder="6" id="TC_QEI_NUM_PULSES">
           <Values dnOrder="0">
-            <User dnOrder="0" value="200"/>
+            <User dnOrder="0" value="65535"/>
           </Values>
         </Long>
         <Boolean dnOrder="7" id="TC_QIER_IDX">
@@ -3566,8 +3566,7 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="afec0" x="190" y="60"/>
         <ElementPosition dnOrder="1" id="cmsis" x="340" y="20"/>
@@ -3578,5 +3577,6 @@
         <ElementPosition dnOrder="6" id="uart0" x="30" y="120"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
