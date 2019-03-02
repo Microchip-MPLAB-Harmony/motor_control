@@ -647,6 +647,7 @@ Note2:      the routine has to be called every 10ms to assure correct ramps
     if(NO_ALRM != motor_alarm)
     { 
       motor_stop();
+      LED1_OC_FAULT_Set();
       motor_stop_source = ALARM_STOP ;
       spe_ref_sgn = 0;
       spe_ref_abs = 0;
