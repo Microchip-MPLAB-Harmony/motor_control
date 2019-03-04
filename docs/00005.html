@@ -51,21 +51,21 @@ Control Algorithm</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The project implements a PLL based sensor-less Field Oriented Control ( FOC ) algorithm on SAME70 32-bit micro-controller to regulate the speed of the PMSM motor. For details of PLL based sensor-less FOC, refer to <a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/AppNotes/Sensorless-FOC-For-PMSM-using-PLL-Estimator-FW-AN-DS00002520C.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">Application Note AN2520</a>. The following section describes briefly about the PLL based sensor-less FOC algorithm, software design and implementation.&nbsp;</p>
+The project implements a PLL based sensor-less Field Oriented Control ( FOC ) algorithm on SAME70 32-bit micro-controller to regulate the speed of the PMSM motor. For details of PLL based sensor-less FOC, refer <a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/AppNotes/Sensorless-FOC-For-PMSM-using-PLL-Estimator-FW-AN-DS00002520C.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">Application Note AN2520</a>. The following section describes briefly about the PLL based sensor-less FOC algorithm, software design and implementation.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-Field Oriented Control is the technique used to achieve the decoupled control of torque and flux. This is done by transforming the stator current quantities (phase currents) from stationary reference frame to torque and flux producing currents components in rotating reference frame using mathematical transformations. The Field Oriented Control is done as follows:&nbsp;</p>
+Field Oriented Control is the technique used to achieve the decoupled control of torque and flux. This is done by transforming the stator current quantities (phase currents) from stationary reference frame to torque and flux producing currents components in rotating reference frame using mathematical transformations. The Field Oriented Control is done as follows-&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <ol class="Element630">
 <li value="1" class="Element600">Measure the motor phase currents.</li>
-<li value="2" class="Element600">Transform them into the two phase system (a, b) using the Clarke transformation.</li>
+<li value="2" class="Element600">Transform them into the two phase system (a, b) using Clarke transformation.</li>
 <li value="3" class="Element600">Calculate the rotor position angle.</li>
-<li value="4" class="Element600">Transform stator currents into the d,q-coordinate system using the Park transformation.</li>
+<li value="4" class="Element600">Transform stator currents into the d,q-coordinate system using Park transformation.</li>
 <li value="5" class="Element600">The stator current torque (i<sub>q</sub>) and flux (i<sub>d</sub>) producing components are controlled separately by the controllers.</li>
-<li value="6" class="Element600">The output stator voltage space vector is transformed back from the d,q-coordinate system into the two phase system fixed with the stator by the Inverse Park transformation.</li>
-<li value="7" class="Element600">Using the space vector modulation, the three-phase output voltage is generated.</li>
+<li value="6" class="Element600">The output stator voltage space vector is transformed back from the d,q-coordinate system into the two phase system fixed with the stator by inverse Park transformation.</li>
+<li value="7" class="Element600">Using the space vector modulation, the output three-phase voltage is generated.</li>
 </ol><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
@@ -73,7 +73,7 @@ The phase currents are measured using two shunt resistors connected to Phase U a
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-The electrical rotor position is calculated using the PLL estimator using <strong>MCLIB_PLLEstimator</strong> software block. The working principle of the PLL estimator can be found in <a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/AppNotes/Sensorless-FOC-For-PMSM-using-PLL-Estimator-FW-AN-DS00002520C.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">Application Note AN2520</a>. The main disadvantage of PLL estimator is its inability to estimate the rotor angle at lower rotor speeds because of very low value of back EMF. Therefore, the FOC algorithm also integrates the ramp-up profile for motor start. The reference speed is incremented linearly using a open loop phase voltage control until the required minimum reference speed for the PLL estimator is reached.&nbsp;</p>
+The electrical rotor position is calculated using the PLL estimator using <strong>MCLIB_PLLEstimator</strong> software block. The working principle of the PLL estimator can be found in <a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/AppNotes/Sensorless-FOC-For-PMSM-using-PLL-Estimator-FW-AN-DS00002520C.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">Application Note AN2520</a>. The main disadvantage of PLL estimator is its inability to estimate the rotor angle at lower rotor speeds because of very low value of back EMF. Hence, the FOC algorithm also integrates the ramp-up profile for motor start. The reference speed is incremented linearly using a open loop phase voltage control until the required minimum reference speed for the PLL estimator is reached.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
@@ -93,7 +93,7 @@ The following figure shows the various state machines of the the motor control s
 <img src="Pll_same70_motor_control_flow.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-In the software, the PMSM speed control task is realized by a state machine as shown in the previous figure. The following sections briefly describes the various states in the PMSM speed control task:&nbsp;</p>
+In the software, the PMSM speed control task is realized by a state machine as shown in the above figure. The following sections briefly describes the various states in the PMSM speed control task:&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
@@ -101,7 +101,7 @@ In the software, the PMSM speed control task is realized by a state machine as s
 <p class="Element10">
 In this state, following tasks are performed:</p>
 <ul class="Element630">
-<li class="Element600">Initialization and configuration of NVIC, AFEC, PWM motor control peripherals for generation of periodic ADC triggers and ADC conversion interrupt</li>
+<li class="Element600">Initialization/ configuration of NVIC, AFEC, PWM motor control peripherals for generation of periodic ADC triggers and ADC conversion interrupt</li>
 <li class="Element600">Current Offset measurement and calibration</li>
 <li class="Element600">Initialize PI controller parameters for speed and current control loops</li>
 </ul><p class="Element10">
@@ -115,18 +115,18 @@ In this state, the motor control state variables are reset and periodic ADC conv
 <p class="Element10">
 <strong>3. Run:</strong>&nbsp;</p>
 <p class="Element10">
-In this state, the motor starts spinning. The following flow chart and the timing diagram shows the tasks performed in run state: </p><p class="Element10" style="text-align: center;">
+In this state, the motor starts spinning. The below flow chart and the timing diagram shows the tasks performed in run state: </p><p class="Element10" style="text-align: center;">
 <img src="Pll_same70_motor_run_task.png" border="0" alt="" title=""></p><p class="Element10">
 &nbsp;</p>
 <p class="Element10" style="text-align: center;">
 <img src="Pll_same70_timing_diagram.png" border="0" alt="" title=""></p><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-In run state, two threads are executed- Main task thread and ADC Interrupt task thread. The current control is carried out in the ADC interrupt task thread, while the speed control is carried out in the main task thread. Therefore, the ADC interrupt cycle indicates the current control frequency.&nbsp;</p>
+In run state, two threads are executed- Main task thread and ADC Interrupt task thread. The current control is carried out in the ADC interrupt task thread, while the speed control is carried out in the main task thread. Hence, the ADC interrupt cycle indicates the current control frequency.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-As pointed out earlier, the PLL estimator is unable to estimate the rotor position information at the start-up phase when the speed is very low. This necessitates the motor control algorithm to integrate an open-loop control mechanism to linearly ramp the motor speed to the required minimum speed before switching over to close open loop control. Therefore, the motor control state can further be classified into three sub-states - Field Alignment, Open-loop Control and Close-loop Control.&nbsp;</p>
+As pointed out earlier, the PLL estimator is unable to estimate the rotor position information at the start-up phase when the speed is very low. This necessitates the motor control algorithm to integrate an open-loop control mechanism to linearly ramp the motor speed to the required minimum speed before switching over to close open loop control. Therefore, the motor control state can further be classified into three sub-states - Field Alignment, Open-loop Control and Close loop Control.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <ul class="Element630">
@@ -155,15 +155,15 @@ In this state, the PWM channels are disabled thereby stopping the motor<strong>.
 &nbsp;</p><div class="Element15">
 Software Configuration:</div>
 <p class="Element10">
-The FOC algorithm is used across different application fields. In order to get the optimal control of the PMSM motor, both the motor specific parameters and application parameters need to be updated in the software . The following section describes how to update both motor and application specific parameters in the the project.&nbsp;</p>
+The FOC algorithm is used across different application fields. In order to get the optimal control of the PMSM motor, both the motor specific parameters and application parameters has to be updated in the software . The following section describes how to update both motor and application specific parameters in the the project.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <ol class="Element630">
 <li value="1" class="Element600"><strong>Setting motor control PWM frequency:</strong></li>
 </ol><p class="Element10">
-The PWM controller frequency ( in Hz ) can be configured by setting the following macro in <span class="Element146">userparams.h</span><i> </i>file.&nbsp;</p>
+The PWM controller frequency ( in Hz ) can be configured by setting following macro in &quot;<i>userparams.h&quot; </i>file.&nbsp;</p>
 <p class="Element10">
-<strong>This frequency should be same as the frequency configured in the PWM peripheral in the MHC.</strong>&nbsp;</p>
+<strong>This frequency should be same as the frequency configured in PWM peripheral in the MHC.</strong>&nbsp;</p>
 <p class="Element10">
 &nbsp;</p><div class="Element63">
 <div class="TableDiv">
@@ -187,7 +187,7 @@ Current controller and PWM frequency in Hz.&nbsp;</div></td></tr></table></div><
 <ol class="Element630">
 <li value="2" class="Element600"><strong>Setting motor specific -parameter:</strong></li>
 </ol><p class="Element10">
-Set the motor following motor parameters in <i><span class="Element146">userparams.h</span> </i>file. </p><div class="Element63">
+Set the motor following motor parameters in &quot;<i>userparams.h&quot; </i>file. </p><div class="Element63">
 <div class="TableDiv">
 <table cellspacing="0" class="Table1">
 <tr>
@@ -247,7 +247,7 @@ RPM&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
 <strong>3. Setting PI Controller parameters:</strong>&nbsp;</p>
 <p class="Element10">
-Depending on the type of motor used, and the corresponding application PI controller parameters should to be updated in <span class="Element146">userparams.h</span><i> </i>file.&nbsp;</p>
+Depending on the type of motor used, and the corresponding application PI controller parameters should to be updated in<i>&quot;userparams.h&quot; </i>file.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
@@ -351,7 +351,7 @@ Maximum controller output of Iq current control loop&nbsp;</div></td></tr></tabl
 <p class="Element10">
 <strong>4. Enabling Field weakening feature:</strong>&nbsp;</p>
 <p class="Element10">
-Field weakening feature enables the PMSM motor to rotate beyond its rated speed. This feature can be enabled by setting the following <strong> </strong>macros in <span class="Element146">userparams.h</span><i> </i>file.&nbsp;</p>
+Field weakening feature enables the PMSM motor to rotate beyond its rated speed. This feature can be enabled by setting following <strong> </strong>macros in &quot;u<i>serparams.h&quot; </i>file.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p><div class="Element63">
 <div class="TableDiv">
@@ -377,7 +377,7 @@ Maximum negative D-axis reference current if field weakening is enabled&nbsp;</d
 <p class="Element10">
 <strong>5. Debugging Features:</strong>&nbsp;</p>
 <p class="Element10">
-Open loop functioning is useful for debugging when using new motor. This feature can be enabled by setting the following <strong> </strong>macros in <span class="Element146">userparams.h</span><i> </i>file.&nbsp;</p>
+Open loop functioning is useful for debugging when using new motor. This feature can be enabled by setting following <strong> </strong>macros in &quot;u<i>serparams.h&quot; </i>file.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p><div class="Element63">
 <div class="TableDiv">

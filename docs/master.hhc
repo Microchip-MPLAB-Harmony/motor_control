@@ -20,7 +20,7 @@
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="X2CScope Plugin">
-    <PARAM name="Local" value="00016.html">
+    <PARAM name="Local" value="00030.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Applications Help">
@@ -75,19 +75,83 @@
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00013.html">
+    <PARAM name="Local" value="00014.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00015.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Hardware Setup">
     <PARAM name="Local" value="00012.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00013.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00014.html">
+    <PARAM name="Local" value="00015.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="PMSM FOC Using Reduced Order Luenberger Observer">
+    <PARAM name="Local" value="00016.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="pmsm_foc_rolo_sam_c21">
+    <PARAM name="Local" value="00017.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00018.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00021.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00019.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00020.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00022.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="PMSM FOC Using Reduced Order Luenberger Observer with Windmilling Capability">
+    <PARAM name="Local" value="00023.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="pmsm_foc_rolo_wm_sam_c21">
+    <PARAM name="Local" value="00024.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00025.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00028.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00026.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00027.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00029.html">
     </OBJECT>
 </ul>
 </ul>

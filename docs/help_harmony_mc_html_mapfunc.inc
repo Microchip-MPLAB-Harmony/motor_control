@@ -1,0 +1,37 @@
+function HTML_ID_Mapping(id: Integer): Integer;
+begin
+  case id of
+    IDH_Motor_Control_Overview                            : result := IDH_HTML_Motor_Control_Overview;
+    IDH_X2CScope_Plugin                                   : result := IDH_HTML_X2CScope_Plugin;
+    IDH_Applications_Help                                 : result := IDH_HTML_Applications_Help;
+    IDH_pmsm_foc_Applications_Help                        : result := IDH_HTML_pmsm_foc_Applications_Help;
+    IDH_pmsm_foc_Applications_pmsm_foc_pll_estimator_sam_e70: result := IDH_HTML_pmsm_foc_Applications_pmsm_foc_pll_estimator_sam_e70;
+    IDH_pmsm_foc_pmsm_foc_pll_estimator_sam_e70_Building_The_Application: result := IDH_HTML_pmsm_foc_pmsm_foc_pll_estimator_sam_e70_Building_The_Application;
+    IDH_pmsm_foc_pmsm_foc_pll_estimator_sam_e70_MPLAB_Harmony_Configurations: result := IDH_HTML_pmsm_foc_pmsm_foc_pll_estimator_sam_e70_MPLAB_Harmony_Configurations;
+    IDH_pmsm_foc_pmsm_foc_pll_estimator_sam_e70_Control_Algorithm: result := IDH_HTML_pmsm_foc_pmsm_foc_pll_estimator_sam_e70_Control_Algorithm;
+    IDH_pmsm_foc_pmsm_foc_pll_estimator_sam_e70_Hardware_Setup: result := IDH_HTML_pmsm_foc_pmsm_foc_pll_estimator_sam_e70_Hardware_Setup;
+    IDH_pmsm_foc_pmsm_foc_pll_estimator_sam_e70_Running_The_Application: result := IDH_HTML_pmsm_foc_pmsm_foc_pll_estimator_sam_e70_Running_The_Application;
+    IDH_pmsm_foc_encoder_Applications_Help                : result := IDH_HTML_pmsm_foc_encoder_Applications_Help;
+    IDH_pmsm_foc_encoder_Applications_pmsm_foc_encoder_sam_e70: result := IDH_HTML_pmsm_foc_encoder_Applications_pmsm_foc_encoder_sam_e70;
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e70_Building_The_Application: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_sam_e70_Building_The_Application;
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e70_MPLAB_Harmony_Configurations: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_sam_e70_MPLAB_Harmony_Configurations;
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e70_Control_Algorithm: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_sam_e70_Control_Algorithm;
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e70_Hardware_Setup: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_sam_e70_Hardware_Setup;
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e70_Running_The_Application: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_sam_e70_Running_The_Application;
+    IDH_pmsm_foc_rolo_Applications_Help                   : result := IDH_HTML_pmsm_foc_rolo_Applications_Help;
+    IDH_pmsm_foc_rolo_Applications_pmsm_foc_rolo_sam_c21  : result := IDH_HTML_pmsm_foc_rolo_Applications_pmsm_foc_rolo_sam_c21;
+    IDH_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_Building_The_Application: result := IDH_HTML_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_Building_The_Application;
+    IDH_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_MPLAB_Harmony_Configurations: result := IDH_HTML_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_MPLAB_Harmony_Configurations;
+    IDH_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_Control_Algorithm: result := IDH_HTML_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_Control_Algorithm;
+    IDH_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_Hardware_Setup: result := IDH_HTML_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_Hardware_Setup;
+    IDH_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_Running_The_Application: result := IDH_HTML_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_Running_The_Application;
+    IDH_pmsm_foc_rolo_wm_Applications_Help                : result := IDH_HTML_pmsm_foc_rolo_wm_Applications_Help;
+    IDH_pmsm_foc_rolo_wm_Applications_pmsm_foc_rolo_wm_sam_c21: result := IDH_HTML_pmsm_foc_rolo_wm_Applications_pmsm_foc_rolo_wm_sam_c21;
+    IDH_pmsm_foc_rolo_wm_pmsm_foc_rolo_wm_sam_c21_Building_The_Application: result := IDH_HTML_pmsm_foc_rolo_wm_pmsm_foc_rolo_wm_sam_c21_Building_The_Application;
+    IDH_pmsm_foc_rolo_wm_pmsm_foc_rolo_wm_sam_c21_MPLAB_Harmony_Configurations: result := IDH_HTML_pmsm_foc_rolo_wm_pmsm_foc_rolo_wm_sam_c21_MPLAB_Harmony_Configurations;
+    IDH_pmsm_foc_rolo_wm_pmsm_foc_rolo_wm_sam_c21_Control_Algorithm: result := IDH_HTML_pmsm_foc_rolo_wm_pmsm_foc_rolo_wm_sam_c21_Control_Algorithm;
+    IDH_pmsm_foc_rolo_wm_pmsm_foc_rolo_wm_sam_c21_Hardware_Setup: result := IDH_HTML_pmsm_foc_rolo_wm_pmsm_foc_rolo_wm_sam_c21_Hardware_Setup;
+    IDH_pmsm_foc_rolo_wm_pmsm_foc_rolo_wm_sam_c21_Running_The_Application: result := IDH_HTML_pmsm_foc_rolo_wm_pmsm_foc_rolo_wm_sam_c21_Running_The_Application;
+    else result := -1;
+  end;
+end;

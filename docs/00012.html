@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Hardware Setup</title>
+<title>Control Algorithm</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00001.html">Motor Control Overview</a> &gt; <a href="00000.html">Applications Help</a> &gt; <a href="00009.html">PMSM FOC Using Quadrature Encoder</a> &gt; <a href="00010.html">pmsm_foc_encoder_sam_e70</a> &gt; <a href="00012.html">Hardware Setup</a></div>
+<a href="00001.html">Motor Control Overview</a> &gt; <a href="00000.html">Applications Help</a> &gt; <a href="00009.html">PMSM FOC Using Quadrature Encoder</a> &gt; <a href="00010.html">pmsm_foc_encoder_sam_e70</a> &gt; <a href="00012.html">Control Algorithm</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -31,12 +31,12 @@ Microchip 32-bit Motor Control</div>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00001.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00015.html">Previous</a> | <a href="00010.html">Up</a> | <a href="00014.html">Next</a></div>
+<a href="00014.html">Previous</a> | <a href="00010.html">Up</a> | <a href="00013.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_sam_e70 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_sam_e70 Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Hardware Setup</div>
+Control Algorithm</div>
 </div>
 </div>
 
@@ -50,44 +50,311 @@ Hardware Setup</div>
 <div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-
+<p class="Element10">
+<span style="color: #000000">The project implements an Encoder based sensored Field Oriented Control ( FOC ) algorithm on SAME70 32-bit micro-controller to regulate the speed of the PMSM motor. For details refer application note </span><a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/AppNotes/Sensored-Encoder-Based)-Field-Oriented-Control-of-Three-Phase-%20Permanent-%20Magnet-%20Synchronous-DS00002757A.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">AN2757</a><span style="color: #000000">. The following section describes briefly about the FOC algorithm, and corresponding software design and implementation on MCLV2 development board.</span>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">Field Oriented Control is the technique used to achieve the decoupled control of torque and flux. This is done by transforming the stator current quantities (phase currents) from stationary reference frame to torque and flux producing currents components in rotating reference frame using mathematical transformations. The Field Oriented Control is achieved by performing following steps:</span></p>
 <ol class="Element630">
-<li value="1" class="Element600"><strong>Project mclv2_sam_e70_pim.X.</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used</strong>
-<ul class="Element632">
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2');"><img src="indicator_external_link.gif" border="0" alt="" title="">MCLV2 Development Board (Low Voltage)</a></li>
-<li class="Element602"><a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/ATSAME70-100-Pin-Motor-Control-Plug-In%20Module-Information-Sheet-DS50002776A.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">ATSAME70 PIM</a></li>
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNo/AC300022');"><img src="indicator_external_link.gif" border="0" alt="" title="">Long Hurst DMA0204024B101 Motor</a></li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup</strong>
-<ol class="Element632">
-<li value="1" class="Element602">Mount the SAME70 144-pin Motor Control PIM on the dsPICDEM MCLV-2 Development Board, as shown in the following figure.</li>
-<li value="2" class="Element602">Connect the External Op amp Configuration Matrix Board to header J14.</li>
-<li value="3" class="Element602">Connect the three-phase wires coming from P1 header of the long Hurst motor (i.e., Red, White and Black to M1, M2 and M3 ports,respectively). Leave the green wire from the motor unconnected.</li>
-<li value="4" class="Element602">Connect the quadrature encoder wires coming of the P3 header of the long hurst motor to HA, HB, +5V and GND.</li>
-<li value="5" class="Element602">Apply 24V DC at BP1-BP2/J2.</li>
-<li value="6" class="Element602">This application supports communication with the X2C-Scope plug-in to monitor or plot any variables used in the application. The communication between the target and the X2C-Scope plug-in can be established using the RS-232 serial port (J10). To use the RS-232 serial port, connect JP4 and JP5 to the UART position.</li>
-<li value="7" class="Element602">Refer to <a href="00016.html">Using the X2C Scope</a> for details on how to use the X2C Scope in this demonstration.</li>
-</ol></li>
-</ul></li>
+<li value="1" class="Element600"><span style="color: #000000">Measure the motor phase currents.</span></li>
+<li value="2" class="Element600"><span style="color: #000000">Transform them into the two phase system (a, b) using Clarke transformation.</span></li>
+<li value="3" class="Element600"><span style="color: #000000">Calculate the rotor position angle.</span></li>
+<li value="4" class="Element600"><span style="color: #000000">Transform stator currents into the d,q-coordinate system using Park transformation.</span></li>
+<li value="5" class="Element600"><span style="color: #000000">The stator current torque (i<sub>q</sub>) and flux (i<sub>d</sub>) producing components are controlled separately by the controllers.</span></li>
+<li value="6" class="Element600"><span style="color: #000000">The output stator voltage space vector is transformed back from the d,q-coordinate system into the two phase system fixed with the stator by inverse Park transformation.</span></li>
+<li value="7" class="Element600"><span style="color: #000000">Using the space vector modulation, the output three-phase voltage is generated.</span></li>
 </ol><p class="Element10">
 &nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="Encoder_same70_hardware_set_up.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
+<p class="Element10">
+<span style="color: #000000">The phase currents are measured using two shunt resistors connected to Phase U and Phase V inverter legs respectively. The W phase current is determined based on Kirchoff's current law.</span>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">The rotor position angle is determined from Quadrature encoder. The details of the quadrature encoder interface can be referred from </span><a href="#" onclick="openExternalLink('ww1.microchip.com/downloads/en/DeviceDoc/80000767C.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">device datasheet</a><span style="color: #000000">.</span>&nbsp;</p>
+<p class="Element10">
 &nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">The following block diagram shows the software realization of the FOC algorithm.</span>&nbsp;</p>
 <p class="Element10" style="text-align: center;">
+<img src="Encoder_same70_block_diagram.png" border="0" alt="" title=""></p><div class="Element15">
+Software Design:</div>
+<p class="Element10">
+The following figure shows the various state machine of the the motor control software. </p><p class="Element10" style="text-align: center;">
+<img src="Encoder_same70_motor_control_flow.png" border="0" alt="" title=""></p><p class="Element10">
 &nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="encoder_same70_motor_connections.png" border="0" alt="" title=""></p></div>
+<p class="Element10">
+Brief description of the tasks undertaken in various motor control states are as follows-&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Initialize:</strong>&nbsp;</p>
+<p class="Element10">
+In this state, following tasks are performed-&nbsp;</p>
+<p class="Element10">
+• Initialization/ configuration of NVIC, AFEC, PWM etc. motor control micro-controller peripherals for generation of periodic ADC triggers and ADC conversion interrupt.&nbsp;</p>
+<p class="Element10">
+• Current Offset measurement and calibration.&nbsp;</p>
+<p class="Element10">
+• Initialize PI controller parameters for speed and current control loops.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Start:</strong>&nbsp;</p>
+<p class="Element10">
+In this state, the motor control state variables reset and periodic ADC conversion interrupt is enabled.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Run:</strong>&nbsp;</p>
+<p class="Element10">
+In this state, the motor starts spinning. The below flow chart shows the tasks performed in run state- </p><p class="Element10" style="text-align: center;">
+<img src="Encoder_same70_adc_isr_flow.png" border="0" alt="" title=""><img src="Encoder_same70_timing_diagram.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+In run state, two threads are executed- Main task thread and ADC Interrupt task thread. The current control is carried out in the ADC interrupt task thread, while the speed control is carried out in the main task thread. Hence the ADC interrupt cycle indicates the current control frequency. To maximum torque per ampere in the motor drive, a field alignment mode is integrated with the FOC algorithm. Brief description of field alignment and Close control is as follows-&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>• Field Alignment:</strong>&nbsp;</p>
+<p class="Element10">
+The quadrature encoder is an incremental encoder. Hence it is important to know the initial position of the rotor to maintain orthogonal rotor and stator flux. To achieve this, q-axis is excited with an small open loop current while d-axis is excited with zero current. After the initial alignment, electrical angle is shifted by 90 degrees to obtain maximum torque.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>• Close Loop Control:</strong>&nbsp;</p>
+<p class="Element10">
+After the alignment, the close loop control by using FOC algorithm is done.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Stop:</strong>&nbsp;</p>
+<p class="Element10">
+In this state, the PWM channels are disabled thereby stopping the motor. The periodic ADC trigger and conversion interrupt is disabled.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element15">
+Software Configuration:</div>
+<p class="Element10">
+The FOC algorithm is used for wide range of PMSM motors used across different application fields. In order to get the optimal control of the PMSM motor, both the motor specific parameters and application parameters has to be updated in the software. The following section describe how to update both motor and application specific parameters in the the project.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>1. Setting motor control PWM frequency:</strong>&nbsp;</p>
+<p class="Element10">
+The PWM controller frequency ( in Hz ) can be configured by setting following macro in &quot;userparams.h&quot; file.&nbsp;</p>
+<p class="Element10">
+<strong>This frequency should be same as the frequency configured in PWM peripheral in the MHC.</strong>&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="24%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="64%">
+<div class="Element66">
+Description&nbsp;</div></td><td class="Element65" valign="top" width="12%">
+<div class="Element66">
+Unit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="24%">
+<div class="Element68">
+PWM_FREQUENCY&nbsp;</div></td><td class="Element67" valign="top" width="64%">
+<div class="Element68">
+Current controller and PWM frequency&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+Hertz&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>2. Setting motor specific -parameter:</strong>&nbsp;</p>
+<p class="Element10">
+Set the motor following motor parameters in &quot;userparams.h&quot; file. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="38%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="55%">
+<div class="Element66">
+Description&nbsp;</div></td><td class="Element65" valign="top" width="7%">
+<div class="Element66">
+Unit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="38%">
+<div class="Element68">
+MOTOR_PER_PHASE_RESISTANCE&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Motor per phase resistance&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+Ohm&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="38%">
+<div class="Element68">
+MOTOR_PER_PHASE_INDUCTANCE&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Motor per phase inductance&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+Henry&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="38%">
+<div class="Element68">
+MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Back EMF constant&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+Vpk(L-L)/KRPM&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="38%">
+<div class="Element68">
+NUM_POLE_PAIRS&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Number of pole pairs&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="38%">
+<div class="Element68">
+RATED_SPEED_RPM&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Rated mechanical speed of the motor&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+rpm&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="38%">
+<div class="Element68">
+MAX_SPEED_RPM&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Maximum mechanical speed of the motor&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+rpm&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="38%">
+<div class="Element68">
+ENCODER_PULSES_PER_REV&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Number of encoder pulses per mechanical revolution&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>3. Setting PI Controller parameters:</strong>&nbsp;</p>
+<p class="Element10">
+Depending on the type of motor used, and the corresponding application PI controller parameters has to be updated in &quot;userparams.h&quot; file.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+Speed Control loop PI controller parameters: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="28%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="72%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+SPEEDCNTR_PTERM&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+Proportional gain of speed control loop&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+SPEEDCNTR_ITERM&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+Integral gain of speed control loop&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+SPEEDCNTR_CTERM&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+Anti-windup term of speed control loop&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+SPEEDCNTR_OUTMAX&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+Maximum controller output of speed control loop&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+I<sub>d</sub> current Control loop PI controller parameters: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="23%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="77%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="23%">
+<div class="Element68">
+D_CURRCNTR_PTERM&nbsp;</div></td><td class="Element67" valign="top" width="77%">
+<div class="Element68">
+Proportional gain of I<sub>d</sub> current control loop&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="23%">
+<div class="Element68">
+D_CURRCNTR_ITERM&nbsp;</div></td><td class="Element67" valign="top" width="77%">
+<div class="Element68">
+Integral gain of I<sub>d</sub> current control loop&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="23%">
+<div class="Element68">
+D_CURRCNTR_CTERM&nbsp;</div></td><td class="Element67" valign="top" width="77%">
+<div class="Element68">
+Anti-windup term of I<sub>d</sub> current control loop&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="23%">
+<div class="Element68">
+D_CURRCNTR_OUTMAX&nbsp;</div></td><td class="Element67" valign="top" width="77%">
+<div class="Element68">
+Maximum controller output of I<sub>d</sub> current control loop&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+I<sub>q</sub> current Control loop PI controller parameters: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="23%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="77%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="23%">
+<div class="Element68">
+Q_CURRCNTR_PTERM&nbsp;</div></td><td class="Element67" valign="top" width="77%">
+<div class="Element68">
+Proportional gain of I<sub>q</sub> current control loop&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="23%">
+<div class="Element68">
+Q_CURRCNTR_ITERM&nbsp;</div></td><td class="Element67" valign="top" width="77%">
+<div class="Element68">
+Integral gain of I<sub>q</sub> current control loop&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="23%">
+<div class="Element68">
+Q_CURRCNTR_CTERM&nbsp;</div></td><td class="Element67" valign="top" width="77%">
+<div class="Element68">
+Anti-windup term of I<sub>q</sub> current control loop&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="23%">
+<div class="Element68">
+Q_CURRCNTR_OUTMAX&nbsp;</div></td><td class="Element67" valign="top" width="77%">
+<div class="Element68">
+Maximum controller output of I<sub>q</sub> current control loop&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+6. Debugging Features:</div>
+<p class="Element10">
+The software also integrates features to enable user to configure/ tune their motor drive with ease. Some of them are listed as follows-&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="7%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="93%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="7%">
+<div class="Element68">
+TORQUE_MODE&nbsp;</div></td><td class="Element67" valign="top" width="93%">
+<div class="Element68">
+This a special mode where the speed control loop can be bypassed. The input of potentiometer is scaled and is fed directly to the q-axis<sub> </sub>PI controller. Torque mode enable switch (0 - Disable, 1 - Enable )&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00001.html">Motor Control Overview</a> &gt; <a href="00000.html">Applications Help</a> &gt; <a href="00009.html">PMSM FOC Using Quadrature Encoder</a> &gt; <a href="00010.html">pmsm_foc_encoder_sam_e70</a> &gt; <a href="00012.html">Hardware Setup</a></div>
+<a href="00001.html">Motor Control Overview</a> &gt; <a href="00000.html">Applications Help</a> &gt; <a href="00009.html">PMSM FOC Using Quadrature Encoder</a> &gt; <a href="00010.html">pmsm_foc_encoder_sam_e70</a> &gt; <a href="00012.html">Control Algorithm</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -98,7 +365,7 @@ Hardware Setup</div>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00001.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_sam_e70 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_sam_e70 Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
