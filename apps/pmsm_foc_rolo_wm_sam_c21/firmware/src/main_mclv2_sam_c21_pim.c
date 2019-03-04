@@ -236,7 +236,6 @@ void ADC_ISR(uintptr_t context)
         ADC0_REGS->ADC_INTENSET = ADC_INTFLAG_RESRDY_Msk;// Enable ADC interrupt
         /* Clear all interrupt flags */
         ADC0_REGS->ADC_INTFLAG = ADC_INTFLAG_Msk;	
-        LED1_OC_FAULT_Clear();
     return;
 }
 #else

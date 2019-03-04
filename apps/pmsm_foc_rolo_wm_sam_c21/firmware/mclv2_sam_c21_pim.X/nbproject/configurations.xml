@@ -210,8 +210,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMC21_DFP" vendor="Microchip" version="2.0.5"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
+        <pack name="SAMC21_DFP" vendor="Microchip" version="2.0.5"/>
       </packs>
       <compileType>
         <linkerTool>
