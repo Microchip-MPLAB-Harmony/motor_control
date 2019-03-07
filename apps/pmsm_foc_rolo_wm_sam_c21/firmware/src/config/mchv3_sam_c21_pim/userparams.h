@@ -145,15 +145,15 @@ Macro definitions
 #define L_SYN           (     0.00253 )/* synchronous inductance 0.00192 [Hen] (note: >0!) */
 #define MAX_CUR_AMP     (     3.0 )    /* peak maximum current [A] */
 #define START_CUR_AMP   (     0.8 )    /* peak startup current [A] */
-#define KP_V_A          (     8.1 )    /* current loop proportional gain [Volt/Amp] */
-#define KI_V_AS         (     1269.0 ) /* current loop integral gain [Volt/(Amp*sec)] */
+#define KP_V_A          (     6.1 )    /* current loop proportional gain [Volt/Amp] */
+#define KI_V_AS         (     469.0 ) /* current loop integral gain [Volt/(Amp*sec)] */
 #define KP_AS_R         (     0.001 )  /* speed loop proportional gain [Amp/(rad/sec)] */  // 0.0016
 #define KI_A_R          (     0.03 )    /* speed loop integral gain [Amp/((rad/sec)*sec)] */
 #define ACC_RPM_S       (  1000.0 )     /* acceleration ramp [rpm/s] */
 #define DEC_RPM_S       (   500.0 )     /* acceleration ramp [rpm/s] */
 #define STUP_ACCTIME_S  (     2.0 )     /* startup acceleration time [sec] */
-#define CUR_RISE_T      (     0.25 )    /* current rising time [s] during startup alignment */
-#define CUR_FALL_T      (     0.1 )     /* direct current falling time [s] after startup */
+#define CUR_RISE_T      (     1.5 )    /* current rising time [s] during startup alignment */
+#define CUR_FALL_T      (     1 )     /* direct current falling time [s] after startup */
 #define MIN_WM_FRE_HZ   (    30 )       /* Minimum Windmilling Frequency [Hz] - 360RPM*/
 #define WINDMILL_CUR_AMP (     0.4 )    /* Post Windmill startup current [A] */
 #define RGN_BRK_CUR_AMP (     0.4 )     /*Regenerative Braking current*/
