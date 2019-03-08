@@ -479,6 +479,7 @@ This example provides compile time re-configuration options using #define macro 
 <li class="Element601">Fetching instructions from RAM is faster than fetching instructions from Flash, as fetches from RAM can occur at CPU clock speed, unlike the Flash, which requires wait states to be asserted.</li>
 <li class="Element601">This speed optimization feature can be enabled by defining the macro <span class="Element146">RAM_EXECUTE</span> in <span class="Element146">userparams.h</span> header file.</li>
 <li class="Element601">Enabling this mode would result in a larger data memory footprint.</li>
+<li class="Element601">Instruction breakpoint will not be asserted on an instruction which is being executed from RAM. It is recommended to disable this macro while debugging this algorithm using instruction breakpoints.</li>
 <li class="Element601">Exercise caution while using this feature as the functions in RAM are vulnerable to get overwritten due to stack overruns or unguarded buffer overruns.</li>
 </ul></li>
 </ul></div>

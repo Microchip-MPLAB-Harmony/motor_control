@@ -1,28 +1,75 @@
 # Microchip MPLAB Harmony 3 Release Notes
-## Motor Control Release v3.1.0
+## Motor Control Release v3.2.0
 
-### NEW ALGORITHMS
+### New Algorithms
 
 - The following table provides the list of algorithms added in this release.
 
-| Algorithm | Supported Plug In Module | dsPICDEM<sup>TM</sup> MCHV-3 Support | dsPICDEM<sup>TM</sup> MCLV-2 Support  |
-| --- | --- | --- | --- | --- |
-| pmsm_foc_pll_estimator_sam_e70| [ATSAME70 Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320203)   | Yes | Yes |
-| pmsm_foc_encoder_sam_e70| [ATSAME70 Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320203)   | No | Yes |
+| Algorithm | Description | Supported Plug In Module | dsPICDEM<sup>TM</sup> MCHV-3 Support | dsPICDEM<sup>TM</sup> MCLV-2 Support  |
+| --- | --- | --- | --- | --- | --- |
+| pmsm_foc_rolo_sam_c21| Sensorless Field Oriented Control of PMSM using Reduced Order Luenberger Observer | [ATSAMC21 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320206)   | Yes | Yes |
+| pmsm_foc_rolo_wm_sam_c21| Sensorless Field Oriented Control of PMSM using Reduced Order Luenberger Observer with Windmilling Capability | [ATSAMC21 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320206)   | Yes | Yes |
+| acim_vhz_sam_c21| Open Loop V/F Control of AC Induction Motor | [ATSAMC21 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320206)   | Yes | No |
 
-### Required MPLAB Harmony v3.x.x Modules
-* csp v3.1.0
-* dev_packs v3.1.0
-* mhc v3.1.0
 
-### KNOWN ISSUES
+### Updated Algorithms
 
-* None.
+- The following table provides the list of algorithms updated in this release.
 
-### DEVELOPMENT TOOLS
+| Algorithm | Description | Supported Plug In Module | dsPICDEM<sup>TM</sup> MCHV-3 Support | dsPICDEM<sup>TM</sup> MCLV-2 Support  | Revision History  |
+| --- | --- | --- | --- | --- | --- |
+| pmsm_foc_pll_estimator_sam_e70| Sensorless Field Oriented Control of PMSM using PLL Estimator | [ATSAME70 Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320203)   | Yes | Yes | Regenerated application with csp v3.2.0  |
+| pmsm_foc_encoder_sam_e70| Sensored Field Oriented Control of PMSM using PDEC | [ATSAME70 Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320203)   | No | Yes | Regenerated application with csp v3.2.0 and added ability to spin the motor in both directions.  |
 
-* [MPLAB X IDE v5.10](https://www.microchip.com/mplab/mplab-x-ide)
+
+### Required MPLAB Harmony v3.2.0 Modules
+* csp v3.2.0
+* dev_packs v3.2.0
+* mhc v3.2.0
+
+### Known Issues
+
+* MPLAB X IDE v5.15 fails to program ATSAME70 Motor Control Plugin Module on dsPICDEM<sup>TM</sup> MCHV-3
+High Voltage Development Board. In order to resolve this issue, implement the following change in dap_cortex-m7.py, located at C:\Program Files (x86)\Microchip\MPLABX\v5.15\packs\Microchip\SAME70_DFP\3.0.10\scripts\
+
+  * Goto line # 197, replace <span style="color:red; font-family:courier" >dap.Connect(True, 8000000L)</span>  with <span style="color:green; font-family:courier">dap.Connect(True, 2000000L)</span>
+
+
+* Programming or debugging SAM C/D2x or SAM D/E5x MCU, using Isolated EDBG Card (board revision #02-10824-R1) on dsPICDEM<sup>TM</sup> MCHV-3 High Voltage Development Board may inhibit MCU from executing instructions if the MCU is reset by pressing on board 'Reset' switch or power cycling the board. Refer to the [Isolated EDBG Debugger Product Change Notice](https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202) for details of hardware modification needed to resolve this issue.
+
+
+### Development Tools
+
+* [MPLAB X IDE v5.15](https://www.microchip.com/mplab/mplab-x-ide)
 * [MPLAB XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
 * MPLAB X IDE plug-ins:
-  * MPLAB Harmony Configurator (MHC) v3.1.0.
+  * MPLAB Harmony Configurator (MHC) v3.2.0.
   * X2CScope v1.2.3.
+
+## Motor Control Release v3.1.0
+
+### New Algorithms
+
+  - The following table provides the list of algorithms added in this release.
+
+| Algorithm | Description | Supported Plug In Module | dsPICDEM<sup>TM</sup> MCHV-3 Support | dsPICDEM<sup>TM</sup> MCLV-2 Support  |
+| --- | --- | --- | --- | --- | --- |
+| pmsm_foc_pll_estimator_sam_e70| Sensorless Field Oriented Control of PMSM using PLL Estimator | [ATSAME70 Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320203)   | Yes | Yes |
+| pmsm_foc_encoder_sam_e70| Sensored Field Oriented Control of PMSM using PDEC | [ATSAME70 Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320203)   | No | Yes |
+
+### Required MPLAB Harmony v3.1.0 Modules
+  * csp v3.1.0
+  * dev_packs v3.1.0
+  * mhc v3.1.0
+
+### Known Issues
+
+  * None.
+
+### Development Tools
+
+  * [MPLAB X IDE v5.10](https://www.microchip.com/mplab/mplab-x-ide)
+  * [MPLAB XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
+  * MPLAB X IDE plug-ins:
+    * MPLAB Harmony Configurator (MHC) v3.1.0.
+    * X2CScope v1.2.3.

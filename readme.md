@@ -1,12 +1,28 @@
-# Microchip MPLAB Harmony 3
+# Microchip MPLAB® Harmony 3 Motor Control
 
-## About *Motor Control* MPLAB Harmony v3 module
+MPLAB Harmony 3 is an extension of the MPLAB® ecosystem for creating
+embedded firmware solutions for Microchip 32-bit SAM and PIC microcontroller
+and microprocessor devices.  Refer to the following links for more information.
+ - [Microchip 32-bit MCUs](https://www.microchip.com/design-centers/32-bit)
+ - [Microchip 32-bit MPUs](https://www.microchip.com/design-centers/32-bit-mpus)
+ - [Microchip MPLAB X IDE](https://www.microchip.com/mplab/mplab-x-ide)
+ - [Microchip MPLAB Harmony](https://www.microchip.com/mplab/mplab-harmony)
+ - [Microchip MPLAB Harmony Pages](https://microchip-mplab-harmony.github.io/)
 
-* This module contains all supported demonstrations for motor control applications running
-on Microchip's SAM series of microcontrollers, developed using MPLAB Harmony v3.x.x Framework.
+This repository contains the MPLAB® Harmony 3 Motor Control module.  This module
+contains motor control demonstrations implemented on Microchip's 32-bit SAM
+microcontrollers. Users can use these demonstrations as a reference for
+developing their own motor control applications on Microchip's SAM series of
+microcontrollers using MPLAB Harmony 3. Refer to he following links for release
+notes and licensing information.
 
-* User can use this demonstrations as a reference for developing their own motor control applications on Microchip's SAM series of microcontrollers using MPLAB Harmony v3.x.x.
+ - [Release Notes](./release_notes.md)
+ - [MPLAB Harmony License](mplab_harmony_license.md)
 
-* For licensing information about contents of this module, please refer to [MPLAB Harmony License](mplab_harmony_license.md).
+# Contents Summary
 
-* For more information about the latest release, please refer to [Release Notes](release_notes.md).
+| Folder     | Description                                               |
+|------------|-----------------------------------------------------------|
+| apps       | Demonstration applications for Motor Control              |
+| doc        | Demonstration user guide in .pdf and .chm format          |
+| docs       | Demonstration user guide in HTML format                   |

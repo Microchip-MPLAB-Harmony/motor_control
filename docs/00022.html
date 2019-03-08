@@ -95,8 +95,6 @@ The following figure shows the various state machines of the the motor control s
 <p class="Element10">
 <img src="Encoder_same70_motor_control_flow.png" border="0" alt="" title="">&nbsp;</p>
 <p class="Element10">
-<img src="Encoder_same70_motor_control_flow.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10">
 &nbsp;</p>
 <p class="Element10">
 In the software, the PMSM speed control task is realized by a state machine as shown in the previous figure. The following sections briefly describes the various states in the PMSM speed control task:&nbsp;</p>
@@ -139,21 +137,19 @@ In run state, two threads are executed; the Main task thread and ADC Interrupt t
 <ul class="Element630">
 <li class="Element600"><strong>Field Alignment:</strong></li>
 </ul><p class="Element10">
-The quadrature encoder is an incremental encoder. It is important to know the initial position of the rotor to maintain orthogonal rotor and stator flux. To achieve this, the q-axis is excited with a small open loop current while the d-axis is excited with zero current.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-In order to avoid pseudo-alignment, i.e. rotor alignment at 180 degrees out of phase, dual step alignment approach is used. The rotor is aligned to an intermediate angle before aligning it to the zero position.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-After the initial alignment, an electrical angle is shifted by 90 degrees to obtain the maximum torque.&nbsp;</p>
+The quadrature encoder is an incremental encoder. It is important to know the initial position of the rotor to maintain orthogonal rotor and stator flux. To achieve this, the q-axis is excited with a small open loop current while the d-axis is excited with zero current. After the initial alignment, an electrical angle is shifted by 90 degrees to obtain the maximum torque.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <ul class="Element630">
 <li class="Element600"><strong>Close Loop Control:</strong></li>
 </ul><p class="Element10">
 After the alignment, the close loop control using the FOC algorithm is done.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>4. Stop:</strong>&nbsp;</p>
+<p class="Element10">
+In this state, the PWM channels are disabled thereby stopping the motor<strong>. </strong>The periodic ADC trigger and conversion interrupt is disabled.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">

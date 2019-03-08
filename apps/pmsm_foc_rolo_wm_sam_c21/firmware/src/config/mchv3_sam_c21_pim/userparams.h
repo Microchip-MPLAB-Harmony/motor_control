@@ -65,9 +65,10 @@
     #ifdef TORQUE_MODE
     #define TORQUE_MODE_MIN_CUR_AMP 0.1
     #endif
-/* Defining RAM_EXECUTE executes key motor control functions from RAM and thereby allowing faster execution at the expense of data memory
-  Undefining RAM_EXECUTE executes key motor control functions from Flash and thereby reducing data memory consumption at the expense of time */
-#define RAM_EXECUTE
+/* Defining RAM_EXECUTE executes key motor control functions from RAM and thereby allowing faster execution at the expense of data memory.
+ Please note, instruction breakpoint will not be asserted if that particular instruction is being executed from RAM
+*Undefining RAM_EXECUTE executes key motor control functions from Flash and thereby reducing data memory consumption at the expense of time */
+#undef RAM_EXECUTE
 
 /*Defining USE_DIVAS uses the DIVAS peripheral for division and square root operatons*/
 #define USE_DIVAS
