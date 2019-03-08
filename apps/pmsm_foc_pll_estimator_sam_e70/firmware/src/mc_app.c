@@ -89,7 +89,9 @@ MCAPP_CONTROL_PARAM gCtrlParam;
 MCAPP_FOC_PARAM gfocParam;
 float phaseCurrentUOffset;
 float phaseCurrentVOffset;
+bool adc_calib_done = false; 
 
+static float speed_ref_filtered = 0;
 
 
 /******************************************************************************/
@@ -376,6 +378,8 @@ static void MCAPP_ADCOffsetCalibration(void)
 	
     /* Set adc trigger from PWM event lines */
     AFEC0_REGS->AFEC_MR |= (AFEC_MR_TRGEN_Msk);
+    /*Set ADC Calibration Done Flag*/
+    adc_calib_done = true;
 }
 
 /******************************************************************************/
@@ -636,7 +640,7 @@ __STATIC_INLINE void MCAPP_SlowControlLoop(void)
 	{
 		/* Velocity reference will be taken from potentiometer if configured. */
 		float PotReading;
-        static float speed_ref_filtered = 0;
+        
 
 		PotReading = AFEC0_ChannelResultGet(POT_ADC_CH);
 		
@@ -722,6 +726,8 @@ void MCAPP_MotorStop(void)
 	gCtrlParam.velRef = 0;
 	gCtrlParam.motorStatus = MOTOR_STATUS_STOPPED;
     gMCAPPData.mcState = MC_APP_STATE_STOP;
+    speed_ref_filtered = 0;
+    adc_calib_done = false;
 }
 
 /******************************************************************************/
@@ -769,7 +775,14 @@ switch (gMCAPPData.mcState)
         NVIC_DisableIRQ(AFEC0_IRQn);
         NVIC_ClearPendingIRQ(AFEC0_IRQn);
         AFEC0_ChannelsInterruptDisable(AFEC_INTERRUPT_EOC_7_MASK);
-        MCAPP_ADCOffsetCalibration();
+        if(adc_calib_done == false)
+        {
+            MCAPP_ADCOffsetCalibration(); // Perform ADC Offset Calibration only once in this state.
+        }
+        else
+        {
+            asm("NOP");
+        }
         MCAPP_MotorControlParamInit();
         gMCAPPData.switchCount = 0xFF;
         MCAPP_SwitchDebounce(MC_APP_STATE_START);
