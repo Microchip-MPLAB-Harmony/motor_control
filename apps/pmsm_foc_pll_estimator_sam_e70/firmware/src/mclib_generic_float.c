@@ -56,7 +56,7 @@
 /* Local Function Prototype                                                   */
 /******************************************************************************/
 
-static inline void MCLIB_SVPWMTimeCalc(MCLIB_SVPWM* svm);
+__STATIC_INLINE void MCLIB_SVPWMTimeCalc(MCLIB_SVPWM* svm);
 
 /******************************************************************************/
 /*                   Global Variables                                         */
@@ -862,7 +862,7 @@ float cosineTable[TABLE_SIZE] =
 /* Function return: None                                                      */
 /* Description: Calculates time to apply vector a,b,c                         */
 /******************************************************************************/
-static inline void MCLIB_SVPWMTimeCalc(MCLIB_SVPWM* svm)
+__STATIC_INLINE void MCLIB_SVPWMTimeCalc(MCLIB_SVPWM* svm)
 {
     svm->t1 = (gMCLIBSVPWM.period) * svm->t1;
     svm->t2 = (gMCLIBSVPWM.period) * svm->t2;

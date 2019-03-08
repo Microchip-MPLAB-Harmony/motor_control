@@ -1,7 +1,7 @@
 /**
  * \brief Component description for MCAN
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,13 +20,350 @@
  *
  */
 
-/* file generated from device description version 2018-11-06T08:17:04Z */
+/* file generated from device description version 2019-01-18T21:19:59Z */
 #ifndef _SAME70_MCAN_COMPONENT_H_
 #define _SAME70_MCAN_COMPONENT_H_
 
 /* ************************************************************************** */
 /*   SOFTWARE API DEFINITION FOR MCAN                                         */
 /* ************************************************************************** */
+
+/* -------- MCAN_RXBE_0 : (MCAN Offset: 0x00) (R/W 32) Rx Buffer Element 0 -------- */
+#define MCAN_RXBE_0_ID_Pos                    _U_(0)                                               /**< (MCAN_RXBE_0) Identifier Position */
+#define MCAN_RXBE_0_ID_Msk                    (_U_(0x1FFFFFFF) << MCAN_RXBE_0_ID_Pos)              /**< (MCAN_RXBE_0) Identifier Mask */
+#define MCAN_RXBE_0_ID(value)                 (MCAN_RXBE_0_ID_Msk & ((value) << MCAN_RXBE_0_ID_Pos))
+#define MCAN_RXBE_0_RTR_Pos                   _U_(29)                                              /**< (MCAN_RXBE_0) Remote Transmission Request Position */
+#define MCAN_RXBE_0_RTR_Msk                   (_U_(0x1) << MCAN_RXBE_0_RTR_Pos)                    /**< (MCAN_RXBE_0) Remote Transmission Request Mask */
+#define MCAN_RXBE_0_RTR(value)                (MCAN_RXBE_0_RTR_Msk & ((value) << MCAN_RXBE_0_RTR_Pos))
+#define MCAN_RXBE_0_XTD_Pos                   _U_(30)                                              /**< (MCAN_RXBE_0) Extended Identifier Position */
+#define MCAN_RXBE_0_XTD_Msk                   (_U_(0x1) << MCAN_RXBE_0_XTD_Pos)                    /**< (MCAN_RXBE_0) Extended Identifier Mask */
+#define MCAN_RXBE_0_XTD(value)                (MCAN_RXBE_0_XTD_Msk & ((value) << MCAN_RXBE_0_XTD_Pos))
+#define MCAN_RXBE_0_ESI_Pos                   _U_(31)                                              /**< (MCAN_RXBE_0) Error State Indicator Position */
+#define MCAN_RXBE_0_ESI_Msk                   (_U_(0x1) << MCAN_RXBE_0_ESI_Pos)                    /**< (MCAN_RXBE_0) Error State Indicator Mask */
+#define MCAN_RXBE_0_ESI(value)                (MCAN_RXBE_0_ESI_Msk & ((value) << MCAN_RXBE_0_ESI_Pos))
+#define MCAN_RXBE_0_Msk                       _U_(0xFFFFFFFF)                                      /**< (MCAN_RXBE_0) Register Mask  */
+
+
+/* -------- MCAN_RXBE_1 : (MCAN Offset: 0x04) (R/W 32) Rx Buffer Element 1 -------- */
+#define MCAN_RXBE_1_RXTS_Pos                  _U_(0)                                               /**< (MCAN_RXBE_1) Rx Timestamp Position */
+#define MCAN_RXBE_1_RXTS_Msk                  (_U_(0xFFFF) << MCAN_RXBE_1_RXTS_Pos)                /**< (MCAN_RXBE_1) Rx Timestamp Mask */
+#define MCAN_RXBE_1_RXTS(value)               (MCAN_RXBE_1_RXTS_Msk & ((value) << MCAN_RXBE_1_RXTS_Pos))
+#define MCAN_RXBE_1_DLC_Pos                   _U_(16)                                              /**< (MCAN_RXBE_1) Data Length Code Position */
+#define MCAN_RXBE_1_DLC_Msk                   (_U_(0xF) << MCAN_RXBE_1_DLC_Pos)                    /**< (MCAN_RXBE_1) Data Length Code Mask */
+#define MCAN_RXBE_1_DLC(value)                (MCAN_RXBE_1_DLC_Msk & ((value) << MCAN_RXBE_1_DLC_Pos))
+#define MCAN_RXBE_1_BRS_Pos                   _U_(20)                                              /**< (MCAN_RXBE_1) Bit Rate Switch Position */
+#define MCAN_RXBE_1_BRS_Msk                   (_U_(0x1) << MCAN_RXBE_1_BRS_Pos)                    /**< (MCAN_RXBE_1) Bit Rate Switch Mask */
+#define MCAN_RXBE_1_BRS(value)                (MCAN_RXBE_1_BRS_Msk & ((value) << MCAN_RXBE_1_BRS_Pos))
+#define MCAN_RXBE_1_FDF_Pos                   _U_(21)                                              /**< (MCAN_RXBE_1) FD Format Position */
+#define MCAN_RXBE_1_FDF_Msk                   (_U_(0x1) << MCAN_RXBE_1_FDF_Pos)                    /**< (MCAN_RXBE_1) FD Format Mask */
+#define MCAN_RXBE_1_FDF(value)                (MCAN_RXBE_1_FDF_Msk & ((value) << MCAN_RXBE_1_FDF_Pos))
+#define MCAN_RXBE_1_FIDX_Pos                  _U_(24)                                              /**< (MCAN_RXBE_1) Filter Index Position */
+#define MCAN_RXBE_1_FIDX_Msk                  (_U_(0x7F) << MCAN_RXBE_1_FIDX_Pos)                  /**< (MCAN_RXBE_1) Filter Index Mask */
+#define MCAN_RXBE_1_FIDX(value)               (MCAN_RXBE_1_FIDX_Msk & ((value) << MCAN_RXBE_1_FIDX_Pos))
+#define MCAN_RXBE_1_ANMF_Pos                  _U_(31)                                              /**< (MCAN_RXBE_1) Accepted Non-matching Frame Position */
+#define MCAN_RXBE_1_ANMF_Msk                  (_U_(0x1) << MCAN_RXBE_1_ANMF_Pos)                   /**< (MCAN_RXBE_1) Accepted Non-matching Frame Mask */
+#define MCAN_RXBE_1_ANMF(value)               (MCAN_RXBE_1_ANMF_Msk & ((value) << MCAN_RXBE_1_ANMF_Pos))
+#define MCAN_RXBE_1_Msk                       _U_(0xFF3FFFFF)                                      /**< (MCAN_RXBE_1) Register Mask  */
+
+
+/* -------- MCAN_RXBE_DATA : (MCAN Offset: 0x08) (R/W 32) Rx Buffer Element Data -------- */
+#define MCAN_RXBE_DATA_DB0_Pos                _U_(0)                                               /**< (MCAN_RXBE_DATA) Data Byte 0 Position */
+#define MCAN_RXBE_DATA_DB0_Msk                (_U_(0xFF) << MCAN_RXBE_DATA_DB0_Pos)                /**< (MCAN_RXBE_DATA) Data Byte 0 Mask */
+#define MCAN_RXBE_DATA_DB0(value)             (MCAN_RXBE_DATA_DB0_Msk & ((value) << MCAN_RXBE_DATA_DB0_Pos))
+#define MCAN_RXBE_DATA_DB1_Pos                _U_(8)                                               /**< (MCAN_RXBE_DATA) Data Byte 1 Position */
+#define MCAN_RXBE_DATA_DB1_Msk                (_U_(0xFF) << MCAN_RXBE_DATA_DB1_Pos)                /**< (MCAN_RXBE_DATA) Data Byte 1 Mask */
+#define MCAN_RXBE_DATA_DB1(value)             (MCAN_RXBE_DATA_DB1_Msk & ((value) << MCAN_RXBE_DATA_DB1_Pos))
+#define MCAN_RXBE_DATA_DB2_Pos                _U_(16)                                              /**< (MCAN_RXBE_DATA) Data Byte 2 Position */
+#define MCAN_RXBE_DATA_DB2_Msk                (_U_(0xFF) << MCAN_RXBE_DATA_DB2_Pos)                /**< (MCAN_RXBE_DATA) Data Byte 2 Mask */
+#define MCAN_RXBE_DATA_DB2(value)             (MCAN_RXBE_DATA_DB2_Msk & ((value) << MCAN_RXBE_DATA_DB2_Pos))
+#define MCAN_RXBE_DATA_DB3_Pos                _U_(24)                                              /**< (MCAN_RXBE_DATA) Data Byte 3 Position */
+#define MCAN_RXBE_DATA_DB3_Msk                (_U_(0xFF) << MCAN_RXBE_DATA_DB3_Pos)                /**< (MCAN_RXBE_DATA) Data Byte 3 Mask */
+#define MCAN_RXBE_DATA_DB3(value)             (MCAN_RXBE_DATA_DB3_Msk & ((value) << MCAN_RXBE_DATA_DB3_Pos))
+#define MCAN_RXBE_DATA_Msk                    _U_(0xFFFFFFFF)                                      /**< (MCAN_RXBE_DATA) Register Mask  */
+
+
+/* -------- MCAN_RXF0E_0 : (MCAN Offset: 0x00) (R/W 32) Rx FIFO 0 Element 0 -------- */
+#define MCAN_RXF0E_0_ID_Pos                   _U_(0)                                               /**< (MCAN_RXF0E_0) Identifier Position */
+#define MCAN_RXF0E_0_ID_Msk                   (_U_(0x1FFFFFFF) << MCAN_RXF0E_0_ID_Pos)             /**< (MCAN_RXF0E_0) Identifier Mask */
+#define MCAN_RXF0E_0_ID(value)                (MCAN_RXF0E_0_ID_Msk & ((value) << MCAN_RXF0E_0_ID_Pos))
+#define MCAN_RXF0E_0_RTR_Pos                  _U_(29)                                              /**< (MCAN_RXF0E_0) Remote Transmission Request Position */
+#define MCAN_RXF0E_0_RTR_Msk                  (_U_(0x1) << MCAN_RXF0E_0_RTR_Pos)                   /**< (MCAN_RXF0E_0) Remote Transmission Request Mask */
+#define MCAN_RXF0E_0_RTR(value)               (MCAN_RXF0E_0_RTR_Msk & ((value) << MCAN_RXF0E_0_RTR_Pos))
+#define MCAN_RXF0E_0_XTD_Pos                  _U_(30)                                              /**< (MCAN_RXF0E_0) Extended Identifier Position */
+#define MCAN_RXF0E_0_XTD_Msk                  (_U_(0x1) << MCAN_RXF0E_0_XTD_Pos)                   /**< (MCAN_RXF0E_0) Extended Identifier Mask */
+#define MCAN_RXF0E_0_XTD(value)               (MCAN_RXF0E_0_XTD_Msk & ((value) << MCAN_RXF0E_0_XTD_Pos))
+#define MCAN_RXF0E_0_ESI_Pos                  _U_(31)                                              /**< (MCAN_RXF0E_0) Error State Indicator Position */
+#define MCAN_RXF0E_0_ESI_Msk                  (_U_(0x1) << MCAN_RXF0E_0_ESI_Pos)                   /**< (MCAN_RXF0E_0) Error State Indicator Mask */
+#define MCAN_RXF0E_0_ESI(value)               (MCAN_RXF0E_0_ESI_Msk & ((value) << MCAN_RXF0E_0_ESI_Pos))
+#define MCAN_RXF0E_0_Msk                      _U_(0xFFFFFFFF)                                      /**< (MCAN_RXF0E_0) Register Mask  */
+
+
+/* -------- MCAN_RXF0E_1 : (MCAN Offset: 0x04) (R/W 32) Rx FIFO 0 Element 1 -------- */
+#define MCAN_RXF0E_1_RXTS_Pos                 _U_(0)                                               /**< (MCAN_RXF0E_1) Rx Timestamp Position */
+#define MCAN_RXF0E_1_RXTS_Msk                 (_U_(0xFFFF) << MCAN_RXF0E_1_RXTS_Pos)               /**< (MCAN_RXF0E_1) Rx Timestamp Mask */
+#define MCAN_RXF0E_1_RXTS(value)              (MCAN_RXF0E_1_RXTS_Msk & ((value) << MCAN_RXF0E_1_RXTS_Pos))
+#define MCAN_RXF0E_1_DLC_Pos                  _U_(16)                                              /**< (MCAN_RXF0E_1) Data Length Code Position */
+#define MCAN_RXF0E_1_DLC_Msk                  (_U_(0xF) << MCAN_RXF0E_1_DLC_Pos)                   /**< (MCAN_RXF0E_1) Data Length Code Mask */
+#define MCAN_RXF0E_1_DLC(value)               (MCAN_RXF0E_1_DLC_Msk & ((value) << MCAN_RXF0E_1_DLC_Pos))
+#define MCAN_RXF0E_1_BRS_Pos                  _U_(20)                                              /**< (MCAN_RXF0E_1) Bit Rate Switch Position */
+#define MCAN_RXF0E_1_BRS_Msk                  (_U_(0x1) << MCAN_RXF0E_1_BRS_Pos)                   /**< (MCAN_RXF0E_1) Bit Rate Switch Mask */
+#define MCAN_RXF0E_1_BRS(value)               (MCAN_RXF0E_1_BRS_Msk & ((value) << MCAN_RXF0E_1_BRS_Pos))
+#define MCAN_RXF0E_1_FDF_Pos                  _U_(21)                                              /**< (MCAN_RXF0E_1) FD Format Position */
+#define MCAN_RXF0E_1_FDF_Msk                  (_U_(0x1) << MCAN_RXF0E_1_FDF_Pos)                   /**< (MCAN_RXF0E_1) FD Format Mask */
+#define MCAN_RXF0E_1_FDF(value)               (MCAN_RXF0E_1_FDF_Msk & ((value) << MCAN_RXF0E_1_FDF_Pos))
+#define MCAN_RXF0E_1_FIDX_Pos                 _U_(24)                                              /**< (MCAN_RXF0E_1) Filter Index Position */
+#define MCAN_RXF0E_1_FIDX_Msk                 (_U_(0x7F) << MCAN_RXF0E_1_FIDX_Pos)                 /**< (MCAN_RXF0E_1) Filter Index Mask */
+#define MCAN_RXF0E_1_FIDX(value)              (MCAN_RXF0E_1_FIDX_Msk & ((value) << MCAN_RXF0E_1_FIDX_Pos))
+#define MCAN_RXF0E_1_ANMF_Pos                 _U_(31)                                              /**< (MCAN_RXF0E_1) Accepted Non-matching Frame Position */
+#define MCAN_RXF0E_1_ANMF_Msk                 (_U_(0x1) << MCAN_RXF0E_1_ANMF_Pos)                  /**< (MCAN_RXF0E_1) Accepted Non-matching Frame Mask */
+#define MCAN_RXF0E_1_ANMF(value)              (MCAN_RXF0E_1_ANMF_Msk & ((value) << MCAN_RXF0E_1_ANMF_Pos))
+#define MCAN_RXF0E_1_Msk                      _U_(0xFF3FFFFF)                                      /**< (MCAN_RXF0E_1) Register Mask  */
+
+
+/* -------- MCAN_RXF0E_DATA : (MCAN Offset: 0x08) (R/W 32) Rx FIFO 0 Element Data -------- */
+#define MCAN_RXF0E_DATA_DB0_Pos               _U_(0)                                               /**< (MCAN_RXF0E_DATA) Data Byte 0 Position */
+#define MCAN_RXF0E_DATA_DB0_Msk               (_U_(0xFF) << MCAN_RXF0E_DATA_DB0_Pos)               /**< (MCAN_RXF0E_DATA) Data Byte 0 Mask */
+#define MCAN_RXF0E_DATA_DB0(value)            (MCAN_RXF0E_DATA_DB0_Msk & ((value) << MCAN_RXF0E_DATA_DB0_Pos))
+#define MCAN_RXF0E_DATA_DB1_Pos               _U_(8)                                               /**< (MCAN_RXF0E_DATA) Data Byte 1 Position */
+#define MCAN_RXF0E_DATA_DB1_Msk               (_U_(0xFF) << MCAN_RXF0E_DATA_DB1_Pos)               /**< (MCAN_RXF0E_DATA) Data Byte 1 Mask */
+#define MCAN_RXF0E_DATA_DB1(value)            (MCAN_RXF0E_DATA_DB1_Msk & ((value) << MCAN_RXF0E_DATA_DB1_Pos))
+#define MCAN_RXF0E_DATA_DB2_Pos               _U_(16)                                              /**< (MCAN_RXF0E_DATA) Data Byte 2 Position */
+#define MCAN_RXF0E_DATA_DB2_Msk               (_U_(0xFF) << MCAN_RXF0E_DATA_DB2_Pos)               /**< (MCAN_RXF0E_DATA) Data Byte 2 Mask */
+#define MCAN_RXF0E_DATA_DB2(value)            (MCAN_RXF0E_DATA_DB2_Msk & ((value) << MCAN_RXF0E_DATA_DB2_Pos))
+#define MCAN_RXF0E_DATA_DB3_Pos               _U_(24)                                              /**< (MCAN_RXF0E_DATA) Data Byte 3 Position */
+#define MCAN_RXF0E_DATA_DB3_Msk               (_U_(0xFF) << MCAN_RXF0E_DATA_DB3_Pos)               /**< (MCAN_RXF0E_DATA) Data Byte 3 Mask */
+#define MCAN_RXF0E_DATA_DB3(value)            (MCAN_RXF0E_DATA_DB3_Msk & ((value) << MCAN_RXF0E_DATA_DB3_Pos))
+#define MCAN_RXF0E_DATA_Msk                   _U_(0xFFFFFFFF)                                      /**< (MCAN_RXF0E_DATA) Register Mask  */
+
+
+/* -------- MCAN_RXF1E_0 : (MCAN Offset: 0x00) (R/W 32) Rx FIFO 1 Element 0 -------- */
+#define MCAN_RXF1E_0_ID_Pos                   _U_(0)                                               /**< (MCAN_RXF1E_0) Identifier Position */
+#define MCAN_RXF1E_0_ID_Msk                   (_U_(0x1FFFFFFF) << MCAN_RXF1E_0_ID_Pos)             /**< (MCAN_RXF1E_0) Identifier Mask */
+#define MCAN_RXF1E_0_ID(value)                (MCAN_RXF1E_0_ID_Msk & ((value) << MCAN_RXF1E_0_ID_Pos))
+#define MCAN_RXF1E_0_RTR_Pos                  _U_(29)                                              /**< (MCAN_RXF1E_0) Remote Transmission Request Position */
+#define MCAN_RXF1E_0_RTR_Msk                  (_U_(0x1) << MCAN_RXF1E_0_RTR_Pos)                   /**< (MCAN_RXF1E_0) Remote Transmission Request Mask */
+#define MCAN_RXF1E_0_RTR(value)               (MCAN_RXF1E_0_RTR_Msk & ((value) << MCAN_RXF1E_0_RTR_Pos))
+#define MCAN_RXF1E_0_XTD_Pos                  _U_(30)                                              /**< (MCAN_RXF1E_0) Extended Identifier Position */
+#define MCAN_RXF1E_0_XTD_Msk                  (_U_(0x1) << MCAN_RXF1E_0_XTD_Pos)                   /**< (MCAN_RXF1E_0) Extended Identifier Mask */
+#define MCAN_RXF1E_0_XTD(value)               (MCAN_RXF1E_0_XTD_Msk & ((value) << MCAN_RXF1E_0_XTD_Pos))
+#define MCAN_RXF1E_0_ESI_Pos                  _U_(31)                                              /**< (MCAN_RXF1E_0) Error State Indicator Position */
+#define MCAN_RXF1E_0_ESI_Msk                  (_U_(0x1) << MCAN_RXF1E_0_ESI_Pos)                   /**< (MCAN_RXF1E_0) Error State Indicator Mask */
+#define MCAN_RXF1E_0_ESI(value)               (MCAN_RXF1E_0_ESI_Msk & ((value) << MCAN_RXF1E_0_ESI_Pos))
+#define MCAN_RXF1E_0_Msk                      _U_(0xFFFFFFFF)                                      /**< (MCAN_RXF1E_0) Register Mask  */
+
+
+/* -------- MCAN_RXF1E_1 : (MCAN Offset: 0x04) (R/W 32) Rx FIFO 1 Element 1 -------- */
+#define MCAN_RXF1E_1_RXTS_Pos                 _U_(0)                                               /**< (MCAN_RXF1E_1) Rx Timestamp Position */
+#define MCAN_RXF1E_1_RXTS_Msk                 (_U_(0xFFFF) << MCAN_RXF1E_1_RXTS_Pos)               /**< (MCAN_RXF1E_1) Rx Timestamp Mask */
+#define MCAN_RXF1E_1_RXTS(value)              (MCAN_RXF1E_1_RXTS_Msk & ((value) << MCAN_RXF1E_1_RXTS_Pos))
+#define MCAN_RXF1E_1_DLC_Pos                  _U_(16)                                              /**< (MCAN_RXF1E_1) Data Length Code Position */
+#define MCAN_RXF1E_1_DLC_Msk                  (_U_(0xF) << MCAN_RXF1E_1_DLC_Pos)                   /**< (MCAN_RXF1E_1) Data Length Code Mask */
+#define MCAN_RXF1E_1_DLC(value)               (MCAN_RXF1E_1_DLC_Msk & ((value) << MCAN_RXF1E_1_DLC_Pos))
+#define MCAN_RXF1E_1_BRS_Pos                  _U_(20)                                              /**< (MCAN_RXF1E_1) Bit Rate Switch Position */
+#define MCAN_RXF1E_1_BRS_Msk                  (_U_(0x1) << MCAN_RXF1E_1_BRS_Pos)                   /**< (MCAN_RXF1E_1) Bit Rate Switch Mask */
+#define MCAN_RXF1E_1_BRS(value)               (MCAN_RXF1E_1_BRS_Msk & ((value) << MCAN_RXF1E_1_BRS_Pos))
+#define MCAN_RXF1E_1_FDF_Pos                  _U_(21)                                              /**< (MCAN_RXF1E_1) FD Format Position */
+#define MCAN_RXF1E_1_FDF_Msk                  (_U_(0x1) << MCAN_RXF1E_1_FDF_Pos)                   /**< (MCAN_RXF1E_1) FD Format Mask */
+#define MCAN_RXF1E_1_FDF(value)               (MCAN_RXF1E_1_FDF_Msk & ((value) << MCAN_RXF1E_1_FDF_Pos))
+#define MCAN_RXF1E_1_FIDX_Pos                 _U_(24)                                              /**< (MCAN_RXF1E_1) Filter Index Position */
+#define MCAN_RXF1E_1_FIDX_Msk                 (_U_(0x7F) << MCAN_RXF1E_1_FIDX_Pos)                 /**< (MCAN_RXF1E_1) Filter Index Mask */
+#define MCAN_RXF1E_1_FIDX(value)              (MCAN_RXF1E_1_FIDX_Msk & ((value) << MCAN_RXF1E_1_FIDX_Pos))
+#define MCAN_RXF1E_1_ANMF_Pos                 _U_(31)                                              /**< (MCAN_RXF1E_1) Accepted Non-matching Frame Position */
+#define MCAN_RXF1E_1_ANMF_Msk                 (_U_(0x1) << MCAN_RXF1E_1_ANMF_Pos)                  /**< (MCAN_RXF1E_1) Accepted Non-matching Frame Mask */
+#define MCAN_RXF1E_1_ANMF(value)              (MCAN_RXF1E_1_ANMF_Msk & ((value) << MCAN_RXF1E_1_ANMF_Pos))
+#define MCAN_RXF1E_1_Msk                      _U_(0xFF3FFFFF)                                      /**< (MCAN_RXF1E_1) Register Mask  */
+
+
+/* -------- MCAN_RXF1E_DATA : (MCAN Offset: 0x08) (R/W 32) Rx FIFO 1 Element Data -------- */
+#define MCAN_RXF1E_DATA_DB0_Pos               _U_(0)                                               /**< (MCAN_RXF1E_DATA) Data Byte 0 Position */
+#define MCAN_RXF1E_DATA_DB0_Msk               (_U_(0xFF) << MCAN_RXF1E_DATA_DB0_Pos)               /**< (MCAN_RXF1E_DATA) Data Byte 0 Mask */
+#define MCAN_RXF1E_DATA_DB0(value)            (MCAN_RXF1E_DATA_DB0_Msk & ((value) << MCAN_RXF1E_DATA_DB0_Pos))
+#define MCAN_RXF1E_DATA_DB1_Pos               _U_(8)                                               /**< (MCAN_RXF1E_DATA) Data Byte 1 Position */
+#define MCAN_RXF1E_DATA_DB1_Msk               (_U_(0xFF) << MCAN_RXF1E_DATA_DB1_Pos)               /**< (MCAN_RXF1E_DATA) Data Byte 1 Mask */
+#define MCAN_RXF1E_DATA_DB1(value)            (MCAN_RXF1E_DATA_DB1_Msk & ((value) << MCAN_RXF1E_DATA_DB1_Pos))
+#define MCAN_RXF1E_DATA_DB2_Pos               _U_(16)                                              /**< (MCAN_RXF1E_DATA) Data Byte 2 Position */
+#define MCAN_RXF1E_DATA_DB2_Msk               (_U_(0xFF) << MCAN_RXF1E_DATA_DB2_Pos)               /**< (MCAN_RXF1E_DATA) Data Byte 2 Mask */
+#define MCAN_RXF1E_DATA_DB2(value)            (MCAN_RXF1E_DATA_DB2_Msk & ((value) << MCAN_RXF1E_DATA_DB2_Pos))
+#define MCAN_RXF1E_DATA_DB3_Pos               _U_(24)                                              /**< (MCAN_RXF1E_DATA) Data Byte 3 Position */
+#define MCAN_RXF1E_DATA_DB3_Msk               (_U_(0xFF) << MCAN_RXF1E_DATA_DB3_Pos)               /**< (MCAN_RXF1E_DATA) Data Byte 3 Mask */
+#define MCAN_RXF1E_DATA_DB3(value)            (MCAN_RXF1E_DATA_DB3_Msk & ((value) << MCAN_RXF1E_DATA_DB3_Pos))
+#define MCAN_RXF1E_DATA_Msk                   _U_(0xFFFFFFFF)                                      /**< (MCAN_RXF1E_DATA) Register Mask  */
+
+
+/* -------- MCAN_TXBE_0 : (MCAN Offset: 0x00) (R/W 32) Tx Buffer Element 0 -------- */
+#define MCAN_TXBE_0_ID_Pos                    _U_(0)                                               /**< (MCAN_TXBE_0) Identifier Position */
+#define MCAN_TXBE_0_ID_Msk                    (_U_(0x1FFFFFFF) << MCAN_TXBE_0_ID_Pos)              /**< (MCAN_TXBE_0) Identifier Mask */
+#define MCAN_TXBE_0_ID(value)                 (MCAN_TXBE_0_ID_Msk & ((value) << MCAN_TXBE_0_ID_Pos))
+#define MCAN_TXBE_0_RTR_Pos                   _U_(29)                                              /**< (MCAN_TXBE_0) Remote Transmission Request Position */
+#define MCAN_TXBE_0_RTR_Msk                   (_U_(0x1) << MCAN_TXBE_0_RTR_Pos)                    /**< (MCAN_TXBE_0) Remote Transmission Request Mask */
+#define MCAN_TXBE_0_RTR(value)                (MCAN_TXBE_0_RTR_Msk & ((value) << MCAN_TXBE_0_RTR_Pos))
+#define MCAN_TXBE_0_XTD_Pos                   _U_(30)                                              /**< (MCAN_TXBE_0) Extended Identifier Position */
+#define MCAN_TXBE_0_XTD_Msk                   (_U_(0x1) << MCAN_TXBE_0_XTD_Pos)                    /**< (MCAN_TXBE_0) Extended Identifier Mask */
+#define MCAN_TXBE_0_XTD(value)                (MCAN_TXBE_0_XTD_Msk & ((value) << MCAN_TXBE_0_XTD_Pos))
+#define MCAN_TXBE_0_ESI_Pos                   _U_(31)                                              /**< (MCAN_TXBE_0) Error State Indicator Position */
+#define MCAN_TXBE_0_ESI_Msk                   (_U_(0x1) << MCAN_TXBE_0_ESI_Pos)                    /**< (MCAN_TXBE_0) Error State Indicator Mask */
+#define MCAN_TXBE_0_ESI(value)                (MCAN_TXBE_0_ESI_Msk & ((value) << MCAN_TXBE_0_ESI_Pos))
+#define MCAN_TXBE_0_Msk                       _U_(0xFFFFFFFF)                                      /**< (MCAN_TXBE_0) Register Mask  */
+
+
+/* -------- MCAN_TXBE_1 : (MCAN Offset: 0x04) (R/W 32) Tx Buffer Element 1 -------- */
+#define MCAN_TXBE_1_DLC_Pos                   _U_(16)                                              /**< (MCAN_TXBE_1) Data Length Code Position */
+#define MCAN_TXBE_1_DLC_Msk                   (_U_(0xF) << MCAN_TXBE_1_DLC_Pos)                    /**< (MCAN_TXBE_1) Data Length Code Mask */
+#define MCAN_TXBE_1_DLC(value)                (MCAN_TXBE_1_DLC_Msk & ((value) << MCAN_TXBE_1_DLC_Pos))
+#define MCAN_TXBE_1_BRS_Pos                   _U_(20)                                              /**< (MCAN_TXBE_1) Bit Rate Switch Position */
+#define MCAN_TXBE_1_BRS_Msk                   (_U_(0x1) << MCAN_TXBE_1_BRS_Pos)                    /**< (MCAN_TXBE_1) Bit Rate Switch Mask */
+#define MCAN_TXBE_1_BRS(value)                (MCAN_TXBE_1_BRS_Msk & ((value) << MCAN_TXBE_1_BRS_Pos))
+#define MCAN_TXBE_1_FDF_Pos                   _U_(21)                                              /**< (MCAN_TXBE_1) FD Format Position */
+#define MCAN_TXBE_1_FDF_Msk                   (_U_(0x1) << MCAN_TXBE_1_FDF_Pos)                    /**< (MCAN_TXBE_1) FD Format Mask */
+#define MCAN_TXBE_1_FDF(value)                (MCAN_TXBE_1_FDF_Msk & ((value) << MCAN_TXBE_1_FDF_Pos))
+#define MCAN_TXBE_1_EFC_Pos                   _U_(23)                                              /**< (MCAN_TXBE_1) Event FIFO Control Position */
+#define MCAN_TXBE_1_EFC_Msk                   (_U_(0x1) << MCAN_TXBE_1_EFC_Pos)                    /**< (MCAN_TXBE_1) Event FIFO Control Mask */
+#define MCAN_TXBE_1_EFC(value)                (MCAN_TXBE_1_EFC_Msk & ((value) << MCAN_TXBE_1_EFC_Pos))
+#define MCAN_TXBE_1_MM_Pos                    _U_(24)                                              /**< (MCAN_TXBE_1) Message Marker Position */
+#define MCAN_TXBE_1_MM_Msk                    (_U_(0xFF) << MCAN_TXBE_1_MM_Pos)                    /**< (MCAN_TXBE_1) Message Marker Mask */
+#define MCAN_TXBE_1_MM(value)                 (MCAN_TXBE_1_MM_Msk & ((value) << MCAN_TXBE_1_MM_Pos))
+#define MCAN_TXBE_1_Msk                       _U_(0xFFBF0000)                                      /**< (MCAN_TXBE_1) Register Mask  */
+
+
+/* -------- MCAN_TXBE_DATA : (MCAN Offset: 0x08) (R/W 32) Tx Buffer Element Data -------- */
+#define MCAN_TXBE_DATA_DB0_Pos                _U_(0)                                               /**< (MCAN_TXBE_DATA) Data Byte 0 Position */
+#define MCAN_TXBE_DATA_DB0_Msk                (_U_(0xFF) << MCAN_TXBE_DATA_DB0_Pos)                /**< (MCAN_TXBE_DATA) Data Byte 0 Mask */
+#define MCAN_TXBE_DATA_DB0(value)             (MCAN_TXBE_DATA_DB0_Msk & ((value) << MCAN_TXBE_DATA_DB0_Pos))
+#define MCAN_TXBE_DATA_DB1_Pos                _U_(8)                                               /**< (MCAN_TXBE_DATA) Data Byte 1 Position */
+#define MCAN_TXBE_DATA_DB1_Msk                (_U_(0xFF) << MCAN_TXBE_DATA_DB1_Pos)                /**< (MCAN_TXBE_DATA) Data Byte 1 Mask */
+#define MCAN_TXBE_DATA_DB1(value)             (MCAN_TXBE_DATA_DB1_Msk & ((value) << MCAN_TXBE_DATA_DB1_Pos))
+#define MCAN_TXBE_DATA_DB2_Pos                _U_(16)                                              /**< (MCAN_TXBE_DATA) Data Byte 2 Position */
+#define MCAN_TXBE_DATA_DB2_Msk                (_U_(0xFF) << MCAN_TXBE_DATA_DB2_Pos)                /**< (MCAN_TXBE_DATA) Data Byte 2 Mask */
+#define MCAN_TXBE_DATA_DB2(value)             (MCAN_TXBE_DATA_DB2_Msk & ((value) << MCAN_TXBE_DATA_DB2_Pos))
+#define MCAN_TXBE_DATA_DB3_Pos                _U_(24)                                              /**< (MCAN_TXBE_DATA) Data Byte 3 Position */
+#define MCAN_TXBE_DATA_DB3_Msk                (_U_(0xFF) << MCAN_TXBE_DATA_DB3_Pos)                /**< (MCAN_TXBE_DATA) Data Byte 3 Mask */
+#define MCAN_TXBE_DATA_DB3(value)             (MCAN_TXBE_DATA_DB3_Msk & ((value) << MCAN_TXBE_DATA_DB3_Pos))
+#define MCAN_TXBE_DATA_Msk                    _U_(0xFFFFFFFF)                                      /**< (MCAN_TXBE_DATA) Register Mask  */
+
+
+/* -------- MCAN_TXEFE_0 : (MCAN Offset: 0x00) (R/W 32) Tx Event FIFO Element 0 -------- */
+#define MCAN_TXEFE_0_ID_Pos                   _U_(0)                                               /**< (MCAN_TXEFE_0) Identifier Position */
+#define MCAN_TXEFE_0_ID_Msk                   (_U_(0x1FFFFFFF) << MCAN_TXEFE_0_ID_Pos)             /**< (MCAN_TXEFE_0) Identifier Mask */
+#define MCAN_TXEFE_0_ID(value)                (MCAN_TXEFE_0_ID_Msk & ((value) << MCAN_TXEFE_0_ID_Pos))
+#define MCAN_TXEFE_0_RTR_Pos                  _U_(29)                                              /**< (MCAN_TXEFE_0) Remote Transmission Request Position */
+#define MCAN_TXEFE_0_RTR_Msk                  (_U_(0x1) << MCAN_TXEFE_0_RTR_Pos)                   /**< (MCAN_TXEFE_0) Remote Transmission Request Mask */
+#define MCAN_TXEFE_0_RTR(value)               (MCAN_TXEFE_0_RTR_Msk & ((value) << MCAN_TXEFE_0_RTR_Pos))
+#define MCAN_TXEFE_0_XTD_Pos                  _U_(30)                                              /**< (MCAN_TXEFE_0) Extended Identifier Position */
+#define MCAN_TXEFE_0_XTD_Msk                  (_U_(0x1) << MCAN_TXEFE_0_XTD_Pos)                   /**< (MCAN_TXEFE_0) Extended Identifier Mask */
+#define MCAN_TXEFE_0_XTD(value)               (MCAN_TXEFE_0_XTD_Msk & ((value) << MCAN_TXEFE_0_XTD_Pos))
+#define MCAN_TXEFE_0_ESI_Pos                  _U_(31)                                              /**< (MCAN_TXEFE_0) Error State Indicator Position */
+#define MCAN_TXEFE_0_ESI_Msk                  (_U_(0x1) << MCAN_TXEFE_0_ESI_Pos)                   /**< (MCAN_TXEFE_0) Error State Indicator Mask */
+#define MCAN_TXEFE_0_ESI(value)               (MCAN_TXEFE_0_ESI_Msk & ((value) << MCAN_TXEFE_0_ESI_Pos))
+#define MCAN_TXEFE_0_Msk                      _U_(0xFFFFFFFF)                                      /**< (MCAN_TXEFE_0) Register Mask  */
+
+
+/* -------- MCAN_TXEFE_1 : (MCAN Offset: 0x04) (R/W 32) Tx Event FIFO Element 1 -------- */
+#define MCAN_TXEFE_1_TXTS_Pos                 _U_(0)                                               /**< (MCAN_TXEFE_1) Tx Timestamp Position */
+#define MCAN_TXEFE_1_TXTS_Msk                 (_U_(0xFFFF) << MCAN_TXEFE_1_TXTS_Pos)               /**< (MCAN_TXEFE_1) Tx Timestamp Mask */
+#define MCAN_TXEFE_1_TXTS(value)              (MCAN_TXEFE_1_TXTS_Msk & ((value) << MCAN_TXEFE_1_TXTS_Pos))
+#define MCAN_TXEFE_1_DLC_Pos                  _U_(16)                                              /**< (MCAN_TXEFE_1) Data Length Code Position */
+#define MCAN_TXEFE_1_DLC_Msk                  (_U_(0xF) << MCAN_TXEFE_1_DLC_Pos)                   /**< (MCAN_TXEFE_1) Data Length Code Mask */
+#define MCAN_TXEFE_1_DLC(value)               (MCAN_TXEFE_1_DLC_Msk & ((value) << MCAN_TXEFE_1_DLC_Pos))
+#define MCAN_TXEFE_1_BRS_Pos                  _U_(20)                                              /**< (MCAN_TXEFE_1) Bit Rate Switch Position */
+#define MCAN_TXEFE_1_BRS_Msk                  (_U_(0x1) << MCAN_TXEFE_1_BRS_Pos)                   /**< (MCAN_TXEFE_1) Bit Rate Switch Mask */
+#define MCAN_TXEFE_1_BRS(value)               (MCAN_TXEFE_1_BRS_Msk & ((value) << MCAN_TXEFE_1_BRS_Pos))
+#define MCAN_TXEFE_1_FDF_Pos                  _U_(21)                                              /**< (MCAN_TXEFE_1) FD Format Position */
+#define MCAN_TXEFE_1_FDF_Msk                  (_U_(0x1) << MCAN_TXEFE_1_FDF_Pos)                   /**< (MCAN_TXEFE_1) FD Format Mask */
+#define MCAN_TXEFE_1_FDF(value)               (MCAN_TXEFE_1_FDF_Msk & ((value) << MCAN_TXEFE_1_FDF_Pos))
+#define MCAN_TXEFE_1_ET_Pos                   _U_(22)                                              /**< (MCAN_TXEFE_1) Event Type Position */
+#define MCAN_TXEFE_1_ET_Msk                   (_U_(0x3) << MCAN_TXEFE_1_ET_Pos)                    /**< (MCAN_TXEFE_1) Event Type Mask */
+#define MCAN_TXEFE_1_ET(value)                (MCAN_TXEFE_1_ET_Msk & ((value) << MCAN_TXEFE_1_ET_Pos))
+#define   MCAN_TXEFE_1_ET_TXE_Val             _U_(0x1)                                             /**< (MCAN_TXEFE_1) Tx event  */
+#define   MCAN_TXEFE_1_ET_TXC_Val             _U_(0x2)                                             /**< (MCAN_TXEFE_1) Transmission in spite of cancellation  */
+#define MCAN_TXEFE_1_ET_TXE                   (MCAN_TXEFE_1_ET_TXE_Val << MCAN_TXEFE_1_ET_Pos)     /**< (MCAN_TXEFE_1) Tx event Position  */
+#define MCAN_TXEFE_1_ET_TXC                   (MCAN_TXEFE_1_ET_TXC_Val << MCAN_TXEFE_1_ET_Pos)     /**< (MCAN_TXEFE_1) Transmission in spite of cancellation Position  */
+#define MCAN_TXEFE_1_MM_Pos                   _U_(24)                                              /**< (MCAN_TXEFE_1) Message Marker Position */
+#define MCAN_TXEFE_1_MM_Msk                   (_U_(0xFF) << MCAN_TXEFE_1_MM_Pos)                   /**< (MCAN_TXEFE_1) Message Marker Mask */
+#define MCAN_TXEFE_1_MM(value)                (MCAN_TXEFE_1_MM_Msk & ((value) << MCAN_TXEFE_1_MM_Pos))
+#define MCAN_TXEFE_1_Msk                      _U_(0xFFFFFFFF)                                      /**< (MCAN_TXEFE_1) Register Mask  */
+
+
+/* -------- MCAN_SIDFE_0 : (MCAN Offset: 0x00) (R/W 32) Standard Message ID Filter Element 0 -------- */
+#define MCAN_SIDFE_0_SFID2_Pos                _U_(0)                                               /**< (MCAN_SIDFE_0) Standard Filter ID 2 Position */
+#define MCAN_SIDFE_0_SFID2_Msk                (_U_(0x7FF) << MCAN_SIDFE_0_SFID2_Pos)               /**< (MCAN_SIDFE_0) Standard Filter ID 2 Mask */
+#define MCAN_SIDFE_0_SFID2(value)             (MCAN_SIDFE_0_SFID2_Msk & ((value) << MCAN_SIDFE_0_SFID2_Pos))
+#define MCAN_SIDFE_0_SFID1_Pos                _U_(16)                                              /**< (MCAN_SIDFE_0) Standard Filter ID 1 Position */
+#define MCAN_SIDFE_0_SFID1_Msk                (_U_(0x7FF) << MCAN_SIDFE_0_SFID1_Pos)               /**< (MCAN_SIDFE_0) Standard Filter ID 1 Mask */
+#define MCAN_SIDFE_0_SFID1(value)             (MCAN_SIDFE_0_SFID1_Msk & ((value) << MCAN_SIDFE_0_SFID1_Pos))
+#define MCAN_SIDFE_0_SFEC_Pos                 _U_(27)                                              /**< (MCAN_SIDFE_0) Standard Filter Element Configuration Position */
+#define MCAN_SIDFE_0_SFEC_Msk                 (_U_(0x7) << MCAN_SIDFE_0_SFEC_Pos)                  /**< (MCAN_SIDFE_0) Standard Filter Element Configuration Mask */
+#define MCAN_SIDFE_0_SFEC(value)              (MCAN_SIDFE_0_SFEC_Msk & ((value) << MCAN_SIDFE_0_SFEC_Pos))
+#define   MCAN_SIDFE_0_SFEC_DISABLE_Val       _U_(0x0)                                             /**< (MCAN_SIDFE_0) Disable filter element  */
+#define   MCAN_SIDFE_0_SFEC_STF0M_Val         _U_(0x1)                                             /**< (MCAN_SIDFE_0) Store in Rx FIFO 0 if filter matches  */
+#define   MCAN_SIDFE_0_SFEC_STF1M_Val         _U_(0x2)                                             /**< (MCAN_SIDFE_0) Store in Rx FIFO 1 if filter matches  */
+#define   MCAN_SIDFE_0_SFEC_REJECT_Val        _U_(0x3)                                             /**< (MCAN_SIDFE_0) Reject ID if filter matches  */
+#define   MCAN_SIDFE_0_SFEC_PRIORITY_Val      _U_(0x4)                                             /**< (MCAN_SIDFE_0) Set priority if filter matches  */
+#define   MCAN_SIDFE_0_SFEC_PRIF0M_Val        _U_(0x5)                                             /**< (MCAN_SIDFE_0) Set priority and store in FIFO 0 if filter matches  */
+#define   MCAN_SIDFE_0_SFEC_PRIF1M_Val        _U_(0x6)                                             /**< (MCAN_SIDFE_0) Set priority and store in FIFO 1 if filter matches  */
+#define   MCAN_SIDFE_0_SFEC_STRXBUF_Val       _U_(0x7)                                             /**< (MCAN_SIDFE_0) Store into Rx Buffer  */
+#define MCAN_SIDFE_0_SFEC_DISABLE             (MCAN_SIDFE_0_SFEC_DISABLE_Val << MCAN_SIDFE_0_SFEC_Pos) /**< (MCAN_SIDFE_0) Disable filter element Position  */
+#define MCAN_SIDFE_0_SFEC_STF0M               (MCAN_SIDFE_0_SFEC_STF0M_Val << MCAN_SIDFE_0_SFEC_Pos) /**< (MCAN_SIDFE_0) Store in Rx FIFO 0 if filter matches Position  */
+#define MCAN_SIDFE_0_SFEC_STF1M               (MCAN_SIDFE_0_SFEC_STF1M_Val << MCAN_SIDFE_0_SFEC_Pos) /**< (MCAN_SIDFE_0) Store in Rx FIFO 1 if filter matches Position  */
+#define MCAN_SIDFE_0_SFEC_REJECT              (MCAN_SIDFE_0_SFEC_REJECT_Val << MCAN_SIDFE_0_SFEC_Pos) /**< (MCAN_SIDFE_0) Reject ID if filter matches Position  */
+#define MCAN_SIDFE_0_SFEC_PRIORITY            (MCAN_SIDFE_0_SFEC_PRIORITY_Val << MCAN_SIDFE_0_SFEC_Pos) /**< (MCAN_SIDFE_0) Set priority if filter matches Position  */
+#define MCAN_SIDFE_0_SFEC_PRIF0M              (MCAN_SIDFE_0_SFEC_PRIF0M_Val << MCAN_SIDFE_0_SFEC_Pos) /**< (MCAN_SIDFE_0) Set priority and store in FIFO 0 if filter matches Position  */
+#define MCAN_SIDFE_0_SFEC_PRIF1M              (MCAN_SIDFE_0_SFEC_PRIF1M_Val << MCAN_SIDFE_0_SFEC_Pos) /**< (MCAN_SIDFE_0) Set priority and store in FIFO 1 if filter matches Position  */
+#define MCAN_SIDFE_0_SFEC_STRXBUF             (MCAN_SIDFE_0_SFEC_STRXBUF_Val << MCAN_SIDFE_0_SFEC_Pos) /**< (MCAN_SIDFE_0) Store into Rx Buffer Position  */
+#define MCAN_SIDFE_0_SFT_Pos                  _U_(30)                                              /**< (MCAN_SIDFE_0) Standard Filter Type Position */
+#define MCAN_SIDFE_0_SFT_Msk                  (_U_(0x3) << MCAN_SIDFE_0_SFT_Pos)                   /**< (MCAN_SIDFE_0) Standard Filter Type Mask */
+#define MCAN_SIDFE_0_SFT(value)               (MCAN_SIDFE_0_SFT_Msk & ((value) << MCAN_SIDFE_0_SFT_Pos))
+#define   MCAN_SIDFE_0_SFT_RANGE_Val          _U_(0x0)                                             /**< (MCAN_SIDFE_0) Range filter from SFID1 to SFID2  */
+#define   MCAN_SIDFE_0_SFT_DUAL_Val           _U_(0x1)                                             /**< (MCAN_SIDFE_0) Dual ID filter for SF1ID or SF2ID  */
+#define   MCAN_SIDFE_0_SFT_CLASSIC_Val        _U_(0x2)                                             /**< (MCAN_SIDFE_0) Classic filter  */
+#define MCAN_SIDFE_0_SFT_RANGE                (MCAN_SIDFE_0_SFT_RANGE_Val << MCAN_SIDFE_0_SFT_Pos) /**< (MCAN_SIDFE_0) Range filter from SFID1 to SFID2 Position  */
+#define MCAN_SIDFE_0_SFT_DUAL                 (MCAN_SIDFE_0_SFT_DUAL_Val << MCAN_SIDFE_0_SFT_Pos)  /**< (MCAN_SIDFE_0) Dual ID filter for SF1ID or SF2ID Position  */
+#define MCAN_SIDFE_0_SFT_CLASSIC              (MCAN_SIDFE_0_SFT_CLASSIC_Val << MCAN_SIDFE_0_SFT_Pos) /**< (MCAN_SIDFE_0) Classic filter Position  */
+#define MCAN_SIDFE_0_Msk                      _U_(0xFFFF07FF)                                      /**< (MCAN_SIDFE_0) Register Mask  */
+
+
+/* -------- MCAN_XIDFE_0 : (MCAN Offset: 0x00) (R/W 32) Extended Message ID Filter Element 0 -------- */
+#define MCAN_XIDFE_0_EFID1_Pos                _U_(0)                                               /**< (MCAN_XIDFE_0) Extended Filter ID 1 Position */
+#define MCAN_XIDFE_0_EFID1_Msk                (_U_(0x1FFFFFFF) << MCAN_XIDFE_0_EFID1_Pos)          /**< (MCAN_XIDFE_0) Extended Filter ID 1 Mask */
+#define MCAN_XIDFE_0_EFID1(value)             (MCAN_XIDFE_0_EFID1_Msk & ((value) << MCAN_XIDFE_0_EFID1_Pos))
+#define MCAN_XIDFE_0_EFEC_Pos                 _U_(29)                                              /**< (MCAN_XIDFE_0) Extended Filter Element Configuration Position */
+#define MCAN_XIDFE_0_EFEC_Msk                 (_U_(0x7) << MCAN_XIDFE_0_EFEC_Pos)                  /**< (MCAN_XIDFE_0) Extended Filter Element Configuration Mask */
+#define MCAN_XIDFE_0_EFEC(value)              (MCAN_XIDFE_0_EFEC_Msk & ((value) << MCAN_XIDFE_0_EFEC_Pos))
+#define   MCAN_XIDFE_0_EFEC_DISABLE_Val       _U_(0x0)                                             /**< (MCAN_XIDFE_0) Disable filter element  */
+#define   MCAN_XIDFE_0_EFEC_STF0M_Val         _U_(0x1)                                             /**< (MCAN_XIDFE_0) Store in Rx FIFO 0 if filter matches  */
+#define   MCAN_XIDFE_0_EFEC_STF1M_Val         _U_(0x2)                                             /**< (MCAN_XIDFE_0) Store in Rx FIFO 1 if filter matches  */
+#define   MCAN_XIDFE_0_EFEC_REJECT_Val        _U_(0x3)                                             /**< (MCAN_XIDFE_0) Reject ID if filter matches  */
+#define   MCAN_XIDFE_0_EFEC_PRIORITY_Val      _U_(0x4)                                             /**< (MCAN_XIDFE_0) Set priority if filter matches  */
+#define   MCAN_XIDFE_0_EFEC_PRIF0M_Val        _U_(0x5)                                             /**< (MCAN_XIDFE_0) Set priority and store in FIFO 0 if filter matches  */
+#define   MCAN_XIDFE_0_EFEC_PRIF1M_Val        _U_(0x6)                                             /**< (MCAN_XIDFE_0) Set priority and store in FIFO 1 if filter matches  */
+#define   MCAN_XIDFE_0_EFEC_STRXBUF_Val       _U_(0x7)                                             /**< (MCAN_XIDFE_0) Store into Rx Buffer  */
+#define MCAN_XIDFE_0_EFEC_DISABLE             (MCAN_XIDFE_0_EFEC_DISABLE_Val << MCAN_XIDFE_0_EFEC_Pos) /**< (MCAN_XIDFE_0) Disable filter element Position  */
+#define MCAN_XIDFE_0_EFEC_STF0M               (MCAN_XIDFE_0_EFEC_STF0M_Val << MCAN_XIDFE_0_EFEC_Pos) /**< (MCAN_XIDFE_0) Store in Rx FIFO 0 if filter matches Position  */
+#define MCAN_XIDFE_0_EFEC_STF1M               (MCAN_XIDFE_0_EFEC_STF1M_Val << MCAN_XIDFE_0_EFEC_Pos) /**< (MCAN_XIDFE_0) Store in Rx FIFO 1 if filter matches Position  */
+#define MCAN_XIDFE_0_EFEC_REJECT              (MCAN_XIDFE_0_EFEC_REJECT_Val << MCAN_XIDFE_0_EFEC_Pos) /**< (MCAN_XIDFE_0) Reject ID if filter matches Position  */
+#define MCAN_XIDFE_0_EFEC_PRIORITY            (MCAN_XIDFE_0_EFEC_PRIORITY_Val << MCAN_XIDFE_0_EFEC_Pos) /**< (MCAN_XIDFE_0) Set priority if filter matches Position  */
+#define MCAN_XIDFE_0_EFEC_PRIF0M              (MCAN_XIDFE_0_EFEC_PRIF0M_Val << MCAN_XIDFE_0_EFEC_Pos) /**< (MCAN_XIDFE_0) Set priority and store in FIFO 0 if filter matches Position  */
+#define MCAN_XIDFE_0_EFEC_PRIF1M              (MCAN_XIDFE_0_EFEC_PRIF1M_Val << MCAN_XIDFE_0_EFEC_Pos) /**< (MCAN_XIDFE_0) Set priority and store in FIFO 1 if filter matches Position  */
+#define MCAN_XIDFE_0_EFEC_STRXBUF             (MCAN_XIDFE_0_EFEC_STRXBUF_Val << MCAN_XIDFE_0_EFEC_Pos) /**< (MCAN_XIDFE_0) Store into Rx Buffer Position  */
+#define MCAN_XIDFE_0_Msk                      _U_(0xFFFFFFFF)                                      /**< (MCAN_XIDFE_0) Register Mask  */
+
+
+/* -------- MCAN_XIDFE_1 : (MCAN Offset: 0x04) (R/W 32) Extended Message ID Filter Element 1 -------- */
+#define MCAN_XIDFE_1_EFID2_Pos                _U_(0)                                               /**< (MCAN_XIDFE_1) Extended Filter ID 2 Position */
+#define MCAN_XIDFE_1_EFID2_Msk                (_U_(0x1FFFFFFF) << MCAN_XIDFE_1_EFID2_Pos)          /**< (MCAN_XIDFE_1) Extended Filter ID 2 Mask */
+#define MCAN_XIDFE_1_EFID2(value)             (MCAN_XIDFE_1_EFID2_Msk & ((value) << MCAN_XIDFE_1_EFID2_Pos))
+#define MCAN_XIDFE_1_EFT_Pos                  _U_(30)                                              /**< (MCAN_XIDFE_1) Extended Filter Type Position */
+#define MCAN_XIDFE_1_EFT_Msk                  (_U_(0x3) << MCAN_XIDFE_1_EFT_Pos)                   /**< (MCAN_XIDFE_1) Extended Filter Type Mask */
+#define MCAN_XIDFE_1_EFT(value)               (MCAN_XIDFE_1_EFT_Msk & ((value) << MCAN_XIDFE_1_EFT_Pos))
+#define   MCAN_XIDFE_1_EFT_RANGE_Val          _U_(0x0)                                             /**< (MCAN_XIDFE_1) Range filter from EFID1 to EFID2  */
+#define   MCAN_XIDFE_1_EFT_DUAL_Val           _U_(0x1)                                             /**< (MCAN_XIDFE_1) Dual ID filter for EFID1 or EFID2  */
+#define   MCAN_XIDFE_1_EFT_CLASSIC_Val        _U_(0x2)                                             /**< (MCAN_XIDFE_1) Classic filter  */
+#define   MCAN_XIDFE_1_EFT_RANGE_NO_XIDAM_Val _U_(0x3)                                             /**< (MCAN_XIDFE_1) Range filter from EFID1 to EFID2 with no XIDAM mask  */
+#define MCAN_XIDFE_1_EFT_RANGE                (MCAN_XIDFE_1_EFT_RANGE_Val << MCAN_XIDFE_1_EFT_Pos) /**< (MCAN_XIDFE_1) Range filter from EFID1 to EFID2 Position  */
+#define MCAN_XIDFE_1_EFT_DUAL                 (MCAN_XIDFE_1_EFT_DUAL_Val << MCAN_XIDFE_1_EFT_Pos)  /**< (MCAN_XIDFE_1) Dual ID filter for EFID1 or EFID2 Position  */
+#define MCAN_XIDFE_1_EFT_CLASSIC              (MCAN_XIDFE_1_EFT_CLASSIC_Val << MCAN_XIDFE_1_EFT_Pos) /**< (MCAN_XIDFE_1) Classic filter Position  */
+#define MCAN_XIDFE_1_EFT_RANGE_NO_XIDAM       (MCAN_XIDFE_1_EFT_RANGE_NO_XIDAM_Val << MCAN_XIDFE_1_EFT_Pos) /**< (MCAN_XIDFE_1) Range filter from EFID1 to EFID2 with no XIDAM mask Position  */
+#define MCAN_XIDFE_1_Msk                      _U_(0xDFFFFFFF)                                      /**< (MCAN_XIDFE_1) Register Mask  */
+
 
 /* -------- MCAN_CREL : (MCAN Offset: 0x00) ( R/ 32) Core Release Register -------- */
 #define MCAN_CREL_DAY_Pos                     _U_(0)                                               /**< (MCAN_CREL) Timestamp Day Position */
@@ -1907,6 +2244,23 @@
 
 
 /** \brief MCAN register offsets definitions */
+#define MCAN_RXBE_0_REG_OFST           (0x00)              /**< (MCAN_RXBE_0) Rx Buffer Element 0 Offset */
+#define MCAN_RXBE_1_REG_OFST           (0x04)              /**< (MCAN_RXBE_1) Rx Buffer Element 1 Offset */
+#define MCAN_RXBE_DATA_REG_OFST        (0x08)              /**< (MCAN_RXBE_DATA) Rx Buffer Element Data Offset */
+#define MCAN_RXF0E_0_REG_OFST          (0x00)              /**< (MCAN_RXF0E_0) Rx FIFO 0 Element 0 Offset */
+#define MCAN_RXF0E_1_REG_OFST          (0x04)              /**< (MCAN_RXF0E_1) Rx FIFO 0 Element 1 Offset */
+#define MCAN_RXF0E_DATA_REG_OFST       (0x08)              /**< (MCAN_RXF0E_DATA) Rx FIFO 0 Element Data Offset */
+#define MCAN_RXF1E_0_REG_OFST          (0x00)              /**< (MCAN_RXF1E_0) Rx FIFO 1 Element 0 Offset */
+#define MCAN_RXF1E_1_REG_OFST          (0x04)              /**< (MCAN_RXF1E_1) Rx FIFO 1 Element 1 Offset */
+#define MCAN_RXF1E_DATA_REG_OFST       (0x08)              /**< (MCAN_RXF1E_DATA) Rx FIFO 1 Element Data Offset */
+#define MCAN_TXBE_0_REG_OFST           (0x00)              /**< (MCAN_TXBE_0) Tx Buffer Element 0 Offset */
+#define MCAN_TXBE_1_REG_OFST           (0x04)              /**< (MCAN_TXBE_1) Tx Buffer Element 1 Offset */
+#define MCAN_TXBE_DATA_REG_OFST        (0x08)              /**< (MCAN_TXBE_DATA) Tx Buffer Element Data Offset */
+#define MCAN_TXEFE_0_REG_OFST          (0x00)              /**< (MCAN_TXEFE_0) Tx Event FIFO Element 0 Offset */
+#define MCAN_TXEFE_1_REG_OFST          (0x04)              /**< (MCAN_TXEFE_1) Tx Event FIFO Element 1 Offset */
+#define MCAN_SIDFE_0_REG_OFST          (0x00)              /**< (MCAN_SIDFE_0) Standard Message ID Filter Element 0 Offset */
+#define MCAN_XIDFE_0_REG_OFST          (0x00)              /**< (MCAN_XIDFE_0) Extended Message ID Filter Element 0 Offset */
+#define MCAN_XIDFE_1_REG_OFST          (0x04)              /**< (MCAN_XIDFE_1) Extended Message ID Filter Element 1 Offset */
 #define MCAN_CREL_REG_OFST             (0x00)              /**< (MCAN_CREL) Core Release Register Offset */
 #define MCAN_ENDN_REG_OFST             (0x04)              /**< (MCAN_ENDN) Endian Register Offset */
 #define MCAN_CUST_REG_OFST             (0x08)              /**< (MCAN_CUST) Customer Register Offset */
@@ -1956,6 +2310,86 @@
 #define MCAN_TXEFA_REG_OFST            (0xF8)              /**< (MCAN_TXEFA) Transmit Event FIFO Acknowledge Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
+/** \brief MCAN_RXBE register API structure */
+typedef struct
+{  /* Rx Buffer Element */
+  __IO  uint32_t                       MCAN_RXBE_0;        /**< Offset: 0x00 (R/W  32) Rx Buffer Element 0 */
+  __IO  uint32_t                       MCAN_RXBE_1;        /**< Offset: 0x04 (R/W  32) Rx Buffer Element 1 */
+  __IO  uint32_t                       MCAN_RXBE_DATA;     /**< Offset: 0x08 (R/W  32) Rx Buffer Element Data */
+} mcan_rxbe_registers_t
+#ifdef __GNUC__
+  __attribute__ ((aligned (4)))
+#endif
+;
+
+/** \brief MCAN_RXF0E register API structure */
+typedef struct
+{  /* Rx FIFO 0 Element */
+  __IO  uint32_t                       MCAN_RXF0E_0;       /**< Offset: 0x00 (R/W  32) Rx FIFO 0 Element 0 */
+  __IO  uint32_t                       MCAN_RXF0E_1;       /**< Offset: 0x04 (R/W  32) Rx FIFO 0 Element 1 */
+  __IO  uint32_t                       MCAN_RXF0E_DATA;    /**< Offset: 0x08 (R/W  32) Rx FIFO 0 Element Data */
+} mcan_rxf0e_registers_t
+#ifdef __GNUC__
+  __attribute__ ((aligned (4)))
+#endif
+;
+
+/** \brief MCAN_RXF1E register API structure */
+typedef struct
+{  /* Rx FIFO 1 Element */
+  __IO  uint32_t                       MCAN_RXF1E_0;       /**< Offset: 0x00 (R/W  32) Rx FIFO 1 Element 0 */
+  __IO  uint32_t                       MCAN_RXF1E_1;       /**< Offset: 0x04 (R/W  32) Rx FIFO 1 Element 1 */
+  __IO  uint32_t                       MCAN_RXF1E_DATA;    /**< Offset: 0x08 (R/W  32) Rx FIFO 1 Element Data */
+} mcan_rxf1e_registers_t
+#ifdef __GNUC__
+  __attribute__ ((aligned (4)))
+#endif
+;
+
+/** \brief MCAN_TXBE register API structure */
+typedef struct
+{  /* Tx Buffer Element */
+  __IO  uint32_t                       MCAN_TXBE_0;        /**< Offset: 0x00 (R/W  32) Tx Buffer Element 0 */
+  __IO  uint32_t                       MCAN_TXBE_1;        /**< Offset: 0x04 (R/W  32) Tx Buffer Element 1 */
+  __IO  uint32_t                       MCAN_TXBE_DATA;     /**< Offset: 0x08 (R/W  32) Tx Buffer Element Data */
+} mcan_txbe_registers_t
+#ifdef __GNUC__
+  __attribute__ ((aligned (4)))
+#endif
+;
+
+/** \brief MCAN_TXEFE register API structure */
+typedef struct
+{  /* Tx Event FIFO Element */
+  __IO  uint32_t                       MCAN_TXEFE_0;       /**< Offset: 0x00 (R/W  32) Tx Event FIFO Element 0 */
+  __IO  uint32_t                       MCAN_TXEFE_1;       /**< Offset: 0x04 (R/W  32) Tx Event FIFO Element 1 */
+} mcan_txefe_registers_t
+#ifdef __GNUC__
+  __attribute__ ((aligned (4)))
+#endif
+;
+
+/** \brief MCAN_SIDFE register API structure */
+typedef struct
+{  /* Standard Message ID Filter Element */
+  __IO  uint32_t                       MCAN_SIDFE_0;       /**< Offset: 0x00 (R/W  32) Standard Message ID Filter Element 0 */
+} mcan_sidfe_registers_t
+#ifdef __GNUC__
+  __attribute__ ((aligned (4)))
+#endif
+;
+
+/** \brief MCAN_XIDFE register API structure */
+typedef struct
+{  /* Extended Message ID Filter Element */
+  __IO  uint32_t                       MCAN_XIDFE_0;       /**< Offset: 0x00 (R/W  32) Extended Message ID Filter Element 0 */
+  __IO  uint32_t                       MCAN_XIDFE_1;       /**< Offset: 0x04 (R/W  32) Extended Message ID Filter Element 1 */
+} mcan_xidfe_registers_t
+#ifdef __GNUC__
+  __attribute__ ((aligned (4)))
+#endif
+;
+
 /** \brief MCAN register API structure */
 typedef struct
 {

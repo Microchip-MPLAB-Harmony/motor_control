@@ -69,16 +69,16 @@
 /******************************************************************************/
 /* Local Function Prototype                                                   */
 /******************************************************************************/
-static inline void MCAPP_MotorAngleCalc(void);
-static inline void MCAPP_MotorCurrentControl( void );
+__STATIC_INLINE void MCAPP_MotorAngleCalc(void);
+__STATIC_INLINE void MCAPP_MotorCurrentControl( void );
 static void MCAPP_ADCOffsetCalibration(void);
 static void MCAPP_MotorControlParamInit(void);
-static inline bool MCAPP_SlowLoopTimeIsFinished(void);
-static inline void MCAPP_SlowControlLoop(void);
+__STATIC_INLINE bool MCAPP_SlowLoopTimeIsFinished(void);
+__STATIC_INLINE void MCAPP_SlowControlLoop(void);
 static void MCAPP_SwitchDebounce(MC_APP_STATE state);
 
 #if(TORQUE_MODE == 0)
-static inline void MCAPP_SpeedRamp(void);
+__STATIC_INLINE void MCAPP_SpeedRamp(void);
 #endif
 
 /******************************************************************************/
@@ -99,7 +99,7 @@ float phaseCurrentVOffset;
 /* Description:                                                               */
 /* Executes one PI iteration for each of the three loops Id,Iq                */
 /******************************************************************************/
-static inline void MCAPP_MotorCurrentControl( void )
+__STATIC_INLINE void MCAPP_MotorCurrentControl( void )
 {
     if( gCtrlParam.openLoop == true )
     {
@@ -235,7 +235,7 @@ static inline void MCAPP_MotorCurrentControl( void )
 /* Description: Generate the start sin waves feeding the motor's terminals    */
 /* in open loop control, forcing the motor to align and to start speeding up  */
 /******************************************************************************/
-static inline void MCAPP_MotorAngleCalc(void)
+__STATIC_INLINE void MCAPP_MotorAngleCalc(void)
 {
 	if(gCtrlParam.openLoop == true)	
 	{
@@ -482,7 +482,7 @@ static void MCAPP_MotorControlParamInit(void)
 /* Description: To be used in a state machine to decide whether to execute       */
 /* slow control loop                                                          */
 /******************************************************************************/
-static inline bool MCAPP_SlowLoopTimeIsFinished(void)
+__STATIC_INLINE bool MCAPP_SlowLoopTimeIsFinished(void)
 {
 	uint8_t retval = false;
 	if(SLOW_LOOP_TIME_PWM_COUNT <= gCtrlParam.sync_cnt)
@@ -501,7 +501,7 @@ static inline bool MCAPP_SlowLoopTimeIsFinished(void)
 /* Description: Increment/Decrements speed reference based upon ramp          */
 /*              configuration in "userparams.h" file.                         */
 /******************************************************************************/
-static inline void MCAPP_SpeedRamp(void)
+__STATIC_INLINE void MCAPP_SpeedRamp(void)
 {
 	if(gCtrlParam.endSpeed > (gCtrlParam.velRef + gCtrlParam.rampIncStep))
 	{
@@ -527,7 +527,7 @@ static inline void MCAPP_SpeedRamp(void)
 /* Function return: None                                                      */
 /* Description: Change the duty cycle of PWMs                                 */
 /******************************************************************************/
-static inline void MCAPP_PWMDutyUpdate(uint32_t duty_PhU,uint32_t duty_PhV,uint32_t duty_PhW)
+__STATIC_INLINE void MCAPP_PWMDutyUpdate(uint32_t duty_PhU,uint32_t duty_PhV,uint32_t duty_PhW)
 {
 	PWM0_ChannelDutySet(PWM_CHANNEL_0, duty_PhU);
     PWM0_ChannelDutySet(PWM_CHANNEL_1, duty_PhV);
@@ -544,7 +544,7 @@ static inline void MCAPP_PWMDutyUpdate(uint32_t duty_PhU,uint32_t duty_PhV,uint3
  *              the phase current measurements and updates duty.              *
  ******************************************************************************/
 
-void MCAPP_ControlLoopISR(uintptr_t context)
+void MCAPP_ControlLoopISR(uint32_t status, uintptr_t context)
 {  
 	float phaseCurrentU;
 	float phaseCurrentV;
@@ -628,14 +628,13 @@ void MCAPP_ControlLoopISR(uintptr_t context)
 /*				"SLOW_LOOP_TIME_SEC" MACRO in "userparms.h file.              */
 /*               Speed ramp and speed control loop is executed from this loop */
 /******************************************************************************/
-static inline void MCAPP_SlowControlLoop(void)
+__STATIC_INLINE void MCAPP_SlowControlLoop(void)
 {
 
 #if(TORQUE_MODE == 0)
 	if(gCtrlParam.openLoop == false)
 	{
 		/* Velocity reference will be taken from potentiometer if configured. */
-#if(SPEED_REF_FROM_POT == 1U)
 		float PotReading;
         static float speed_ref_filtered = 0;
 
@@ -649,7 +648,6 @@ static inline void MCAPP_SlowControlLoop(void)
 		{
 			gCtrlParam.velRef = OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC;
 		}
-#endif // End of #if(SPEED_REF_FROM_POT == true)
 		
 		/* Speed Ramp */
 		MCAPP_SpeedRamp();

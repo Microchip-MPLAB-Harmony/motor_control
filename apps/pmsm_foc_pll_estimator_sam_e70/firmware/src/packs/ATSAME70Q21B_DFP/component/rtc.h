@@ -1,7 +1,7 @@
 /**
  * \brief Component description for RTC
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-06T08:17:04Z */
+/* file generated from device description version 2019-01-18T21:19:59Z */
 #ifndef _SAME70_RTC_COMPONENT_H_
 #define _SAME70_RTC_COMPONENT_H_
 
