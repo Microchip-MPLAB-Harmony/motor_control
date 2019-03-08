@@ -681,12 +681,13 @@ void MCAPP_MotorStart(void)
 	/* ADC end of conversion interrupt generation for FOC control */
 	NVIC_DisableIRQ(AFEC0_IRQn);
 	NVIC_ClearPendingIRQ(AFEC0_IRQn);
+    MCAPP_MotorControlParamInit();
 	NVIC_SetPriority(AFEC0_IRQn, 0);
 	AFEC0_CallbackRegister(MCAPP_ControlLoopISR, (uintptr_t)NULL);
 	NVIC_EnableIRQ(AFEC0_IRQn);
 	AFEC0_ChannelsInterruptEnable(AFEC_INTERRUPT_EOC_7_MASK);
 	((pio_registers_t*)PIO_PORT_D)->PIO_PDR = ~0xF8FFFFFF; // Enable PWML output. 
-	MCAPP_MotorControlParamInit();
+	
 	gCtrlParam.motorStatus = MOTOR_STATUS_RUNNING;
 	gCtrlParam.endSpeed = OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC;
 	/* Clear fault before start */

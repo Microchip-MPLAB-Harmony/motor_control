@@ -1,25 +1,26 @@
 /*******************************************************************************
-  PWM Peripheral Library Interface Header File
+  Cortex-M L1 Cache Header
 
-  Company
-    Microchip Technology Inc.
+  File Name:
+    device_cache.h
 
-  File Name
-    plib_pwm_common.h
+  Summary:
+    Preprocessor definitions to provide L1 Cache control.
 
-  Summary
-    PWM peripheral library interface.
+  Description:
+    An MPLAB PLIB or Project can include this header to perform cache cleans,
+    invalidates etc. For the DCache and ICache.
 
-  Description
-    This file defines the interface to the PWM peripheral library.  This
-    library provides access to and control of the associated peripheral
-    instance.
+  Remarks:
+    This header should not define any prototypes or data definitions, or 
+    include any files that do.  The file only provides macro definitions for 
+    build-time.
 
 *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -42,21 +43,17 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef PLIB_PWM_COMMON_H    // Guards against multiple inclusion
-#define PLIB_PWM_COMMON_H
-
+#ifndef DEVICE_CACHE_H
+#define DEVICE_CACHE_H
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
-/*  This section lists the other files that are included in this file.
+/*  This section Includes other configuration headers necessary to completely
+    define this configuration.
 */
-
-#include <stddef.h>
-#include <stdbool.h>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -64,84 +61,32 @@
 extern "C" {
 
 #endif
-
 // DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Data Types
+// Section: L1 Cache Configuration
 // *****************************************************************************
 // *****************************************************************************
-/*  The following data type definitions are used by the functions in this
-    interface and should be considered part it.
-*/
+#define ICACHE_ENABLE()                                SCB_EnableICache()
+#define ICACHE_DISABLE()                               SCB_DisableICache()
+#define ICACHE_INVALIDATE()                            SCB_InvalidateICache()
+#define INSTRUCTION_CACHE_ENABLED                      true
 
+#define DCACHE_ENABLE()                                SCB_EnableDCache()
+#define DCACHE_DISABLE()                               SCB_DisableDCache()
+#define DCACHE_INVALIDATE()                            SCB_InvalidateDCache()
+#define DCACHE_CLEAN()                                 SCB_CleanDCache()
+#define DCACHE_CLEAN_INVALIDATE()                      SCB_CleanInvalidateDCache()
+#define DCACHE_CLEAN_BY_ADDR(addr,sz)                  SCB_CleanDCache_by_Addr(addr,sz)
+#define DCACHE_INVALIDATE_BY_ADDR(addr,sz)             SCB_InvalidateDCache_by_Addr(addr,sz)
+#define DCACHE_CLEAN_INVALIDATE_BY_ADDR(addr,sz)       SCB_CleanInvalidateDCache_by_Addr(addr,sz)
+#define DATA_CACHE_ENABLED                             true
 
-typedef void (*PWM_CALLBACK)(uint32_t status, uintptr_t context );
-// *****************************************************************************
-
-typedef enum
-{
-    PWM_CHANNEL_0,
-    PWM_CHANNEL_1,
-    PWM_CHANNEL_2,
-    PWM_CHANNEL_3
-}PWM_CHANNEL_NUM;
-// *****************************************************************************
-
-typedef enum
-{
-    PWM_CHANNEL_0_MASK = (1U << 0U),
-    PWM_CHANNEL_1_MASK = (1U << 1U),
-    PWM_CHANNEL_2_MASK = (1U << 2U),
-    PWM_CHANNEL_3_MASK = (1U << 3U)
-}PWM_CHANNEL_MASK;
-
-// *****************************************************************************
-
-typedef enum
-{
-    PWM_COMPARE_0,
-    PWM_COMPARE_1,
-    PWM_COMPARE_2,
-    PWM_COMPARE_3,
-    PWM_COMPARE_4,
-    PWM_COMPARE_5,
-    PWM_COMPARE_6,
-    PWM_COMPARE_7,
-}PWM_COMPARE;
-
-// *****************************************************************************
-
-typedef enum
-{
-    PWM_FAULT_ID_0,
-    PWM_FAULT_ID_1,
-    PWM_FAULT_ID_2,
-    PWM_FAULT_ID_3,
-    PWM_FAULT_ID_4,
-    PWM_FAULT_ID_5,
-    PWM_FAULT_ID_6,
-    PWM_FAULT_ID_7,
-}PWM_FAULT_ID;
-
-typedef struct
-{
-    PWM_CALLBACK callback_fn;
-    uintptr_t context;
-}PWM_CALLBACK_OBJECT;
-
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
+//DOM-IGNORE-BEGIN
+#ifdef __cplusplus
 }
-
 #endif
-// DOM-IGNORE-END
+//DOM-IGNORE-END
 
-#endif //PLIB_PWM_COMMON_H
-
-/**
- End of File
-*/
+#endif // #ifndef DEVICE_CACHE_H
