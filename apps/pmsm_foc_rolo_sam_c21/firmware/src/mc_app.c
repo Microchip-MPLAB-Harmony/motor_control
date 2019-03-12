@@ -1585,14 +1585,14 @@ void motorcontrol(void)
                 {
                     /* idmax calc and d reference clamping */
 #ifdef USE_DIVAS
-                if(MAX_CUR > curdqr.y) 
-                {
-                    iq_pi.hlim = (int32_t)DIVAS_SquareRoot((uint32_t)((uint32_t)(MAX_CUR_SQUARED)- (uint32_t)(curdqr.y*curdqr.y)));
-                }
-                else
-                {
-                    iq_pi.hlim = 0;
-                }
+                    if(MAX_CUR > curdqr.y) 
+                    {
+                        s32a = (int32_t)DIVAS_SquareRoot((uint32_t)((uint32_t)(MAX_CUR_SQUARED)- (uint32_t)(curdqr.y*curdqr.y)));
+                    }
+                    else
+                    {
+                        s32a = 0;
+                    }
 #else
                     s32a = library_scat(MAX_CUR, curdqr.y);
 #endif 
