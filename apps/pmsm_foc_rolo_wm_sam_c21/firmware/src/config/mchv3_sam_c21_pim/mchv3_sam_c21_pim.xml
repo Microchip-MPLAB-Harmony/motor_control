@@ -1744,31 +1744,52 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="8" id="sercom3">
       <Symbols dnOrder="0">
-        <Boolean dnOrder="0" id="USART_INTERRUPT_MODE">
+        <Integer dnOrder="0" id="I2CM_BAUD">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="sercom3" priority="1" value="59880"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <Integer dnOrder="1" id="SPI_BAUD_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="sercom3" priority="1" value="23"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <Integer dnOrder="2" id="USART_BAUD_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="sercom3" priority="1" value="63019"/>
+            </Dynamic>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="3" id="USART_INTERRUPT_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="false"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="1" id="USART_RXPO">
+        <KeyValueSet dnOrder="4" id="USART_RXPO">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="2" id="USART_SAMPLE_COUNT">
+        <Integer dnOrder="5" id="USART_SAMPLE_COUNT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="sercom3" priority="1" value="16"/>
             </Dynamic>
           </Values>
         </Integer>
-        <Integer dnOrder="3" id="USART_SAMPLE_RATE">
+        <Integer dnOrder="6" id="USART_SAMPLE_RATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="sercom3" priority="1" value="0"/>
             </Dynamic>
           </Values>
         </Integer>
-        <KeyValueSet dnOrder="4" id="USART_TXPO">
+        <KeyValueSet dnOrder="7" id="USART_TXPO">
           <Values dnOrder="0">
             <User dnOrder="0" value="0"/>
           </Values>
@@ -1871,14 +1892,14 @@
         <Comment dnOrder="10" id="TCC_DTHS_COMMENT">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
-              <Value dnOrder="0">****&amp;#160;High&amp;#160;side&amp;#160;dead&amp;#160;time&amp;#160;is&amp;#160;1.0&amp;#160;uS&amp;#160;****</Value>
+              <Value dnOrder="0">****&amp;#160;High&amp;#160;side&amp;#160;dead&amp;#160;time&amp;#160;is&amp;#160;2.0&amp;#160;uS&amp;#160;****</Value>
             </String>
           </Attributes>
         </Comment>
         <Comment dnOrder="11" id="TCC_DTLS_COMMENT">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
-              <Value dnOrder="0">****&amp;#160;Low&amp;#160;side&amp;#160;dead&amp;#160;time&amp;#160;is&amp;#160;1.0&amp;#160;uS&amp;#160;****</Value>
+              <Value dnOrder="0">****&amp;#160;Low&amp;#160;side&amp;#160;dead&amp;#160;time&amp;#160;is&amp;#160;2.0&amp;#160;uS&amp;#160;****</Value>
             </String>
           </Attributes>
         </Comment>
@@ -1913,12 +1934,12 @@
         </KeyValueSet>
         <Integer dnOrder="17" id="TCC_WEXCTRL_DTHS">
           <Values dnOrder="0">
-            <User dnOrder="0" value="48"/>
+            <User dnOrder="0" value="96"/>
           </Values>
         </Integer>
         <Integer dnOrder="18" id="TCC_WEXCTRL_DTLS">
           <Values dnOrder="0">
-            <User dnOrder="0" value="48"/>
+            <User dnOrder="0" value="96"/>
           </Values>
         </Integer>
       </Symbols>

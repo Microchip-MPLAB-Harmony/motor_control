@@ -126,7 +126,9 @@ void SYS_Initialize ( void* data )
 
     TCC0_PWMInitialize();
 
+
     ADC0_Initialize();
+
     ADC1_Initialize();
     EIC_Initialize();
 

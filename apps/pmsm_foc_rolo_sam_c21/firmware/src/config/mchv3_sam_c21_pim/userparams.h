@@ -173,7 +173,7 @@ Macro definitions
 /* slower sampling frequency [Hz] (speed ramps and slower functions) */
 #define SAMF_SLOW       (  100 )  
 
-#define DEADT_TICKS     (   48U )		/* 48 ticks @48MHz -> 1us */
+#define DEADT_TICKS     (   96U )		/* 48 ticks @48MHz -> 1us */
 
 
 
