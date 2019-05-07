@@ -7,27 +7,30 @@
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mclv2_sam_e54_pim" projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f4" displayName="adc" projectFiles="true">
+            <logicalFolder name="f5" displayName="adc" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/adc/plib_adc_common.h</itemPath>
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/adc/plib_adc0.h</itemPath>
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/adc/plib_adc1.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="clock" projectFiles="true">
+            <logicalFolder name="f7" displayName="clock" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/clock/plib_clock.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="cmcc" projectFiles="true">
+            <logicalFolder name="f9" displayName="cmcc" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/cmcc/plib_cmcc.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="eic" projectFiles="true">
+            <logicalFolder name="f10" displayName="eic" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/eic/plib_eic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f3" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/evsys/plib_evsys.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f8" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="port" projectFiles="true">
+            <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
+              <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="port" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="sercom" projectFiles="true">
@@ -36,7 +39,7 @@
                 <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/sercom/usart/plib_sercom_usart_common.h</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="tcc" projectFiles="true">
+            <logicalFolder name="f4" displayName="tcc" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/tcc/plib_tcc0.h</itemPath>
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/tcc/plib_tcc_common.h</itemPath>
             </logicalFolder>
@@ -138,26 +141,29 @@
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mclv2_sam_e54_pim" projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f4" displayName="adc" projectFiles="true">
+            <logicalFolder name="f5" displayName="adc" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/adc/plib_adc0.c</itemPath>
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/adc/plib_adc1.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="clock" projectFiles="true">
+            <logicalFolder name="f7" displayName="clock" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/clock/plib_clock.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="cmcc" projectFiles="true">
+            <logicalFolder name="f9" displayName="cmcc" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/cmcc/plib_cmcc.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="eic" projectFiles="true">
+            <logicalFolder name="f10" displayName="eic" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/eic/plib_eic.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f3" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/evsys/plib_evsys.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f8" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="port" projectFiles="true">
+            <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
+              <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="port" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="sercom" projectFiles="true">
@@ -165,7 +171,7 @@
                 <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/sercom/usart/plib_sercom2_usart.c</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="tcc" projectFiles="true">
+            <logicalFolder name="f4" displayName="tcc" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/tcc/plib_tcc0.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -212,8 +218,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME54_DFP" vendor="Microchip" version="2.0.12"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
+        <pack name="SAME54_DFP" vendor="Microchip" version="2.0.12"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -267,7 +273,7 @@
         <property key="programoptions.programuserotp" value="false"/>
       </AtmelIceTool>
       <C32>
-        <property key="additional-warnings" value="false"/>
+        <property key="additional-warnings" value="true"/>
         <property key="addresss-attribute-use" value="false"/>
         <property key="enable-app-io" value="false"/>
         <property key="enable-omit-frame-pointer" value="false"/>
@@ -279,7 +285,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
-        <property key="make-warnings-into-errors" value="false"/>
+        <property key="make-warnings-into-errors" value="true"/>
         <property key="optimization-level" value="-O1"/>
         <property key="place-data-into-section" value="true"/>
         <property key="post-instruction-scheduling" value="default"/>

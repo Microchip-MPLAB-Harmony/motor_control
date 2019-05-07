@@ -763,7 +763,7 @@ inline void mcLib_SinCosGen(mcParam_SinCos *scParam)
     
     uint32_t y0_Index;
     uint32_t y0_IndexNext;
-    float x0, x1, y0, y1, temp;
+    float x0, y0, y1, temp;
     
     // Software check to ensure  0 <= Angle < 2*PI
      if(scParam->Angle <  0) 
@@ -781,7 +781,6 @@ inline void mcLib_SinCosGen(mcParam_SinCos *scParam)
         y0_Index = 0;
         y0_IndexNext = 1;
         x0 = ANGLE_2PI;
-        x1 = ANGLE_STEP;
         temp = 0;
     }
     else
@@ -790,11 +789,10 @@ inline void mcLib_SinCosGen(mcParam_SinCos *scParam)
         if(y0_IndexNext >= TABLE_SIZE )
         {
             y0_IndexNext = 0;
-            x1 = ANGLE_2PI;
         }
         else
         {
-            x1 = ((y0_IndexNext) * ANGLE_STEP);
+
         }
 
         x0 = (y0_Index * ANGLE_STEP);  
@@ -802,7 +800,7 @@ inline void mcLib_SinCosGen(mcParam_SinCos *scParam)
     
     // Since below calculation is same for sin & cosine, we can do it once and reuse
     
-	temp = ((scParam->Angle - x0)/(x1 - x0));
+	temp = ((scParam->Angle - x0)*ONE_BY_ANGLE_STEP);
     }
     
 	// Find Sine now

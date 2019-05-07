@@ -66,7 +66,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define 	ANGLE_2PI              	(2*M_PI)               // Defines value for 2*PI
 #define 	TABLE_SIZE      		256                    // Defines the size of sine/cosine look up table
 #define 	ANGLE_STEP      		(float)((float)ANGLE_2PI/(float)TABLE_SIZE) //Defines the angle resolution in the sine/cosine look up table
-
+#define     ONE_BY_ANGLE_STEP       (float)(1/ANGLE_STEP)
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Types

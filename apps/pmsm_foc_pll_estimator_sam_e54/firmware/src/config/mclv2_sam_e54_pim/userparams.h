@@ -302,7 +302,7 @@
 #define     MIN_RHO_OFFSET_ELEC_RAD                              (float)(RHO_OFFSET_ELEC_RAD/PWM_FREQ)
 
 #define     FW_SPEED_RAD_PER_SEC_ELEC                           (float)(((FW_SPEED_RPM/60)*2*M_PI)*NOPOLESPAIRS)
-#define     MAX_NORM                                            (float) 0.99
+#define     MAX_NORM                                            (float) 0.95
 #define     MAX_NORM_SQ                                         (float) (MAX_NORM*MAX_NORM)
 #define     TORQUE_MODE_POT_ADC_RATIO                           (float) (TORQUE_MODE_MAX_CUR/MAX_ADC_COUNT)
 

@@ -91,7 +91,7 @@ void ADC0_Initialize( void )
     }
 
     /* Writing calibration values in BIASREFBUF, BIASCOMP and BIASR2R */
-    ADC0_REGS->ADC_CALIB =(uint32_t)( ADC_CALIB_BIASCOMP((((*(uint64_t*)SW0_ADDR) & ADC0_BIASCOMP_POS)))) \
+    ADC0_REGS->ADC_CALIB =(uint32_t)(ADC_CALIB_BIASCOMP((((*(uint64_t*)SW0_ADDR) & ADC0_BIASCOMP_Msk) >> ADC0_BIASCOMP_POS))) \
             | ADC_CALIB_BIASR2R((((*(uint64_t*)SW0_ADDR) & ADC0_BIASR2R_Msk) >> ADC0_BIASR2R_POS))
             | ADC_CALIB_BIASREFBUF(((*(uint64_t*)SW0_ADDR) & ADC0_BIASREFBUF_Msk)>> ADC0_BIASREFBUF_POS );
 
@@ -169,6 +169,26 @@ void ADC0_ConversionStart( void )
     }
 }
 
+/* Configure window comparison threshold values */
+void ADC0_ComparisonWindowSet(uint16_t low_threshold, uint16_t high_threshold)
+{
+    ADC0_REGS->ADC_WINLT = low_threshold;
+    ADC0_REGS->ADC_WINUT = high_threshold;
+    while((ADC0_REGS->ADC_SYNCBUSY))
+    {
+        /* Wait for Synchronization */
+    }
+}
+
+void ADC0_WindowModeSet(ADC_WINMODE mode)
+{
+    ADC0_REGS->ADC_CTRLB &= ~ADC_CTRLB_WINMODE_Msk;
+    ADC0_REGS->ADC_CTRLB |= mode << ADC_CTRLB_WINMODE_Pos;
+    while((ADC0_REGS->ADC_SYNCBUSY))
+    {
+        /* Wait for Synchronization */
+    }
+}
 
 /* Read the conversion result */
 uint16_t ADC0_ConversionResultGet( void )

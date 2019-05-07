@@ -100,6 +100,9 @@ void ADC1_ConversionStart( void );
 
 uint16_t ADC1_ConversionResultGet( void );
 
+void ADC1_ComparisonWindowSet(uint16_t low_threshold, uint16_t high_threshold);
+
+void ADC1_WindowModeSet(ADC_WINMODE mode);
 
 uint16_t ADC1_LastConversionResultGet( void );
 
