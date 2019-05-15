@@ -132,7 +132,7 @@
  * max current = x
  * (x * 0.01 * 10.06) + 1.65V = 3.3V
  * x = 16.4 Amps */
-#define MAX_CURRENT                                         ((float)(16.4)) /* Max current as per above calculations */
+#define MAX_CURRENT                                         ((float)(16.4)) /* Max Board Current in A */
 #define MAX_ADC_COUNT                                       (float)4095     /* 12-bit ADC */
 #define MAX_ADC_INPUT_VOLTAGE                               (float)3.3      /* volts */
 

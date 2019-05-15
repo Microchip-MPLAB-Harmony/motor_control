@@ -787,9 +787,7 @@ float cosineTable[TABLE_SIZE] =
 /******************************************************************************/
  void MCLIB_SinCosCalc(MCLIB_POSITION* position )
 {
-    /* IMPORTANT:
-       DO NOT PASS "SincosParm.angle" > 2*PI. There is no software check
-    
+    /* 
        Since we are using "float", it is not possible to get an index of array
        directly. Almost every time, we will need to do interpolation, as per
        following equation: -
@@ -797,7 +795,13 @@ float cosineTable[TABLE_SIZE] =
     
     uint32_t y0_Index;
     uint32_t y0_IndexNext;
-    float x0, x1, y0, y1, temp;
+    float x0, y0, y1, temp;
+    
+    // Software check to ensure  0 <= Angle < 2*PI
+    if(position->angle <  0) 
+        position->angle = position->angle + TOTAL_SINE_TABLE_ANGLE; 
+    if(position->angle >= TOTAL_SINE_TABLE_ANGLE)
+        position->angle = position->angle - TOTAL_SINE_TABLE_ANGLE;    
     
     y0_Index = (uint32_t)(position->angle / ANGLE_STEP);
     y0_IndexNext = y0_Index + 1;
@@ -805,17 +809,12 @@ float cosineTable[TABLE_SIZE] =
     if(y0_IndexNext >= TABLE_SIZE )
     {
         y0_IndexNext = 0;
-        x1 = TOTAL_SINE_TABLE_ANGLE;
-    }
-    else
-    {
-        x1 = ((y0_IndexNext) * ANGLE_STEP);
     }
     
     x0 = (y0_Index * ANGLE_STEP);  
     
     /* Since below calculation is same for sin & cosine, we can do it once and reuse. */
-    temp = ((position->angle - x0) / (x1 - x0));
+    temp = ((position->angle - x0) * ONE_BY_ANGLE_STEP);
     /*==============  Find Sine now  =============================================*/
     y0 = sineTable[y0_Index];
     y1 = sineTable[y0_IndexNext];     

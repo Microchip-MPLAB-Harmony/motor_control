@@ -159,19 +159,19 @@
 /* Driver board configuration Parameters */
 /***********************************************************************************************/
 /* MCLV-2 motor control driver board 
- * Gain of opamp = 10
+ * Gain of opamp = 15
  * shunt resistor = 0.025 ohms
  * DC offset = 1.65V
  * max current = x
  * (x * 0.025 * 15) + 1.65V = 3.3V
  * x = 4.4Amps */
 
-#define MAX_CURRENT                                         ((float)(4.4)) /* Max current as per above calculations */
+#define MAX_CURRENT                                         ((float)(4.4))  /* Max Board Current in A */
 #define MAX_ADC_COUNT                                       (float)4095     /* 12-bit ADC */
 #define MAX_ADC_INPUT_VOLTAGE                               (float)3.3      /* volts */
 
 #define DC_BUS_VOLTAGE                                      (float)24.0     /* Volts */
-#define DCBUS_SENSE_TOP_RESISTOR                            (float)30.00     /* 30K Ohm */
+#define DCBUS_SENSE_TOP_RESISTOR                            (float)30.00    /* 30K Ohm */
 #define DCBUS_SENSE_BOTTOM_RESISTOR                         (float)2.00     /* 2K Ohm */
 #define STATOR_VOLTAGE_LIMIT                                (float)(0.98)   /* In percentage */
 
