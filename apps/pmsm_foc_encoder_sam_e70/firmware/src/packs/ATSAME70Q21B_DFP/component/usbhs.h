@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-01-18T21:19:59Z */
+/* file generated from device description version 2019-04-01T08:48:30Z */
 #ifndef _SAME70_USBHS_COMPONENT_H_
 #define _SAME70_USBHS_COMPONENT_H_
 
@@ -1463,27 +1463,27 @@
 #define USBHS_HSTISR_PEP_9_Pos                _U_(17)                                              /**< (USBHS_HSTISR) Pipe 9 Interrupt Position */
 #define USBHS_HSTISR_PEP_9_Msk                (_U_(0x1) << USBHS_HSTISR_PEP_9_Pos)                 /**< (USBHS_HSTISR) Pipe 9 Interrupt Mask */
 #define USBHS_HSTISR_PEP_9(value)             (USBHS_HSTISR_PEP_9_Msk & ((value) << USBHS_HSTISR_PEP_9_Pos))
-#define USBHS_HSTISR_DMA_0_Pos                _U_(25)                                              /**< (USBHS_HSTISR) DMA Channel 0 Interrupt Position */
-#define USBHS_HSTISR_DMA_0_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_0_Pos)                 /**< (USBHS_HSTISR) DMA Channel 0 Interrupt Mask */
-#define USBHS_HSTISR_DMA_0(value)             (USBHS_HSTISR_DMA_0_Msk & ((value) << USBHS_HSTISR_DMA_0_Pos))
-#define USBHS_HSTISR_DMA_1_Pos                _U_(26)                                              /**< (USBHS_HSTISR) DMA Channel 1 Interrupt Position */
-#define USBHS_HSTISR_DMA_1_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_1_Pos)                 /**< (USBHS_HSTISR) DMA Channel 1 Interrupt Mask */
+#define USBHS_HSTISR_DMA_1_Pos                _U_(25)                                              /**< (USBHS_HSTISR) DMA Channel 0 Interrupt Position */
+#define USBHS_HSTISR_DMA_1_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_1_Pos)                 /**< (USBHS_HSTISR) DMA Channel 0 Interrupt Mask */
 #define USBHS_HSTISR_DMA_1(value)             (USBHS_HSTISR_DMA_1_Msk & ((value) << USBHS_HSTISR_DMA_1_Pos))
-#define USBHS_HSTISR_DMA_2_Pos                _U_(27)                                              /**< (USBHS_HSTISR) DMA Channel 2 Interrupt Position */
-#define USBHS_HSTISR_DMA_2_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_2_Pos)                 /**< (USBHS_HSTISR) DMA Channel 2 Interrupt Mask */
+#define USBHS_HSTISR_DMA_2_Pos                _U_(26)                                              /**< (USBHS_HSTISR) DMA Channel 1 Interrupt Position */
+#define USBHS_HSTISR_DMA_2_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_2_Pos)                 /**< (USBHS_HSTISR) DMA Channel 1 Interrupt Mask */
 #define USBHS_HSTISR_DMA_2(value)             (USBHS_HSTISR_DMA_2_Msk & ((value) << USBHS_HSTISR_DMA_2_Pos))
-#define USBHS_HSTISR_DMA_3_Pos                _U_(28)                                              /**< (USBHS_HSTISR) DMA Channel 3 Interrupt Position */
-#define USBHS_HSTISR_DMA_3_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_3_Pos)                 /**< (USBHS_HSTISR) DMA Channel 3 Interrupt Mask */
+#define USBHS_HSTISR_DMA_3_Pos                _U_(27)                                              /**< (USBHS_HSTISR) DMA Channel 2 Interrupt Position */
+#define USBHS_HSTISR_DMA_3_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_3_Pos)                 /**< (USBHS_HSTISR) DMA Channel 2 Interrupt Mask */
 #define USBHS_HSTISR_DMA_3(value)             (USBHS_HSTISR_DMA_3_Msk & ((value) << USBHS_HSTISR_DMA_3_Pos))
-#define USBHS_HSTISR_DMA_4_Pos                _U_(29)                                              /**< (USBHS_HSTISR) DMA Channel 4 Interrupt Position */
-#define USBHS_HSTISR_DMA_4_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_4_Pos)                 /**< (USBHS_HSTISR) DMA Channel 4 Interrupt Mask */
+#define USBHS_HSTISR_DMA_4_Pos                _U_(28)                                              /**< (USBHS_HSTISR) DMA Channel 3 Interrupt Position */
+#define USBHS_HSTISR_DMA_4_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_4_Pos)                 /**< (USBHS_HSTISR) DMA Channel 3 Interrupt Mask */
 #define USBHS_HSTISR_DMA_4(value)             (USBHS_HSTISR_DMA_4_Msk & ((value) << USBHS_HSTISR_DMA_4_Pos))
-#define USBHS_HSTISR_DMA_5_Pos                _U_(30)                                              /**< (USBHS_HSTISR) DMA Channel 5 Interrupt Position */
-#define USBHS_HSTISR_DMA_5_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_5_Pos)                 /**< (USBHS_HSTISR) DMA Channel 5 Interrupt Mask */
+#define USBHS_HSTISR_DMA_5_Pos                _U_(29)                                              /**< (USBHS_HSTISR) DMA Channel 4 Interrupt Position */
+#define USBHS_HSTISR_DMA_5_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_5_Pos)                 /**< (USBHS_HSTISR) DMA Channel 4 Interrupt Mask */
 #define USBHS_HSTISR_DMA_5(value)             (USBHS_HSTISR_DMA_5_Msk & ((value) << USBHS_HSTISR_DMA_5_Pos))
-#define USBHS_HSTISR_DMA_6_Pos                _U_(31)                                              /**< (USBHS_HSTISR) DMA Channel 6 Interrupt Position */
-#define USBHS_HSTISR_DMA_6_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_6_Pos)                 /**< (USBHS_HSTISR) DMA Channel 6 Interrupt Mask */
+#define USBHS_HSTISR_DMA_6_Pos                _U_(30)                                              /**< (USBHS_HSTISR) DMA Channel 5 Interrupt Position */
+#define USBHS_HSTISR_DMA_6_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_6_Pos)                 /**< (USBHS_HSTISR) DMA Channel 5 Interrupt Mask */
 #define USBHS_HSTISR_DMA_6(value)             (USBHS_HSTISR_DMA_6_Msk & ((value) << USBHS_HSTISR_DMA_6_Pos))
+#define USBHS_HSTISR_DMA_7_Pos                _U_(31)                                              /**< (USBHS_HSTISR) DMA Channel 6 Interrupt Position */
+#define USBHS_HSTISR_DMA_7_Msk                (_U_(0x1) << USBHS_HSTISR_DMA_7_Pos)                 /**< (USBHS_HSTISR) DMA Channel 6 Interrupt Mask */
+#define USBHS_HSTISR_DMA_7(value)             (USBHS_HSTISR_DMA_7_Msk & ((value) << USBHS_HSTISR_DMA_7_Pos))
 #define USBHS_HSTISR_Msk                      _U_(0xFE03FF7F)                                      /**< (USBHS_HSTISR) Register Mask  */
 
 #define USBHS_HSTISR_PEP__Pos                 _U_(8)                                               /**< (USBHS_HSTISR Position) Pipe x Interrupt */
@@ -1540,27 +1540,27 @@
 #define USBHS_HSTIFR_HWUPIS_Pos               _U_(6)                                               /**< (USBHS_HSTIFR) Host Wake-Up Interrupt Set Position */
 #define USBHS_HSTIFR_HWUPIS_Msk               (_U_(0x1) << USBHS_HSTIFR_HWUPIS_Pos)                /**< (USBHS_HSTIFR) Host Wake-Up Interrupt Set Mask */
 #define USBHS_HSTIFR_HWUPIS(value)            (USBHS_HSTIFR_HWUPIS_Msk & ((value) << USBHS_HSTIFR_HWUPIS_Pos))
-#define USBHS_HSTIFR_DMA_0_Pos                _U_(25)                                              /**< (USBHS_HSTIFR) DMA Channel 0 Interrupt Set Position */
-#define USBHS_HSTIFR_DMA_0_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_0_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 0 Interrupt Set Mask */
-#define USBHS_HSTIFR_DMA_0(value)             (USBHS_HSTIFR_DMA_0_Msk & ((value) << USBHS_HSTIFR_DMA_0_Pos))
-#define USBHS_HSTIFR_DMA_1_Pos                _U_(26)                                              /**< (USBHS_HSTIFR) DMA Channel 1 Interrupt Set Position */
-#define USBHS_HSTIFR_DMA_1_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_1_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 1 Interrupt Set Mask */
+#define USBHS_HSTIFR_DMA_1_Pos                _U_(25)                                              /**< (USBHS_HSTIFR) DMA Channel 0 Interrupt Set Position */
+#define USBHS_HSTIFR_DMA_1_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_1_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 0 Interrupt Set Mask */
 #define USBHS_HSTIFR_DMA_1(value)             (USBHS_HSTIFR_DMA_1_Msk & ((value) << USBHS_HSTIFR_DMA_1_Pos))
-#define USBHS_HSTIFR_DMA_2_Pos                _U_(27)                                              /**< (USBHS_HSTIFR) DMA Channel 2 Interrupt Set Position */
-#define USBHS_HSTIFR_DMA_2_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_2_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 2 Interrupt Set Mask */
+#define USBHS_HSTIFR_DMA_2_Pos                _U_(26)                                              /**< (USBHS_HSTIFR) DMA Channel 1 Interrupt Set Position */
+#define USBHS_HSTIFR_DMA_2_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_2_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 1 Interrupt Set Mask */
 #define USBHS_HSTIFR_DMA_2(value)             (USBHS_HSTIFR_DMA_2_Msk & ((value) << USBHS_HSTIFR_DMA_2_Pos))
-#define USBHS_HSTIFR_DMA_3_Pos                _U_(28)                                              /**< (USBHS_HSTIFR) DMA Channel 3 Interrupt Set Position */
-#define USBHS_HSTIFR_DMA_3_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_3_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 3 Interrupt Set Mask */
+#define USBHS_HSTIFR_DMA_3_Pos                _U_(27)                                              /**< (USBHS_HSTIFR) DMA Channel 2 Interrupt Set Position */
+#define USBHS_HSTIFR_DMA_3_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_3_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 2 Interrupt Set Mask */
 #define USBHS_HSTIFR_DMA_3(value)             (USBHS_HSTIFR_DMA_3_Msk & ((value) << USBHS_HSTIFR_DMA_3_Pos))
-#define USBHS_HSTIFR_DMA_4_Pos                _U_(29)                                              /**< (USBHS_HSTIFR) DMA Channel 4 Interrupt Set Position */
-#define USBHS_HSTIFR_DMA_4_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_4_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 4 Interrupt Set Mask */
+#define USBHS_HSTIFR_DMA_4_Pos                _U_(28)                                              /**< (USBHS_HSTIFR) DMA Channel 3 Interrupt Set Position */
+#define USBHS_HSTIFR_DMA_4_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_4_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 3 Interrupt Set Mask */
 #define USBHS_HSTIFR_DMA_4(value)             (USBHS_HSTIFR_DMA_4_Msk & ((value) << USBHS_HSTIFR_DMA_4_Pos))
-#define USBHS_HSTIFR_DMA_5_Pos                _U_(30)                                              /**< (USBHS_HSTIFR) DMA Channel 5 Interrupt Set Position */
-#define USBHS_HSTIFR_DMA_5_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_5_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 5 Interrupt Set Mask */
+#define USBHS_HSTIFR_DMA_5_Pos                _U_(29)                                              /**< (USBHS_HSTIFR) DMA Channel 4 Interrupt Set Position */
+#define USBHS_HSTIFR_DMA_5_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_5_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 4 Interrupt Set Mask */
 #define USBHS_HSTIFR_DMA_5(value)             (USBHS_HSTIFR_DMA_5_Msk & ((value) << USBHS_HSTIFR_DMA_5_Pos))
-#define USBHS_HSTIFR_DMA_6_Pos                _U_(31)                                              /**< (USBHS_HSTIFR) DMA Channel 6 Interrupt Set Position */
-#define USBHS_HSTIFR_DMA_6_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_6_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 6 Interrupt Set Mask */
+#define USBHS_HSTIFR_DMA_6_Pos                _U_(30)                                              /**< (USBHS_HSTIFR) DMA Channel 5 Interrupt Set Position */
+#define USBHS_HSTIFR_DMA_6_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_6_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 5 Interrupt Set Mask */
 #define USBHS_HSTIFR_DMA_6(value)             (USBHS_HSTIFR_DMA_6_Msk & ((value) << USBHS_HSTIFR_DMA_6_Pos))
+#define USBHS_HSTIFR_DMA_7_Pos                _U_(31)                                              /**< (USBHS_HSTIFR) DMA Channel 6 Interrupt Set Position */
+#define USBHS_HSTIFR_DMA_7_Msk                (_U_(0x1) << USBHS_HSTIFR_DMA_7_Pos)                 /**< (USBHS_HSTIFR) DMA Channel 6 Interrupt Set Mask */
+#define USBHS_HSTIFR_DMA_7(value)             (USBHS_HSTIFR_DMA_7_Msk & ((value) << USBHS_HSTIFR_DMA_7_Pos))
 #define USBHS_HSTIFR_Msk                      _U_(0xFE00007F)                                      /**< (USBHS_HSTIFR) Register Mask  */
 
 #define USBHS_HSTIFR_DMA__Pos                 _U_(25)                                              /**< (USBHS_HSTIFR Position) DMA Channel 6 Interrupt Set */
@@ -1619,27 +1619,27 @@
 #define USBHS_HSTIMR_PEP_9_Pos                _U_(17)                                              /**< (USBHS_HSTIMR) Pipe 9 Interrupt Enable Position */
 #define USBHS_HSTIMR_PEP_9_Msk                (_U_(0x1) << USBHS_HSTIMR_PEP_9_Pos)                 /**< (USBHS_HSTIMR) Pipe 9 Interrupt Enable Mask */
 #define USBHS_HSTIMR_PEP_9(value)             (USBHS_HSTIMR_PEP_9_Msk & ((value) << USBHS_HSTIMR_PEP_9_Pos))
-#define USBHS_HSTIMR_DMA_0_Pos                _U_(25)                                              /**< (USBHS_HSTIMR) DMA Channel 0 Interrupt Enable Position */
-#define USBHS_HSTIMR_DMA_0_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_0_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 0 Interrupt Enable Mask */
-#define USBHS_HSTIMR_DMA_0(value)             (USBHS_HSTIMR_DMA_0_Msk & ((value) << USBHS_HSTIMR_DMA_0_Pos))
-#define USBHS_HSTIMR_DMA_1_Pos                _U_(26)                                              /**< (USBHS_HSTIMR) DMA Channel 1 Interrupt Enable Position */
-#define USBHS_HSTIMR_DMA_1_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_1_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 1 Interrupt Enable Mask */
+#define USBHS_HSTIMR_DMA_1_Pos                _U_(25)                                              /**< (USBHS_HSTIMR) DMA Channel 0 Interrupt Enable Position */
+#define USBHS_HSTIMR_DMA_1_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_1_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 0 Interrupt Enable Mask */
 #define USBHS_HSTIMR_DMA_1(value)             (USBHS_HSTIMR_DMA_1_Msk & ((value) << USBHS_HSTIMR_DMA_1_Pos))
-#define USBHS_HSTIMR_DMA_2_Pos                _U_(27)                                              /**< (USBHS_HSTIMR) DMA Channel 2 Interrupt Enable Position */
-#define USBHS_HSTIMR_DMA_2_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_2_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 2 Interrupt Enable Mask */
+#define USBHS_HSTIMR_DMA_2_Pos                _U_(26)                                              /**< (USBHS_HSTIMR) DMA Channel 1 Interrupt Enable Position */
+#define USBHS_HSTIMR_DMA_2_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_2_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 1 Interrupt Enable Mask */
 #define USBHS_HSTIMR_DMA_2(value)             (USBHS_HSTIMR_DMA_2_Msk & ((value) << USBHS_HSTIMR_DMA_2_Pos))
-#define USBHS_HSTIMR_DMA_3_Pos                _U_(28)                                              /**< (USBHS_HSTIMR) DMA Channel 3 Interrupt Enable Position */
-#define USBHS_HSTIMR_DMA_3_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_3_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 3 Interrupt Enable Mask */
+#define USBHS_HSTIMR_DMA_3_Pos                _U_(27)                                              /**< (USBHS_HSTIMR) DMA Channel 2 Interrupt Enable Position */
+#define USBHS_HSTIMR_DMA_3_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_3_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 2 Interrupt Enable Mask */
 #define USBHS_HSTIMR_DMA_3(value)             (USBHS_HSTIMR_DMA_3_Msk & ((value) << USBHS_HSTIMR_DMA_3_Pos))
-#define USBHS_HSTIMR_DMA_4_Pos                _U_(29)                                              /**< (USBHS_HSTIMR) DMA Channel 4 Interrupt Enable Position */
-#define USBHS_HSTIMR_DMA_4_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_4_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 4 Interrupt Enable Mask */
+#define USBHS_HSTIMR_DMA_4_Pos                _U_(28)                                              /**< (USBHS_HSTIMR) DMA Channel 3 Interrupt Enable Position */
+#define USBHS_HSTIMR_DMA_4_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_4_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 3 Interrupt Enable Mask */
 #define USBHS_HSTIMR_DMA_4(value)             (USBHS_HSTIMR_DMA_4_Msk & ((value) << USBHS_HSTIMR_DMA_4_Pos))
-#define USBHS_HSTIMR_DMA_5_Pos                _U_(30)                                              /**< (USBHS_HSTIMR) DMA Channel 5 Interrupt Enable Position */
-#define USBHS_HSTIMR_DMA_5_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_5_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 5 Interrupt Enable Mask */
+#define USBHS_HSTIMR_DMA_5_Pos                _U_(29)                                              /**< (USBHS_HSTIMR) DMA Channel 4 Interrupt Enable Position */
+#define USBHS_HSTIMR_DMA_5_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_5_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 4 Interrupt Enable Mask */
 #define USBHS_HSTIMR_DMA_5(value)             (USBHS_HSTIMR_DMA_5_Msk & ((value) << USBHS_HSTIMR_DMA_5_Pos))
-#define USBHS_HSTIMR_DMA_6_Pos                _U_(31)                                              /**< (USBHS_HSTIMR) DMA Channel 6 Interrupt Enable Position */
-#define USBHS_HSTIMR_DMA_6_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_6_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 6 Interrupt Enable Mask */
+#define USBHS_HSTIMR_DMA_6_Pos                _U_(30)                                              /**< (USBHS_HSTIMR) DMA Channel 5 Interrupt Enable Position */
+#define USBHS_HSTIMR_DMA_6_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_6_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 5 Interrupt Enable Mask */
 #define USBHS_HSTIMR_DMA_6(value)             (USBHS_HSTIMR_DMA_6_Msk & ((value) << USBHS_HSTIMR_DMA_6_Pos))
+#define USBHS_HSTIMR_DMA_7_Pos                _U_(31)                                              /**< (USBHS_HSTIMR) DMA Channel 6 Interrupt Enable Position */
+#define USBHS_HSTIMR_DMA_7_Msk                (_U_(0x1) << USBHS_HSTIMR_DMA_7_Pos)                 /**< (USBHS_HSTIMR) DMA Channel 6 Interrupt Enable Mask */
+#define USBHS_HSTIMR_DMA_7(value)             (USBHS_HSTIMR_DMA_7_Msk & ((value) << USBHS_HSTIMR_DMA_7_Pos))
 #define USBHS_HSTIMR_Msk                      _U_(0xFE03FF7F)                                      /**< (USBHS_HSTIMR) Register Mask  */
 
 #define USBHS_HSTIMR_PEP__Pos                 _U_(8)                                               /**< (USBHS_HSTIMR Position) Pipe x Interrupt Enable */
@@ -1701,27 +1701,27 @@
 #define USBHS_HSTIDR_PEP_9_Pos                _U_(17)                                              /**< (USBHS_HSTIDR) Pipe 9 Interrupt Disable Position */
 #define USBHS_HSTIDR_PEP_9_Msk                (_U_(0x1) << USBHS_HSTIDR_PEP_9_Pos)                 /**< (USBHS_HSTIDR) Pipe 9 Interrupt Disable Mask */
 #define USBHS_HSTIDR_PEP_9(value)             (USBHS_HSTIDR_PEP_9_Msk & ((value) << USBHS_HSTIDR_PEP_9_Pos))
-#define USBHS_HSTIDR_DMA_0_Pos                _U_(25)                                              /**< (USBHS_HSTIDR) DMA Channel 0 Interrupt Disable Position */
-#define USBHS_HSTIDR_DMA_0_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_0_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 0 Interrupt Disable Mask */
-#define USBHS_HSTIDR_DMA_0(value)             (USBHS_HSTIDR_DMA_0_Msk & ((value) << USBHS_HSTIDR_DMA_0_Pos))
-#define USBHS_HSTIDR_DMA_1_Pos                _U_(26)                                              /**< (USBHS_HSTIDR) DMA Channel 1 Interrupt Disable Position */
-#define USBHS_HSTIDR_DMA_1_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_1_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 1 Interrupt Disable Mask */
+#define USBHS_HSTIDR_DMA_1_Pos                _U_(25)                                              /**< (USBHS_HSTIDR) DMA Channel 0 Interrupt Disable Position */
+#define USBHS_HSTIDR_DMA_1_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_1_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 0 Interrupt Disable Mask */
 #define USBHS_HSTIDR_DMA_1(value)             (USBHS_HSTIDR_DMA_1_Msk & ((value) << USBHS_HSTIDR_DMA_1_Pos))
-#define USBHS_HSTIDR_DMA_2_Pos                _U_(27)                                              /**< (USBHS_HSTIDR) DMA Channel 2 Interrupt Disable Position */
-#define USBHS_HSTIDR_DMA_2_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_2_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 2 Interrupt Disable Mask */
+#define USBHS_HSTIDR_DMA_2_Pos                _U_(26)                                              /**< (USBHS_HSTIDR) DMA Channel 1 Interrupt Disable Position */
+#define USBHS_HSTIDR_DMA_2_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_2_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 1 Interrupt Disable Mask */
 #define USBHS_HSTIDR_DMA_2(value)             (USBHS_HSTIDR_DMA_2_Msk & ((value) << USBHS_HSTIDR_DMA_2_Pos))
-#define USBHS_HSTIDR_DMA_3_Pos                _U_(28)                                              /**< (USBHS_HSTIDR) DMA Channel 3 Interrupt Disable Position */
-#define USBHS_HSTIDR_DMA_3_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_3_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 3 Interrupt Disable Mask */
+#define USBHS_HSTIDR_DMA_3_Pos                _U_(27)                                              /**< (USBHS_HSTIDR) DMA Channel 2 Interrupt Disable Position */
+#define USBHS_HSTIDR_DMA_3_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_3_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 2 Interrupt Disable Mask */
 #define USBHS_HSTIDR_DMA_3(value)             (USBHS_HSTIDR_DMA_3_Msk & ((value) << USBHS_HSTIDR_DMA_3_Pos))
-#define USBHS_HSTIDR_DMA_4_Pos                _U_(29)                                              /**< (USBHS_HSTIDR) DMA Channel 4 Interrupt Disable Position */
-#define USBHS_HSTIDR_DMA_4_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_4_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 4 Interrupt Disable Mask */
+#define USBHS_HSTIDR_DMA_4_Pos                _U_(28)                                              /**< (USBHS_HSTIDR) DMA Channel 3 Interrupt Disable Position */
+#define USBHS_HSTIDR_DMA_4_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_4_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 3 Interrupt Disable Mask */
 #define USBHS_HSTIDR_DMA_4(value)             (USBHS_HSTIDR_DMA_4_Msk & ((value) << USBHS_HSTIDR_DMA_4_Pos))
-#define USBHS_HSTIDR_DMA_5_Pos                _U_(30)                                              /**< (USBHS_HSTIDR) DMA Channel 5 Interrupt Disable Position */
-#define USBHS_HSTIDR_DMA_5_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_5_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 5 Interrupt Disable Mask */
+#define USBHS_HSTIDR_DMA_5_Pos                _U_(29)                                              /**< (USBHS_HSTIDR) DMA Channel 4 Interrupt Disable Position */
+#define USBHS_HSTIDR_DMA_5_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_5_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 4 Interrupt Disable Mask */
 #define USBHS_HSTIDR_DMA_5(value)             (USBHS_HSTIDR_DMA_5_Msk & ((value) << USBHS_HSTIDR_DMA_5_Pos))
-#define USBHS_HSTIDR_DMA_6_Pos                _U_(31)                                              /**< (USBHS_HSTIDR) DMA Channel 6 Interrupt Disable Position */
-#define USBHS_HSTIDR_DMA_6_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_6_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 6 Interrupt Disable Mask */
+#define USBHS_HSTIDR_DMA_6_Pos                _U_(30)                                              /**< (USBHS_HSTIDR) DMA Channel 5 Interrupt Disable Position */
+#define USBHS_HSTIDR_DMA_6_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_6_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 5 Interrupt Disable Mask */
 #define USBHS_HSTIDR_DMA_6(value)             (USBHS_HSTIDR_DMA_6_Msk & ((value) << USBHS_HSTIDR_DMA_6_Pos))
+#define USBHS_HSTIDR_DMA_7_Pos                _U_(31)                                              /**< (USBHS_HSTIDR) DMA Channel 6 Interrupt Disable Position */
+#define USBHS_HSTIDR_DMA_7_Msk                (_U_(0x1) << USBHS_HSTIDR_DMA_7_Pos)                 /**< (USBHS_HSTIDR) DMA Channel 6 Interrupt Disable Mask */
+#define USBHS_HSTIDR_DMA_7(value)             (USBHS_HSTIDR_DMA_7_Msk & ((value) << USBHS_HSTIDR_DMA_7_Pos))
 #define USBHS_HSTIDR_Msk                      _U_(0xFE03FF7F)                                      /**< (USBHS_HSTIDR) Register Mask  */
 
 #define USBHS_HSTIDR_PEP__Pos                 _U_(8)                                               /**< (USBHS_HSTIDR Position) Pipe x Interrupt Disable */
@@ -1783,27 +1783,27 @@
 #define USBHS_HSTIER_PEP_9_Pos                _U_(17)                                              /**< (USBHS_HSTIER) Pipe 9 Interrupt Enable Position */
 #define USBHS_HSTIER_PEP_9_Msk                (_U_(0x1) << USBHS_HSTIER_PEP_9_Pos)                 /**< (USBHS_HSTIER) Pipe 9 Interrupt Enable Mask */
 #define USBHS_HSTIER_PEP_9(value)             (USBHS_HSTIER_PEP_9_Msk & ((value) << USBHS_HSTIER_PEP_9_Pos))
-#define USBHS_HSTIER_DMA_0_Pos                _U_(25)                                              /**< (USBHS_HSTIER) DMA Channel 0 Interrupt Enable Position */
-#define USBHS_HSTIER_DMA_0_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_0_Pos)                 /**< (USBHS_HSTIER) DMA Channel 0 Interrupt Enable Mask */
-#define USBHS_HSTIER_DMA_0(value)             (USBHS_HSTIER_DMA_0_Msk & ((value) << USBHS_HSTIER_DMA_0_Pos))
-#define USBHS_HSTIER_DMA_1_Pos                _U_(26)                                              /**< (USBHS_HSTIER) DMA Channel 1 Interrupt Enable Position */
-#define USBHS_HSTIER_DMA_1_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_1_Pos)                 /**< (USBHS_HSTIER) DMA Channel 1 Interrupt Enable Mask */
+#define USBHS_HSTIER_DMA_1_Pos                _U_(25)                                              /**< (USBHS_HSTIER) DMA Channel 0 Interrupt Enable Position */
+#define USBHS_HSTIER_DMA_1_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_1_Pos)                 /**< (USBHS_HSTIER) DMA Channel 0 Interrupt Enable Mask */
 #define USBHS_HSTIER_DMA_1(value)             (USBHS_HSTIER_DMA_1_Msk & ((value) << USBHS_HSTIER_DMA_1_Pos))
-#define USBHS_HSTIER_DMA_2_Pos                _U_(27)                                              /**< (USBHS_HSTIER) DMA Channel 2 Interrupt Enable Position */
-#define USBHS_HSTIER_DMA_2_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_2_Pos)                 /**< (USBHS_HSTIER) DMA Channel 2 Interrupt Enable Mask */
+#define USBHS_HSTIER_DMA_2_Pos                _U_(26)                                              /**< (USBHS_HSTIER) DMA Channel 1 Interrupt Enable Position */
+#define USBHS_HSTIER_DMA_2_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_2_Pos)                 /**< (USBHS_HSTIER) DMA Channel 1 Interrupt Enable Mask */
 #define USBHS_HSTIER_DMA_2(value)             (USBHS_HSTIER_DMA_2_Msk & ((value) << USBHS_HSTIER_DMA_2_Pos))
-#define USBHS_HSTIER_DMA_3_Pos                _U_(28)                                              /**< (USBHS_HSTIER) DMA Channel 3 Interrupt Enable Position */
-#define USBHS_HSTIER_DMA_3_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_3_Pos)                 /**< (USBHS_HSTIER) DMA Channel 3 Interrupt Enable Mask */
+#define USBHS_HSTIER_DMA_3_Pos                _U_(27)                                              /**< (USBHS_HSTIER) DMA Channel 2 Interrupt Enable Position */
+#define USBHS_HSTIER_DMA_3_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_3_Pos)                 /**< (USBHS_HSTIER) DMA Channel 2 Interrupt Enable Mask */
 #define USBHS_HSTIER_DMA_3(value)             (USBHS_HSTIER_DMA_3_Msk & ((value) << USBHS_HSTIER_DMA_3_Pos))
-#define USBHS_HSTIER_DMA_4_Pos                _U_(29)                                              /**< (USBHS_HSTIER) DMA Channel 4 Interrupt Enable Position */
-#define USBHS_HSTIER_DMA_4_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_4_Pos)                 /**< (USBHS_HSTIER) DMA Channel 4 Interrupt Enable Mask */
+#define USBHS_HSTIER_DMA_4_Pos                _U_(28)                                              /**< (USBHS_HSTIER) DMA Channel 3 Interrupt Enable Position */
+#define USBHS_HSTIER_DMA_4_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_4_Pos)                 /**< (USBHS_HSTIER) DMA Channel 3 Interrupt Enable Mask */
 #define USBHS_HSTIER_DMA_4(value)             (USBHS_HSTIER_DMA_4_Msk & ((value) << USBHS_HSTIER_DMA_4_Pos))
-#define USBHS_HSTIER_DMA_5_Pos                _U_(30)                                              /**< (USBHS_HSTIER) DMA Channel 5 Interrupt Enable Position */
-#define USBHS_HSTIER_DMA_5_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_5_Pos)                 /**< (USBHS_HSTIER) DMA Channel 5 Interrupt Enable Mask */
+#define USBHS_HSTIER_DMA_5_Pos                _U_(29)                                              /**< (USBHS_HSTIER) DMA Channel 4 Interrupt Enable Position */
+#define USBHS_HSTIER_DMA_5_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_5_Pos)                 /**< (USBHS_HSTIER) DMA Channel 4 Interrupt Enable Mask */
 #define USBHS_HSTIER_DMA_5(value)             (USBHS_HSTIER_DMA_5_Msk & ((value) << USBHS_HSTIER_DMA_5_Pos))
-#define USBHS_HSTIER_DMA_6_Pos                _U_(31)                                              /**< (USBHS_HSTIER) DMA Channel 6 Interrupt Enable Position */
-#define USBHS_HSTIER_DMA_6_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_6_Pos)                 /**< (USBHS_HSTIER) DMA Channel 6 Interrupt Enable Mask */
+#define USBHS_HSTIER_DMA_6_Pos                _U_(30)                                              /**< (USBHS_HSTIER) DMA Channel 5 Interrupt Enable Position */
+#define USBHS_HSTIER_DMA_6_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_6_Pos)                 /**< (USBHS_HSTIER) DMA Channel 5 Interrupt Enable Mask */
 #define USBHS_HSTIER_DMA_6(value)             (USBHS_HSTIER_DMA_6_Msk & ((value) << USBHS_HSTIER_DMA_6_Pos))
+#define USBHS_HSTIER_DMA_7_Pos                _U_(31)                                              /**< (USBHS_HSTIER) DMA Channel 6 Interrupt Enable Position */
+#define USBHS_HSTIER_DMA_7_Msk                (_U_(0x1) << USBHS_HSTIER_DMA_7_Pos)                 /**< (USBHS_HSTIER) DMA Channel 6 Interrupt Enable Mask */
+#define USBHS_HSTIER_DMA_7(value)             (USBHS_HSTIER_DMA_7_Msk & ((value) << USBHS_HSTIER_DMA_7_Pos))
 #define USBHS_HSTIER_Msk                      _U_(0xFE03FF7F)                                      /**< (USBHS_HSTIER) Register Mask  */
 
 #define USBHS_HSTIER_PEP__Pos                 _U_(8)                                               /**< (USBHS_HSTIER Position) Pipe x Interrupt Enable */

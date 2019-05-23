@@ -179,7 +179,7 @@ bool UART0_Write( void *buffer, const size_t size )
     {
         while( size > processedSize )
         {
-            if(UART_SR_TXEMPTY_Msk == (UART0_REGS->UART_SR& UART_SR_TXEMPTY_Msk))
+            if(UART_SR_TXRDY_Msk == (UART0_REGS->UART_SR & UART_SR_TXRDY_Msk))
             {
                 UART0_REGS->UART_THR = (UART_THR_TXCHR(*lBuffer++) & UART_THR_TXCHR_Msk);
                 processedSize++;
@@ -199,7 +199,8 @@ int UART0_ReadByte(void)
 
 void UART0_WriteByte(int data)
 {
-    while ((UART_SR_TXEMPTY_Msk == (UART0_REGS->UART_SR& UART_SR_TXEMPTY_Msk)) == 0);
+    while ((UART_SR_TXRDY_Msk == (UART0_REGS->UART_SR & UART_SR_TXRDY_Msk)) == 0);
+
     UART0_REGS->UART_THR = (UART_THR_TXCHR(data) & UART_THR_TXCHR_Msk);
 }
 
@@ -207,7 +208,19 @@ bool UART0_TransmitterIsReady( void )
 {
     bool status = false;
 
-    if(UART_SR_TXEMPTY_Msk == (UART0_REGS->UART_SR& UART_SR_TXEMPTY_Msk))
+    if(UART_SR_TXRDY_Msk == (UART0_REGS->UART_SR & UART_SR_TXRDY_Msk))
+    {
+        status = true;
+    }
+
+    return status;
+}
+
+bool UART0_TransmitComplete( void )
+{
+    bool status = false;
+
+    if(UART_SR_TXEMPTY_Msk == (UART0_REGS->UART_SR & UART_SR_TXEMPTY_Msk))
     {
         status = true;
     }
@@ -219,7 +232,7 @@ bool UART0_ReceiverIsReady( void )
 {
     bool status = false;
 
-    if(UART_SR_RXRDY_Msk == (UART0_REGS->UART_SR& UART_SR_RXRDY_Msk))
+    if(UART_SR_RXRDY_Msk == (UART0_REGS->UART_SR & UART_SR_RXRDY_Msk))
     {
         status = true;
     }

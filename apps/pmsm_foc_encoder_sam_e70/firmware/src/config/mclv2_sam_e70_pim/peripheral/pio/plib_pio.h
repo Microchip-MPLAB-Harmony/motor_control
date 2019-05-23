@@ -280,42 +280,42 @@ void PIO_PortOutputEnable(PIO_PORT port, uint32_t mask);
 
 static inline void PIO_PinWrite(PIO_PIN pin, bool value)
 {
-    PIO_PortWrite(PIOA_BASE_ADDRESS + (0x200 * (pin>>5)), (uint32_t)(0x1) << (pin & 0x1f), (uint32_t)(value) << (pin & 0x1f));
+    PIO_PortWrite((PIO_PORT)(PIOA_BASE_ADDRESS + (0x200 * (pin>>5))), (uint32_t)(0x1) << (pin & 0x1f), (uint32_t)(value) << (pin & 0x1f));
 }
 
 static inline bool PIO_PinRead(PIO_PIN pin)
 {
-    return (bool)((PIO_PortRead(PIOA_BASE_ADDRESS + (0x200 * (pin>>5))) >> (pin & 0x1F)) & 0x1);
+    return (bool)((PIO_PortRead((PIO_PORT)(PIOA_BASE_ADDRESS + (0x200 * (pin>>5)))) >> (pin & 0x1F)) & 0x1);
 }
 
 static inline bool PIO_PinLatchRead(PIO_PIN pin)
 {
-    return (bool)((PIO_PortLatchRead(PIOA_BASE_ADDRESS + (0x200 * (pin>>5))) >> (pin & 0x1F)) & 0x1);
+    return (bool)((PIO_PortLatchRead((PIO_PORT)(PIOA_BASE_ADDRESS + (0x200 * (pin>>5)))) >> (pin & 0x1F)) & 0x1);
 }
 
 static inline void PIO_PinToggle(PIO_PIN pin)
 {
-    PIO_PortToggle(PIOA_BASE_ADDRESS + (0x200 * (pin>>5)), 0x1 << (pin & 0x1F));
+    PIO_PortToggle((PIO_PORT)(PIOA_BASE_ADDRESS + (0x200 * (pin>>5))), 0x1 << (pin & 0x1F));
 }
 
 static inline void PIO_PinSet(PIO_PIN pin)
 {
-    PIO_PortSet(PIOA_BASE_ADDRESS + (0x200 * (pin>>5)), 0x1 << (pin & 0x1F));
+    PIO_PortSet((PIO_PORT)(PIOA_BASE_ADDRESS + (0x200 * (pin>>5))), 0x1 << (pin & 0x1F));
 }
 
 static inline void PIO_PinClear(PIO_PIN pin)
 {
-    PIO_PortClear(PIOA_BASE_ADDRESS + (0x200 * (pin>>5)), 0x1 << (pin & 0x1F));
+    PIO_PortClear((PIO_PORT)(PIOA_BASE_ADDRESS + (0x200 * (pin>>5))), 0x1 << (pin & 0x1F));
 }
 
 static inline void PIO_PinInputEnable(PIO_PIN pin)
 {
-    PIO_PortInputEnable(PIOA_BASE_ADDRESS + (0x200 * (pin>>5)), 0x1 << (pin & 0x1F));
+    PIO_PortInputEnable((PIO_PORT)(PIOA_BASE_ADDRESS + (0x200 * (pin>>5))), 0x1 << (pin & 0x1F));
 }
 
 static inline void PIO_PinOutputEnable(PIO_PIN pin)
 {
-    PIO_PortOutputEnable(PIOA_BASE_ADDRESS + (0x200 * (pin>>5)), 0x1 << (pin & 0x1F));
+    PIO_PortOutputEnable((PIO_PORT)(PIOA_BASE_ADDRESS + (0x200 * (pin>>5))), 0x1 << (pin & 0x1F));
 }
 
 
