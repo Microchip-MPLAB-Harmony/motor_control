@@ -1649,21 +1649,21 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="adc0" x="466" y="241"/>
-        <ElementPosition dnOrder="1" id="adc1" x="733" y="238"/>
-        <ElementPosition dnOrder="2" id="cmsis" x="597" y="49"/>
-        <ElementPosition dnOrder="3" id="core" x="605" y="16"/>
-        <ElementPosition dnOrder="4" id="dfp" x="556" y="84"/>
-        <ElementPosition dnOrder="5" id="divas" x="460" y="152"/>
-        <ElementPosition dnOrder="6" id="eic" x="333" y="287"/>
-        <ElementPosition dnOrder="7" id="evsys" x="839" y="290"/>
-        <ElementPosition dnOrder="8" id="nvmctrl" x="590" y="293"/>
-        <ElementPosition dnOrder="9" id="sercom3" x="590" y="117"/>
-        <ElementPosition dnOrder="10" id="tcc0" x="733" y="155"/>
+        <ElementPosition dnOrder="0" id="adc0" x="374" y="197"/>
+        <ElementPosition dnOrder="1" id="adc1" x="238" y="251"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="94" y="46"/>
+        <ElementPosition dnOrder="3" id="core" x="223" y="46"/>
+        <ElementPosition dnOrder="4" id="dfp" x="315" y="47"/>
+        <ElementPosition dnOrder="5" id="divas" x="99" y="201"/>
+        <ElementPosition dnOrder="6" id="eic" x="100" y="254"/>
+        <ElementPosition dnOrder="7" id="evsys" x="375" y="249"/>
+        <ElementPosition dnOrder="8" id="nvmctrl" x="94" y="83"/>
+        <ElementPosition dnOrder="9" id="sercom3" x="242" y="356"/>
+        <ElementPosition dnOrder="10" id="tcc0" x="239" y="199"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

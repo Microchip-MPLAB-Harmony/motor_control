@@ -107,8 +107,8 @@
           <Name dnOrder="1">plib_nvmctrl.c</Name>
           <LogicalPath dnOrder="2">config/mclv2_sam_c21_pim/peripheral/nvmctrl/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvmctrl/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BB12F3CA915C0E3F942632B149897578</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BB12F3CA915C0E3F942632B149897578</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1A276F1056D0517E6CEDAD9C16DBD026</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1A276F1056D0517E6CEDAD9C16DBD026</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -131,8 +131,8 @@
           <Name dnOrder="1">plib_tcc0.c</Name>
           <LogicalPath dnOrder="2">config/mclv2_sam_c21_pim/peripheral/tcc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/tcc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6B7FCCF79A351F512E22FD3BE8AC3D9C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6B7FCCF79A351F512E22FD3BE8AC3D9C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">402CB2969B5CC80D017356373F440175</GeneratedChecksum>
+          <UserChecksum dnOrder="5">402CB2969B5CC80D017356373F440175</UserChecksum>
         </File>
         <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
@@ -651,7 +651,7 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMC21_DFP\3.0.23\samc21\atdf\ATSAMC21J18A.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
       <Setting dnOrder="5" key="PackageFilter" value="csp;motor_control;"/>
     </Settings>
   </Configurator>

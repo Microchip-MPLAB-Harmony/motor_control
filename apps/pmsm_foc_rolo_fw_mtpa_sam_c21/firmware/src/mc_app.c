@@ -53,6 +53,23 @@ Headers inclusions
 #include "userparams.h"
 
 extern int32_t __aeabi_idiv(int32_t numerator, int32_t denominator);
+static __INLINE void MCAPP_MotorStop( void );
+static __INLINE void MCAPP_rotorAlignment(void);
+static void MCAPP_MotorCurrentControl(void);
+
+static __INLINE void MCAPP_ResetStateVariables( void );
+
+#if(1U == ENABLE_MTPA )
+static __INLINE int32_t MCAPP_idmaxTorquePerAmpere(void);
+#endif
+
+#if(1U == FIELD_WEAKENING )
+static __INLINE int32_t MCAPP_fieldWeakening(void);
+#endif
+
+#if(1U == DECOUPLING_ENABLE)
+static __INLINE void MCAPP_Decouple(vec2_t * controlOutput);
+#endif
 
 /****************************************************************************/
 /************************MISRA Violations    ********************************/
@@ -108,6 +125,10 @@ uint16_t     dec_ramp;
 /* Field weakening debug variables */
 int16_t     rated_scaled_rpm;
 int16_t     scaled_resistance;
+#ifdef NON_ISOTROPIC_MOTOR
+int16_t     scaled_inductance_d;
+int16_t     scaled_inductance_q;
+#endif
 int16_t     scaled_inductance;
 int16_t     scaled_fw_current;
 
@@ -162,6 +183,9 @@ int16_t iqref_abs;
 int16_t dComp, qComp;
 #endif
 
+#ifdef NON_ISOTROPIC_MOTOR
+int32_t iqSquare;
+#endif
 /******************************************************************************
 Safety variables
 ******************************************************************************/
@@ -257,7 +281,7 @@ static int16_t
                     amplitude value [internal voltage unit] */
 
 static int32_t
-    dcurref_l,    /* amplified direct current reference */
+    dcurref_l,    /* amplified direct current reference last value */
     vbmin_mem,    /* filter memory in vbmin lp filter */
     vbfil_mem,    /* filter memory in vbus lp filter */
     vdfil_mem,    /* filter memory in vd lp filter */
@@ -316,7 +340,12 @@ void macro_debug(void)
     /* Debug parameters for field weakening */
     rated_scaled_rpm  = PMSM_RATED_SPEED_SCALED;
     scaled_resistance =  PMSM_RESISTANCE_SCALED;
+#ifdef NON_ISOTROPIC_MOTOR
+    scaled_inductance_d =  PMSM_INDUCTANCE_D_SCALED;
+    scaled_inductance_q =  PMSM_INDUCTANCE_Q_SCALED;
+#endif
     scaled_inductance =  PMSM_INDUCTANCE_SCALED;
+
     scaled_fw_current =  PMSM_MAX_NEGATIVE_IDREF_SCALED;
 #endif
 }
@@ -447,8 +476,8 @@ void motorcontrol_vars_init(void)
   ext_speed_ref_rpm = 0;
 
   /* observer init */
-  estimation_set_base_values(SAMPLING_FREQ, BASE_SPEED,
-                             BASE_VOLTAGE, BASE_CURRENT);
+  estimation_set_base_values(SAMPLING_FREQ, BASE_SPEED, BASE_VOLTAGE, BASE_CURRENT);
+
   estimation_set_parameters((float32_t)R_STA, (float32_t)L_SYN);
 
   /* phase offset */
@@ -1304,19 +1333,19 @@ void  __ramfunc__ motorcontrol(void)
 void motorcontrol(void)
 #endif
 {
-  int32_t s32a;
+    int32_t s32a;
 
-  /* bus voltage in internal units */
-  s32a = (int32_t)adc_dc_bus_voltage * KAD_VOL;
+    /* bus voltage in internal units */
+    s32a = (int32_t)adc_dc_bus_voltage * KAD_VOL;
   #if(0 != SH_KAD_VOL)
-  vbus = (int16_t)(s32a >> SH_KAD_VOL);
+    vbus = (int16_t)(s32a >> SH_KAD_VOL);
   #else   /* if(0 != SH_KAD_CUR) */
-  vbus = (int16_t)s32a;
+    vbus = (int16_t)s32a;
   #endif  /* else if(0 != SH_KAD_CUR) */
-  /* performs motor control if needed */
+    /* performs motor control if needed */
 
-  if (0U != state_run)
-  {
+    if (0U != state_run)
+    {
 
         /* current transformations (previous angle) */
         library_ab_dq(&sysph, &curabm, &curdqm);
@@ -1329,15 +1358,8 @@ void motorcontrol(void)
         {
 
             case STOPPED:
-                state_stopped = state_count;
-                dcurref_l = 0;
-                curdqr.x = 0;
-                curdqr.y = 0;
-                newsysph = 0;
-                ampsysph = 0;
-                elespeed = 0;
-                elespeed_abs = 0;
-                elespeed_l = 0;
+                /* Stop motor */
+                MCAPP_MotorStop();
                 if(0 != spe_ref_sgn)
                 {
                     motor_status = ALIGNING;
@@ -1355,86 +1377,10 @@ void motorcontrol(void)
                     elespeed_abs = 0;
                     motor_status = STOPPED;
 
-
                 }
                 else
                 {
-                #ifdef Q_AXIS_STARTUP
-
-                    if(spe_ref_sgn>0)
-                    {
-                        /* current rising ramp */
-                        if(START_CUR > curdqr.y)
-                        {
-                            dcurref_l += CUR_RAMP_AL;
-
-                            curdqr.y = (int16_t)(dcurref_l >> SH_BASE_VALUE);
-
-                        }
-                        else
-                        {
-                            curdqr.y = START_CUR;
-                            motor_status = STARTING;
-                            state_count++;
-                        }
-                    }
-                    else
-                    {
-                         /* current decreasing ramp */
-                        if(-START_CUR < curdqr.y)
-                        {
-                            dcurref_l -= CUR_RAMP_AL;
-
-                            curdqr.y = (int16_t)(dcurref_l >> SH_BASE_VALUE);
-
-                        }
-                        else
-                        {
-                            curdqr.y = -START_CUR;
-                            motor_status = STARTING;
-                            state_count++;
-                        }
-                    }
-                #else
-                    if(spe_ref_sgn>0)
-                    {
-                        /* current rising ramp */
-                        if(START_CUR > curdqr.x)
-                        {
-                            dcurref_l += CUR_RAMP_AL;
-
-                            curdqr.x = (int16_t)(dcurref_l >> SH_BASE_VALUE);
-
-                        }
-                        else
-                        {
-                            curdqr.x = START_CUR;
-
-                            /* status change */
-                            motor_status = STARTING;
-
-                        }
-                    }
-                    else
-                    {
-                    /* current decreasing ramp */
-                        if(-START_CUR < curdqr.x)
-                        {
-                            dcurref_l -= CUR_RAMP_AL;
-
-                            curdqr.x = (int16_t)(dcurref_l >> SH_BASE_VALUE);
-
-                        }
-                        else
-                        {
-                            curdqr.x = -START_CUR;
-
-                            /* status change */
-                            motor_status = STARTING;
-
-                        }
-                    }
-                #endif
+                    MCAPP_rotorAlignment();
                 }
                 break;
             case STARTING:
@@ -1443,8 +1389,6 @@ void motorcontrol(void)
                 if((MIN_SPE >> 2) > elespeed_abs)
                 {
                   estimation_alignment(elespeed, &outvab, &curabm);
-
-
                 }
                 else
                 {
@@ -1579,183 +1523,15 @@ void motorcontrol(void)
             case RUNNING:
 
                 state_closedloop = state_count;
-               /* reference speed filter */
+
+                /* Determine reference speed  */
                 spe_ref_mem += spe_ref_abs;
                 spe_ref_mem -= spe_ref_fil;
                 spe_ref_fil = (uint16_t)(spe_ref_mem >> SH_REFSPEED_FIL);
 
-                /* position and speed estimation (Luenberger) */
-                position_and_speed_estimation(spe_ref_sgn, &prev_outvab, &curabm);
-                /* estimated position */
-                newsysph = position_offset + get_angular_position();
-                /* estimated speed */
-                elespeed = get_angular_speed();
-                if(0 > elespeed)
-                {
-                    elespeed_abs = (uint16_t)(-elespeed);
-                }
-                else
-                {
-                    elespeed_abs = (uint16_t)elespeed;
-                }
+                /* Close loop Control */
+                MCAPP_MotorCurrentControl();
 
-                /* speed control */
-#if(1U ==  FIELD_WEAKENING)
-            #ifdef USE_DIVAS
-                if( (MAX_CUR > curdqr.x) || ( MAX_CUR > -curdqr.x ))
-                {
-                    sp_pi.hlim = (int32_t)DIVAS_SquareRoot((uint32_t)( MAX_CUR_SQUARED - (int32_t)((int32_t)curdqr.x*(int32_t)curdqr.x)));
-                }
-                else
-                {
-                    sp_pi.hlim = 0;
-                }
-            #else
-                sp_pi.hlim = library_scat(MAX_CUR, curdqr.x);
-            #endif
-                sp_pi.llim = -sp_pi.hlim;
-#else
-                sp_pi.hlim = MAX_CUR;
-                sp_pi.llim = -MAX_CUR;
-#endif
-
-                s32a = (int32_t)spe_ref_fil;
-                if(0 > spe_ref_sgn)
-                {
-                    s32a = -s32a;
-                }
-                s32a -= elespeed;
-                #ifdef TORQUE_MODE
-                curdqr.y = torque_adc_ref;
-                #else // Speed Control
-                curdqr.y = library_pi_control(s32a, &sp_pi);
-                #endif
-
-                /* Flux Control */
-#if(1U == FIELD_WEAKENING )
-                VdSquare =  (int32_t)vdfil * (int32_t)vdfil;
-                if( PMSM_RATED_SPEED_SCALED < elespeed_abs )
-                {
-                    if( vdfil >= outvmax )
-                    {
-                       VdSquare = outvmax * outvmax;
-                    }
-                #ifdef USE_DIVAS
-                    Vqref = DIVAS_SquareRoot( (uint32_t)(outvmax*outvmax - VdSquare) );
-                #else
-                    Vqref = library_scat( (int16_t)outvmax, outvdq.y);
-                #endif
-                    /* Revert the sign of reference q-axis current for negative rotation  */
-                    if(0 > spe_ref_sgn)
-                    {
-                       iqref_abs = -curdqr.y;
-                    }
-                    else
-                    {
-                       iqref_abs = curdqr.y;
-                    }
-                    /* Id reference for feed forward control */
-                    Numerator =  (int32_t)((int32_t)K_CURRENT * (int32_t)((int32_t)Vqref
-                                                    -(int32_t)(((int32_t)iqref_abs * (int32_t)PMSM_RESISTANCE_SCALED) >> SH_BASE_VALUE )
-                                                    -(int32_t)(get_Bemf_magnitude())));
-
-                    Denominator = ((int32_t)PMSM_INDUCTANCE_SCALED * (int32_t)elespeed_abs)>> SH_BASE_VALUE;
-                 #ifdef USE_DIVAS
-                    s32a = __aeabi_idiv(Numerator, Denominator);
-                 #else
-                    s32a = Numerator/Denominator;
-                 #endif
-
-                    /* Limit the reference d axis current */
-                    if( s32a > 0)
-                    {
-                        s32a = 0;
-                    }
-                    else if( s32a < (int32_t)PMSM_MAX_NEGATIVE_IDREF_SCALED )
-                    {
-                        s32a = PMSM_MAX_NEGATIVE_IDREF_SCALED ;
-                    }
-                    else
-                    {
-                        /* Do nothing */
-
-                    }
-
-                }
-                else
-                {
-                    /* Field weakening is disabled below rated speed. */
-                    s32a = 0;
-                }
-                s32a <<= SH_BASE_VALUE;
-                if((s32a - dcurref_l) > CUR_RAMP_AL)
-                {
-                   dcurref_l += CUR_RAMP_AL;
-                }
-                else if((dcurref_l - s32a) > CUR_RAMP_RU )
-                {
-                   dcurref_l -= CUR_RAMP_RU ;
-                }
-                else
-                {
-                   dcurref_l = s32a;
-                }
-
-                curdqr.x = (int16_t)(dcurref_l >> SH_BASE_VALUE );
-#else
-                if(0 != curdqr.x)
-                {
-                    /* idmax calc and d reference clamping */
-                #ifdef USE_DIVAS
-                    if(MAX_CUR > curdqr.y)
-                    {
-                        s32a = (int32_t)DIVAS_SquareRoot((uint32_t)((uint32_t)(MAX_CUR_SQUARED)- (uint32_t)(curdqr.y*curdqr.y)));
-                    }
-                    else
-                    {
-                        s32a = 0;
-                    }
-                #else
-                    s32a = library_scat(MAX_CUR, curdqr.y);
-                #endif
-                    s32a <<= SH_BASE_VALUE;
-                    if(s32a < dcurref_l)
-                    {
-                        dcurref_l = s32a;
-                    }
-                    else if(-s32a > dcurref_l)
-                    {
-                        dcurref_l = -s32a;
-                    }
-                    else
-                    {
-                      /* no action */
-                    }
-
-                    /* d current ramp */
-                    if(CUR_RAMP_RU < dcurref_l)
-                    {
-                        dcurref_l -= CUR_RAMP_RU;
-                    }
-                    else if(-CUR_RAMP_RU > dcurref_l)
-                    {
-                        dcurref_l += CUR_RAMP_RU;
-                    }
-                    else
-                    {
-                        dcurref_l = 0;
-                    }
-
-                    curdqr.x = (int16_t)(dcurref_l >> SH_BASE_VALUE);
-                }
-
-#endif
-                /* phase lost check filters */
-                phase_lost_filters();
-#ifndef TORQUE_MODE
-                /* position loss control */
-                pos_lost_control();
-#endif
                 break;
             default:
               /* empty case: control should not come here */
@@ -1796,30 +1572,14 @@ void motorcontrol(void)
         s32a = curdqr.y;
         s32a -= curdqm.y;
         outvdq.y =  library_pi_control(s32a, &iq_pi);
-        prev_outvab = outvab; // save the outvab from previous cycle before updating them in the current cycle
+        prev_outvab = outvab;
         /* voltage reverse-Park transformation */
         library_dq_ab(&sysph, &outvdq, &outvab);
 
         /* modulation (uses vbus and outvab to calculate duties,
            and sets directly pwm registers) */
 #if(1U == DECOUPLING_ENABLE )
-        s32a =  (int32_t)(elespeed_abs * (int32_t)PMSM_INDUCTANCE_SCALED)>> SH_BASE_VALUE;
-        dComp = (int16_t)((s32a * (int32_t)curdqm.y)>> SH_BASE_VALUE);
-        qComp = (int16_t)((s32a * (int32_t)curdqm.x)>> SH_BASE_VALUE) + (int16_t)get_Bemf_magnitude();
-
-        /* Mapping the decoupling terms to the duty cycle */
-      #ifdef USE_DIVAS
-        s32a = __aeabi_idiv( (int32_t)(PWM_HPER_TICKS << SH_BASE_VALUE), (int32_t)outvmax );
-      #else
-        s32a =  (int32_t)(PWM_HPER_TICKS << SH_BASE_VALUE)/(int32_t)outvmax;
-      #endif
-        dComp = ((int32_t)dComp * s32a) >> SH_BASE_VALUE;
-        qComp = ((int32_t)qComp * s32a) >> SH_BASE_VALUE;
-
-        /* Adding the decoupling terms to PI controller output  */
-        outvdq.x -= dComp;
-        outvdq.y += qComp;
-
+        MCAPP_Decouple(&outvdq);
 #endif
 
         pwm_modulation();
@@ -1847,49 +1607,7 @@ void motorcontrol(void)
     }/* if state run is not zero */
     else
     {
-        pwm_modulation_reset();
-        phase_lost_filters_reset();
-
-        sysph.ang = 0;
-        sysph.sin = 0;
-        sysph.cos = (int16_t)BASE_VALUE_INT;
-
-        curdqr.x = 0;
-        curdqr.y = 0;
-        curdqm.x = 0;
-        curdqm.y = 0;
-        id_pi.imem = 0;
-        iq_pi.imem = 0;
-        sp_pi.imem = 0;
-
-        outvdq.x = 0;
-        outvdq.y = 0;
-        outvab.x = 0;
-        outvab.y = 0;
-
-
-        motor_status = STOPPED;
-
-        dcurref_l = 0;
-        newsysph = 0;
-        ampsysph = 0;
-        elespeed_abs = 0;
-        elespeed = 0;
-        spe_ref_mem = 0;
-        spe_ref_fil = 0;
-        elespeed_l = 0;
-
-        idfil_mem = 0;
-        idfil = 0;
-        iqfil_mem = 0;
-        iqfil = 0;
-        vdfil_mem = 0;
-        vdfil = 0;
-        vqfil_mem = 0;
-        vqfil = 0;
-        espabs_mem = 0;
-        espabs_fil = 0;
-
+        MCAPP_ResetStateVariables();
     }
 
     /* minimum bus voltage calculation */
@@ -1919,5 +1637,339 @@ void motorcontrol(void)
 
 
 }
+
+static void MCAPP_MotorCurrentControl(void )
+{
+    int32_t dcurref_mtpa = 0;
+    int32_t dcurref_fw = 0;
+    int32_t s32a;
+
+    /* position and speed estimation (Luenberger) */
+    position_and_speed_estimation(spe_ref_sgn, &prev_outvab, &curabm);
+
+    /* estimated position */
+    newsysph = position_offset + get_angular_position();
+
+    /* estimated speed */
+    elespeed = get_angular_speed();
+
+    if( 0 > elespeed)
+    {
+        elespeed_abs = (uint16_t)(-elespeed);
+    }
+    else
+    {
+        elespeed_abs = (uint16_t)elespeed;
+    }
+
+    /* speed control */
+    #if(1U ==  FIELD_WEAKENING)
+    #ifdef USE_DIVAS
+    if( (MAX_CUR > curdqr.x) || ( MAX_CUR > -curdqr.x ))
+    {
+        sp_pi.hlim = (int32_t)DIVAS_SquareRoot((uint32_t)( MAX_CUR_SQUARED - (int32_t)((int32_t)curdqr.x*(int32_t)curdqr.x)));
+    }
+    else
+    {
+        sp_pi.hlim = 0;
+    }
+    #else
+    sp_pi.hlim = library_scat(MAX_CUR, curdqr.x);
+    #endif
+    sp_pi.llim = -sp_pi.hlim;
+    #else
+    sp_pi.hlim = MAX_CUR;
+    sp_pi.llim = -MAX_CUR;
+    #endif
+
+    s32a = (int32_t)spe_ref_fil;
+    if(0 > spe_ref_sgn)
+    {
+        s32a = -s32a;
+    }
+    s32a -= elespeed;
+    #ifdef TORQUE_MODE
+    curdqr.y = torque_adc_ref;
+    #else // Speed Control
+    curdqr.y = library_pi_control(s32a, &sp_pi);
+    #endif
+
+#if( 1U == MTPA_ENABLE )
+    dcurref_mtpa = MCAPP_idmaxTorquePerAmpere( );
+#endif
+
+#if(1U == FIELD_WEAKENING)
+    dcurref_fw = MCAPP_fieldWeakening( );
+#endif
+    /* Determine the target d-axis reference current */
+    s32a = (dcurref_mtpa < dcurref_fw) ? dcurref_mtpa : dcurref_fw;
+
+    /* D-axis current linear ramp filter */
+    if((s32a + CUR_RAMP_RU )  < dcurref_l )
+    {
+       dcurref_l -= CUR_RAMP_RU;
+    }
+    else if((s32a - CUR_RAMP_RU )  < dcurref_l )
+    {
+       dcurref_l += CUR_RAMP_RU;
+    }
+    else
+    {
+       dcurref_l = s32a;
+    }
+
+    curdqr.x = (int16_t)(dcurref_l >> SH_BASE_VALUE);
+
+    /* phase lost check filters */
+    phase_lost_filters();
+
+#ifndef TORQUE_MODE
+    /* position loss control */
+    pos_lost_control();
+#endif
+
+}
+
+#if(1U == ENABLE_MTPA )
+static __INLINE int32_t MCAPP_idmaxTorquePerAmpere( void )
+{
+    int32_t s32a;
+
+    s32a =  (int32_t)iqfil * (int32_t)iqfil;
+
+    #ifdef USE_DIVAS
+    if( PMSM_MTPA_CONSTANT2_SCALED > s32a )
+    {
+        s32a = PMSM_MTPA_CONSTANT1_SCALED - DIVAS_SquareRoot( PMSM_MTPA_CONSTANT2_SCALED - s32a );
+    }
+    else
+    {
+        s32a = 0;
+    }
+    #else
+    s32a = PMSM_MTPA_CONSTANT1_SCALED - library_scat( PMSM_MTPA_CONSTANT1_SCALED, iqfil );
+    #endif
+
+    s32a <<= SH_BASE_VALUE;
+
+    return s32a;
+
+}
+#endif
+
+#if(1U == FIELD_WEAKENING )
+static __INLINE int32_t MCAPP_fieldWeakening(void)
+{
+    int32_t s32a;
+    int32_t VdSquare, Numerator, Denominator;
+
+    VdSquare =  (int32_t)vdfil * (int32_t)vdfil;
+    if( PMSM_RATED_SPEED_SCALED < elespeed_abs )
+    {
+        if( vdfil >= outvmax )
+        {
+           VdSquare = outvmax * outvmax;
+        }
+    #ifdef USE_DIVAS
+        Vqref = DIVAS_SquareRoot( (uint32_t)(outvmax*outvmax - VdSquare) );
+    #else
+        Vqref = library_scat( (int16_t)outvmax, outvdq.y);
+    #endif
+        /* Revert the sign of reference q-axis current for negative rotation  */
+        if(0 > spe_ref_sgn)
+        {
+           iqref_abs = -curdqr.y;
+        }
+        else
+        {
+           iqref_abs = curdqr.y;
+        }
+        /* Id reference for feed forward control */
+        Numerator =  (int32_t)((int32_t)K_CURRENT * (int32_t)((int32_t)Vqref
+                                        -(int32_t)(((int32_t)iqref_abs * (int32_t)PMSM_RESISTANCE_SCALED) >> SH_BASE_VALUE )
+                                        -(int32_t)(get_Bemf_magnitude())));
+     #ifdef NON_ISOTROPIC_MOTOR
+        Denominator = ((int32_t)PMSM_INDUCTANCE_D_SCALED * (int32_t)elespeed_abs)>> SH_BASE_VALUE;
+     #else
+        Denominator = ((int32_t)PMSM_INDUCTANCE_SCALED * (int32_t)elespeed_abs)>> SH_BASE_VALUE;
+     #endif
+     #ifdef USE_DIVAS
+        s32a = __aeabi_idiv(Numerator, Denominator);
+     #else
+        s32a = Numerator/Denominator;
+     #endif
+
+        /* Limit the reference d axis current */
+        if( s32a > 0)
+        {
+            s32a = 0;
+        }
+        else if( s32a < (int32_t)PMSM_MAX_NEGATIVE_IDREF_SCALED )
+        {
+            s32a = PMSM_MAX_NEGATIVE_IDREF_SCALED ;
+        }
+        else
+        {
+            /* Do nothing */
+
+        }
+
+    }
+    else
+    {
+        /* Field weakening is disabled below rated speed. */
+        s32a = 0;
+    }
+    s32a <<= SH_BASE_VALUE;
+    return s32a;
+}
+
+#endif
+
+#if(1U == DECOUPLING_ENABLE)
+void MCAPP_Decouple(vec2_t * controlOutput)
+{
+    int16_t dComp, qComp;
+    int32_t s32a;
+
+    s32a =  (int32_t)(elespeed_abs * (int32_t)PMSM_INDUCTANCE_SCALED)>> SH_BASE_VALUE;
+    dComp = (int16_t)((s32a * (int32_t)curdqm.y)>> SH_BASE_VALUE);
+    qComp = (int16_t)((s32a * (int32_t)curdqm.x)>> SH_BASE_VALUE) + (int16_t)get_Bemf_magnitude();
+
+    /* Mapping the decoupling terms to the duty cycle */
+    #ifdef USE_DIVAS
+    s32a = __aeabi_idiv( (int32_t)(PWM_HPER_TICKS << SH_BASE_VALUE), (int32_t)outvmax );
+    #else
+    s32a =  (int32_t)(PWM_HPER_TICKS << SH_BASE_VALUE)/(int32_t)outvmax;
+    #endif
+    dComp = ((int32_t)dComp * s32a) >> SH_BASE_VALUE;
+    qComp = ((int32_t)qComp * s32a) >> SH_BASE_VALUE;
+
+    /* Adding the decoupling terms to PI controller output  */
+    controlOutput->x -= dComp;
+    controlOutput->y += qComp;
+}
+#endif
+
+void MCAPP_ResetStateVariables( void )
+{
+    pwm_modulation_reset();
+    phase_lost_filters_reset();
+
+    sysph.ang = 0;
+    sysph.sin = 0;
+    sysph.cos = (int16_t)BASE_VALUE_INT;
+
+    curdqr.x = 0;
+    curdqr.y = 0;
+    curdqm.x = 0;
+    curdqm.y = 0;
+    id_pi.imem = 0;
+    iq_pi.imem = 0;
+    sp_pi.imem = 0;
+
+    outvdq.x = 0;
+    outvdq.y = 0;
+    outvab.x = 0;
+    outvab.y = 0;
+
+    motor_status = STOPPED;
+
+    dcurref_l = 0;
+    newsysph = 0;
+    ampsysph = 0;
+    elespeed_abs = 0;
+    elespeed = 0;
+    spe_ref_mem = 0;
+    spe_ref_fil = 0;
+    elespeed_l = 0;
+
+    idfil = 0;
+    iqfil = 0;
+    vdfil = 0;
+    vqfil = 0;
+    espabs_fil = 0;
+}
+
+static __INLINE void MCAPP_MotorStop(void)
+{
+    state_stopped = state_count;
+    dcurref_l = 0;
+    curdqr.x = 0;
+    curdqr.y = 0;
+    newsysph = 0;
+    ampsysph = 0;
+    elespeed = 0;
+    elespeed_abs = 0;
+    elespeed_l = 0;
+}
+
+static __INLINE void MCAPP_rotorAlignment(void)
+{
+  #ifdef Q_AXIS_STARTUP
+    if(spe_ref_sgn>0)
+    {
+        /* current rising ramp */
+        if(START_CUR > curdqr.y)
+        {
+            dcurref_l += CUR_RAMP_AL;
+            curdqr.y = (int16_t)(dcurref_l >> SH_BASE_VALUE);
+        }
+        else
+        {
+            curdqr.y = START_CUR;
+            motor_status = STARTING;
+            state_count++;
+        }
+    }
+    else
+    {
+         /* current decreasing ramp */
+        if(-START_CUR < curdqr.y)
+        {
+            dcurref_l -= CUR_RAMP_AL;
+            curdqr.y = (int16_t)(dcurref_l >> SH_BASE_VALUE);
+        }
+        else
+        {
+            curdqr.y = -START_CUR;
+            motor_status = STARTING;
+            state_count++;
+        }
+    }
+  #else
+    if(spe_ref_sgn>0)
+    {
+        /* current rising ramp */
+        if(START_CUR > curdqr.x)
+        {
+            dcurref_l += CUR_RAMP_AL;
+            curdqr.x = (int16_t)(dcurref_l >> SH_BASE_VALUE);
+        }
+        else
+        {
+            curdqr.x = START_CUR;
+            /* status change */
+            motor_status = STARTING;
+        }
+    }
+    else
+    {
+    /* current decreasing ramp */
+        if(-START_CUR < curdqr.x)
+        {
+            dcurref_l -= CUR_RAMP_AL;
+            curdqr.x = (int16_t)(dcurref_l >> SH_BASE_VALUE);
+        }
+        else
+        {
+            curdqr.x = -START_CUR;
+            /* status change */
+            motor_status = STARTING;
+        }
+    }
+  #endif
+}
+
 
 /* EOF motor_control.c */

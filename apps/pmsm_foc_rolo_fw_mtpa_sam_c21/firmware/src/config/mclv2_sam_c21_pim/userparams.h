@@ -52,7 +52,6 @@
  Undefining CTRL_PWM_1_1 sets the Control to PWM Frequency Ration as 1:2*/
 #define CTRL_PWM_1_1
 
-
 /* Defining Q_AXIS_STARTUP causes the open loop startup by injecting current in Q axis
  * Undefining Q_AXIS_STARTUP cause the open loop startup by injecting current in D axis */
 #define Q_AXIS_STARTUP
@@ -90,36 +89,38 @@ Macro definitions
 /* Note: only one motor has to be selected! */
 
 
-#ifdef  SMALL_HURST                      /* Small Hurst motor */
-#define RATED_FRE_HZ    (   250 )       /* maximum frequency [Hz] - 3000RPM */
+#ifdef  SMALL_HURST                             /* Small Hurst motor */
+#define ISOTROPIC_MOTOR                               /* Surface mounted PMSM motor */
+#define RATED_FRE_HZ        (   250      )      /* maximum frequency [Hz] - 3000RPM                 */
 #if(1U == FIELD_WEAKENING)
-#define MAX_FRE_HZ      (   300 )       /* maximum frequency [Hz] - 3600RPM */
+#define MAX_FRE_HZ          (   300       )     /* maximum frequency [Hz] - 3600RPM                 */
 #else
-#define MAX_FRE_HZ      RATED_FRE_HZ   /* maximum frequency [Hz] - 3600RPM */
+#define MAX_FRE_HZ         RATED_FRE_HZ         /* maximum frequency [Hz] - 3600RPM                 */
 #endif
-#define MIN_FRE_HZ      (    30 )       /* minimum frequency [Hz] - 360RPM  */
-#define POLAR_COUPLES   (     5 )       /* number of polar couples */
-#define R_STA           (   2.1 )       /* stator phase resistance [Ohm] */
-#define L_SYN           (     0.00192 ) /* synchronous inductance 0.00192 [Hen] (note: >0!) */
-#define MAX_CUR_AMP     (     2.0 )     /* peak maximum current [A] */
-#define START_CUR_AMP   (     0.4 )     /* peak startup current [A] */
-#define KP_V_A_Q          (     5.0 )     /* current loop proportional gain [Volt/Amp] */
-#define KI_V_AS_Q         (   1467.0 )    /* current loop integral gain [Volt/(Amp*sec)] */
-#define KP_V_A_D          (     5.0 )     /* current loop proportional gain [Volt/Amp] */
-#define KI_V_AS_D         (   1467.0 )    /* current loop integral gain [Volt/(Amp*sec)] */
-#define KP_AS_R         (  0.0016 )  	/* speed loop proportional gain [Amp/(rad/sec)] */
-#define KI_A_R          (  0.002  )    	/* speed loop integral gain [Amp/((rad/sec)*sec)] */
-#define ACC_RPM_S       (  1000.0 )     /* acceleration ramp [rpm/s] */
-#define DEC_RPM_S       (   500.0 )     /* acceleration ramp [rpm/s] */
-#define STUP_ACCTIME_S  (     2.0 )     /* startup acceleration time [sec] */
-#define CUR_RISE_T      (     1 )       /* current rising time [s] during startup alignment */
-#define CUR_FALL_T      (     1.0 )     /* direct current falling time [s] after startup */
+#define MIN_FRE_HZ          (    30       )     /* minimum frequency [Hz] - 360RPM                  */
+#define POLAR_COUPLES       (     5       )     /* number of polar couples                          */
+#define R_STA               (   2.1       )     /* stator phase resistance [Ohm]                    */
+#define L_SYN               (     0.00192 )     /* synchronous inductance 0.00192 [Hen] (note: >0!) */
+#define MAX_CUR_AMP         (     2.0     )     /* peak maximum current [A]                         */
+#define START_CUR_AMP       (     0.4     )     /* peak startup current [A]                         */
+#define KP_V_A_Q            (     5.0     )     /* current loop proportional gain [Volt/Amp]        */
+#define KI_V_AS_Q           (   1467.0    )     /* current loop integral gain [Volt/(Amp*sec)]      */
+#define KP_V_A_D            (     5.0     )     /* current loop proportional gain [Volt/Amp]        */
+#define KI_V_AS_D           (   1467.0    )     /* current loop integral gain [Volt/(Amp*sec)]      */
+#define KP_AS_R             (  0.0016     )  	  /* speed loop proportional gain [Amp/(rad/sec)]     */
+#define KI_A_R              (  0.002      )    	/* speed loop integral gain [Amp/((rad/sec)*sec)]   */
+#define ACC_RPM_S           (  1000.0     )     /* acceleration ramp [rpm/s]                        */
+#define DEC_RPM_S           (   500.0     )     /* acceleration ramp [rpm/s]                        */
+#define STUP_ACCTIME_S      (     2.0     )     /* startup acceleration time [sec]                  */
+#define CUR_RISE_T          (     1       )     /* current rising time [s] during startup alignment */
+#define CUR_FALL_T          (     1.0     )     /* direct current falling time [s] after startup    */
 #endif  /* ifdef SMALL_HURST */
 
 
 
 #ifdef  LONG_HURST                         /* Long Hurst motor */
-#define RATED_FRE_HZ    (   250    )       /* rated frequency [Hz] - 3000 RPM                       */
+#define ISOTROPIC_MOTOR                          /* Surface mounted PMSM motor */
+#define RATED_FRE_HZ    (   234    )       /* rated frequency [Hz] - 2804 RPM                       */
 #if(1U == FIELD_WEAKENING)
 #define MAX_FRE_HZ      (   295    )       /* maximum frequency [Hz] - 3540 RPM                     */
 #else
@@ -141,34 +142,45 @@ Macro definitions
 #define DEC_RPM_S       (   500.0   )      /* acceleration ramp [rpm/s]                             */
 #define STUP_ACCTIME_S  (   2.0     )      /* startup acceleration time [sec]                       */
 #define CUR_RISE_T      (   1.5     )      /* current rising time [s] during startup alignment      */
-#define CUR_FALL_T      (   1       )      /* direct current falling time [s] after startup         */
+#define CUR_FALL_T      (   1.0     )      /* direct current falling time [s] after startup         */
 #endif  /* ifdef LONG_HURST */
 
-#ifdef  LEADSHINE_EL5_M0400_1_24                      /* LEAD SHINE (EL5-M0400-1-24) */
-#define RATED_FRE_HZ    (   250 )      /* maximum frequency [Hz] - 3000 RPM*/
+#ifdef  SAMPLE_INSET_MOTOR                         /* Inset type motor                                       */
+#define NON_ISOTROPIC_MOTOR                        /* Interior burried type PMSM motor                       */
+#define RATED_FRE_HZ           (   250       )     /* maximum frequency [Hz] - 3000 RPM                      */
 #if(1U == FIELD_WEAKENING)
-#define MAX_FRE_HZ      (   300 )       /* maximum frequency [Hz] - 3600RPM */
+#define MAX_FRE_HZ             (   300       )     /* maximum frequency [Hz] - 3600RPM                       */
 #else
-#define MAX_FRE_HZ      RATED_FRE_HZ   /* maximum frequency [Hz] - 3600RPM */
+#define MAX_FRE_HZ             RATED_FRE_HZ        /* maximum frequency [Hz] - 3600RPM                       */
 #endif
-#define MIN_FRE_HZ      (    30 )      /* minimum frequency [Hz] - 360 RPM*/
-#define POLAR_COUPLES   (     5 )      /* number of polar couples */
-#define R_STA           (     1.375 )  /* stator phase resistance [Ohm] */
-#define L_SYN           (     0.00253 )/* synchronous inductance 0.00192 [Hen] (note: >0!) */
-#define MAX_CUR_AMP     (     3.0 )    /* peak maximum current [A] */
-#define START_CUR_AMP   (     0.8 )    /* peak startup current [A] */
-#define KP_V_A_Q          (     6.1 )    /* current loop proportional gain [Volt/Amp] */
-#define KI_V_AS_Q         (     469.0 ) /* current loop integral gain [Volt/(Amp*sec)] */
-#define KP_V_A_D          (     6.1 )    /* current loop proportional gain [Volt/Amp] */
-#define KI_V_AS_D         (     469.0 ) /* current loop integral gain [Volt/(Amp*sec)] */
-#define KP_AS_R         (     0.001 )  /* speed loop proportional gain [Amp/(rad/sec)] */  // 0.0016
-#define KI_A_R          (     0.03 )    /* speed loop integral gain [Amp/((rad/sec)*sec)] */
-#define ACC_RPM_S       (  1000.0 )     /* acceleration ramp [rpm/s] */
-#define DEC_RPM_S       (   500.0 )     /* acceleration ramp [rpm/s] */
-#define STUP_ACCTIME_S  (     2.0 )     /* startup acceleration time [sec] */
-#define CUR_RISE_T      (     1.5 )    /* current rising time [s] during startup alignment */
-#define CUR_FALL_T      (     1 )     /* direct current falling time [s] after startup */
-#endif  /* ifdef LEADSHINE_EL5_M0400_1_24 */
+#define MIN_FRE_HZ             (    30       )     /* minimum frequency [Hz] - 360 RPM                       */
+#define POLAR_COUPLES          (     5       )     /* number of polar couples                                */
+#define R_STA                  (     0.285   )     /* stator phase resistance [Ohm]                          */
+#define LD_SYN                 (     0.00032 )     /* synchronous inductance 0.00192 [Hen]                   */
+#define LQ_SYN                 (     0.00000 )     /* synchronous inductance 0.00192 [Hen]                   */
+#define L_SYN                  (     0.00032 )     /* synchronous inductance 0.00192 [Hen]                   */
+#define AIR_GAP_FLUX           (     0.8     )     /* Air gap flux in weber                                  */
+#define MAX_CUR_AMP            (     2.0     )      /* peak maximum current [A]                              */
+#define START_CUR_AMP          (     0.2     )      /* peak startup current [A]                              */
+#define KP_V_A_D               (     0.71    )      /* current loop proportional gain [Volt/Amp] 0.71        */
+#define KI_V_AS_D              (   917.0     )      /* current loop integral gain [Volt/(Amp*sec)]917        */
+#define KP_V_A_Q               (     0.71    )      /* current loop proportional gain [Volt/Amp] 0.71        */
+#define KI_V_AS_Q              (   917.0     )      /* current loop integral gain [Volt/(Amp*sec)]917        */
+#define KP_AS_R                (     0.003   )      /* speed loop proportional gain [Amp/(rad/sec)]          */
+#define KI_A_R                 (     0.004   )      /* speed loop integral gain [Amp/((rad/sec)*sec)]        */
+#define ACC_RPM_S              (  1000.0     )      /* acceleration ramp [rpm/s]                             */
+#define DEC_RPM_S              (   500.0     )      /* acceleration ramp [rpm/s]                             */
+#define STUP_ACCTIME_S         (     2.0     )      /* startup acceleration time [sec]                       */
+#define CUR_RISE_T             (     1.5     )      /* current rising time [s] during startup alignment      */
+#define CUR_FALL_T             (     1       )      /* direct current falling time [s] after startup         */
+#endif  /* SAMPLE_INSET_MOTOR */
+
+#ifdef NON_ISOTROPIC_MOTOR
+#define ENABLE_MTPA     1
+#else 
+#define ENABLE_MTPA     0
+#endif
+
 /* board related parameters */
 /* Note: only one board type has to be selected! */
 
@@ -178,13 +190,6 @@ Macro definitions
 #define AD_RBA          (  465.4545 )  /*8.8A, 1A <-> 465.45 bit */
 #define AD_RBV          (   77.57 )  /* 52.8V, 1V <->  77.57 bit */
 #endif /* ifdef MCLV2 */
-
-/* dsPICDEM MCHV-3 Board related parameters */
-#ifdef MCHV3
-#define CUR_SGN_REV     /* current sign is reversed!!! */
-#define AD_RBA          (  124.876 )  /*32.79A, 1A <-> 124.87 bit */
-#define AD_RBV          (   9.03 )  /* 453V, 1V <->  9 bit */
-#endif  /* ifdef MCHV3 */
 
 #define AD_FULLRANGE    ( 4096 )
 
@@ -259,6 +264,12 @@ Macro definitions
 /* a second internal speed unit is needed, to obtain angles as integral of the speed */
 #define K_SPEED_L       ((uint16_t)(BASE_SPEED * (32768.0f / FLOAT_PI) / K_TIME))
 /* speed[second internal speed unit] = K_SPEED_L * speed[internal speed unit] */
+/* Conversion constant: Impedence[internal impedence units] = K_FLUX * Impedence [Ohm] */
+#define K_IMPEDENCE                      (float)(BASE_VALUE_FL * BASE_CURRENT / BASE_VOLTAGE)
+
+/* Conversion constant: Flux[internal flux units] = K_FLUX * Flux [Weber] */
+#define K_FLUX                           (float)(BASE_VALUE_FL * BASE_SPEED / BASE_VOLTAGE)
+
 
 
 /* due to chosen base values, the conversion constants from the A/D result to the internal
@@ -410,9 +421,14 @@ Macro definitions
 
 #define PMSM_RESISTANCE_PHYS            R_STA
 #define PMSM_RESISTANCE_SCALED          (int16_t)(0.5f + (BASE_VALUE_FL * R_STA / BASE_IMPEDENCE))
-
-#define PMSM_INDUCTANCE_PHYS            L_SYN
-#define PMSM_INDUCTANCE_SCALED          (int16_t)(0.5f + (BASE_VALUE_FL * L_SYN / BASE_INDUCTANCE))
+#define PMSM_INDUCTANCE_PHYS          L_SYN
+#define PMSM_INDUCTANCE_SCALED        (int16_t)(0.5f + (BASE_VALUE_FL * L_SYN / BASE_INDUCTANCE))
+#ifdef NON_ISOTROPIC_MOTOR
+  #define PMSM_INDUCTANCE_D_PHYS          LD_SYN
+  #define PMSM_INDUCTANCE_D_SCALED        (int16_t)(0.5f + (BASE_VALUE_FL * PMSM_INDUCTANCE_D_PHYS / BASE_INDUCTANCE))
+  #define PMSM_INDUCTANCE_Q_PHYS          LQ_SYN
+  #define PMSM_INDUCTANCE_Q_SCALED        (int16_t)(0.5f + (BASE_VALUE_FL * PMSM_INDUCTANCE_Q_PHYS / BASE_INDUCTANCE))
+#endif
 
 #define PMSM_MAX_NEGATIVE_IDREF_PHYS    (float)(-2.0f)
 #define PMSM_MAX_NEGATIVE_IDREF_SCALED  (int16_t)(K_CURRENT * PMSM_MAX_NEGATIVE_IDREF_PHYS)
@@ -433,5 +449,11 @@ Macro definitions
 
 #define PMSM_MAX_NEGATIVE_IDREF_PHYS    (float)(-2.0f)
 #define PMSM_MAX_NEGATIVE_IDREF_SCALED  (int16_t)(K_CURRENT * PMSM_MAX_NEGATIVE_IDREF_PHYS)
+#endif
+#if(1U == ENABLE_MTPA)
+   #define PMSM_MTPA_CONSTANT1_PHYS         (float)(0.5 * AIR_GAP_FLUX / (PMSM_INDUCTANCE_D_PHYS - PMSM_INDUCTANCE_Q_PHYS))
+   #define PMSM_MTPA_CONSTANT1_SCALED       (int32_t)(PMSM_MTPA_CONSTANT1_PHYS * K_CURRENT )
+   #define PMSM_MTPA_CONSTANT2_PHYS         (float)(PMSM_MTPA_CONSTANT1_PHYS * PMSM_MTPA_CONSTANT1_PHYS )
+   #define PMSM_MTPA_CONSTANT2_SCALED       (int32_t)(PMSM_MTPA_CONSTANT2_PHYS * K_CURRENT )
 #endif
 #endif // USERPARAMS_H

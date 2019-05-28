@@ -4,7 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f3" displayName="config" projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mclv2_sam_c21_pim" projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f5" displayName="adc" projectFiles="true">
@@ -44,19 +44,18 @@
               <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/tcc/plib_tcc_common.h</itemPath>
             </logicalFolder>
           </logicalFolder>
+          <itemPath>../src/config/mclv2_sam_c21_pim/userparams.h</itemPath>
           <itemPath>../src/config/mclv2_sam_c21_pim/device_cache.h</itemPath>
           <itemPath>../src/config/mclv2_sam_c21_pim/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/mclv2_sam_c21_pim/definitions.h</itemPath>
-          <itemPath>../src/config/mclv2_sam_c21_pim/userparams.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f1"
-                     displayName="Motor Control Library"
-                     projectFiles="true">
-        <itemPath>../src/q14_rolo_mcLib.h</itemPath>
+      <logicalFolder name="f3" displayName="MotorControl" projectFiles="true">
         <itemPath>../src/q14_generic_mcLib.h</itemPath>
+        <itemPath>../src/q14_rolo_mcLib.h</itemPath>
+        <itemPath>../src/mc_app.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="packs" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMC21J18A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAMC21J18A_DFP/component/ac.h</itemPath>
@@ -120,11 +119,10 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f2" displayName="X2C Scope" projectFiles="true">
+      <logicalFolder name="f4" displayName="X2CScope" projectFiles="true">
         <itemPath>../src/X2CScope.h</itemPath>
         <itemPath>../src/X2CScopeCommunication.h</itemPath>
       </logicalFolder>
-      <itemPath>../src/mc_app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -133,7 +131,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <logicalFolder name="f3" displayName="config" projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mclv2_sam_c21_pim" projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f5" displayName="adc" projectFiles="true">
@@ -180,17 +178,15 @@
           <itemPath>../src/config/mclv2_sam_c21_pim/libc_syscalls.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f2"
-                     displayName="Motor Control Library"
-                     projectFiles="true">
+      <logicalFolder name="f2" displayName="MotorControl" projectFiles="true">
         <itemPath>../src/q14_generic_mcLib.c</itemPath>
         <itemPath>../src/q14_rolo_mcLib.c</itemPath>
+        <itemPath>../src/mc_app.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="f1" displayName="X2C Scope" projectFiles="true">
-        <itemPath>../src/X2CScopeCommunication.c</itemPath>
+      <logicalFolder name="f3" displayName="X2CScope" projectFiles="true">
         <itemPath>../src/X2CScope.c</itemPath>
+        <itemPath>../src/X2CScopeCommunication.c</itemPath>
       </logicalFolder>
-      <itemPath>../src/mc_app.c</itemPath>
       <itemPath>../src/main_mclv2_sam_c21_pim.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -200,7 +196,7 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>../src</Elem>
+    <Elem>..</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -216,8 +212,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
         <pack name="SAMC21_DFP" vendor="Microchip" version="2.0.5"/>
+        <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
         <linkerTool>

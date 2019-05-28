@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <executable name="dist/mclv2_sam_c21_pim/production/mclv2_sam_c21_pim.X.production.elf">
+    <memory name="program">
+      <units>bytes</units>
+      <length>262144</length>
+      <used>27054</used>
+      <free>235090</free>
+    </memory>
+    <memory name="data">
+      <units>bytes</units>
+      <length>32768</length>
+      <used>15980</used>
+      <free>16788</free>
+    </memory>
+  </executable>
+</project>
