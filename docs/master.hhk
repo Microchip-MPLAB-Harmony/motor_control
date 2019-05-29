@@ -29,19 +29,29 @@
     <PARAM name="Local" value="00007.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
-    <PARAM name="Keyword" value="Building The Application">
-    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Keyword" value="BLDC Block Commutation Using Hall Sensors">
+    <PARAM name="Name" value="BLDC Block Commutation Using Hall Sensors">
+    <PARAM name="Local" value="00012.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="bldc_bc_hall_sam_c21">
+    <PARAM name="Name" value="bldc_bc_hall_sam_c21">
     <PARAM name="Local" value="00011.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Building The Application">
     <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00032.html">
+    <PARAM name="Local" value="00044.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Building The Application">
     <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00025.html">
+    <PARAM name="Local" value="00051.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Building The Application">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00013.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Building The Application">
@@ -51,7 +61,82 @@
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Building The Application">
     <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00026.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Building The Application">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00031.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Building The Application">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00037.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Building The Application">
+    <PARAM name="Name" value="Building The Application">
     <PARAM name="Local" value="00000.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Building The Application">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00056.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Building The Application">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00072.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Building The Application">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00065.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Control Algorithm">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00035.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Control Algorithm">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00027.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Control Algorithm">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00066.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Control Algorithm">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00052.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Control Algorithm">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00073.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Control Algorithm">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00045.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Control Algorithm">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00062.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Control Algorithm">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00038.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Control Algorithm">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00014.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Control Algorithm">
@@ -61,27 +146,32 @@
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Control Algorithm">
     <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00022.html">
+    <PARAM name="Local" value="00019.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
-    <PARAM name="Keyword" value="Control Algorithm">
-    <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00033.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Keyword" value="Control Algorithm">
-    <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00026.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Keyword" value="Control Algorithm">
-    <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00012.html">
+    <PARAM name="Keyword" value="FOC Based Position Control of PMSM Using Quadrature Encoder">
+    <PARAM name="Name" value="FOC Based Position Control of PMSM Using Quadrature Encoder">
+    <PARAM name="Local" value="00042.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Hardware Setup">
     <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00019.html">
+    <PARAM name="Local" value="00039.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Hardware Setup">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00008.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Hardware Setup">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00020.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Hardware Setup">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00057.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Hardware Setup">
@@ -91,27 +181,57 @@
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Hardware Setup">
     <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00027.html">
+    <PARAM name="Local" value="00046.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Hardware Setup">
     <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00013.html">
+    <PARAM name="Local" value="00074.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Hardware Setup">
     <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00034.html">
+    <PARAM name="Local" value="00067.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Hardware Setup">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00028.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Hardware Setup">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00053.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Hardware Setup">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00032.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Motor Control Overview">
     <PARAM name="Name" value="Motor Control Overview">
-    <PARAM name="Local" value="00008.html">
+    <PARAM name="Local" value="00015.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="MPLAB Harmony Configurations">
     <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00028.html">
+    <PARAM name="Local" value="00009.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="MPLAB Harmony Configurations">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00054.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="MPLAB Harmony Configurations">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00047.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="MPLAB Harmony Configurations">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00068.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="MPLAB Harmony Configurations">
@@ -121,77 +241,137 @@
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="MPLAB Harmony Configurations">
     <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00035.html">
+    <PARAM name="Local" value="00033.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="MPLAB Harmony Configurations">
     <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00014.html">
+    <PARAM name="Local" value="00075.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="MPLAB Harmony Configurations">
     <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00020.html">
+    <PARAM name="Local" value="00029.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="MPLAB Harmony Configurations">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00021.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="MPLAB Harmony Configurations">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00058.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="MPLAB Harmony Configurations">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00040.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="PFC in PLL based PMSM drive">
+    <PARAM name="Name" value="PFC in PLL based PMSM drive">
+    <PARAM name="Local" value="00070.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="PMSM FOC Using PLL Estimator">
     <PARAM name="Name" value="PMSM FOC Using PLL Estimator">
-    <PARAM name="Local" value="00009.html">
+    <PARAM name="Local" value="00016.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="PMSM FOC Using Quadrature Encoder">
     <PARAM name="Name" value="PMSM FOC Using Quadrature Encoder">
-    <PARAM name="Local" value="00016.html">
+    <PARAM name="Local" value="00023.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="PMSM FOC Using Reduced Order Luenberger Observer">
     <PARAM name="Name" value="PMSM FOC Using Reduced Order Luenberger Observer">
-    <PARAM name="Local" value="00023.html">
+    <PARAM name="Local" value="00049.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="PMSM FOC Using Reduced Order Luenberger Observer with Windmilling Capability">
     <PARAM name="Name" value="PMSM FOC Using Reduced Order Luenberger Observer with Windmilling Capability">
-    <PARAM name="Local" value="00030.html">
+    <PARAM name="Local" value="00063.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="PMSM FOC Using ROLO with Field Weakening and MTPA Capability">
+    <PARAM name="Name" value="PMSM FOC Using ROLO with Field Weakening and MTPA Capability">
+    <PARAM name="Local" value="00061.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="pmsm_foc_encoder_position_sam_e54">
+    <PARAM name="Name" value="pmsm_foc_encoder_position_sam_e54">
+    <PARAM name="Local" value="00043.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="pmsm_foc_encoder_sam_e54">
+    <PARAM name="Name" value="pmsm_foc_encoder_sam_e54">
+    <PARAM name="Local" value="00024.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="pmsm_foc_encoder_sam_e70">
     <PARAM name="Name" value="pmsm_foc_encoder_sam_e70">
-    <PARAM name="Local" value="00017.html">
+    <PARAM name="Local" value="00025.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="pmsm_foc_pll_estimator_sam_e54">
+    <PARAM name="Name" value="pmsm_foc_pll_estimator_sam_e54">
+    <PARAM name="Local" value="00036.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="pmsm_foc_pll_estimator_sam_e70">
     <PARAM name="Name" value="pmsm_foc_pll_estimator_sam_e70">
-    <PARAM name="Local" value="00010.html">
+    <PARAM name="Local" value="00017.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="pmsm_foc_rolo_fw_mtpa_sam_c21">
+    <PARAM name="Name" value="pmsm_foc_rolo_fw_mtpa_sam_c21">
+    <PARAM name="Local" value="00060.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="pmsm_foc_rolo_sam_c21">
     <PARAM name="Name" value="pmsm_foc_rolo_sam_c21">
-    <PARAM name="Local" value="00024.html">
+    <PARAM name="Local" value="00050.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="pmsm_foc_rolo_wm_sam_c21">
     <PARAM name="Name" value="pmsm_foc_rolo_wm_sam_c21">
-    <PARAM name="Local" value="00031.html">
+    <PARAM name="Local" value="00064.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="pmsm_pfc_foc_pll_estimator_sam_e70">
+    <PARAM name="Name" value="pmsm_pfc_foc_pll_estimator_sam_e70">
+    <PARAM name="Local" value="00071.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Running The Application">
     <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00015.html">
+    <PARAM name="Local" value="00041.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Running The Application">
     <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00036.html">
+    <PARAM name="Local" value="00034.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Running The Application">
     <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00021.html">
+    <PARAM name="Local" value="00076.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Running The Application">
     <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00029.html">
+    <PARAM name="Local" value="00022.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Running The Application">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00030.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Running The Application">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00055.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="Running The Application">
@@ -199,9 +379,29 @@
     <PARAM name="Local" value="00004.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Running The Application">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00059.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Running The Application">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00048.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Running The Application">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00069.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Keyword" value="Running The Application">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00010.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
     <PARAM name="Keyword" value="X2CScope Plugin">
     <PARAM name="Name" value="X2CScope Plugin">
-    <PARAM name="Local" value="00037.html">
+    <PARAM name="Local" value="00077.html">
     </OBJECT>
 </ul>
 <!-- End Client Area -->
