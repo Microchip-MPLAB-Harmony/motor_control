@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="66">
+<configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -8,121 +8,121 @@
         <logicalFolder name="f1" displayName="mclv2_sam_c21_pim" projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f5" displayName="adc" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/adc/plib_adc_common.h</itemPath>
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/adc/plib_adc0.h</itemPath>
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/adc/plib_adc1.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/adc/plib_adc_common.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/adc/plib_adc0.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/adc/plib_adc1.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f7" displayName="clock" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/clock/plib_clock.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/clock/plib_clock.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f9" displayName="eic" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/eic/plib_eic.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/eic/plib_eic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="evsys" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/evsys/plib_evsys.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/evsys/plib_evsys.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f8" displayName="nvic" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/nvic/plib_nvic.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f6" displayName="port" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/port/plib_port.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="sercom" projectFiles="true">
               <logicalFolder name="f1" displayName="usart" projectFiles="true">
-                <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/sercom/usart/plib_sercom3_usart.h</itemPath>
-                <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/sercom/usart/plib_sercom_usart_common.h</itemPath>
+                <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/sercom/usart/plib_sercom3_usart.h</itemPath>
+                <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/sercom/usart/plib_sercom_usart_common.h</itemPath>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f10" displayName="tc" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/tc/plib_tc_common.h</itemPath>
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/tc/plib_tc3.h</itemPath>
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/tc/plib_tc4.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/tc/plib_tc_common.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/tc/plib_tc3.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/tc/plib_tc4.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="tcc" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/tcc/plib_tcc0.h</itemPath>
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/tcc/plib_tcc_common.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/tcc/plib_tcc0.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/tcc/plib_tcc_common.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath ex="false">../src/config/mclv2_sam_c21_pim/userparams.h</itemPath>
-          <itemPath ex="false">../src/config/mclv2_sam_c21_pim/device_cache.h</itemPath>
-          <itemPath ex="false">../src/config/mclv2_sam_c21_pim/toolchain_specifics.h</itemPath>
-          <itemPath ex="false">../src/config/mclv2_sam_c21_pim/definitions.h</itemPath>
+          <itemPath>../src/config/mclv2_sam_c21_pim/userparams.h</itemPath>
+          <itemPath>../src/config/mclv2_sam_c21_pim/device_cache.h</itemPath>
+          <itemPath>../src/config/mclv2_sam_c21_pim/toolchain_specifics.h</itemPath>
+          <itemPath>../src/config/mclv2_sam_c21_pim/definitions.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f3" displayName="MotorControl" projectFiles="true">
-        <itemPath ex="false">../src/mc_app.h</itemPath>
-        <itemPath ex="false">../src/q14_generic_mcLib.h</itemPath>
+        <itemPath>../src/mc_app.h</itemPath>
+        <itemPath>../src/q14_generic_mcLib.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMC21J18A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/ac.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/adc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/can.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/ccl.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/dac.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/divas.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/dmac.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/dsu.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/eic.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/evsys.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/freqm.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/gclk.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/hmatrixb.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/mclk.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/mtb.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/nvmctrl.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/osc32kctrl.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/oscctrl.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/pac.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/pm.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/port.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/ptc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/rstc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/rtc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/sdadc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/sercom.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/supc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/tc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/tcc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/tsens.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/component/wdt.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/ac.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/adc.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/can.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/ccl.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/dac.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/divas.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/dmac.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/dsu.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/eic.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/evsys.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/freqm.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/gclk.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/hmatrixb.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/mclk.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/mtb.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/nvmctrl.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/osc32kctrl.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/oscctrl.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/pac.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/pm.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/port.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/ptc.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/rstc.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/rtc.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/sdadc.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/sercom.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/supc.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/tc.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/tcc.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/tsens.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/component/wdt.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
-            <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/pio/samc21j18a.h</itemPath>
+            <itemPath>../src/packs/ATSAMC21J18A_DFP/pio/samc21j18a.h</itemPath>
           </logicalFolder>
-          <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/device.h</itemPath>
-          <itemPath ex="false">../src/packs/ATSAMC21J18A_DFP/atsamc21j18a.h</itemPath>
+          <itemPath>../src/packs/ATSAMC21J18A_DFP/device.h</itemPath>
+          <itemPath>../src/packs/ATSAMC21J18A_DFP/atsamc21j18a.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f2" displayName="DSP" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f4" displayName="X2CScope" projectFiles="true">
-        <itemPath ex="false">../src/X2CScope.h</itemPath>
-        <itemPath ex="false">../src/X2CScopeCommunication.h</itemPath>
+        <itemPath>../src/X2CScope.h</itemPath>
+        <itemPath>../src/X2CScopeCommunication.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -136,64 +136,64 @@
         <logicalFolder name="f1" displayName="mclv2_sam_c21_pim" projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f5" displayName="adc" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/adc/plib_adc0.c</itemPath>
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/adc/plib_adc1.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/adc/plib_adc0.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/adc/plib_adc1.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f7" displayName="clock" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/clock/plib_clock.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/clock/plib_clock.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f9" displayName="eic" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/eic/plib_eic.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/eic/plib_eic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="evsys" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/evsys/plib_evsys.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/evsys/plib_evsys.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f8" displayName="nvic" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/nvic/plib_nvic.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f6" displayName="port" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/port/plib_port.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="sercom" projectFiles="true">
               <logicalFolder name="f1" displayName="usart" projectFiles="true">
-                <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/sercom/usart/plib_sercom3_usart.c</itemPath>
+                <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/sercom/usart/plib_sercom3_usart.c</itemPath>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f10" displayName="tc" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/tc/plib_tc3.c</itemPath>
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/tc/plib_tc4.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/tc/plib_tc3.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/tc/plib_tc4.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="tcc" projectFiles="true">
-              <itemPath ex="false">../src/config/mclv2_sam_c21_pim/peripheral/tcc/plib_tcc0.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_c21_pim/peripheral/tcc/plib_tcc0.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="stdio" projectFiles="true">
-            <itemPath ex="false">../src/config/mclv2_sam_c21_pim/stdio/xc32_monitor.c</itemPath>
+            <itemPath>../src/config/mclv2_sam_c21_pim/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
-          <itemPath ex="false">../src/config/mclv2_sam_c21_pim/initialization.c</itemPath>
-          <itemPath ex="false">../src/config/mclv2_sam_c21_pim/interrupts.c</itemPath>
-          <itemPath ex="false">../src/config/mclv2_sam_c21_pim/exceptions.c</itemPath>
-          <itemPath ex="false">../src/config/mclv2_sam_c21_pim/startup_xc32.c</itemPath>
-          <itemPath ex="false">../src/config/mclv2_sam_c21_pim/libc_syscalls.c</itemPath>
+          <itemPath>../src/config/mclv2_sam_c21_pim/initialization.c</itemPath>
+          <itemPath>../src/config/mclv2_sam_c21_pim/interrupts.c</itemPath>
+          <itemPath>../src/config/mclv2_sam_c21_pim/exceptions.c</itemPath>
+          <itemPath>../src/config/mclv2_sam_c21_pim/startup_xc32.c</itemPath>
+          <itemPath>../src/config/mclv2_sam_c21_pim/libc_syscalls.c</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f2" displayName="MotorControl" projectFiles="true">
-        <itemPath ex="false">../src/mc_app.c</itemPath>
-        <itemPath ex="false">../src/q14_generic_mcLib.c</itemPath>
+        <itemPath>../src/mc_app.c</itemPath>
+        <itemPath>../src/q14_generic_mcLib.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="X2CScope" projectFiles="true">
-        <itemPath ex="false">../src/X2CScope.c</itemPath>
-        <itemPath ex="false">../src/X2CScopeCommunication.c</itemPath>
+        <itemPath>../src/X2CScope.c</itemPath>
+        <itemPath>../src/X2CScopeCommunication.c</itemPath>
       </logicalFolder>
-      <itemPath ex="false">../src/main_mclv2_sam_c21_pim.c</itemPath>
+      <itemPath>../src/main_mclv2_sam_c21_pim.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
-      <itemPath ex="false">Makefile</itemPath>
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -209,11 +209,11 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>ICD4Tool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.20</languageToolchainVersion>
+        <languageToolchainVersion>2.15</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMC21_DFP" vendor="Microchip" version="3.0.23"/>
+        <pack name="SAMC21_DFP" vendor="Microchip" version="3.0.22"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
