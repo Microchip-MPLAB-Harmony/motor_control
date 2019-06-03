@@ -291,8 +291,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/mclv2_sam_e54_pim/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FB59AA0B30B2BEFE0A75EB826A509ACA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FB59AA0B30B2BEFE0A75EB826A509ACA</UserChecksum>
+          <GeneratedChecksum dnOrder="4">816FC498CC9CC40DE4AA6FE531F22685</GeneratedChecksum>
+          <UserChecksum dnOrder="5">816FC498CC9CC40DE4AA6FE531F22685</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
@@ -742,7 +742,7 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAME54_DFP\3.0.27\atdf\ATSAME54P20A.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
       <Setting dnOrder="5" key="PackageFilter" value="csp;motor_control;"/>
     </Settings>
   </Configurator>
