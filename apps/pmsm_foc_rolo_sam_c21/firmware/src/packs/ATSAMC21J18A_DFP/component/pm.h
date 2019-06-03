@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-01-07T09:41:41Z */
+/* file generated from device description version 2019-04-08T12:38:18Z */
 #ifndef _SAMC21_PM_COMPONENT_H_
 #define _SAMC21_PM_COMPONENT_H_
 
@@ -34,13 +34,9 @@
 #define PM_SLEEPCFG_SLEEPMODE_Pos             _U_(0)                                               /**< (PM_SLEEPCFG) Sleep Mode Position */
 #define PM_SLEEPCFG_SLEEPMODE_Msk             (_U_(0x7) << PM_SLEEPCFG_SLEEPMODE_Pos)              /**< (PM_SLEEPCFG) Sleep Mode Mask */
 #define PM_SLEEPCFG_SLEEPMODE(value)          (PM_SLEEPCFG_SLEEPMODE_Msk & ((value) << PM_SLEEPCFG_SLEEPMODE_Pos))
-#define   PM_SLEEPCFG_SLEEPMODE_IDLE0_Val     _U_(0x0)                                             /**< (PM_SLEEPCFG) CPU clock is OFF  */
-#define   PM_SLEEPCFG_SLEEPMODE_IDLE1_Val     _U_(0x1)                                             /**< (PM_SLEEPCFG) AHB clock is OFF  */
-#define   PM_SLEEPCFG_SLEEPMODE_IDLE2_Val     _U_(0x2)                                             /**< (PM_SLEEPCFG) APB clock are OFF  */
+#define   PM_SLEEPCFG_SLEEPMODE_IDLE_Val      _U_(0x2)                                             /**< (PM_SLEEPCFG) CPU, AHBx, and APBx clocks are OFF  */
 #define   PM_SLEEPCFG_SLEEPMODE_STANDBY_Val   _U_(0x4)                                             /**< (PM_SLEEPCFG) All Clocks are OFF  */
-#define PM_SLEEPCFG_SLEEPMODE_IDLE0           (PM_SLEEPCFG_SLEEPMODE_IDLE0_Val << PM_SLEEPCFG_SLEEPMODE_Pos) /**< (PM_SLEEPCFG) CPU clock is OFF Position  */
-#define PM_SLEEPCFG_SLEEPMODE_IDLE1           (PM_SLEEPCFG_SLEEPMODE_IDLE1_Val << PM_SLEEPCFG_SLEEPMODE_Pos) /**< (PM_SLEEPCFG) AHB clock is OFF Position  */
-#define PM_SLEEPCFG_SLEEPMODE_IDLE2           (PM_SLEEPCFG_SLEEPMODE_IDLE2_Val << PM_SLEEPCFG_SLEEPMODE_Pos) /**< (PM_SLEEPCFG) APB clock are OFF Position  */
+#define PM_SLEEPCFG_SLEEPMODE_IDLE            (PM_SLEEPCFG_SLEEPMODE_IDLE_Val << PM_SLEEPCFG_SLEEPMODE_Pos) /**< (PM_SLEEPCFG) CPU, AHBx, and APBx clocks are OFF Position  */
 #define PM_SLEEPCFG_SLEEPMODE_STANDBY         (PM_SLEEPCFG_SLEEPMODE_STANDBY_Val << PM_SLEEPCFG_SLEEPMODE_Pos) /**< (PM_SLEEPCFG) All Clocks are OFF Position  */
 #define PM_SLEEPCFG_Msk                       _U_(0x07)                                            /**< (PM_SLEEPCFG) Register Mask  */
 
