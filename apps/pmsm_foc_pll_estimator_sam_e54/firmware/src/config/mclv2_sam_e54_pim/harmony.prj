@@ -27,8 +27,8 @@
           <Name dnOrder="1">interrupts.c</Name>
           <LogicalPath dnOrder="2">config/mclv2_sam_e54_pim/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9915B43F4EBC4EED0671DE793D00064F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9915B43F4EBC4EED0671DE793D00064F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">770233CB1C62F8044A8C45FFDABCCCA8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">770233CB1C62F8044A8C45FFDABCCCA8</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -131,8 +131,8 @@
           <Name dnOrder="1">plib_tcc0.c</Name>
           <LogicalPath dnOrder="2">config/mclv2_sam_e54_pim/peripheral/tcc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/tcc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E783F92B52160468612BB1F6BA0122B9</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E783F92B52160468612BB1F6BA0122B9</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DE5EF386B51BAB924F97C10405E18B7E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DE5EF386B51BAB924F97C10405E18B7E</UserChecksum>
         </File>
         <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
@@ -283,8 +283,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/mclv2_sam_e54_pim/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9422A99DA6EB571CF0F8C32BBA48924E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9422A99DA6EB571CF0F8C32BBA48924E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4FEFCEAC582361EA0109D5D4729651B6</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4FEFCEAC582361EA0109D5D4729651B6</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
@@ -719,7 +719,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="csp;motor_control;"/>
     </Settings>
   </Configurator>
 </Configuration>

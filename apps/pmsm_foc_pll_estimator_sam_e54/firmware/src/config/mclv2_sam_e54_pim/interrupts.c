@@ -162,7 +162,7 @@ void USB_SOF_HSOF_Handler       ( void ) __attribute__((weak, alias("Dummy_Handl
 void USB_TRCPT0_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void USB_TRCPT1_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void GMAC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void TCC0_OTHER_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void TCC0_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void TCC0_MC0_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void TCC0_MC1_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void TCC0_MC2_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -319,7 +319,7 @@ const DeviceVectors exception_table=
     .pfnUSB_TRCPT0_Handler         = ( void * ) USB_TRCPT0_Handler,
     .pfnUSB_TRCPT1_Handler         = ( void * ) USB_TRCPT1_Handler,
     .pfnGMAC_Handler               = ( void * ) GMAC_Handler,
-    .pfnTCC0_OTHER_Handler         = ( void * ) TCC0_OTHER_Handler,
+    .pfnTCC0_OTHER_Handler         = ( void * ) TCC0_Handler,
     .pfnTCC0_MC0_Handler           = ( void * ) TCC0_MC0_Handler,
     .pfnTCC0_MC1_Handler           = ( void * ) TCC0_MC1_Handler,
     .pfnTCC0_MC2_Handler           = ( void * ) TCC0_MC2_Handler,

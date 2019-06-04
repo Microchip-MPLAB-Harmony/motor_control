@@ -27,13 +27,13 @@
             <logicalFolder name="f8" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
+            <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f6" displayName="port" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="sercom" projectFiles="true">
+            <logicalFolder name="f2" displayName="sercom" projectFiles="true">
               <logicalFolder name="f1" displayName="usart" projectFiles="true">
                 <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/sercom/usart/plib_sercom2_usart.h</itemPath>
                 <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/sercom/usart/plib_sercom_usart_common.h</itemPath>
@@ -160,13 +160,13 @@
             <logicalFolder name="f8" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
+            <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f6" displayName="port" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="sercom" projectFiles="true">
+            <logicalFolder name="f2" displayName="sercom" projectFiles="true">
               <logicalFolder name="f1" displayName="usart" projectFiles="true">
                 <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/sercom/usart/plib_sercom2_usart.c</itemPath>
               </logicalFolder>

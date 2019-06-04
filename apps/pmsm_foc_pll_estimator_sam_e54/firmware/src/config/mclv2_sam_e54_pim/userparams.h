@@ -175,7 +175,7 @@
 #define     ALIGN_Q_CURRENT_REF                                 0.4                     // Maximum Torque Reference during Motor Alignment in A
 #define     OPENLOOP_Q_CURRENT_REF                              0.4                     // Maximum Torque Reference during Open Loop Mode in A
 #define     RHO_OFFSET_ELEC_DEG                                 45                      // Angle Offset between actual rotor angle and estimated angle during open loop mode. This offset helps in smooth transition from Open Loop to Closed Loop
-#define     MAX_FW_NEGATIVE_ID_REF                              (float)(-2.2)           // Maximum negative D axis reference current (in A) during Flux Weakening
+#define     MAX_FW_NEGATIVE_ID_REF                              (float)(-1.2)           // Maximum negative D axis reference current (in A) during Flux Weakening
 #define     TORQUE_MODE_MAX_CUR                                 0.4                     // Maximum Torque Mode Current Reference in A
 #define     MAX_MOTOR_CURRENT                                   (float)(4.4)            // Maximum Motor Current in A
 
