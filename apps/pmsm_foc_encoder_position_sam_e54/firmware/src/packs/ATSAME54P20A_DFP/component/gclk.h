@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-02-04T09:12:27Z */
+/* file generated from device description version 2019-04-09T10:12:25Z */
 #ifndef _SAME54_GCLK_COMPONENT_H_
 #define _SAME54_GCLK_COMPONENT_H_
 

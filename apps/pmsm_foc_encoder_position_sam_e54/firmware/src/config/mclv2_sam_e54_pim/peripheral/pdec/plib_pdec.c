@@ -83,7 +83,7 @@ void PDEC_QDECInitialize( void )
 
     /* Configure quadrature control settings */
     PDEC_REGS->PDEC_CTRLA = PDEC_CTRLA_MODE_QDEC | PDEC_CTRLA_CONF_X4
-                                | PDEC_CTRLA_PINEN(0x7) | PDEC_CTRLA_PINVEN(0x0)
+                                | PDEC_CTRLA_PINEN(0x3) | PDEC_CTRLA_PINVEN(0x0)
                                  | PDEC_CTRLA_ANGULAR(7)
                                  | PDEC_CTRLA_MAXCMP(4); 
     PDEC_REGS->PDEC_PRESC = PDEC_PRESC_PRESC_DIV1;

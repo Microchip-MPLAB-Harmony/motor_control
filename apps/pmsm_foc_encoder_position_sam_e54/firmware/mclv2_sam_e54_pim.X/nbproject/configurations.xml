@@ -15,7 +15,10 @@
             <logicalFolder name="f7" displayName="clock" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/clock/plib_clock.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="eic" projectFiles="true">
+            <logicalFolder name="f9" displayName="cmcc" projectFiles="true">
+              <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/cmcc/plib_cmcc.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f10" displayName="eic" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/eic/plib_eic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="evsys" projectFiles="true">
@@ -27,7 +30,7 @@
             <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f10" displayName="pdec" projectFiles="true">
+            <logicalFolder name="f11" displayName="pdec" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/pdec/plib_pdec_common.h</itemPath>
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/pdec/plib_pdec.h</itemPath>
             </logicalFolder>
@@ -149,7 +152,10 @@
             <logicalFolder name="f7" displayName="clock" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/clock/plib_clock.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="eic" projectFiles="true">
+            <logicalFolder name="f9" displayName="cmcc" projectFiles="true">
+              <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/cmcc/plib_cmcc.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f10" displayName="eic" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/eic/plib_eic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="evsys" projectFiles="true">
@@ -161,7 +167,7 @@
             <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f10" displayName="pdec" projectFiles="true">
+            <logicalFolder name="f11" displayName="pdec" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e54_pim/peripheral/pdec/plib_pdec.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f6" displayName="port" projectFiles="true">

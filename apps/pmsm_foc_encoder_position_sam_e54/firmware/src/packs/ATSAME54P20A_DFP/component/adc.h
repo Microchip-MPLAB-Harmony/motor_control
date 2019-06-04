@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-02-04T09:12:27Z */
+/* file generated from device description version 2019-04-09T10:12:25Z */
 #ifndef _SAME54_ADC_COMPONENT_H_
 #define _SAME54_ADC_COMPONENT_H_
 
@@ -145,8 +145,8 @@
 #define   ADC_INPUTCTRL_MUXPOS_SCALEDVBAT_Val _U_(0x19)                                            /**< (ADC_INPUTCTRL) 1/4 Scaled VBAT Supply  */
 #define   ADC_INPUTCTRL_MUXPOS_SCALEDIOVCC_Val _U_(0x1A)                                            /**< (ADC_INPUTCTRL) 1/4 Scaled I/O Supply  */
 #define   ADC_INPUTCTRL_MUXPOS_BANDGAP_Val    _U_(0x1B)                                            /**< (ADC_INPUTCTRL) Bandgap Voltage  */
-#define   ADC_INPUTCTRL_MUXPOS_PTAT_Val       _U_(0x1C)                                            /**< (ADC_INPUTCTRL) Temperature Sensor  */
-#define   ADC_INPUTCTRL_MUXPOS_CTAT_Val       _U_(0x1D)                                            /**< (ADC_INPUTCTRL) Temperature Sensor  */
+#define   ADC_INPUTCTRL_MUXPOS_PTAT_Val       _U_(0x1C)                                            /**< (ADC_INPUTCTRL) Temperature Sensor TSENSP  */
+#define   ADC_INPUTCTRL_MUXPOS_CTAT_Val       _U_(0x1D)                                            /**< (ADC_INPUTCTRL) Temperature Sensor TSENSC  */
 #define   ADC_INPUTCTRL_MUXPOS_DAC_Val        _U_(0x1E)                                            /**< (ADC_INPUTCTRL) DAC Output  */
 #define   ADC_INPUTCTRL_MUXPOS_PTC_Val        _U_(0x1F)                                            /**< (ADC_INPUTCTRL) PTC output (only on ADC0)  */
 #define ADC_INPUTCTRL_MUXPOS_AIN0             (ADC_INPUTCTRL_MUXPOS_AIN0_Val << ADC_INPUTCTRL_MUXPOS_Pos) /**< (ADC_INPUTCTRL) ADC AIN0 Pin Position  */
@@ -177,8 +177,8 @@
 #define ADC_INPUTCTRL_MUXPOS_SCALEDVBAT       (ADC_INPUTCTRL_MUXPOS_SCALEDVBAT_Val << ADC_INPUTCTRL_MUXPOS_Pos) /**< (ADC_INPUTCTRL) 1/4 Scaled VBAT Supply Position  */
 #define ADC_INPUTCTRL_MUXPOS_SCALEDIOVCC      (ADC_INPUTCTRL_MUXPOS_SCALEDIOVCC_Val << ADC_INPUTCTRL_MUXPOS_Pos) /**< (ADC_INPUTCTRL) 1/4 Scaled I/O Supply Position  */
 #define ADC_INPUTCTRL_MUXPOS_BANDGAP          (ADC_INPUTCTRL_MUXPOS_BANDGAP_Val << ADC_INPUTCTRL_MUXPOS_Pos) /**< (ADC_INPUTCTRL) Bandgap Voltage Position  */
-#define ADC_INPUTCTRL_MUXPOS_PTAT             (ADC_INPUTCTRL_MUXPOS_PTAT_Val << ADC_INPUTCTRL_MUXPOS_Pos) /**< (ADC_INPUTCTRL) Temperature Sensor Position  */
-#define ADC_INPUTCTRL_MUXPOS_CTAT             (ADC_INPUTCTRL_MUXPOS_CTAT_Val << ADC_INPUTCTRL_MUXPOS_Pos) /**< (ADC_INPUTCTRL) Temperature Sensor Position  */
+#define ADC_INPUTCTRL_MUXPOS_PTAT             (ADC_INPUTCTRL_MUXPOS_PTAT_Val << ADC_INPUTCTRL_MUXPOS_Pos) /**< (ADC_INPUTCTRL) Temperature Sensor TSENSP Position  */
+#define ADC_INPUTCTRL_MUXPOS_CTAT             (ADC_INPUTCTRL_MUXPOS_CTAT_Val << ADC_INPUTCTRL_MUXPOS_Pos) /**< (ADC_INPUTCTRL) Temperature Sensor TSENSC Position  */
 #define ADC_INPUTCTRL_MUXPOS_DAC              (ADC_INPUTCTRL_MUXPOS_DAC_Val << ADC_INPUTCTRL_MUXPOS_Pos) /**< (ADC_INPUTCTRL) DAC Output Position  */
 #define ADC_INPUTCTRL_MUXPOS_PTC              (ADC_INPUTCTRL_MUXPOS_PTC_Val << ADC_INPUTCTRL_MUXPOS_Pos) /**< (ADC_INPUTCTRL) PTC output (only on ADC0) Position  */
 #define ADC_INPUTCTRL_DIFFMODE_Pos            _U_(7)                                               /**< (ADC_INPUTCTRL) Differential Mode Position */
@@ -262,15 +262,15 @@
 #define   ADC_REFCTRL_REFSEL_INTREF_Val       _U_(0x0)                                             /**< (ADC_REFCTRL) Internal Bandgap Reference  */
 #define   ADC_REFCTRL_REFSEL_INTVCC0_Val      _U_(0x2)                                             /**< (ADC_REFCTRL) 1/2 VDDANA  */
 #define   ADC_REFCTRL_REFSEL_INTVCC1_Val      _U_(0x3)                                             /**< (ADC_REFCTRL) VDDANA  */
-#define   ADC_REFCTRL_REFSEL_AREFA_Val        _U_(0x4)                                             /**< (ADC_REFCTRL) External Reference  */
-#define   ADC_REFCTRL_REFSEL_AREFB_Val        _U_(0x5)                                             /**< (ADC_REFCTRL) External Reference  */
-#define   ADC_REFCTRL_REFSEL_AREFC_Val        _U_(0x6)                                             /**< (ADC_REFCTRL) External Reference (only on ADC1)  */
+#define   ADC_REFCTRL_REFSEL_AREFA_Val        _U_(0x4)                                             /**< (ADC_REFCTRL) External Reference A  */
+#define   ADC_REFCTRL_REFSEL_AREFB_Val        _U_(0x5)                                             /**< (ADC_REFCTRL) External Reference B  */
+#define   ADC_REFCTRL_REFSEL_AREFC_Val        _U_(0x6)                                             /**< (ADC_REFCTRL) External Reference C (only on ADC1)  */
 #define ADC_REFCTRL_REFSEL_INTREF             (ADC_REFCTRL_REFSEL_INTREF_Val << ADC_REFCTRL_REFSEL_Pos) /**< (ADC_REFCTRL) Internal Bandgap Reference Position  */
 #define ADC_REFCTRL_REFSEL_INTVCC0            (ADC_REFCTRL_REFSEL_INTVCC0_Val << ADC_REFCTRL_REFSEL_Pos) /**< (ADC_REFCTRL) 1/2 VDDANA Position  */
 #define ADC_REFCTRL_REFSEL_INTVCC1            (ADC_REFCTRL_REFSEL_INTVCC1_Val << ADC_REFCTRL_REFSEL_Pos) /**< (ADC_REFCTRL) VDDANA Position  */
-#define ADC_REFCTRL_REFSEL_AREFA              (ADC_REFCTRL_REFSEL_AREFA_Val << ADC_REFCTRL_REFSEL_Pos) /**< (ADC_REFCTRL) External Reference Position  */
-#define ADC_REFCTRL_REFSEL_AREFB              (ADC_REFCTRL_REFSEL_AREFB_Val << ADC_REFCTRL_REFSEL_Pos) /**< (ADC_REFCTRL) External Reference Position  */
-#define ADC_REFCTRL_REFSEL_AREFC              (ADC_REFCTRL_REFSEL_AREFC_Val << ADC_REFCTRL_REFSEL_Pos) /**< (ADC_REFCTRL) External Reference (only on ADC1) Position  */
+#define ADC_REFCTRL_REFSEL_AREFA              (ADC_REFCTRL_REFSEL_AREFA_Val << ADC_REFCTRL_REFSEL_Pos) /**< (ADC_REFCTRL) External Reference A Position  */
+#define ADC_REFCTRL_REFSEL_AREFB              (ADC_REFCTRL_REFSEL_AREFB_Val << ADC_REFCTRL_REFSEL_Pos) /**< (ADC_REFCTRL) External Reference B Position  */
+#define ADC_REFCTRL_REFSEL_AREFC              (ADC_REFCTRL_REFSEL_AREFC_Val << ADC_REFCTRL_REFSEL_Pos) /**< (ADC_REFCTRL) External Reference C (only on ADC1) Position  */
 #define ADC_REFCTRL_REFCOMP_Pos               _U_(7)                                               /**< (ADC_REFCTRL) Reference Buffer Offset Compensation Enable Position */
 #define ADC_REFCTRL_REFCOMP_Msk               (_U_(0x1) << ADC_REFCTRL_REFCOMP_Pos)                /**< (ADC_REFCTRL) Reference Buffer Offset Compensation Enable Mask */
 #define ADC_REFCTRL_REFCOMP(value)            (ADC_REFCTRL_REFCOMP_Msk & ((value) << ADC_REFCTRL_REFCOMP_Pos))

@@ -86,9 +86,9 @@ bool NVMCTRL_Read( uint32_t *data, uint32_t length, uint32_t address );
 
 void NVMCTRL_SetWriteMode(NVMCTRL_WRITEMODE mode);
 
-uint8_t NVMCTRL_QuadWordWrite(uint32_t *data, const uint32_t address);
+bool NVMCTRL_QuadWordWrite(uint32_t *data, const uint32_t address);
 
-uint8_t NVMCTRL_DoubleWordWrite(uint32_t *data, const uint32_t address);
+bool NVMCTRL_DoubleWordWrite(uint32_t *data, const uint32_t address);
 
 bool NVMCTRL_PageWrite( uint32_t* data, uint32_t address );
 
@@ -108,13 +108,13 @@ uint32_t NVMCTRL_RegionLockStatusGet (void);
 
 bool NVMCTRL_SmartEEPROM_IsBusy(void);
 
-uint16_t NVMCTRL_SmartEepromStatusGet( void );
+uint32_t NVMCTRL_SmartEEPROMStatusGet( void );
 
 bool NVMCTRL_SmartEEPROM_IsActiveSectorFull(void);
 
-void NVMCTRL_SmartEepromSectorReallocate(void);
+void NVMCTRL_SmartEEPROMSectorReallocate(void);
 
-void NVMCTRL_SmartEepromFlushPageBuffer(void);
+void NVMCTRL_SmartEEPROMFlushPageBuffer(void);
 
 void NVMCTRL_BankSwap(void);
 
