@@ -186,7 +186,7 @@ uint32_t TCC0_PWMInterruptStatusGet(void)
     uint32_t interrupt_status;
     interrupt_status = TCC0_REGS->TCC_INTFLAG;
     /* Clear interrupt flags */
-    TCC0_REGS->TCC_INTFLAG = TCC_INTFLAG_Msk;
+    TCC0_REGS->TCC_INTFLAG = interrupt_status;
     return interrupt_status;
 }
 

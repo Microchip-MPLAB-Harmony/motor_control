@@ -50,7 +50,7 @@
 
 /*Defining CTRL_PWM_1_1 sets the Control to PWM Frequency Ratio as 1:1
  Undefining CTRL_PWM_1_1 sets the Control to PWM Frequency Ration as 1:2*/
-#define CTRL_PWM_1_1
+#undef CTRL_PWM_1_1
 
 
 /* Defining Q_AXIS_STARTUP causes the open loop startup by injecting current in Q axis 

@@ -58,8 +58,7 @@ Macro definitions
 /*	only the cross-coupling coefficients are speed dependent, and their value is usually
 	much lesser than the others; so in first approximation they could be neglected, saving
 	a lot of computation time; furthermore, neglecting them could lead to a higher noise immunity */
-/* uncomment the following macro to enable the cross-coupling observer terms */
-// #define CROSS_COUPLING_ENABLED 
+#define CROSS_COUPLING_ENABLED 
 
 /* uncomment the following macro to enable amplification clamping */
 /* #define AMP_CLAMP */
