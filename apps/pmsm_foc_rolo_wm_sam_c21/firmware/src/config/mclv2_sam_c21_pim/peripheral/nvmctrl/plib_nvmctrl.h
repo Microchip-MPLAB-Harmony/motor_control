@@ -1,24 +1,22 @@
 /*******************************************************************************
-  SERCOM Universal Synchronous/Asynchrnous Receiver/Transmitter PLIB
+  Non-Volatile Memory Controller(NVMCTRL) PLIB.
 
-  Company
+  Company:
     Microchip Technology Inc.
 
-  File Name
-    plib_sercom3_usart.h
+  File Name:
+    plib_nvmctrl.h
 
-  Summary
-    USART peripheral library interface.
+  Summary:
+    Interface definition of NVMCTRL Plib.
 
-  Description
-    This file defines the interface to the USART peripheral library. This
-    library provides access to and control of the associated peripheral
-    instance.
-
-  Remarks:
-    None.
+  Description:
+    This file defines the interface for the NVMCTRL Plib.
+    It allows user to Program, Erase and lock the on-chip Non Volatile Flash
+    Memory.
 *******************************************************************************/
 
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -41,9 +39,10 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
+// DOM-IGNORE-END
 
-#ifndef PLIB_SERCOM3_USART_H // Guards against multiple inclusion
-#define PLIB_SERCOM3_USART_H
+#ifndef PLIB_NVMCTRL_H
+#define PLIB_NVMCTRL_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -51,50 +50,74 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "plib_sercom_usart_common.h"
+#include "device.h"
+#include <stdint.h>
+#include <stdbool.h>
+#include <stddef.h>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus // Provide C++ Compatibility
-
-	extern "C" {
-
+ extern "C" {
 #endif
+
 // DOM-IGNORE-END
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
-// *****************************************************************************
-// *****************************************************************************
+#define NVMCTRL_FLASH_START_ADDRESS        (0x00000000U)
+#define NVMCTRL_FLASH_SIZE                 (0x40000U)
+#define NVMCTRL_FLASH_PAGESIZE             (64U)
+#define NVMCTRL_FLASH_ROWSIZE              (256U)
 
-void SERCOM3_USART_Initialize( void );
+#define NVMCTRL_RWWEEPROM_START_ADDRESS    (0x00400000U)
+#define NVMCTRL_RWWEEPROM_SIZE             (0x2000U)
+#define NVMCTRL_RWWEEPROM_PAGESIZE         (64U)
+#define NVMCTRL_RWWEEPROM_ROWSIZE          (256U)
 
-bool SERCOM3_USART_SerialSetup( USART_SERIAL_SETUP * serialSetup, uint32_t clkFrequency );
 
-bool SERCOM3_USART_Write( void *buffer, const size_t size );
+typedef enum
+{
+    /* No error */
+    NVMCTRL_ERROR_NONE = 0x0,
 
-bool SERCOM3_USART_TransmitterIsReady( void );
+    /* NVMCTRL invalid commands and/or bad keywords error */
+    NVMCTRL_ERROR_PROG = 0x4,
 
-bool SERCOM3_USART_TransmitComplete( void );
+    /* NVMCTRL lock error */
+    NVMCTRL_ERROR_LOCK = 0x8,
 
-void SERCOM3_USART_WriteByte( int data );
+    /* NVMCTRL programming or erase error */
+    NVMCTRL_ERROR_NVM = 0x10,
 
-bool SERCOM3_USART_Read( void *buffer, const size_t size );
+} NVMCTRL_ERROR;
 
-bool SERCOM3_USART_ReceiverIsReady( void );
 
-int SERCOM3_USART_ReadByte( void );
+void NVMCTRL_Initialize(void);
 
-USART_ERROR SERCOM3_USART_ErrorGet( void );
+bool NVMCTRL_Read( uint32_t *data, uint32_t length, uint32_t address );
 
-uint32_t SERCOM3_USART_FrequencyGet( void );
+bool NVMCTRL_PageWrite( uint32_t* data, uint32_t address );
+
+bool NVMCTRL_RowErase( uint32_t address );
+
+bool NVMCTRL_RWWEEPROM_Read( uint32_t *data, uint32_t length, const uint32_t address );
+
+bool NVMCTRL_RWWEEPROM_PageWrite( uint32_t* data, uint32_t address );
+
+bool NVMCTRL_RWWEEPROM_RowErase ( uint32_t address );
+
+NVMCTRL_ERROR NVMCTRL_ErrorGet( void );
+
+bool NVMCTRL_IsBusy( void );
+
+void NVMCTRL_RegionLock (uint32_t address);
+
+void NVMCTRL_RegionUnlock (uint32_t address);
+
+
+void NVMCTRL_CacheInvalidate ( void );
 
 // DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    }
-
+#ifdef __cplusplus // Provide C++ Compatibility
+}
 #endif
 // DOM-IGNORE-END
-
-#endif //PLIB_SERCOM3_USART_H
+#endif // PLIB_NVMCTRL_H
