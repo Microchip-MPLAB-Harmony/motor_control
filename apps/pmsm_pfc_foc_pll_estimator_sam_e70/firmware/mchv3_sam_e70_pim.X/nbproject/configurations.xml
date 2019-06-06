@@ -15,6 +15,9 @@
             <logicalFolder name="f4" displayName="clk" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_e70_pim/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
+            <logicalFolder name="f7" displayName="efc" projectFiles="true">
+              <itemPath>../src/config/mchv3_sam_e70_pim/peripheral/efc/plib_efc.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f6" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_e70_pim/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
@@ -132,6 +135,9 @@
             </logicalFolder>
             <logicalFolder name="f4" displayName="clk" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_e70_pim/peripheral/clk/plib_clk.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f7" displayName="efc" projectFiles="true">
+              <itemPath>../src/config/mchv3_sam_e70_pim/peripheral/efc/plib_efc.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f6" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_e70_pim/peripheral/nvic/plib_nvic.c</itemPath>

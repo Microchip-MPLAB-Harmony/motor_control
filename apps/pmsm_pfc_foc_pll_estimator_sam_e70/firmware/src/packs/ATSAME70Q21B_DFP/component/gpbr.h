@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-01-18T21:19:59Z */
+/* file generated from device description version 2019-04-01T08:48:30Z */
 #ifndef _SAME70_GPBR_COMPONENT_H_
 #define _SAME70_GPBR_COMPONENT_H_
 
