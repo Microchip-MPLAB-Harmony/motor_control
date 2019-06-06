@@ -55,10 +55,13 @@
 
 /* Defining Q_AXIS_STARTUP causes the open loop startup by injecting current in Q axis 
  * Undefining Q_AXIS_STARTUP cause the open loop startup by injecting current in D axis */
-#define Q_AXIS_STARTUP
+#undef Q_AXIS_STARTUP
 
 /*Debug Feature: Defining OPEN_LOOP_FUNCTIONING forces the algorithm to operate in Rotor Angle Open Loop mode i.e. angle reference is generated and not estimated*/
 #undef OPEN_LOOP_FUNCTIONING
+
+/* Enabling cross compensation */
+#define CROSS_COUPLING_ENABLED
 
 /*Debug Feature: Defining TORQUE_MODE forces the algorithm to operate in Torque Mode i.e. no speed control, the potentiometer input is used as torque reference*/
 #undef TORQUE_MODE
@@ -68,7 +71,7 @@
 /* Defining RAM_EXECUTE executes key motor control functions from RAM and thereby allowing faster execution at the expense of data memory.
  Please note, instruction breakpoint will not be asserted if that particular instruction is being executed from RAM
 *Undefining RAM_EXECUTE executes key motor control functions from Flash and thereby reducing data memory consumption at the expense of time */
-#undef RAM_EXECUTE
+#define RAM_EXECUTE
 
 /*Defining USE_DIVAS uses the DIVAS peripheral for division and square root operatons*/
 #define USE_DIVAS
@@ -145,7 +148,7 @@ Macro definitions
 #define R_STA           (     1.375 )  /* stator phase resistance [Ohm] */
 #define L_SYN           (     0.00253 )/* synchronous inductance 0.00192 [Hen] (note: >0!) */
 #define MAX_CUR_AMP     (     3.0 )    /* peak maximum current [A] */
-#define START_CUR_AMP   (     0.8 )    /* peak startup current [A] */
+#define START_CUR_AMP   (     0.4 )    /* peak startup current [A] */
 #define KP_V_A          (     6.1 )    /* current loop proportional gain [Volt/Amp] */
 #define KI_V_AS         (     469.0 ) /* current loop integral gain [Volt/(Amp*sec)] */
 #define KP_AS_R         (     0.001 )  /* speed loop proportional gain [Amp/(rad/sec)] */  // 0.0016

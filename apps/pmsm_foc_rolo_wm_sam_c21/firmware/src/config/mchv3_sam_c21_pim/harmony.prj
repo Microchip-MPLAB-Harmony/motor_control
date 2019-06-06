@@ -631,11 +631,11 @@
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMC21_DFP\1.2.179\samc21\atdf\ATSAMC21J18A.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMC21_DFP\3.0.23\samc21\atdf\ATSAMC21J18A.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="csp;motor_control;"/>
     </Settings>
   </Configurator>
 </Configuration>
