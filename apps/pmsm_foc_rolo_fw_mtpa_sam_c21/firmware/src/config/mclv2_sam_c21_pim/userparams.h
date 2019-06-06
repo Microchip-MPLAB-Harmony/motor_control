@@ -72,9 +72,6 @@
 /*Defining USE_DIVAS uses the DIVAS peripheral for division and square root operatons*/
 #define USE_DIVAS
 
-/* Enabling cross coupling */
-#define CROSS_COUPLING_ENABLED
-
 /*******************************************************************************
 Macro definitions
 *******************************************************************************/
