@@ -7,26 +7,29 @@
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mchv3_sam_c21_pim" projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f7" displayName="adc" projectFiles="true">
+            <logicalFolder name="f8" displayName="adc" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/adc/plib_adc_common.h</itemPath>
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/adc/plib_adc1.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="clock" projectFiles="true">
+            <logicalFolder name="f6" displayName="clock" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/clock/plib_clock.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="divas" projectFiles="true">
+            <logicalFolder name="f10" displayName="divas" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/divas/plib_divas.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="eic" projectFiles="true">
+            <logicalFolder name="f9" displayName="eic" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/eic/plib_eic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f3" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/evsys/plib_evsys.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f7" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="port" projectFiles="true">
+            <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
+              <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="port" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="sercom" projectFiles="true">
@@ -35,7 +38,7 @@
                 <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/sercom/usart/plib_sercom_usart_common.h</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="tcc" projectFiles="true">
+            <logicalFolder name="f4" displayName="tcc" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/tcc/plib_tcc0.h</itemPath>
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/tcc/plib_tcc_common.h</itemPath>
             </logicalFolder>
@@ -131,25 +134,28 @@
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mchv3_sam_c21_pim" projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f7" displayName="adc" projectFiles="true">
+            <logicalFolder name="f8" displayName="adc" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/adc/plib_adc1.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="clock" projectFiles="true">
+            <logicalFolder name="f6" displayName="clock" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/clock/plib_clock.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="divas" projectFiles="true">
+            <logicalFolder name="f10" displayName="divas" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/divas/plib_divas.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="eic" projectFiles="true">
+            <logicalFolder name="f9" displayName="eic" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/eic/plib_eic.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f3" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/evsys/plib_evsys.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f7" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="port" projectFiles="true">
+            <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
+              <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="port" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="sercom" projectFiles="true">
@@ -157,7 +163,7 @@
                 <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/sercom/usart/plib_sercom3_usart.c</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="tcc" projectFiles="true">
+            <logicalFolder name="f4" displayName="tcc" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/tcc/plib_tcc0.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -200,7 +206,7 @@
         <targetDevice>ATSAMC21J18A</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>AtmelIceTool</platformTool>
+        <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.15</languageToolchainVersion>
         <platform>3</platform>

@@ -22,7 +22,7 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -86,21 +86,20 @@ void ADC1_Initialize( void )
     {
         /* Wait for Synchronization */
     }
-
     /* Write linearity calibration in BIASREFBUF and bias calibration in BIASCOMP */
     ADC1_REGS->ADC_CALIB = (uint32_t)(ADC_CALIB_BIASREFBUF(((*(uint64_t*)OTP5_ADDR) & ADC1_LINEARITY_Msk))) \
         | ADC_CALIB_BIASCOMP((((*(uint64_t*)OTP5_ADDR) & ADC1_BIASCAL_Msk) >> ADC1_BIASCAL_POS));
 
-    /* prescaler */
+    /* Prescaler */
     ADC1_REGS->ADC_CTRLB = ADC_CTRLB_PRESCALER_DIV4;
     /* Sampling length */
     ADC1_REGS->ADC_SAMPCTRL = ADC_SAMPCTRL_SAMPLEN(3U);
 
-    /* reference */
+    /* Reference */
     ADC1_REGS->ADC_REFCTRL = ADC_REFCTRL_REFSEL_INTVCC2;
 
-    /* positive and negative input pins */
-    ADC1_REGS->ADC_INPUTCTRL = ADC_POSINPUT_AIN0 | ADC_NEGINPUT_GND;
+    /* Input pin */
+    ADC1_REGS->ADC_INPUTCTRL = ADC_POSINPUT_AIN0;
 
     /* Resolution & Operation Mode */
     ADC1_REGS->ADC_CTRLC = ADC_CTRLC_RESSEL_12BIT | ADC_CTRLC_WINMODE(0) ;
@@ -174,6 +173,26 @@ bool ADC1_ConversionSequenceIsFinished(void)
     return seq_status;
 }
 
+/* Configure window comparison threshold values */
+void ADC1_ComparisonWindowSet(uint16_t low_threshold, uint16_t high_threshold)
+{
+    ADC1_REGS->ADC_WINLT = low_threshold;
+    ADC1_REGS->ADC_WINUT = high_threshold;
+    while((ADC1_REGS->ADC_SYNCBUSY))
+    {
+        /* Wait for Synchronization */
+    }
+}
+
+void ADC1_WindowModeSet(ADC_WINMODE mode)
+{
+    ADC1_REGS->ADC_CTRLC &= ~ADC_CTRLC_WINMODE_Msk;
+    ADC1_REGS->ADC_CTRLC |= (mode << ADC_CTRLC_WINMODE_Pos);
+    while((ADC1_REGS->ADC_SYNCBUSY))
+    {
+        /* Wait for Synchronization */
+    }
+}
 
 /* Read the conversion result */
 uint16_t ADC1_ConversionResultGet( void )
