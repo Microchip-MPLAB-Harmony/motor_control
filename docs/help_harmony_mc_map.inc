@@ -31,9 +31,9 @@
     IDH_pmsm_foc_encoder_Applications_pmsm_foc_encoder_sam_e54 = $0000001E; // pmsm_foc_encoder Applications pmsm_foc_encoder_sam_e54
     IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Building_The_Application = $0000001F; // pmsm_foc_encoder pmsm_foc_encoder_sam_e54 Building The Application
     IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_MPLAB_Harmony_Configurations = $00000020; // pmsm_foc_encoder pmsm_foc_encoder_sam_e54 MPLAB Harmony Configurations
-    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Hardware_Setup = $00000021; // pmsm_foc_encoder pmsm_foc_encoder_sam_e54 Hardware Setup
-    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Running_The_Application = $00000022; // pmsm_foc_encoder pmsm_foc_encoder_sam_e54 Running The Application
-    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Control_Algorithm = $00000023; // pmsm_foc_encoder pmsm_foc_encoder_sam_e54 Control Algorithm
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Control_Algorithm = $00000021; // pmsm_foc_encoder pmsm_foc_encoder_sam_e54 Control Algorithm
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Hardware_Setup = $00000022; // pmsm_foc_encoder pmsm_foc_encoder_sam_e54 Hardware Setup
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Running_The_Application = $00000023; // pmsm_foc_encoder pmsm_foc_encoder_sam_e54 Running The Application
     IDH_pmsm_foc_rolo_Applications_Help                = $00000024; // pmsm_foc_rolo Applications Help
     IDH_pmsm_foc_rolo_Applications_pmsm_foc_rolo_sam_c21 = $00000025; // pmsm_foc_rolo Applications pmsm_foc_rolo_sam_c21
     IDH_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_Building_The_Application = $00000026; // pmsm_foc_rolo pmsm_foc_rolo_sam_c21 Building The Application

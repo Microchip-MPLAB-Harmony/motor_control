@@ -31,7 +31,7 @@ Microchip 32-bit Motor Control</div>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00015.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00030.html">Previous</a> | <a href="00024.html">Up</a> | <a href="00049.html">Next</a></div>
+<a href="00029.html">Previous</a> | <a href="00024.html">Up</a> | <a href="00028.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
 <a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_sam_e54 Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
@@ -75,12 +75,14 @@ The rotor position angle is determined from the Quadrature encoder.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-The following block diagram shows the software realization of the FOC algorithm. </p><p class="Element10">
+The following block diagram shows the software realization of the FOC algorithm. </p><p class="Element10" style="text-align: center;">
+<img src="Encoder_same54_block_diagram.png" border="0" alt="" title=""></p><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
 <strong>Software Design:</strong>&nbsp;</p>
 <p class="Element10">
-The following figure shows the various state machines of the the motor control software. </p><p class="Element10">
+The following figure shows the various state machines of the the motor control software. </p><p class="Element10" style="text-align: center;">
+<img src="Encoder_same54_motor_control_flow.png" border="0" alt="" title=""></p><p class="Element10">
 In the software, the PMSM speed control task is realized by a state machine as shown in the previous figure. The following sections briefly describes the various states in the PMSM speed control task:&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
@@ -110,7 +112,8 @@ In this state, the motor starts spinning. The below flow chart and the timing di
 <p class="Element10" style="text-align: center;">
 &nbsp;</p><p class="Element10">
 &nbsp;</p>
-<p class="Element10">
+<p class="Element10" style="text-align: center;">
+<img src="Encoder_same54_timing_diagram.png" border="0" alt="" title=""></p><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
 In run state, two threads are executed; the Main task thread and ADC Interrupt task thread. The current control is carried out in the ADC interrupt task thread, while the speed control is carried out in the main task thread. Therefore, the ADC interrupt cycle indicates the current control frequency.&nbsp;</p>

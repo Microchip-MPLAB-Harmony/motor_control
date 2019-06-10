@@ -63,20 +63,70 @@ Hardware Setup</div>
 </ul></li>
 <li class="Element601"><strong>Hardware Setup</strong>
 <ol class="Element632">
-<li value="1" class="Element602">Mount the SAME70 144-pin Motor Control PIM on the dsPICDEM MCHV-3 Development Board, as shown in the following figure.</li>
-<li value="2" class="Element602">Connect the three-phase wires of the PMSM motor to M1, M2 and M3 ports.</li>
-<li value="3" class="Element602">Connect External Op amp configuration Matrix board to header J4.</li>
-<li value="4" class="Element602">Connect Isolated EDBG card as shown in the following figure. Refer to <a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/Isolated-EDBG-%20Debugger-Card-Information-Sheet-DS50002831A.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated EDBG Card Information Sheet</a> for instructions.</li>
-<li value="5" class="Element602">Connect the AC mains using J1.</li>
-<li value="6" class="Element602">This application supports communication with the X2C-Scope plug-in to monitor and plot any variables used in the application. The communication between the target and the X2C-Scope plug-in can be established using the RS-232 serial port. Refer to the jumper positions marked on the development board chassis to select between the RS-232 serial port (J8) and the mini-USB port (J6). Refer to <a href="00077.html">Using the X2C-Scope Plug-in</a> for details on how to use the X2C-Scope in this demonstration.</li>
+<li value="1" class="Element602"><span style="color: #000000">Mount the ATSAME70 Motor Control Plug In Module on U9 header.</span></li>
 </ol></li>
 </ul></li>
-</ol><p class="Element10">
-&nbsp;</p>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_pim_mchv3.png" border="0" alt="" title=""></p>
+<ol class="Element630">
+<li value="2" class="Element600"><span style="color: #000000">Place the &quot;PFC - External Opamp Configuration&quot; Matrix </span>board at J4.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_pfc_external_opamp_mchv3.png" border="0" alt="" title="">&nbsp;</p>
 <p class="Element10" style="text-align: center;">
-<img src="pll_same70_hv_hardware_setup.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="3" class="Element600"><span style="color: #000000">Motor Connections:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Phase U - M1</span></li>
+<li class="Element601"><span style="color: #000000">Phase V - M2</span></li>
+<li class="Element601"><span style="color: #000000">Phase W - M3</span></li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="Motor Connections_MCHV3.png" border="0" alt="" title=""></p><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="4" class="Element600">Jumper Settings:
+<ul class="Element631">
+<li class="Element601">J11 - VAC ( Short Pin 3 - 4)</li>
+<li class="Element601">J12 - IA ( Short Pin 1 - 2)</li>
+<li class="Element601">J13 - IB ( Short Pin 1 - 2)</li>
+<li class="Element601">J14 - Fault_IP/IBUS ( Short Pin 1 - 2)</li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_mchv3_jumper_settings.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="5" class="Element600">Power the board with (110V/220V) AC mains. For additional safety, it is recommended to use a current limited power supply while testing this software demonstration on a non-default hardware and motor.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_ac_mains.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>Installing Isolated Embedded Debugger</strong>
+<ul class="Element631">
+<li class="Element601">Default programmer or debugger daughter card shipped with the MCHV3 board cannot program or debug SAM series MCU and therefore, it needs to be replaced with an <a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated Embedded Debugger Interface for MCHV</a>.</li>
+</ul></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="replacing_isolated_edbg.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>Complete Setup</strong></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="pll_same70_hv_hardware_setup.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
 &nbsp;</p>
 
 <ol class="Element630">
@@ -88,20 +138,58 @@ Hardware Setup</div>
 <li class="Element602"><a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/ATSAME70-100-Pin-Motor-Control-Plug-In%20Module-Information-Sheet-DS50002776A.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">ATSAME70 PIM</a></li>
 <li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNo/AC300022');"><img src="indicator_external_link.gif" border="0" alt="" title="">Long Hurst DMA0204024B101 Motor</a></li>
 </ul></li>
-<li class="Element601"><strong>Hardware Setup</strong>
-<ol class="Element632">
-<li value="1" class="Element602">Mount the SAME70 144-pin Motor Control PIM on the dsPICDEM MCLV-2 Development Board, as shown in the following figure.</li>
-<li value="2" class="Element602">Connect the External Op amp Configuration Matrix Board to header J14.</li>
-<li value="3" class="Element602">Connect the three-phase wires coming from P1 header of the long Hurst motor (i.e., Red, White and Black to M1, M2 and M3 ports,respectively). Leave the green wire from the motor unconnected.</li>
-<li value="4" class="Element602">Apply 24V DC at BP1-BP2/J2.</li>
-<li value="5" class="Element602">This application supports communication with the X2C-Scope plug-in to monitor or plot any variables used in the application. The communication between the target and the X2C-Scope plug-in can be established using the RS-232 serial port (J10). To use the RS-232 serial port, connect JP4 and JP5 to the UART position.</li>
-<li value="6" class="Element602">Refer to <a href="00077.html">Using the X2C Scope</a> for details on how to use X2C Scope in this demonstration.</li>
+</ul></li>
+</ol>
+<ul class="Element630">
+<li class="Element600"><strong>Hardware Setup</strong>
+<ol class="Element631">
+<li value="1" class="Element601"><span style="color: #000000">Mount the ATSAME70 Motor Control Plug In Module on U9 header.</span></li>
 </ol></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="pll_same70_pim.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="2" class="Element600"><span style="color: #000000">Place the &quot;External Opamp Configuration&quot; Matrix board at J14</span></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_mclv2_ext_opamp.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="3" class="Element600"><span style="color: #000000">Motor Connections:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Phase U - M1</span></li>
+<li class="Element601"><span style="color: #000000">Phase V - M2</span></li>
+<li class="Element601"><span style="color: #000000">Phase W - M3</span></li>
 </ul></li>
 </ol><p class="Element10">
 &nbsp;</p>
 <p class="Element10" style="text-align: center;">
-<img src="Pll_same70_lv_drive_hardware_set_up.png" border="0" alt="" title="">&nbsp;</p>
+<img src="pll_same70_motor_connection.png" border="0" alt="" title=""></p>
+<ol class="Element630">
+<li value="4" class="Element600">Jumper Settings:
+<ul class="Element631">
+<li class="Element601">JP1 - Curr, JP2 - Curr, JP3 - Curr</li>
+<li class="Element601">In order to use RS232 port for X2CScope Communication JP4 - UART, JP5 - UART</li>
+<li class="Element601">In order to use USB port for X2CScope Communication JP4 - USB, JP5 - USB</li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_mclv2_jumper_settings.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="5" class="Element600"><span style="color: #000000">Power the board with a 24V DC supply using J2 or BP1-BP2. </span>For additional safety, it is recommended to use a current limited power supply while testing this software demonstration on a non-default hardware and motor.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_power_mclv2.png" border="0" alt="" title=""></p>
+<ul class="Element630">
+<li class="Element600"><strong>Complete Setup</strong></li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="pll_same70_mclv2.png" border="0" alt="" title="">&nbsp;</p>
 <p class="Element10" style="text-align: center;">
 &nbsp;</p>
 </div>

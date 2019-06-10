@@ -34,9 +34,9 @@ begin
     IDH_pmsm_foc_encoder_Applications_pmsm_foc_encoder_sam_e54: result := IDH_HTML_pmsm_foc_encoder_Applications_pmsm_foc_encoder_sam_e54;
     IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Building_The_Application: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Building_The_Application;
     IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_MPLAB_Harmony_Configurations: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_MPLAB_Harmony_Configurations;
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Control_Algorithm: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Control_Algorithm;
     IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Hardware_Setup: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Hardware_Setup;
     IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Running_The_Application: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Running_The_Application;
-    IDH_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Control_Algorithm: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_sam_e54_Control_Algorithm;
     IDH_pmsm_foc_rolo_Applications_Help                   : result := IDH_HTML_pmsm_foc_rolo_Applications_Help;
     IDH_pmsm_foc_rolo_Applications_pmsm_foc_rolo_sam_c21  : result := IDH_HTML_pmsm_foc_rolo_Applications_pmsm_foc_rolo_sam_c21;
     IDH_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_Building_The_Application: result := IDH_HTML_pmsm_foc_rolo_pmsm_foc_rolo_sam_c21_Building_The_Application;

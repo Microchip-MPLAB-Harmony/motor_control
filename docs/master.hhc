@@ -162,16 +162,16 @@
     <PARAM name="Local" value="00029.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00027.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Hardware Setup">
     <PARAM name="Local" value="00028.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Running The Application">
     <PARAM name="Local" value="00030.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00027.html">
     </OBJECT>
 </ul>
 </ul>
