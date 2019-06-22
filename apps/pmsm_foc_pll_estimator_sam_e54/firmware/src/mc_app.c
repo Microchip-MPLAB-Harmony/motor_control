@@ -54,21 +54,27 @@ mcParam_SVPWM 						mcApp_SVGenParam;     // Parameters related to Space Vector 
 mcParam_ControlRef 					mcApp_ControlParam;   // Parameters related to Current and Speed references
 mcParam_PLLEstimator                mcApp_EstimParam;     // Parameters related to PLL Estimator
 mcParam_AlphaBeta                   mcApp_I_AlphaBetaParam; // Alpha and Beta (2 Phase Stationary Frame) axis Current values
+mcParam_AlphaBeta                   mcApp_IRef_AlphaBetaParam; // Alpha and Beta (2 Phase Stationary Frame) axis Current Reference values
 mcParam_DQ                          mcApp_I_DQParam;// D and Q axis (2 Phase Rotating Frame) current values
+mcParam_DQ                          mcApp_IRef_DQParam; // D and Q axis (2 Phase Rotating Frame) Current Reference Values
 mcParam_ABC                         mcApp_I_ABCParam; // A,B,C axis (3 Phase Stationary Frame) current values
 mcParam_AlphaBeta                   mcApp_V_AlphaBetaParam; // Alpha and Beta (2 Phase Stationary Frame) axis voltage values
 mcParam_DQ                          mcApp_V_DQParam;// D and Q axis (2 Phase Rotating Frame) voltage values
 motor_status_t                      mcApp_motorState;
 delay_gen_t                         delay_10ms;
+state_machine_status_t              motor_state_machine;
 float 								OpenLoop_Ramp_Angle_Rads_Per_Sec = 0; 	// ramp angle variable for initial ramp 
 unsigned int 						Align_Counter = 0; 				// lock variable for initial ramp 
+unsigned int                        Windmilling_Counter = 0;
+unsigned int                        Passive_Brake_Counter = 0;
 short        						potReading;
 int16_t                             phaseCurrentA;
 int16_t                             phaseCurrentB;
 float								DoControl_Temp1, DoControl_Temp2;
 
-
-
+float                               d_intermediate;
+mcParam_DQ                          I_dq_old,I_dq_new;
+float                               ol_angle,cl_angle;
 uint16_t calibration_sample_count = 0x0000U;
 uint16_t adc_0_offset = 0;
 uint16_t adc_1_offset = 0;
@@ -76,6 +82,7 @@ uint32_t adc_0_sum = 0;
 uint32_t adc_1_sum = 0;
 uint32_t curpi_counter = 0;
 
+char    state_count = 0;
 
 void mcApp_SpeedRamp()
 {
@@ -210,10 +217,119 @@ if(mcApp_motorState.focStart)
 
     switch (mcApp_motorState.focStateMachine)
     {
+        case WINDMILLING:
+        {
+            state_count = 1;
+            motor_state_machine.windmilling = state_count;
+            mcApp_IRef_DQParam.d = 0;
+            mcApp_IRef_DQParam.q = 0;
+            if(Windmilling_Counter < COUNT_FOR_WINDMILLING_TIME)
+            {
+                Windmilling_Counter++;
+            }
+            else
+            {
+                mcApp_motorState.focStateMachine = WINDMILLING_DECIDE;
+                Windmilling_Counter = 0;
+                state_count++;
+            }
+            
+            break;
+        }
         
+        case WINDMILLING_DECIDE:
+        {
+            motor_state_machine.windmilling_decide = state_count;
+            if(mcApp_EstimParam.qVelEstim > MIN_WM_SPEED_SPEED_ELEC_RAD_PER_SEC) 
+            {
+                if(mcApp_motorState.motorDirection == 0)
+                {
+                    mcApp_Speed_PIParam.qdSum = WINDMILL_START_Q_AXIS_REF;
+                    mcApp_ControlParam.VelRef = mcApp_EstimParam.qVelEstim;
+                    mcApp_D_PIParam.qInRef = 0.0;
+                    mcApp_IRef_DQParam.d = 0.0;
+                    mcApp_motorState.focStateMachine = CLOSEDLOOP_FOC;
+                    state_count++;
+                }
+                else
+                {
+                    if(mcApp_IRef_DQParam.q >  -REGEN_BRAKE_CURRENT_REF)
+                    {
+                        mcApp_IRef_DQParam.q -= REGEN_BRAKE_CURRENT_STEP;
+                    }
+                    else
+                    {
+                        mcApp_IRef_DQParam.q = -REGEN_BRAKE_CURRENT_REF;
+                    }
+                    mcApp_motorState.focStateMachine = WINDMILLING_DECIDE;
+                    motor_state_machine.regen_brake = state_count;
+                }
+                
+            }
+            else if (mcApp_EstimParam.qVelEstim < -MIN_WM_SPEED_SPEED_ELEC_RAD_PER_SEC)
+            {
+                if(mcApp_motorState.motorDirection == 1)
+                {
+                    mcApp_Speed_PIParam.qdSum = -WINDMILL_START_Q_AXIS_REF;
+                    mcApp_ControlParam.VelRef = -mcApp_EstimParam.qVelEstim;
+                    mcApp_D_PIParam.qInRef = 0.0;
+                    mcApp_IRef_DQParam.d = 0.0;
+                    mcApp_motorState.focStateMachine = CLOSEDLOOP_FOC;
+                    state_count++;
+                }
+                else
+                {
+                    if(mcApp_IRef_DQParam.q <  REGEN_BRAKE_CURRENT_REF)
+                    {
+                        mcApp_IRef_DQParam.q += REGEN_BRAKE_CURRENT_STEP;
+                    }
+                    else
+                    {
+                        mcApp_IRef_DQParam.q = REGEN_BRAKE_CURRENT_REF;
+                    }
+                    mcApp_motorState.focStateMachine = WINDMILLING_DECIDE;
+                    motor_state_machine.regen_brake = state_count;
+                }
+            }
+            else
+            {
+                mcApp_motorState.focStateMachine = WINDMILLING_PASSIVE_BRAKE;
+                state_count++;
+            }
+            
+            break;
+        }
+        
+        case WINDMILLING_PASSIVE_BRAKE:
+        {
+            motor_state_machine.passive_brake = state_count;
+            if(Passive_Brake_Counter < COUNT_FOR_PASSIVE_BRAKE_TIME)
+            {
+                Passive_Brake_Counter++;
+                
+            }
+            else
+            {
+                mcApp_motorState.focStateMachine = ALIGN;
+                
+                state_count++;
+            }
+            mcApp_IRef_DQParam.d = mcApp_IRef_DQParam.q = 0;
+            //Not resetting the PI Controller's integral term can cause OC fault in Long hurst motor.
+            mcApp_D_PIParam.qdSum = 0;
+            mcApp_Q_PIParam.qdSum = 0;
+            mcApp_ControlParam.AssertActiveVector = 0;
+            break;
+         }
+                  
+    
+            
+                
         case ALIGN:
         {
-       
+         motor_state_machine.align = state_count;
+         mcApp_ControlParam.AssertActiveVector = 1;
+         mcApp_ControlParam.ol_cl_complete = 0;
          if (Align_Counter < COUNT_FOR_ALIGN_TIME)
             {
                      
@@ -224,42 +340,30 @@ if(mcApp_motorState.focStart)
            {
             OpenLoop_Ramp_Angle_Rads_Per_Sec = 0;   
             mcApp_focParam.OpenLoopAngle = 0;
+            Align_Counter = 0;
             mcApp_motorState.focStateMachine = OPENLOOP_FOC;
-            
+            state_count++;
             }
         /* Align stator reference frame to alpha-beta axis*/
         mcApp_SincosParam.Angle = 0;
-        if(mcApp_motorState.motorDirection == 0)
-        {
-            
-            if(mcApp_ControlParam.IqRef > ALIGN_Q_CURRENT_REF)
-            {
-                mcApp_ControlParam.IqRef = ALIGN_Q_CURRENT_REF;
-            }
-            else
-            {
-                mcApp_ControlParam.IqRef += ALIGN_CURRENT_STEP;
-            }
-            
-        }
-        else
-        {
-            if(mcApp_ControlParam.IqRef < -ALIGN_Q_CURRENT_REF)
-            {
-                mcApp_ControlParam.IqRef = -ALIGN_Q_CURRENT_REF;
-            }
-            else
-            {
-                mcApp_ControlParam.IqRef -= ALIGN_CURRENT_STEP;
-            }
-        }
-        mcApp_ControlParam.IdRef = 0;
+        
+         if(mcApp_IRef_DQParam.d> ALIGN_D_CURRENT_REF)
+         {
+            mcApp_IRef_DQParam.d= ALIGN_D_CURRENT_REF;
+         }
+         else
+         {
+            mcApp_IRef_DQParam.d+= ALIGN_CURRENT_STEP;
+         }
+        mcApp_IRef_DQParam.q = 0;
+
         break;
         }
         
         case OPENLOOP_FOC:
         {
-         
+         motor_state_machine.open_loop = state_count;   
+         mcApp_ControlParam.AssertActiveVector = 1;
             if (OpenLoop_Ramp_Angle_Rads_Per_Sec < OPENLOOP_END_SPEED_RADS_PER_SEC_ELEC_IN_LOOPTIME)
             {
                 OpenLoop_Ramp_Angle_Rads_Per_Sec+=OPENLOOP_RAMPSPEED_INCREASERATE;
@@ -267,8 +371,8 @@ if(mcApp_motorState.focStart)
         	else // switch to closed loop
             {
             #ifndef OPEN_LOOP_FUNCTIONING
-                        mcApp_motorState.focStateMachine = CLOSEDLOOP_FOC;
-                        mcApp_Speed_PIParam.qdSum = mcApp_ControlParam.IqRef;
+                        mcApp_motorState.focStateMachine = OPENLOOP_TO_CLOSEDLOOP_FOC;
+                        
                         if(mcApp_motorState.motorDirection == 0)
                         {
                             mcApp_ControlParam.VelRef = OPENLOOP_END_SPEED_RADS_PER_SEC_ELEC;
@@ -277,9 +381,9 @@ if(mcApp_motorState.focStart)
                         {
                             mcApp_ControlParam.VelRef = -OPENLOOP_END_SPEED_RADS_PER_SEC_ELEC;
                         }
-                        mcApp_D_PIParam.qInRef = 0.0;
-                        mcApp_ControlParam.IdRef = 0.0;
+
             #endif
+            state_count++;
             }
 		
             // the angle set depends on startup ramp
@@ -301,160 +405,183 @@ if(mcApp_motorState.focStart)
              * At certain minimum speed, enough BACK EMF is available for PLL 
              * estimator to be able to estimate rotor position */
             mcApp_SincosParam.Angle = mcApp_focParam.OpenLoopAngle;
+
+            mcApp_IRef_DQParam.d= OPENLOOP_D_CURRENT_REF;
+            break;
+        
+        }
+        case OPENLOOP_TO_CLOSEDLOOP_FOC:
+        {
+            motor_state_machine.open_loop_to_closed_loop = state_count;
+            mcApp_ControlParam.AssertActiveVector = 1;
+            mcApp_SincosParam.Angle = mcApp_focParam.OpenLoopAngle;
+            mcLib_SinCosGen(&mcApp_SincosParam);
+            
+            //Translate Integral values and current reference values of the D and Q axis PI Controllers to new reference frames
+            mcApp_V_DQParam.d = mcApp_D_PIParam.qdSum;
+            mcApp_V_DQParam.q = mcApp_Q_PIParam.qdSum;
+            mcLib_InvParkTransform(&mcApp_V_DQParam,&mcApp_SincosParam, &mcApp_V_AlphaBetaParam);
+            mcLib_InvParkTransform(&mcApp_IRef_DQParam,&mcApp_SincosParam, &mcApp_IRef_AlphaBetaParam);
+          
+            mcApp_SincosParam.Angle = mcApp_EstimParam.qRho;
+
+            mcLib_SinCosGen(&mcApp_SincosParam);
+            mcLib_ParkTransform(&mcApp_IRef_AlphaBetaParam, &mcApp_SincosParam, &mcApp_IRef_DQParam);
+            mcLib_ParkTransform(&mcApp_V_AlphaBetaParam, &mcApp_SincosParam, &mcApp_V_DQParam);
+
+            mcApp_D_PIParam.qdSum = mcApp_V_DQParam.d;
+            mcApp_Q_PIParam.qdSum = mcApp_V_DQParam.q;
+            mcApp_Speed_PIParam.qdSum = mcApp_IRef_DQParam.q;
+            
+            mcApp_motorState.focStateMachine = CLOSEDLOOP_FOC;
+            state_count++;
+            break;
+        }
+        case CLOSEDLOOP_FOC:
+        {
+            motor_state_machine.closed_loop = state_count;
+            mcApp_ControlParam.AssertActiveVector = 1;
+            /* Use the rotor angle estimated by PLL estimator as the angle reference for rotating frame*/          
+            mcApp_SincosParam.Angle = mcApp_EstimParam.qRho; 
+            if(mcApp_ControlParam.ol_cl_complete == 0)
+            {
                 if(mcApp_motorState.motorDirection == 0)
                 {
-                mcApp_ControlParam.IqRef = OPENLOOP_Q_CURRENT_REF;
+                    mcApp_ControlParam.VelRef = OPENLOOP_END_SPEED_RADS_PER_SEC_ELEC;
                 }
                 else
                 {
-                mcApp_ControlParam.IqRef = -OPENLOOP_Q_CURRENT_REF;    
+                    mcApp_ControlParam.VelRef = -OPENLOOP_END_SPEED_RADS_PER_SEC_ELEC;
                 }
-            mcApp_ControlParam.IdRef = 0;
+                // calculate max allowable d axis reference with priority to q axis current.
+                //In order to ensure that total current vector does not exceed max motor current rating
+                d_intermediate =  sqrtf(MAX_MOTOR_CURRENT_SQUARED - (mcApp_IRef_DQParam.q*mcApp_IRef_DQParam.q));
 
-              break;
-        
-        }
-        
-        case CLOSEDLOOP_FOC:
-        {
-        /* Use the rotor angle estimated by PLL estimator as the angle reference for rotating frame*/          
-        mcApp_SincosParam.Angle = mcApp_EstimParam.qRho; 
-         // in closed loop slowly decrease the offset add to the estimated angle
-    if(mcApp_motorState.motorDirection == 0)
-    {
-   	    if(mcApp_EstimParam.RhoOffset>MIN_RHO_OFFSET_ELEC_RAD)
-        {
-            mcApp_EstimParam.RhoOffset = mcApp_EstimParam.RhoOffset - MIN_RHO_OFFSET_ELEC_RAD ; 
-        }
-        else
-        {
-            mcApp_EstimParam.RhoOffset = 0;
-        }
-    }
-    else
-    {
-   	    if(mcApp_EstimParam.RhoOffset<MIN_RHO_OFFSET_ELEC_RAD)
-        {
-            mcApp_EstimParam.RhoOffset = mcApp_EstimParam.RhoOffset + MIN_RHO_OFFSET_ELEC_RAD ; 
-        }
-        else
-        {
-            mcApp_EstimParam.RhoOffset = 0;
-        }    
-    }
-
-
- 
-
-        
-        //if TORQUE MODE skip the speed and Field Weakening controller               
-#ifndef	TORQUE_MODE
-       	// Execute the velocity control loop
-		mcApp_Speed_PIParam.qInMeas = mcApp_EstimParam.qVelEstim;
-    	mcApp_Speed_PIParam.qInRef  = mcApp_ControlParam.VelRef;
-    	mcLib_CalcPI(&mcApp_Speed_PIParam);
-    	mcApp_ControlParam.IqRef = mcApp_Speed_PIParam.qOut;
-            
-#ifdef ENABLE_FLUX_WEAKENING	
-		// Implement Field Weakening if Speed input is greater than the base speed of the motor
-    if(mcApp_motorState.motorDirection == 0)
-    {
-            if(mcApp_ControlParam.VelRef > NOMINAL_SPEED_RAD_PER_SEC_ELEC)
-            {
-                mcApp_focParam.Vds = mcApp_V_DQParam.d*mcApp_V_DQParam.d;
-
-                if(mcApp_focParam.Vds>MAX_NORM_SQ)
+                //If current D axis reference is higher than max allowable D axis reference then limit its value to the max allowable D axis reference.
+                if(mcApp_IRef_DQParam.d > d_intermediate)
                 {
-                mcApp_focParam.Vds = MAX_NORM_SQ;
+                    mcApp_IRef_DQParam.d = d_intermediate;
                 }
 
-                mcApp_focParam.Vqs = sqrtf(MAX_NORM_SQ-mcApp_focParam.Vds);
-                mcApp_focParam.VqRefVoltage = mcApp_focParam.MaxPhaseVoltage*mcApp_focParam.Vqs;
+                if(mcApp_IRef_DQParam.d > D_CURRENT_REF_STEP)
+                {
+                    mcApp_IRef_DQParam.d -= D_CURRENT_REF_STEP;
+                }
+                else
+                {
+                    mcApp_IRef_DQParam.d = 0;
+                    mcApp_ControlParam.ol_cl_complete = 1;
+                }
+            }
 
-                 //Calculating Flux Weakening value of Id, Id_flux_Weakening = (Vqref- Rs*Iq - BEMF)/omega*Ls
+            //if TORQUE MODE skip the speed and Field Weakening controller               
+    #ifndef	TORQUE_MODE
+            // Execute the velocity control loop
+            mcApp_Speed_PIParam.qInMeas = mcApp_EstimParam.qVelEstim;
+            mcApp_Speed_PIParam.qInRef  = mcApp_ControlParam.VelRef;
+            mcLib_CalcPI(&mcApp_Speed_PIParam);
+            mcApp_IRef_DQParam.q= mcApp_Speed_PIParam.qOut;
 
-                mcApp_ControlParam.IdRef_FW_Raw = (mcApp_focParam.VqRefVoltage - (MOTOR_PER_PHASE_RESISTANCE * mcApp_ControlParam.IqRef) 
-                                        -(mcApp_ControlParam.VelRef  * MOTOR_BACK_EMF_CONSTANT_Vpeak_PHASE_RAD_PER_SEC_ELEC))/(mcApp_ControlParam.VelRef  * MOTOR_PER_PHASE_INDUCTANCE);
+    #ifdef ENABLE_FLUX_WEAKENING	
+            // Implement Field Weakening if Speed input is greater than the base speed of the motor
+            if(mcApp_motorState.motorDirection == 0)
+            {
+                    if(mcApp_ControlParam.VelRef > NOMINAL_SPEED_RAD_PER_SEC_ELEC && mcApp_ControlParam.ol_cl_complete == 1)
+                    {
+                        mcApp_focParam.Vds = mcApp_V_DQParam.d*mcApp_V_DQParam.d;
 
-                mcApp_ControlParam.IdRef_FW_Filtered = mcApp_ControlParam.IdRef_FW_Filtered +
-                                  ((mcApp_ControlParam.IdRef_FW_Raw - mcApp_ControlParam.IdRef_FW_Filtered) * mcApp_ControlParam.qKfilterIdRef) ;	
+                        if(mcApp_focParam.Vds>MAX_NORM_SQ)
+                        {
+                        mcApp_focParam.Vds = MAX_NORM_SQ;
+                        }
 
-                mcApp_ControlParam.IdRef = mcApp_ControlParam.IdRef_FW_Filtered;
-                  //Limit Id such that MAX_FW_NEGATIVE_ID_REF < Id < 0
-                if(mcApp_ControlParam.IdRef > 0)
-                    mcApp_ControlParam.IdRef = 0; 
+                        mcApp_focParam.Vqs = sqrtf(MAX_NORM_SQ-mcApp_focParam.Vds);
+                        mcApp_focParam.VqRefVoltage = mcApp_focParam.MaxPhaseVoltage*mcApp_focParam.Vqs;
 
-                if(mcApp_ControlParam.IdRef < MAX_FW_NEGATIVE_ID_REF)
-                    mcApp_ControlParam.IdRef = MAX_FW_NEGATIVE_ID_REF;
+                         //Calculating Flux Weakening value of Id, Id_flux_Weakening = (Vqref- Rs*Iq - BEMF)/omega*Ls
 
-                // Limit Q axis current such that sqrtf(Id^2 +Iq^2) <= MAX_MOTOR_CURRENT
-                mcApp_ControlParam.IqRefmax = sqrtf((MAX_MOTOR_CURRENT_SQUARED) - (mcApp_ControlParam.IdRef*mcApp_ControlParam.IdRef));	
+                        mcApp_ControlParam.Id_FW_Raw = (mcApp_focParam.VqRefVoltage - (MOTOR_PER_PHASE_RESISTANCE * mcApp_IRef_DQParam.q) 
+                                                -(mcApp_ControlParam.VelRef  * MOTOR_BACK_EMF_CONSTANT_Vpeak_PHASE_RAD_PER_SEC_ELEC))/(mcApp_ControlParam.VelRef  * MOTOR_PER_PHASE_INDUCTANCE);
+
+                        mcApp_ControlParam.Id_FW_Filtered = mcApp_ControlParam.Id_FW_Filtered +
+                                          ((mcApp_ControlParam.Id_FW_Raw - mcApp_ControlParam.Id_FW_Filtered) * mcApp_ControlParam.qKfilterIdRef) ;	
+
+                        mcApp_IRef_DQParam.d= mcApp_ControlParam.Id_FW_Filtered;
+                          //Limit Id such that MAX_FW_NEGATIVE_ID_REF < Id < 0
+                        if(mcApp_IRef_DQParam.d> 0)
+                            mcApp_IRef_DQParam.d= 0; 
+
+                        if(mcApp_IRef_DQParam.d< MAX_FW_NEGATIVE_ID_REF)
+                            mcApp_IRef_DQParam.d= MAX_FW_NEGATIVE_ID_REF;
+
+                        // Limit Q axis current such that sqrtf(Id^2 +Iq^2) <= MAX_MOTOR_CURRENT
+                        mcApp_ControlParam.Iqmax = sqrtf((MAX_MOTOR_CURRENT_SQUARED) - (mcApp_IRef_DQParam.d*mcApp_IRef_DQParam.d));	
+                    }
+                    else
+                    {
+                        mcApp_IRef_DQParam.d= 0;
+                        mcApp_ControlParam.Iqmax = MAX_MOTOR_CURRENT;
+                        mcApp_ControlParam.Id_FW_Filtered = 0;
+                        mcApp_ControlParam.Id_FW_Raw = 0;
+                    }
             }
             else
             {
-                mcApp_ControlParam.IdRef = 0;
-                mcApp_ControlParam.IqRefmax = MAX_MOTOR_CURRENT;
-                mcApp_ControlParam.IdRef_FW_Filtered = 0;
-                mcApp_ControlParam.IdRef_FW_Raw = 0;
+                    if(mcApp_ControlParam.VelRef < -NOMINAL_SPEED_RAD_PER_SEC_ELEC && mcApp_ControlParam.ol_cl_complete == 1)
+                    {
+                        mcApp_focParam.Vds = mcApp_V_DQParam.d*mcApp_V_DQParam.d;
+
+                        if(mcApp_focParam.Vds>MAX_NORM_SQ)
+                        {
+                        mcApp_focParam.Vds = MAX_NORM_SQ;
+                        }
+
+                        mcApp_focParam.Vqs = sqrtf(MAX_NORM_SQ-mcApp_focParam.Vds);
+                        mcApp_focParam.VqRefVoltage = -mcApp_focParam.MaxPhaseVoltage*mcApp_focParam.Vqs;
+
+                         //Calculating Flux Weakening value of Id, Id_flux_Weakening = (Vqref- Rs*Iq - BEMF)/omega*Ls
+
+                        mcApp_ControlParam.Id_FW_Raw = (mcApp_focParam.VqRefVoltage - (MOTOR_PER_PHASE_RESISTANCE * mcApp_IRef_DQParam.q) 
+                                                -(mcApp_ControlParam.VelRef  * MOTOR_BACK_EMF_CONSTANT_Vpeak_PHASE_RAD_PER_SEC_ELEC))/(mcApp_ControlParam.VelRef  * MOTOR_PER_PHASE_INDUCTANCE);
+
+                        mcApp_ControlParam.Id_FW_Filtered = mcApp_ControlParam.Id_FW_Filtered +
+                                          ((mcApp_ControlParam.Id_FW_Raw - mcApp_ControlParam.Id_FW_Filtered) * mcApp_ControlParam.qKfilterIdRef) ;										
+                        mcApp_IRef_DQParam.d= mcApp_ControlParam.Id_FW_Filtered;						
+                          //Limit Id such that MAX_FW_NEGATIVE_ID_REF < Id < 0
+                        if(mcApp_IRef_DQParam.d> 0)
+                            mcApp_IRef_DQParam.d= 0; 
+
+                        if(mcApp_IRef_DQParam.d< MAX_FW_NEGATIVE_ID_REF)
+                            mcApp_IRef_DQParam.d= MAX_FW_NEGATIVE_ID_REF;
+
+                        // Limit Q axis current such that sqrtf(Id^2 +Iq^2) <= MAX_MOTOR_CURRENT
+                        mcApp_ControlParam.Iqmax = -sqrtf((MAX_MOTOR_CURRENT_SQUARED) - (mcApp_IRef_DQParam.d*mcApp_IRef_DQParam.d));	
+                    }
+                    else
+                    {
+                        mcApp_IRef_DQParam.d= 0;
+                        mcApp_ControlParam.Iqmax = -MAX_MOTOR_CURRENT;
+                        mcApp_ControlParam.Id_FW_Filtered = 0;
+                    }
             }
+
+
+    #endif 	
+
+    #else
+    if(mcApp_motorState.motorDirection == 0)
+    {
+            mcApp_IRef_DQParam.q= (float)((float)potReading * TORQUE_MODE_POT_ADC_RATIO); // During torque mode, Iq = Potentiometer provides torque reference in terms of current, Id = 0
+            mcApp_IRef_DQParam.d= 0;
+            mcApp_ControlParam.Iqmax = TORQUE_MODE_MAX_CUR;
     }
     else
     {
-            if(mcApp_ControlParam.VelRef < -NOMINAL_SPEED_RAD_PER_SEC_ELEC)
-            {
-                mcApp_focParam.Vds = mcApp_V_DQParam.d*mcApp_V_DQParam.d;
-
-                if(mcApp_focParam.Vds>MAX_NORM_SQ)
-                {
-                mcApp_focParam.Vds = MAX_NORM_SQ;
-                }
-
-                mcApp_focParam.Vqs = sqrtf(MAX_NORM_SQ-mcApp_focParam.Vds);
-                mcApp_focParam.VqRefVoltage = -mcApp_focParam.MaxPhaseVoltage*mcApp_focParam.Vqs;
-
-                 //Calculating Flux Weakening value of Id, Id_flux_Weakening = (Vqref- Rs*Iq - BEMF)/omega*Ls
-
-                mcApp_ControlParam.IdRef_FW_Raw = (mcApp_focParam.VqRefVoltage - (MOTOR_PER_PHASE_RESISTANCE * mcApp_ControlParam.IqRef) 
-                                        -(mcApp_ControlParam.VelRef  * MOTOR_BACK_EMF_CONSTANT_Vpeak_PHASE_RAD_PER_SEC_ELEC))/(mcApp_ControlParam.VelRef  * MOTOR_PER_PHASE_INDUCTANCE);
-
-                mcApp_ControlParam.IdRef_FW_Filtered = mcApp_ControlParam.IdRef_FW_Filtered +
-                                  ((mcApp_ControlParam.IdRef_FW_Raw - mcApp_ControlParam.IdRef_FW_Filtered) * mcApp_ControlParam.qKfilterIdRef) ;										
-                mcApp_ControlParam.IdRef = mcApp_ControlParam.IdRef_FW_Filtered;						
-                  //Limit Id such that MAX_FW_NEGATIVE_ID_REF < Id < 0
-                if(mcApp_ControlParam.IdRef > 0)
-                    mcApp_ControlParam.IdRef = 0; 
-
-                if(mcApp_ControlParam.IdRef < MAX_FW_NEGATIVE_ID_REF)
-                    mcApp_ControlParam.IdRef = MAX_FW_NEGATIVE_ID_REF;
-
-                // Limit Q axis current such that sqrtf(Id^2 +Iq^2) <= MAX_MOTOR_CURRENT
-                mcApp_ControlParam.IqRefmax = -sqrtf((MAX_MOTOR_CURRENT_SQUARED) - (mcApp_ControlParam.IdRef*mcApp_ControlParam.IdRef));	
-            }
-            else
-            {
-                mcApp_ControlParam.IdRef = 0;
-                mcApp_ControlParam.IqRefmax = -MAX_MOTOR_CURRENT;
-                mcApp_ControlParam.IdRef_FW_Filtered = 0;
-            }
+            mcApp_IRef_DQParam.q= (float)((float)-potReading * TORQUE_MODE_POT_ADC_RATIO); // During torque mode, Iq = Potentiometer provides torque reference in terms of current, Id = 0
+            mcApp_IRef_DQParam.d= 0;
+            mcApp_ControlParam.Iqmax = -TORQUE_MODE_MAX_CUR;
     }
-
-        
-#endif 	
-		
-#else
-if(mcApp_motorState.motorDirection == 0)
-{
-        mcApp_ControlParam.IqRef = (float)((float)potReading * TORQUE_MODE_POT_ADC_RATIO); // During torque mode, Iq = Potentiometer provides torque reference in terms of current, Id = 0
-		mcApp_ControlParam.IdRef = 0;
-        mcApp_ControlParam.IqRefmax = TORQUE_MODE_MAX_CUR;
-}
-else
-{
-        mcApp_ControlParam.IqRef = (float)((float)-potReading * TORQUE_MODE_POT_ADC_RATIO); // During torque mode, Iq = Potentiometer provides torque reference in terms of current, Id = 0
-		mcApp_ControlParam.IdRef = 0;
-        mcApp_ControlParam.IqRefmax = -TORQUE_MODE_MAX_CUR;
-}
-#endif  // endif for TORQUE_MODE
+    #endif  // endif for TORQUE_MODE
 	
 
         break;
@@ -462,7 +589,7 @@ else
      }
     
 #else // CURPI_TUN
-mcApp_ControlParam.IdRef = CUR_STEP_AMP;
+mcApp_IRef_DQParam.d= CUR_STEP_AMP;
 if(curpi_counter < CPT_CNT_VAL)
 {
     curpi_counter++;
@@ -477,7 +604,7 @@ else
 
                 // PI control for D
         mcApp_D_PIParam.qInMeas = mcApp_I_DQParam.d;          // This is in Amps
-        mcApp_D_PIParam.qInRef  = mcApp_ControlParam.IdRef;      // This is in Amps
+        mcApp_D_PIParam.qInRef  = mcApp_IRef_DQParam.d;      // This is in Amps
         mcLib_CalcPI(&mcApp_D_PIParam);
         mcApp_V_DQParam.d    =  mcApp_D_PIParam.qOut;          // This is in %. If should be converted to volts, multiply with DCBus/sqrt(3)
 
@@ -493,9 +620,9 @@ else
             if(mcApp_motorState.motorDirection == 0)
             {
                 //Limit Q axis current
-                if(mcApp_ControlParam.IqRef>mcApp_ControlParam.IqRefmax)
+                if(mcApp_IRef_DQParam.q>mcApp_ControlParam.Iqmax)
                 {
-                mcApp_ControlParam.IqRef = mcApp_ControlParam.IqRefmax;
+                mcApp_IRef_DQParam.q= mcApp_ControlParam.Iqmax;
                 }
                 else
                 {
@@ -505,9 +632,9 @@ else
             else
             {
                 //Limit Q axis current
-                if(mcApp_ControlParam.IqRef<mcApp_ControlParam.IqRefmax)
+                if(mcApp_IRef_DQParam.q<mcApp_ControlParam.Iqmax)
                 {
-                mcApp_ControlParam.IqRef = mcApp_ControlParam.IqRefmax;
+                mcApp_IRef_DQParam.q= mcApp_ControlParam.Iqmax;
                 }   
                 else
                 {
@@ -516,7 +643,7 @@ else
             }
         // PI control for Q
         mcApp_Q_PIParam.qInMeas = mcApp_I_DQParam.q;          // This is in Amps
-        mcApp_Q_PIParam.qInRef  = mcApp_ControlParam.IqRef;      // This is in Amps
+        mcApp_Q_PIParam.qInRef  = mcApp_IRef_DQParam.q;      // This is in Amps
         mcLib_CalcPI(&mcApp_Q_PIParam);
         mcApp_V_DQParam.q    =  mcApp_Q_PIParam.qOut;          // This is in %. If should be converted to volts, multiply with DCBus/sqrt(3)   
 
@@ -527,11 +654,18 @@ else
         mcApp_EstimParam.qLastValpha = (mcApp_focParam.MaxPhaseVoltage * mcApp_V_AlphaBetaParam.alpha);
         mcApp_EstimParam.qLastVbeta = (mcApp_focParam.MaxPhaseVoltage * mcApp_V_AlphaBetaParam.beta);
         mcLib_SVPWMGen(&mcApp_V_AlphaBetaParam , &mcApp_SVGenParam);
-        
+    if(mcApp_ControlParam.AssertActiveVector == 1)
+    {
         TCC0_PWM24bitDutySet(TCC0_CHANNEL0,(uint32_t) mcApp_SVGenParam.dPWM_A );
         TCC0_PWM24bitDutySet(TCC0_CHANNEL1,(uint32_t) mcApp_SVGenParam.dPWM_B );
         TCC0_PWM24bitDutySet(TCC0_CHANNEL2,(uint32_t) mcApp_SVGenParam.dPWM_C );
-
+    }
+    else
+    {
+        TCC0_PWM24bitDutySet(TCC0_CHANNEL0,(uint32_t) PWM_HALF_PERIOD_COUNT );
+        TCC0_PWM24bitDutySet(TCC0_CHANNEL1,(uint32_t) PWM_HALF_PERIOD_COUNT );
+        TCC0_PWM24bitDutySet(TCC0_CHANNEL2,(uint32_t) PWM_HALF_PERIOD_COUNT );
+    }
         
 }
 else
@@ -586,11 +720,11 @@ void mcApp_InitControlParameters(void)
     mcApp_Q_PIParam.qOutMin = -mcApp_Q_PIParam.qOutMax;
     if(mcApp_motorState.motorDirection == 0)
     {
-        mcApp_ControlParam.IqRefmax = MAX_MOTOR_CURRENT;
+        mcApp_ControlParam.Iqmax = MAX_MOTOR_CURRENT;
     }
     else
     {
-       mcApp_ControlParam.IqRefmax = -MAX_MOTOR_CURRENT; 
+       mcApp_ControlParam.Iqmax = -MAX_MOTOR_CURRENT; 
     }
     mcLib_InitPI(&mcApp_Q_PIParam);
 
@@ -628,14 +762,7 @@ void mcApp_InitEstimParm(void)
     mcApp_EstimParam.qVelEstimFilterK = KFILTER_VELESTIM;
 
     mcApp_EstimParam.qDeltaT = LOOPTIME_SEC;
-    if(mcApp_motorState.motorDirection == 0)
-    {
-        mcApp_EstimParam.RhoOffset = RHO_OFFSET_ELEC_RAD;
-    }
-    else
-    {
-        mcApp_EstimParam.RhoOffset = -RHO_OFFSET_ELEC_RAD; 
-    }
+
 }
 
 
@@ -643,16 +770,19 @@ void mcApp_motorStart()
 {
     mcApp_InitControlParameters();
 	mcApp_InitEstimParm();
-    mcApp_ControlParam.IdRef = 0;
-    mcApp_ControlParam.IqRef = 0;
-    mcApp_ControlParam.IdRef_FW_Filtered = 0;
+    mcApp_IRef_DQParam.d= 0;
+    mcApp_IRef_DQParam.q= 0;
+    mcApp_ControlParam.Id_FW_Filtered = 0;
     mcApp_ControlParam.VelInput = 0;
     mcApp_ControlParam.VelRef = 0;
+    #ifdef ENABLE_WINDMILLING
+    mcApp_motorState.focStateMachine = WINDMILLING;
+    #else
     mcApp_motorState.focStateMachine = ALIGN;
+    #endif
     mcApp_SincosParam.Angle = 0;
 	mcApp_SVGenParam.PWMPeriod = (float)MAX_DUTY;
     Align_Counter = 0;
-    mcApp_motorState.focStateMachine = ALIGN;
     mcApp_motorState.focStart = 1;
     TCC0_PWM24bitDutySet(TCC0_CHANNEL0,(uint32_t) PWM_HALF_PERIOD_COUNT );
     TCC0_PWM24bitDutySet(TCC0_CHANNEL1,(uint32_t) PWM_HALF_PERIOD_COUNT );
@@ -663,11 +793,19 @@ void mcApp_motorStart()
 void mcApp_motorStop()
 {
     mcApp_motorState.focStart = 0;
-    mcApp_ControlParam.IdRef = 0;
-    mcApp_ControlParam.IqRef = 0;
+    mcApp_IRef_DQParam.d= 0;
+    mcApp_IRef_DQParam.q= 0;
     mcApp_I_DQParam.d = 0;
     mcApp_I_DQParam.q = 0;
-            
+    state_count = 0;
+    motor_state_machine.align = 0;
+    motor_state_machine.closed_loop = 0;
+    motor_state_machine.open_loop = 0;
+    motor_state_machine.open_loop_to_closed_loop = 0;
+    motor_state_machine.passive_brake = 0;
+    motor_state_machine.windmilling = 0;
+    motor_state_machine.windmilling_decide = 0;
+    Passive_Brake_Counter = 0;
     PWM_Output_Disable(); 
 }
 
@@ -706,6 +844,10 @@ void OC_FAULT_ISR(uintptr_t context)
     mcApp_motorState.motorStart = 0;
     mcApp_motorState.focStart = 0;
     LED1_OC_FAULT_Set();
-    while(1);
+    while(1)
+    {
+        X2CScope_Communicate();
+        X2CScope_Update();
+    }
     
 }

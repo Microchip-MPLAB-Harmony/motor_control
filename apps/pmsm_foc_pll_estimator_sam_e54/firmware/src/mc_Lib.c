@@ -646,7 +646,7 @@ inline void mcLib_PLLEstimator(mcParam_PLLEstimator *pllestimatorParam,
 	pllestimatorParam->qLastVbeta = (focParam->MaxPhaseVoltage * V_alphabetaParam->beta);
 
     // Calculate Sin(Rho) and Cos(Rho)
-    scParam->Angle 	=	pllestimatorParam->qRho + pllestimatorParam->RhoOffset; 
+    scParam->Angle 	=	pllestimatorParam->qRho;// + pllestimatorParam->RhoOffset; 
 
 
   

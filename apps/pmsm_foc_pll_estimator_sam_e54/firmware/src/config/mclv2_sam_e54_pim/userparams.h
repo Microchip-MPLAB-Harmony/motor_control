@@ -49,8 +49,8 @@
 #define     DELAY_MS                                            (float)10  // Delay in milliseconds after which Speed Ramp loop is executed
 #define     SW_DEBOUNCE_DLY_MS                                  (float)500  // Switch debounce delay in mS
 
-#define LONG_HURST
-#undef SMALL_HURST
+#undef LONG_HURST
+#define SMALL_HURST
 #undef LEADSHINE
 
 #define MCLV2
@@ -86,6 +86,8 @@
  Undefine macro ENABLE_FLUX_WEAKENING to enable Flux Weakening*/
 #undef ENABLE_FLUX_WEAKENING
 
+/*Define macro ENABLE_WINDMILLING to enable Windmilling Capability*/
+#define     ENABLE_WINDMILLING
 
 
 #ifdef MCLV2
@@ -131,13 +133,19 @@
 #define     OPENLOOP_RAMP_TIME_IN_SEC                           3                       // Ramp time to reach from 0 to Open Loop Speed in seconds
 #define     OPENLOOP_END_SPEED_RPM                              500                     // Speed at which the motor switches from open loop to closed loop in RPM
 #define     CLOSEDLOOP_RAMP_RATE_RPM_SEC                        500                     // Closed Loop Speed Ramp rate in Rev/min/Sec
-#define     ALIGN_Q_CURRENT_REF                                 0.4                     // Maximum Torque Reference during Motor Alignment in A
-#define     OPENLOOP_Q_CURRENT_REF                              0.4                     // Maximum Torque Reference during Open Loop Mode in A
+#define     ALIGN_D_CURRENT_REF                                 0.4                     // Maximum Torque Reference during Motor Alignment in A
+#define     OPENLOOP_D_CURRENT_REF                              0.4                     // Maximum Torque Reference during Open Loop Mode in A
 #define     RHO_OFFSET_ELEC_DEG                                 45                      // Angle Offset between actual rotor angle and estimated angle during open loop mode. This offset helps in smooth transition from Open Loop to Closed Loop
 #define     MAX_FW_NEGATIVE_ID_REF                              (float)(-1.8)           // Maximum negative D axis reference current during Flux Weakening in A
 #define     TORQUE_MODE_MAX_CUR                                 0.4                     // Maximum Torque Mode Current Reference in A
 #define     MAX_MOTOR_CURRENT                                   (float)(4.4)            // Maximum Motor Current in A
-
+#define     WINDMILL_TIME_SEC                                   0.5                       // Duration of Motor Windmilling in seconds
+#define     WINDMILL_START_Q_AXIS_REF                           0.4
+#define     REGEN_BRAKE_CURRENT_REF                             0.4
+#define     PASSIVE_BRAKE_TIME_IN_SEC                           2
+#define     D_CURRENT_REF_FALL_TIME_SEC                         (float)(1.0)            // D axis Current Reference Fall Time in Seconds
+#define     REGEN_BRAKE_CURRENT_RAMP_TIME_SEC                   (float)(1.0)
+#define     MIN_WM_SPEED_IN_RPM                                 (float)(200)
 /* PI controllers tuning values - */
 
 //******** D Control Loop Coefficients *******
@@ -172,13 +180,18 @@
 #define     OPENLOOP_RAMP_TIME_IN_SEC                           3                       // Ramp time to reach from 0 to Open Loop Speed in seconds
 #define     OPENLOOP_END_SPEED_RPM                              500                     // Speed at which the motor switches from open loop to closed loop in RPM
 #define     CLOSEDLOOP_RAMP_RATE_RPM_SEC                        500                     // Closed Loop Speed Ramp rate in Rev/min/Sec
-#define     ALIGN_Q_CURRENT_REF                                 0.4                     // Maximum Torque Reference during Motor Alignment in A
-#define     OPENLOOP_Q_CURRENT_REF                              0.4                     // Maximum Torque Reference during Open Loop Mode in A
-#define     RHO_OFFSET_ELEC_DEG                                 45                      // Angle Offset between actual rotor angle and estimated angle during open loop mode. This offset helps in smooth transition from Open Loop to Closed Loop
+#define     ALIGN_D_CURRENT_REF                                 0.4                     // Maximum Torque Reference during Motor Alignment in A
+#define     OPENLOOP_D_CURRENT_REF                              0.4                     // Maximum Torque Reference during Open Loop Mode in A
 #define     MAX_FW_NEGATIVE_ID_REF                              (float)(-1.2)           // Maximum negative D axis reference current (in A) during Flux Weakening
 #define     TORQUE_MODE_MAX_CUR                                 0.4                     // Maximum Torque Mode Current Reference in A
 #define     MAX_MOTOR_CURRENT                                   (float)(4.4)            // Maximum Motor Current in A
-
+#define     WINDMILL_TIME_SEC                                   0.5                       // Duration of Motor Windmilling in seconds
+#define     WINDMILL_START_Q_AXIS_REF                           0.4
+#define     REGEN_BRAKE_CURRENT_REF                             0.4
+#define     PASSIVE_BRAKE_TIME_IN_SEC                           2
+#define     D_CURRENT_REF_FALL_TIME_SEC                         (float)(1.0)            // D axis Current Reference Fall Time in Seconds
+#define     REGEN_BRAKE_CURRENT_RAMP_TIME_SEC                   (float)(1.0)
+#define     MIN_WM_SPEED_IN_RPM                                 (float)(200)
 /* PI controllers tuning values - */
 
 //******** D Control Loop Coefficients *******
@@ -213,30 +226,35 @@
 #define     OPENLOOP_RAMP_TIME_IN_SEC                           3                       // Ramp time to reach from 0 to Open Loop Speed in seconds
 #define     OPENLOOP_END_SPEED_RPM                              500                     // Speed at which the motor switches from open loop to closed loop in RPM
 #define     CLOSEDLOOP_RAMP_RATE_RPM_SEC                        500                     // Closed Loop Speed Ramp rate in Rev/min/Sec
-#define     ALIGN_Q_CURRENT_REF                                 0.4                     // Maximum Torque Reference during Motor Alignment in A
-#define     OPENLOOP_Q_CURRENT_REF                              0.4                     // Maximum Torque Reference during Open Loop Mode in A
-#define     RHO_OFFSET_ELEC_DEG                                 45                      // Angle Offset between actual rotor angle and estimated angle during open loop mode. This offset helps in smooth transition from Open Loop to Closed Loop
+#define     ALIGN_D_CURRENT_REF                                 0.4                     // Maximum Torque Reference during Motor Alignment in A
+#define     OPENLOOP_D_CURRENT_REF                              0.4                     // Maximum Torque Reference during Open Loop Mode in A
 #define     MAX_FW_NEGATIVE_ID_REF                              (float)(-1.2)           // Maximum negative D axis reference current (in A) during Flux Weakening
 #define     TORQUE_MODE_MAX_CUR                                 0.4                     // Maximum Torque Mode Current Reference in A
 #define     MAX_MOTOR_CURRENT                                   (float)(4.4)            // Maximum Motor Current in A
-
+#define     WINDMILL_TIME_SEC                                   0.5                       // Duration of Motor Windmilling in seconds
+#define     WINDMILL_START_Q_AXIS_REF                           0.4
+#define     REGEN_BRAKE_CURRENT_REF                             0.4
+#define     PASSIVE_BRAKE_TIME_IN_SEC                           2
+#define     D_CURRENT_REF_FALL_TIME_SEC                         (float)(1.0)            // D axis Current Reference Fall Time in Seconds
+#define     REGEN_BRAKE_CURRENT_RAMP_TIME_SEC                   (float)(1.0)
+#define     MIN_WM_SPEED_IN_RPM                                 (float)(200)
 /* PI controllers tuning values - */
 
 //******** D Control Loop Coefficients *******
-#define     D_CURRCNTR_PTERM                                    0.08                    // D axis Proportional Gain
-#define     D_CURRCNTR_ITERM                                    (0.00005)               // D axis Integral Gain
+#define     D_CURRCNTR_PTERM                                    0.025                    // D axis Proportional Gain
+#define     D_CURRCNTR_ITERM                                    (0.0003)               // D axis Integral Gain 
 #define     D_CURRCNTR_CTERM                                    0.5                     // D axis Anti-Windup Gain
 #define     D_CURRCNTR_OUTMAX                                   0.999                   // D axis PI Controller Maximum Output - Max D axis Voltage (Normalized)
 
 //******** Q Control Loop Coefficients *******
-#define     Q_CURRCNTR_PTERM                                    0.08                    // Q axis Proportional Gain
-#define     Q_CURRCNTR_ITERM                                    (0.00005)               // Q axis Integral Gain
+#define     Q_CURRCNTR_PTERM                                    0.025                    // Q axis Proportional Gain
+#define     Q_CURRCNTR_ITERM                                    (0.0003)               // Q axis Integral Gain
 #define     Q_CURRCNTR_CTERM                                    0.5                     // Q axis Anti-Windup Gain
 #define     Q_CURRCNTR_OUTMAX                                   0.999                   // Q axis PI Controller Maximum Output - Max D axis Voltage (Normalized)
 //*** Speed Control Loop Coefficients *****
 #define     SPEEDCNTR_PTERM                                     (0.005)                 // Speed Loop Proportional Gain
 #define     SPEEDCNTR_ITERM                                     (0.00000020)            // Speed Loop Integral Gain
-#define     SPEEDCNTR_CTERM                                     0.5                     // Speed Loop Anti-Windup Gain
+#define     SPEEDCNTR_CTERM                                     0.999                     // Speed Loop Anti-Windup Gain
 #define     SPEEDCNTR_OUTMAX                                    MAX_MOTOR_CURRENT       // Speed Loop PI Controller Maximum Output - Max Q axis Current Reference in A
 #endif 
 
@@ -249,7 +267,6 @@
 #define     KFILTER_ESDQ                (float)((float)400/(float)32767)                // D,Q Axis BEMF Filter Coefficient
 #define     KFILTER_VELESTIM            (float)((float)(374)/(float)32767)              // PLL Estimator Speed Filter Coefficient
 #define     KFILTER_IDREF               (float)((float)(10)/(float)32767)               // Flux Weakening mode - D axis Current Reference Filter
-
 
 
 
@@ -275,7 +292,9 @@
 #define     MAX_DUTY                                            (PWM_PERIOD_COUNT)
 #define     LOOPTIME_SEC                                        (float)(1/((float)PWM_FREQ))           // PWM Period - 50 uSec, 20Khz PWM
 #define     COUNT_FOR_ALIGN_TIME                                (unsigned int)((float)ALIGN_TIME_IN_SEC/(float)LOOPTIME_SEC)
-#define     ALIGN_CURRENT_STEP                                  (float)(2*ALIGN_Q_CURRENT_REF/COUNT_FOR_ALIGN_TIME) // Current reference during aligning is ramped up for 50% of align time.
+#define     COUNT_FOR_WINDMILLING_TIME                          (unsigned int)((float)WINDMILL_TIME_SEC/(float)LOOPTIME_SEC)
+#define     COUNT_FOR_PASSIVE_BRAKE_TIME                        (unsigned int)((float)PASSIVE_BRAKE_TIME_IN_SEC/(float)LOOPTIME_SEC)
+#define     ALIGN_CURRENT_STEP                                  (float)(2*ALIGN_D_CURRENT_REF/COUNT_FOR_ALIGN_TIME) // Current reference during aligning is ramped up for 50% of align time.
 #define     OPENLOOP_END_SPEED_RPS                              ((float)OPENLOOP_END_SPEED_RPM/60)
 #define     OPENLOOP_END_SPEED_RADS_PER_SEC_MECH                (float)(OPENLOOP_END_SPEED_RPS * SINGLE_ELEC_ROT_RADS_PER_SEC)
 #define     OPENLOOP_END_SPEED_RADS_PER_SEC_ELEC                (float)(OPENLOOP_END_SPEED_RADS_PER_SEC_MECH * NOPOLESPAIRS)
@@ -286,7 +305,8 @@
 #define     CLOSEDLOOP_RAMP_RATE_RADS_PER_SEC2_ELEC             (float)(CLOSEDLOOP_RAMP_RATE_RADS_PER_SEC2_MECH*NOPOLESPAIRS) // CLosed Loop  Speed Ramp rate in Electrical Radians/Sec^2
 #define     CLOSEDLOOP_SPEED_RAMP_RATE_DELTA                    (float)(CLOSEDLOOP_RAMP_RATE_RADS_PER_SEC2_ELEC*DELAY_MS*0.001) // CLosed Loop  Speed Ramp Rate in Electrical Radians/sec^2 in each control loop time
 #define     CLOSEDLOOP_SPEED_HYSTERESIS                         (float)(5*CLOSEDLOOP_SPEED_RAMP_RATE_DELTA)
-#define     NOMINAL_SPEED_RAD_PER_SEC_ELEC                      (float)(((NOMINAL_SPEED_RPM/60)*2*M_PI)*NOPOLESPAIRS) // Value in RPM
+#define     NOMINAL_SPEED_RAD_PER_SEC_ELEC                      (float)(((NOMINAL_SPEED_RPM/60)*2*M_PI)*NOPOLESPAIRS)   // Value in Electrical Radians/Sec
+#define     MIN_WM_SPEED_SPEED_ELEC_RAD_PER_SEC                 (float)(((MIN_WM_SPEED_IN_RPM/60)*2*M_PI)*NOPOLESPAIRS)    // Value in Electrical Radians/Sec
 #if(STAR_CONNECTED_MOTOR==1)
     #define     MOTOR_BACK_EMF_CONSTANT_Vpeak_PHASE_RPM_MECH    (float)((MOTOR_BACK_EMF_CONSTANT_Vpeak_Line_Line_KRPM_MECH/1.732)/1000)
 #else
@@ -316,6 +336,10 @@
 #ifdef      CURPI_TUN
     #define CPT_CNT_VAL   (float)(CUR_STEP_TIM*PWM_FREQ)
 #endif 
+
+#define     D_CURRENT_REF_STEP                  (float)(ALIGN_D_CURRENT_REF/(D_CURRENT_REF_FALL_TIME_SEC*PWM_FREQ))
+#define     REGEN_BRAKE_CURRENT_STEP            (float)(REGEN_BRAKE_CURRENT_REF/(REGEN_BRAKE_CURRENT_RAMP_TIME_SEC*PWM_FREQ))
+
 
 #endif
  

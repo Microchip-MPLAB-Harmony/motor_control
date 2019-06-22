@@ -99,13 +99,13 @@ typedef struct
 {
     float   VelInput;   // Speed Input. Speed Input passed through a rate limiter gives Speed Reference
     float   VelRef;		// Speed Reference. 
-    float   IdRef; 		// D axis Current (Flux) reference value
-    float   IdRef_FW_Raw;  // Field Weakening D axis Current Reference (Raw)
-    float   IdRef_FW_Filtered; // Field Weakening D axis Current (Flux) reference Filtered
+    float   Id_FW_Raw;  // Field Weakening D axis Current Reference (Raw)
+    float   Id_FW_Filtered; // Field Weakening D axis Current (Flux) reference Filtered
     float   qKfilterIdRef;  // D axis Current Reference Filter Coefficient
-    float   IqRef; 		// Q axis Current (Torque) reference value
-	float   Diff;		// Difference between Speed Input and Speed Reference
-	float 	IqRefmax;	// Maximum Q axis current
+ 	float   Diff;		// Difference between Speed Input and Speed Reference
+	float 	Iqmax;	// Maximum Q axis current
+    char ol_cl_complete;
+    char    AssertActiveVector;
 } mcParam_ControlRef;
 
 //Structure containing variables used in Field Oriented Control

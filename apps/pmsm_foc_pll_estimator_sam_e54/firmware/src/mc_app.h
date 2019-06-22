@@ -50,9 +50,13 @@
 
 /*MC State Machine States*/
 
-#define ALIGN           0
-#define OPENLOOP_FOC    1
-#define CLOSEDLOOP_FOC  2
+#define WINDMILLING                 0
+#define WINDMILLING_DECIDE          1
+#define WINDMILLING_PASSIVE_BRAKE   2
+#define ALIGN                       3
+#define OPENLOOP_FOC                4
+#define OPENLOOP_TO_CLOSEDLOOP_FOC  5
+#define CLOSEDLOOP_FOC              6
 
 typedef struct {
     uint32_t inputVal; /* read value of button input pin */
@@ -71,6 +75,17 @@ typedef struct {
     uint8_t motorStart;
     uint8_t motorDirection; // Motor Spin Direction : 0 - Positive Direction, 1 - Negative Direction
 } motor_status_t;
+
+typedef struct {
+    char windmilling;
+    char windmilling_decide;
+    char passive_brake;
+    char regen_brake;
+    char align;
+    char open_loop;
+    char open_loop_to_closed_loop;
+    char closed_loop;
+}state_machine_status_t;
 extern delay_gen_t          delay_10ms;
 extern unsigned int         Align_Counter;
 extern mcParam_ControlRef   mcApp_ControlParam;
