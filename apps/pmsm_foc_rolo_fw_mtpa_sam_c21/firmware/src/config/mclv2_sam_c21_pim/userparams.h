@@ -150,13 +150,13 @@ Macro definitions
 #else
 #define MAX_FRE_HZ             RATED_FRE_HZ        /* maximum frequency [Hz] - 3600RPM                       */
 #endif
-#define MIN_FRE_HZ             (    30       )     /* minimum frequency [Hz] - 360 RPM                       */
+#define MIN_FRE_HZ              (    30       )     /* minimum frequency [Hz] - 360 RPM                       */
 #define POLAR_COUPLES          (     5       )     /* number of polar couples                                */
-#define R_STA                  (     0.285   )     /* stator phase resistance [Ohm]                          */
-#define LD_SYN                 (     0.00032 )     /* synchronous inductance 0.00192 [Hen]                   */
-#define LQ_SYN                 (     0.00000 )     /* synchronous inductance 0.00192 [Hen]                   */
+#define R_STA                           (     0.285   )     /* stator phase resistance [Ohm]                          */
+#define LD_SYN                 (     0.032 )     /* synchronous inductance  0.032 [Hen]                   */
+#define LQ_SYN                 (     0.044 )     /* synchronous inductance  0.044 [Hen]                   */
 #define L_SYN                  (     0.00032 )     /* synchronous inductance 0.00192 [Hen]                   */
-#define AIR_GAP_FLUX           (     0.8     )     /* Air gap flux in weber                                  */
+#define AIR_GAP_FLUX           (     0.2     )     /* Air gap flux in weber                                  */
 #define MAX_CUR_AMP            (     2.0     )      /* peak maximum current [A]                              */
 #define START_CUR_AMP          (     0.2     )      /* peak startup current [A]                              */
 #define KP_V_A_D               (     0.71    )      /* current loop proportional gain [Volt/Amp] 0.71        */
@@ -174,7 +174,7 @@ Macro definitions
 
 #ifdef NON_ISOTROPIC_MOTOR
 #define ENABLE_MTPA     1
-#else 
+#else
 #define ENABLE_MTPA     0
 #endif
 
@@ -448,9 +448,8 @@ Macro definitions
 #define PMSM_MAX_NEGATIVE_IDREF_SCALED  (int16_t)(K_CURRENT * PMSM_MAX_NEGATIVE_IDREF_PHYS)
 #endif
 #if(1U == ENABLE_MTPA)
-   #define PMSM_MTPA_CONSTANT1_PHYS         (float)(0.5 * AIR_GAP_FLUX / (PMSM_INDUCTANCE_D_PHYS - PMSM_INDUCTANCE_Q_PHYS))
-   #define PMSM_MTPA_CONSTANT1_SCALED       (int32_t)(PMSM_MTPA_CONSTANT1_PHYS * K_CURRENT )
-   #define PMSM_MTPA_CONSTANT2_PHYS         (float)(PMSM_MTPA_CONSTANT1_PHYS * PMSM_MTPA_CONSTANT1_PHYS )
-   #define PMSM_MTPA_CONSTANT2_SCALED       (int32_t)(PMSM_MTPA_CONSTANT2_PHYS * K_CURRENT )
+   #define PMSM_MTPA_CONSTANT1_PHYS         (float)(0.5 * AIR_GAP_FLUX / (PMSM_INDUCTANCE_Q_PHYS - PMSM_INDUCTANCE_D_PHYS))
+   #define PMSM_MTPA_CONSTANT1_SCALED       (uint32_t)(PMSM_MTPA_CONSTANT1_PHYS * K_CURRENT )
+   #define PMSM_MTPA_CONSTANT2_SCALED       (uint32_t)(PMSM_MTPA_CONSTANT1_SCALED * PMSM_MTPA_CONSTANT1_SCALED )
 #endif
 #endif // USERPARAMS_H

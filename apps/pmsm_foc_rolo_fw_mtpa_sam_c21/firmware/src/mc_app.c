@@ -1694,7 +1694,7 @@ static void MCAPP_MotorCurrentControl(void )
     curdqr.y = library_pi_control(s32a, &sp_pi);
     #endif
 
-#if( 1U == MTPA_ENABLE )
+#if( 1U == ENABLE_MTPA )
     dcurref_mtpa = MCAPP_idmaxTorquePerAmpere( );
 #endif
 
@@ -1733,25 +1733,46 @@ static void MCAPP_MotorCurrentControl(void )
 #if(1U == ENABLE_MTPA )
 static __INLINE int32_t MCAPP_idmaxTorquePerAmpere( void )
 {
-    int32_t s32a;
+      int32_t s32a;
+      static int32_t  const1 = 0;
+# ifdef USE_DIVAS  
+      static int32_t  const2 = 0;
+#endif
+      static int32_t   shift = 0;
+      static uint8_t   init_done = 0;
+      
+      if( 0U  == init_done )
+      {
+          init_done = 1U; 
+          const1 =  (int32_t)PMSM_MTPA_CONSTANT1_SCALED;
+    
+          while( const1 > (int32_t)BASE_VALUE )
+          {
+                  shift++;
+                  const1 >>= 1;
+          }
+#ifdef USE_DIVAS  
+          const2 = (int32_t)( const1 * const1 ); 
+#endif
+      }
+     
 
-    s32a =  (int32_t)iqfil * (int32_t)iqfil;
-
-    #ifdef USE_DIVAS
-    if( PMSM_MTPA_CONSTANT2_SCALED > s32a )
-    {
-        s32a = PMSM_MTPA_CONSTANT1_SCALED - DIVAS_SquareRoot( PMSM_MTPA_CONSTANT2_SCALED - s32a );
-    }
-    else
-    {
-        s32a = 0;
-    }
+      s32a = (int32_t)((int32_t)iqfil * (int32_t)iqfil ) >> ( 2* shift);
+    
+      
+     #ifdef USE_DIVAS   
+    s32a = (int32_t)((int32_t)const1 - (int32_t)DIVAS_SquareRoot( const2 + (uint32_t)s32a ));
     #else
-    s32a = PMSM_MTPA_CONSTANT1_SCALED - library_scat( PMSM_MTPA_CONSTANT1_SCALED, iqfil );
+    vec2_t CartCoordinate;
+    vecp_t PolCoordinate;
+    CartCoordinate.x = (int16_t)const1;
+    CartCoordinate.y = (int16_t)( iqfil >> shift );
+    library_xy_rt( &CartCoordinate, &PolCoordinate );
+    s32a = (int32_t)const1 - (int32_t)PolCoordinate.r;
     #endif
 
-    s32a <<= SH_BASE_VALUE;
-
+    s32a <<= (SH_BASE_VALUE+ shift);
+    
     return s32a;
 
 }
@@ -1761,7 +1782,9 @@ static __INLINE int32_t MCAPP_idmaxTorquePerAmpere( void )
 static __INLINE int32_t MCAPP_fieldWeakening(void)
 {
     int32_t s32a;
+        #ifdef USE_DIVAS
     int32_t VdSquare, Numerator, Denominator;
+#endif
 
     VdSquare =  (int32_t)vdfil * (int32_t)vdfil;
     if( PMSM_RATED_SPEED_SCALED < elespeed_abs )
@@ -1773,7 +1796,7 @@ static __INLINE int32_t MCAPP_fieldWeakening(void)
     #ifdef USE_DIVAS
         Vqref = DIVAS_SquareRoot( (uint32_t)(outvmax*outvmax - VdSquare) );
     #else
-        Vqref = library_scat( (int16_t)outvmax, outvdq.y);
+        Vqref = library_scat( (int16_t)outvmax, vdfil );
     #endif
         /* Revert the sign of reference q-axis current for negative rotation  */
         if(0 > spe_ref_sgn)
