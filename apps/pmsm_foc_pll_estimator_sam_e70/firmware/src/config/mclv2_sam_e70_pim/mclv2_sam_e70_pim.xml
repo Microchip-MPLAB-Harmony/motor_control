@@ -1221,17 +1221,17 @@
         </Integer>
         <String dnOrder="190" id="PIN_38_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value=""/>
+            <User dnOrder="0" value="PUSH_BUTTON_S3"/>
           </Values>
         </String>
         <String dnOrder="191" id="PIN_38_FUNCTION_TYPE">
           <Values dnOrder="0">
-            <User dnOrder="0" value=""/>
+            <User dnOrder="0" value="GPIO"/>
           </Values>
         </String>
         <String dnOrder="192" id="PIN_38_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
-            <User dnOrder="0" value=""/>
+            <User dnOrder="0" value="GPIO"/>
           </Values>
         </String>
         <String dnOrder="193" id="PIN_38_PIO_CHANNEL">
@@ -1276,7 +1276,7 @@
         </Integer>
         <String dnOrder="201" id="PIN_40_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="SWITCH"/>
+            <User dnOrder="0" value="PUSH_BUTTON_S2"/>
           </Values>
         </String>
         <String dnOrder="202" id="PIN_40_FUNCTION_TYPE">

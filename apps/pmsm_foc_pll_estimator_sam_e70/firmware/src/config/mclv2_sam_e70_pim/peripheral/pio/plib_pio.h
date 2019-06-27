@@ -62,14 +62,23 @@
 // *****************************************************************************
 
 
-/*** Macros for SWITCH pin ***/
-#define SWITCH_Set()               (PIOC_REGS->PIO_SODR = (1<<3))
-#define SWITCH_Clear()             (PIOC_REGS->PIO_CODR = (1<<3))
-#define SWITCH_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<3))
-#define SWITCH_Get()               ((PIOC_REGS->PIO_PDSR >> 3) & 0x1)
-#define SWITCH_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<3))
-#define SWITCH_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<3))
-#define SWITCH_PIN                  PIO_PIN_PC3
+/*** Macros for PUSH_BUTTON_S3 pin ***/
+#define PUSH_BUTTON_S3_Set()               (PIOC_REGS->PIO_SODR = (1<<1))
+#define PUSH_BUTTON_S3_Clear()             (PIOC_REGS->PIO_CODR = (1<<1))
+#define PUSH_BUTTON_S3_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<1))
+#define PUSH_BUTTON_S3_Get()               ((PIOC_REGS->PIO_PDSR >> 1) & 0x1)
+#define PUSH_BUTTON_S3_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<1))
+#define PUSH_BUTTON_S3_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<1))
+#define PUSH_BUTTON_S3_PIN                  PIO_PIN_PC1
+
+/*** Macros for PUSH_BUTTON_S2 pin ***/
+#define PUSH_BUTTON_S2_Set()               (PIOC_REGS->PIO_SODR = (1<<3))
+#define PUSH_BUTTON_S2_Clear()             (PIOC_REGS->PIO_CODR = (1<<3))
+#define PUSH_BUTTON_S2_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<3))
+#define PUSH_BUTTON_S2_Get()               ((PIOC_REGS->PIO_PDSR >> 3) & 0x1)
+#define PUSH_BUTTON_S2_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<3))
+#define PUSH_BUTTON_S2_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<3))
+#define PUSH_BUTTON_S2_PIN                  PIO_PIN_PC3
 
 /*** Macros for LED pin ***/
 #define LED_Set()               (PIOC_REGS->PIO_SODR = (1<<23))

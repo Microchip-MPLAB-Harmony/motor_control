@@ -81,7 +81,7 @@ extern "C" {
   Remarks:
     None.
 */
-typedef enum 
+typedef enum
 {
    /* Application's state machine's initial state. */
 	MC_APP_STATE_INIT = 0U,
@@ -101,9 +101,9 @@ typedef enum
   Remarks:
     None.
 */
-typedef enum 
+typedef enum
 {
-   
+
     MC_APP_SWITCH_RELEASED,
 	MC_APP_SWITCH_PRESSED
 
@@ -120,7 +120,7 @@ typedef enum
   Remarks:
     None.
 */
-typedef struct 
+typedef struct
 {
   MC_APP_STATE mcState;
   uint32_t switchCount;
@@ -142,7 +142,7 @@ typedef enum
 {
 	MOTOR_CTRL_CMD_STOP,
 	MOTOR_CTRL_CMD_START
-	
+
 }tMotorCtrlCmd;
 
 /* Motor control FOC parameter structure
@@ -156,7 +156,7 @@ typedef enum
   Remarks:
     None.
 */
-typedef struct 
+typedef struct
 {
     float   angle;
 	float   dIqRefdt;
@@ -164,7 +164,7 @@ typedef struct
 
 	float   lastVd;
     float   fwVd;
-  
+
     float   fwVqRefFiltered;
 
     float   dcBusVoltage;
@@ -182,22 +182,23 @@ typedef struct
   Remarks:
     None.
 */
-typedef struct 
+typedef struct
 {
-    float    velRef;        /* Reference velocity from Ramp */
-    float    idRef;         /* Vd flux reference value */
-	float    idRefFF;       /* Id reference value from feed forward */
-    float    iqRef;         /* Vq torque reference value */
-	float	 endSpeed;      /* End speed reference value for ramp */
-	float    rampIncStep;   /* Speed increment per slow loop execution */
-    float    startup_angle_ramp_rads_per_sec;  /* ramp angle variable for initial ramp */
-    uint32_t startup_lock_count; /* lock variable for initial ramp */
-    uint32_t open_loop_stab_counter;
-    uint32_t sync_cnt;   /* counter in main loop (5ms) synchronization function */
-	tMotorStatus motorStatus;   /* Motor status, STOPPED - 0, RUNNING -1 */
-	bool         openLoop;      /* Indicated motor running in open loop; */
-	bool         changeMode;    /* Switch from open loop to close loop */     
-	
+    float        velRef;        /* Reference velocity from Ramp */
+    float        idRef;         /* Vd flux reference value */
+	  float        idRefFF;       /* Id reference value from feed forward */
+    float        iqRef;         /* Vq torque reference value */
+  	float	       endSpeed;      /* End speed reference value for ramp */
+	  float        rampIncStep;   /* Speed increment per slow loop execution */
+    float        startup_angle_ramp_rads_per_sec;  /* ramp angle variable for initial ramp */
+    uint32_t     startup_lock_count; /* lock variable for initial ramp */
+    uint32_t     open_loop_stab_counter;
+    uint32_t     sync_cnt;   /* counter in main loop (5ms) synchronization function */
+  	tMotorStatus motorStatus;   /* Motor status, STOPPED - 0, RUNNING -1 */
+	  bool         openLoop;      /* Indicated motor running in open loop; */
+	  bool         changeMode;    /* Switch from open loop to close loop */
+	  uint8_t      directionSwitch;   /* Motor direction flag */
+
 } MCAPP_CONTROL_PARAM;
 
 // *****************************************************************************
@@ -212,7 +213,7 @@ void MCAPP_MotorPLLEstimInit(void);
 void MCAPP_MotorPIParamInit(void);
 
 
-    
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
