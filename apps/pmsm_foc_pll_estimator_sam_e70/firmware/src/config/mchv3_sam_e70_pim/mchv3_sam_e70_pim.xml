@@ -1780,7 +1780,7 @@
         </Integer>
         <String dnOrder="300" id="PIN_7_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="SWITCH"/>
+            <User dnOrder="0" value="START_STOP_BUTTON"/>
           </Values>
         </String>
         <String dnOrder="301" id="PIN_7_FUNCTION_TYPE">

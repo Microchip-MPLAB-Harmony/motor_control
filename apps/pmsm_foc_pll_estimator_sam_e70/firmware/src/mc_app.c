@@ -883,10 +883,12 @@ void MCAPP_Tasks()
           break;
     }
 
+#ifdef MCLV2
     if( MC_APP_STATE_RUNNING != gMCAPPData.mcState )
     {
         MCAPP_MotorDirectionToggle();
     }
+#endif
 }
 
 

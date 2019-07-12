@@ -62,14 +62,14 @@
 // *****************************************************************************
 
 
-/*** Macros for SWITCH pin ***/
-#define SWITCH_Set()               (PIOE_REGS->PIO_SODR = (1<<2))
-#define SWITCH_Clear()             (PIOE_REGS->PIO_CODR = (1<<2))
-#define SWITCH_Toggle()            (PIOE_REGS->PIO_ODSR ^= (1<<2))
-#define SWITCH_Get()               ((PIOE_REGS->PIO_PDSR >> 2) & 0x1)
-#define SWITCH_OutputEnable()      (PIOE_REGS->PIO_OER = (1<<2))
-#define SWITCH_InputEnable()       (PIOE_REGS->PIO_ODR = (1<<2))
-#define SWITCH_PIN                  PIO_PIN_PE2
+/*** Macros for START_STOP_BUTTON pin ***/
+#define START_STOP_BUTTON_Set()               (PIOE_REGS->PIO_SODR = (1<<2))
+#define START_STOP_BUTTON_Clear()             (PIOE_REGS->PIO_CODR = (1<<2))
+#define START_STOP_BUTTON_Toggle()            (PIOE_REGS->PIO_ODSR ^= (1<<2))
+#define START_STOP_BUTTON_Get()               ((PIOE_REGS->PIO_PDSR >> 2) & 0x1)
+#define START_STOP_BUTTON_OutputEnable()      (PIOE_REGS->PIO_OER = (1<<2))
+#define START_STOP_BUTTON_InputEnable()       (PIOE_REGS->PIO_ODR = (1<<2))
+#define START_STOP_BUTTON_PIN                  PIO_PIN_PE2
 
 /*** Macros for LED pin ***/
 #define LED_Set()               (PIOC_REGS->PIO_SODR = (1<<23))

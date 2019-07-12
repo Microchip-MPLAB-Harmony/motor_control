@@ -387,8 +387,8 @@
           <Name dnOrder="1">plib_pio.h</Name>
           <LogicalPath dnOrder="2">config/mchv3_sam_e70_pim/peripheral/pio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1185FBE05DE964BA39F29BBE8D745629</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1185FBE05DE964BA39F29BBE8D745629</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F5DA02174226A8CA38EB0CE322129E74</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F5DA02174226A8CA38EB0CE322129E74</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
