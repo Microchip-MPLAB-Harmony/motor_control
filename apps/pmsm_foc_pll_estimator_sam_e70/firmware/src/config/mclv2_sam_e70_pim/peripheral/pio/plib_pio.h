@@ -62,23 +62,23 @@
 // *****************************************************************************
 
 
-/*** Macros for PUSH_BUTTON_S3 pin ***/
-#define PUSH_BUTTON_S3_Set()               (PIOC_REGS->PIO_SODR = (1<<1))
-#define PUSH_BUTTON_S3_Clear()             (PIOC_REGS->PIO_CODR = (1<<1))
-#define PUSH_BUTTON_S3_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<1))
-#define PUSH_BUTTON_S3_Get()               ((PIOC_REGS->PIO_PDSR >> 1) & 0x1)
-#define PUSH_BUTTON_S3_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<1))
-#define PUSH_BUTTON_S3_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<1))
-#define PUSH_BUTTON_S3_PIN                  PIO_PIN_PC1
+/*** Macros for DIRECTION_TOGGLE_BUTTON pin ***/
+#define DIRECTION_TOGGLE_BUTTON_Set()               (PIOC_REGS->PIO_SODR = (1<<1))
+#define DIRECTION_TOGGLE_BUTTON_Clear()             (PIOC_REGS->PIO_CODR = (1<<1))
+#define DIRECTION_TOGGLE_BUTTON_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<1))
+#define DIRECTION_TOGGLE_BUTTON_Get()               ((PIOC_REGS->PIO_PDSR >> 1) & 0x1)
+#define DIRECTION_TOGGLE_BUTTON_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<1))
+#define DIRECTION_TOGGLE_BUTTON_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<1))
+#define DIRECTION_TOGGLE_BUTTON_PIN                  PIO_PIN_PC1
 
-/*** Macros for PUSH_BUTTON_S2 pin ***/
-#define PUSH_BUTTON_S2_Set()               (PIOC_REGS->PIO_SODR = (1<<3))
-#define PUSH_BUTTON_S2_Clear()             (PIOC_REGS->PIO_CODR = (1<<3))
-#define PUSH_BUTTON_S2_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<3))
-#define PUSH_BUTTON_S2_Get()               ((PIOC_REGS->PIO_PDSR >> 3) & 0x1)
-#define PUSH_BUTTON_S2_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<3))
-#define PUSH_BUTTON_S2_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<3))
-#define PUSH_BUTTON_S2_PIN                  PIO_PIN_PC3
+/*** Macros for START_STOP_BUTTON pin ***/
+#define START_STOP_BUTTON_Set()               (PIOC_REGS->PIO_SODR = (1<<3))
+#define START_STOP_BUTTON_Clear()             (PIOC_REGS->PIO_CODR = (1<<3))
+#define START_STOP_BUTTON_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<3))
+#define START_STOP_BUTTON_Get()               ((PIOC_REGS->PIO_PDSR >> 3) & 0x1)
+#define START_STOP_BUTTON_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<3))
+#define START_STOP_BUTTON_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<3))
+#define START_STOP_BUTTON_PIN                  PIO_PIN_PC3
 
 /*** Macros for LED pin ***/
 #define LED_Set()               (PIOC_REGS->PIO_SODR = (1<<23))

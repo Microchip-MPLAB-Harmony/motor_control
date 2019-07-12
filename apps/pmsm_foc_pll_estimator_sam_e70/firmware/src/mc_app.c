@@ -76,7 +76,9 @@ static void MCAPP_MotorControlParamInit(void);
 __STATIC_INLINE bool MCAPP_SlowLoopTimeIsFinished(void);
 __STATIC_INLINE void MCAPP_SlowControlLoop(void);
 static void MCAPP_SwitchDebounce(MC_APP_STATE state);
+#ifdef MCLV2
 static void MCAPP_MotorDirectionToggle( void );
+#endif
 
 #if(TORQUE_MODE == 0)
 __STATIC_INLINE void MCAPP_SpeedRamp(void);
@@ -762,7 +764,7 @@ void MCAPP_MotorStop(void)
          adc_calib_done = false;
 }
 
-
+#ifdef MCLV2
 /******************************************************************************/
 /* Function name: MCAPP_MotorDirectionToggle                                  */
 /* Function parameters: None                                                  */
@@ -775,7 +777,7 @@ static void MCAPP_MotorDirectionToggle( void )
    static MC_APP_SWITCH_STATE switchState = MC_APP_SWITCH_RELEASED;
 
    /* Check if the push button for motor direction toggling is pressed */
-   if (!PUSH_BUTTON_S3_Get())
+   if (!DIRECTION_TOGGLE_BUTTON_Get())
    {
        switchCount++;
        if (switchCount >= 0xFF)
@@ -786,7 +788,7 @@ static void MCAPP_MotorDirectionToggle( void )
    }
    if (switchState == MC_APP_SWITCH_PRESSED)
    {
-       if (PUSH_BUTTON_S3_Get())
+       if (DIRECTION_TOGGLE_BUTTON_Get())
        {
            switchCount = 0;
            switchState = MC_APP_SWITCH_RELEASED;
@@ -799,6 +801,7 @@ static void MCAPP_MotorDirectionToggle( void )
    }
 
 }
+#endif
 
 /******************************************************************************/
 /* Function name: MCAPP_SwitchDebounce                                                   */
@@ -808,7 +811,7 @@ static void MCAPP_MotorDirectionToggle( void )
 /******************************************************************************/
 static void MCAPP_SwitchDebounce(MC_APP_STATE state)
 {
-    if (!PUSH_BUTTON_S2_Get())
+    if (!START_STOP_BUTTON_Get())
     {
         gMCAPPData.switchCount++;
         if (gMCAPPData.switchCount >= 0xFF)
@@ -819,7 +822,7 @@ static void MCAPP_SwitchDebounce(MC_APP_STATE state)
     }
     if (gMCAPPData.switchState == MC_APP_SWITCH_PRESSED)
     {
-        if (PUSH_BUTTON_S2_Get())
+        if (START_STOP_BUTTON_Get())
         {
             gMCAPPData.switchCount = 0;
             gMCAPPData.switchState = MC_APP_SWITCH_RELEASED;

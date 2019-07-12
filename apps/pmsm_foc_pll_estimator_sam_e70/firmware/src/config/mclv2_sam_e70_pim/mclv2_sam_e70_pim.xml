@@ -1221,7 +1221,7 @@
         </Integer>
         <String dnOrder="190" id="PIN_38_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="PUSH_BUTTON_S3"/>
+            <User dnOrder="0" value="DIRECTION_TOGGLE_BUTTON"/>
           </Values>
         </String>
         <String dnOrder="191" id="PIN_38_FUNCTION_TYPE">
@@ -1276,7 +1276,7 @@
         </Integer>
         <String dnOrder="201" id="PIN_40_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="PUSH_BUTTON_S2"/>
+            <User dnOrder="0" value="START_STOP_BUTTON"/>
           </Values>
         </String>
         <String dnOrder="202" id="PIN_40_FUNCTION_TYPE">
@@ -2692,8 +2692,7 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="afec0" x="171" y="60"/>
         <ElementPosition dnOrder="1" id="cmsis" x="340" y="20"/>
@@ -2704,5 +2703,6 @@
         <ElementPosition dnOrder="6" id="uart0" x="330" y="60"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

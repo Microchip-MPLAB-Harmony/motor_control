@@ -79,7 +79,6 @@ void PWM0_Initialize (void)
     PWM0_REGS->PWM_CH_NUM[0].PWM_DT = (100U << PWM_DT_DTL_Pos) | (100U);
          
      
-
     /************** Channel 1 *************************/
 
     /* PWM duty cycle */
@@ -89,7 +88,6 @@ void PWM0_Initialize (void)
     PWM0_REGS->PWM_CH_NUM[1].PWM_DT = (100U << PWM_DT_DTL_Pos) | (100U);
          
      
-
     /************** Channel 2 *************************/
 
     /* PWM duty cycle */
@@ -110,7 +108,8 @@ void PWM0_Initialize (void)
 		 | (0 << PWM_FPV1_FPVH1_Pos) | (1 << PWM_FPV1_FPVL1_Pos)
 		 | (0 << PWM_FPV1_FPVH2_Pos) | (1 << PWM_FPV1_FPVL2_Pos);
     /* Fault mode configuration */
-    PWM0_REGS->PWM_FMR = PWM_FMR_FFIL(0x0) | PWM_FMR_FPOL(0xF8) | PWM_FMR_FMOD(0xFF);
+    PWM0_REGS->PWM_FMR = PWM_FMR_FPOL(0b11111000) |
+        PWM_FMR_FMOD(0b11111111);
 
     /************* Compare Unit 0 **************************/
     /* Compare unit configurations */
