@@ -97,16 +97,16 @@ The expression <img src="pmsm_rolo_fw_mtpa_bemf.png" border="0" alt="" title="">
 <p class="Element10">
 <strong>Maximum Torque Per Ampere:</strong>&nbsp;</p>
 <p class="Element10">
-The Maximum Torque per ampere (MTPA) for PMSM implies imposing a negative value of d-axis current in order to minimize the copper losses. Minimizing the copper losses increases the efficiency of the overall motor drive. It has to be noted that MTPA is only applicable for anisotropic motors. </p><p class="Element10" style="text-align: center;">
-<img src="pmsm_rolo_fw_mtpa_mtpa_Eq1.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
+The Maximum Torque per ampere (MTPA) for PMSM implies imposing a negative value of d-axis current in order to maximize the overall electromagnetic torque for a particular input stator current. The reference d-axis current required to achieve MTPA is calculated using the following equation:&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="pmsm_rolo_fw_mtpa_mtpa_Eq2.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+The MTPA is only applicable for anisotropic PMSM motors. It should be disabled in case of isotropic-motor.&nbsp;</p>
+<p class="Element10">
 &nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p><p class="Element10">
-Solving for the above equation, </p><p class="Element10" style="text-align: center;">
+<p class="Element10">
 &nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="pmsm_rolo_fw_mtpa_mtpa_Eq2.png" border="0" alt="" title=""></p><p class="Element10">
+<p class="Element10">
 The following block diagram shows the software realization of the FOC algorithm.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p><p class="Element10" style="text-align: center;">

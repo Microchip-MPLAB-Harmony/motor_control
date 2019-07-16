@@ -1,7 +1,39 @@
 ![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
+# Microchip MPLAB Harmony 3 Release Notes
+## Motor Control Release v3.3.1
 
+
+### Updated Algorithms
+
+- The following table provides the list of algorithms updated in this release.
+
+| Algorithm | Description | Supported Plug In Module | dsPICDEM™ MCHV-3 Support | dsPICDEM™ MCLV-2 Support  | Revision History  |
+| --- | --- | --- | --- | --- | --- |
+| pmsm_foc_pll_estimator_sam_e54| Sensorless Field Oriented Control of PMSM using PLL Estimator | [ATSAME54 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320207)   | Yes | Yes | Added Windmilling (On-the-fly Startup) Support|
+| pmsm_foc_rolo_fw_mtpa_sam_c21| Sensorless Field Oriented Control of PMSM using Reduced Order Luenberger Observer with Field Weakening and MTPA Capability | [ATSAMC21 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320206)   | No | Yes | Fixed error in MTPA calculation|
+| pmsm_foc_pll_estimator_sam_e70| Sensorless Field Oriented Control of PMSM using PLL Estimator | [ATSAME70 Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320203)   | Yes | Yes | Added Bi-directional Support|
+
+
+### Required MPLAB Harmony v3.3.0 Modules
+* csp v3.3.0
+* dev_packs v3.3.0
+* mhc v3.3.0
+
+### Known Issues
+
+* Programming or debugging SAM C/D2x or SAM D/E5x MCU, using Isolated EDBG Card (board revision #02-10824-R1) on dsPICDEM™ MCHV-3 High Voltage Development Board may inhibit MCU from executing instructions if the MCU is reset by pressing on board 'Reset' switch or power cycling the board. Refer to the [Isolated EDBG Debugger Product Change Notice](https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202) for details of hardware modification needed to resolve this issue.
+
+
+
+### Development Tools
+
+* [MPLAB X IDE v5.20](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.3.0.
+  * X2CScope v1.2.3.
 
 # Microchip MPLAB Harmony 3 Release Notes
 ## Motor Control Release v3.3.0
