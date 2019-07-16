@@ -89,6 +89,31 @@ The following figure shows the flow chart of the implemented algorithm: </p><p c
 &nbsp;</p>
 <p class="Element10" style="text-align: center;">
 &nbsp;</p><p class="Element10">
+<strong>Windmilling Detect - <span class="Element146">WINDMILLING:</span></strong>&nbsp;</p>
+<p class="Element10">
+In this state, the algorithm detects if the motor shaft is &quot;Windmilling&quot; or freewheeling due to stored momentum or external force and estimates the rotor angle, speed and direction of the windmilling motor. The length of duration of this state is defined by the macro <span class="Element146">WINDMILLING_TIME_SEC</span>.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Windmilling Decide - <span class="Element146">WINDMILLING_DECIDE:</span></strong>&nbsp;</p>
+<p class="Element10">
+In this state, the algorithm makes determination of the further action based on information obtained from Windmilling Detect state.</p>
+<ul class="Element630">
+<li class="Element600">If the detected windmilling speed is greater than the &quot;minimum windmilling speed&quot; and if the direction of the windmilling motor is same as the &quot;command&quot; direction, the algorithm switches to &quot;Closed Loop Control&quot; state.</li>
+<li class="Element600">If the detected windmilling speed is greater than the &quot;minimum windmilling speed&quot; but the direction of the windmilling motor is opposite to that of the &quot;command&quot; direction, the algorithm brakes the motor using active or regenerative braking. Once the speed of the windmilling motor drops below the minimum windmilling speed, the algorithm applies a passive brake by short circuiting all three phase windings to bring the motor to a halt. Once the motor is halted, the algorithm switches to &quot;Field Alignment&quot; state.</li>
+<li class="Element600">If the detected windmilling speed is less than the &quot;minimum windmilling speed&quot;, the algorithm applies a passive brake by short circuiting all three phase windings to bring the motor to a halt. Once the motor is halted, the algorithm switches to &quot;Field Alignment&quot; state.</li>
+<li class="Element600">&quot;Minimum Windmilling Speed&quot; in RPM is defined by the macro <span class="Element146">MIN_WM_SPEED_RPM.</span></li>
+<li class="Element600">&quot;Maximum Regenerative Braking Current&quot; in amperes (A) is defined by the macro <span class="Element146">RGN_BRK_CUR_AMP</span>.</li>
+<li class="Element600">Duration of the &quot;Passive Braking&quot; in seconds (s) is defined by the macro <span class="Element146">PASSIVE_BRAKING_TIME_SEC.</span></li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Windmilling Passive Brake - </strong><span class="Element146">WINDMILLING_PASSIVE_BRAKE</span><strong>:</strong>&nbsp;</p>
+<p class="Element10">
+In this state, the algorithm asserts NULL vector for a duration defined by the macro <span class="Element146">PASSIVE_BRAKING_TIME_SEC. </span>The intention of this state is to bring the motor to a complete halt once the motor speed is less than <span class="Element146">MIN_WM_SPEED_RPM</span>. At the end of this state, the algorithm attempts to start the motor in the commanded direction using the standard start up method i.e. Align -&gt; Open Loop FOC -&gt; Closed Loop FOC.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
 <strong>Field Alignment - <span class="Element146">ALIGN</span>:</strong>&nbsp;</p>
 <p class="Element10">
 In this mode, a pre-defined value of the current is asserted across the Q axis of the rotor for a pre-defined length of time, in order to align the rotor to a known angle of 90 electrical degrees. The magnitude of the current and the length of the time for which it is applied depends upon the electrical and mechanical time constant of the PMSM motor drive. Electrical time constant of the motor is a function of R and L values of the motor windings, whereas the mechanical time constant of the motor drive is primarily a function of the static load on the motor shaft.&nbsp;</p>
@@ -177,136 +202,185 @@ Set the following motor specific parameters in the <span class="Element146">user
 <div class="TableDiv">
 <table cellspacing="0" class="Table1">
 <tr>
-<td class="Element65" valign="top" width="28%">
+<td class="Element65" valign="top" width="31%">
 <div class="Element66">
-Macro&nbsp;</div></td><td class="Element65" valign="top" width="66%">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="64%">
 <div class="Element66">
-Description&nbsp;</div></td><td class="Element65" valign="top" width="6%">
+Description&nbsp;</div></td><td class="Element65" valign="top" width="5%">
 <div class="Element66">
 Units&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-MOTOR_PER_PHASE_RESISTANCE&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+MOTOR_PER_PHASE_RESISTANCE&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Motor per phase resistance&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Motor per phase resistance&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 Ohm&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-MOTOR_PER_PHASE_INDUCTANCE&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+MOTOR_PER_PHASE_INDUCTANCE&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Motor per phase inductance&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Motor per phase inductance&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 H&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-MOTOR_BACK_EMF_CONSTANT_Vpeak_Line_Line_KRPM_MECH&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+MOTOR_BACK_EMF_CONSTANT_Vpeak_Line_Line_KRPM_MECH&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Motor Back EMF Constant&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Motor Back EMF Constant&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 Vpeak(L-L)/KRPM&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-NOPOLESPAIRS&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+NOPOLESPAIRS&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Number of Pole Pairs&nbsp;</div></td><td class="Element67" valign="top" width="6%">
-<div class="Element68">
--&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
-<div class="Element68">
-STAR_CONNECTED_MOTOR&nbsp;</div></td><td class="Element67" valign="top" width="66%">
-<div class="Element68">
-1 : Motor is Star Connected, 0 : Motor is Delta Connected&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Number of Pole Pairs&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 -&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-NOMINAL_SPEED_RPM&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+STAR_CONNECTED_MOTOR&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Nominal Speed of the motor (Base Speed)&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+1 : Motor is Star Connected, 0 : Motor is Delta Connected&nbsp;</div></td><td class="Element67" valign="top" width="5%">
+<div class="Element68">
+-&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="31%">
+<div class="Element68">
+NOMINAL_SPEED_RPM&nbsp;</div></td><td class="Element67" valign="top" width="64%">
+<div class="Element68">
+Nominal Speed of the motor (Base Speed)&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 RPM&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-FW_SPEED_RPM&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+FW_SPEED_RPM&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Max Speed of the motor in Flux Weakening mode&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Max Speed of the motor in Flux Weakening mode&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 RPM&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-ALIGN_TIME_IN_SEC&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+ALIGN_TIME_IN_SEC&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Motor Alignment duration&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Motor Alignment duration&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 seconds&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-OPENLOOP_RAMP_TIME_IN_SEC&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+OPENLOOP_RAMP_TIME_IN_SEC&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Ramp time to reach from 0 to Open Loop Speed (Open Loop FOC duration)&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Ramp time to reach from 0 to Open Loop Speed (Open Loop FOC duration)&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 seconds&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-OPENLOOP_END_SPEED_RPM&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+OPENLOOP_END_SPEED_RPM&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Motor speed at which the algorithm switches from open loop FOC to closed loop FOC operaton. In other words, maximum open loop speed&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Motor speed at which the algorithm switches from open loop FOC to closed loop FOC operaton. In other words, maximum open loop speed&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 RPM&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-CLOSEDLOOP_RAMP_RATE_RPM_SEC&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+CLOSEDLOOP_RAMP_RATE_RPM_SEC&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Speed ramp rate in closed loop FOC mode&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Speed ramp rate in closed loop FOC mode&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 RPM/sec&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-ALIGN_Q_CURRENT_REF&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+ALIGN_Q_CURRENT_REF&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Q axis current reference during &quot;alignment&quot; mode&nbsp;</div></td><td class="Element67" valign="top" width="6%">
-<div class="Element68">
-A&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
-<div class="Element68">
-OPENLOOP_Q_CURRENT_REF&nbsp;</div></td><td class="Element67" valign="top" width="66%">
-<div class="Element68">
-Q axis current reference during &quot;open loop FOC&quot; mode&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Q axis current reference during &quot;alignment&quot; mode&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 A&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-RHO_OFFSET_ELEC_DEG&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+OPENLOOP_Q_CURRENT_REF&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Angle Offset between actual rotor angle and estimated angle during open loop mode. This offset helps in smooth transition from Open Loop to Closed Loop&nbsp;</div></td><td class="Element67" valign="top" width="6%">
-<div class="Element68">
-electrical degrees&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
-<div class="Element68">
-MAX_FW_NEGATIVE_ID_REF&nbsp;</div></td><td class="Element67" valign="top" width="66%">
-<div class="Element68">
-Maximum negative D axis reference current during Flux Weakening&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Q axis current reference during &quot;open loop FOC&quot; mode&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 A&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-TORQUE_MODE_MAX_CUR&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+MAX_FW_NEGATIVE_ID_REF&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Maximum Torque Mode Current Reference&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Maximum negative D axis reference current during Flux Weakening&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 A&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
+<td class="Element67" valign="top" width="31%">
 <div class="Element68">
-MAX_MOTOR_CURRENT&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+TORQUE_MODE_MAX_CUR&nbsp;</div></td><td class="Element67" valign="top" width="64%">
 <div class="Element68">
-Maximum Motor Current&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+Maximum Torque Mode Current Reference&nbsp;</div></td><td class="Element67" valign="top" width="5%">
+<div class="Element68">
+A&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="31%">
+<div class="Element68">
+MAX_MOTOR_CURRENT&nbsp;</div></td><td class="Element67" valign="top" width="64%">
+<div class="Element68">
+Maximum Motor Current&nbsp;</div></td><td class="Element67" valign="top" width="5%">
 <div class="Element68">
 A&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<strong>3. Setting board specific parameters:</strong>&nbsp;</p>
+<strong>3. Setting Windmilling specific parameters</strong> </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="27%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="67%">
+<div class="Element66">
+Description&nbsp;</div></td><td class="Element65" valign="top" width="6%">
+<div class="Element66">
+Units&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="27%">
+<div class="Element68">
+WINDMILL_TIME_SEC&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+Time Duration of Windmilling state&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+<div class="Element68">
+seconds&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="27%">
+<div class="Element68">
+WINDMILL_START_Q_AXIS_REF&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+Initial Q axis current reference when the algorithm switches from Windmilling state to Closed Loop Control state&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+<div class="Element68">
+A&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="27%">
+<div class="Element68">
+REGEN_BRAKE_CURRENT_REF&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+Magnitude of Q axis braking current reference applied during regenerative braking&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+<div class="Element68">
+A&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="27%">
+<div class="Element68">
+REGEN_BRAKE_CURRENT_RAMP_TIME_SEC&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+Ramp time of regenerative braking from 0 to REGEN_BRAKE_CURRENT_REF&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+<div class="Element68">
+seconds&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="27%">
+<div class="Element68">
+PASSIVE_BRAKE_TIME_IN_SEC&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+Time Duration of Passive Braking state&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+<div class="Element68">
+seconds&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="27%">
+<div class="Element68">
+MIN_WM_SPEED_IN_RPM&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+Minimum Windmilling Speed&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+<div class="Element68">
+RPM&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>4. Setting board specific parameters:</strong>&nbsp;</p>
 <p class="Element10">
 Set the following board specific parameters in the <span class="Element146">userparams.h</span><i> </i>file. </p><div class="Element63">
 <div class="TableDiv">
@@ -343,7 +417,7 @@ Kohm&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<strong>4. Setting PI Controller parameters:</strong>&nbsp;</p>
+<strong>5. Setting PI Controller parameters:</strong>&nbsp;</p>
 <p class="Element10">
 Depending on the type of motor used, and the corresponding application PI controller parameters should be updated in the <span class="Element146">userparams.h</span><i> </i>file.&nbsp;</p>
 <p class="Element10">
@@ -445,7 +519,7 @@ Q axis PI Controller Maximum Output - Max Q axis Voltage (Normalized)&nbsp;</div
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<strong>5. PLL Estimator Parameters:</strong>&nbsp;</p>
+<strong>6. PLL Estimator Parameters:</strong>&nbsp;</p>
 <p class="Element10">
 Set the following PLL Estimator specific parameters in the <span class="Element146">userparams.h</span><i> </i>file.&nbsp;</p>
 <p class="Element10">
@@ -476,7 +550,7 @@ D axis Current Reference Filter in Flux Weakening mode - Cut off frequency of th
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<strong>6. Operating Modes :</strong>&nbsp;</p>
+<strong>7. Operating Modes :</strong>&nbsp;</p>
 <p class="Element10">
 This example provides compile time re-configuration options using #define macro directives to enable or disable different operating modes. These macro directives can be accessed in the <span class="Element146">userparams.h</span> header file. </p><p class="Element10" style="text-align: center;">
 &nbsp;</p>
@@ -512,6 +586,10 @@ This example provides compile time re-configuration options using #define macro 
 <li class="Element601">Maximum speed in flux weakening mode is set by <span class="Element146">FW_SPEED_RPM</span></li>
 <li class="Element601">Maximum D axis current reference in flux weakening mode is set by <span class="Element146">MAX_FW_NEGATIVE_ID_REF</span></li>
 <li class="Element601">Note: In flux weakening mode, the motor cannot provide constant torque which could cause the motor to stall. Additionally, operating motor in flux weakening mode for prolonged duration may result in demagnetization of the permanent magnets of the PMSM.</li>
+</ul></li>
+<li class="Element600">Windmilling - ENABLE_WINDMILLING
+<ul class="Element631">
+<li class="Element601">Defining this macro, enables the WINDMILLING feature of this algorithm.</li>
 </ul></li>
 </ul><p class="Element10">
 &nbsp;</p>

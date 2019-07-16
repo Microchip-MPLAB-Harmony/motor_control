@@ -110,6 +110,14 @@ In this state, the algorithm makes determination of the further action based on 
 </ul><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
+<strong>Windmilling Passive Brake - </strong><span class="Element146">WINDMILLING_PASSIVE_BRAKE</span><strong>:</strong>&nbsp;</p>
+<p class="Element10">
+In this state, the algorithm asserts NULL vector for a duration defined by the macro <span class="Element146">PASSIVE_BRAKING_TIME_SEC. </span>The intention of this state is to bring the motor to a complete halt once the motor speed is less than <span class="Element146">MIN_WM_SPEED_RPM</span>. At the end of this state, the algorithm attempts to start the motor in the commanded direction using the standard start up method i.e. Align -&gt; Open Loop FOC -&gt; Closed Loop FOC.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
 <strong>Field Alignment - <span class="Element146">ALIGN</span>:</strong>&nbsp;</p>
 <p class="Element10">
 In this mode, a pre-defined value of the current is asserted across the Q axis of the rotor for a pre-defined length of time, in order to align the rotor to a known angle of 90 electrical degrees. The magnitude of the current and the length of the time for which it is applied depends upon the electrical and mechanical time constant of the PMSM motor drive. Electrical time constant of the motor is a function of R and L values of the motor windings, whereas the mechanical time constant of the motor drive is primarily a function of the static load on the motor shaft.&nbsp;</p>
