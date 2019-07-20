@@ -590,6 +590,7 @@ if(mcApp_motorState.focStart)
     
 #else // CURPI_TUN
 mcApp_IRef_DQParam.d= CUR_STEP_AMP;
+mcApp_ControlParam.AssertActiveVector = 1;
 if(curpi_counter < CPT_CNT_VAL)
 {
     curpi_counter++;
