@@ -231,7 +231,7 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../src/X2CScopeLib_SAMC21_XC32_215.a</linkerLibFileItem>
+            <linkerLibFileItem>../../../pmsm_foc_pll_estimator_sam_e54/firmware/src/X2CScopeLib_SAME54_XC32.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <archiverTool>
