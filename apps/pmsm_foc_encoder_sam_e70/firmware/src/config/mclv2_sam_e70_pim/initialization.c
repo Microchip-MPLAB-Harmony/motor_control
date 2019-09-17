@@ -103,7 +103,7 @@ void SYS_Initialize ( void* data )
 
     EFC_Initialize();
   
-    CLK_Initialize();
+    CLOCK_Initialize();
 	PIO_Initialize();
 
     AFEC0_Initialize();
@@ -117,6 +117,8 @@ void SYS_Initialize ( void* data )
     PWM0_Initialize();
 
     TC0_QuadratureInitialize();
+  
+
  
      
     

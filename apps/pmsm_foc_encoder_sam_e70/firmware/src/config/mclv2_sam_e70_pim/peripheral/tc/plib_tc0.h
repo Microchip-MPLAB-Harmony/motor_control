@@ -100,6 +100,9 @@ __STATIC_INLINE int16_t TC0_QuadraturePositionGet (void)
 }
 
 TC_QUADRATURE_STATUS TC0_QuadratureStatusGet(void);
+  
+
+
  
 
  

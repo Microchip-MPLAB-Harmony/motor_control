@@ -151,35 +151,27 @@ typedef struct
 {
     float    velRef;        /* Reference velocity from Ramp */
     float    idRef;         /* Vd flux reference value */
-	float    idRefFF;       /* Id reference value from feed forward */
     float    iqRef;         /* Vq torque reference value */
 	float	 endSpeed;      /* End speed reference value for ramp */
 	float    rampIncStep;   /* Speed increment per slow loop execution */
     float    startup_angle_ramp_rads_per_sec;  /* ramp angle variable for initial ramp */
     uint32_t startup_lock_count; /* lock variable for initial ramp */
-    uint32_t open_loop_stab_counter;
     uint32_t sync_cnt;   /* counter in main loop (5ms) synchronization function */
 	tMotorStatus motorStatus;   /* Motor status, STOPPED - 0, RUNNING -1 */
 	bool         openLoop;      /* Indicated motor running in open loop; */
 	bool         changeMode;    /* Switch from open loop to close loop */  
-	
+	int16_t   direction;
 } MCAPP_CONTROL_PARAM;
 
 typedef struct 
 {
     float   angle;
-	float   dIqRefdt;
-	float   lastIqRef;
-	float   lastVd;
-    float   fwVd;
-    float   fwVqRefFiltered;
     float   dcBusVoltage;
     float   dcBusVoltageBySqrt3;
 } MCAPP_FOC_PARAM;
 
 typedef struct
 {
-  volatile uint16_t elec_rotation_count;
   float rotor_angle_rad_per_sec;
   int16_t prev_position_count;
   int16_t present_position_count;
@@ -193,6 +185,7 @@ typedef struct
 
 void MCAPP_Tasks(void);
 void MCAPP_MotorStart(void);
+void MCAPP_MotorStop(void);
 void MCAPP_MotorPIParamInit(void);
 void MCAPP_PIOutputInit( MCLIB_PI *pParm);
 

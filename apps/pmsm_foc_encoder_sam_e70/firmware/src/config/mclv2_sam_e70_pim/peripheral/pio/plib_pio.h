@@ -62,6 +62,15 @@
 // *****************************************************************************
 
 
+/*** Macros for DIRECTION_TOGGLE_BUTTON pin ***/
+#define DIRECTION_TOGGLE_BUTTON_Set()               (PIOC_REGS->PIO_SODR = (1<<1))
+#define DIRECTION_TOGGLE_BUTTON_Clear()             (PIOC_REGS->PIO_CODR = (1<<1))
+#define DIRECTION_TOGGLE_BUTTON_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<1))
+#define DIRECTION_TOGGLE_BUTTON_Get()               ((PIOC_REGS->PIO_PDSR >> 1) & 0x1)
+#define DIRECTION_TOGGLE_BUTTON_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<1))
+#define DIRECTION_TOGGLE_BUTTON_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<1))
+#define DIRECTION_TOGGLE_BUTTON_PIN                  PIO_PIN_PC1
+
 /*** Macros for SWITCH pin ***/
 #define SWITCH_Set()               (PIOC_REGS->PIO_SODR = (1<<3))
 #define SWITCH_Clear()             (PIOC_REGS->PIO_CODR = (1<<3))

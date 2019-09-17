@@ -58,7 +58,7 @@
 /***********************************************************************************************/
 /* Motor Configuration Parameters */
 /***********************************************************************************************/
-
+#define MCLV2
 /* Motor selection from above mentioned predefined motors */
 #define MOTOR                                               (MOTOR_3_HURST_DMA0204024B101)
 

@@ -54,15 +54,14 @@
 #include "device.h"
 #include "plib_tc0.h"
 
+
 /* Initialize channel in quadrature mode */
 void TC0_QuadratureInitialize (void)
 {
     uint32_t status;
-
     /* clock selection and waveform selection */
-    TC0_REGS->TC_CHANNEL[0].TC_CMR = TC_CMR_TCCLKS_XC0 | TC_CMR_CAPTURE_LDRA_RISING | TC_CMR_CAPTURE_CPCTRG_Msk;
-    TC0_REGS->TC_CHANNEL[0].TC_RC = 65535U;
-
+    TC0_REGS->TC_CHANNEL[0].TC_CMR = TC_CMR_TCCLKS_XC0 | TC_CMR_CAPTURE_LDRA_RISING;
+    TC0_REGS->TC_CHANNEL[0].TC_RC = 0xFFFF;
 
     /*Enable quadrature mode */
     TC0_REGS->TC_BMR = TC_BMR_QDEN_Msk  | TC_BMR_MAXFILT(2U) | TC_BMR_EDGPHA_Msk
@@ -88,6 +87,7 @@ TC_QUADRATURE_STATUS TC0_QuadratureStatusGet(void)
 {
     return (TC_QUADRATURE_STATUS)(TC0_REGS->TC_QISR & TC_QUADRATURE_STATUS_MSK);
 }
+ 
  
 
  

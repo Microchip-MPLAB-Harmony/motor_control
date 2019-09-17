@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-04-01T08:48:30Z */
+/* file generated from device description version 2019-07-24T15:04:36Z */
 #ifndef _SAME70_RTT_COMPONENT_H_
 #define _SAME70_RTT_COMPONENT_H_
 

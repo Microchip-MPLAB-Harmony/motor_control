@@ -92,6 +92,8 @@ uint32_t prim;
     }
 }
 #endif /* (__ARM_FP==14) || (__ARM_FP==4) */
+
+
 #define GPNVM_TCM_SIZE_Pos        7u
 #define GPNVM_TCM_SIZE_Msk        (0x3u << GPNVM_TCM_SIZE_Pos)
 
@@ -182,6 +184,7 @@ void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call))
 #endif
 
 	TCM_Configure(0);
+
     /* Disable TCM  */
     TCM_Disable();
 
