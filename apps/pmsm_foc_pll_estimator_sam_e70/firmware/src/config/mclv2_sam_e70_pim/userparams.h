@@ -101,7 +101,7 @@
 
 /* Field weakening - Limit for -ve Idref */
 #if(FIELD_WEAKENING == 1U)
-#define MAX_FW_NEGATIVE_ID_REF              (float)(-1.0)
+#define MAX_FW_NEGATIVE_ID_REF              (float)(-2.0)
 #endif
 
 /******************************************************************************/

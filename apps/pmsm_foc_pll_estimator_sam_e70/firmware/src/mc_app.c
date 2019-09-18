@@ -145,27 +145,35 @@ __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
         gMCLIBVoltageDQ.vd = gPIParmD.out;
     }
     else
-	  {
-	    	/* Closed Loop Vector Control */
+	{
+	   	/* Closed Loop Vector Control */
         if( gCtrlParam.changeMode == true )
         {
             /* switched from open loop to close loop */
             gCtrlParam.changeMode = false;
-      			/* Load velocity control loop with Iq reference for smooth transition */
-      			gPIParmQref.dSum = gCtrlParam.iqRef;
+      		/* Load velocity control loop with Iq reference for smooth transition */
+      		gPIParmQref.dSum = gCtrlParam.iqRef;
             gCtrlParam.velRef = OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC;
             gPIParmD.inRef = 0.0;
             gCtrlParam.idRef = 0.0;
-			      gCtrlParam.sync_cnt = 0;
-	      }
+			gCtrlParam.sync_cnt = 0;
+	    }
 
 		/* Check if field weakening is enabled */
 #if(FIELD_WEAKENING == 1)
-    		float VqRefSquare, VdSquare,OmegaLs;
-    		VdSquare = gMCLIBVoltageDQ.vd * gMCLIBVoltageDQ.vd;
+        float VqRefSquare, VdSquare,OmegaLs, Vestm;
+    	VdSquare = gMCLIBVoltageDQ.vd * gMCLIBVoltageDQ.vd;
 
-  	         if(gMCLIBEstimParam.velEstim > RATED_SPEED_RAD_PER_SEC_ELEC)
-  		 {
+        if(gMCLIBEstimParam.velEstim < 0)
+        {
+            Vestm = gMCLIBEstimParam.velEstim * -1;
+        }
+        else
+        {
+            Vestm = gMCLIBEstimParam.velEstim;
+        }
+  	    if(Vestm > RATED_SPEED_RAD_PER_SEC_ELEC)
+  		{
   			if(VdSquare >= MAX_STATOR_VOLT_SQUARE)
   			{
   			   VdSquare = MAX_STATOR_VOLT_SQUARE;
@@ -177,28 +185,37 @@ __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
   			gfocParam.lastIqRef = gCtrlParam.iqRef;
   			OmegaLs = (gCtrlParam.velRef * MOTOR_PER_PHASE_INDUCTANCE);
 
-  			/* Id reference for feed forward control */
-  			gCtrlParam.idRefFF = ((gfocParam.fwVqRefFiltered * gfocParam.dcBusVoltageBySqrt3) - (MOTOR_PER_PHASE_RESISTANCE * gCtrlParam.iqRef)
-  			                   - (MOTOR_PER_PHASE_INDUCTANCE * gfocParam.dIqRefdt) - gMCLIBEstimParam.bemfAmplitudeFilt)/OmegaLs;
-
+  			if(gCtrlParam.directionSwitch == 0)
+            {
+                /* Id reference for feed forward control */
+                gCtrlParam.idRefFF = ((gfocParam.fwVqRefFiltered * gfocParam.dcBusVoltageBySqrt3) - (MOTOR_PER_PHASE_RESISTANCE * gCtrlParam.iqRef)
+                                   - (MOTOR_PER_PHASE_INDUCTANCE * gfocParam.dIqRefdt) - gMCLIBEstimParam.bemfAmplitudeFilt)/OmegaLs;
+            }
+            else
+            {
+                /* Id reference for feed forward control */
+                gCtrlParam.idRefFF = ((gfocParam.fwVqRefFiltered * gfocParam.dcBusVoltageBySqrt3) + (MOTOR_PER_PHASE_RESISTANCE * gCtrlParam.iqRef)
+  			                   + (MOTOR_PER_PHASE_INDUCTANCE * gfocParam.dIqRefdt) - gMCLIBEstimParam.bemfAmplitudeFilt)/(-1 * OmegaLs);
+            }
+            
   			/* Limit idRef. (0 > VdRef > MAX_FW_NEGATIVE_ID_REF) */
   			if(gCtrlParam.idRefFF > 0)
   			{
-  				  gCtrlParam.idRef = 0;
+  				gCtrlParam.idRef = 0;
   			}
   			else if(gCtrlParam.idRefFF < MAX_FW_NEGATIVE_ID_REF)
   			{
-  				  gCtrlParam.idRef = MAX_FW_NEGATIVE_ID_REF;
+  				gCtrlParam.idRef = MAX_FW_NEGATIVE_ID_REF;
   			}
   			else
   			{
-  				  gCtrlParam.idRef = gCtrlParam.idRefFF;
+  				gCtrlParam.idRef = gCtrlParam.idRefFF;
   			}
   		}
   		else
   		{
-  			  /* Field weakening is disabled below rated speed. */
-  			  gCtrlParam.idRef = 0;
+  			/* Field weakening is disabled below rated speed. */
+  			gCtrlParam.idRef = 0;
   		}
 #endif // End of #ifdef FIELD_WEAKENING
 
@@ -218,9 +235,9 @@ __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
         /* PI control for Id flux control loop */
         gPIParmD.inMeas = gMCLIBCurrentDQ.id;          /* This is in Amps */
         gPIParmD.inRef  = gCtrlParam.idRef;       /* This is in Amps */
-		    MCLIB_PIControl(&gPIParmD);
+        MCLIB_PIControl(&gPIParmD);
 
-		    gfocParam.lastVd = gMCLIBVoltageDQ.vd;
+        gfocParam.lastVd = gMCLIBVoltageDQ.vd;
         gMCLIBVoltageDQ.vd    = gPIParmD.out;          /* This is in %. It should be converted to volts, multiply with (DC/sqrt(3)) */
 
 		    /* Check if field weakening is enabled */
@@ -316,7 +333,7 @@ __STATIC_INLINE void MCAPP_MotorAngleCalc(void)
 		/* Switched to closed loop..
    	       In closed loop slowly decrease the offset which is present in
    	       the estimated angle during open loop */
-   	if(gMCLIBEstimParam.rhoOffset > ANGLE_OFFSET_MIN)
+        if(gMCLIBEstimParam.rhoOffset > ANGLE_OFFSET_MIN)
 		{
            gMCLIBEstimParam.rhoOffset = gMCLIBEstimParam.rhoOffset - ANGLE_OFFSET_MIN;
 		}
@@ -427,7 +444,7 @@ void MCAPP_MotorPLLEstimInit(void)
   	gMCLIBEstimParam.omegaMr = 0;
 
     gMCLIBEstimParam.kFilterEsdq = KFILTER_ESDQ;
-	  gMCLIBEstimParam.kFilterBEMFAmp = KFILTER_BEMF_AMPLITUDE;
+	gMCLIBEstimParam.kFilterBEMFAmp = KFILTER_BEMF_AMPLITUDE;
     gMCLIBEstimParam.velEstimFilterK = KFILTER_VELESTIM;
 
     gMCLIBEstimParam.deltaT = FAST_LOOP_TIME_SEC;
@@ -505,8 +522,8 @@ static void MCAPP_MotorControlParamInit(void)
 	gCtrlParam.startup_angle_ramp_rads_per_sec = 0;
 	gCtrlParam.changeMode = false;
 	gCtrlParam.startup_lock_count = 0;
-         gCtrlParam.iqRef = 0;
-         gCtrlParam.idRef = 0;
+    gCtrlParam.iqRef = 0;
+    gCtrlParam.idRef = 0;
 	gMCLIBPosition.angle = 0;
 	gMCLIBSVPWM.period = PWM0_ChannelPeriodGet(PWM_CHANNEL_0);
 	gCtrlParam.motorStatus = MOTOR_STATUS_STOPPED;
@@ -669,41 +686,39 @@ __STATIC_INLINE void MCAPP_SlowControlLoop(void)
 #if(TORQUE_MODE == 0)
   	if(gCtrlParam.openLoop == false)
   	{
-    		/* Velocity reference will be taken from potentiometer if configured. */
-    		float PotReading;
-
-
-    		PotReading = AFEC0_ChannelResultGet(POT_ADC_CH);
+    	/* Velocity reference will be taken from potentiometer if configured. */
+    	float PotReading;
+   		PotReading = AFEC0_ChannelResultGet(POT_ADC_CH);
 
         speed_ref_filtered = speed_ref_filtered + ((PotReading - speed_ref_filtered) * KFILTER_POT );
-    		gCtrlParam.velRef = (float)((float)speed_ref_filtered * POT_ADC_COUNT_FW_SPEED_RATIO);
+   		gCtrlParam.velRef = (float)((float)speed_ref_filtered * POT_ADC_COUNT_FW_SPEED_RATIO);
 
         /* Restrict velocity reference so motor will be spinning in closed loop. */
-    		if(gCtrlParam.velRef < OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC)
-    		{
-    			  gCtrlParam.velRef = OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC;
-    		}
+        if(gCtrlParam.velRef < OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC)
+        {
+              gCtrlParam.velRef = OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC;
+        }
 
-    		/* Speed Ramp */
-    		MCAPP_SpeedRamp();
+        /* Speed Ramp */
+        MCAPP_SpeedRamp();
 
-    		/* Check if velocity reference is lower than minimum speed requirement */
-    		if(gCtrlParam.velRef >= OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC)
-    		{
-      			/* Execute the velocity control loop */
+        /* Check if velocity reference is lower than minimum speed requirement */
+        if(gCtrlParam.velRef >= OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC)
+        {
+            /* Execute the velocity control loop */
             if(1U == gCtrlParam.directionSwitch)
             {
                gCtrlParam.velRef = -gCtrlParam.velRef;
             }
             gPIParmQref.inRef  = gCtrlParam.velRef;
-      			gPIParmQref.inMeas = gMCLIBEstimParam.velEstim;
-      			MCLIB_PIControl(&gPIParmQref);
-      			gCtrlParam.iqRef = gPIParmQref.out;
-    		}
-    		else
-    		{
-    			  MCAPP_MotorStop();
-    		}
+            gPIParmQref.inMeas = gMCLIBEstimParam.velEstim;
+            MCLIB_PIControl(&gPIParmQref);
+            gCtrlParam.iqRef = gPIParmQref.out;
+        }
+        else
+        {
+            MCAPP_MotorStop();
+        }
   	}
 #endif	// End of #if(TORQUE_MODE == false)
 }
@@ -746,8 +761,8 @@ void MCAPP_MotorStart(void)
 void MCAPP_MotorStop(void)
 {
 	((pio_registers_t*)PIO_PORT_D)->PIO_PER = ~0xF8FFFFFF; // Disable PWML output.
-        /* Disables PWM channels. */
-        PWM0_ChannelsStop(PWM_CHANNEL_0_MASK | PWM_CHANNEL_1_MASK | PWM_CHANNEL_2_MASK);
+    /* Disables PWM channels. */
+    PWM0_ChannelsStop(PWM_CHANNEL_0_MASK | PWM_CHANNEL_1_MASK | PWM_CHANNEL_2_MASK);
 
 	/* Reset algorithm specific variables for next iteration.*/
 	MCAPP_MotorControlParamInit();
@@ -759,9 +774,9 @@ void MCAPP_MotorStop(void)
 	gCtrlParam.endSpeed = 0;
 	gCtrlParam.velRef = 0;
 	gCtrlParam.motorStatus = MOTOR_STATUS_STOPPED;
-         gMCAPPData.mcState = MC_APP_STATE_STOP;
-         speed_ref_filtered = 0;
-         adc_calib_done = false;
+    gMCAPPData.mcState = MC_APP_STATE_STOP;
+    speed_ref_filtered = 0;
+    adc_calib_done = false;
 }
 
 #ifdef MCLV2

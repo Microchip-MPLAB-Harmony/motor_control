@@ -244,7 +244,7 @@ void MCLIB_ParkTransform(MCLIB_I_ALPHA_BETA* input, MCLIB_POSITION* position, MC
   							((estimParam->rs  * gMCLIBCurrentAlphaBeta.iBeta ))
   							- estimParam->vIndbeta;
 
-  #if (FIELD_WEAKENING == true)
+  #if (FIELD_WEAKENING == 1)
   	/* In field weakening BEMF amplitude is estimated to calculate Id_ref */
   	bemfAmp = sqrtf((estimParam->esa * estimParam->esa) + (estimParam->esb * estimParam->esb));
   	/* Filter first order for BEMF amplitude.
