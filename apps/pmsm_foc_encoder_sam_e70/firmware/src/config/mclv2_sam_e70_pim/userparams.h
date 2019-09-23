@@ -55,6 +55,7 @@
 
 #define TORQUE_MODE                                      (0U)  /* If enabled - torque control */
                                                                /* If disabled (default) - speed control*/
+#define ENABLE_FLUX_WEAKENING               (0U)
 /***********************************************************************************************/
 /* Motor Configuration Parameters */
 /***********************************************************************************************/
@@ -85,7 +86,7 @@
 /* Hurst motor part number - DMB0224C10002 */
 #define MOTOR_PER_PHASE_RESISTANCE                          ((float)0.285)
 #define MOTOR_PER_PHASE_INDUCTANCE                          ((float)0.00032)
-#define MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH                ((float)13.57)
+#define MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH                ((float)7.24)
 #define NUM_POLE_PAIRS                                      ((float)5)
 #define RATED_SPEED_RPM                                     ((float)2804)
 #define MAX_SPEED_RPM                                       ((float)3644)
@@ -164,6 +165,9 @@
 #define KFILTER_BEMF_AMPLITUDE         (float)((float)100/(float)32767)
 #define KFILTER_VELESTIM               (float)((float)174/(float)32767)
 #define KFILTER_POT                    (float)((float)50/(float)32767)
+
+
+#define MAX_FW_NEGATIVE_ID_REF  (float)(-3.0f)
 
 /***********************************************************************************************/
 /* Driver board configuration Parameters */
@@ -245,15 +249,18 @@
 
 /* BEMF constant */
 #define MOTOR_BEMF_CONST_V_PEAK_PHASE_PER_RPM_MECH       (float)((MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH/SQRT3)/1000.0)
-#define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_PER_RPM_MECH * (float)(2.0 * M_PI/60.0))
-#define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH * NUM_POLE_PAIRS)
+#define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_PER_RPM_MECH / (float)(2.0 * M_PI/60.0))
+#define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH / NUM_POLE_PAIRS)
 
 #define ENCODER_PULSES_PER_EREV                          (uint16_t)(ENCODER_PULSES_PER_REV/NUM_POLE_PAIRS)
 
-#define MAX_SPEED_RAD_PER_SEC_ELEC          (float)(((RATED_SPEED_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)
-
 #define MAX_STATOR_VOLT_SQUARE              (float)(0.98 * 0.98)
-#define POT_ADC_COUNT_FW_SPEED_RATIO        (float)(MAX_SPEED_RAD_PER_SEC_ELEC/MAX_ADC_COUNT)
+#if(1U == ENABLE_FLUX_WEAKENING )
+    #define MAX_SPEED_RAD_PER_SEC_ELEC              (float)(((MAX_SPEED_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)
+#else 
+    #define MAX_SPEED_RAD_PER_SEC_ELEC          (float)(((RATED_SPEED_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)
+ #endif 
+ #define POT_ADC_COUNT_FW_SPEED_RATIO        (float)(MAX_SPEED_RAD_PER_SEC_ELEC/MAX_ADC_COUNT)
 #define QDEC_RC 65536u              
 #define QDEC_UPPER_THRESHOLD 49151u   
 #define QDEC_LOWER_THRESHOLD 16384u  

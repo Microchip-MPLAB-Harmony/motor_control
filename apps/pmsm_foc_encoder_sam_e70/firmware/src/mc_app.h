@@ -160,6 +160,7 @@ typedef struct
 	tMotorStatus motorStatus;   /* Motor status, STOPPED - 0, RUNNING -1 */
 	bool         openLoop;      /* Indicated motor running in open loop; */
 	bool         changeMode;    /* Switch from open loop to close loop */  
+    bool     adc_calibration_done;
 	int16_t   direction;
 } MCAPP_CONTROL_PARAM;
 

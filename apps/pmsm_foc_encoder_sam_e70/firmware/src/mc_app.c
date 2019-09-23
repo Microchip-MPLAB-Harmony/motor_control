@@ -70,6 +70,9 @@ __STATIC_INLINE void MCAPP_SlowControlLoop(void);
 __STATIC_INLINE void MCAPP_SpeedRamp(void);
 #endif
 
+#if(ENABLE_FLUX_WEAKENING == 1U)
+__STATIC_INLINE float MCAPP_FieldWeakening( void );
+#endif
 /******************************************************************************/
 /*                   Structures                                               */
 /******************************************************************************/
@@ -87,6 +90,7 @@ MCAPP_CONTROL_PARAM gCtrlParam =
 	.motorStatus = MOTOR_STATUS_STOPPED,
 	.openLoop = true,
 	.changeMode  = false,
+    .adc_calibration_done = false,
 	.direction   = 1
 };
 MCAPP_FOC_PARAM gfocParam;
@@ -166,6 +170,12 @@ __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
         /* If TORQUE MODE is enabled then skip the velocity control loop */
         gCtrlParam.iqRef = Q_CURRENT_REF_OPENLOOP * gCtrlParam.direction;
         #endif
+
+         #if(ENABLE_FLUX_WEAKENING == 1U)
+        gCtrlParam.idRef = MCAPP_FieldWeakening();
+        #else
+        gCtrlParam.idRef = 0.0f;
+        #endif 
 
         /* PI control for Id flux control loop */
         gPIParmD.inMeas = gMCLIBCurrentDQ.id;          /* This is in Amps */
@@ -329,6 +339,7 @@ static void MCAPP_ADCOffsetCalibration(void)
     AFEC0_ChannelsInterruptEnable(AFEC_INTERRUPT_EOC_7_MASK);
     /* Set adc trigger from PWM event lines */
     AFEC0_REGS->AFEC_MR |= (AFEC_MR_TRGEN_Msk);
+    gCtrlParam.adc_calibration_done = true;
 }
 
 /******************************************************************************/
@@ -452,6 +463,97 @@ __STATIC_INLINE void MCAPP_SpeedRamp(void)
 }
 #endif
 
+#if(ENABLE_FLUX_WEAKENING == 1U)
+/******************************************************************************/
+/* Function name: MCAPP_FieldWeakening                                        */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description: Calculates d-axis current for field weakening                 */
+/******************************************************************************/
+float UqrefFilt = 0.0f;
+float iqref_1 = 0.0f;
+float Esfilt = 0.0f;
+float debug = 0;
+__STATIC_INLINE float MCAPP_FieldWeakening( void )
+{
+    float UqRef, UdSquare,OmegaLs, idref, absRefVel, absIqref;
+    
+    UdSquare =  gMCLIBVoltageDQ.vd * gMCLIBVoltageDQ.vd;
+
+    if( gCtrlParam.velRef < 0.0f )
+    {
+        absRefVel = -gCtrlParam.velRef; 
+    }
+    else 
+    {
+        absRefVel = gCtrlParam.velRef;
+    }
+
+    if( gCtrlParam.iqRef < 0.0f )
+    {
+        absIqref = -gCtrlParam.iqRef; 
+    }
+    else 
+    {
+        absIqref = gCtrlParam.iqRef;
+    }
+
+    if( absRefVel > RATED_SPEED_RAD_PER_SEC_ELEC )
+    {
+        if(UdSquare >= MAX_STATOR_VOLT_SQUARE)
+        {
+            UdSquare = MAX_STATOR_VOLT_SQUARE;
+        }
+
+        UqRef = sqrtf((float)(  MAX_STATOR_VOLT_SQUARE - UdSquare));
+
+        UqrefFilt =  UqrefFilt + ( ( UqRef - UqrefFilt) * KFILTER_ESDQ );
+
+        OmegaLs = ( absRefVel *  MOTOR_PER_PHASE_INDUCTANCE);
+
+        /* Calculate filtered back emf */
+        Esfilt = Esfilt + KFILTER_ESDQ * ((MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC * absRefVel ) - Esfilt );
+
+        /* Id reference for feed forward control */
+        idref = (( gfocParam.dcBusVoltageBySqrt3  )
+              - ( MOTOR_PER_PHASE_RESISTANCE * absIqref)
+              - ( MOTOR_PER_PHASE_INDUCTANCE * (( absIqref - iqref_1) *  PWM_FREQUENCY ) )
+              - ( Esfilt )) / OmegaLs;
+
+        iqref_1 = absIqref;
+      
+        /* d-axis current saturation  */
+        if(idref > 0)
+        {
+            idref = 0;
+            debug = 1;
+        }
+        else if( idref <  MAX_FW_NEGATIVE_ID_REF)
+        {
+            idref =  MAX_FW_NEGATIVE_ID_REF;
+            
+            debug =2;
+        }
+        else
+        {
+            debug =3;
+        }
+    }
+    else
+    {
+        /* Field weakening is disabled below rated speed. */
+        idref = 0;
+        debug =4;
+    }
+
+    debug = MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC;
+
+    return idref;
+
+}
+
+#endif
+
 /******************************************************************************/
 /* Function name: MCAPP_PWMDutyUpdate                                         */
 /* Function parameters: None                                                  */
@@ -557,7 +659,6 @@ __STATIC_INLINE void MCAPP_SlowControlLoop(void)
         /* Velocity reference will be taken from potentiometer. */
         float PotReading;
         PotReading = (float)AFEC0_ChannelResultGet(POT_ADC_CH) * gCtrlParam.direction;
-        //PotReading = (PotReading - 2048.0)*2.0;
         speed_ref_filtered = speed_ref_filtered + ((PotReading - speed_ref_filtered) * KFILTER_POT );
 
         gCtrlParam.endSpeed = ((float)((float)speed_ref_filtered * POT_ADC_COUNT_FW_SPEED_RATIO));
@@ -639,6 +740,14 @@ void MCAPP_MotorStop(void)
 
 	gCtrlParam.motorStatus = MOTOR_STATUS_STOPPED;
     gMCAPPData.mcState = MC_APP_STATE_STOP;
+
+#if(ENABLE_FLUX_WEAKENING == 1U)
+    /* Reset field weakening parameters */
+    UqrefFilt = 0.0f;
+    iqref_1 = 0.0f;
+    Esfilt = 0.0f;
+#endif
+
 }
 
 #ifdef MCLV2
@@ -734,7 +843,10 @@ void MCAPP_Tasks()
             PWM0_REGS->PWM_OOV = 0x00;
             PWM0_REGS->PWM_OS = 0xF000F;
             
-            MCAPP_ADCOffsetCalibration();
+            if (gCtrlParam.adc_calibration_done == false)
+            {
+                MCAPP_ADCOffsetCalibration();
+            }
             
             gCtrlParam.openLoop = true;
             gCtrlParam.changeMode = false;
