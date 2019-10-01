@@ -145,9 +145,62 @@ void ADC_CALIB_ISR (ADC_STATUS status, uintptr_t context)
         adc_1_offset = adc_1_sum>>12;
         ADC0_Disable();
         ADC0_CallbackRegister((ADC_CALLBACK) mcApp_ADCISRTasks, (uintptr_t)NULL);
+        EIC_CallbackRegister ((EIC_PIN)EIC_PIN_2, (EIC_CALLBACK) OC_FAULT_ISR,(uintptr_t)NULL);
         ADC0_Enable();
     }
  
+}
+
+void MCAPP_FieldWeakening( void )
+{
+   
+    float absIqref;
+    if(mcApp_ControlParam.VelRef > NOMINAL_SPEED_RAD_PER_SEC_ELEC )
+    {
+        mcApp_focParam.Vds = mcApp_V_DQParam.d*mcApp_V_DQParam.d;
+
+        if(mcApp_focParam.Vds>MAX_NORM_SQ)
+        {
+            mcApp_focParam.Vds = MAX_NORM_SQ;
+        }
+
+        mcApp_focParam.Vqs = sqrtf(MAX_NORM_SQ-mcApp_focParam.Vds);
+        mcApp_focParam.VqRefVoltage = mcApp_focParam.MaxPhaseVoltage*mcApp_focParam.Vqs;
+
+        absIqref = ( mcApp_ControlParam.IqRef > 0.0f )? (mcApp_ControlParam.IqRef):(-mcApp_ControlParam.IqRef);
+
+        //Calculating Flux Weakening value of Id, Id_flux_Weakening = (Vqref- Rs*Iq - BEMF)/omega*Ls
+        mcApp_ControlParam.IdRef_FW_Raw = (mcApp_focParam.VqRefVoltage - (MOTOR_PER_PHASE_RESISTANCE * absIqref) 
+                                      -(mcApp_ControlParam.VelRef  * MOTOR_BACK_EMF_CONSTANT_Vpeak_PHASE_RAD_PER_SEC_ELEC))
+                                      /(mcApp_ControlParam.VelRef  * MOTOR_PER_PHASE_INDUCTANCE);
+
+        mcApp_ControlParam.IdRef_FW_Filtered = mcApp_ControlParam.IdRef_FW_Filtered +
+                                          ((mcApp_ControlParam.IdRef_FW_Raw - mcApp_ControlParam.IdRef_FW_Filtered)
+                                          * mcApp_ControlParam.qKfilterIdRef) ;	
+
+        mcApp_ControlParam.IdRef= mcApp_ControlParam.IdRef_FW_Filtered;
+               
+        //Limit Id such that MAX_FW_NEGATIVE_ID_REF < Id < 0
+        if(mcApp_ControlParam.IdRef > 0)
+        {
+            mcApp_ControlParam.IdRef = 0; 
+        }
+       
+        if(mcApp_ControlParam.IdRef< MAX_FW_NEGATIVE_ID_REF)
+        {
+            mcApp_ControlParam.IdRef = MAX_FW_NEGATIVE_ID_REF;
+        }
+   
+        // Limit Q axis current such that sqrtf(Id^2 +Iq^2) <= MAX_MOTOR_CURRENT
+        mcApp_ControlParam.IqRefmax = sqrtf((MAX_MOTOR_CURRENT_SQUARED) - (mcApp_ControlParam.IdRef * mcApp_ControlParam.IdRef ));	
+    }
+    else
+    {
+        mcApp_ControlParam.IdRef = 0;
+        mcApp_ControlParam.IqRefmax = MAX_MOTOR_CURRENT;
+        mcApp_ControlParam.IdRef_FW_Filtered = 0;
+        mcApp_ControlParam.IdRef_FW_Raw = 0;
+    }
 }
 // *****************************************************************************
 // *****************************************************************************
@@ -156,7 +209,6 @@ void ADC_CALIB_ISR (ADC_STATUS status, uintptr_t context)
 // *****************************************************************************
 void mcApp_ADCISRTasks(ADC_STATUS status, uintptr_t context)
 {
-    X2CScope_Update();
     phaseCurrentA = (int16_t)ADC0_ConversionResultGet() - (int16_t)adc_0_offset;// Phase Current A measured using ADC0
     phaseCurrentB = (int16_t)ADC1_ConversionResultGet() - (int16_t)adc_1_offset;// Phase Current B measured using ADC4
     
@@ -191,18 +243,25 @@ void mcApp_ADCISRTasks(ADC_STATUS status, uintptr_t context)
         {
        
          if (Align_Counter < COUNT_FOR_ALIGN_TIME)
-            {
+         {
                      
             Align_Counter++;
             mcApp_motorState.focStateMachine = ALIGN;
             mcApp_SincosParam.Angle = (M_PI);
-            }
+         }
          else if (Align_Counter < 2*COUNT_FOR_ALIGN_TIME)
-            {
+         {
             Align_Counter++;
             mcApp_motorState.focStateMachine = ALIGN;
-            mcApp_SincosParam.Angle = (3*M_PI_2); 
+            if(0 == mcApp_motorState.motorDirection)
+            {
+                mcApp_SincosParam.Angle = (3*M_PI_2); 
             }
+            else 
+            {
+                mcApp_SincosParam.Angle = (M_PI_2); 
+            }
+         }
          else 
            {
               /*start PDEC timer*/
@@ -213,6 +272,7 @@ void mcApp_ADCISRTasks(ADC_STATUS status, uintptr_t context)
             gPositionCalc.posCompensation = 0u;
             speed_ref_filtered=0.0f;
             mcApp_SincosParam.Angle = 0;
+            mcApp_Speed_PIParam.qdSum =  mcApp_ControlParam.IqRef;
             mcApp_motorState.focStateMachine = CLOSEDLOOP_FOC;
             
             }
@@ -284,40 +344,51 @@ void mcApp_ADCISRTasks(ADC_STATUS status, uintptr_t context)
         #ifndef	TORQUE_MODE
         if (slow_loop_count >= 100)
         {
-        slow_loop_count = 0;
+            slow_loop_count = 0;
             /* Speed Calculation from Encoder */
-        gPositionCalc.present_position_count = (int16_t)(PDEC_QDECPositionGet());
-        pos_count_diff = gPositionCalc.present_position_count - gPositionCalc.prev_position_count;
-        speed_elec_rad_per_sec = (pos_count_diff * 2*M_PI)/(ENCODER_PULSES_PER_EREV *SLOW_LOOP_TIME_SEC );
-        gPositionCalc.prev_position_count = gPositionCalc.present_position_count;
+            gPositionCalc.present_position_count = (int16_t)(PDEC_QDECPositionGet());
+            pos_count_diff = gPositionCalc.present_position_count - gPositionCalc.prev_position_count;
+            speed_elec_rad_per_sec = (pos_count_diff * 2*M_PI)/(ENCODER_PULSES_PER_EREV *SLOW_LOOP_TIME_SEC );
+            gPositionCalc.prev_position_count = gPositionCalc.present_position_count;
         }
-            // Execute the velocity control loop
+        // Execute the velocity control loop
+        mcApp_Speed_PIParam.qInMeas = speed_elec_rad_per_sec;
         if (mcApp_motorState.motorDirection == 0)
-        {
-            mcApp_Speed_PIParam.qInMeas = speed_elec_rad_per_sec;
+        {     
+            mcApp_Speed_PIParam.qInRef  = mcApp_ControlParam.VelRef;
         }
-        else
+        else 
         {
-            mcApp_Speed_PIParam.qInMeas = -speed_elec_rad_per_sec;
+            mcApp_Speed_PIParam.qInRef  = -mcApp_ControlParam.VelRef;
         }
-    	mcApp_Speed_PIParam.qInRef  = mcApp_ControlParam.VelRef;
+        /* Limit speed controller output */
+        mcApp_Speed_PIParam.qOutMax  = mcApp_ControlParam.IqRefmax;
+        mcApp_Speed_PIParam.qOutMin  = -mcApp_ControlParam.IqRefmax;
+
+        /* Speed PI Control */
     	mcLib_CalcPI(&mcApp_Speed_PIParam);
     	mcApp_ControlParam.IqRef = mcApp_Speed_PIParam.qOut;
-        mcApp_ControlParam.IdRef = 0;
+
+        #ifndef ENABLE_FLUX_WEAKENING 
+            mcApp_ControlParam.IdRef = 0;
+ 
+        #else 
+            MCAPP_FieldWeakening(  );
+        #endif 
             
 		
         #else
         if(mcApp_motorState.motorDirection == 0)
         {
-        mcApp_ControlParam.IqRef = (float)((float)potReading * TORQUE_MODE_POT_ADC_RATIO); // During torque mode, Iq = Potentiometer provides torque reference in terms of current, Id = 0
-		mcApp_ControlParam.IdRef = 0;
-        mcApp_ControlParam.IqRefmax = TORQUE_MODE_MAX_CUR;
+            mcApp_ControlParam.IqRef = (float)((float)potReading * TORQUE_MODE_POT_ADC_RATIO); // During torque mode, Iq = Potentiometer provides torque reference in terms of current, Id = 0
+            mcApp_ControlParam.IdRef = 0;
+            mcApp_ControlParam.IqRefmax = TORQUE_MODE_MAX_CUR;
         }
         else
         {
-        mcApp_ControlParam.IqRef = (float)((float)potReading * TORQUE_MODE_POT_ADC_RATIO); // During torque mode, Iq = Potentiometer provides torque reference in terms of current, Id = 0
-		mcApp_ControlParam.IdRef = 0;
-        mcApp_ControlParam.IqRefmax = -TORQUE_MODE_MAX_CUR;
+            mcApp_ControlParam.IqRef = -(float)((float)potReading * TORQUE_MODE_POT_ADC_RATIO); // During torque mode, Iq = Potentiometer provides torque reference in terms of current, Id = 0
+            mcApp_ControlParam.IdRef = 0;
+            mcApp_ControlParam.IqRefmax = TORQUE_MODE_MAX_CUR;
         }
         #endif  // endif for TORQUE_MODE
 	
@@ -354,32 +425,7 @@ void mcApp_ADCISRTasks(ADC_STATUS status, uintptr_t context)
         DoControl_Temp1 = MAX_NORM_SQ - DoControl_Temp2;
         mcApp_Q_PIParam.qOutMax = sqrtf(DoControl_Temp1);
         mcApp_Q_PIParam.qOutMin = -mcApp_Q_PIParam.qOutMax;        
-	
-            if(mcApp_motorState.motorDirection == 0)
-            {
-                //Limit Q axis current
-                if(mcApp_ControlParam.IqRef>mcApp_ControlParam.IqRefmax)
-                {
-                mcApp_ControlParam.IqRef = mcApp_ControlParam.IqRefmax;
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                //Limit Q axis current
-                if(mcApp_ControlParam.IqRef<mcApp_ControlParam.IqRefmax)
-                {
-                mcApp_ControlParam.IqRef = mcApp_ControlParam.IqRefmax;
-                }   
-                else
-                {
-
-                }
-            }
-        
+	       
         // PI control for Q
         mcApp_Q_PIParam.qInMeas = mcApp_I_DQParam.q;          // This is in Amps
         mcApp_Q_PIParam.qInRef  = mcApp_ControlParam.IqRef;      // This is in Amps
@@ -421,6 +467,8 @@ void mcApp_ADCISRTasks(ADC_STATUS status, uintptr_t context)
         mcApp_focParam.MaxPhaseVoltage = (float)(mcApp_focParam.DCBusVoltage*ONE_BY_SQRT3);     
         delay_10ms.count++; 
         slow_loop_count++;
+
+         X2CScope_Update();
         
 }
 
@@ -450,14 +498,7 @@ void mcApp_InitControlParameters(void)
     mcApp_Q_PIParam.qdSum = 0;
     mcApp_Q_PIParam.qOutMax = Q_CURRCNTR_OUTMAX;
     mcApp_Q_PIParam.qOutMin = -mcApp_Q_PIParam.qOutMax;
-    if(mcApp_motorState.motorDirection == 0)
-    {
-        mcApp_ControlParam.IqRefmax = MAX_MOTOR_CURRENT;
-    }
-    else
-    {
-       mcApp_ControlParam.IqRefmax = -MAX_MOTOR_CURRENT; 
-    }
+   
     mcLib_InitPI(&mcApp_Q_PIParam);
 
     // PI Qref Term
@@ -467,9 +508,12 @@ void mcApp_InitControlParameters(void)
     mcApp_Speed_PIParam.qdSum = 0;
     mcApp_Speed_PIParam.qOutMax = SPEEDCNTR_OUTMAX;   
     mcApp_Speed_PIParam.qOutMin = -mcApp_Speed_PIParam.qOutMax;
+    mcApp_ControlParam.IqRefmax = MAX_MOTOR_CURRENT;
 
     mcLib_InitPI(&mcApp_Speed_PIParam);
 	
+
+    mcApp_ControlParam.qKfilterIdRef = KFILTER_IDREF;
    
 	
 	return;
