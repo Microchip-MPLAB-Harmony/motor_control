@@ -83,6 +83,8 @@ uint32_t curpi_counter = 0;
 
 void mcApp_SpeedRamp()
 {
+     if(mcApp_motorState.focStateMachine == CLOSEDLOOP_FOC)
+     {
         if(mcApp_motorState.motorDirection ==0)
         {
             mcApp_ControlParam.VelInput = (float)((float)potReading * POT_ADC_COUNT_FW_SPEED_RATIO);
@@ -107,7 +109,7 @@ void mcApp_SpeedRamp()
         {
              mcApp_ControlParam.VelRef = mcApp_ControlParam.VelInput;
         }
-
+     }
         
 }
 

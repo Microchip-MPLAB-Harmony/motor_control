@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-04-09T10:12:25Z */
+/* file generated from device description version 2019-06-03T16:18:52Z */
 #ifndef _SAME54_CCL_COMPONENT_H_
 #define _SAME54_CCL_COMPONENT_H_
 
@@ -34,12 +34,24 @@
 #define CCL_CTRL_SWRST_Pos                    _U_(0)                                               /**< (CCL_CTRL) Software Reset Position */
 #define CCL_CTRL_SWRST_Msk                    (_U_(0x1) << CCL_CTRL_SWRST_Pos)                     /**< (CCL_CTRL) Software Reset Mask */
 #define CCL_CTRL_SWRST(value)                 (CCL_CTRL_SWRST_Msk & ((value) << CCL_CTRL_SWRST_Pos))
+#define   CCL_CTRL_SWRST_DISABLE_Val          _U_(0x0)                                             /**< (CCL_CTRL) The peripheral is not reset  */
+#define   CCL_CTRL_SWRST_ENABLE_Val           _U_(0x1)                                             /**< (CCL_CTRL) The peripheral is reset  */
+#define CCL_CTRL_SWRST_DISABLE                (CCL_CTRL_SWRST_DISABLE_Val << CCL_CTRL_SWRST_Pos)   /**< (CCL_CTRL) The peripheral is not reset Position  */
+#define CCL_CTRL_SWRST_ENABLE                 (CCL_CTRL_SWRST_ENABLE_Val << CCL_CTRL_SWRST_Pos)    /**< (CCL_CTRL) The peripheral is reset Position  */
 #define CCL_CTRL_ENABLE_Pos                   _U_(1)                                               /**< (CCL_CTRL) Enable Position */
 #define CCL_CTRL_ENABLE_Msk                   (_U_(0x1) << CCL_CTRL_ENABLE_Pos)                    /**< (CCL_CTRL) Enable Mask */
 #define CCL_CTRL_ENABLE(value)                (CCL_CTRL_ENABLE_Msk & ((value) << CCL_CTRL_ENABLE_Pos))
+#define   CCL_CTRL_ENABLE_DISABLE_Val         _U_(0x0)                                             /**< (CCL_CTRL) The peripheral is disabled  */
+#define   CCL_CTRL_ENABLE_ENABLE_Val          _U_(0x1)                                             /**< (CCL_CTRL) The peripheral is enabled  */
+#define CCL_CTRL_ENABLE_DISABLE               (CCL_CTRL_ENABLE_DISABLE_Val << CCL_CTRL_ENABLE_Pos) /**< (CCL_CTRL) The peripheral is disabled Position  */
+#define CCL_CTRL_ENABLE_ENABLE                (CCL_CTRL_ENABLE_ENABLE_Val << CCL_CTRL_ENABLE_Pos)  /**< (CCL_CTRL) The peripheral is enabled Position  */
 #define CCL_CTRL_RUNSTDBY_Pos                 _U_(6)                                               /**< (CCL_CTRL) Run in Standby Position */
 #define CCL_CTRL_RUNSTDBY_Msk                 (_U_(0x1) << CCL_CTRL_RUNSTDBY_Pos)                  /**< (CCL_CTRL) Run in Standby Mask */
 #define CCL_CTRL_RUNSTDBY(value)              (CCL_CTRL_RUNSTDBY_Msk & ((value) << CCL_CTRL_RUNSTDBY_Pos))
+#define   CCL_CTRL_RUNSTDBY_DISABLE_Val       _U_(0x0)                                             /**< (CCL_CTRL) Generic clock is not required in standby sleep mode  */
+#define   CCL_CTRL_RUNSTDBY_ENABLE_Val        _U_(0x1)                                             /**< (CCL_CTRL) Generic clock is  required in standby sleep mode  */
+#define CCL_CTRL_RUNSTDBY_DISABLE             (CCL_CTRL_RUNSTDBY_DISABLE_Val << CCL_CTRL_RUNSTDBY_Pos) /**< (CCL_CTRL) Generic clock is not required in standby sleep mode Position  */
+#define CCL_CTRL_RUNSTDBY_ENABLE              (CCL_CTRL_RUNSTDBY_ENABLE_Val << CCL_CTRL_RUNSTDBY_Pos) /**< (CCL_CTRL) Generic clock is  required in standby sleep mode Position  */
 #define CCL_CTRL_Msk                          _U_(0x43)                                            /**< (CCL_CTRL) Register Mask  */
 
 
@@ -68,6 +80,10 @@
 #define CCL_LUTCTRL_ENABLE_Pos                _U_(1)                                               /**< (CCL_LUTCTRL) LUT Enable Position */
 #define CCL_LUTCTRL_ENABLE_Msk                (_U_(0x1) << CCL_LUTCTRL_ENABLE_Pos)                 /**< (CCL_LUTCTRL) LUT Enable Mask */
 #define CCL_LUTCTRL_ENABLE(value)             (CCL_LUTCTRL_ENABLE_Msk & ((value) << CCL_LUTCTRL_ENABLE_Pos))
+#define   CCL_LUTCTRL_ENABLE_DISABLE_Val      _U_(0x0)                                             /**< (CCL_LUTCTRL) LUT block is disabled  */
+#define   CCL_LUTCTRL_ENABLE_ENABLE_Val       _U_(0x1)                                             /**< (CCL_LUTCTRL) LUT block is enabled  */
+#define CCL_LUTCTRL_ENABLE_DISABLE            (CCL_LUTCTRL_ENABLE_DISABLE_Val << CCL_LUTCTRL_ENABLE_Pos) /**< (CCL_LUTCTRL) LUT block is disabled Position  */
+#define CCL_LUTCTRL_ENABLE_ENABLE             (CCL_LUTCTRL_ENABLE_ENABLE_Val << CCL_LUTCTRL_ENABLE_Pos) /**< (CCL_LUTCTRL) LUT block is enabled Position  */
 #define CCL_LUTCTRL_FILTSEL_Pos               _U_(4)                                               /**< (CCL_LUTCTRL) Filter Selection Position */
 #define CCL_LUTCTRL_FILTSEL_Msk               (_U_(0x3) << CCL_LUTCTRL_FILTSEL_Pos)                /**< (CCL_LUTCTRL) Filter Selection Mask */
 #define CCL_LUTCTRL_FILTSEL(value)            (CCL_LUTCTRL_FILTSEL_Msk & ((value) << CCL_LUTCTRL_FILTSEL_Pos))
@@ -80,6 +96,10 @@
 #define CCL_LUTCTRL_EDGESEL_Pos               _U_(7)                                               /**< (CCL_LUTCTRL) Edge Selection Position */
 #define CCL_LUTCTRL_EDGESEL_Msk               (_U_(0x1) << CCL_LUTCTRL_EDGESEL_Pos)                /**< (CCL_LUTCTRL) Edge Selection Mask */
 #define CCL_LUTCTRL_EDGESEL(value)            (CCL_LUTCTRL_EDGESEL_Msk & ((value) << CCL_LUTCTRL_EDGESEL_Pos))
+#define   CCL_LUTCTRL_EDGESEL_DISABLE_Val     _U_(0x0)                                             /**< (CCL_LUTCTRL) Edge detector is disabled  */
+#define   CCL_LUTCTRL_EDGESEL_ENABLE_Val      _U_(0x1)                                             /**< (CCL_LUTCTRL) Edge detector is enabled  */
+#define CCL_LUTCTRL_EDGESEL_DISABLE           (CCL_LUTCTRL_EDGESEL_DISABLE_Val << CCL_LUTCTRL_EDGESEL_Pos) /**< (CCL_LUTCTRL) Edge detector is disabled Position  */
+#define CCL_LUTCTRL_EDGESEL_ENABLE            (CCL_LUTCTRL_EDGESEL_ENABLE_Val << CCL_LUTCTRL_EDGESEL_Pos) /**< (CCL_LUTCTRL) Edge detector is enabled Position  */
 #define CCL_LUTCTRL_INSEL0_Pos                _U_(8)                                               /**< (CCL_LUTCTRL) Input Selection 0 Position */
 #define CCL_LUTCTRL_INSEL0_Msk                (_U_(0xF) << CCL_LUTCTRL_INSEL0_Pos)                 /**< (CCL_LUTCTRL) Input Selection 0 Mask */
 #define CCL_LUTCTRL_INSEL0(value)             (CCL_LUTCTRL_INSEL0_Msk & ((value) << CCL_LUTCTRL_INSEL0_Pos))
@@ -152,12 +172,24 @@
 #define CCL_LUTCTRL_INVEI_Pos                 _U_(20)                                              /**< (CCL_LUTCTRL) Inverted Event Input Enable Position */
 #define CCL_LUTCTRL_INVEI_Msk                 (_U_(0x1) << CCL_LUTCTRL_INVEI_Pos)                  /**< (CCL_LUTCTRL) Inverted Event Input Enable Mask */
 #define CCL_LUTCTRL_INVEI(value)              (CCL_LUTCTRL_INVEI_Msk & ((value) << CCL_LUTCTRL_INVEI_Pos))
+#define   CCL_LUTCTRL_INVEI_DISABLE_Val       _U_(0x0)                                             /**< (CCL_LUTCTRL) Incoming event is not inverted  */
+#define   CCL_LUTCTRL_INVEI_ENABLE_Val        _U_(0x1)                                             /**< (CCL_LUTCTRL) Incoming event is inverted  */
+#define CCL_LUTCTRL_INVEI_DISABLE             (CCL_LUTCTRL_INVEI_DISABLE_Val << CCL_LUTCTRL_INVEI_Pos) /**< (CCL_LUTCTRL) Incoming event is not inverted Position  */
+#define CCL_LUTCTRL_INVEI_ENABLE              (CCL_LUTCTRL_INVEI_ENABLE_Val << CCL_LUTCTRL_INVEI_Pos) /**< (CCL_LUTCTRL) Incoming event is inverted Position  */
 #define CCL_LUTCTRL_LUTEI_Pos                 _U_(21)                                              /**< (CCL_LUTCTRL) LUT Event Input Enable Position */
 #define CCL_LUTCTRL_LUTEI_Msk                 (_U_(0x1) << CCL_LUTCTRL_LUTEI_Pos)                  /**< (CCL_LUTCTRL) LUT Event Input Enable Mask */
 #define CCL_LUTCTRL_LUTEI(value)              (CCL_LUTCTRL_LUTEI_Msk & ((value) << CCL_LUTCTRL_LUTEI_Pos))
+#define   CCL_LUTCTRL_LUTEI_DISABLE_Val       _U_(0x0)                                             /**< (CCL_LUTCTRL) LUT incoming event is disabled  */
+#define   CCL_LUTCTRL_LUTEI_ENABLE_Val        _U_(0x1)                                             /**< (CCL_LUTCTRL) LUT incoming event is enabled  */
+#define CCL_LUTCTRL_LUTEI_DISABLE             (CCL_LUTCTRL_LUTEI_DISABLE_Val << CCL_LUTCTRL_LUTEI_Pos) /**< (CCL_LUTCTRL) LUT incoming event is disabled Position  */
+#define CCL_LUTCTRL_LUTEI_ENABLE              (CCL_LUTCTRL_LUTEI_ENABLE_Val << CCL_LUTCTRL_LUTEI_Pos) /**< (CCL_LUTCTRL) LUT incoming event is enabled Position  */
 #define CCL_LUTCTRL_LUTEO_Pos                 _U_(22)                                              /**< (CCL_LUTCTRL) LUT Event Output Enable Position */
 #define CCL_LUTCTRL_LUTEO_Msk                 (_U_(0x1) << CCL_LUTCTRL_LUTEO_Pos)                  /**< (CCL_LUTCTRL) LUT Event Output Enable Mask */
 #define CCL_LUTCTRL_LUTEO(value)              (CCL_LUTCTRL_LUTEO_Msk & ((value) << CCL_LUTCTRL_LUTEO_Pos))
+#define   CCL_LUTCTRL_LUTEO_DISABLE_Val       _U_(0x0)                                             /**< (CCL_LUTCTRL) LUT event output is disabled  */
+#define   CCL_LUTCTRL_LUTEO_ENABLE_Val        _U_(0x1)                                             /**< (CCL_LUTCTRL) LUT event output is enabled  */
+#define CCL_LUTCTRL_LUTEO_DISABLE             (CCL_LUTCTRL_LUTEO_DISABLE_Val << CCL_LUTCTRL_LUTEO_Pos) /**< (CCL_LUTCTRL) LUT event output is disabled Position  */
+#define CCL_LUTCTRL_LUTEO_ENABLE              (CCL_LUTCTRL_LUTEO_ENABLE_Val << CCL_LUTCTRL_LUTEO_Pos) /**< (CCL_LUTCTRL) LUT event output is enabled Position  */
 #define CCL_LUTCTRL_TRUTH_Pos                 _U_(24)                                              /**< (CCL_LUTCTRL) Truth Value Position */
 #define CCL_LUTCTRL_TRUTH_Msk                 (_U_(0xFF) << CCL_LUTCTRL_TRUTH_Pos)                 /**< (CCL_LUTCTRL) Truth Value Mask */
 #define CCL_LUTCTRL_TRUTH(value)              (CCL_LUTCTRL_TRUTH_Msk & ((value) << CCL_LUTCTRL_TRUTH_Pos))
