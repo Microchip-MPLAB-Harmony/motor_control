@@ -15,7 +15,30 @@
     "main" function calls the "SYS_Initialize" function to initialize the state
     machines of all modules in the system
  *******************************************************************************/
-
+// DOM-IGNORE-BEGIN
+/*******************************************************************************
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ *******************************************************************************/
+// DOM-IGNORE-END
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
@@ -71,6 +94,8 @@ button_response_t button_S3_data;
 uint16_t calibration_sample_count = 0x0000U;
 uint16_t adc_0_offset = 0;
 uint16_t adc_1_offset = 0;
+uint8_t  overCurrentFaultActive = 0;
+uint32_t    overCurrentFaultResetDelayCounter = 0;
 
 uint32_t adc_0_sum = 0;
 uint32_t adc_1_sum = 0;
@@ -113,20 +138,36 @@ int main ( void )
         X2CScope_Communicate();
         if(0U == syn10ms())
         {
-            /* This if loop ensures that when the motor direction is changed, 
-             * the PWM is disabled for 10mS before re-starting the windmilling 
-             * state to avoid current spike*/
-            if(direction_change_flag == 1) 
+            if(overCurrentFaultActive == 0)
             {
-                motor_start();
-                direction_change_flag = 0;
+                /* This if loop ensures that when the motor direction is changed, 
+                 * the PWM is disabled for 10mS before re-starting the windmilling 
+                 * state to avoid current spike*/
+                if(direction_change_flag == 1) 
+                {
+                    if(start_toggle)
+                    {
+                        motor_start();
+                   }
+                    direction_change_flag = 0;
+                }
+                speed_ramp(); 
+
+                button_S2_data.inputVal = BTN_START_STOP_Get();
+                buttonRespond(&button_S2_data, &motor_start_stop);
+               
             }
-            speed_ramp(); 
-       
-            button_S2_data.inputVal = BTN_START_STOP_Get();
-            buttonRespond(&button_S2_data, &motor_start_stop);
-           
-     
+            else
+            {
+                overCurrentFaultResetDelayCounter++;
+                //Clear the Over Current Flag after a delay defined by OVERCURRENT_RESET_DELAY_SEC
+                if(overCurrentFaultResetDelayCounter >= OVERCURRENT_RESET_DELAY_COUNT)
+                {
+                    overCurrentFaultResetDelayCounter = 0;
+                    overCurrentFaultActive = 0;
+                    
+                }
+            }
         }
 
         
@@ -138,11 +179,14 @@ int main ( void )
 }
 void OC_FAULT_ISR(uintptr_t context)
 {
-    motor_stop();
-    start_toggle=0;
+    motor_stop(); // Disable TCC output
+    start_toggle=0; // Stop the state machine
+    overCurrentFaultActive = 1; // Set overCurrentFault Flag
+    TCC0_REGS->TCC_CTRLBSET = TCC_CTRLBSET_CMD(TCC_CTRLBSET_CMD_RETRIGGER_Val); // Clear the COUNT value
+    syn_cnt = SYN_VAL10MS; // Reset the 10mS counter
+    TCC0_REGS->TCC_STATUS = TCC_STATUS_FAULT0(1); // Clear Non Recoverable Fault
     LED1_OC_FAULT_Set();
-    while(1);
-    
+       
 }
 /* This ISR calibrates zero crossing point for Phase U and Phase V currents*/
 void ADC_CALIB_ISR (uintptr_t context)
@@ -173,7 +217,6 @@ void ADC_CALIB_ISR (uintptr_t context)
 #ifdef CTRL_PWM_1_1
 void ADC_ISR(uintptr_t context)
 {
-
         adc_result_data[0] = ADC0_ConversionResultGet();
         adc_result_data[1] = ADC1_ConversionResultGet();
         X2CScope_Update();
@@ -268,7 +311,7 @@ void ADC_ISR(uintptr_t context)
 
 #endif
 
-void motor_start_stop(void)
+void motor_start_stop(void) //Calling this function, starts/stops the motor
 {
 
      start_toggle =!start_toggle;
@@ -310,13 +353,17 @@ void motor_start_stop(void)
             spe_ref_sgn = -1;
         }
      }
+     else         
+     {
+        LED1_OC_FAULT_Clear(); // Clear Fault LED when the motor is started.
+     }
 }
 
-void motor_direction_toggle(void)
+void motor_direction_toggle(void) //Calling this function, toggles the direction of the motor
 {
     motor_stop(); 
     direction = !direction; // toggle direction 
-     LED2_DIRECTION_Set(); 
+    LED2_DIRECTION_Toggle();
     windmilling_start = 0;
     windmilling_count = 0;
     state_count = 1;

@@ -125,7 +125,8 @@ static int32_t
  sp_fir_acc,  /* speed fir filter accumulator */
  sp_iir1_mem, /* speed iir filter memory (first iir) */
  sp_iir2_mem, /* speed iir filter memory (second iir) */
- sp_iir3_mem; /* speed iir filter memory (third iir) */
+ sp_iir3_mem, /* speed iir filter memory (third iir) */
+ sp_iir3_mem_abs; /*speed iir filter memory absolute (third iir)*/
 
  uint16_t
  dph_min,     /* minimum delta phase */
@@ -840,7 +841,7 @@ void speed_filter(void)
  }
  
 
-  dph_global = dph;
+ dph_global = dph;
  /* first filter (FIR) */
  /* since we use as output the accumulator undivided, the amplification is
   4=2^2 if we calculate the speed over 4 samples; if the speed is
@@ -879,14 +880,26 @@ void speed_filter(void)
  sp_iir3_mem += sp_iir2_mem;
 
  /* the total amplification is 2^(2+3*4=14); now come back to the internal units */
- speed_abs = (int16_t)(sp_iir3_mem / k_spe12);
- #ifdef PH_CLAMP
- dph_abs_fil = (int16_t)(sp_iir3_mem >> 14);
- #endif 
- speed_est = speed_abs;
-
-}
+ speed_est = (int16_t)(sp_iir3_mem / k_spe12);
  
+ 
+ if(speed_sgn < 0)
+ {
+     speed_abs = -speed_est;
+     sp_iir3_mem_abs = -sp_iir3_mem;
+ }
+ else
+ {
+     speed_abs = speed_est;
+     sp_iir3_mem_abs = sp_iir3_mem;
+ }    
+ 
+ #ifdef PH_CLAMP
+ dph_abs_fil = (int16_t)(sp_iir3_mem_abs >> 14);
+ #endif
+}
+
+
 /*******************************************************************************
 Function:  bemf_speed_filter
 Description: speed estimation, using a fourth order low-pass filter
@@ -961,12 +974,25 @@ void bemf_speed_filter(void)
  sp_iir3_mem += sp_iir2_mem;
 
  /* the total amplification is 2^(2+3*4=14); now come back to the internal units */
- speed_abs = (int16_t)(sp_iir3_mem / k_spe12);
- #ifdef PH_CLAMP
- dph_abs_fil = (int16_t)(sp_iir3_mem >> 14);
- #endif 
- speed_est = speed_abs;
+
+speed_est = (int16_t)(sp_iir3_mem / k_spe12);
+
+ if(speed_est < 0)
+ {
+     speed_abs = -speed_est;
+     sp_iir3_mem_abs = -sp_iir3_mem;
+ }
+ else
+ {
+     speed_abs = speed_est;
+     sp_iir3_mem_abs = sp_iir3_mem;
+ }
+
+#ifdef PH_CLAMP
+dph_abs_fil = (int16_t)(sp_iir3_mem_abs >> 14);
+#endif 
 }
+
 
 /******************************************************************************
 Function:  speed_filter_init
@@ -1023,9 +1049,9 @@ uint16_t delay_comp(void)
  int16_t s16a;
         uint16_t retval;
 
- /*sp_iir3_mem = change in angle per sample*2^14
-  *s32a = sp_iir3_mem for  1 sampling period delay.  s32a= 2*sp_iir3_mem for 2 sampling period delay*/
- s32a = sp_iir3_mem;  /* always positive */
+ /*sp_iir3_mem_abs = change in angle per sample*2^14
+  *s32a = sp_iir3_mem_abs for  1 sampling period delay.  s32a= 2*sp_iir3_mem_abs for 2 sampling period delay*/
+ s32a = sp_iir3_mem_abs;  /* always positive */
  if((int32_t)BASE_VALUE_INT <= s32a)
  {
   if(0 > speed_sgn)

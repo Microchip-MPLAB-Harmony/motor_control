@@ -463,9 +463,9 @@ void motor_stop(void)
 {
     /* Rules 11.4, 11.6 violated access to register */
     int32_t dc[3];
-    dc[0] =  (int32_t)PWM_HPER_TICKS;
-    dc[1] =  (int32_t)PWM_HPER_TICKS;
-    dc[2] =  (int32_t)PWM_HPER_TICKS;
+    dc[0] =  (int32_t)HALF_HPER_TICKS;
+    dc[1] =  (int32_t)HALF_HPER_TICKS;
+    dc[2] =  (int32_t)HALF_HPER_TICKS;
 	
     TCC0_PWM24bitDutySet(TCC0_CHANNEL0,(uint32_t)dc[0]);
     TCC0_PWM24bitDutySet(TCC0_CHANNEL1,(uint32_t)dc[1]);
@@ -1845,7 +1845,8 @@ void motorcontrol(void)
                 #ifdef TORQUE_MODE
                 curdqr.y = torque_adc_ref;
                 #else // Speed Control
-                curdqr.y = library_pi_control(s32a, &sp_pi); 
+                curdqr.y = library_pi_control(s32a, &sp_pi);
+                curdqr.x = 0;
                 #endif
                 /* d current reduction */
                 if(0 != curdqr.x)

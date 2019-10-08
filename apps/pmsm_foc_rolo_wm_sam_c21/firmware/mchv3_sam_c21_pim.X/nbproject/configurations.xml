@@ -7,27 +7,30 @@
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mchv3_sam_c21_pim" projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f4" displayName="adc" projectFiles="true">
+            <logicalFolder name="f5" displayName="adc" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/adc/plib_adc_common.h</itemPath>
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/adc/plib_adc0.h</itemPath>
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/adc/plib_adc1.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="clock" projectFiles="true">
+            <logicalFolder name="f7" displayName="clock" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/clock/plib_clock.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="divas" projectFiles="true">
+            <logicalFolder name="f10" displayName="divas" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/divas/plib_divas.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="eic" projectFiles="true">
+            <logicalFolder name="f9" displayName="eic" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/eic/plib_eic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f3" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/evsys/plib_evsys.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f8" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="port" projectFiles="true">
+            <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
+              <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="port" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="sercom" projectFiles="true">
@@ -36,7 +39,7 @@
                 <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/sercom/usart/plib_sercom_usart_common.h</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="tcc" projectFiles="true">
+            <logicalFolder name="f4" displayName="tcc" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/tcc/plib_tcc0.h</itemPath>
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/tcc/plib_tcc_common.h</itemPath>
             </logicalFolder>
@@ -101,6 +104,9 @@
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
@@ -133,26 +139,29 @@
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mchv3_sam_c21_pim" projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f4" displayName="adc" projectFiles="true">
+            <logicalFolder name="f5" displayName="adc" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/adc/plib_adc0.c</itemPath>
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/adc/plib_adc1.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="clock" projectFiles="true">
+            <logicalFolder name="f7" displayName="clock" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/clock/plib_clock.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="divas" projectFiles="true">
+            <logicalFolder name="f10" displayName="divas" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/divas/plib_divas.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="eic" projectFiles="true">
+            <logicalFolder name="f9" displayName="eic" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/eic/plib_eic.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f3" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/evsys/plib_evsys.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f8" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="port" projectFiles="true">
+            <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
+              <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="port" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="sercom" projectFiles="true">
@@ -160,7 +169,7 @@
                 <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/sercom/usart/plib_sercom3_usart.c</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="tcc" projectFiles="true">
+            <logicalFolder name="f4" displayName="tcc" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_c21_pim/peripheral/tcc/plib_tcc0.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -206,12 +215,11 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.15</languageToolchainVersion>
+        <languageToolchainVersion>2.30</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
-        <pack name="SAMC21_DFP" vendor="Microchip" version="2.0.5"/>
+        <pack name="SAMC21_DFP" vendor="Microchip" version="3.0.22"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -312,6 +320,9 @@
         <property key="preprocessor-macros" value=""/>
         <property key="warning-level" value=""/>
       </C32-AS>
+      <C32-CO>
+        <property key="coverage-enable" value=""/>
+      </C32-CO>
       <C32-LD>
         <property key="additional-options-use-response-files" value="false"/>
         <property key="additional-options-write-sla" value="false"/>
@@ -332,7 +343,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="0"/>
+        <property key="heap-size" value="512"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>
@@ -394,9 +405,13 @@
       </C32Global>
       <EdbgTool>
         <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="communication.activationmode" value="nohv"/>
         <property key="communication.interface" value="swd"/>
         <property key="communication.speed" value="2.000"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="firmware.path"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="firmware.update.action" value="firmware.update.use.latest"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
         <property key="memories.configurationmemory" value="true"/>
@@ -410,14 +425,62 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-3ffff"/>
+        <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value=""/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="voltagevalue" value=""/>
       </EdbgTool>
+      <ICD4Tool>
+        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareOption.UpdateOptions"
+                  value="ToolFirmwareOption.UseLatest"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="hwtoolclock.frcindebug" value="false"/>
+        <property key="memories.aux" value="false"/>
+        <property key="memories.bootflash" value="true"/>
+        <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.configurationmemory2" value="true"/>
+        <property key="memories.dataflash" value="true"/>
+        <property key="memories.eeprom" value="true"/>
+        <property key="memories.exclude.configurationmemory" value="true"/>
+        <property key="memories.flashdata" value="true"/>
+        <property key="memories.id" value="true"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.programmemory" value="true"/>
+        <property key="memories.programmemory.ranges" value="0-3ffff"/>
+        <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.donoteraseauxmem" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.ledbrightness" value="5"/>
+        <property key="programoptions.pgcconfig" value="pull down"/>
+        <property key="programoptions.pgcresistor.value" value="4.7"/>
+        <property key="programoptions.pgdconfig" value="pull down"/>
+        <property key="programoptions.pgdresistor.value" value="4.7"/>
+        <property key="programoptions.pgmentry.voltage" value="low"/>
+        <property key="programoptions.pgmspeed" value="Med"/>
+        <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preserveeeprom" value="false"/>
+        <property key="programoptions.preserveeeprom.ranges" value=""/>
+        <property key="programoptions.preserveprogram.ranges" value="0-20007fff"/>
+        <property key="programoptions.preserveprogramrange" value="false"/>
+        <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programcalmem" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
+        <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
+        <property key="voltagevalue" value="5.0"/>
+      </ICD4Tool>
       <PICkit3PlatformTool>
         <property key="ADC 1" value="true"/>
         <property key="AutoSelectMemRanges" value="auto"/>

@@ -75,9 +75,9 @@ void TCC0_PWMInitialize(void)
     TCC0_REGS->TCC_WAVE = TCC_WAVE_WAVEGEN_DSBOTTOM;
 
     /* Configure duty cycle values */
-    TCC0_REGS->TCC_CC[0] = 0U;
-    TCC0_REGS->TCC_CC[1] = 0U;
-    TCC0_REGS->TCC_CC[2] = 0U;
+    TCC0_REGS->TCC_CC[0] = 1200U;
+    TCC0_REGS->TCC_CC[1] = 1200U;
+    TCC0_REGS->TCC_CC[2] = 1200U;
     TCC0_REGS->TCC_CC[3] = 0U;
     TCC0_REGS->TCC_PER = 2399U;
 

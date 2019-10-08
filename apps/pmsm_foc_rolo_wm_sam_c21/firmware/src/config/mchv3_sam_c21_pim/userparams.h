@@ -50,7 +50,7 @@
 
 /*Defining CTRL_PWM_1_1 sets the Control to PWM Frequency Ratio as 1:1
  Undefining CTRL_PWM_1_1 sets the Control to PWM Frequency Ration as 1:2*/
-#define CTRL_PWM_1_1
+#undef CTRL_PWM_1_1
 
 
 /* Defining Q_AXIS_STARTUP causes the open loop startup by injecting current in Q axis 
@@ -71,7 +71,7 @@
 /* Defining RAM_EXECUTE executes key motor control functions from RAM and thereby allowing faster execution at the expense of data memory.
  Please note, instruction breakpoint will not be asserted if that particular instruction is being executed from RAM
 *Undefining RAM_EXECUTE executes key motor control functions from Flash and thereby reducing data memory consumption at the expense of time */
-#define RAM_EXECUTE
+#undef RAM_EXECUTE
 
 /*Defining USE_DIVAS uses the DIVAS peripheral for division and square root operatons*/
 #define USE_DIVAS
@@ -412,6 +412,8 @@ Macro definitions
 #define CUR_STEP_TIM    ( 0.5 )     
 #define CPT_CNT_VAL     ((uint16_t)(CUR_STEP_TIM * SAMF_SLOW))
 
+#define OVERCURRENT_RESET_DELAY_SEC     3
+#define OVERCURRENT_RESET_DELAY_COUNT  (uint32_t) (OVERCURRENT_RESET_DELAY_SEC*100)  // Delay coun value calculated based 10mS unit.
 /*Defining this macro enables Windmilling detect*/
 #define WINDMILLING_ENABLE
 

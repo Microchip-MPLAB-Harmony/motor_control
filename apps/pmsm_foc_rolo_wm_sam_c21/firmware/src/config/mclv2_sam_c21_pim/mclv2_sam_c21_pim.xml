@@ -1447,7 +1447,15 @@
         </Boolean>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="8" id="nvmctrl"/>
+    <UniqueComponent dnOrder="8" id="nvmctrl">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="NVM_RWS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="nvmctrl" value="2"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
     <UniqueComponent dnOrder="9" id="sercom3">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="I2CM_BAUD">
@@ -1494,7 +1502,12 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="10" id="tcc0">
       <Symbols dnOrder="0">
-        <KeyValueSet dnOrder="0" id="TCC_0_DRVCTRL_NRE_NRV">
+        <Integer dnOrder="0" id="TCC_0_CC">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="1200"/>
+          </Values>
+        </Integer>
+        <KeyValueSet dnOrder="1" id="TCC_0_DRVCTRL_NRE_NRV">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1504,7 +1517,12 @@
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="1" id="TCC_1_DRVCTRL_NRE_NRV">
+        <Integer dnOrder="2" id="TCC_1_CC">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="1200"/>
+          </Values>
+        </Integer>
+        <KeyValueSet dnOrder="3" id="TCC_1_DRVCTRL_NRE_NRV">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1514,7 +1532,12 @@
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="2" id="TCC_2_DRVCTRL_NRE_NRV">
+        <Integer dnOrder="4" id="TCC_2_CC">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="1200"/>
+          </Values>
+        </Integer>
+        <KeyValueSet dnOrder="5" id="TCC_2_DRVCTRL_NRE_NRV">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1524,24 +1547,14 @@
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="3" id="TCC_3_DRVCTRL_NRE_NRV">
+        <KeyValueSet dnOrder="6" id="TCC_3_DRVCTRL_NRE_NRV">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </KeyValueSet>
-        <KeyValueSet dnOrder="4" id="TCC_4_DRVCTRL_NRE_NRV">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
-            <User dnOrder="0" value="1"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="5" id="TCC_5_DRVCTRL_NRE_NRV">
+        <KeyValueSet dnOrder="7" id="TCC_4_DRVCTRL_NRE_NRV">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1551,7 +1564,7 @@
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="6" id="TCC_6_DRVCTRL_NRE_NRV">
+        <KeyValueSet dnOrder="8" id="TCC_5_DRVCTRL_NRE_NRV">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1561,21 +1574,31 @@
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="7" id="TCC_7_DRVCTRL_NRE_NRV">
+        <KeyValueSet dnOrder="9" id="TCC_6_DRVCTRL_NRE_NRV">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="1"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="10" id="TCC_7_DRVCTRL_NRE_NRV">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </KeyValueSet>
-        <Boolean dnOrder="8" id="TCC_CTRLBSET_DIR">
+        <Boolean dnOrder="11" id="TCC_CTRLBSET_DIR">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </Boolean>
-        <Integer dnOrder="9" id="TCC_DRVCTRL_FILTERVAL">
+        <Integer dnOrder="12" id="TCC_DRVCTRL_FILTERVAL">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1585,55 +1608,55 @@
             <User dnOrder="0" value="5"/>
           </Values>
         </Integer>
-        <Comment dnOrder="10" id="TCC_DTHS_COMMENT">
+        <Comment dnOrder="13" id="TCC_DTHS_COMMENT">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
               <Value dnOrder="0">****&amp;#160;High&amp;#160;side&amp;#160;dead&amp;#160;time&amp;#160;is&amp;#160;1.0&amp;#160;uS&amp;#160;****</Value>
             </String>
           </Attributes>
         </Comment>
-        <Comment dnOrder="11" id="TCC_DTLS_COMMENT">
+        <Comment dnOrder="14" id="TCC_DTLS_COMMENT">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
               <Value dnOrder="0">****&amp;#160;Low&amp;#160;side&amp;#160;dead&amp;#160;time&amp;#160;is&amp;#160;1.0&amp;#160;uS&amp;#160;****</Value>
             </String>
           </Attributes>
         </Comment>
-        <Combo dnOrder="12" id="TCC_EVCTRL_EVACT">
+        <Combo dnOrder="15" id="TCC_EVCTRL_EVACT">
           <Values dnOrder="0">
             <User dnOrder="0" value="Event 0 Rising Edge"/>
           </Values>
         </Combo>
-        <Boolean dnOrder="13" id="TCC_EVCTRL_OVFEO">
+        <Boolean dnOrder="16" id="TCC_EVCTRL_OVFEO">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Comment dnOrder="14" id="TCC_FREQUENCY">
+        <Comment dnOrder="17" id="TCC_FREQUENCY">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
               <Value dnOrder="0">****&amp;#160;PWM&amp;#160;Frequency&amp;#160;is&amp;#160;10000&amp;#160;Hz&amp;#160;****</Value>
             </String>
           </Attributes>
         </Comment>
-        <Boolean dnOrder="15" id="TCC_INTENSET_FAULT0">
+        <Boolean dnOrder="18" id="TCC_INTENSET_FAULT0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Boolean>
-        <KeyValueSet dnOrder="16" id="TCC_WAVE_WAVEGEN">
+        <KeyValueSet dnOrder="19" id="TCC_WAVE_WAVEGEN">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="17" id="TCC_WEXCTRL_DTHS">
+        <Integer dnOrder="20" id="TCC_WEXCTRL_DTHS">
           <Values dnOrder="0">
             <User dnOrder="0" value="48"/>
           </Values>
         </Integer>
-        <Integer dnOrder="18" id="TCC_WEXCTRL_DTLS">
+        <Integer dnOrder="21" id="TCC_WEXCTRL_DTLS">
           <Values dnOrder="0">
             <User dnOrder="0" value="48"/>
           </Values>
@@ -1642,7 +1665,8 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="adc0" x="295" y="79"/>
         <ElementPosition dnOrder="1" id="adc1" x="297" y="141"/>
@@ -1657,6 +1681,5 @@
         <ElementPosition dnOrder="10" id="tcc0" x="161" y="81"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

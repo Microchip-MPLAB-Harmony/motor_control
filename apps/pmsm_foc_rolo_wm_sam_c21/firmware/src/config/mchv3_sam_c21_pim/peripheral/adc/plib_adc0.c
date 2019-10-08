@@ -86,21 +86,20 @@ void ADC0_Initialize( void )
     {
         /* Wait for Synchronization */
     }
-
     /* Write linearity calibration in BIASREFBUF and bias calibration in BIASCOMP */
     ADC0_REGS->ADC_CALIB = (uint32_t)(ADC_CALIB_BIASREFBUF(((*(uint64_t*)OTP5_ADDR) & ADC0_LINEARITY_Msk))) \
         | ADC_CALIB_BIASCOMP((((*(uint64_t*)OTP5_ADDR) & ADC0_BIASCAL_Msk) >> ADC0_BIASCAL_POS));
 
-    /* prescaler */
+    /* Prescaler */
     ADC0_REGS->ADC_CTRLB = ADC_CTRLB_PRESCALER_DIV4;
     /* Sampling length */
     ADC0_REGS->ADC_SAMPCTRL = ADC_SAMPCTRL_SAMPLEN(3U);
 
-    /* reference */
+    /* Reference */
     ADC0_REGS->ADC_REFCTRL = ADC_REFCTRL_REFSEL_INTVCC2;
 
-    /* positive and negative input pins */
-    ADC0_REGS->ADC_INPUTCTRL = ADC_POSINPUT_AIN2 | ADC_NEGINPUT_GND;
+    /* Input pin */
+    ADC0_REGS->ADC_INPUTCTRL = ADC_POSINPUT_AIN2;
 
     /* Resolution & Operation Mode */
     ADC0_REGS->ADC_CTRLC = ADC_CTRLC_RESSEL_12BIT | ADC_CTRLC_WINMODE(0) ;
@@ -174,6 +173,26 @@ bool ADC0_ConversionSequenceIsFinished(void)
     return seq_status;
 }
 
+/* Configure window comparison threshold values */
+void ADC0_ComparisonWindowSet(uint16_t low_threshold, uint16_t high_threshold)
+{
+    ADC0_REGS->ADC_WINLT = low_threshold;
+    ADC0_REGS->ADC_WINUT = high_threshold;
+    while((ADC0_REGS->ADC_SYNCBUSY))
+    {
+        /* Wait for Synchronization */
+    }
+}
+
+void ADC0_WindowModeSet(ADC_WINMODE mode)
+{
+    ADC0_REGS->ADC_CTRLC &= ~ADC_CTRLC_WINMODE_Msk;
+    ADC0_REGS->ADC_CTRLC |= (mode << ADC_CTRLC_WINMODE_Pos);
+    while((ADC0_REGS->ADC_SYNCBUSY))
+    {
+        /* Wait for Synchronization */
+    }
+}
 
 /* Read the conversion result */
 uint16_t ADC0_ConversionResultGet( void )

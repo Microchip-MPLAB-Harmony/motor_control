@@ -94,6 +94,8 @@ button_response_t button_S3_data;
 uint16_t calibration_sample_count = 0x0000U;
 uint16_t adc_0_offset = 0;
 uint16_t adc_1_offset = 0;
+uint8_t  overCurrentFaultActive = 0;
+uint32_t    overCurrentFaultResetDelayCounter = 0;
 
 uint32_t adc_0_sum = 0;
 uint32_t adc_1_sum = 0;
@@ -136,21 +138,37 @@ int main ( void )
         X2CScope_Communicate();
         if(0U == syn10ms())
         {
-            /* This if loop ensures that when the motor direction is changed, 
-             * the PWM is disabled for 10mS before re-starting the windmilling 
-             * state to avoid current spike*/
-            if(direction_change_flag == 1) 
+            if(overCurrentFaultActive == 0)
             {
-                motor_start();
-                direction_change_flag = 0;
+                /* This if loop ensures that when the motor direction is changed, 
+                 * the PWM is disabled for 10mS before re-starting the windmilling 
+                 * state to avoid current spike*/
+                if(direction_change_flag == 1) 
+                {
+                    if(start_toggle)
+                    {
+                        motor_start();
+                   }
+                    direction_change_flag = 0;
+                }
+                speed_ramp(); 
+
+                button_S2_data.inputVal = BTN_START_STOP_Get();
+                buttonRespond(&button_S2_data, &motor_start_stop);
+                button_S3_data.inputVal = BTN_DIR_TGL_Get();
+                buttonRespond(&button_S3_data, &motor_direction_toggle);
             }
-            speed_ramp(); 
-       
-            button_S2_data.inputVal = BTN_START_STOP_Get();
-            buttonRespond(&button_S2_data, &motor_start_stop);
-            button_S3_data.inputVal = BTN_DIR_TGL_Get();
-            buttonRespond(&button_S3_data, &motor_direction_toggle);
-     
+            else
+            {
+                overCurrentFaultResetDelayCounter++;
+                //Clear the Over Current Flag after a delay defined by OVERCURRENT_RESET_DELAY_SEC
+                if(overCurrentFaultResetDelayCounter >= OVERCURRENT_RESET_DELAY_COUNT)
+                {
+                    overCurrentFaultResetDelayCounter = 0;
+                    overCurrentFaultActive = 0;
+                    
+                }
+            }
         }
 
         
@@ -162,11 +180,14 @@ int main ( void )
 }
 void OC_FAULT_ISR(uintptr_t context)
 {
-    motor_stop();
-    start_toggle=0;
+    motor_stop(); // Disable TCC output
+    start_toggle=0; // Stop the state machine
+    overCurrentFaultActive = 1; // Set overCurrentFault Flag
+    TCC0_REGS->TCC_CTRLBSET = TCC_CTRLBSET_CMD(TCC_CTRLBSET_CMD_RETRIGGER_Val); // Clear the COUNT value
+    syn_cnt = SYN_VAL10MS; // Reset the 10mS counter
+    TCC0_REGS->TCC_STATUS = TCC_STATUS_FAULT0(1); // Clear Non Recoverable Fault
     LED1_OC_FAULT_Set();
-    while(1);
-    
+       
 }
 /* This ISR calibrates zero crossing point for Phase U and Phase V currents*/
 void ADC_CALIB_ISR (uintptr_t context)
@@ -332,6 +353,10 @@ void motor_start_stop(void) //Calling this function, starts/stops the motor
         {
             spe_ref_sgn = -1;
         }
+     }
+     else         
+     {
+        LED1_OC_FAULT_Clear(); // Clear Fault LED when the motor is started.
      }
 }
 
