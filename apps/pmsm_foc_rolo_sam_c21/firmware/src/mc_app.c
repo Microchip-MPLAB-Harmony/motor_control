@@ -441,9 +441,9 @@ void motor_stop(void)
 {
     /* Rules 11.4, 11.6 violated access to register */
     int32_t dc[3];
-    dc[0] =  (int32_t)PWM_HPER_TICKS;
-    dc[1] =  (int32_t)PWM_HPER_TICKS;
-    dc[2] =  (int32_t)PWM_HPER_TICKS;
+    dc[0] =  (int32_t)HALF_HPER_TICKS;
+    dc[1] =  (int32_t)HALF_HPER_TICKS;
+    dc[2] =  (int32_t)HALF_HPER_TICKS;
     
     TCC0_PWM24bitDutySet(TCC0_CHANNEL0,(uint32_t)dc[0]);
     TCC0_PWM24bitDutySet(TCC0_CHANNEL1,(uint32_t)dc[1]);
@@ -723,6 +723,7 @@ Note2:        the routine has to be called every 10ms to assure correct ramps
             {
               /* if motor is not already started */
               motor_start();
+              LED1_OC_FAULT_Clear();
             }
             if(STOPPED == motor_status)
             {
@@ -1580,6 +1581,7 @@ void motorcontrol(void)
                 #else // Speed Control
                 curdqr.y = library_pi_control(s32a, &sp_pi); 
                 #endif
+                curdqr.x = 0;
                 /* d current reduction */
                 if(0 != curdqr.x)
                 {

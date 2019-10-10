@@ -53,6 +53,8 @@
 #include "mc_app.h"
 #include "X2CScopeCommunication.h"
 
+
+
 #ifndef CTRL_PWM_1_1
 static uint8_t  adc_interrupt_counter = 0U;
 #endif
@@ -64,6 +66,8 @@ uint8_t  direction = 0x0U;
 uint16_t calibration_sample_count = 0x0000U;
 uint16_t adc_0_offset = 0;
 uint16_t adc_1_offset = 0;
+uint8_t  overCurrentFaultActive = 0;
+uint32_t    overCurrentFaultResetDelayCounter = 0;
 
 uint32_t adc_0_sum = 0;
 uint32_t adc_1_sum = 0;
@@ -78,6 +82,7 @@ void motor_direction_toggle(void);
 void buttonRespond(button_response_t * buttonResData, void (* buttonJob)(void));
 
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Main Entry Point
@@ -86,17 +91,16 @@ void buttonRespond(button_response_t * buttonResData, void (* buttonJob)(void));
 
 int main ( void )
 {
-    /* Initialize all modules */
+
+/* Initialize all modules */
     SYS_Initialize ( NULL );
     motor_stop();
     ADC0_CallbackRegister((ADC_CALLBACK) ADC_CALIB_ISR, (uintptr_t)NULL);
     EIC_CallbackRegister ((EIC_PIN)EIC_PIN_2, (EIC_CALLBACK) OC_FAULT_ISR,(uintptr_t)NULL);
     motorcontrol_vars_init();
     ADC0_Enable();
-
     X2CScope_Init();
     TCC0_PWMStart();
-     
 
     while ( true )
     {
@@ -107,15 +111,28 @@ int main ( void )
         X2CScope_Communicate();
         if(0U == syn10ms())
         {
-          
-            
-            button_S2_data.inputVal = BTN_START_STOP_Get();
-            buttonRespond(&button_S2_data, &motor_start_stop);
+            if(overCurrentFaultActive == 0)
+            {
+                speed_ramp(); 
 
-            button_S3_data.inputVal = BTN_DIR_TGL_Get();
-            buttonRespond(&button_S3_data, &motor_direction_toggle);
-
-            speed_ramp(); 
+                button_S2_data.inputVal = BTN_START_STOP_Get();
+                buttonRespond(&button_S2_data, &motor_start_stop);
+                
+                button_S3_data.inputVal = BTN_DIR_TGL_Get();
+                buttonRespond(&button_S3_data, &motor_direction_toggle);
+               
+            }
+            else
+            {
+                overCurrentFaultResetDelayCounter++;
+                //Clear the Over Current Flag after a delay defined by OVERCURRENT_RESET_DELAY_SEC
+                if(overCurrentFaultResetDelayCounter >= OVERCURRENT_RESET_DELAY_COUNT)
+                {
+                    overCurrentFaultResetDelayCounter = 0;
+                    overCurrentFaultActive = 0;
+                    
+                }
+            }
         }
 
         
@@ -125,15 +142,16 @@ int main ( void )
 
     return ( EXIT_FAILURE );
 }
-
 void OC_FAULT_ISR(uintptr_t context)
 {
-    motor_stop();
-    motor_stop_source = OC_FAULT_STOP;
-    start_toggle=0;
+    motor_stop(); // Disable TCC output
+    start_toggle=0; // Stop the state machine
+    overCurrentFaultActive = 1; // Set overCurrentFault Flag
+    TCC0_REGS->TCC_CTRLBSET = TCC_CTRLBSET_CMD(TCC_CTRLBSET_CMD_RETRIGGER_Val); // Clear the COUNT value
+    syn_cnt = SYN_VAL10MS; // Reset the 10mS counter
+    TCC0_REGS->TCC_STATUS = TCC_STATUS_FAULT0(1); // Clear Non Recoverable Fault
     LED1_OC_FAULT_Set();
-    while(1);
-    
+       
 }
 /* This ISR calibrates zero crossing point for Phase U and Phase V currents*/
 void ADC_CALIB_ISR (uintptr_t context)
@@ -292,7 +310,6 @@ void buttonRespond(button_response_t * buttonResData, void (* buttonJob)(void))
             break;
     }
 }
-
 /*******************************************************************************
  End of File
 */

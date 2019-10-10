@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-04-08T12:38:18Z */
+/* file generated from device description version 2019-08-07T06:35:22Z */
 #ifndef _SAMC21_DSU_COMPONENT_H_
 #define _SAMC21_DSU_COMPONENT_H_
 

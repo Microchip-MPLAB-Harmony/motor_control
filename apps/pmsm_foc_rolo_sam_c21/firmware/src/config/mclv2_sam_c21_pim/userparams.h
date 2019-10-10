@@ -55,7 +55,7 @@
 
 /* Defining Q_AXIS_STARTUP causes the open loop startup by injecting current in Q axis 
  * Undefining Q_AXIS_STARTUP cause the open loop startup by injecting current in D axis */
-#define Q_AXIS_STARTUP
+#undef Q_AXIS_STARTUP
 
 /*Debug Feature: Defining OPEN_LOOP_FUNCTIONING forces the algorithm to operate in Rotor Angle Open Loop mode i.e. angle reference is generated and not estimated*/
 #undef OPEN_LOOP_FUNCTIONING
@@ -368,6 +368,9 @@ Macro definitions
 /* step duration [sec] */
 #define CUR_STEP_TIM    ( 0.5 )     
 #define CPT_CNT_VAL     ((uint16_t)(CUR_STEP_TIM * SAMF_SLOW))
+
+#define OVERCURRENT_RESET_DELAY_SEC     3
+#define OVERCURRENT_RESET_DELAY_COUNT  (uint32_t) (OVERCURRENT_RESET_DELAY_SEC*100)  // Delay coun value calculated based 10mS unit.
 
 
 
