@@ -50,7 +50,7 @@
 
 /*Defining CTRL_PWM_1_1 sets the Control to PWM Frequency Ratio as 1:1
  Undefining CTRL_PWM_1_1 sets the Control to PWM Frequency Ration as 1:2*/
-#define CTRL_PWM_1_1
+#undef CTRL_PWM_1_1
 
 
 /* Defining Q_AXIS_STARTUP causes the open loop startup by injecting current in Q axis 
@@ -72,9 +72,6 @@
 
 /*Defining USE_DIVAS uses the DIVAS peripheral for division and square root operatons*/
 #define USE_DIVAS
-
-/* Defining cross coupling term */
-#undef CROSS_COUPLING_ENABLED
 
 
 
@@ -371,6 +368,9 @@ Macro definitions
 /* step duration [sec] */
 #define CUR_STEP_TIM    ( 0.5 )     
 #define CPT_CNT_VAL     ((uint16_t)(CUR_STEP_TIM * SAMF_SLOW))
+
+#define OVERCURRENT_RESET_DELAY_SEC     3
+#define OVERCURRENT_RESET_DELAY_COUNT  (uint32_t) (OVERCURRENT_RESET_DELAY_SEC*100)  // Delay coun value calculated based 10mS unit.
 
 
 

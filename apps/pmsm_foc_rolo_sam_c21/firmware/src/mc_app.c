@@ -1329,8 +1329,6 @@ void motorcontrol(void)
                 {
                 #ifdef Q_AXIS_STARTUP
                     
-                    if(spe_ref_sgn>0)
-                    {
                         /* current rising ramp */
                         if(START_CUR > curdqr.y)
                         {
@@ -1345,27 +1343,8 @@ void motorcontrol(void)
                             motor_status = STARTING;
                             state_count++;
                         }
-                    }
-                    else
-                    {
-                         /* current decreasing ramp */
-                        if(-START_CUR < curdqr.y)
-                        {
-                            dcurref_l -= CUR_RAMP_AL;
 
-                            curdqr.y = (int16_t)(dcurref_l >> SH_BASE_VALUE);
-
-                        }
-                        else
-                        {
-                            curdqr.y = -START_CUR;
-                            motor_status = STARTING;
-                            state_count++;
-                        }
-                    }
                 #else
-                    if(spe_ref_sgn>0)
-                    {
                         /* current rising ramp */
                         if(START_CUR > curdqr.x)
                         {
@@ -1381,26 +1360,6 @@ void motorcontrol(void)
                             /* status change */
                             motor_status = STARTING;
 
-                        }
-                    }
-                    else
-                    {
-                    /* current decreasing ramp */
-                        if(-START_CUR < curdqr.x)
-                        {
-                            dcurref_l -= CUR_RAMP_AL;
-
-                            curdqr.x = (int16_t)(dcurref_l >> SH_BASE_VALUE);
-
-                        }
-                        else
-                        {
-                            curdqr.x = -START_CUR;
-
-                            /* status change */
-                            motor_status = STARTING;
-
-                        }
                     }
                 #endif     
                 }

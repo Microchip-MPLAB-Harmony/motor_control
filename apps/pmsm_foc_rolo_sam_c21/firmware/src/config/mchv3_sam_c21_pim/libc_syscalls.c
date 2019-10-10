@@ -41,8 +41,7 @@ extern void _exit(int status);
 extern void _exit(int status)
 {
     /* Software breakpoint */
-#ifdef DEBUG
-//    asm("bkpt #0");
+#ifdef __DEBUG
     __BKPT(0);
 #endif
 
