@@ -95,7 +95,9 @@ uint16_t calibration_sample_count = 0x0000U;
 uint16_t adc_0_offset = 0;
 uint16_t adc_1_offset = 0;
 uint8_t  overCurrentFaultActive = 0;
-uint32_t    overCurrentFaultResetDelayCounter = 0;
+/*initializing the fault delay counter to final value to avoid any overcurrent 
+reset delay in case an OC fault is triggered upon board power up*/
+uint32_t    overCurrentFaultResetDelayCounter = OVERCURRENT_RESET_DELAY_COUNT;
 
 uint32_t adc_0_sum = 0;
 uint32_t adc_1_sum = 0;
@@ -361,37 +363,40 @@ void motor_start_stop(void) //Calling this function, starts/stops the motor
 
 void motor_direction_toggle(void) //Calling this function, toggles the direction of the motor
 {
-    motor_stop(); 
-    direction = !direction; // toggle direction 
-    LED2_DIRECTION_Toggle();
-    windmilling_start = 0;
-    windmilling_count = 0;
-    state_count = 1;
-    braking_count = 0;
-    state_windmilling = 0;
-    state_decide = 0;
-    state_brake = 0;
-    state_stopped = 0;
-    state_align = 0;
-    state_start = 0;
-    state_closingloop = 0;
-    state_closingloopwindmilling = 0;
-    state_closedloop = 0;
-    angle_rollover_count = 0;
-#ifdef WINDMILLING_ENABLE
-    motor_status = WINDMILLING;
-#else
-    motor_status = STOPPED;
-#endif 
-    direction_change_flag = 1;
-    trigger = 0;
-    if(direction == 0)
+    if(!start_toggle)
     {
-        spe_ref_sgn = 1;
-    }
-    else
-    {
-        spe_ref_sgn = -1;
+        motor_stop(); 
+        direction = !direction; // toggle direction 
+        LED2_DIRECTION_Toggle();
+        windmilling_start = 0;
+        windmilling_count = 0;
+        state_count = 1;
+        braking_count = 0;
+        state_windmilling = 0;
+        state_decide = 0;
+        state_brake = 0;
+        state_stopped = 0;
+        state_align = 0;
+        state_start = 0;
+        state_closingloop = 0;
+        state_closingloopwindmilling = 0;
+        state_closedloop = 0;
+        angle_rollover_count = 0;
+    #ifdef WINDMILLING_ENABLE
+        motor_status = WINDMILLING;
+    #else
+        motor_status = STOPPED;
+    #endif 
+        direction_change_flag = 1;
+        trigger = 0;
+        if(direction == 0)
+        {
+            spe_ref_sgn = 1;
+        }
+        else
+        {
+            spe_ref_sgn = -1;
+        }
     }
     
 }
