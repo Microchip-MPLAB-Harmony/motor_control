@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-04-09T10:12:25Z */
+/* file generated from device description version 2019-06-03T16:18:52Z */
 #ifndef _SAME54_SERCOM_COMPONENT_H_
 #define _SAME54_SERCOM_COMPONENT_H_
 

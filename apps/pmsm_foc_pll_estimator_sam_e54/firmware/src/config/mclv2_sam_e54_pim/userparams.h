@@ -149,14 +149,14 @@
 /* PI controllers tuning values - */
 
 //******** D Control Loop Coefficients *******
-#define     D_CURRCNTR_PTERM                                    0.08                    // D axis Proportional Gain
-#define     D_CURRCNTR_ITERM                                    (0.00005)               // D axis Integral Gain
+#define     D_CURRCNTR_PTERM                                    0.2                    // D axis Proportional Gain
+#define     D_CURRCNTR_ITERM                                    (0.0005)               // D axis Integral Gain
 #define     D_CURRCNTR_CTERM                                    0.5                     // D axis Anti-Windup Gain
 #define     D_CURRCNTR_OUTMAX                                   0.999                   // D axis PI Controller Maximum Output - Max D axis Voltage (Normalized)
 
 //******** Q Control Loop Coefficients *******
-#define     Q_CURRCNTR_PTERM                                    0.08                    // Q axis Proportional Gain
-#define     Q_CURRCNTR_ITERM                                    (0.00005)               // Q axis Integral Gain
+#define     Q_CURRCNTR_PTERM                                    0.2                    // Q axis Proportional Gain
+#define     Q_CURRCNTR_ITERM                                    (0.0005)               // Q axis Integral Gain
 #define     Q_CURRCNTR_CTERM                                    0.5                     // Q axis Anti-Windup Gain
 #define     Q_CURRCNTR_OUTMAX                                   0.999                   // Q axis PI Controller Maximum Output - Max D axis Voltage (Normalized)
 //*** Speed Control Loop Coefficients *****
@@ -272,7 +272,8 @@
 
 
 
-
+#define OVERCURRENT_RESET_DELAY_SEC     3
+#define OVERCURRENT_RESET_DELAY_COUNT  (uint32_t) (OVERCURRENT_RESET_DELAY_SEC*100)  // Delay coun value calculated based 10mS unit.
 
 
 // <editor-fold defaultstate="collapsed" desc=" Derived Macros from Motor Control Board Specifications, Motor Specifications and Motor Dyanmics">

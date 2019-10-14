@@ -34,6 +34,8 @@
 
 button_response_t    button_S2_data;
 button_response_t    button_S3_data;
+extern uint8_t  overCurrentFaultActive;
+extern uint32_t overCurrentFaultResetDelayCounter;
 
 
 void buttonRespond(button_response_t * buttonResData, void (* buttonJob)(void));
@@ -66,23 +68,37 @@ int main ( void )
         X2CScope_Communicate();
         if(delay_10ms.count>delay_10ms.period)
         {
-#ifdef MCLV2
-            button_S2_data.inputVal = BTN_START_STOP_Get();
-#endif
-            
-#ifdef MCHV3
-            button_S2_data.inputVal = BTN_START_STOP_MCHV3_Get();
-#endif 
-            buttonRespond(&button_S2_data, &mcApp_motorStartToggle);
-            button_S3_data.inputVal = BTN_DIR_TGL_Get();
-            buttonRespond(&button_S3_data, &mcApp_motorDirectionToggle);
-            mcApp_SpeedRamp();
+            if(overCurrentFaultActive == 0)
+            {
+    #ifdef MCLV2
+                button_S2_data.inputVal = BTN_START_STOP_Get();
+    #endif
+
+    #ifdef MCHV3
+                button_S2_data.inputVal = BTN_START_STOP_MCHV3_Get();
+    #endif 
+                buttonRespond(&button_S2_data, &mcApp_motorStartToggle);
+                button_S3_data.inputVal = BTN_DIR_TGL_Get();
+                buttonRespond(&button_S3_data, &mcApp_motorDirectionToggle);
+                mcApp_SpeedRamp();
+            }
+            else
+            {
+                overCurrentFaultResetDelayCounter++;
+                //Clear the Over Current Flag after a delay defined by OVERCURRENT_RESET_DELAY_SEC
+                if(overCurrentFaultResetDelayCounter >= OVERCURRENT_RESET_DELAY_COUNT)
+                {
+                    overCurrentFaultResetDelayCounter = 0;
+                    overCurrentFaultActive = 0;
+                    
+                }
+            }
             delay_10ms.count = 0;
-            
+
         }
         else
         {
-            
+
         }
         
     }

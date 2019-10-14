@@ -83,7 +83,7 @@ void EIC_Initialize (void)
     /* Interrupt sense type and filter control for EXTINT channels 0 to 7*/
     EIC_REGS->EIC_CONFIG[0] =  EIC_CONFIG_SENSE0_NONE  |
                               EIC_CONFIG_SENSE1_NONE  |
-                              EIC_CONFIG_SENSE2_FALL  |
+                              EIC_CONFIG_SENSE2_LOW  |
                               EIC_CONFIG_SENSE3_NONE  |
                               EIC_CONFIG_SENSE4_NONE  |
                               EIC_CONFIG_SENSE5_NONE  |
@@ -101,14 +101,10 @@ void EIC_Initialize (void)
                               EIC_CONFIG_SENSE7_NONE ;
 
 
-    /* Debouncer enable */
-    EIC_REGS->EIC_DEBOUNCEN = 0x4;
 
     /* Event Control Output enable */
     EIC_REGS->EIC_EVCTRL = 0x4;
 
-    /* Debouncer Setting */
-    EIC_REGS->EIC_DPRESCALER = EIC_DPRESCALER_PRESCALER0(0) | EIC_DPRESCALER_PRESCALER1(0) ;
 
     /* External Interrupt enable*/
     EIC_REGS->EIC_INTENSET = 0x4;

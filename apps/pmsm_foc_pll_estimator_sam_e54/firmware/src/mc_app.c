@@ -81,7 +81,14 @@ uint16_t adc_1_offset = 0;
 uint32_t adc_0_sum = 0;
 uint32_t adc_1_sum = 0;
 uint32_t curpi_counter = 0;
+float invDutyA = 0;
+float invDutyB = 0;
+float invDutyC = 0;
 
+uint8_t  overCurrentFaultActive = 0;
+/*initializing the fault delay counter to final value to avoid any overcurrent 
+reset delay in case an OC fault is triggered upon board power up*/
+uint32_t    overCurrentFaultResetDelayCounter = OVERCURRENT_RESET_DELAY_COUNT;
 char    state_count = 0;
 
 void mcApp_SpeedRamp()
@@ -657,9 +664,17 @@ else
         mcLib_SVPWMGen(&mcApp_V_AlphaBetaParam , &mcApp_SVGenParam);
     if(mcApp_ControlParam.AssertActiveVector == 1)
     {
-        TCC0_PWM24bitDutySet(TCC0_CHANNEL0,(uint32_t) mcApp_SVGenParam.dPWM_A );
-        TCC0_PWM24bitDutySet(TCC0_CHANNEL1,(uint32_t) mcApp_SVGenParam.dPWM_B );
-        TCC0_PWM24bitDutySet(TCC0_CHANNEL2,(uint32_t) mcApp_SVGenParam.dPWM_C );
+        invDutyA =  PWM_PERIOD_COUNT -  mcApp_SVGenParam.dPWM_A;
+        invDutyB =  PWM_PERIOD_COUNT -  mcApp_SVGenParam.dPWM_B;
+        invDutyC =  PWM_PERIOD_COUNT -  mcApp_SVGenParam.dPWM_C;
+        
+    /* TCC module when operated in center aligned mode, results in ON time 
+    which inversely proportional to Duty Cycle value (CC). 
+    Hence, the inverted duty value is used to generate desired PWM signals*/
+        
+        TCC0_PWM24bitDutySet(TCC0_CHANNEL0,(uint32_t) invDutyA);
+        TCC0_PWM24bitDutySet(TCC0_CHANNEL1,(uint32_t) invDutyB);
+        TCC0_PWM24bitDutySet(TCC0_CHANNEL2,(uint32_t) invDutyC);
     }
     else
     {
@@ -676,21 +691,22 @@ else
         TCC0_PWM24bitDutySet(TCC0_CHANNEL2,(uint32_t) PWM_HALF_PERIOD_COUNT );
     
 }
-        while(ADC0_REGS->ADC_INTFLAG != ADC_INTFLAG_RESRDY_Msk);
+          while(ADC0_REGS->ADC_INTFLAG != ADC_INTFLAG_RESRDY_Msk);
                        
         /* Read the ADC result value */
         mcApp_focParam.DCBusVoltage = ((float)ADC1_ConversionResultGet())* VOLTAGE_ADC_TO_PHY_RATIO; // Reads and translates to actual bus voltage
 		potReading = ADC0_ConversionResultGet();
-  
         /* select the next ADC channel for conversion */
         ADC0_ChannelSelect(ADC_POSINPUT_AIN0,ADC_NEGINPUT_GND); // Phase U to ADC0
         ADC1_ChannelSelect(ADC_POSINPUT_AIN0,ADC_NEGINPUT_GND); // Phase V to ADC1
-        ADC0_REGS->ADC_INTENSET = ADC_INTFLAG_RESRDY_Msk;// Enable ADC interrupt
-        /* Clear all interrupt flags */
+         /* Clear all interrupt flags */
         ADC0_REGS->ADC_INTFLAG = ADC_INTFLAG_Msk;
+        ADC0_REGS->ADC_INTENSET = ADC_INTFLAG_RESRDY_Msk;// Enable ADC interrupt
+       
       
         mcApp_focParam.MaxPhaseVoltage = (float)(mcApp_focParam.DCBusVoltage*ONE_BY_SQRT3);     
         delay_10ms.count++; 
+
 }
 
 
@@ -816,6 +832,8 @@ void mcApp_motorStartToggle()
     if(mcApp_motorState.motorStart == 1)
     {
         mcApp_motorStart();
+        LED1_OC_FAULT_Clear();
+        
     }
     else
     {
@@ -841,14 +859,18 @@ void mcApp_motorDirectionToggle()
 
 void OC_FAULT_ISR(uintptr_t context)
 {
+    
     mcApp_motorStop();
+    ADC0_Disable();
+    TCC0_PWMStop();
+    LED1_OC_FAULT_Set();
     mcApp_motorState.motorStart = 0;
     mcApp_motorState.focStart = 0;
-    LED1_OC_FAULT_Set();
-    while(1)
-    {
-        X2CScope_Communicate();
-        X2CScope_Update();
-    }
+    overCurrentFaultActive = 1; // Set overCurrentFault Flag
+    TCC0_REGS->TCC_CTRLBSET = TCC_CTRLBSET_CMD(TCC_CTRLBSET_CMD_RETRIGGER_Val); // Clear the COUNT value
+    delay_10ms.count = 0;  // Reset the 10mS counter
+    TCC0_REGS->TCC_STATUS = TCC_STATUS_FAULT0(1); // Clear Non Recoverable Fault
+    TCC0_PWMStart();
+    ADC0_Enable();
     
 }
