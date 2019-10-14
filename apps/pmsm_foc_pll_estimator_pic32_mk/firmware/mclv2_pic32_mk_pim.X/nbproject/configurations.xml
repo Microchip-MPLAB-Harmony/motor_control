@@ -37,6 +37,13 @@
       <logicalFolder name="f10" displayName="Control Library" projectFiles="true">
         <itemPath>../src/mc_lib.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="PIC32MK1024MCF100_DFP"
+                       projectFiles="true">
+          <itemPath>../src/packs/PIC32MK1024MCF100_DFP/device.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
       <logicalFolder name="f4" displayName="X2C Scope" projectFiles="true">
         <itemPath>../src/X2CScope.h</itemPath>
         <itemPath>../src/X2CScopeCommunication.h</itemPath>
@@ -101,7 +108,6 @@
         <itemPath>../src/X2CScope.c</itemPath>
         <itemPath>../src/X2CScopeCommunication.c</itemPath>
       </logicalFolder>
-      <itemPath>../src/main.c</itemPath>
       <itemPath>../src/mc_currMeasurement.c</itemPath>
       <itemPath>../src/mc_app.c</itemPath>
       <itemPath>../src/mc_picontrol.c</itemPath>
@@ -111,6 +117,7 @@
       <itemPath>../src/mc_speed.c</itemPath>
       <itemPath>../src/mc_infrastructure.c</itemPath>
       <itemPath>../src/mc_errorHandler.c</itemPath>
+      <itemPath>../src/main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -131,11 +138,11 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>ICD4Tool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.15</languageToolchainVersion>
+        <languageToolchainVersion>2.30</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.0.22"/>
+        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.1.53"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -169,6 +176,8 @@
         </C32-AR>
         <C32-AS>
         </C32-AS>
+        <C32-CO>
+        </C32-CO>
         <C32-LD>
         </C32-LD>
         <C32CPP>
@@ -226,6 +235,9 @@
         <property key="preprocessor-macros" value=""/>
         <property key="warning-level" value=""/>
       </C32-AS>
+      <C32-CO>
+        <property key="coverage-enable" value=""/>
+      </C32-CO>
       <C32-LD>
         <property key="additional-options-use-response-files" value="false"/>
         <property key="additional-options-write-sla" value="false"/>
