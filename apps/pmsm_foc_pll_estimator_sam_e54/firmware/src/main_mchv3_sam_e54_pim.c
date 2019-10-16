@@ -37,7 +37,8 @@ button_response_t    button_S2_data;
 
 
 void buttonRespond(button_response_t * buttonResData, void (* buttonJob)(void));
- 
+extern uint8_t  overCurrentFaultActive;
+extern uint32_t overCurrentFaultResetDelayCounter;
 
 
 // *****************************************************************************
@@ -58,6 +59,7 @@ int main ( void )
     ADC0_Enable();
     X2CScope_Init();
 
+    
 
     while ( true )
     {
@@ -66,9 +68,23 @@ int main ( void )
         
         if(delay_10ms.count>delay_10ms.period)
         {
-            button_S2_data.inputVal = BTN_START_STOP_Get();
-            buttonRespond(&button_S2_data, &mcApp_motorStartToggle);
-            mcApp_SpeedRamp();
+            if(overCurrentFaultActive == 0)
+            {
+                button_S2_data.inputVal = BTN_START_STOP_Get();
+                buttonRespond(&button_S2_data, &mcApp_motorStartToggle);
+                mcApp_SpeedRamp();
+            }
+            else
+            {
+                overCurrentFaultResetDelayCounter++;
+                //Clear the Over Current Flag after a delay defined by OVERCURRENT_RESET_DELAY_SEC
+                if(overCurrentFaultResetDelayCounter >= OVERCURRENT_RESET_DELAY_COUNT)
+                {
+                    overCurrentFaultResetDelayCounter = 0;
+                    overCurrentFaultActive = 0; 
+                    
+                }
+            }
             delay_10ms.count = 0;
         }
         else

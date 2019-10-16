@@ -48,6 +48,7 @@
 #define     PWM_FREQ                                            20000           // PWM Frequency in Hz
 #define     DELAY_MS                                            (float)10  // Delay in milliseconds after which Speed Ramp loop is executed
 #define     SW_DEBOUNCE_DLY_MS                                  (float)500  // Switch debounce delay in mS
+#define     OVERCURRENT_RESET_DELAY_SEC                              3          // Time delay in seconds after which the motor can be started after an overcurrent fault
 
 #undef LONG_HURST
 #define SMALL_HURST
@@ -272,9 +273,6 @@
 
 
 
-#define OVERCURRENT_RESET_DELAY_SEC     3
-#define OVERCURRENT_RESET_DELAY_COUNT  (uint32_t) (OVERCURRENT_RESET_DELAY_SEC*100)  // Delay coun value calculated based 10mS unit.
-
 
 // <editor-fold defaultstate="collapsed" desc=" Derived Macros from Motor Control Board Specifications, Motor Specifications and Motor Dyanmics">
 
@@ -340,7 +338,7 @@
 
 #define     D_CURRENT_REF_STEP                  (float)(ALIGN_D_CURRENT_REF/(D_CURRENT_REF_FALL_TIME_SEC*PWM_FREQ))
 #define     REGEN_BRAKE_CURRENT_STEP            (float)(REGEN_BRAKE_CURRENT_REF/(REGEN_BRAKE_CURRENT_RAMP_TIME_SEC*PWM_FREQ))
-
+#define     OVERCURRENT_RESET_DELAY_COUNT       (uint32_t) (OVERCURRENT_RESET_DELAY_SEC*100)  // Delay coun value calculated based 10mS unit.
 
 #endif
  
