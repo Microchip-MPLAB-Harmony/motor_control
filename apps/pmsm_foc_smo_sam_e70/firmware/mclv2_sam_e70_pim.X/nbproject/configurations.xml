@@ -32,10 +32,10 @@
               <itemPath>../src/config/mclv2_sam_e70_pim/peripheral/uart/plib_uart0.h</itemPath>
             </logicalFolder>
           </logicalFolder>
+          <itemPath>../src/config/mclv2_sam_e70_pim/userparams.h</itemPath>
           <itemPath>../src/config/mclv2_sam_e70_pim/device_cache.h</itemPath>
           <itemPath>../src/config/mclv2_sam_e70_pim/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/mclv2_sam_e70_pim/definitions.h</itemPath>
-          <itemPath>../src/config/mclv2_sam_e70_pim/userparams.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f3" displayName="Motor Control" projectFiles="true">
