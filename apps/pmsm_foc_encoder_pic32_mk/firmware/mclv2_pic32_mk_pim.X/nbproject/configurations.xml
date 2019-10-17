@@ -135,7 +135,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.0.38"/>
+        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.1.53"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -212,6 +212,9 @@
         <property key="preprocessor-macros" value=""/>
         <property key="warning-level" value=""/>
       </C32-AS>
+      <C32-CO>
+        <property key="coverage-enable" value=""/>
+      </C32-CO>
       <C32-LD>
         <property key="additional-options-use-response-files" value="false"/>
         <property key="additional-options-write-sla" value="false"/>
