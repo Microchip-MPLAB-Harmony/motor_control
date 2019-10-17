@@ -51,7 +51,7 @@ void static UART0_ErrorClear( void )
 {
     uint8_t dummyData = 0u;
 
-    UART0_REGS->UART_CR|= UART_CR_RSTSTA_Msk;
+    UART0_REGS->UART_CR = UART_CR_RSTSTA_Msk;
 
     /* Flush existing error bytes from the RX FIFO */
     while( UART_SR_RXRDY_Msk == (UART0_REGS->UART_SR& UART_SR_RXRDY_Msk) )
@@ -61,8 +61,6 @@ void static UART0_ErrorClear( void )
 
     /* Ignore the warning */
     (void)dummyData;
-
-    return;
 }
 
 void UART0_Initialize( void )
@@ -78,8 +76,6 @@ void UART0_Initialize( void )
 
     /* Configure UART0 Baud Rate */
     UART0_REGS->UART_BRGR = UART_BRGR_CD(81);
-
-    return;
 }
 
 UART_ERROR UART0_ErrorGet( void )
@@ -115,15 +111,19 @@ bool UART0_SerialSetup( UART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
         /* Calculate BRG value */
         brgVal = srcClkFreq / (16 * baud);
 
-        /* Configure UART0 mode */
-        uartMode = UART0_REGS->UART_MR;
-        uartMode &= ~UART_MR_PAR_Msk;
-        UART0_REGS->UART_MR = uartMode | setup->parity ;
+        /* If the target baud rate is acheivable using this clock */
+        if (brgVal <= 65535)
+        {
+            /* Configure UART0 mode */
+            uartMode = UART0_REGS->UART_MR;
+            uartMode &= ~UART_MR_PAR_Msk;
+            UART0_REGS->UART_MR = uartMode | setup->parity ;
 
-        /* Configure UART0 Baud Rate */
-        UART0_REGS->UART_BRGR = UART_BRGR_CD(brgVal);
+            /* Configure UART0 Baud Rate */
+            UART0_REGS->UART_BRGR = UART_BRGR_CD(brgVal);
 
-        status = true;
+            status = true;
+        }
     }
 
     return status;
@@ -155,7 +155,7 @@ bool UART0_Read( void *buffer, const size_t size )
 
             if(UART_SR_RXRDY_Msk == (UART0_REGS->UART_SR & UART_SR_RXRDY_Msk))
             {
-                *lBuffer++ = (UART0_REGS->UART_RHR& UART_RHR_RXCHR_Msk);
+                *lBuffer++ = (UART0_REGS->UART_RHR & UART_RHR_RXCHR_Msk);
                 processedSize++;
             }
         }

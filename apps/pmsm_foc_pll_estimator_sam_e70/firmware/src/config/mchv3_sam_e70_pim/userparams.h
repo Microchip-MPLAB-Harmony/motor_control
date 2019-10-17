@@ -84,8 +84,8 @@
 
 /* Motor Start-up configuration parameters */
 #define LOCK_TIME_IN_SEC                (2)   /* Startup - Rotor alignment time */
-#define OPEN_LOOP_END_SPEED_RPM         (RATED_SPEED_RPM*0.20) /* Startup - Control loop switches to close loop at this speed */
-#define OPEN_LOOP_RAMP_TIME_IN_SEC      (2)   /* Startup - Time to reach OPEN_LOOP_END_SPEED_RPM in seconds */
+#define OPEN_LOOP_END_SPEED_RPM         (RATED_SPEED_RPM*0.25) /* Startup - Control loop switches to close loop at this speed */
+#define OPEN_LOOP_RAMP_TIME_IN_SEC      (5)   /* Startup - Time to reach OPEN_LOOP_END_SPEED_RPM in seconds */
 #define Q_CURRENT_REF_OPENLOOP          ((float)0.2) /* Startup - Motor start to ramp up in current control mode */
 
 /******************************************************************************/
@@ -105,7 +105,7 @@
 
 /******* Velocity Control Loop Coefficients **********************************/
 #define     SPEEDCNTR_PTERM            ((float)0.004)
-#define     SPEEDCNTR_ITERM            ((float)0.0005)
+#define     SPEEDCNTR_ITERM            ((float)0.00005)
 #define     SPEEDCNTR_CTERM            ((float)(0.999))
 #define     SPEEDCNTR_OUTMAX           ((float)MAX_MOTOR_CURRENT)
 #endif

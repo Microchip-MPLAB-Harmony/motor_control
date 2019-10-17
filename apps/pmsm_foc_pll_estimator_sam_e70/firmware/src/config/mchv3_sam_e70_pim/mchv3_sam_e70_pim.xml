@@ -2711,17 +2711,17 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="afec0" x="30" y="60"/>
+        <ElementPosition dnOrder="0" id="afec0" x="19" y="162"/>
         <ElementPosition dnOrder="1" id="cmsis" x="340" y="20"/>
         <ElementPosition dnOrder="2" id="core" x="240" y="20"/>
         <ElementPosition dnOrder="3" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="4" id="efc" x="30" y="120"/>
-        <ElementPosition dnOrder="5" id="pwm0" x="338" y="59"/>
-        <ElementPosition dnOrder="6" id="uart0" x="190" y="60"/>
+        <ElementPosition dnOrder="4" id="efc" x="19" y="59"/>
+        <ElementPosition dnOrder="5" id="pwm0" x="164" y="162"/>
+        <ElementPosition dnOrder="6" id="uart0" x="19" y="270"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
