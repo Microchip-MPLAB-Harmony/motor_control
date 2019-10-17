@@ -60,7 +60,6 @@
 /***********************************************************************************************/
 #define OPEN_LOOP_FUNCTIONING                            (0U)  /* If enabled - Keep running in open loop */
 #define TORQUE_MODE                                      (0U)  /* If enabled - torque control */
-#define FIELD_WEAKENING                                  (1U)  /* If enabled - Field weakening */
 #define PFC_ENABLE                                       (1U)  /* If enabled - Power Factor Correction */
 
 /***********************************************************************************************/
@@ -90,10 +89,6 @@
 #define OPEN_LOOP_RAMP_TIME_IN_SEC      (2)   /* Startup - Time to reach OPEN_LOOP_END_SPEED_RPM in seconds */
 #define Q_CURRENT_REF_OPENLOOP          ((float)0.2) /* Startup - Motor start to ramp up in current control mode */
 
-/* Field weakening - Limit for -ve Idref */
-#if(FIELD_WEAKENING == 1U)
-#define MAX_FW_NEGATIVE_ID_REF              (float)(-1.0)
-#endif
 
 /******************************************************************************/
 /* PI controllers tuning values - */
@@ -112,7 +107,7 @@
 
 /******* Velocity Control Loop Coefficients **********************************/
 #define     SPEEDCNTR_PTERM            ((float)0.004)
-#define     SPEEDCNTR_ITERM            ((float)0.0005)
+#define     SPEEDCNTR_ITERM            ((float)0.00005)
 #define     SPEEDCNTR_CTERM            ((float)(0.999))
 #define     SPEEDCNTR_OUTMAX           ((float)MAX_MOTOR_CURRENT)
 #endif
@@ -258,12 +253,8 @@
 #define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_PER_RPM_MECH / (float)(2.0 * M_PI/60.0))
 #define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH / NUM_POLE_PAIRS)
 
-/* Field weakening */
-#if(FIELD_WEAKENING == 1U)
-#define MAX_SPEED_RAD_PER_SEC_ELEC          (float)(((MAX_SPEED_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)
-#else
+
 #define MAX_SPEED_RAD_PER_SEC_ELEC          (float)(((RATED_SPEED_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)
-#endif
 
 #define MAX_STATOR_VOLT_SQUARE              (float)(0.98 * 0.98)
 #define POT_ADC_COUNT_FW_SPEED_RATIO        (float)(MAX_SPEED_RAD_PER_SEC_ELEC/MAX_ADC_COUNT)

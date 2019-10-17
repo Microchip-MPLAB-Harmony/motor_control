@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-04-01T08:48:30Z */
+/* file generated from device description version 2019-07-24T15:04:36Z */
 #ifndef _SAME70_USART_COMPONENT_H_
 #define _SAME70_USART_COMPONENT_H_
 
@@ -29,30 +29,30 @@
 /* ************************************************************************** */
 
 /* -------- US_CR : (USART Offset: 0x00) ( /W 32) Control Register -------- */
-#define US_CR_RSTRX_Pos                       _U_(2)                                               /**< (US_CR) Reset Receiver Position */
-#define US_CR_RSTRX_Msk                       (_U_(0x1) << US_CR_RSTRX_Pos)                        /**< (US_CR) Reset Receiver Mask */
-#define US_CR_RSTRX(value)                    (US_CR_RSTRX_Msk & ((value) << US_CR_RSTRX_Pos))    
-#define US_CR_RSTTX_Pos                       _U_(3)                                               /**< (US_CR) Reset Transmitter Position */
-#define US_CR_RSTTX_Msk                       (_U_(0x1) << US_CR_RSTTX_Pos)                        /**< (US_CR) Reset Transmitter Mask */
-#define US_CR_RSTTX(value)                    (US_CR_RSTTX_Msk & ((value) << US_CR_RSTTX_Pos))    
-#define US_CR_RXEN_Pos                        _U_(4)                                               /**< (US_CR) Receiver Enable Position */
-#define US_CR_RXEN_Msk                        (_U_(0x1) << US_CR_RXEN_Pos)                         /**< (US_CR) Receiver Enable Mask */
-#define US_CR_RXEN(value)                     (US_CR_RXEN_Msk & ((value) << US_CR_RXEN_Pos))      
-#define US_CR_RXDIS_Pos                       _U_(5)                                               /**< (US_CR) Receiver Disable Position */
-#define US_CR_RXDIS_Msk                       (_U_(0x1) << US_CR_RXDIS_Pos)                        /**< (US_CR) Receiver Disable Mask */
-#define US_CR_RXDIS(value)                    (US_CR_RXDIS_Msk & ((value) << US_CR_RXDIS_Pos))    
-#define US_CR_TXEN_Pos                        _U_(6)                                               /**< (US_CR) Transmitter Enable Position */
-#define US_CR_TXEN_Msk                        (_U_(0x1) << US_CR_TXEN_Pos)                         /**< (US_CR) Transmitter Enable Mask */
-#define US_CR_TXEN(value)                     (US_CR_TXEN_Msk & ((value) << US_CR_TXEN_Pos))      
-#define US_CR_TXDIS_Pos                       _U_(7)                                               /**< (US_CR) Transmitter Disable Position */
-#define US_CR_TXDIS_Msk                       (_U_(0x1) << US_CR_TXDIS_Pos)                        /**< (US_CR) Transmitter Disable Mask */
-#define US_CR_TXDIS(value)                    (US_CR_TXDIS_Msk & ((value) << US_CR_TXDIS_Pos))    
-#define US_CR_RSTSTA_Pos                      _U_(8)                                               /**< (US_CR) Reset Status Bits Position */
-#define US_CR_RSTSTA_Msk                      (_U_(0x1) << US_CR_RSTSTA_Pos)                       /**< (US_CR) Reset Status Bits Mask */
-#define US_CR_RSTSTA(value)                   (US_CR_RSTSTA_Msk & ((value) << US_CR_RSTSTA_Pos))  
-#define US_CR_Msk                             _U_(0x000001FC)                                      /**< (US_CR) Register Mask  */
+#define US_CR_Msk                             _U_(0x00000000)                                      /**< (US_CR) Register Mask  */
 
 /* USART mode */
+#define US_CR_USART_RSTRX_Pos                 _U_(2)                                               /**< (US_CR) Reset Receiver Position */
+#define US_CR_USART_RSTRX_Msk                 (_U_(0x1) << US_CR_USART_RSTRX_Pos)                  /**< (US_CR) Reset Receiver Mask */
+#define US_CR_USART_RSTRX(value)              (US_CR_USART_RSTRX_Msk & ((value) << US_CR_USART_RSTRX_Pos))
+#define US_CR_USART_RSTTX_Pos                 _U_(3)                                               /**< (US_CR) Reset Transmitter Position */
+#define US_CR_USART_RSTTX_Msk                 (_U_(0x1) << US_CR_USART_RSTTX_Pos)                  /**< (US_CR) Reset Transmitter Mask */
+#define US_CR_USART_RSTTX(value)              (US_CR_USART_RSTTX_Msk & ((value) << US_CR_USART_RSTTX_Pos))
+#define US_CR_USART_RXEN_Pos                  _U_(4)                                               /**< (US_CR) Receiver Enable Position */
+#define US_CR_USART_RXEN_Msk                  (_U_(0x1) << US_CR_USART_RXEN_Pos)                   /**< (US_CR) Receiver Enable Mask */
+#define US_CR_USART_RXEN(value)               (US_CR_USART_RXEN_Msk & ((value) << US_CR_USART_RXEN_Pos))
+#define US_CR_USART_RXDIS_Pos                 _U_(5)                                               /**< (US_CR) Receiver Disable Position */
+#define US_CR_USART_RXDIS_Msk                 (_U_(0x1) << US_CR_USART_RXDIS_Pos)                  /**< (US_CR) Receiver Disable Mask */
+#define US_CR_USART_RXDIS(value)              (US_CR_USART_RXDIS_Msk & ((value) << US_CR_USART_RXDIS_Pos))
+#define US_CR_USART_TXEN_Pos                  _U_(6)                                               /**< (US_CR) Transmitter Enable Position */
+#define US_CR_USART_TXEN_Msk                  (_U_(0x1) << US_CR_USART_TXEN_Pos)                   /**< (US_CR) Transmitter Enable Mask */
+#define US_CR_USART_TXEN(value)               (US_CR_USART_TXEN_Msk & ((value) << US_CR_USART_TXEN_Pos))
+#define US_CR_USART_TXDIS_Pos                 _U_(7)                                               /**< (US_CR) Transmitter Disable Position */
+#define US_CR_USART_TXDIS_Msk                 (_U_(0x1) << US_CR_USART_TXDIS_Pos)                  /**< (US_CR) Transmitter Disable Mask */
+#define US_CR_USART_TXDIS(value)              (US_CR_USART_TXDIS_Msk & ((value) << US_CR_USART_TXDIS_Pos))
+#define US_CR_USART_RSTSTA_Pos                _U_(8)                                               /**< (US_CR) Reset Status Bits Position */
+#define US_CR_USART_RSTSTA_Msk                (_U_(0x1) << US_CR_USART_RSTSTA_Pos)                 /**< (US_CR) Reset Status Bits Mask */
+#define US_CR_USART_RSTSTA(value)             (US_CR_USART_RSTSTA_Msk & ((value) << US_CR_USART_RSTSTA_Pos))
 #define US_CR_USART_STTBRK_Pos                _U_(9)                                               /**< (US_CR) Start Break Position */
 #define US_CR_USART_STTBRK_Msk                (_U_(0x1) << US_CR_USART_STTBRK_Pos)                 /**< (US_CR) Start Break Mask */
 #define US_CR_USART_STTBRK(value)             (US_CR_USART_STTBRK_Msk & ((value) << US_CR_USART_STTBRK_Pos))
@@ -86,28 +86,73 @@
 #define US_CR_USART_RTSDIS_Pos                _U_(19)                                              /**< (US_CR) Request to Send Disable Position */
 #define US_CR_USART_RTSDIS_Msk                (_U_(0x1) << US_CR_USART_RTSDIS_Pos)                 /**< (US_CR) Request to Send Disable Mask */
 #define US_CR_USART_RTSDIS(value)             (US_CR_USART_RTSDIS_Msk & ((value) << US_CR_USART_RTSDIS_Pos))
-#define US_CR_USART_Msk                       _U_(0x000FFE00)                                       /**< (US_CR_USART) Register Mask  */
+#define US_CR_USART_Msk                       _U_(0x000FFFFC)                                       /**< (US_CR_USART) Register Mask  */
 
 /* SPI mode */
+#define US_CR_SPI_RSTRX_Pos                   _U_(2)                                               /**< (US_CR) Reset Receiver Position */
+#define US_CR_SPI_RSTRX_Msk                   (_U_(0x1) << US_CR_SPI_RSTRX_Pos)                    /**< (US_CR) Reset Receiver Mask */
+#define US_CR_SPI_RSTRX(value)                (US_CR_SPI_RSTRX_Msk & ((value) << US_CR_SPI_RSTRX_Pos))
+#define US_CR_SPI_RSTTX_Pos                   _U_(3)                                               /**< (US_CR) Reset Transmitter Position */
+#define US_CR_SPI_RSTTX_Msk                   (_U_(0x1) << US_CR_SPI_RSTTX_Pos)                    /**< (US_CR) Reset Transmitter Mask */
+#define US_CR_SPI_RSTTX(value)                (US_CR_SPI_RSTTX_Msk & ((value) << US_CR_SPI_RSTTX_Pos))
+#define US_CR_SPI_RXEN_Pos                    _U_(4)                                               /**< (US_CR) Receiver Enable Position */
+#define US_CR_SPI_RXEN_Msk                    (_U_(0x1) << US_CR_SPI_RXEN_Pos)                     /**< (US_CR) Receiver Enable Mask */
+#define US_CR_SPI_RXEN(value)                 (US_CR_SPI_RXEN_Msk & ((value) << US_CR_SPI_RXEN_Pos))
+#define US_CR_SPI_RXDIS_Pos                   _U_(5)                                               /**< (US_CR) Receiver Disable Position */
+#define US_CR_SPI_RXDIS_Msk                   (_U_(0x1) << US_CR_SPI_RXDIS_Pos)                    /**< (US_CR) Receiver Disable Mask */
+#define US_CR_SPI_RXDIS(value)                (US_CR_SPI_RXDIS_Msk & ((value) << US_CR_SPI_RXDIS_Pos))
+#define US_CR_SPI_TXEN_Pos                    _U_(6)                                               /**< (US_CR) Transmitter Enable Position */
+#define US_CR_SPI_TXEN_Msk                    (_U_(0x1) << US_CR_SPI_TXEN_Pos)                     /**< (US_CR) Transmitter Enable Mask */
+#define US_CR_SPI_TXEN(value)                 (US_CR_SPI_TXEN_Msk & ((value) << US_CR_SPI_TXEN_Pos))
+#define US_CR_SPI_TXDIS_Pos                   _U_(7)                                               /**< (US_CR) Transmitter Disable Position */
+#define US_CR_SPI_TXDIS_Msk                   (_U_(0x1) << US_CR_SPI_TXDIS_Pos)                    /**< (US_CR) Transmitter Disable Mask */
+#define US_CR_SPI_TXDIS(value)                (US_CR_SPI_TXDIS_Msk & ((value) << US_CR_SPI_TXDIS_Pos))
+#define US_CR_SPI_RSTSTA_Pos                  _U_(8)                                               /**< (US_CR) Reset Status Bits Position */
+#define US_CR_SPI_RSTSTA_Msk                  (_U_(0x1) << US_CR_SPI_RSTSTA_Pos)                   /**< (US_CR) Reset Status Bits Mask */
+#define US_CR_SPI_RSTSTA(value)               (US_CR_SPI_RSTSTA_Msk & ((value) << US_CR_SPI_RSTSTA_Pos))
 #define US_CR_SPI_FCS_Pos                     _U_(18)                                              /**< (US_CR) Force SPI Chip Select Position */
 #define US_CR_SPI_FCS_Msk                     (_U_(0x1) << US_CR_SPI_FCS_Pos)                      /**< (US_CR) Force SPI Chip Select Mask */
 #define US_CR_SPI_FCS(value)                  (US_CR_SPI_FCS_Msk & ((value) << US_CR_SPI_FCS_Pos))
 #define US_CR_SPI_RCS_Pos                     _U_(19)                                              /**< (US_CR) Release SPI Chip Select Position */
 #define US_CR_SPI_RCS_Msk                     (_U_(0x1) << US_CR_SPI_RCS_Pos)                      /**< (US_CR) Release SPI Chip Select Mask */
 #define US_CR_SPI_RCS(value)                  (US_CR_SPI_RCS_Msk & ((value) << US_CR_SPI_RCS_Pos))
-#define US_CR_SPI_Msk                         _U_(0x000C0000)                                       /**< (US_CR_SPI) Register Mask  */
+#define US_CR_SPI_Msk                         _U_(0x000C01FC)                                       /**< (US_CR_SPI) Register Mask  */
 
 /* LIN mode */
+#define US_CR_LIN_RSTRX_Pos                   _U_(2)                                               /**< (US_CR) Reset Receiver Position */
+#define US_CR_LIN_RSTRX_Msk                   (_U_(0x1) << US_CR_LIN_RSTRX_Pos)                    /**< (US_CR) Reset Receiver Mask */
+#define US_CR_LIN_RSTRX(value)                (US_CR_LIN_RSTRX_Msk & ((value) << US_CR_LIN_RSTRX_Pos))
+#define US_CR_LIN_RSTTX_Pos                   _U_(3)                                               /**< (US_CR) Reset Transmitter Position */
+#define US_CR_LIN_RSTTX_Msk                   (_U_(0x1) << US_CR_LIN_RSTTX_Pos)                    /**< (US_CR) Reset Transmitter Mask */
+#define US_CR_LIN_RSTTX(value)                (US_CR_LIN_RSTTX_Msk & ((value) << US_CR_LIN_RSTTX_Pos))
+#define US_CR_LIN_RXEN_Pos                    _U_(4)                                               /**< (US_CR) Receiver Enable Position */
+#define US_CR_LIN_RXEN_Msk                    (_U_(0x1) << US_CR_LIN_RXEN_Pos)                     /**< (US_CR) Receiver Enable Mask */
+#define US_CR_LIN_RXEN(value)                 (US_CR_LIN_RXEN_Msk & ((value) << US_CR_LIN_RXEN_Pos))
+#define US_CR_LIN_RXDIS_Pos                   _U_(5)                                               /**< (US_CR) Receiver Disable Position */
+#define US_CR_LIN_RXDIS_Msk                   (_U_(0x1) << US_CR_LIN_RXDIS_Pos)                    /**< (US_CR) Receiver Disable Mask */
+#define US_CR_LIN_RXDIS(value)                (US_CR_LIN_RXDIS_Msk & ((value) << US_CR_LIN_RXDIS_Pos))
+#define US_CR_LIN_TXEN_Pos                    _U_(6)                                               /**< (US_CR) Transmitter Enable Position */
+#define US_CR_LIN_TXEN_Msk                    (_U_(0x1) << US_CR_LIN_TXEN_Pos)                     /**< (US_CR) Transmitter Enable Mask */
+#define US_CR_LIN_TXEN(value)                 (US_CR_LIN_TXEN_Msk & ((value) << US_CR_LIN_TXEN_Pos))
+#define US_CR_LIN_TXDIS_Pos                   _U_(7)                                               /**< (US_CR) Transmitter Disable Position */
+#define US_CR_LIN_TXDIS_Msk                   (_U_(0x1) << US_CR_LIN_TXDIS_Pos)                    /**< (US_CR) Transmitter Disable Mask */
+#define US_CR_LIN_TXDIS(value)                (US_CR_LIN_TXDIS_Msk & ((value) << US_CR_LIN_TXDIS_Pos))
+#define US_CR_LIN_RSTSTA_Pos                  _U_(8)                                               /**< (US_CR) Reset Status Bits Position */
+#define US_CR_LIN_RSTSTA_Msk                  (_U_(0x1) << US_CR_LIN_RSTSTA_Pos)                   /**< (US_CR) Reset Status Bits Mask */
+#define US_CR_LIN_RSTSTA(value)               (US_CR_LIN_RSTSTA_Msk & ((value) << US_CR_LIN_RSTSTA_Pos))
 #define US_CR_LIN_LINABT_Pos                  _U_(20)                                              /**< (US_CR) Abort LIN Transmission Position */
 #define US_CR_LIN_LINABT_Msk                  (_U_(0x1) << US_CR_LIN_LINABT_Pos)                   /**< (US_CR) Abort LIN Transmission Mask */
 #define US_CR_LIN_LINABT(value)               (US_CR_LIN_LINABT_Msk & ((value) << US_CR_LIN_LINABT_Pos))
 #define US_CR_LIN_LINWKUP_Pos                 _U_(21)                                              /**< (US_CR) Send LIN Wakeup Signal Position */
 #define US_CR_LIN_LINWKUP_Msk                 (_U_(0x1) << US_CR_LIN_LINWKUP_Pos)                  /**< (US_CR) Send LIN Wakeup Signal Mask */
 #define US_CR_LIN_LINWKUP(value)              (US_CR_LIN_LINWKUP_Msk & ((value) << US_CR_LIN_LINWKUP_Pos))
-#define US_CR_LIN_Msk                         _U_(0x00300000)                                       /**< (US_CR_LIN) Register Mask  */
+#define US_CR_LIN_Msk                         _U_(0x003001FC)                                       /**< (US_CR_LIN) Register Mask  */
 
 
 /* -------- US_MR : (USART Offset: 0x04) (R/W 32) Mode Register -------- */
+#define US_MR_Msk                             _U_(0x00000000)                                      /**< (US_MR) Register Mask  */
+
+/* USART mode */
 #define US_MR_USART_MODE_Pos                  _U_(0)                                               /**< (US_MR) USART Mode of Operation Position */
 #define US_MR_USART_MODE_Msk                  (_U_(0xF) << US_MR_USART_MODE_Pos)                   /**< (US_MR) USART Mode of Operation Mask */
 #define US_MR_USART_MODE(value)               (US_MR_USART_MODE_Msk & ((value) << US_MR_USART_MODE_Pos))
@@ -135,34 +180,28 @@
 #define US_MR_USART_MODE_LIN_SLAVE            (US_MR_USART_MODE_LIN_SLAVE_Val << US_MR_USART_MODE_Pos) /**< (US_MR) LIN Slave mode Position  */
 #define US_MR_USART_MODE_SPI_MASTER           (US_MR_USART_MODE_SPI_MASTER_Val << US_MR_USART_MODE_Pos) /**< (US_MR) SPI Master mode (CLKO must be written to 1 and USCLKS = 0, 1 or 2) Position  */
 #define US_MR_USART_MODE_SPI_SLAVE            (US_MR_USART_MODE_SPI_SLAVE_Val << US_MR_USART_MODE_Pos) /**< (US_MR) SPI Slave mode Position  */
-#define US_MR_USCLKS_Pos                      _U_(4)                                               /**< (US_MR) Clock Selection Position */
-#define US_MR_USCLKS_Msk                      (_U_(0x3) << US_MR_USCLKS_Pos)                       /**< (US_MR) Clock Selection Mask */
-#define US_MR_USCLKS(value)                   (US_MR_USCLKS_Msk & ((value) << US_MR_USCLKS_Pos))  
-#define   US_MR_USCLKS_MCK_Val                _U_(0x0)                                             /**< (US_MR) Peripheral clock is selected  */
-#define   US_MR_USCLKS_DIV_Val                _U_(0x1)                                             /**< (US_MR) Peripheral clock divided (DIV = 8) is selected  */
-#define   US_MR_USCLKS_PCK_Val                _U_(0x2)                                             /**< (US_MR) PMC programmable clock (PCK) is selected. If the SCK pin is driven (CLKO = 1), the CD field must be greater than 1.  */
-#define   US_MR_USCLKS_SCK_Val                _U_(0x3)                                             /**< (US_MR) Serial clock (SCK) is selected  */
-#define US_MR_USCLKS_MCK                      (US_MR_USCLKS_MCK_Val << US_MR_USCLKS_Pos)           /**< (US_MR) Peripheral clock is selected Position  */
-#define US_MR_USCLKS_DIV                      (US_MR_USCLKS_DIV_Val << US_MR_USCLKS_Pos)           /**< (US_MR) Peripheral clock divided (DIV = 8) is selected Position  */
-#define US_MR_USCLKS_PCK                      (US_MR_USCLKS_PCK_Val << US_MR_USCLKS_Pos)           /**< (US_MR) PMC programmable clock (PCK) is selected. If the SCK pin is driven (CLKO = 1), the CD field must be greater than 1. Position  */
-#define US_MR_USCLKS_SCK                      (US_MR_USCLKS_SCK_Val << US_MR_USCLKS_Pos)           /**< (US_MR) Serial clock (SCK) is selected Position  */
-#define US_MR_CHRL_Pos                        _U_(6)                                               /**< (US_MR) Character Length Position */
-#define US_MR_CHRL_Msk                        (_U_(0x3) << US_MR_CHRL_Pos)                         /**< (US_MR) Character Length Mask */
-#define US_MR_CHRL(value)                     (US_MR_CHRL_Msk & ((value) << US_MR_CHRL_Pos))      
-#define   US_MR_CHRL_5_BIT_Val                _U_(0x0)                                             /**< (US_MR) Character length is 5 bits  */
-#define   US_MR_CHRL_6_BIT_Val                _U_(0x1)                                             /**< (US_MR) Character length is 6 bits  */
-#define   US_MR_CHRL_7_BIT_Val                _U_(0x2)                                             /**< (US_MR) Character length is 7 bits  */
-#define   US_MR_CHRL_8_BIT_Val                _U_(0x3)                                             /**< (US_MR) Character length is 8 bits  */
-#define US_MR_CHRL_5_BIT                      (US_MR_CHRL_5_BIT_Val << US_MR_CHRL_Pos)             /**< (US_MR) Character length is 5 bits Position  */
-#define US_MR_CHRL_6_BIT                      (US_MR_CHRL_6_BIT_Val << US_MR_CHRL_Pos)             /**< (US_MR) Character length is 6 bits Position  */
-#define US_MR_CHRL_7_BIT                      (US_MR_CHRL_7_BIT_Val << US_MR_CHRL_Pos)             /**< (US_MR) Character length is 7 bits Position  */
-#define US_MR_CHRL_8_BIT                      (US_MR_CHRL_8_BIT_Val << US_MR_CHRL_Pos)             /**< (US_MR) Character length is 8 bits Position  */
-#define US_MR_CLKO_Pos                        _U_(18)                                              /**< (US_MR) Clock Output Select Position */
-#define US_MR_CLKO_Msk                        (_U_(0x1) << US_MR_CLKO_Pos)                         /**< (US_MR) Clock Output Select Mask */
-#define US_MR_CLKO(value)                     (US_MR_CLKO_Msk & ((value) << US_MR_CLKO_Pos))      
-#define US_MR_Msk                             _U_(0x000400FF)                                      /**< (US_MR) Register Mask  */
-
-/* USART mode */
+#define US_MR_USART_USCLKS_Pos                _U_(4)                                               /**< (US_MR) Clock Selection Position */
+#define US_MR_USART_USCLKS_Msk                (_U_(0x3) << US_MR_USART_USCLKS_Pos)                 /**< (US_MR) Clock Selection Mask */
+#define US_MR_USART_USCLKS(value)             (US_MR_USART_USCLKS_Msk & ((value) << US_MR_USART_USCLKS_Pos))
+#define   US_MR_USART_USCLKS_MCK_Val          _U_(0x0)                                             /**< (US_MR) Peripheral clock is selected  */
+#define   US_MR_USART_USCLKS_DIV_Val          _U_(0x1)                                             /**< (US_MR) Peripheral clock divided (DIV = 8) is selected  */
+#define   US_MR_USART_USCLKS_PCK_Val          _U_(0x2)                                             /**< (US_MR) PMC programmable clock (PCK) is selected. If the SCK pin is driven (CLKO = 1), the CD field must be greater than 1.  */
+#define   US_MR_USART_USCLKS_SCK_Val          _U_(0x3)                                             /**< (US_MR) Serial clock (SCK) is selected  */
+#define US_MR_USART_USCLKS_MCK                (US_MR_USART_USCLKS_MCK_Val << US_MR_USART_USCLKS_Pos) /**< (US_MR) Peripheral clock is selected Position  */
+#define US_MR_USART_USCLKS_DIV                (US_MR_USART_USCLKS_DIV_Val << US_MR_USART_USCLKS_Pos) /**< (US_MR) Peripheral clock divided (DIV = 8) is selected Position  */
+#define US_MR_USART_USCLKS_PCK                (US_MR_USART_USCLKS_PCK_Val << US_MR_USART_USCLKS_Pos) /**< (US_MR) PMC programmable clock (PCK) is selected. If the SCK pin is driven (CLKO = 1), the CD field must be greater than 1. Position  */
+#define US_MR_USART_USCLKS_SCK                (US_MR_USART_USCLKS_SCK_Val << US_MR_USART_USCLKS_Pos) /**< (US_MR) Serial clock (SCK) is selected Position  */
+#define US_MR_USART_CHRL_Pos                  _U_(6)                                               /**< (US_MR) Character Length Position */
+#define US_MR_USART_CHRL_Msk                  (_U_(0x3) << US_MR_USART_CHRL_Pos)                   /**< (US_MR) Character Length Mask */
+#define US_MR_USART_CHRL(value)               (US_MR_USART_CHRL_Msk & ((value) << US_MR_USART_CHRL_Pos))
+#define   US_MR_USART_CHRL_5_BIT_Val          _U_(0x0)                                             /**< (US_MR) Character length is 5 bits  */
+#define   US_MR_USART_CHRL_6_BIT_Val          _U_(0x1)                                             /**< (US_MR) Character length is 6 bits  */
+#define   US_MR_USART_CHRL_7_BIT_Val          _U_(0x2)                                             /**< (US_MR) Character length is 7 bits  */
+#define   US_MR_USART_CHRL_8_BIT_Val          _U_(0x3)                                             /**< (US_MR) Character length is 8 bits  */
+#define US_MR_USART_CHRL_5_BIT                (US_MR_USART_CHRL_5_BIT_Val << US_MR_USART_CHRL_Pos) /**< (US_MR) Character length is 5 bits Position  */
+#define US_MR_USART_CHRL_6_BIT                (US_MR_USART_CHRL_6_BIT_Val << US_MR_USART_CHRL_Pos) /**< (US_MR) Character length is 6 bits Position  */
+#define US_MR_USART_CHRL_7_BIT                (US_MR_USART_CHRL_7_BIT_Val << US_MR_USART_CHRL_Pos) /**< (US_MR) Character length is 7 bits Position  */
+#define US_MR_USART_CHRL_8_BIT                (US_MR_USART_CHRL_8_BIT_Val << US_MR_USART_CHRL_Pos) /**< (US_MR) Character length is 8 bits Position  */
 #define US_MR_USART_SYNC_Pos                  _U_(8)                                               /**< (US_MR) Synchronous Mode Select Position */
 #define US_MR_USART_SYNC_Msk                  (_U_(0x1) << US_MR_USART_SYNC_Pos)                   /**< (US_MR) Synchronous Mode Select Mask */
 #define US_MR_USART_SYNC(value)               (US_MR_USART_SYNC_Msk & ((value) << US_MR_USART_SYNC_Pos))
@@ -207,6 +246,9 @@
 #define US_MR_USART_MODE9_Pos                 _U_(17)                                              /**< (US_MR) 9-bit Character Length Position */
 #define US_MR_USART_MODE9_Msk                 (_U_(0x1) << US_MR_USART_MODE9_Pos)                  /**< (US_MR) 9-bit Character Length Mask */
 #define US_MR_USART_MODE9(value)              (US_MR_USART_MODE9_Msk & ((value) << US_MR_USART_MODE9_Pos))
+#define US_MR_USART_CLKO_Pos                  _U_(18)                                              /**< (US_MR) Clock Output Select Position */
+#define US_MR_USART_CLKO_Msk                  (_U_(0x1) << US_MR_USART_CLKO_Pos)                   /**< (US_MR) Clock Output Select Mask */
+#define US_MR_USART_CLKO(value)               (US_MR_USART_CLKO_Msk & ((value) << US_MR_USART_CLKO_Pos))
 #define US_MR_USART_OVER_Pos                  _U_(19)                                              /**< (US_MR) Oversampling Mode Position */
 #define US_MR_USART_OVER_Msk                  (_U_(0x1) << US_MR_USART_OVER_Pos)                   /**< (US_MR) Oversampling Mode Mask */
 #define US_MR_USART_OVER(value)               (US_MR_USART_OVER_Msk & ((value) << US_MR_USART_OVER_Pos))
@@ -237,40 +279,101 @@
 #define US_MR_USART_ONEBIT_Pos                _U_(31)                                              /**< (US_MR) Start Frame Delimiter Selector Position */
 #define US_MR_USART_ONEBIT_Msk                (_U_(0x1) << US_MR_USART_ONEBIT_Pos)                 /**< (US_MR) Start Frame Delimiter Selector Mask */
 #define US_MR_USART_ONEBIT(value)             (US_MR_USART_ONEBIT_Msk & ((value) << US_MR_USART_ONEBIT_Pos))
-#define US_MR_USART_Msk                       _U_(0xF7FBFF00)                                       /**< (US_MR_USART) Register Mask  */
+#define US_MR_USART_Msk                       _U_(0xF7FFFFFF)                                       /**< (US_MR_USART) Register Mask  */
 
 /* SPI mode */
+#define US_MR_SPI_USART_MODE_Pos              _U_(0)                                               /**< (US_MR) USART Mode of Operation Position */
+#define US_MR_SPI_USART_MODE_Msk              (_U_(0xF) << US_MR_SPI_USART_MODE_Pos)               /**< (US_MR) USART Mode of Operation Mask */
+#define US_MR_SPI_USART_MODE(value)           (US_MR_SPI_USART_MODE_Msk & ((value) << US_MR_SPI_USART_MODE_Pos))
+#define   US_MR_SPI_USART_MODE_NORMAL_Val     _U_(0x0)                                             /**< (US_MR) Normal mode  */
+#define   US_MR_SPI_USART_MODE_RS485_Val      _U_(0x1)                                             /**< (US_MR) RS485  */
+#define   US_MR_SPI_USART_MODE_HW_HANDSHAKING_Val _U_(0x2)                                             /**< (US_MR) Hardware handshaking  */
+#define   US_MR_SPI_USART_MODE_MODEM_Val      _U_(0x3)                                             /**< (US_MR) Modem  */
+#define   US_MR_SPI_USART_MODE_IS07816_T_0_Val _U_(0x4)                                             /**< (US_MR) IS07816 Protocol: T = 0  */
+#define   US_MR_SPI_USART_MODE_IS07816_T_1_Val _U_(0x6)                                             /**< (US_MR) IS07816 Protocol: T = 1  */
+#define   US_MR_SPI_USART_MODE_IRDA_Val       _U_(0x8)                                             /**< (US_MR) IrDA  */
+#define   US_MR_SPI_USART_MODE_LON_Val        _U_(0x9)                                             /**< (US_MR) LON  */
+#define   US_MR_SPI_USART_MODE_LIN_MASTER_Val _U_(0xA)                                             /**< (US_MR) LIN Master mode  */
+#define   US_MR_SPI_USART_MODE_LIN_SLAVE_Val  _U_(0xB)                                             /**< (US_MR) LIN Slave mode  */
+#define   US_MR_SPI_USART_MODE_SPI_MASTER_Val _U_(0xE)                                             /**< (US_MR) SPI Master mode (CLKO must be written to 1 and USCLKS = 0, 1 or 2)  */
+#define   US_MR_SPI_USART_MODE_SPI_SLAVE_Val  _U_(0xF)                                             /**< (US_MR) SPI Slave mode  */
+#define US_MR_SPI_USART_MODE_NORMAL           (US_MR_SPI_USART_MODE_NORMAL_Val << US_MR_SPI_USART_MODE_Pos) /**< (US_MR) Normal mode Position  */
+#define US_MR_SPI_USART_MODE_RS485            (US_MR_SPI_USART_MODE_RS485_Val << US_MR_SPI_USART_MODE_Pos) /**< (US_MR) RS485 Position  */
+#define US_MR_SPI_USART_MODE_HW_HANDSHAKING   (US_MR_SPI_USART_MODE_HW_HANDSHAKING_Val << US_MR_SPI_USART_MODE_Pos) /**< (US_MR) Hardware handshaking Position  */
+#define US_MR_SPI_USART_MODE_MODEM            (US_MR_SPI_USART_MODE_MODEM_Val << US_MR_SPI_USART_MODE_Pos) /**< (US_MR) Modem Position  */
+#define US_MR_SPI_USART_MODE_IS07816_T_0      (US_MR_SPI_USART_MODE_IS07816_T_0_Val << US_MR_SPI_USART_MODE_Pos) /**< (US_MR) IS07816 Protocol: T = 0 Position  */
+#define US_MR_SPI_USART_MODE_IS07816_T_1      (US_MR_SPI_USART_MODE_IS07816_T_1_Val << US_MR_SPI_USART_MODE_Pos) /**< (US_MR) IS07816 Protocol: T = 1 Position  */
+#define US_MR_SPI_USART_MODE_IRDA             (US_MR_SPI_USART_MODE_IRDA_Val << US_MR_SPI_USART_MODE_Pos) /**< (US_MR) IrDA Position  */
+#define US_MR_SPI_USART_MODE_LON              (US_MR_SPI_USART_MODE_LON_Val << US_MR_SPI_USART_MODE_Pos) /**< (US_MR) LON Position  */
+#define US_MR_SPI_USART_MODE_LIN_MASTER       (US_MR_SPI_USART_MODE_LIN_MASTER_Val << US_MR_SPI_USART_MODE_Pos) /**< (US_MR) LIN Master mode Position  */
+#define US_MR_SPI_USART_MODE_LIN_SLAVE        (US_MR_SPI_USART_MODE_LIN_SLAVE_Val << US_MR_SPI_USART_MODE_Pos) /**< (US_MR) LIN Slave mode Position  */
+#define US_MR_SPI_USART_MODE_SPI_MASTER       (US_MR_SPI_USART_MODE_SPI_MASTER_Val << US_MR_SPI_USART_MODE_Pos) /**< (US_MR) SPI Master mode (CLKO must be written to 1 and USCLKS = 0, 1 or 2) Position  */
+#define US_MR_SPI_USART_MODE_SPI_SLAVE        (US_MR_SPI_USART_MODE_SPI_SLAVE_Val << US_MR_SPI_USART_MODE_Pos) /**< (US_MR) SPI Slave mode Position  */
+#define US_MR_SPI_USCLKS_Pos                  _U_(4)                                               /**< (US_MR) Clock Selection Position */
+#define US_MR_SPI_USCLKS_Msk                  (_U_(0x3) << US_MR_SPI_USCLKS_Pos)                   /**< (US_MR) Clock Selection Mask */
+#define US_MR_SPI_USCLKS(value)               (US_MR_SPI_USCLKS_Msk & ((value) << US_MR_SPI_USCLKS_Pos))
+#define   US_MR_SPI_USCLKS_MCK_Val            _U_(0x0)                                             /**< (US_MR) Peripheral clock is selected  */
+#define   US_MR_SPI_USCLKS_DIV_Val            _U_(0x1)                                             /**< (US_MR) Peripheral clock divided (DIV = 8) is selected  */
+#define   US_MR_SPI_USCLKS_PCK_Val            _U_(0x2)                                             /**< (US_MR) PMC programmable clock (PCK) is selected. If the SCK pin is driven (CLKO = 1), the CD field must be greater than 1.  */
+#define   US_MR_SPI_USCLKS_SCK_Val            _U_(0x3)                                             /**< (US_MR) Serial clock (SCK) is selected  */
+#define US_MR_SPI_USCLKS_MCK                  (US_MR_SPI_USCLKS_MCK_Val << US_MR_SPI_USCLKS_Pos)   /**< (US_MR) Peripheral clock is selected Position  */
+#define US_MR_SPI_USCLKS_DIV                  (US_MR_SPI_USCLKS_DIV_Val << US_MR_SPI_USCLKS_Pos)   /**< (US_MR) Peripheral clock divided (DIV = 8) is selected Position  */
+#define US_MR_SPI_USCLKS_PCK                  (US_MR_SPI_USCLKS_PCK_Val << US_MR_SPI_USCLKS_Pos)   /**< (US_MR) PMC programmable clock (PCK) is selected. If the SCK pin is driven (CLKO = 1), the CD field must be greater than 1. Position  */
+#define US_MR_SPI_USCLKS_SCK                  (US_MR_SPI_USCLKS_SCK_Val << US_MR_SPI_USCLKS_Pos)   /**< (US_MR) Serial clock (SCK) is selected Position  */
+#define US_MR_SPI_CHRL_Pos                    _U_(6)                                               /**< (US_MR) Character Length Position */
+#define US_MR_SPI_CHRL_Msk                    (_U_(0x3) << US_MR_SPI_CHRL_Pos)                     /**< (US_MR) Character Length Mask */
+#define US_MR_SPI_CHRL(value)                 (US_MR_SPI_CHRL_Msk & ((value) << US_MR_SPI_CHRL_Pos))
+#define   US_MR_SPI_CHRL_5_BIT_Val            _U_(0x0)                                             /**< (US_MR) Character length is 5 bits  */
+#define   US_MR_SPI_CHRL_6_BIT_Val            _U_(0x1)                                             /**< (US_MR) Character length is 6 bits  */
+#define   US_MR_SPI_CHRL_7_BIT_Val            _U_(0x2)                                             /**< (US_MR) Character length is 7 bits  */
+#define   US_MR_SPI_CHRL_8_BIT_Val            _U_(0x3)                                             /**< (US_MR) Character length is 8 bits  */
+#define US_MR_SPI_CHRL_5_BIT                  (US_MR_SPI_CHRL_5_BIT_Val << US_MR_SPI_CHRL_Pos)     /**< (US_MR) Character length is 5 bits Position  */
+#define US_MR_SPI_CHRL_6_BIT                  (US_MR_SPI_CHRL_6_BIT_Val << US_MR_SPI_CHRL_Pos)     /**< (US_MR) Character length is 6 bits Position  */
+#define US_MR_SPI_CHRL_7_BIT                  (US_MR_SPI_CHRL_7_BIT_Val << US_MR_SPI_CHRL_Pos)     /**< (US_MR) Character length is 7 bits Position  */
+#define US_MR_SPI_CHRL_8_BIT                  (US_MR_SPI_CHRL_8_BIT_Val << US_MR_SPI_CHRL_Pos)     /**< (US_MR) Character length is 8 bits Position  */
 #define US_MR_SPI_CPHA_Pos                    _U_(8)                                               /**< (US_MR) SPI Clock Phase Position */
 #define US_MR_SPI_CPHA_Msk                    (_U_(0x1) << US_MR_SPI_CPHA_Pos)                     /**< (US_MR) SPI Clock Phase Mask */
 #define US_MR_SPI_CPHA(value)                 (US_MR_SPI_CPHA_Msk & ((value) << US_MR_SPI_CPHA_Pos))
 #define US_MR_SPI_CPOL_Pos                    _U_(16)                                              /**< (US_MR) SPI Clock Polarity Position */
 #define US_MR_SPI_CPOL_Msk                    (_U_(0x1) << US_MR_SPI_CPOL_Pos)                     /**< (US_MR) SPI Clock Polarity Mask */
 #define US_MR_SPI_CPOL(value)                 (US_MR_SPI_CPOL_Msk & ((value) << US_MR_SPI_CPOL_Pos))
+#define US_MR_SPI_CLKO_Pos                    _U_(18)                                              /**< (US_MR) Clock Output Select Position */
+#define US_MR_SPI_CLKO_Msk                    (_U_(0x1) << US_MR_SPI_CLKO_Pos)                     /**< (US_MR) Clock Output Select Mask */
+#define US_MR_SPI_CLKO(value)                 (US_MR_SPI_CLKO_Msk & ((value) << US_MR_SPI_CLKO_Pos))
 #define US_MR_SPI_WRDBT_Pos                   _U_(20)                                              /**< (US_MR) Wait Read Data Before Transfer Position */
 #define US_MR_SPI_WRDBT_Msk                   (_U_(0x1) << US_MR_SPI_WRDBT_Pos)                    /**< (US_MR) Wait Read Data Before Transfer Mask */
 #define US_MR_SPI_WRDBT(value)                (US_MR_SPI_WRDBT_Msk & ((value) << US_MR_SPI_WRDBT_Pos))
-#define US_MR_SPI_Msk                         _U_(0x00110100)                                       /**< (US_MR_SPI) Register Mask  */
+#define US_MR_SPI_Msk                         _U_(0x001501FF)                                       /**< (US_MR_SPI) Register Mask  */
 
 
 /* -------- US_IER : (USART Offset: 0x08) ( /W 32) Interrupt Enable Register -------- */
-#define US_IER_RXRDY_Pos                      _U_(0)                                               /**< (US_IER) RXRDY Interrupt Enable Position */
-#define US_IER_RXRDY_Msk                      (_U_(0x1) << US_IER_RXRDY_Pos)                       /**< (US_IER) RXRDY Interrupt Enable Mask */
-#define US_IER_RXRDY(value)                   (US_IER_RXRDY_Msk & ((value) << US_IER_RXRDY_Pos))  
-#define US_IER_TXRDY_Pos                      _U_(1)                                               /**< (US_IER) TXRDY Interrupt Enable Position */
-#define US_IER_TXRDY_Msk                      (_U_(0x1) << US_IER_TXRDY_Pos)                       /**< (US_IER) TXRDY Interrupt Enable Mask */
-#define US_IER_TXRDY(value)                   (US_IER_TXRDY_Msk & ((value) << US_IER_TXRDY_Pos))  
-#define US_IER_OVRE_Pos                       _U_(5)                                               /**< (US_IER) Overrun Error Interrupt Enable Position */
-#define US_IER_OVRE_Msk                       (_U_(0x1) << US_IER_OVRE_Pos)                        /**< (US_IER) Overrun Error Interrupt Enable Mask */
-#define US_IER_OVRE(value)                    (US_IER_OVRE_Msk & ((value) << US_IER_OVRE_Pos))    
-#define US_IER_TXEMPTY_Pos                    _U_(9)                                               /**< (US_IER) TXEMPTY Interrupt Enable Position */
-#define US_IER_TXEMPTY_Msk                    (_U_(0x1) << US_IER_TXEMPTY_Pos)                     /**< (US_IER) TXEMPTY Interrupt Enable Mask */
-#define US_IER_TXEMPTY(value)                 (US_IER_TXEMPTY_Msk & ((value) << US_IER_TXEMPTY_Pos))
-#define US_IER_Msk                            _U_(0x00000223)                                      /**< (US_IER) Register Mask  */
+#define US_IER_Msk                            _U_(0x00000000)                                      /**< (US_IER) Register Mask  */
 
 /* USART mode */
+#define US_IER_USART_RXRDY_Pos                _U_(0)                                               /**< (US_IER) RXRDY Interrupt Enable Position */
+#define US_IER_USART_RXRDY_Msk                (_U_(0x1) << US_IER_USART_RXRDY_Pos)                 /**< (US_IER) RXRDY Interrupt Enable Mask */
+#define US_IER_USART_RXRDY(value)             (US_IER_USART_RXRDY_Msk & ((value) << US_IER_USART_RXRDY_Pos))
+#define US_IER_USART_TXRDY_Pos                _U_(1)                                               /**< (US_IER) TXRDY Interrupt Enable Position */
+#define US_IER_USART_TXRDY_Msk                (_U_(0x1) << US_IER_USART_TXRDY_Pos)                 /**< (US_IER) TXRDY Interrupt Enable Mask */
+#define US_IER_USART_TXRDY(value)             (US_IER_USART_TXRDY_Msk & ((value) << US_IER_USART_TXRDY_Pos))
 #define US_IER_USART_RXBRK_Pos                _U_(2)                                               /**< (US_IER) Receiver Break Interrupt Enable Position */
 #define US_IER_USART_RXBRK_Msk                (_U_(0x1) << US_IER_USART_RXBRK_Pos)                 /**< (US_IER) Receiver Break Interrupt Enable Mask */
 #define US_IER_USART_RXBRK(value)             (US_IER_USART_RXBRK_Msk & ((value) << US_IER_USART_RXBRK_Pos))
+#define US_IER_USART_OVRE_Pos                 _U_(5)                                               /**< (US_IER) Overrun Error Interrupt Enable Position */
+#define US_IER_USART_OVRE_Msk                 (_U_(0x1) << US_IER_USART_OVRE_Pos)                  /**< (US_IER) Overrun Error Interrupt Enable Mask */
+#define US_IER_USART_OVRE(value)              (US_IER_USART_OVRE_Msk & ((value) << US_IER_USART_OVRE_Pos))
+#define US_IER_USART_FRAME_Pos                _U_(6)                                               /**< (US_IER) Framing Error Interrupt Enable Position */
+#define US_IER_USART_FRAME_Msk                (_U_(0x1) << US_IER_USART_FRAME_Pos)                 /**< (US_IER) Framing Error Interrupt Enable Mask */
+#define US_IER_USART_FRAME(value)             (US_IER_USART_FRAME_Msk & ((value) << US_IER_USART_FRAME_Pos))
+#define US_IER_USART_PARE_Pos                 _U_(7)                                               /**< (US_IER) Parity Error Interrupt Enable Position */
+#define US_IER_USART_PARE_Msk                 (_U_(0x1) << US_IER_USART_PARE_Pos)                  /**< (US_IER) Parity Error Interrupt Enable Mask */
+#define US_IER_USART_PARE(value)              (US_IER_USART_PARE_Msk & ((value) << US_IER_USART_PARE_Pos))
+#define US_IER_USART_TIMEOUT_Pos              _U_(8)                                               /**< (US_IER) Timeout Interrupt Enable Position */
+#define US_IER_USART_TIMEOUT_Msk              (_U_(0x1) << US_IER_USART_TIMEOUT_Pos)               /**< (US_IER) Timeout Interrupt Enable Mask */
+#define US_IER_USART_TIMEOUT(value)           (US_IER_USART_TIMEOUT_Msk & ((value) << US_IER_USART_TIMEOUT_Pos))
+#define US_IER_USART_TXEMPTY_Pos              _U_(9)                                               /**< (US_IER) TXEMPTY Interrupt Enable Position */
+#define US_IER_USART_TXEMPTY_Msk              (_U_(0x1) << US_IER_USART_TXEMPTY_Pos)               /**< (US_IER) TXEMPTY Interrupt Enable Mask */
+#define US_IER_USART_TXEMPTY(value)           (US_IER_USART_TXEMPTY_Msk & ((value) << US_IER_USART_TXEMPTY_Pos))
 #define US_IER_USART_ITER_Pos                 _U_(10)                                              /**< (US_IER) Max number of Repetitions Reached Interrupt Enable Position */
 #define US_IER_USART_ITER_Msk                 (_U_(0x1) << US_IER_USART_ITER_Pos)                  /**< (US_IER) Max number of Repetitions Reached Interrupt Enable Mask */
 #define US_IER_USART_ITER(value)              (US_IER_USART_ITER_Msk & ((value) << US_IER_USART_ITER_Pos))
@@ -292,27 +395,51 @@
 #define US_IER_USART_MANE_Pos                 _U_(24)                                              /**< (US_IER) Manchester Error Interrupt Enable Position */
 #define US_IER_USART_MANE_Msk                 (_U_(0x1) << US_IER_USART_MANE_Pos)                  /**< (US_IER) Manchester Error Interrupt Enable Mask */
 #define US_IER_USART_MANE(value)              (US_IER_USART_MANE_Msk & ((value) << US_IER_USART_MANE_Pos))
-#define US_IER_USART_Msk                      _U_(0x010F2404)                                       /**< (US_IER_USART) Register Mask  */
-
-/* USART_LIN mode */
-#define US_IER_USART_LIN_FRAME_Pos            _U_(6)                                               /**< (US_IER) Framing Error Interrupt Enable Position */
-#define US_IER_USART_LIN_FRAME_Msk            (_U_(0x1) << US_IER_USART_LIN_FRAME_Pos)             /**< (US_IER) Framing Error Interrupt Enable Mask */
-#define US_IER_USART_LIN_FRAME(value)         (US_IER_USART_LIN_FRAME_Msk & ((value) << US_IER_USART_LIN_FRAME_Pos))
-#define US_IER_USART_LIN_PARE_Pos             _U_(7)                                               /**< (US_IER) Parity Error Interrupt Enable Position */
-#define US_IER_USART_LIN_PARE_Msk             (_U_(0x1) << US_IER_USART_LIN_PARE_Pos)              /**< (US_IER) Parity Error Interrupt Enable Mask */
-#define US_IER_USART_LIN_PARE(value)          (US_IER_USART_LIN_PARE_Msk & ((value) << US_IER_USART_LIN_PARE_Pos))
-#define US_IER_USART_LIN_TIMEOUT_Pos          _U_(8)                                               /**< (US_IER) Timeout Interrupt Enable Position */
-#define US_IER_USART_LIN_TIMEOUT_Msk          (_U_(0x1) << US_IER_USART_LIN_TIMEOUT_Pos)           /**< (US_IER) Timeout Interrupt Enable Mask */
-#define US_IER_USART_LIN_TIMEOUT(value)       (US_IER_USART_LIN_TIMEOUT_Msk & ((value) << US_IER_USART_LIN_TIMEOUT_Pos))
-#define US_IER_USART_LIN_Msk                  _U_(0x000001C0)                                       /**< (US_IER_USART_LIN) Register Mask  */
+#define US_IER_USART_Msk                      _U_(0x010F27E7)                                       /**< (US_IER_USART) Register Mask  */
 
 /* SPI mode */
+#define US_IER_SPI_RXRDY_Pos                  _U_(0)                                               /**< (US_IER) RXRDY Interrupt Enable Position */
+#define US_IER_SPI_RXRDY_Msk                  (_U_(0x1) << US_IER_SPI_RXRDY_Pos)                   /**< (US_IER) RXRDY Interrupt Enable Mask */
+#define US_IER_SPI_RXRDY(value)               (US_IER_SPI_RXRDY_Msk & ((value) << US_IER_SPI_RXRDY_Pos))
+#define US_IER_SPI_TXRDY_Pos                  _U_(1)                                               /**< (US_IER) TXRDY Interrupt Enable Position */
+#define US_IER_SPI_TXRDY_Msk                  (_U_(0x1) << US_IER_SPI_TXRDY_Pos)                   /**< (US_IER) TXRDY Interrupt Enable Mask */
+#define US_IER_SPI_TXRDY(value)               (US_IER_SPI_TXRDY_Msk & ((value) << US_IER_SPI_TXRDY_Pos))
+#define US_IER_SPI_OVRE_Pos                   _U_(5)                                               /**< (US_IER) Overrun Error Interrupt Enable Position */
+#define US_IER_SPI_OVRE_Msk                   (_U_(0x1) << US_IER_SPI_OVRE_Pos)                    /**< (US_IER) Overrun Error Interrupt Enable Mask */
+#define US_IER_SPI_OVRE(value)                (US_IER_SPI_OVRE_Msk & ((value) << US_IER_SPI_OVRE_Pos))
+#define US_IER_SPI_TXEMPTY_Pos                _U_(9)                                               /**< (US_IER) TXEMPTY Interrupt Enable Position */
+#define US_IER_SPI_TXEMPTY_Msk                (_U_(0x1) << US_IER_SPI_TXEMPTY_Pos)                 /**< (US_IER) TXEMPTY Interrupt Enable Mask */
+#define US_IER_SPI_TXEMPTY(value)             (US_IER_SPI_TXEMPTY_Msk & ((value) << US_IER_SPI_TXEMPTY_Pos))
+#define US_IER_SPI_UNRE_Pos                   _U_(10)                                              /**< (US_IER) Underrun Error Interrupt Enable Position */
+#define US_IER_SPI_UNRE_Msk                   (_U_(0x1) << US_IER_SPI_UNRE_Pos)                    /**< (US_IER) Underrun Error Interrupt Enable Mask */
+#define US_IER_SPI_UNRE(value)                (US_IER_SPI_UNRE_Msk & ((value) << US_IER_SPI_UNRE_Pos))
 #define US_IER_SPI_NSSE_Pos                   _U_(19)                                              /**< (US_IER) NSS Line (Driving CTS Pin) Rising or Falling Edge Event Position */
 #define US_IER_SPI_NSSE_Msk                   (_U_(0x1) << US_IER_SPI_NSSE_Pos)                    /**< (US_IER) NSS Line (Driving CTS Pin) Rising or Falling Edge Event Mask */
 #define US_IER_SPI_NSSE(value)                (US_IER_SPI_NSSE_Msk & ((value) << US_IER_SPI_NSSE_Pos))
-#define US_IER_SPI_Msk                        _U_(0x00080000)                                       /**< (US_IER_SPI) Register Mask  */
+#define US_IER_SPI_Msk                        _U_(0x00080623)                                       /**< (US_IER_SPI) Register Mask  */
 
 /* LIN mode */
+#define US_IER_LIN_RXRDY_Pos                  _U_(0)                                               /**< (US_IER) RXRDY Interrupt Enable Position */
+#define US_IER_LIN_RXRDY_Msk                  (_U_(0x1) << US_IER_LIN_RXRDY_Pos)                   /**< (US_IER) RXRDY Interrupt Enable Mask */
+#define US_IER_LIN_RXRDY(value)               (US_IER_LIN_RXRDY_Msk & ((value) << US_IER_LIN_RXRDY_Pos))
+#define US_IER_LIN_TXRDY_Pos                  _U_(1)                                               /**< (US_IER) TXRDY Interrupt Enable Position */
+#define US_IER_LIN_TXRDY_Msk                  (_U_(0x1) << US_IER_LIN_TXRDY_Pos)                   /**< (US_IER) TXRDY Interrupt Enable Mask */
+#define US_IER_LIN_TXRDY(value)               (US_IER_LIN_TXRDY_Msk & ((value) << US_IER_LIN_TXRDY_Pos))
+#define US_IER_LIN_OVRE_Pos                   _U_(5)                                               /**< (US_IER) Overrun Error Interrupt Enable Position */
+#define US_IER_LIN_OVRE_Msk                   (_U_(0x1) << US_IER_LIN_OVRE_Pos)                    /**< (US_IER) Overrun Error Interrupt Enable Mask */
+#define US_IER_LIN_OVRE(value)                (US_IER_LIN_OVRE_Msk & ((value) << US_IER_LIN_OVRE_Pos))
+#define US_IER_LIN_FRAME_Pos                  _U_(6)                                               /**< (US_IER) Framing Error Interrupt Enable Position */
+#define US_IER_LIN_FRAME_Msk                  (_U_(0x1) << US_IER_LIN_FRAME_Pos)                   /**< (US_IER) Framing Error Interrupt Enable Mask */
+#define US_IER_LIN_FRAME(value)               (US_IER_LIN_FRAME_Msk & ((value) << US_IER_LIN_FRAME_Pos))
+#define US_IER_LIN_PARE_Pos                   _U_(7)                                               /**< (US_IER) Parity Error Interrupt Enable Position */
+#define US_IER_LIN_PARE_Msk                   (_U_(0x1) << US_IER_LIN_PARE_Pos)                    /**< (US_IER) Parity Error Interrupt Enable Mask */
+#define US_IER_LIN_PARE(value)                (US_IER_LIN_PARE_Msk & ((value) << US_IER_LIN_PARE_Pos))
+#define US_IER_LIN_TIMEOUT_Pos                _U_(8)                                               /**< (US_IER) Timeout Interrupt Enable Position */
+#define US_IER_LIN_TIMEOUT_Msk                (_U_(0x1) << US_IER_LIN_TIMEOUT_Pos)                 /**< (US_IER) Timeout Interrupt Enable Mask */
+#define US_IER_LIN_TIMEOUT(value)             (US_IER_LIN_TIMEOUT_Msk & ((value) << US_IER_LIN_TIMEOUT_Pos))
+#define US_IER_LIN_TXEMPTY_Pos                _U_(9)                                               /**< (US_IER) TXEMPTY Interrupt Enable Position */
+#define US_IER_LIN_TXEMPTY_Msk                (_U_(0x1) << US_IER_LIN_TXEMPTY_Pos)                 /**< (US_IER) TXEMPTY Interrupt Enable Mask */
+#define US_IER_LIN_TXEMPTY(value)             (US_IER_LIN_TXEMPTY_Msk & ((value) << US_IER_LIN_TXEMPTY_Pos))
 #define US_IER_LIN_LINBK_Pos                  _U_(13)                                              /**< (US_IER) LIN Break Sent or LIN Break Received Interrupt Enable Position */
 #define US_IER_LIN_LINBK_Msk                  (_U_(0x1) << US_IER_LIN_LINBK_Pos)                   /**< (US_IER) LIN Break Sent or LIN Break Received Interrupt Enable Mask */
 #define US_IER_LIN_LINBK(value)               (US_IER_LIN_LINBK_Msk & ((value) << US_IER_LIN_LINBK_Pos))
@@ -343,15 +470,30 @@
 #define US_IER_LIN_LINHTE_Pos                 _U_(31)                                              /**< (US_IER) LIN Header Timeout Error Interrupt Enable Position */
 #define US_IER_LIN_LINHTE_Msk                 (_U_(0x1) << US_IER_LIN_LINHTE_Pos)                  /**< (US_IER) LIN Header Timeout Error Interrupt Enable Mask */
 #define US_IER_LIN_LINHTE(value)              (US_IER_LIN_LINHTE_Msk & ((value) << US_IER_LIN_LINHTE_Pos))
-#define US_IER_LIN_Msk                        _U_(0xFE00E000)                                       /**< (US_IER_LIN) Register Mask  */
+#define US_IER_LIN_Msk                        _U_(0xFE00E3E3)                                       /**< (US_IER_LIN) Register Mask  */
 
 /* LON mode */
+#define US_IER_LON_RXRDY_Pos                  _U_(0)                                               /**< (US_IER) RXRDY Interrupt Enable Position */
+#define US_IER_LON_RXRDY_Msk                  (_U_(0x1) << US_IER_LON_RXRDY_Pos)                   /**< (US_IER) RXRDY Interrupt Enable Mask */
+#define US_IER_LON_RXRDY(value)               (US_IER_LON_RXRDY_Msk & ((value) << US_IER_LON_RXRDY_Pos))
+#define US_IER_LON_TXRDY_Pos                  _U_(1)                                               /**< (US_IER) TXRDY Interrupt Enable Position */
+#define US_IER_LON_TXRDY_Msk                  (_U_(0x1) << US_IER_LON_TXRDY_Pos)                   /**< (US_IER) TXRDY Interrupt Enable Mask */
+#define US_IER_LON_TXRDY(value)               (US_IER_LON_TXRDY_Msk & ((value) << US_IER_LON_TXRDY_Pos))
+#define US_IER_LON_OVRE_Pos                   _U_(5)                                               /**< (US_IER) Overrun Error Interrupt Enable Position */
+#define US_IER_LON_OVRE_Msk                   (_U_(0x1) << US_IER_LON_OVRE_Pos)                    /**< (US_IER) Overrun Error Interrupt Enable Mask */
+#define US_IER_LON_OVRE(value)                (US_IER_LON_OVRE_Msk & ((value) << US_IER_LON_OVRE_Pos))
 #define US_IER_LON_LSFE_Pos                   _U_(6)                                               /**< (US_IER) LON Short Frame Error Interrupt Enable Position */
 #define US_IER_LON_LSFE_Msk                   (_U_(0x1) << US_IER_LON_LSFE_Pos)                    /**< (US_IER) LON Short Frame Error Interrupt Enable Mask */
 #define US_IER_LON_LSFE(value)                (US_IER_LON_LSFE_Msk & ((value) << US_IER_LON_LSFE_Pos))
 #define US_IER_LON_LCRCE_Pos                  _U_(7)                                               /**< (US_IER) LON CRC Error Interrupt Enable Position */
 #define US_IER_LON_LCRCE_Msk                  (_U_(0x1) << US_IER_LON_LCRCE_Pos)                   /**< (US_IER) LON CRC Error Interrupt Enable Mask */
 #define US_IER_LON_LCRCE(value)               (US_IER_LON_LCRCE_Msk & ((value) << US_IER_LON_LCRCE_Pos))
+#define US_IER_LON_TXEMPTY_Pos                _U_(9)                                               /**< (US_IER) TXEMPTY Interrupt Enable Position */
+#define US_IER_LON_TXEMPTY_Msk                (_U_(0x1) << US_IER_LON_TXEMPTY_Pos)                 /**< (US_IER) TXEMPTY Interrupt Enable Mask */
+#define US_IER_LON_TXEMPTY(value)             (US_IER_LON_TXEMPTY_Msk & ((value) << US_IER_LON_TXEMPTY_Pos))
+#define US_IER_LON_UNRE_Pos                   _U_(10)                                              /**< (US_IER) Underrun Error Interrupt Enable Position */
+#define US_IER_LON_UNRE_Msk                   (_U_(0x1) << US_IER_LON_UNRE_Pos)                    /**< (US_IER) Underrun Error Interrupt Enable Mask */
+#define US_IER_LON_UNRE(value)                (US_IER_LON_UNRE_Msk & ((value) << US_IER_LON_UNRE_Pos))
 #define US_IER_LON_LTXD_Pos                   _U_(24)                                              /**< (US_IER) LON Transmission Done Interrupt Enable Position */
 #define US_IER_LON_LTXD_Msk                   (_U_(0x1) << US_IER_LON_LTXD_Pos)                    /**< (US_IER) LON Transmission Done Interrupt Enable Mask */
 #define US_IER_LON_LTXD(value)                (US_IER_LON_LTXD_Msk & ((value) << US_IER_LON_LTXD_Pos))
@@ -367,76 +509,103 @@
 #define US_IER_LON_LBLOVFE_Pos                _U_(28)                                              /**< (US_IER) LON Backlog Overflow Error Interrupt Enable Position */
 #define US_IER_LON_LBLOVFE_Msk                (_U_(0x1) << US_IER_LON_LBLOVFE_Pos)                 /**< (US_IER) LON Backlog Overflow Error Interrupt Enable Mask */
 #define US_IER_LON_LBLOVFE(value)             (US_IER_LON_LBLOVFE_Msk & ((value) << US_IER_LON_LBLOVFE_Pos))
-#define US_IER_LON_Msk                        _U_(0x1F0000C0)                                       /**< (US_IER_LON) Register Mask  */
-
-/* LON_SPI mode */
-#define US_IER_LON_SPI_UNRE_Pos               _U_(10)                                              /**< (US_IER) Underrun Error Interrupt Enable Position */
-#define US_IER_LON_SPI_UNRE_Msk               (_U_(0x1) << US_IER_LON_SPI_UNRE_Pos)                /**< (US_IER) Underrun Error Interrupt Enable Mask */
-#define US_IER_LON_SPI_UNRE(value)            (US_IER_LON_SPI_UNRE_Msk & ((value) << US_IER_LON_SPI_UNRE_Pos))
-#define US_IER_LON_SPI_Msk                    _U_(0x00000400)                                       /**< (US_IER_LON_SPI) Register Mask  */
+#define US_IER_LON_Msk                        _U_(0x1F0006E3)                                       /**< (US_IER_LON) Register Mask  */
 
 
 /* -------- US_IDR : (USART Offset: 0x0C) ( /W 32) Interrupt Disable Register -------- */
-#define US_IDR_RXRDY_Pos                      _U_(0)                                               /**< (US_IDR) RXRDY Interrupt Disable Position */
-#define US_IDR_RXRDY_Msk                      (_U_(0x1) << US_IDR_RXRDY_Pos)                       /**< (US_IDR) RXRDY Interrupt Disable Mask */
-#define US_IDR_RXRDY(value)                   (US_IDR_RXRDY_Msk & ((value) << US_IDR_RXRDY_Pos))  
-#define US_IDR_TXRDY_Pos                      _U_(1)                                               /**< (US_IDR) TXRDY Interrupt Disable Position */
-#define US_IDR_TXRDY_Msk                      (_U_(0x1) << US_IDR_TXRDY_Pos)                       /**< (US_IDR) TXRDY Interrupt Disable Mask */
-#define US_IDR_TXRDY(value)                   (US_IDR_TXRDY_Msk & ((value) << US_IDR_TXRDY_Pos))  
-#define US_IDR_OVRE_Pos                       _U_(5)                                               /**< (US_IDR) Overrun Error Interrupt Enable Position */
-#define US_IDR_OVRE_Msk                       (_U_(0x1) << US_IDR_OVRE_Pos)                        /**< (US_IDR) Overrun Error Interrupt Enable Mask */
-#define US_IDR_OVRE(value)                    (US_IDR_OVRE_Msk & ((value) << US_IDR_OVRE_Pos))    
-#define US_IDR_TXEMPTY_Pos                    _U_(9)                                               /**< (US_IDR) TXEMPTY Interrupt Disable Position */
-#define US_IDR_TXEMPTY_Msk                    (_U_(0x1) << US_IDR_TXEMPTY_Pos)                     /**< (US_IDR) TXEMPTY Interrupt Disable Mask */
-#define US_IDR_TXEMPTY(value)                 (US_IDR_TXEMPTY_Msk & ((value) << US_IDR_TXEMPTY_Pos))
-#define US_IDR_RIIC_Pos                       _U_(16)                                              /**< (US_IDR) Ring Indicator Input Change Disable Position */
-#define US_IDR_RIIC_Msk                       (_U_(0x1) << US_IDR_RIIC_Pos)                        /**< (US_IDR) Ring Indicator Input Change Disable Mask */
-#define US_IDR_RIIC(value)                    (US_IDR_RIIC_Msk & ((value) << US_IDR_RIIC_Pos))    
-#define US_IDR_DSRIC_Pos                      _U_(17)                                              /**< (US_IDR) Data Set Ready Input Change Disable Position */
-#define US_IDR_DSRIC_Msk                      (_U_(0x1) << US_IDR_DSRIC_Pos)                       /**< (US_IDR) Data Set Ready Input Change Disable Mask */
-#define US_IDR_DSRIC(value)                   (US_IDR_DSRIC_Msk & ((value) << US_IDR_DSRIC_Pos))  
-#define US_IDR_DCDIC_Pos                      _U_(18)                                              /**< (US_IDR) Data Carrier Detect Input Change Interrupt Disable Position */
-#define US_IDR_DCDIC_Msk                      (_U_(0x1) << US_IDR_DCDIC_Pos)                       /**< (US_IDR) Data Carrier Detect Input Change Interrupt Disable Mask */
-#define US_IDR_DCDIC(value)                   (US_IDR_DCDIC_Msk & ((value) << US_IDR_DCDIC_Pos))  
-#define US_IDR_Msk                            _U_(0x00070223)                                      /**< (US_IDR) Register Mask  */
+#define US_IDR_Msk                            _U_(0x00000000)                                      /**< (US_IDR) Register Mask  */
 
 /* USART mode */
+#define US_IDR_USART_RXRDY_Pos                _U_(0)                                               /**< (US_IDR) RXRDY Interrupt Disable Position */
+#define US_IDR_USART_RXRDY_Msk                (_U_(0x1) << US_IDR_USART_RXRDY_Pos)                 /**< (US_IDR) RXRDY Interrupt Disable Mask */
+#define US_IDR_USART_RXRDY(value)             (US_IDR_USART_RXRDY_Msk & ((value) << US_IDR_USART_RXRDY_Pos))
+#define US_IDR_USART_TXRDY_Pos                _U_(1)                                               /**< (US_IDR) TXRDY Interrupt Disable Position */
+#define US_IDR_USART_TXRDY_Msk                (_U_(0x1) << US_IDR_USART_TXRDY_Pos)                 /**< (US_IDR) TXRDY Interrupt Disable Mask */
+#define US_IDR_USART_TXRDY(value)             (US_IDR_USART_TXRDY_Msk & ((value) << US_IDR_USART_TXRDY_Pos))
 #define US_IDR_USART_RXBRK_Pos                _U_(2)                                               /**< (US_IDR) Receiver Break Interrupt Disable Position */
 #define US_IDR_USART_RXBRK_Msk                (_U_(0x1) << US_IDR_USART_RXBRK_Pos)                 /**< (US_IDR) Receiver Break Interrupt Disable Mask */
 #define US_IDR_USART_RXBRK(value)             (US_IDR_USART_RXBRK_Msk & ((value) << US_IDR_USART_RXBRK_Pos))
+#define US_IDR_USART_OVRE_Pos                 _U_(5)                                               /**< (US_IDR) Overrun Error Interrupt Enable Position */
+#define US_IDR_USART_OVRE_Msk                 (_U_(0x1) << US_IDR_USART_OVRE_Pos)                  /**< (US_IDR) Overrun Error Interrupt Enable Mask */
+#define US_IDR_USART_OVRE(value)              (US_IDR_USART_OVRE_Msk & ((value) << US_IDR_USART_OVRE_Pos))
+#define US_IDR_USART_FRAME_Pos                _U_(6)                                               /**< (US_IDR) Framing Error Interrupt Disable Position */
+#define US_IDR_USART_FRAME_Msk                (_U_(0x1) << US_IDR_USART_FRAME_Pos)                 /**< (US_IDR) Framing Error Interrupt Disable Mask */
+#define US_IDR_USART_FRAME(value)             (US_IDR_USART_FRAME_Msk & ((value) << US_IDR_USART_FRAME_Pos))
+#define US_IDR_USART_PARE_Pos                 _U_(7)                                               /**< (US_IDR) Parity Error Interrupt Disable Position */
+#define US_IDR_USART_PARE_Msk                 (_U_(0x1) << US_IDR_USART_PARE_Pos)                  /**< (US_IDR) Parity Error Interrupt Disable Mask */
+#define US_IDR_USART_PARE(value)              (US_IDR_USART_PARE_Msk & ((value) << US_IDR_USART_PARE_Pos))
+#define US_IDR_USART_TIMEOUT_Pos              _U_(8)                                               /**< (US_IDR) Timeout Interrupt Disable Position */
+#define US_IDR_USART_TIMEOUT_Msk              (_U_(0x1) << US_IDR_USART_TIMEOUT_Pos)               /**< (US_IDR) Timeout Interrupt Disable Mask */
+#define US_IDR_USART_TIMEOUT(value)           (US_IDR_USART_TIMEOUT_Msk & ((value) << US_IDR_USART_TIMEOUT_Pos))
+#define US_IDR_USART_TXEMPTY_Pos              _U_(9)                                               /**< (US_IDR) TXEMPTY Interrupt Disable Position */
+#define US_IDR_USART_TXEMPTY_Msk              (_U_(0x1) << US_IDR_USART_TXEMPTY_Pos)               /**< (US_IDR) TXEMPTY Interrupt Disable Mask */
+#define US_IDR_USART_TXEMPTY(value)           (US_IDR_USART_TXEMPTY_Msk & ((value) << US_IDR_USART_TXEMPTY_Pos))
 #define US_IDR_USART_ITER_Pos                 _U_(10)                                              /**< (US_IDR) Max Number of Repetitions Reached Interrupt Disable Position */
 #define US_IDR_USART_ITER_Msk                 (_U_(0x1) << US_IDR_USART_ITER_Pos)                  /**< (US_IDR) Max Number of Repetitions Reached Interrupt Disable Mask */
 #define US_IDR_USART_ITER(value)              (US_IDR_USART_ITER_Msk & ((value) << US_IDR_USART_ITER_Pos))
 #define US_IDR_USART_NACK_Pos                 _U_(13)                                              /**< (US_IDR) Non Acknowledge Interrupt Disable Position */
 #define US_IDR_USART_NACK_Msk                 (_U_(0x1) << US_IDR_USART_NACK_Pos)                  /**< (US_IDR) Non Acknowledge Interrupt Disable Mask */
 #define US_IDR_USART_NACK(value)              (US_IDR_USART_NACK_Msk & ((value) << US_IDR_USART_NACK_Pos))
+#define US_IDR_USART_RIIC_Pos                 _U_(16)                                              /**< (US_IDR) Ring Indicator Input Change Disable Position */
+#define US_IDR_USART_RIIC_Msk                 (_U_(0x1) << US_IDR_USART_RIIC_Pos)                  /**< (US_IDR) Ring Indicator Input Change Disable Mask */
+#define US_IDR_USART_RIIC(value)              (US_IDR_USART_RIIC_Msk & ((value) << US_IDR_USART_RIIC_Pos))
+#define US_IDR_USART_DSRIC_Pos                _U_(17)                                              /**< (US_IDR) Data Set Ready Input Change Disable Position */
+#define US_IDR_USART_DSRIC_Msk                (_U_(0x1) << US_IDR_USART_DSRIC_Pos)                 /**< (US_IDR) Data Set Ready Input Change Disable Mask */
+#define US_IDR_USART_DSRIC(value)             (US_IDR_USART_DSRIC_Msk & ((value) << US_IDR_USART_DSRIC_Pos))
+#define US_IDR_USART_DCDIC_Pos                _U_(18)                                              /**< (US_IDR) Data Carrier Detect Input Change Interrupt Disable Position */
+#define US_IDR_USART_DCDIC_Msk                (_U_(0x1) << US_IDR_USART_DCDIC_Pos)                 /**< (US_IDR) Data Carrier Detect Input Change Interrupt Disable Mask */
+#define US_IDR_USART_DCDIC(value)             (US_IDR_USART_DCDIC_Msk & ((value) << US_IDR_USART_DCDIC_Pos))
 #define US_IDR_USART_CTSIC_Pos                _U_(19)                                              /**< (US_IDR) Clear to Send Input Change Interrupt Disable Position */
 #define US_IDR_USART_CTSIC_Msk                (_U_(0x1) << US_IDR_USART_CTSIC_Pos)                 /**< (US_IDR) Clear to Send Input Change Interrupt Disable Mask */
 #define US_IDR_USART_CTSIC(value)             (US_IDR_USART_CTSIC_Msk & ((value) << US_IDR_USART_CTSIC_Pos))
 #define US_IDR_USART_MANE_Pos                 _U_(24)                                              /**< (US_IDR) Manchester Error Interrupt Disable Position */
 #define US_IDR_USART_MANE_Msk                 (_U_(0x1) << US_IDR_USART_MANE_Pos)                  /**< (US_IDR) Manchester Error Interrupt Disable Mask */
 #define US_IDR_USART_MANE(value)              (US_IDR_USART_MANE_Msk & ((value) << US_IDR_USART_MANE_Pos))
-#define US_IDR_USART_Msk                      _U_(0x01082404)                                       /**< (US_IDR_USART) Register Mask  */
-
-/* USART_LIN mode */
-#define US_IDR_USART_LIN_FRAME_Pos            _U_(6)                                               /**< (US_IDR) Framing Error Interrupt Disable Position */
-#define US_IDR_USART_LIN_FRAME_Msk            (_U_(0x1) << US_IDR_USART_LIN_FRAME_Pos)             /**< (US_IDR) Framing Error Interrupt Disable Mask */
-#define US_IDR_USART_LIN_FRAME(value)         (US_IDR_USART_LIN_FRAME_Msk & ((value) << US_IDR_USART_LIN_FRAME_Pos))
-#define US_IDR_USART_LIN_PARE_Pos             _U_(7)                                               /**< (US_IDR) Parity Error Interrupt Disable Position */
-#define US_IDR_USART_LIN_PARE_Msk             (_U_(0x1) << US_IDR_USART_LIN_PARE_Pos)              /**< (US_IDR) Parity Error Interrupt Disable Mask */
-#define US_IDR_USART_LIN_PARE(value)          (US_IDR_USART_LIN_PARE_Msk & ((value) << US_IDR_USART_LIN_PARE_Pos))
-#define US_IDR_USART_LIN_TIMEOUT_Pos          _U_(8)                                               /**< (US_IDR) Timeout Interrupt Disable Position */
-#define US_IDR_USART_LIN_TIMEOUT_Msk          (_U_(0x1) << US_IDR_USART_LIN_TIMEOUT_Pos)           /**< (US_IDR) Timeout Interrupt Disable Mask */
-#define US_IDR_USART_LIN_TIMEOUT(value)       (US_IDR_USART_LIN_TIMEOUT_Msk & ((value) << US_IDR_USART_LIN_TIMEOUT_Pos))
-#define US_IDR_USART_LIN_Msk                  _U_(0x000001C0)                                       /**< (US_IDR_USART_LIN) Register Mask  */
+#define US_IDR_USART_Msk                      _U_(0x010F27E7)                                       /**< (US_IDR_USART) Register Mask  */
 
 /* SPI mode */
+#define US_IDR_SPI_RXRDY_Pos                  _U_(0)                                               /**< (US_IDR) RXRDY Interrupt Disable Position */
+#define US_IDR_SPI_RXRDY_Msk                  (_U_(0x1) << US_IDR_SPI_RXRDY_Pos)                   /**< (US_IDR) RXRDY Interrupt Disable Mask */
+#define US_IDR_SPI_RXRDY(value)               (US_IDR_SPI_RXRDY_Msk & ((value) << US_IDR_SPI_RXRDY_Pos))
+#define US_IDR_SPI_TXRDY_Pos                  _U_(1)                                               /**< (US_IDR) TXRDY Interrupt Disable Position */
+#define US_IDR_SPI_TXRDY_Msk                  (_U_(0x1) << US_IDR_SPI_TXRDY_Pos)                   /**< (US_IDR) TXRDY Interrupt Disable Mask */
+#define US_IDR_SPI_TXRDY(value)               (US_IDR_SPI_TXRDY_Msk & ((value) << US_IDR_SPI_TXRDY_Pos))
+#define US_IDR_SPI_OVRE_Pos                   _U_(5)                                               /**< (US_IDR) Overrun Error Interrupt Enable Position */
+#define US_IDR_SPI_OVRE_Msk                   (_U_(0x1) << US_IDR_SPI_OVRE_Pos)                    /**< (US_IDR) Overrun Error Interrupt Enable Mask */
+#define US_IDR_SPI_OVRE(value)                (US_IDR_SPI_OVRE_Msk & ((value) << US_IDR_SPI_OVRE_Pos))
+#define US_IDR_SPI_TXEMPTY_Pos                _U_(9)                                               /**< (US_IDR) TXEMPTY Interrupt Disable Position */
+#define US_IDR_SPI_TXEMPTY_Msk                (_U_(0x1) << US_IDR_SPI_TXEMPTY_Pos)                 /**< (US_IDR) TXEMPTY Interrupt Disable Mask */
+#define US_IDR_SPI_TXEMPTY(value)             (US_IDR_SPI_TXEMPTY_Msk & ((value) << US_IDR_SPI_TXEMPTY_Pos))
+#define US_IDR_SPI_UNRE_Pos                   _U_(10)                                              /**< (US_IDR) SPI Underrun Error Interrupt Disable Position */
+#define US_IDR_SPI_UNRE_Msk                   (_U_(0x1) << US_IDR_SPI_UNRE_Pos)                    /**< (US_IDR) SPI Underrun Error Interrupt Disable Mask */
+#define US_IDR_SPI_UNRE(value)                (US_IDR_SPI_UNRE_Msk & ((value) << US_IDR_SPI_UNRE_Pos))
 #define US_IDR_SPI_NSSE_Pos                   _U_(19)                                              /**< (US_IDR) NSS Line (Driving CTS Pin) Rising or Falling Edge Event Position */
 #define US_IDR_SPI_NSSE_Msk                   (_U_(0x1) << US_IDR_SPI_NSSE_Pos)                    /**< (US_IDR) NSS Line (Driving CTS Pin) Rising or Falling Edge Event Mask */
 #define US_IDR_SPI_NSSE(value)                (US_IDR_SPI_NSSE_Msk & ((value) << US_IDR_SPI_NSSE_Pos))
-#define US_IDR_SPI_Msk                        _U_(0x00080000)                                       /**< (US_IDR_SPI) Register Mask  */
+#define US_IDR_SPI_Msk                        _U_(0x00080623)                                       /**< (US_IDR_SPI) Register Mask  */
 
 /* LIN mode */
+#define US_IDR_LIN_RXRDY_Pos                  _U_(0)                                               /**< (US_IDR) RXRDY Interrupt Disable Position */
+#define US_IDR_LIN_RXRDY_Msk                  (_U_(0x1) << US_IDR_LIN_RXRDY_Pos)                   /**< (US_IDR) RXRDY Interrupt Disable Mask */
+#define US_IDR_LIN_RXRDY(value)               (US_IDR_LIN_RXRDY_Msk & ((value) << US_IDR_LIN_RXRDY_Pos))
+#define US_IDR_LIN_TXRDY_Pos                  _U_(1)                                               /**< (US_IDR) TXRDY Interrupt Disable Position */
+#define US_IDR_LIN_TXRDY_Msk                  (_U_(0x1) << US_IDR_LIN_TXRDY_Pos)                   /**< (US_IDR) TXRDY Interrupt Disable Mask */
+#define US_IDR_LIN_TXRDY(value)               (US_IDR_LIN_TXRDY_Msk & ((value) << US_IDR_LIN_TXRDY_Pos))
+#define US_IDR_LIN_OVRE_Pos                   _U_(5)                                               /**< (US_IDR) Overrun Error Interrupt Enable Position */
+#define US_IDR_LIN_OVRE_Msk                   (_U_(0x1) << US_IDR_LIN_OVRE_Pos)                    /**< (US_IDR) Overrun Error Interrupt Enable Mask */
+#define US_IDR_LIN_OVRE(value)                (US_IDR_LIN_OVRE_Msk & ((value) << US_IDR_LIN_OVRE_Pos))
+#define US_IDR_LIN_FRAME_Pos                  _U_(6)                                               /**< (US_IDR) Framing Error Interrupt Disable Position */
+#define US_IDR_LIN_FRAME_Msk                  (_U_(0x1) << US_IDR_LIN_FRAME_Pos)                   /**< (US_IDR) Framing Error Interrupt Disable Mask */
+#define US_IDR_LIN_FRAME(value)               (US_IDR_LIN_FRAME_Msk & ((value) << US_IDR_LIN_FRAME_Pos))
+#define US_IDR_LIN_PARE_Pos                   _U_(7)                                               /**< (US_IDR) Parity Error Interrupt Disable Position */
+#define US_IDR_LIN_PARE_Msk                   (_U_(0x1) << US_IDR_LIN_PARE_Pos)                    /**< (US_IDR) Parity Error Interrupt Disable Mask */
+#define US_IDR_LIN_PARE(value)                (US_IDR_LIN_PARE_Msk & ((value) << US_IDR_LIN_PARE_Pos))
+#define US_IDR_LIN_TIMEOUT_Pos                _U_(8)                                               /**< (US_IDR) Timeout Interrupt Disable Position */
+#define US_IDR_LIN_TIMEOUT_Msk                (_U_(0x1) << US_IDR_LIN_TIMEOUT_Pos)                 /**< (US_IDR) Timeout Interrupt Disable Mask */
+#define US_IDR_LIN_TIMEOUT(value)             (US_IDR_LIN_TIMEOUT_Msk & ((value) << US_IDR_LIN_TIMEOUT_Pos))
+#define US_IDR_LIN_TXEMPTY_Pos                _U_(9)                                               /**< (US_IDR) TXEMPTY Interrupt Disable Position */
+#define US_IDR_LIN_TXEMPTY_Msk                (_U_(0x1) << US_IDR_LIN_TXEMPTY_Pos)                 /**< (US_IDR) TXEMPTY Interrupt Disable Mask */
+#define US_IDR_LIN_TXEMPTY(value)             (US_IDR_LIN_TXEMPTY_Msk & ((value) << US_IDR_LIN_TXEMPTY_Pos))
 #define US_IDR_LIN_LINBK_Pos                  _U_(13)                                              /**< (US_IDR) LIN Break Sent or LIN Break Received Interrupt Disable Position */
 #define US_IDR_LIN_LINBK_Msk                  (_U_(0x1) << US_IDR_LIN_LINBK_Pos)                   /**< (US_IDR) LIN Break Sent or LIN Break Received Interrupt Disable Mask */
 #define US_IDR_LIN_LINBK(value)               (US_IDR_LIN_LINBK_Msk & ((value) << US_IDR_LIN_LINBK_Pos))
@@ -467,15 +636,30 @@
 #define US_IDR_LIN_LINHTE_Pos                 _U_(31)                                              /**< (US_IDR) LIN Header Timeout Error Interrupt Disable Position */
 #define US_IDR_LIN_LINHTE_Msk                 (_U_(0x1) << US_IDR_LIN_LINHTE_Pos)                  /**< (US_IDR) LIN Header Timeout Error Interrupt Disable Mask */
 #define US_IDR_LIN_LINHTE(value)              (US_IDR_LIN_LINHTE_Msk & ((value) << US_IDR_LIN_LINHTE_Pos))
-#define US_IDR_LIN_Msk                        _U_(0xFE00E000)                                       /**< (US_IDR_LIN) Register Mask  */
+#define US_IDR_LIN_Msk                        _U_(0xFE00E3E3)                                       /**< (US_IDR_LIN) Register Mask  */
 
 /* LON mode */
+#define US_IDR_LON_RXRDY_Pos                  _U_(0)                                               /**< (US_IDR) RXRDY Interrupt Disable Position */
+#define US_IDR_LON_RXRDY_Msk                  (_U_(0x1) << US_IDR_LON_RXRDY_Pos)                   /**< (US_IDR) RXRDY Interrupt Disable Mask */
+#define US_IDR_LON_RXRDY(value)               (US_IDR_LON_RXRDY_Msk & ((value) << US_IDR_LON_RXRDY_Pos))
+#define US_IDR_LON_TXRDY_Pos                  _U_(1)                                               /**< (US_IDR) TXRDY Interrupt Disable Position */
+#define US_IDR_LON_TXRDY_Msk                  (_U_(0x1) << US_IDR_LON_TXRDY_Pos)                   /**< (US_IDR) TXRDY Interrupt Disable Mask */
+#define US_IDR_LON_TXRDY(value)               (US_IDR_LON_TXRDY_Msk & ((value) << US_IDR_LON_TXRDY_Pos))
+#define US_IDR_LON_OVRE_Pos                   _U_(5)                                               /**< (US_IDR) Overrun Error Interrupt Enable Position */
+#define US_IDR_LON_OVRE_Msk                   (_U_(0x1) << US_IDR_LON_OVRE_Pos)                    /**< (US_IDR) Overrun Error Interrupt Enable Mask */
+#define US_IDR_LON_OVRE(value)                (US_IDR_LON_OVRE_Msk & ((value) << US_IDR_LON_OVRE_Pos))
 #define US_IDR_LON_LSFE_Pos                   _U_(6)                                               /**< (US_IDR) LON Short Frame Error Interrupt Disable Position */
 #define US_IDR_LON_LSFE_Msk                   (_U_(0x1) << US_IDR_LON_LSFE_Pos)                    /**< (US_IDR) LON Short Frame Error Interrupt Disable Mask */
 #define US_IDR_LON_LSFE(value)                (US_IDR_LON_LSFE_Msk & ((value) << US_IDR_LON_LSFE_Pos))
 #define US_IDR_LON_LCRCE_Pos                  _U_(7)                                               /**< (US_IDR) LON CRC Error Interrupt Disable Position */
 #define US_IDR_LON_LCRCE_Msk                  (_U_(0x1) << US_IDR_LON_LCRCE_Pos)                   /**< (US_IDR) LON CRC Error Interrupt Disable Mask */
 #define US_IDR_LON_LCRCE(value)               (US_IDR_LON_LCRCE_Msk & ((value) << US_IDR_LON_LCRCE_Pos))
+#define US_IDR_LON_TXEMPTY_Pos                _U_(9)                                               /**< (US_IDR) TXEMPTY Interrupt Disable Position */
+#define US_IDR_LON_TXEMPTY_Msk                (_U_(0x1) << US_IDR_LON_TXEMPTY_Pos)                 /**< (US_IDR) TXEMPTY Interrupt Disable Mask */
+#define US_IDR_LON_TXEMPTY(value)             (US_IDR_LON_TXEMPTY_Msk & ((value) << US_IDR_LON_TXEMPTY_Pos))
+#define US_IDR_LON_UNRE_Pos                   _U_(10)                                              /**< (US_IDR) SPI Underrun Error Interrupt Disable Position */
+#define US_IDR_LON_UNRE_Msk                   (_U_(0x1) << US_IDR_LON_UNRE_Pos)                    /**< (US_IDR) SPI Underrun Error Interrupt Disable Mask */
+#define US_IDR_LON_UNRE(value)                (US_IDR_LON_UNRE_Msk & ((value) << US_IDR_LON_UNRE_Pos))
 #define US_IDR_LON_LTXD_Pos                   _U_(24)                                              /**< (US_IDR) LON Transmission Done Interrupt Disable Position */
 #define US_IDR_LON_LTXD_Msk                   (_U_(0x1) << US_IDR_LON_LTXD_Pos)                    /**< (US_IDR) LON Transmission Done Interrupt Disable Mask */
 #define US_IDR_LON_LTXD(value)                (US_IDR_LON_LTXD_Msk & ((value) << US_IDR_LON_LTXD_Pos))
@@ -491,76 +675,103 @@
 #define US_IDR_LON_LBLOVFE_Pos                _U_(28)                                              /**< (US_IDR) LON Backlog Overflow Error Interrupt Disable Position */
 #define US_IDR_LON_LBLOVFE_Msk                (_U_(0x1) << US_IDR_LON_LBLOVFE_Pos)                 /**< (US_IDR) LON Backlog Overflow Error Interrupt Disable Mask */
 #define US_IDR_LON_LBLOVFE(value)             (US_IDR_LON_LBLOVFE_Msk & ((value) << US_IDR_LON_LBLOVFE_Pos))
-#define US_IDR_LON_Msk                        _U_(0x1F0000C0)                                       /**< (US_IDR_LON) Register Mask  */
-
-/* LON_SPI mode */
-#define US_IDR_LON_SPI_UNRE_Pos               _U_(10)                                              /**< (US_IDR) SPI Underrun Error Interrupt Disable Position */
-#define US_IDR_LON_SPI_UNRE_Msk               (_U_(0x1) << US_IDR_LON_SPI_UNRE_Pos)                /**< (US_IDR) SPI Underrun Error Interrupt Disable Mask */
-#define US_IDR_LON_SPI_UNRE(value)            (US_IDR_LON_SPI_UNRE_Msk & ((value) << US_IDR_LON_SPI_UNRE_Pos))
-#define US_IDR_LON_SPI_Msk                    _U_(0x00000400)                                       /**< (US_IDR_LON_SPI) Register Mask  */
+#define US_IDR_LON_Msk                        _U_(0x1F0006E3)                                       /**< (US_IDR_LON) Register Mask  */
 
 
 /* -------- US_IMR : (USART Offset: 0x10) ( R/ 32) Interrupt Mask Register -------- */
-#define US_IMR_RXRDY_Pos                      _U_(0)                                               /**< (US_IMR) RXRDY Interrupt Mask Position */
-#define US_IMR_RXRDY_Msk                      (_U_(0x1) << US_IMR_RXRDY_Pos)                       /**< (US_IMR) RXRDY Interrupt Mask Mask */
-#define US_IMR_RXRDY(value)                   (US_IMR_RXRDY_Msk & ((value) << US_IMR_RXRDY_Pos))  
-#define US_IMR_TXRDY_Pos                      _U_(1)                                               /**< (US_IMR) TXRDY Interrupt Mask Position */
-#define US_IMR_TXRDY_Msk                      (_U_(0x1) << US_IMR_TXRDY_Pos)                       /**< (US_IMR) TXRDY Interrupt Mask Mask */
-#define US_IMR_TXRDY(value)                   (US_IMR_TXRDY_Msk & ((value) << US_IMR_TXRDY_Pos))  
-#define US_IMR_OVRE_Pos                       _U_(5)                                               /**< (US_IMR) Overrun Error Interrupt Mask Position */
-#define US_IMR_OVRE_Msk                       (_U_(0x1) << US_IMR_OVRE_Pos)                        /**< (US_IMR) Overrun Error Interrupt Mask Mask */
-#define US_IMR_OVRE(value)                    (US_IMR_OVRE_Msk & ((value) << US_IMR_OVRE_Pos))    
-#define US_IMR_TXEMPTY_Pos                    _U_(9)                                               /**< (US_IMR) TXEMPTY Interrupt Mask Position */
-#define US_IMR_TXEMPTY_Msk                    (_U_(0x1) << US_IMR_TXEMPTY_Pos)                     /**< (US_IMR) TXEMPTY Interrupt Mask Mask */
-#define US_IMR_TXEMPTY(value)                 (US_IMR_TXEMPTY_Msk & ((value) << US_IMR_TXEMPTY_Pos))
-#define US_IMR_RIIC_Pos                       _U_(16)                                              /**< (US_IMR) Ring Indicator Input Change Mask Position */
-#define US_IMR_RIIC_Msk                       (_U_(0x1) << US_IMR_RIIC_Pos)                        /**< (US_IMR) Ring Indicator Input Change Mask Mask */
-#define US_IMR_RIIC(value)                    (US_IMR_RIIC_Msk & ((value) << US_IMR_RIIC_Pos))    
-#define US_IMR_DSRIC_Pos                      _U_(17)                                              /**< (US_IMR) Data Set Ready Input Change Mask Position */
-#define US_IMR_DSRIC_Msk                      (_U_(0x1) << US_IMR_DSRIC_Pos)                       /**< (US_IMR) Data Set Ready Input Change Mask Mask */
-#define US_IMR_DSRIC(value)                   (US_IMR_DSRIC_Msk & ((value) << US_IMR_DSRIC_Pos))  
-#define US_IMR_DCDIC_Pos                      _U_(18)                                              /**< (US_IMR) Data Carrier Detect Input Change Interrupt Mask Position */
-#define US_IMR_DCDIC_Msk                      (_U_(0x1) << US_IMR_DCDIC_Pos)                       /**< (US_IMR) Data Carrier Detect Input Change Interrupt Mask Mask */
-#define US_IMR_DCDIC(value)                   (US_IMR_DCDIC_Msk & ((value) << US_IMR_DCDIC_Pos))  
-#define US_IMR_Msk                            _U_(0x00070223)                                      /**< (US_IMR) Register Mask  */
+#define US_IMR_Msk                            _U_(0x00000000)                                      /**< (US_IMR) Register Mask  */
 
 /* USART mode */
+#define US_IMR_USART_RXRDY_Pos                _U_(0)                                               /**< (US_IMR) RXRDY Interrupt Mask Position */
+#define US_IMR_USART_RXRDY_Msk                (_U_(0x1) << US_IMR_USART_RXRDY_Pos)                 /**< (US_IMR) RXRDY Interrupt Mask Mask */
+#define US_IMR_USART_RXRDY(value)             (US_IMR_USART_RXRDY_Msk & ((value) << US_IMR_USART_RXRDY_Pos))
+#define US_IMR_USART_TXRDY_Pos                _U_(1)                                               /**< (US_IMR) TXRDY Interrupt Mask Position */
+#define US_IMR_USART_TXRDY_Msk                (_U_(0x1) << US_IMR_USART_TXRDY_Pos)                 /**< (US_IMR) TXRDY Interrupt Mask Mask */
+#define US_IMR_USART_TXRDY(value)             (US_IMR_USART_TXRDY_Msk & ((value) << US_IMR_USART_TXRDY_Pos))
 #define US_IMR_USART_RXBRK_Pos                _U_(2)                                               /**< (US_IMR) Receiver Break Interrupt Mask Position */
 #define US_IMR_USART_RXBRK_Msk                (_U_(0x1) << US_IMR_USART_RXBRK_Pos)                 /**< (US_IMR) Receiver Break Interrupt Mask Mask */
 #define US_IMR_USART_RXBRK(value)             (US_IMR_USART_RXBRK_Msk & ((value) << US_IMR_USART_RXBRK_Pos))
+#define US_IMR_USART_OVRE_Pos                 _U_(5)                                               /**< (US_IMR) Overrun Error Interrupt Mask Position */
+#define US_IMR_USART_OVRE_Msk                 (_U_(0x1) << US_IMR_USART_OVRE_Pos)                  /**< (US_IMR) Overrun Error Interrupt Mask Mask */
+#define US_IMR_USART_OVRE(value)              (US_IMR_USART_OVRE_Msk & ((value) << US_IMR_USART_OVRE_Pos))
+#define US_IMR_USART_FRAME_Pos                _U_(6)                                               /**< (US_IMR) Framing Error Interrupt Mask Position */
+#define US_IMR_USART_FRAME_Msk                (_U_(0x1) << US_IMR_USART_FRAME_Pos)                 /**< (US_IMR) Framing Error Interrupt Mask Mask */
+#define US_IMR_USART_FRAME(value)             (US_IMR_USART_FRAME_Msk & ((value) << US_IMR_USART_FRAME_Pos))
+#define US_IMR_USART_PARE_Pos                 _U_(7)                                               /**< (US_IMR) Parity Error Interrupt Mask Position */
+#define US_IMR_USART_PARE_Msk                 (_U_(0x1) << US_IMR_USART_PARE_Pos)                  /**< (US_IMR) Parity Error Interrupt Mask Mask */
+#define US_IMR_USART_PARE(value)              (US_IMR_USART_PARE_Msk & ((value) << US_IMR_USART_PARE_Pos))
+#define US_IMR_USART_TIMEOUT_Pos              _U_(8)                                               /**< (US_IMR) Timeout Interrupt Mask Position */
+#define US_IMR_USART_TIMEOUT_Msk              (_U_(0x1) << US_IMR_USART_TIMEOUT_Pos)               /**< (US_IMR) Timeout Interrupt Mask Mask */
+#define US_IMR_USART_TIMEOUT(value)           (US_IMR_USART_TIMEOUT_Msk & ((value) << US_IMR_USART_TIMEOUT_Pos))
+#define US_IMR_USART_TXEMPTY_Pos              _U_(9)                                               /**< (US_IMR) TXEMPTY Interrupt Mask Position */
+#define US_IMR_USART_TXEMPTY_Msk              (_U_(0x1) << US_IMR_USART_TXEMPTY_Pos)               /**< (US_IMR) TXEMPTY Interrupt Mask Mask */
+#define US_IMR_USART_TXEMPTY(value)           (US_IMR_USART_TXEMPTY_Msk & ((value) << US_IMR_USART_TXEMPTY_Pos))
 #define US_IMR_USART_ITER_Pos                 _U_(10)                                              /**< (US_IMR) Max Number of Repetitions Reached Interrupt Mask Position */
 #define US_IMR_USART_ITER_Msk                 (_U_(0x1) << US_IMR_USART_ITER_Pos)                  /**< (US_IMR) Max Number of Repetitions Reached Interrupt Mask Mask */
 #define US_IMR_USART_ITER(value)              (US_IMR_USART_ITER_Msk & ((value) << US_IMR_USART_ITER_Pos))
 #define US_IMR_USART_NACK_Pos                 _U_(13)                                              /**< (US_IMR) Non Acknowledge Interrupt Mask Position */
 #define US_IMR_USART_NACK_Msk                 (_U_(0x1) << US_IMR_USART_NACK_Pos)                  /**< (US_IMR) Non Acknowledge Interrupt Mask Mask */
 #define US_IMR_USART_NACK(value)              (US_IMR_USART_NACK_Msk & ((value) << US_IMR_USART_NACK_Pos))
+#define US_IMR_USART_RIIC_Pos                 _U_(16)                                              /**< (US_IMR) Ring Indicator Input Change Mask Position */
+#define US_IMR_USART_RIIC_Msk                 (_U_(0x1) << US_IMR_USART_RIIC_Pos)                  /**< (US_IMR) Ring Indicator Input Change Mask Mask */
+#define US_IMR_USART_RIIC(value)              (US_IMR_USART_RIIC_Msk & ((value) << US_IMR_USART_RIIC_Pos))
+#define US_IMR_USART_DSRIC_Pos                _U_(17)                                              /**< (US_IMR) Data Set Ready Input Change Mask Position */
+#define US_IMR_USART_DSRIC_Msk                (_U_(0x1) << US_IMR_USART_DSRIC_Pos)                 /**< (US_IMR) Data Set Ready Input Change Mask Mask */
+#define US_IMR_USART_DSRIC(value)             (US_IMR_USART_DSRIC_Msk & ((value) << US_IMR_USART_DSRIC_Pos))
+#define US_IMR_USART_DCDIC_Pos                _U_(18)                                              /**< (US_IMR) Data Carrier Detect Input Change Interrupt Mask Position */
+#define US_IMR_USART_DCDIC_Msk                (_U_(0x1) << US_IMR_USART_DCDIC_Pos)                 /**< (US_IMR) Data Carrier Detect Input Change Interrupt Mask Mask */
+#define US_IMR_USART_DCDIC(value)             (US_IMR_USART_DCDIC_Msk & ((value) << US_IMR_USART_DCDIC_Pos))
 #define US_IMR_USART_CTSIC_Pos                _U_(19)                                              /**< (US_IMR) Clear to Send Input Change Interrupt Mask Position */
 #define US_IMR_USART_CTSIC_Msk                (_U_(0x1) << US_IMR_USART_CTSIC_Pos)                 /**< (US_IMR) Clear to Send Input Change Interrupt Mask Mask */
 #define US_IMR_USART_CTSIC(value)             (US_IMR_USART_CTSIC_Msk & ((value) << US_IMR_USART_CTSIC_Pos))
 #define US_IMR_USART_MANE_Pos                 _U_(24)                                              /**< (US_IMR) Manchester Error Interrupt Mask Position */
 #define US_IMR_USART_MANE_Msk                 (_U_(0x1) << US_IMR_USART_MANE_Pos)                  /**< (US_IMR) Manchester Error Interrupt Mask Mask */
 #define US_IMR_USART_MANE(value)              (US_IMR_USART_MANE_Msk & ((value) << US_IMR_USART_MANE_Pos))
-#define US_IMR_USART_Msk                      _U_(0x01082404)                                       /**< (US_IMR_USART) Register Mask  */
-
-/* USART_LIN mode */
-#define US_IMR_USART_LIN_FRAME_Pos            _U_(6)                                               /**< (US_IMR) Framing Error Interrupt Mask Position */
-#define US_IMR_USART_LIN_FRAME_Msk            (_U_(0x1) << US_IMR_USART_LIN_FRAME_Pos)             /**< (US_IMR) Framing Error Interrupt Mask Mask */
-#define US_IMR_USART_LIN_FRAME(value)         (US_IMR_USART_LIN_FRAME_Msk & ((value) << US_IMR_USART_LIN_FRAME_Pos))
-#define US_IMR_USART_LIN_PARE_Pos             _U_(7)                                               /**< (US_IMR) Parity Error Interrupt Mask Position */
-#define US_IMR_USART_LIN_PARE_Msk             (_U_(0x1) << US_IMR_USART_LIN_PARE_Pos)              /**< (US_IMR) Parity Error Interrupt Mask Mask */
-#define US_IMR_USART_LIN_PARE(value)          (US_IMR_USART_LIN_PARE_Msk & ((value) << US_IMR_USART_LIN_PARE_Pos))
-#define US_IMR_USART_LIN_TIMEOUT_Pos          _U_(8)                                               /**< (US_IMR) Timeout Interrupt Mask Position */
-#define US_IMR_USART_LIN_TIMEOUT_Msk          (_U_(0x1) << US_IMR_USART_LIN_TIMEOUT_Pos)           /**< (US_IMR) Timeout Interrupt Mask Mask */
-#define US_IMR_USART_LIN_TIMEOUT(value)       (US_IMR_USART_LIN_TIMEOUT_Msk & ((value) << US_IMR_USART_LIN_TIMEOUT_Pos))
-#define US_IMR_USART_LIN_Msk                  _U_(0x000001C0)                                       /**< (US_IMR_USART_LIN) Register Mask  */
+#define US_IMR_USART_Msk                      _U_(0x010F27E7)                                       /**< (US_IMR_USART) Register Mask  */
 
 /* SPI mode */
+#define US_IMR_SPI_RXRDY_Pos                  _U_(0)                                               /**< (US_IMR) RXRDY Interrupt Mask Position */
+#define US_IMR_SPI_RXRDY_Msk                  (_U_(0x1) << US_IMR_SPI_RXRDY_Pos)                   /**< (US_IMR) RXRDY Interrupt Mask Mask */
+#define US_IMR_SPI_RXRDY(value)               (US_IMR_SPI_RXRDY_Msk & ((value) << US_IMR_SPI_RXRDY_Pos))
+#define US_IMR_SPI_TXRDY_Pos                  _U_(1)                                               /**< (US_IMR) TXRDY Interrupt Mask Position */
+#define US_IMR_SPI_TXRDY_Msk                  (_U_(0x1) << US_IMR_SPI_TXRDY_Pos)                   /**< (US_IMR) TXRDY Interrupt Mask Mask */
+#define US_IMR_SPI_TXRDY(value)               (US_IMR_SPI_TXRDY_Msk & ((value) << US_IMR_SPI_TXRDY_Pos))
+#define US_IMR_SPI_OVRE_Pos                   _U_(5)                                               /**< (US_IMR) Overrun Error Interrupt Mask Position */
+#define US_IMR_SPI_OVRE_Msk                   (_U_(0x1) << US_IMR_SPI_OVRE_Pos)                    /**< (US_IMR) Overrun Error Interrupt Mask Mask */
+#define US_IMR_SPI_OVRE(value)                (US_IMR_SPI_OVRE_Msk & ((value) << US_IMR_SPI_OVRE_Pos))
+#define US_IMR_SPI_TXEMPTY_Pos                _U_(9)                                               /**< (US_IMR) TXEMPTY Interrupt Mask Position */
+#define US_IMR_SPI_TXEMPTY_Msk                (_U_(0x1) << US_IMR_SPI_TXEMPTY_Pos)                 /**< (US_IMR) TXEMPTY Interrupt Mask Mask */
+#define US_IMR_SPI_TXEMPTY(value)             (US_IMR_SPI_TXEMPTY_Msk & ((value) << US_IMR_SPI_TXEMPTY_Pos))
+#define US_IMR_SPI_UNRE_Pos                   _U_(10)                                              /**< (US_IMR) SPI Underrun Error Interrupt Mask Position */
+#define US_IMR_SPI_UNRE_Msk                   (_U_(0x1) << US_IMR_SPI_UNRE_Pos)                    /**< (US_IMR) SPI Underrun Error Interrupt Mask Mask */
+#define US_IMR_SPI_UNRE(value)                (US_IMR_SPI_UNRE_Msk & ((value) << US_IMR_SPI_UNRE_Pos))
 #define US_IMR_SPI_NSSE_Pos                   _U_(19)                                              /**< (US_IMR) NSS Line (Driving CTS Pin) Rising or Falling Edge Event Position */
 #define US_IMR_SPI_NSSE_Msk                   (_U_(0x1) << US_IMR_SPI_NSSE_Pos)                    /**< (US_IMR) NSS Line (Driving CTS Pin) Rising or Falling Edge Event Mask */
 #define US_IMR_SPI_NSSE(value)                (US_IMR_SPI_NSSE_Msk & ((value) << US_IMR_SPI_NSSE_Pos))
-#define US_IMR_SPI_Msk                        _U_(0x00080000)                                       /**< (US_IMR_SPI) Register Mask  */
+#define US_IMR_SPI_Msk                        _U_(0x00080623)                                       /**< (US_IMR_SPI) Register Mask  */
 
 /* LIN mode */
+#define US_IMR_LIN_RXRDY_Pos                  _U_(0)                                               /**< (US_IMR) RXRDY Interrupt Mask Position */
+#define US_IMR_LIN_RXRDY_Msk                  (_U_(0x1) << US_IMR_LIN_RXRDY_Pos)                   /**< (US_IMR) RXRDY Interrupt Mask Mask */
+#define US_IMR_LIN_RXRDY(value)               (US_IMR_LIN_RXRDY_Msk & ((value) << US_IMR_LIN_RXRDY_Pos))
+#define US_IMR_LIN_TXRDY_Pos                  _U_(1)                                               /**< (US_IMR) TXRDY Interrupt Mask Position */
+#define US_IMR_LIN_TXRDY_Msk                  (_U_(0x1) << US_IMR_LIN_TXRDY_Pos)                   /**< (US_IMR) TXRDY Interrupt Mask Mask */
+#define US_IMR_LIN_TXRDY(value)               (US_IMR_LIN_TXRDY_Msk & ((value) << US_IMR_LIN_TXRDY_Pos))
+#define US_IMR_LIN_OVRE_Pos                   _U_(5)                                               /**< (US_IMR) Overrun Error Interrupt Mask Position */
+#define US_IMR_LIN_OVRE_Msk                   (_U_(0x1) << US_IMR_LIN_OVRE_Pos)                    /**< (US_IMR) Overrun Error Interrupt Mask Mask */
+#define US_IMR_LIN_OVRE(value)                (US_IMR_LIN_OVRE_Msk & ((value) << US_IMR_LIN_OVRE_Pos))
+#define US_IMR_LIN_FRAME_Pos                  _U_(6)                                               /**< (US_IMR) Framing Error Interrupt Mask Position */
+#define US_IMR_LIN_FRAME_Msk                  (_U_(0x1) << US_IMR_LIN_FRAME_Pos)                   /**< (US_IMR) Framing Error Interrupt Mask Mask */
+#define US_IMR_LIN_FRAME(value)               (US_IMR_LIN_FRAME_Msk & ((value) << US_IMR_LIN_FRAME_Pos))
+#define US_IMR_LIN_PARE_Pos                   _U_(7)                                               /**< (US_IMR) Parity Error Interrupt Mask Position */
+#define US_IMR_LIN_PARE_Msk                   (_U_(0x1) << US_IMR_LIN_PARE_Pos)                    /**< (US_IMR) Parity Error Interrupt Mask Mask */
+#define US_IMR_LIN_PARE(value)                (US_IMR_LIN_PARE_Msk & ((value) << US_IMR_LIN_PARE_Pos))
+#define US_IMR_LIN_TIMEOUT_Pos                _U_(8)                                               /**< (US_IMR) Timeout Interrupt Mask Position */
+#define US_IMR_LIN_TIMEOUT_Msk                (_U_(0x1) << US_IMR_LIN_TIMEOUT_Pos)                 /**< (US_IMR) Timeout Interrupt Mask Mask */
+#define US_IMR_LIN_TIMEOUT(value)             (US_IMR_LIN_TIMEOUT_Msk & ((value) << US_IMR_LIN_TIMEOUT_Pos))
+#define US_IMR_LIN_TXEMPTY_Pos                _U_(9)                                               /**< (US_IMR) TXEMPTY Interrupt Mask Position */
+#define US_IMR_LIN_TXEMPTY_Msk                (_U_(0x1) << US_IMR_LIN_TXEMPTY_Pos)                 /**< (US_IMR) TXEMPTY Interrupt Mask Mask */
+#define US_IMR_LIN_TXEMPTY(value)             (US_IMR_LIN_TXEMPTY_Msk & ((value) << US_IMR_LIN_TXEMPTY_Pos))
 #define US_IMR_LIN_LINBK_Pos                  _U_(13)                                              /**< (US_IMR) LIN Break Sent or LIN Break Received Interrupt Mask Position */
 #define US_IMR_LIN_LINBK_Msk                  (_U_(0x1) << US_IMR_LIN_LINBK_Pos)                   /**< (US_IMR) LIN Break Sent or LIN Break Received Interrupt Mask Mask */
 #define US_IMR_LIN_LINBK(value)               (US_IMR_LIN_LINBK_Msk & ((value) << US_IMR_LIN_LINBK_Pos))
@@ -591,15 +802,30 @@
 #define US_IMR_LIN_LINHTE_Pos                 _U_(31)                                              /**< (US_IMR) LIN Header Timeout Error Interrupt Mask Position */
 #define US_IMR_LIN_LINHTE_Msk                 (_U_(0x1) << US_IMR_LIN_LINHTE_Pos)                  /**< (US_IMR) LIN Header Timeout Error Interrupt Mask Mask */
 #define US_IMR_LIN_LINHTE(value)              (US_IMR_LIN_LINHTE_Msk & ((value) << US_IMR_LIN_LINHTE_Pos))
-#define US_IMR_LIN_Msk                        _U_(0xFE00E000)                                       /**< (US_IMR_LIN) Register Mask  */
+#define US_IMR_LIN_Msk                        _U_(0xFE00E3E3)                                       /**< (US_IMR_LIN) Register Mask  */
 
 /* LON mode */
+#define US_IMR_LON_RXRDY_Pos                  _U_(0)                                               /**< (US_IMR) RXRDY Interrupt Mask Position */
+#define US_IMR_LON_RXRDY_Msk                  (_U_(0x1) << US_IMR_LON_RXRDY_Pos)                   /**< (US_IMR) RXRDY Interrupt Mask Mask */
+#define US_IMR_LON_RXRDY(value)               (US_IMR_LON_RXRDY_Msk & ((value) << US_IMR_LON_RXRDY_Pos))
+#define US_IMR_LON_TXRDY_Pos                  _U_(1)                                               /**< (US_IMR) TXRDY Interrupt Mask Position */
+#define US_IMR_LON_TXRDY_Msk                  (_U_(0x1) << US_IMR_LON_TXRDY_Pos)                   /**< (US_IMR) TXRDY Interrupt Mask Mask */
+#define US_IMR_LON_TXRDY(value)               (US_IMR_LON_TXRDY_Msk & ((value) << US_IMR_LON_TXRDY_Pos))
+#define US_IMR_LON_OVRE_Pos                   _U_(5)                                               /**< (US_IMR) Overrun Error Interrupt Mask Position */
+#define US_IMR_LON_OVRE_Msk                   (_U_(0x1) << US_IMR_LON_OVRE_Pos)                    /**< (US_IMR) Overrun Error Interrupt Mask Mask */
+#define US_IMR_LON_OVRE(value)                (US_IMR_LON_OVRE_Msk & ((value) << US_IMR_LON_OVRE_Pos))
 #define US_IMR_LON_LSFE_Pos                   _U_(6)                                               /**< (US_IMR) LON Short Frame Error Interrupt Mask Position */
 #define US_IMR_LON_LSFE_Msk                   (_U_(0x1) << US_IMR_LON_LSFE_Pos)                    /**< (US_IMR) LON Short Frame Error Interrupt Mask Mask */
 #define US_IMR_LON_LSFE(value)                (US_IMR_LON_LSFE_Msk & ((value) << US_IMR_LON_LSFE_Pos))
 #define US_IMR_LON_LCRCE_Pos                  _U_(7)                                               /**< (US_IMR) LON CRC Error Interrupt Mask Position */
 #define US_IMR_LON_LCRCE_Msk                  (_U_(0x1) << US_IMR_LON_LCRCE_Pos)                   /**< (US_IMR) LON CRC Error Interrupt Mask Mask */
 #define US_IMR_LON_LCRCE(value)               (US_IMR_LON_LCRCE_Msk & ((value) << US_IMR_LON_LCRCE_Pos))
+#define US_IMR_LON_TXEMPTY_Pos                _U_(9)                                               /**< (US_IMR) TXEMPTY Interrupt Mask Position */
+#define US_IMR_LON_TXEMPTY_Msk                (_U_(0x1) << US_IMR_LON_TXEMPTY_Pos)                 /**< (US_IMR) TXEMPTY Interrupt Mask Mask */
+#define US_IMR_LON_TXEMPTY(value)             (US_IMR_LON_TXEMPTY_Msk & ((value) << US_IMR_LON_TXEMPTY_Pos))
+#define US_IMR_LON_UNRE_Pos                   _U_(10)                                              /**< (US_IMR) SPI Underrun Error Interrupt Mask Position */
+#define US_IMR_LON_UNRE_Msk                   (_U_(0x1) << US_IMR_LON_UNRE_Pos)                    /**< (US_IMR) SPI Underrun Error Interrupt Mask Mask */
+#define US_IMR_LON_UNRE(value)                (US_IMR_LON_UNRE_Msk & ((value) << US_IMR_LON_UNRE_Pos))
 #define US_IMR_LON_LTXD_Pos                   _U_(24)                                              /**< (US_IMR) LON Transmission Done Interrupt Mask Position */
 #define US_IMR_LON_LTXD_Msk                   (_U_(0x1) << US_IMR_LON_LTXD_Pos)                    /**< (US_IMR) LON Transmission Done Interrupt Mask Mask */
 #define US_IMR_LON_LTXD(value)                (US_IMR_LON_LTXD_Msk & ((value) << US_IMR_LON_LTXD_Pos))
@@ -615,49 +841,52 @@
 #define US_IMR_LON_LBLOVFE_Pos                _U_(28)                                              /**< (US_IMR) LON Backlog Overflow Error Interrupt Mask Position */
 #define US_IMR_LON_LBLOVFE_Msk                (_U_(0x1) << US_IMR_LON_LBLOVFE_Pos)                 /**< (US_IMR) LON Backlog Overflow Error Interrupt Mask Mask */
 #define US_IMR_LON_LBLOVFE(value)             (US_IMR_LON_LBLOVFE_Msk & ((value) << US_IMR_LON_LBLOVFE_Pos))
-#define US_IMR_LON_Msk                        _U_(0x1F0000C0)                                       /**< (US_IMR_LON) Register Mask  */
-
-/* LON_SPI mode */
-#define US_IMR_LON_SPI_UNRE_Pos               _U_(10)                                              /**< (US_IMR) SPI Underrun Error Interrupt Mask Position */
-#define US_IMR_LON_SPI_UNRE_Msk               (_U_(0x1) << US_IMR_LON_SPI_UNRE_Pos)                /**< (US_IMR) SPI Underrun Error Interrupt Mask Mask */
-#define US_IMR_LON_SPI_UNRE(value)            (US_IMR_LON_SPI_UNRE_Msk & ((value) << US_IMR_LON_SPI_UNRE_Pos))
-#define US_IMR_LON_SPI_Msk                    _U_(0x00000400)                                       /**< (US_IMR_LON_SPI) Register Mask  */
+#define US_IMR_LON_Msk                        _U_(0x1F0006E3)                                       /**< (US_IMR_LON) Register Mask  */
 
 
 /* -------- US_CSR : (USART Offset: 0x14) ( R/ 32) Channel Status Register -------- */
-#define US_CSR_RXRDY_Pos                      _U_(0)                                               /**< (US_CSR) Receiver Ready (cleared by reading US_RHR) Position */
-#define US_CSR_RXRDY_Msk                      (_U_(0x1) << US_CSR_RXRDY_Pos)                       /**< (US_CSR) Receiver Ready (cleared by reading US_RHR) Mask */
-#define US_CSR_RXRDY(value)                   (US_CSR_RXRDY_Msk & ((value) << US_CSR_RXRDY_Pos))  
-#define US_CSR_TXRDY_Pos                      _U_(1)                                               /**< (US_CSR) Transmitter Ready (cleared by writing US_THR) Position */
-#define US_CSR_TXRDY_Msk                      (_U_(0x1) << US_CSR_TXRDY_Pos)                       /**< (US_CSR) Transmitter Ready (cleared by writing US_THR) Mask */
-#define US_CSR_TXRDY(value)                   (US_CSR_TXRDY_Msk & ((value) << US_CSR_TXRDY_Pos))  
-#define US_CSR_OVRE_Pos                       _U_(5)                                               /**< (US_CSR) Overrun Error (cleared by writing a one to bit US_CR.RSTSTA) Position */
-#define US_CSR_OVRE_Msk                       (_U_(0x1) << US_CSR_OVRE_Pos)                        /**< (US_CSR) Overrun Error (cleared by writing a one to bit US_CR.RSTSTA) Mask */
-#define US_CSR_OVRE(value)                    (US_CSR_OVRE_Msk & ((value) << US_CSR_OVRE_Pos))    
-#define US_CSR_TXEMPTY_Pos                    _U_(9)                                               /**< (US_CSR) Transmitter Empty (cleared by writing US_THR) Position */
-#define US_CSR_TXEMPTY_Msk                    (_U_(0x1) << US_CSR_TXEMPTY_Pos)                     /**< (US_CSR) Transmitter Empty (cleared by writing US_THR) Mask */
-#define US_CSR_TXEMPTY(value)                 (US_CSR_TXEMPTY_Msk & ((value) << US_CSR_TXEMPTY_Pos))
-#define US_CSR_RIIC_Pos                       _U_(16)                                              /**< (US_CSR) Ring Indicator Input Change Flag (cleared on read) Position */
-#define US_CSR_RIIC_Msk                       (_U_(0x1) << US_CSR_RIIC_Pos)                        /**< (US_CSR) Ring Indicator Input Change Flag (cleared on read) Mask */
-#define US_CSR_RIIC(value)                    (US_CSR_RIIC_Msk & ((value) << US_CSR_RIIC_Pos))    
-#define US_CSR_DSRIC_Pos                      _U_(17)                                              /**< (US_CSR) Data Set Ready Input Change Flag (cleared on read) Position */
-#define US_CSR_DSRIC_Msk                      (_U_(0x1) << US_CSR_DSRIC_Pos)                       /**< (US_CSR) Data Set Ready Input Change Flag (cleared on read) Mask */
-#define US_CSR_DSRIC(value)                   (US_CSR_DSRIC_Msk & ((value) << US_CSR_DSRIC_Pos))  
-#define US_CSR_DCDIC_Pos                      _U_(18)                                              /**< (US_CSR) Data Carrier Detect Input Change Flag (cleared on read) Position */
-#define US_CSR_DCDIC_Msk                      (_U_(0x1) << US_CSR_DCDIC_Pos)                       /**< (US_CSR) Data Carrier Detect Input Change Flag (cleared on read) Mask */
-#define US_CSR_DCDIC(value)                   (US_CSR_DCDIC_Msk & ((value) << US_CSR_DCDIC_Pos))  
-#define US_CSR_Msk                            _U_(0x00070223)                                      /**< (US_CSR) Register Mask  */
+#define US_CSR_Msk                            _U_(0x00000000)                                      /**< (US_CSR) Register Mask  */
 
 /* USART mode */
+#define US_CSR_USART_RXRDY_Pos                _U_(0)                                               /**< (US_CSR) Receiver Ready (cleared by reading US_RHR) Position */
+#define US_CSR_USART_RXRDY_Msk                (_U_(0x1) << US_CSR_USART_RXRDY_Pos)                 /**< (US_CSR) Receiver Ready (cleared by reading US_RHR) Mask */
+#define US_CSR_USART_RXRDY(value)             (US_CSR_USART_RXRDY_Msk & ((value) << US_CSR_USART_RXRDY_Pos))
+#define US_CSR_USART_TXRDY_Pos                _U_(1)                                               /**< (US_CSR) Transmitter Ready (cleared by writing US_THR) Position */
+#define US_CSR_USART_TXRDY_Msk                (_U_(0x1) << US_CSR_USART_TXRDY_Pos)                 /**< (US_CSR) Transmitter Ready (cleared by writing US_THR) Mask */
+#define US_CSR_USART_TXRDY(value)             (US_CSR_USART_TXRDY_Msk & ((value) << US_CSR_USART_TXRDY_Pos))
 #define US_CSR_USART_RXBRK_Pos                _U_(2)                                               /**< (US_CSR) Break Received/End of Break (cleared by writing a one to bit US_CR.RSTSTA) Position */
 #define US_CSR_USART_RXBRK_Msk                (_U_(0x1) << US_CSR_USART_RXBRK_Pos)                 /**< (US_CSR) Break Received/End of Break (cleared by writing a one to bit US_CR.RSTSTA) Mask */
 #define US_CSR_USART_RXBRK(value)             (US_CSR_USART_RXBRK_Msk & ((value) << US_CSR_USART_RXBRK_Pos))
+#define US_CSR_USART_OVRE_Pos                 _U_(5)                                               /**< (US_CSR) Overrun Error (cleared by writing a one to bit US_CR.RSTSTA) Position */
+#define US_CSR_USART_OVRE_Msk                 (_U_(0x1) << US_CSR_USART_OVRE_Pos)                  /**< (US_CSR) Overrun Error (cleared by writing a one to bit US_CR.RSTSTA) Mask */
+#define US_CSR_USART_OVRE(value)              (US_CSR_USART_OVRE_Msk & ((value) << US_CSR_USART_OVRE_Pos))
+#define US_CSR_USART_FRAME_Pos                _U_(6)                                               /**< (US_CSR) Framing Error (cleared by writing a one to bit US_CR.RSTSTA) Position */
+#define US_CSR_USART_FRAME_Msk                (_U_(0x1) << US_CSR_USART_FRAME_Pos)                 /**< (US_CSR) Framing Error (cleared by writing a one to bit US_CR.RSTSTA) Mask */
+#define US_CSR_USART_FRAME(value)             (US_CSR_USART_FRAME_Msk & ((value) << US_CSR_USART_FRAME_Pos))
+#define US_CSR_USART_PARE_Pos                 _U_(7)                                               /**< (US_CSR) Parity Error (cleared by writing a one to bit US_CR.RSTSTA) Position */
+#define US_CSR_USART_PARE_Msk                 (_U_(0x1) << US_CSR_USART_PARE_Pos)                  /**< (US_CSR) Parity Error (cleared by writing a one to bit US_CR.RSTSTA) Mask */
+#define US_CSR_USART_PARE(value)              (US_CSR_USART_PARE_Msk & ((value) << US_CSR_USART_PARE_Pos))
+#define US_CSR_USART_TIMEOUT_Pos              _U_(8)                                               /**< (US_CSR) Receiver Timeout (cleared by writing a one to bit US_CR.STTTO) Position */
+#define US_CSR_USART_TIMEOUT_Msk              (_U_(0x1) << US_CSR_USART_TIMEOUT_Pos)               /**< (US_CSR) Receiver Timeout (cleared by writing a one to bit US_CR.STTTO) Mask */
+#define US_CSR_USART_TIMEOUT(value)           (US_CSR_USART_TIMEOUT_Msk & ((value) << US_CSR_USART_TIMEOUT_Pos))
+#define US_CSR_USART_TXEMPTY_Pos              _U_(9)                                               /**< (US_CSR) Transmitter Empty (cleared by writing US_THR) Position */
+#define US_CSR_USART_TXEMPTY_Msk              (_U_(0x1) << US_CSR_USART_TXEMPTY_Pos)               /**< (US_CSR) Transmitter Empty (cleared by writing US_THR) Mask */
+#define US_CSR_USART_TXEMPTY(value)           (US_CSR_USART_TXEMPTY_Msk & ((value) << US_CSR_USART_TXEMPTY_Pos))
 #define US_CSR_USART_ITER_Pos                 _U_(10)                                              /**< (US_CSR) Max Number of Repetitions Reached (cleared by writing a one to bit US_CR.RSTIT) Position */
 #define US_CSR_USART_ITER_Msk                 (_U_(0x1) << US_CSR_USART_ITER_Pos)                  /**< (US_CSR) Max Number of Repetitions Reached (cleared by writing a one to bit US_CR.RSTIT) Mask */
 #define US_CSR_USART_ITER(value)              (US_CSR_USART_ITER_Msk & ((value) << US_CSR_USART_ITER_Pos))
 #define US_CSR_USART_NACK_Pos                 _U_(13)                                              /**< (US_CSR) Non Acknowledge Interrupt (cleared by writing a one to bit US_CR.RSTNACK) Position */
 #define US_CSR_USART_NACK_Msk                 (_U_(0x1) << US_CSR_USART_NACK_Pos)                  /**< (US_CSR) Non Acknowledge Interrupt (cleared by writing a one to bit US_CR.RSTNACK) Mask */
 #define US_CSR_USART_NACK(value)              (US_CSR_USART_NACK_Msk & ((value) << US_CSR_USART_NACK_Pos))
+#define US_CSR_USART_RIIC_Pos                 _U_(16)                                              /**< (US_CSR) Ring Indicator Input Change Flag (cleared on read) Position */
+#define US_CSR_USART_RIIC_Msk                 (_U_(0x1) << US_CSR_USART_RIIC_Pos)                  /**< (US_CSR) Ring Indicator Input Change Flag (cleared on read) Mask */
+#define US_CSR_USART_RIIC(value)              (US_CSR_USART_RIIC_Msk & ((value) << US_CSR_USART_RIIC_Pos))
+#define US_CSR_USART_DSRIC_Pos                _U_(17)                                              /**< (US_CSR) Data Set Ready Input Change Flag (cleared on read) Position */
+#define US_CSR_USART_DSRIC_Msk                (_U_(0x1) << US_CSR_USART_DSRIC_Pos)                 /**< (US_CSR) Data Set Ready Input Change Flag (cleared on read) Mask */
+#define US_CSR_USART_DSRIC(value)             (US_CSR_USART_DSRIC_Msk & ((value) << US_CSR_USART_DSRIC_Pos))
+#define US_CSR_USART_DCDIC_Pos                _U_(18)                                              /**< (US_CSR) Data Carrier Detect Input Change Flag (cleared on read) Position */
+#define US_CSR_USART_DCDIC_Msk                (_U_(0x1) << US_CSR_USART_DCDIC_Pos)                 /**< (US_CSR) Data Carrier Detect Input Change Flag (cleared on read) Mask */
+#define US_CSR_USART_DCDIC(value)             (US_CSR_USART_DCDIC_Msk & ((value) << US_CSR_USART_DCDIC_Pos))
 #define US_CSR_USART_CTSIC_Pos                _U_(19)                                              /**< (US_CSR) Clear to Send Input Change Flag (cleared on read) Position */
 #define US_CSR_USART_CTSIC_Msk                (_U_(0x1) << US_CSR_USART_CTSIC_Pos)                 /**< (US_CSR) Clear to Send Input Change Flag (cleared on read) Mask */
 #define US_CSR_USART_CTSIC(value)             (US_CSR_USART_CTSIC_Msk & ((value) << US_CSR_USART_CTSIC_Pos))
@@ -676,30 +905,54 @@
 #define US_CSR_USART_MANERR_Pos               _U_(24)                                              /**< (US_CSR) Manchester Error (cleared by writing a one to the bit US_CR.RSTSTA) Position */
 #define US_CSR_USART_MANERR_Msk               (_U_(0x1) << US_CSR_USART_MANERR_Pos)                /**< (US_CSR) Manchester Error (cleared by writing a one to the bit US_CR.RSTSTA) Mask */
 #define US_CSR_USART_MANERR(value)            (US_CSR_USART_MANERR_Msk & ((value) << US_CSR_USART_MANERR_Pos))
-#define US_CSR_USART_Msk                      _U_(0x01F82404)                                       /**< (US_CSR_USART) Register Mask  */
-
-/* USART_LIN mode */
-#define US_CSR_USART_LIN_FRAME_Pos            _U_(6)                                               /**< (US_CSR) Framing Error (cleared by writing a one to bit US_CR.RSTSTA) Position */
-#define US_CSR_USART_LIN_FRAME_Msk            (_U_(0x1) << US_CSR_USART_LIN_FRAME_Pos)             /**< (US_CSR) Framing Error (cleared by writing a one to bit US_CR.RSTSTA) Mask */
-#define US_CSR_USART_LIN_FRAME(value)         (US_CSR_USART_LIN_FRAME_Msk & ((value) << US_CSR_USART_LIN_FRAME_Pos))
-#define US_CSR_USART_LIN_PARE_Pos             _U_(7)                                               /**< (US_CSR) Parity Error (cleared by writing a one to bit US_CR.RSTSTA) Position */
-#define US_CSR_USART_LIN_PARE_Msk             (_U_(0x1) << US_CSR_USART_LIN_PARE_Pos)              /**< (US_CSR) Parity Error (cleared by writing a one to bit US_CR.RSTSTA) Mask */
-#define US_CSR_USART_LIN_PARE(value)          (US_CSR_USART_LIN_PARE_Msk & ((value) << US_CSR_USART_LIN_PARE_Pos))
-#define US_CSR_USART_LIN_TIMEOUT_Pos          _U_(8)                                               /**< (US_CSR) Receiver Timeout (cleared by writing a one to bit US_CR.STTTO) Position */
-#define US_CSR_USART_LIN_TIMEOUT_Msk          (_U_(0x1) << US_CSR_USART_LIN_TIMEOUT_Pos)           /**< (US_CSR) Receiver Timeout (cleared by writing a one to bit US_CR.STTTO) Mask */
-#define US_CSR_USART_LIN_TIMEOUT(value)       (US_CSR_USART_LIN_TIMEOUT_Msk & ((value) << US_CSR_USART_LIN_TIMEOUT_Pos))
-#define US_CSR_USART_LIN_Msk                  _U_(0x000001C0)                                       /**< (US_CSR_USART_LIN) Register Mask  */
+#define US_CSR_USART_Msk                      _U_(0x01FF27E7)                                       /**< (US_CSR_USART) Register Mask  */
 
 /* SPI mode */
+#define US_CSR_SPI_RXRDY_Pos                  _U_(0)                                               /**< (US_CSR) Receiver Ready (cleared by reading US_RHR) Position */
+#define US_CSR_SPI_RXRDY_Msk                  (_U_(0x1) << US_CSR_SPI_RXRDY_Pos)                   /**< (US_CSR) Receiver Ready (cleared by reading US_RHR) Mask */
+#define US_CSR_SPI_RXRDY(value)               (US_CSR_SPI_RXRDY_Msk & ((value) << US_CSR_SPI_RXRDY_Pos))
+#define US_CSR_SPI_TXRDY_Pos                  _U_(1)                                               /**< (US_CSR) Transmitter Ready (cleared by writing US_THR) Position */
+#define US_CSR_SPI_TXRDY_Msk                  (_U_(0x1) << US_CSR_SPI_TXRDY_Pos)                   /**< (US_CSR) Transmitter Ready (cleared by writing US_THR) Mask */
+#define US_CSR_SPI_TXRDY(value)               (US_CSR_SPI_TXRDY_Msk & ((value) << US_CSR_SPI_TXRDY_Pos))
+#define US_CSR_SPI_OVRE_Pos                   _U_(5)                                               /**< (US_CSR) Overrun Error (cleared by writing a one to bit US_CR.RSTSTA) Position */
+#define US_CSR_SPI_OVRE_Msk                   (_U_(0x1) << US_CSR_SPI_OVRE_Pos)                    /**< (US_CSR) Overrun Error (cleared by writing a one to bit US_CR.RSTSTA) Mask */
+#define US_CSR_SPI_OVRE(value)                (US_CSR_SPI_OVRE_Msk & ((value) << US_CSR_SPI_OVRE_Pos))
+#define US_CSR_SPI_TXEMPTY_Pos                _U_(9)                                               /**< (US_CSR) Transmitter Empty (cleared by writing US_THR) Position */
+#define US_CSR_SPI_TXEMPTY_Msk                (_U_(0x1) << US_CSR_SPI_TXEMPTY_Pos)                 /**< (US_CSR) Transmitter Empty (cleared by writing US_THR) Mask */
+#define US_CSR_SPI_TXEMPTY(value)             (US_CSR_SPI_TXEMPTY_Msk & ((value) << US_CSR_SPI_TXEMPTY_Pos))
+#define US_CSR_SPI_UNRE_Pos                   _U_(10)                                              /**< (US_CSR) SPI Underrun Error Position */
+#define US_CSR_SPI_UNRE_Msk                   (_U_(0x1) << US_CSR_SPI_UNRE_Pos)                    /**< (US_CSR) SPI Underrun Error Mask */
+#define US_CSR_SPI_UNRE(value)                (US_CSR_SPI_UNRE_Msk & ((value) << US_CSR_SPI_UNRE_Pos))
 #define US_CSR_SPI_NSSE_Pos                   _U_(19)                                              /**< (US_CSR) NSS Line (Driving CTS Pin) Rising or Falling Edge Event Position */
 #define US_CSR_SPI_NSSE_Msk                   (_U_(0x1) << US_CSR_SPI_NSSE_Pos)                    /**< (US_CSR) NSS Line (Driving CTS Pin) Rising or Falling Edge Event Mask */
 #define US_CSR_SPI_NSSE(value)                (US_CSR_SPI_NSSE_Msk & ((value) << US_CSR_SPI_NSSE_Pos))
 #define US_CSR_SPI_NSS_Pos                    _U_(23)                                              /**< (US_CSR) Image of NSS Line Position */
 #define US_CSR_SPI_NSS_Msk                    (_U_(0x1) << US_CSR_SPI_NSS_Pos)                     /**< (US_CSR) Image of NSS Line Mask */
 #define US_CSR_SPI_NSS(value)                 (US_CSR_SPI_NSS_Msk & ((value) << US_CSR_SPI_NSS_Pos))
-#define US_CSR_SPI_Msk                        _U_(0x00880000)                                       /**< (US_CSR_SPI) Register Mask  */
+#define US_CSR_SPI_Msk                        _U_(0x00880623)                                       /**< (US_CSR_SPI) Register Mask  */
 
 /* LIN mode */
+#define US_CSR_LIN_RXRDY_Pos                  _U_(0)                                               /**< (US_CSR) Receiver Ready (cleared by reading US_RHR) Position */
+#define US_CSR_LIN_RXRDY_Msk                  (_U_(0x1) << US_CSR_LIN_RXRDY_Pos)                   /**< (US_CSR) Receiver Ready (cleared by reading US_RHR) Mask */
+#define US_CSR_LIN_RXRDY(value)               (US_CSR_LIN_RXRDY_Msk & ((value) << US_CSR_LIN_RXRDY_Pos))
+#define US_CSR_LIN_TXRDY_Pos                  _U_(1)                                               /**< (US_CSR) Transmitter Ready (cleared by writing US_THR) Position */
+#define US_CSR_LIN_TXRDY_Msk                  (_U_(0x1) << US_CSR_LIN_TXRDY_Pos)                   /**< (US_CSR) Transmitter Ready (cleared by writing US_THR) Mask */
+#define US_CSR_LIN_TXRDY(value)               (US_CSR_LIN_TXRDY_Msk & ((value) << US_CSR_LIN_TXRDY_Pos))
+#define US_CSR_LIN_OVRE_Pos                   _U_(5)                                               /**< (US_CSR) Overrun Error (cleared by writing a one to bit US_CR.RSTSTA) Position */
+#define US_CSR_LIN_OVRE_Msk                   (_U_(0x1) << US_CSR_LIN_OVRE_Pos)                    /**< (US_CSR) Overrun Error (cleared by writing a one to bit US_CR.RSTSTA) Mask */
+#define US_CSR_LIN_OVRE(value)                (US_CSR_LIN_OVRE_Msk & ((value) << US_CSR_LIN_OVRE_Pos))
+#define US_CSR_LIN_FRAME_Pos                  _U_(6)                                               /**< (US_CSR) Framing Error (cleared by writing a one to bit US_CR.RSTSTA) Position */
+#define US_CSR_LIN_FRAME_Msk                  (_U_(0x1) << US_CSR_LIN_FRAME_Pos)                   /**< (US_CSR) Framing Error (cleared by writing a one to bit US_CR.RSTSTA) Mask */
+#define US_CSR_LIN_FRAME(value)               (US_CSR_LIN_FRAME_Msk & ((value) << US_CSR_LIN_FRAME_Pos))
+#define US_CSR_LIN_PARE_Pos                   _U_(7)                                               /**< (US_CSR) Parity Error (cleared by writing a one to bit US_CR.RSTSTA) Position */
+#define US_CSR_LIN_PARE_Msk                   (_U_(0x1) << US_CSR_LIN_PARE_Pos)                    /**< (US_CSR) Parity Error (cleared by writing a one to bit US_CR.RSTSTA) Mask */
+#define US_CSR_LIN_PARE(value)                (US_CSR_LIN_PARE_Msk & ((value) << US_CSR_LIN_PARE_Pos))
+#define US_CSR_LIN_TIMEOUT_Pos                _U_(8)                                               /**< (US_CSR) Receiver Timeout (cleared by writing a one to bit US_CR.STTTO) Position */
+#define US_CSR_LIN_TIMEOUT_Msk                (_U_(0x1) << US_CSR_LIN_TIMEOUT_Pos)                 /**< (US_CSR) Receiver Timeout (cleared by writing a one to bit US_CR.STTTO) Mask */
+#define US_CSR_LIN_TIMEOUT(value)             (US_CSR_LIN_TIMEOUT_Msk & ((value) << US_CSR_LIN_TIMEOUT_Pos))
+#define US_CSR_LIN_TXEMPTY_Pos                _U_(9)                                               /**< (US_CSR) Transmitter Empty (cleared by writing US_THR) Position */
+#define US_CSR_LIN_TXEMPTY_Msk                (_U_(0x1) << US_CSR_LIN_TXEMPTY_Pos)                 /**< (US_CSR) Transmitter Empty (cleared by writing US_THR) Mask */
+#define US_CSR_LIN_TXEMPTY(value)             (US_CSR_LIN_TXEMPTY_Msk & ((value) << US_CSR_LIN_TXEMPTY_Pos))
 #define US_CSR_LIN_LINBK_Pos                  _U_(13)                                              /**< (US_CSR) LIN Break Sent or LIN Break Received Position */
 #define US_CSR_LIN_LINBK_Msk                  (_U_(0x1) << US_CSR_LIN_LINBK_Pos)                   /**< (US_CSR) LIN Break Sent or LIN Break Received Mask */
 #define US_CSR_LIN_LINBK(value)               (US_CSR_LIN_LINBK_Msk & ((value) << US_CSR_LIN_LINBK_Pos))
@@ -733,15 +986,30 @@
 #define US_CSR_LIN_LINHTE_Pos                 _U_(31)                                              /**< (US_CSR) LIN Header Timeout Error Position */
 #define US_CSR_LIN_LINHTE_Msk                 (_U_(0x1) << US_CSR_LIN_LINHTE_Pos)                  /**< (US_CSR) LIN Header Timeout Error Mask */
 #define US_CSR_LIN_LINHTE(value)              (US_CSR_LIN_LINHTE_Msk & ((value) << US_CSR_LIN_LINHTE_Pos))
-#define US_CSR_LIN_Msk                        _U_(0xFE80E000)                                       /**< (US_CSR_LIN) Register Mask  */
+#define US_CSR_LIN_Msk                        _U_(0xFE80E3E3)                                       /**< (US_CSR_LIN) Register Mask  */
 
 /* LON mode */
+#define US_CSR_LON_RXRDY_Pos                  _U_(0)                                               /**< (US_CSR) Receiver Ready (cleared by reading US_RHR) Position */
+#define US_CSR_LON_RXRDY_Msk                  (_U_(0x1) << US_CSR_LON_RXRDY_Pos)                   /**< (US_CSR) Receiver Ready (cleared by reading US_RHR) Mask */
+#define US_CSR_LON_RXRDY(value)               (US_CSR_LON_RXRDY_Msk & ((value) << US_CSR_LON_RXRDY_Pos))
+#define US_CSR_LON_TXRDY_Pos                  _U_(1)                                               /**< (US_CSR) Transmitter Ready (cleared by writing US_THR) Position */
+#define US_CSR_LON_TXRDY_Msk                  (_U_(0x1) << US_CSR_LON_TXRDY_Pos)                   /**< (US_CSR) Transmitter Ready (cleared by writing US_THR) Mask */
+#define US_CSR_LON_TXRDY(value)               (US_CSR_LON_TXRDY_Msk & ((value) << US_CSR_LON_TXRDY_Pos))
+#define US_CSR_LON_OVRE_Pos                   _U_(5)                                               /**< (US_CSR) Overrun Error (cleared by writing a one to bit US_CR.RSTSTA) Position */
+#define US_CSR_LON_OVRE_Msk                   (_U_(0x1) << US_CSR_LON_OVRE_Pos)                    /**< (US_CSR) Overrun Error (cleared by writing a one to bit US_CR.RSTSTA) Mask */
+#define US_CSR_LON_OVRE(value)                (US_CSR_LON_OVRE_Msk & ((value) << US_CSR_LON_OVRE_Pos))
 #define US_CSR_LON_LSFE_Pos                   _U_(6)                                               /**< (US_CSR) LON Short Frame Error Position */
 #define US_CSR_LON_LSFE_Msk                   (_U_(0x1) << US_CSR_LON_LSFE_Pos)                    /**< (US_CSR) LON Short Frame Error Mask */
 #define US_CSR_LON_LSFE(value)                (US_CSR_LON_LSFE_Msk & ((value) << US_CSR_LON_LSFE_Pos))
 #define US_CSR_LON_LCRCE_Pos                  _U_(7)                                               /**< (US_CSR) LON CRC Error Position */
 #define US_CSR_LON_LCRCE_Msk                  (_U_(0x1) << US_CSR_LON_LCRCE_Pos)                   /**< (US_CSR) LON CRC Error Mask */
 #define US_CSR_LON_LCRCE(value)               (US_CSR_LON_LCRCE_Msk & ((value) << US_CSR_LON_LCRCE_Pos))
+#define US_CSR_LON_TXEMPTY_Pos                _U_(9)                                               /**< (US_CSR) Transmitter Empty (cleared by writing US_THR) Position */
+#define US_CSR_LON_TXEMPTY_Msk                (_U_(0x1) << US_CSR_LON_TXEMPTY_Pos)                 /**< (US_CSR) Transmitter Empty (cleared by writing US_THR) Mask */
+#define US_CSR_LON_TXEMPTY(value)             (US_CSR_LON_TXEMPTY_Msk & ((value) << US_CSR_LON_TXEMPTY_Pos))
+#define US_CSR_LON_UNRE_Pos                   _U_(10)                                              /**< (US_CSR) Underrun Error Position */
+#define US_CSR_LON_UNRE_Msk                   (_U_(0x1) << US_CSR_LON_UNRE_Pos)                    /**< (US_CSR) Underrun Error Mask */
+#define US_CSR_LON_UNRE(value)                (US_CSR_LON_UNRE_Msk & ((value) << US_CSR_LON_UNRE_Pos))
 #define US_CSR_LON_LTXD_Pos                   _U_(24)                                              /**< (US_CSR) LON Transmission End Flag Position */
 #define US_CSR_LON_LTXD_Msk                   (_U_(0x1) << US_CSR_LON_LTXD_Pos)                    /**< (US_CSR) LON Transmission End Flag Mask */
 #define US_CSR_LON_LTXD(value)                (US_CSR_LON_LTXD_Msk & ((value) << US_CSR_LON_LTXD_Pos))
@@ -757,13 +1025,7 @@
 #define US_CSR_LON_LBLOVFE_Pos                _U_(28)                                              /**< (US_CSR) LON Backlog Overflow Error Position */
 #define US_CSR_LON_LBLOVFE_Msk                (_U_(0x1) << US_CSR_LON_LBLOVFE_Pos)                 /**< (US_CSR) LON Backlog Overflow Error Mask */
 #define US_CSR_LON_LBLOVFE(value)             (US_CSR_LON_LBLOVFE_Msk & ((value) << US_CSR_LON_LBLOVFE_Pos))
-#define US_CSR_LON_Msk                        _U_(0x1F0000C0)                                       /**< (US_CSR_LON) Register Mask  */
-
-/* LON_SPI mode */
-#define US_CSR_LON_SPI_UNRE_Pos               _U_(10)                                              /**< (US_CSR) SPI Underrun Error Position */
-#define US_CSR_LON_SPI_UNRE_Msk               (_U_(0x1) << US_CSR_LON_SPI_UNRE_Pos)                /**< (US_CSR) SPI Underrun Error Mask */
-#define US_CSR_LON_SPI_UNRE(value)            (US_CSR_LON_SPI_UNRE_Msk & ((value) << US_CSR_LON_SPI_UNRE_Pos))
-#define US_CSR_LON_SPI_Msk                    _U_(0x00000400)                                       /**< (US_CSR_LON_SPI) Register Mask  */
+#define US_CSR_LON_Msk                        _U_(0x1F0006E3)                                       /**< (US_CSR_LON) Register Mask  */
 
 
 /* -------- US_RHR : (USART Offset: 0x18) ( R/ 32) Receive Holding Register -------- */

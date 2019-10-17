@@ -60,7 +60,6 @@
 void PWM1_Initialize (void)
 {
 
-
     /************** Channel 0 *************************/
     /* PWM channel mode configurations */
     PWM1_REGS->PWM_CH_NUM[0].PWM_CMR = PWM_CMR_CPRE_MCK | PWM_CMR_CALG_CENTER_ALIGNED
@@ -77,7 +76,6 @@ void PWM1_Initialize (void)
  
  
  
-
 
     /************* Compare Unit 0 **************************/
     /* Compare unit configurations */
