@@ -109,10 +109,10 @@
 #define     SPEEDCNTR_CTERM                                     0.5                     // Speed Loop Anti-Windup Gain
 #define     SPEEDCNTR_OUTMAX                                    MAX_MOTOR_CURRENT       // Speed Loop PI Controller Maximum Output - Max Q axis Current Reference in A
 //*** Position Control Loop Coefficients *****
-#define     POSCNTR_PTERM                                      (1)
-#define     POSCNTR_ITERM                                      0.00025
-#define     POSCNTR_CTERM                                      0.5
-#define     POSCNTR_OUTMAX                                     (150*RPM_TO_ELEC_RAD_PER_SEC)
+#define     POSCNTR_PTERM                                      (1.0)
+#define     POSCNTR_ITERM                                      0.00000
+#define     POSCNTR_CTERM                                      0.0
+#define     POSCNTR_OUTMAX                                     (300*RPM_TO_ELEC_RAD_PER_SEC)
 
 
 #endif
@@ -182,7 +182,8 @@
 #define QDEC_OVERFLOW  (uint16_t)(QDEC_RC % ENCODER_PULSES_PER_EREV) 
 #define QDEC_UNDERFLOW  (uint16_t)(ENCODER_PULSES_PER_EREV - QDEC_OVERFLOW)
 #define FAST_LOOP_TIME_SEC          (float)(1/(float)PWM_FREQ) /* Always runs in sync with PWM */
-#define SLOW_LOOP_TIME_SEC          (float)(FAST_LOOP_TIME_SEC * 100) /* 100 times slower than Fast Loop */
+#define SLOW_LOOP_FACTOR            (float)(100)  
+#define SLOW_LOOP_TIME_SEC          (float)(FAST_LOOP_TIME_SEC * SLOW_LOOP_FACTOR) /* 100 times slower than Fast Loop */
  
 #endif
 // </editor-fold>

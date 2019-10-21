@@ -72,6 +72,9 @@ uint16_t                            slow_loop_count = 0;
 int16_t                             pos_count_diff = 0;
 float                               speed_elec_rad_per_sec = 0.0;
 float                               potPosition = 0;
+float                               position_filtered=0;
+uint8_t                             fixed_pot=1;
+int16_t                             pot_adc;
 
 
 
@@ -187,6 +190,7 @@ void mcApp_ADCISRTasks(ADC_STATUS status, uintptr_t context)
             mcApp_SincosParam.Angle = 0;
             mcApp_motorState.focStateMachine = CLOSEDLOOP_FOC;
             potPosition = 0;
+            position_filtered =0;
             mcApp_Position_PIParam.qInMeas = 0;
             speed_elec_rad_per_sec = 0;
             
@@ -240,12 +244,11 @@ void mcApp_ADCISRTasks(ADC_STATUS status, uintptr_t context)
             }
                          
         
-        mcApp_Position_PIParam.qInMeas = (int16_t)(PDEC_QDECPositionGet());
+        mcApp_Position_PIParam.qInMeas = ((int16_t)PDEC_QDECPositionGet());    
         mcLib_CalcPI(&mcApp_Position_PIParam);
         mcApp_Speed_PIParam.qInRef = mcApp_Position_PIParam.qOut;        
         
-        
-        if (slow_loop_count >= 100)
+        if (slow_loop_count >= SLOW_LOOP_FACTOR)
         {
         slow_loop_count = 0;
             /* Speed Calculation from Encoder */
@@ -319,9 +322,33 @@ void mcApp_ADCISRTasks(ADC_STATUS status, uintptr_t context)
         mcApp_focParam.DCBusVoltage = ((float)ADC1_ConversionResultGet())* VOLTAGE_ADC_TO_PHY_RATIO; // Reads and translates to actual bus voltage
 		potReading = ADC0_ConversionResultGet();
         potReading-=2047;
-        mcApp_Position_PIParam.qInRef  = (int16_t) ((float)potReading*(6*ENCODER_PULSES_PER_REV/4096));
+        
+        #ifdef MCLV2
+         mcApp_Position_PIParam.qInRef  = (int16_t) ((float)potReading*(3.0*ENCODER_PULSES_PER_REV/4096));
+        #endif
+        
+        #ifdef MCHV3         
 
+        if(fixed_pot == 1)
+        {
+          mcApp_Position_PIParam.qInRef  =  (int16_t)((float)potReading*(6.0*ENCODER_PULSES_PER_REV/4096.0));  
   
+          if (mcApp_Position_PIParam.qInRef > 0 && mcApp_Position_PIParam.qInRef < 2000)
+          {
+             mcApp_Position_PIParam.qInRef = 2000; 
+          }
+          else if (mcApp_Position_PIParam.qInRef < 0 && mcApp_Position_PIParam.qInRef > -2000)
+          {
+             mcApp_Position_PIParam.qInRef = -2000; 
+          }
+          else
+          {
+             mcApp_Position_PIParam.qInRef = mcApp_Position_PIParam.qInRef; 
+          }
+          pot_adc = potReading;
+          fixed_pot = 0;          
+        }
+        #endif
         /* select the next ADC channel for conversion */
         ADC0_ChannelSelect(ADC_POSINPUT_AIN0,ADC_NEGINPUT_GND); // Phase U to ADC0
         ADC1_ChannelSelect(ADC_POSINPUT_AIN0,ADC_NEGINPUT_GND); // Phase V to ADC1
@@ -410,13 +437,14 @@ void mcApp_motorStart()
     gPositionCalc.present_position_count = 0;
     speed_ref_filtered = 0.0f;
     potPosition = 0;
+    position_filtered =0;
     mcApp_Position_PIParam.qInMeas = 0;
     
     TCC0_PWM24bitDutySet(TCC0_CHANNEL0,(uint32_t) PWM_HALF_PERIOD_COUNT );
     TCC0_PWM24bitDutySet(TCC0_CHANNEL1,(uint32_t) PWM_HALF_PERIOD_COUNT );
     TCC0_PWM24bitDutySet(TCC0_CHANNEL2,(uint32_t) PWM_HALF_PERIOD_COUNT );
     PWM_Output_Enable();
-    
+    fixed_pot =1;
     
 }
 
