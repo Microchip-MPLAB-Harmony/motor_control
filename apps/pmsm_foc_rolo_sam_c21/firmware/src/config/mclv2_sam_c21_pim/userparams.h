@@ -62,9 +62,7 @@
 
 /*Debug Feature: Defining TORQUE_MODE forces the algorithm to operate in Torque Mode i.e. no speed control, the potentiometer input is used as torque reference*/
 #undef TORQUE_MODE
-    #ifdef TORQUE_MODE
-    #define TORQUE_MODE_MIN_CUR_AMP 0.1
-    #endif
+
 /* Defining RAM_EXECUTE executes key motor control functions from RAM and thereby allowing faster execution at the expense of data memory.
  Please note, instruction breakpoint will not be asserted if that particular instruction is being executed from RAM
 *Undefining RAM_EXECUTE executes key motor control functions from Flash and thereby reducing data memory consumption at the expense of time */
@@ -105,6 +103,7 @@ Macro definitions
 #define STUP_ACCTIME_S  (     2.0 )     /* startup acceleration time [sec] */
 #define CUR_RISE_T      (     1 )       /* current rising time [s] during startup alignment */
 #define CUR_FALL_T      (     1.0 )     /* direct current falling time [s] after startup */
+#define TORQUE_MODE_MIN_CUR_AMP 0.08     /* Minimum Torque Mode Reference in A */
 #endif  /* ifdef SMALL_HURST */
 
 
@@ -126,16 +125,17 @@ Macro definitions
 #define STUP_ACCTIME_S  (     2.0 )     /* startup acceleration time [sec] */
 #define CUR_RISE_T      (     1.5 )     /* current rising time [s] during startup alignment */
 #define CUR_FALL_T      (     1 )     /* direct current falling time [s] after startup */
+#define TORQUE_MODE_MIN_CUR_AMP 0.2     /* Minimum Torque Mode Reference in A */
 #endif  /* ifdef LONG_HURST */
 
 #ifdef  LEADSHINE_EL5_M0400_1_24                      /* LEAD SHINE (EL5-M0400-1-24) */
 #define MAX_FRE_HZ      (   250 )      /* maximum frequency [Hz] - 3000 RPM*/
-#define MIN_FRE_HZ      (    30 )      /* minimum frequency [Hz] - 360 RPM*/
+#define MIN_FRE_HZ      (    40 )      /* minimum frequency [Hz] - 480 RPM*/
 #define POLAR_COUPLES   (     5 )      /* number of polar couples */
 #define R_STA           (     1.375 )  /* stator phase resistance [Ohm] */
 #define L_SYN           (     0.00253 )/* synchronous inductance 0.00192 [Hen] (note: >0!) */
 #define MAX_CUR_AMP     (     3.0 )    /* peak maximum current [A] */
-#define START_CUR_AMP   (     0.8 )    /* peak startup current [A] */
+#define START_CUR_AMP   (     0.4 )    /* peak startup current [A] */
 #define KP_V_A          (     6.1 )    /* current loop proportional gain [Volt/Amp] */
 #define KI_V_AS         (     469.0 ) /* current loop integral gain [Volt/(Amp*sec)] */
 #define KP_AS_R         (     0.001 )  /* speed loop proportional gain [Amp/(rad/sec)] */  // 0.0016
@@ -145,6 +145,7 @@ Macro definitions
 #define STUP_ACCTIME_S  (     2.0 )     /* startup acceleration time [sec] */
 #define CUR_RISE_T      (     1.5 )    /* current rising time [s] during startup alignment */
 #define CUR_FALL_T      (     1 )     /* direct current falling time [s] after startup */
+#define TORQUE_MODE_MIN_CUR_AMP 0.2     /* Minimum Torque Mode Reference in A */
 #endif  /* ifdef LEADSHINE_EL5_M0400_1_24 */
 /* board related parameters */
 /* Note: only one board type has to be selected! */

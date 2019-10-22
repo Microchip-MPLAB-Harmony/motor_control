@@ -62,13 +62,11 @@
 
 /*Debug Feature: Defining TORQUE_MODE forces the algorithm to operate in Torque Mode i.e. no speed control, the potentiometer input is used as torque reference*/
 #undef TORQUE_MODE
-    #ifdef TORQUE_MODE
-    #define TORQUE_MODE_MIN_CUR_AMP 0.1
-    #endif
+
 /* Defining RAM_EXECUTE executes key motor control functions from RAM and thereby allowing faster execution at the expense of data memory.
  Please note, instruction breakpoint will not be asserted if that particular instruction is being executed from RAM
 *Undefining RAM_EXECUTE executes key motor control functions from Flash and thereby reducing data memory consumption at the expense of time */
-#define RAM_EXECUTE
+#undef RAM_EXECUTE
 
 /*Defining USE_DIVAS uses the DIVAS peripheral for division and square root operatons*/
 #define USE_DIVAS
@@ -105,6 +103,7 @@ Macro definitions
 #define STUP_ACCTIME_S  (     2.0 )     /* startup acceleration time [sec] */
 #define CUR_RISE_T      (     1 )       /* current rising time [s] during startup alignment */
 #define CUR_FALL_T      (     1.0 )     /* direct current falling time [s] after startup */
+#define TORQUE_MODE_MIN_CUR_AMP 0.08     /* Minimum Torque Mode Reference in A */
 #endif  /* ifdef SMALL_HURST */
 
 
@@ -126,6 +125,7 @@ Macro definitions
 #define STUP_ACCTIME_S  (     2.0 )     /* startup acceleration time [sec] */
 #define CUR_RISE_T      (     1.5 )     /* current rising time [s] during startup alignment */
 #define CUR_FALL_T      (     1 )     /* direct current falling time [s] after startup */
+#define TORQUE_MODE_MIN_CUR_AMP 0.2     /* Minimum Torque Mode Reference in A */
 #endif  /* ifdef LONG_HURST */
 
 #ifdef  LEADSHINE_EL5_M0400_1_24                      /* LEAD SHINE (EL5-M0400-1-24) */
@@ -145,6 +145,7 @@ Macro definitions
 #define STUP_ACCTIME_S  (     2.0 )     /* startup acceleration time [sec] */
 #define CUR_RISE_T      (     1.5 )    /* current rising time [s] during startup alignment */
 #define CUR_FALL_T      (     1 )     /* direct current falling time [s] after startup */
+#define TORQUE_MODE_MIN_CUR_AMP 0.2     /* Minimum Torque Mode Reference in A */
 #endif  /* ifdef LEADSHINE_EL5_M0400_1_24 */
 /* board related parameters */
 /* Note: only one board type has to be selected! */

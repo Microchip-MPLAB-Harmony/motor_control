@@ -1846,8 +1846,8 @@ void motorcontrol(void)
                 curdqr.y = torque_adc_ref;
                 #else // Speed Control
                 curdqr.y = library_pi_control(s32a, &sp_pi);
-                curdqr.x = 0;
                 #endif
+                curdqr.x = 0;
                 /* d current reduction */
                 if(0 != curdqr.x)
                 {
