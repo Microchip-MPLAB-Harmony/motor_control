@@ -1991,7 +1991,15 @@
         </Boolean>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="7" id="nvmctrl"/>
+    <UniqueComponent dnOrder="7" id="nvmctrl">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="NVM_RWS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="nvmctrl" value="5"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
     <UniqueComponent dnOrder="8" id="pdec">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="PDEC_CC0_ANGULAR">
@@ -2284,7 +2292,7 @@
         <Comment dnOrder="21" id="TCC_FREQUENCY">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
-              <Value dnOrder="0">****&amp;#160;PWM&amp;#160;Frequency&amp;#160;is&amp;#160;20000&amp;#160;Hz&amp;#160;****</Value>
+              <Value dnOrder="0">****&amp;#160;PWM&amp;#160;Frequency&amp;#160;is&amp;#160;19993&amp;#160;Hz&amp;#160;****</Value>
             </String>
           </Attributes>
         </Comment>
@@ -2297,7 +2305,7 @@
         </Boolean>
         <Integer dnOrder="23" id="TCC_PER_PER">
           <Values dnOrder="0">
-            <User dnOrder="0" value="2999"/>
+            <User dnOrder="0" value="3000"/>
           </Values>
         </Integer>
         <KeyValueSet dnOrder="24" id="TCC_WAVE_WAVEGEN">
