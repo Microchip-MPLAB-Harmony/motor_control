@@ -148,7 +148,7 @@
 
 // <editor-fold defaultstate="collapsed" desc=" Derived Macros from Motor Control Board Specifications, Motor Specifications and Motor Dyanmics">
 
-#define     PWM_PERIOD_COUNT                                    2999
+#define     PWM_PERIOD_COUNT                                    3000
 #define     PWM_HALF_PERIOD_COUNT                               PWM_PERIOD_COUNT>>1
 #define     MAX_MOTOR_CURRENT_SQUARED                           (float)((float)MAX_MOTOR_CURRENT*(float)MAX_MOTOR_CURRENT)
 #define     VREF_DAC_VALUE                                      (int) 2048

@@ -84,7 +84,7 @@ void TCC0_PWMInitialize(void)
     TCC0_REGS->TCC_CC[3] = 0U;
     TCC0_REGS->TCC_CC[4] = 0U;
     TCC0_REGS->TCC_CC[5] = 0U;
-    TCC0_REGS->TCC_PER = 2999U;
+    TCC0_REGS->TCC_PER = 3000U;
 
     /* Fault configurations */
     TCC0_REGS->TCC_EVCTRL = TCC_EVCTRL_TCEI0_Msk | TCC_EVCTRL_EVACT0_FAULT;
