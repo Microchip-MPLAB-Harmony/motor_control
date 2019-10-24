@@ -155,8 +155,8 @@
           <Name dnOrder="1">arm_common_tables.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/DSP/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/DSP/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">18A3522CBBBC362FC56ADF9367AB8B46</GeneratedChecksum>
-          <UserChecksum dnOrder="5">18A3522CBBBC362FC56ADF9367AB8B46</UserChecksum>
+          <GeneratedChecksum dnOrder="4">ECE7DC494F56CE01D96DE918E61B7C02</GeneratedChecksum>
+          <UserChecksum dnOrder="5">ECE7DC494F56CE01D96DE918E61B7C02</UserChecksum>
         </File>
         <File dnOrder="19">
           <Type dnOrder="0">HEADER</Type>
@@ -171,8 +171,8 @@
           <Name dnOrder="1">arm_math.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/DSP/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/DSP/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">944C03F7472B879EED2AD711773D6600</GeneratedChecksum>
-          <UserChecksum dnOrder="5">944C03F7472B879EED2AD711773D6600</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4726F6E7A3CDEDAE6075A88F3D16F093</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4726F6E7A3CDEDAE6075A88F3D16F093</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">HEADER</Type>
@@ -195,64 +195,64 @@
           <Name dnOrder="1">cmsis_armcc.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D0A91713174AE0A9464105CD4157DEC1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D0A91713174AE0A9464105CD4157DEC1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">383D36C6689446D94CA73225ECE66F5B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">383D36C6689446D94CA73225ECE66F5B</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_armclang.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FB9082D52CC87C29BABCEC7CDA5DA8CD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FB9082D52CC87C29BABCEC7CDA5DA8CD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FD0B323BEC472B297396811D20BD066E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FD0B323BEC472B297396811D20BD066E</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_armclang_ltm.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">787D64C13CE3DCD1082EA06108F51EC6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">787D64C13CE3DCD1082EA06108F51EC6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1D96AFEF42545E927DB26D2F95D211C5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1D96AFEF42545E927DB26D2F95D211C5</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_compiler.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">60385A5C6C9882B5D30709A1F6EAEC35</GeneratedChecksum>
-          <UserChecksum dnOrder="5">60385A5C6C9882B5D30709A1F6EAEC35</UserChecksum>
+          <GeneratedChecksum dnOrder="4">365C5BBEA54A0D27134F48D8CA4CAF51</GeneratedChecksum>
+          <UserChecksum dnOrder="5">365C5BBEA54A0D27134F48D8CA4CAF51</UserChecksum>
         </File>
         <File dnOrder="27">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_gcc.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B2E4B79E96D9481B139252F7F1C5924F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B2E4B79E96D9481B139252F7F1C5924F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">84913DBF2CD848CDB8F892E2ADC7EE77</GeneratedChecksum>
+          <UserChecksum dnOrder="5">84913DBF2CD848CDB8F892E2ADC7EE77</UserChecksum>
         </File>
         <File dnOrder="28">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_iccarm.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AF3CC89090034E070238E8A7BE343262</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AF3CC89090034E070238E8A7BE343262</UserChecksum>
+          <GeneratedChecksum dnOrder="4">200BD202EF9D260096788CB11E4BBA43</GeneratedChecksum>
+          <UserChecksum dnOrder="5">200BD202EF9D260096788CB11E4BBA43</UserChecksum>
         </File>
         <File dnOrder="29">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_version.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8D06BEF47A08B8A7A91DE48D1C5DFDAB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8D06BEF47A08B8A7A91DE48D1C5DFDAB</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C0876654D46C4217FC4F3AE616901992</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C0876654D46C4217FC4F3AE616901992</UserChecksum>
         </File>
         <File dnOrder="30">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">core_cm7.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E2D95C83EEF36A6FEF8B2362C2D64C00</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E2D95C83EEF36A6FEF8B2362C2D64C00</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8DE3726CE4B43568336A848B01175803</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8DE3726CE4B43568336A848B01175803</UserChecksum>
         </File>
         <File dnOrder="31">
           <Type dnOrder="0">HEADER</Type>
@@ -674,7 +674,7 @@
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAME70_DFP\4.0.42\same70b\atdf\ATSAME70Q21B.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
