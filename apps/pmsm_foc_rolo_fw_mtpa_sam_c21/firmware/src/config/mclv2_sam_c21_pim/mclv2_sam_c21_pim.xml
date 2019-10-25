@@ -1619,7 +1619,7 @@
         <Comment dnOrder="14" id="TCC_FREQUENCY">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
-              <Value dnOrder="0">****&amp;#160;PWM&amp;#160;Frequency&amp;#160;is&amp;#160;10000&amp;#160;Hz&amp;#160;****</Value>
+              <Value dnOrder="0">****&amp;#160;PWM&amp;#160;Frequency&amp;#160;is&amp;#160;9995&amp;#160;Hz&amp;#160;****</Value>
             </String>
           </Attributes>
         </Comment>
@@ -1630,17 +1630,22 @@
             </Boolean>
           </Attributes>
         </Boolean>
-        <KeyValueSet dnOrder="16" id="TCC_WAVE_WAVEGEN">
+        <Integer dnOrder="16" id="TCC_PER_PER">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="2400"/>
+          </Values>
+        </Integer>
+        <KeyValueSet dnOrder="17" id="TCC_WAVE_WAVEGEN">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="17" id="TCC_WEXCTRL_DTHS">
+        <Integer dnOrder="18" id="TCC_WEXCTRL_DTHS">
           <Values dnOrder="0">
             <User dnOrder="0" value="48"/>
           </Values>
         </Integer>
-        <Integer dnOrder="18" id="TCC_WEXCTRL_DTLS">
+        <Integer dnOrder="19" id="TCC_WEXCTRL_DTLS">
           <Values dnOrder="0">
             <User dnOrder="0" value="48"/>
           </Values>
@@ -1649,7 +1654,8 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="adc0" x="374" y="197"/>
         <ElementPosition dnOrder="1" id="adc1" x="238" y="251"/>
@@ -1664,6 +1670,5 @@
         <ElementPosition dnOrder="10" id="tcc0" x="239" y="199"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
