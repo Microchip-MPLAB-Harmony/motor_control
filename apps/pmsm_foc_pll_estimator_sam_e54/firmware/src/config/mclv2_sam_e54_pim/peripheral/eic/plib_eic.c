@@ -101,10 +101,14 @@ void EIC_Initialize (void)
                               EIC_CONFIG_SENSE7_NONE ;
 
 
+    /* Debouncer enable */
+    EIC_REGS->EIC_DEBOUNCEN = 0x4;
 
     /* Event Control Output enable */
     EIC_REGS->EIC_EVCTRL = 0x4;
 
+    /* Debouncer Setting */
+    EIC_REGS->EIC_DPRESCALER = EIC_DPRESCALER_PRESCALER0(0) | EIC_DPRESCALER_PRESCALER1(0) ;
 
     /* External Interrupt enable*/
     EIC_REGS->EIC_INTENSET = 0x4;

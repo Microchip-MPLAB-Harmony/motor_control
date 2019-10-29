@@ -1490,7 +1490,7 @@
         <Menu dnOrder="0" id="DEBOUNCE_MENU">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
+              <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
@@ -1521,7 +1521,7 @@
         </KeyValueSet>
         <Hex dnOrder="5" id="EIC_DEBOUNCEN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="eic" value="0"/>
+            <Dynamic dnOrder="0" id="eic" value="4"/>
           </Values>
         </Hex>
         <Boolean dnOrder="6" id="EIC_DEBOUNCEN_2">
@@ -2226,7 +2226,7 @@
         <ElementPosition dnOrder="2" id="cmsis" x="433" y="20"/>
         <ElementPosition dnOrder="3" id="core" x="333" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="126" y="23"/>
-        <ElementPosition dnOrder="5" id="eic" x="127" y="100"/>
+        <ElementPosition dnOrder="5" id="eic" x="126" y="100"/>
         <ElementPosition dnOrder="6" id="evsys" x="269" y="98"/>
         <ElementPosition dnOrder="7" id="nvmctrl" x="0" y="16"/>
         <ElementPosition dnOrder="8" id="sercom2" x="274" y="287"/>
