@@ -49,7 +49,10 @@
 #define MCHV3
 
 /*Defining CTRL_PWM_1_1 sets the Control to PWM Frequency Ratio as 1:1
- Undefining CTRL_PWM_1_1 sets the Control to PWM Frequency Ration as 1:2*/
+ Undefining CTRL_PWM_1_1 sets the Control to PWM Frequency Ration as 1:2
+ Note: Please account for CPU bandwidth availability while setting 
+ Control to PWM Frequency Ratio as 1:1. If the ISR execution is not completed within
+ the same PWM cycle, it could lead to erratic motor behavior */
 #undef CTRL_PWM_1_1
 
 
