@@ -60,7 +60,6 @@
 /* Algorithm Configuration parameters                                                          */
 /***********************************************************************************************/
 #define OPEN_LOOP_FUNCTIONING                            (0U)  /* If enabled - Keep running in open loop */
-#define TORQUE_MODE                                      (0U)  /* If enabled - torque control */
 
 /***********************************************************************************************/
 /* Motor Configuration Parameters */
@@ -294,12 +293,7 @@
 #define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_PER_RPM_MECH / (float)(2.0 * M_PI/60.0))
 #define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH / NUM_POLE_PAIRS)
 
-/* Field weakening */
-#if(FIELD_WEAKENING == 1U)
-#define MAX_SPEED_RAD_PER_SEC_ELEC          (float)(((MAX_SPEED_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)
-#else
 #define MAX_SPEED_RAD_PER_SEC_ELEC          (float)(((RATED_SPEED_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)
-#endif
 
 #define MAX_STATOR_VOLT_SQUARE              (float)(0.98 * 0.98)
 #define POT_ADC_COUNT_FW_SPEED_RATIO        (float)(MAX_SPEED_RAD_PER_SEC_ELEC/MAX_ADC_COUNT)

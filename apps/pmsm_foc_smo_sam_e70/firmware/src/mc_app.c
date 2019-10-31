@@ -872,8 +872,7 @@ inline void MC_APP_MC_DoControl( void )
             PIParmD.qInRef = 0.0;
             CtrlParm.IdRef = 0.0;
         }             
-
-#if	(TORQUE_MODE == 0U)        
+      
         VelRefRaw = (float)((float)potReading * POT_ADC_COUNT_FW_SPEED_RATIO);
         /* LPF */
         CtrlParm.VelRef = (RL_1MINUS_WCTS_VELREF * (CtrlParm.VelRef)) + (RL_WCTS_VELREF * (VelRefRaw));
@@ -882,11 +881,10 @@ inline void MC_APP_MC_DoControl( void )
         {
             CtrlParm.VelRef = END_SPEED_RADS_PER_SEC_ELEC;
         }
-#endif        
                
-        //if TORQUE MODE skip the speed and Field Weakening controller     
+    
         CtrlParm.IqRefmax = MAX_MOTOR_CURRENT;
-#if	(TORQUE_MODE == 0U)
+
         // Execute the velocity control loop
         PIParmQref.qInMeas = speedData.WeHat;
         PIParmQref.qInRef  = CtrlParm.VelRef * mc_appData.direction;
@@ -894,12 +892,6 @@ inline void MC_APP_MC_DoControl( void )
         CtrlParm.IqRef = PIParmQref.qOut;
 
         CtrlParm.IdRef = 0;
-
- 	
-#else  /* If TORQUE MODE is defined */
-        CtrlParm.IqRef = Q_CURRENT_REF_OPENLOOP * mc_appData.direction; // During torque mode, Iq = Open Loop Iq, Id = 0
-        CtrlParm.IdRef = 0;
-#endif  // endif for TORQUE_MODE
 		
         // PI control for D
         PIParmD.qInMeas = ParkParm.Id;          // This is in Amps
