@@ -73,8 +73,8 @@ void PIO_Initialize ( void )
     /* PORTA Output Write Enable */
     ((pio_registers_t*)PIO_PORT_A)->PIO_OWER = PIO_OWER_Msk;
     /* PORTA Output Direction Enable */
-    ((pio_registers_t*)PIO_PORT_A)->PIO_OER = 0x0;
-    ((pio_registers_t*)PIO_PORT_A)->PIO_ODR = ~0x0;
+    ((pio_registers_t*)PIO_PORT_A)->PIO_OER = 0x4;
+    ((pio_registers_t*)PIO_PORT_A)->PIO_ODR = ~0x4;
     /* PORTA Initial state High */
     ((pio_registers_t*)PIO_PORT_A)->PIO_ODSR = 0x0;
     /* PORTA drive control */

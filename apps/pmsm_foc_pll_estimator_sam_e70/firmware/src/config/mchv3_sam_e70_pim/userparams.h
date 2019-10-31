@@ -84,7 +84,7 @@
 
 /* Motor Start-up configuration parameters */
 #define LOCK_TIME_IN_SEC                (2)   /* Startup - Rotor alignment time */
-#define OPEN_LOOP_END_SPEED_RPM         (RATED_SPEED_RPM*0.25) /* Startup - Control loop switches to close loop at this speed */
+#define OPEN_LOOP_END_SPEED_RPM         (RATED_SPEED_RPM*0.2) /* Startup - Control loop switches to close loop at this speed */
 #define OPEN_LOOP_RAMP_TIME_IN_SEC      (5)   /* Startup - Time to reach OPEN_LOOP_END_SPEED_RPM in seconds */
 #define Q_CURRENT_REF_OPENLOOP          ((float)0.2) /* Startup - Motor start to ramp up in current control mode */
 
@@ -92,28 +92,28 @@
 /* PI controllers tuning values - */
 #if(MOTOR == MOTOR_1_EL5_M0400_1_24)
 /********* D Control Loop Coefficients ****************************************/
-#define     D_CURRCNTR_PTERM           ((float)(0.05)/MAX_MOTOR_CURRENT)
+#define     D_CURRCNTR_PTERM           ((float)(0.025)/MAX_MOTOR_CURRENT)
 #define     D_CURRCNTR_ITERM           ((float)(0.001) /MAX_MOTOR_CURRENT)
 #define     D_CURRCNTR_CTERM           ((float)(0.999)/MAX_MOTOR_CURRENT)
 #define     D_CURRCNTR_OUTMAX          ((float)(0.999))
 
 /******** Q Control Loop Coefficients ****************************************/
-#define     Q_CURRCNTR_PTERM           ((float)(0.05)/MAX_MOTOR_CURRENT)
+#define     Q_CURRCNTR_PTERM           ((float)(0.025)/MAX_MOTOR_CURRENT)
 #define     Q_CURRCNTR_ITERM           ((float)(0.001) /MAX_MOTOR_CURRENT)
 #define     Q_CURRCNTR_CTERM           ((float)(0.999)/MAX_MOTOR_CURRENT)
 #define     Q_CURRCNTR_OUTMAX          ((float)(0.999))
 
 /******* Velocity Control Loop Coefficients **********************************/
-#define     SPEEDCNTR_PTERM            ((float)0.004)
+#define     SPEEDCNTR_PTERM            ((float)0.002)
 #define     SPEEDCNTR_ITERM            ((float)0.00005)
 #define     SPEEDCNTR_CTERM            ((float)(0.999))
 #define     SPEEDCNTR_OUTMAX           ((float)MAX_MOTOR_CURRENT)
 #endif
 
 /* First order low pass Filter constants used inside the project             */
-#define KFILTER_ESDQ                   (float)((float)200/(float)32767)
-#define KFILTER_BEMF_AMPLITUDE         (float)((float)100/(float)32767)
-#define KFILTER_VELESTIM               (float)((float)174/(float)32767)
+#define KFILTER_ESDQ                   (float)((float)4000/(float)32767)
+#define KFILTER_BEMF_AMPLITUDE         (float)((float)4000/(float)32767)
+#define KFILTER_VELESTIM               (float)((float)4000/(float)32767)
 #define KFILTER_POT                    (float)((float)50/(float)32767)
 
 /***********************************************************************************************/

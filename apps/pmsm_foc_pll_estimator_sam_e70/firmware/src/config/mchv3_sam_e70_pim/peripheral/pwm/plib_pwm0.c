@@ -76,7 +76,7 @@ void PWM0_Initialize (void)
     /* PWM duty cycle */
     PWM0_REGS->PWM_CH_NUM[0].PWM_CDTY = 0U;
     /* Dead time */
-    PWM0_REGS->PWM_CH_NUM[0].PWM_DT = (200U << PWM_DT_DTL_Pos) | (200U);
+    PWM0_REGS->PWM_CH_NUM[0].PWM_DT = (100U << PWM_DT_DTL_Pos) | (100U);
          
      
 
@@ -86,7 +86,7 @@ void PWM0_Initialize (void)
     PWM0_REGS->PWM_CH_NUM[1].PWM_CDTY = 0U;
     PWM0_REGS->PWM_CH_NUM[1].PWM_CMR = PWM_CMR_DTE_Msk;
     /* Dead time */
-    PWM0_REGS->PWM_CH_NUM[1].PWM_DT = (200U << PWM_DT_DTL_Pos) | (200U);
+    PWM0_REGS->PWM_CH_NUM[1].PWM_DT = (100U << PWM_DT_DTL_Pos) | (100U);
          
      
 
@@ -96,7 +96,7 @@ void PWM0_Initialize (void)
     PWM0_REGS->PWM_CH_NUM[2].PWM_CDTY = 0U;
     PWM0_REGS->PWM_CH_NUM[2].PWM_CMR = PWM_CMR_DTE_Msk;
     /* Dead time */
-    PWM0_REGS->PWM_CH_NUM[2].PWM_DT = (200U << PWM_DT_DTL_Pos) | (200U);
+    PWM0_REGS->PWM_CH_NUM[2].PWM_DT = (100U << PWM_DT_DTL_Pos) | (100U);
          
      
  

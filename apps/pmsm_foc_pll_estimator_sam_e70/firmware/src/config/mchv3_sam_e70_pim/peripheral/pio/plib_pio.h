@@ -71,6 +71,15 @@
 #define START_STOP_BUTTON_InputEnable()       (PIOE_REGS->PIO_ODR = (1<<2))
 #define START_STOP_BUTTON_PIN                  PIO_PIN_PE2
 
+/*** Macros for GPIO_PA2 pin ***/
+#define GPIO_PA2_Set()               (PIOA_REGS->PIO_SODR = (1<<2))
+#define GPIO_PA2_Clear()             (PIOA_REGS->PIO_CODR = (1<<2))
+#define GPIO_PA2_Toggle()            (PIOA_REGS->PIO_ODSR ^= (1<<2))
+#define GPIO_PA2_Get()               ((PIOA_REGS->PIO_PDSR >> 2) & 0x1)
+#define GPIO_PA2_OutputEnable()      (PIOA_REGS->PIO_OER = (1<<2))
+#define GPIO_PA2_InputEnable()       (PIOA_REGS->PIO_ODR = (1<<2))
+#define GPIO_PA2_PIN                  PIO_PIN_PA2
+
 /*** Macros for LED pin ***/
 #define LED_Set()               (PIOC_REGS->PIO_SODR = (1<<23))
 #define LED_Clear()             (PIOC_REGS->PIO_CODR = (1<<23))
