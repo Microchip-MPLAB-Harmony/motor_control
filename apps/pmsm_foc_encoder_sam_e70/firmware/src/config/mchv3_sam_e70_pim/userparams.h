@@ -92,20 +92,20 @@
 /* PI controllers tuning values - */
 #if(MOTOR == MOTOR_1_EL5_M0400_1_24)
 /********* D Control Loop Coefficients ****************************************/
-#define     D_CURRCNTR_PTERM           ((float)(0.05)/MAX_MOTOR_CURRENT)
-#define     D_CURRCNTR_ITERM           ((float)(0.001) /MAX_MOTOR_CURRENT)
+#define     D_CURRCNTR_PTERM           ((float)(0.04)/MAX_MOTOR_CURRENT)
+#define     D_CURRCNTR_ITERM           ((float)(0.02) /MAX_MOTOR_CURRENT)
 #define     D_CURRCNTR_CTERM           ((float)(0.999)/MAX_MOTOR_CURRENT)
-#define     D_CURRCNTR_OUTMAX          ((float)(0.999))
+#define     D_CURRCNTR_OUTMAX          ((float)(0.98))
 
 /******** Q Control Loop Coefficients ****************************************/
-#define     Q_CURRCNTR_PTERM           ((float)(0.05)/MAX_MOTOR_CURRENT)
-#define     Q_CURRCNTR_ITERM           ((float)(0.001) /MAX_MOTOR_CURRENT)
+#define     Q_CURRCNTR_PTERM           ((float)(0.04)/MAX_MOTOR_CURRENT)
+#define     Q_CURRCNTR_ITERM           ((float)(0.02) /MAX_MOTOR_CURRENT)
 #define     Q_CURRCNTR_CTERM           ((float)(0.999)/MAX_MOTOR_CURRENT)
-#define     Q_CURRCNTR_OUTMAX          ((float)(0.999))
+#define     Q_CURRCNTR_OUTMAX          ((float)(0.98))
 
 /******* Velocity Control Loop Coefficients **********************************/
 #define     SPEEDCNTR_PTERM            ((float)0.004)
-#define     SPEEDCNTR_ITERM            ((float)0.0005)
+#define     SPEEDCNTR_ITERM            ((float)0.0004)
 #define     SPEEDCNTR_CTERM            ((float)(0.999))
 #define     SPEEDCNTR_OUTMAX           ((float)MAX_MOTOR_CURRENT)
 #endif
@@ -149,7 +149,7 @@
 
 #define CPU_FREQUENCY                                       (300000000U)
 /** Master clock frequency in Hz */
-#define MASTER_CLK_FREQUENCY                                (150000000U)
+#define MASTER_CLK_FREQUENCY                                (75000000U)
 
 /** Phase Current Offset calibration samples */
 #define CURRENTS_OFFSET_SAMPLES                             (100U)
@@ -216,6 +216,6 @@
 #define QDEC_RC 65536u              
 #define QDEC_UPPER_THRESHOLD 49151u   
 #define QDEC_LOWER_THRESHOLD 16384u  
-#define QDEC_OVERFLOW  (uint16_t)(QDEC_RC % ENCODER_PULSES_PER_EREV) 
+#define QDEC_OVERFLOW  (uint16_t)((QDEC_RC % ENCODER_PULSES_PER_EREV))
 #define QDEC_UNDERFLOW  (uint16_t)(ENCODER_PULSES_PER_EREV - QDEC_OVERFLOW)
 #endif

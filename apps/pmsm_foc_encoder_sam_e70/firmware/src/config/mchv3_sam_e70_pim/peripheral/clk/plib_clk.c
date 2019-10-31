@@ -58,7 +58,7 @@ static void CLK_MasterClockInitialize(void)
     while ((PMC_REGS->PMC_SR & PMC_SR_MCKRDY_Msk) != PMC_SR_MCKRDY_Msk);
 
     /* Program PMC_MCKR.MDIV and Wait for PMC_SR.MCKRDY to be set   */
-    PMC_REGS->PMC_MCKR = (PMC_REGS->PMC_MCKR & ~PMC_MCKR_MDIV_Msk) | PMC_MCKR_MDIV_PCK_DIV2;
+    PMC_REGS->PMC_MCKR = (PMC_REGS->PMC_MCKR & ~PMC_MCKR_MDIV_Msk) | PMC_MCKR_MDIV_PCK_DIV4;
     while ((PMC_REGS->PMC_SR & PMC_SR_MCKRDY_Msk) != PMC_SR_MCKRDY_Msk);
 
     /* Program PMC_MCKR.CSS and Wait for PMC_SR.MCKRDY to be set    */

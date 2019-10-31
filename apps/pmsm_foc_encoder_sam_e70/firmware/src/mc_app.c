@@ -249,10 +249,10 @@ __STATIC_INLINE void MCAPP_MotorAngleCalc(void)
         gPositionCalc.posCntTmp = gPositionCalc.QDECcnt + gPositionCalc.posCompensation;  
         gPositionCalc.posCnt = gPositionCalc.posCntTmp % ENCODER_PULSES_PER_EREV;
         gPositionCalc.rotor_angle_rad_per_sec = ((float)gPositionCalc.posCnt) * (2.0 * M_PI / ENCODER_PULSES_PER_EREV);
-        gPositionCalc.QDECcntZ = gPositionCalc.QDECcnt;    
-               
+        gPositionCalc.QDECcntZ = gPositionCalc.QDECcnt; 
+              
     }
-
+    
     /* Limit rotor angle range to 0 to 2*M_PI for lookup table */
     if(gPositionCalc.rotor_angle_rad_per_sec > (2*M_PI))
     {

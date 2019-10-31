@@ -64,7 +64,7 @@ void TC0_QuadratureInitialize (void)
     TC0_REGS->TC_CHANNEL[0].TC_RC = 0xFFFF;
 
     /*Enable quadrature mode */
-    TC0_REGS->TC_BMR = TC_BMR_QDEN_Msk | (TC_BMR_SWAP_Msk) | TC_BMR_MAXFILT(2U) | TC_BMR_EDGPHA_Msk
+    TC0_REGS->TC_BMR = TC_BMR_QDEN_Msk  | TC_BMR_MAXFILT(2U) | TC_BMR_EDGPHA_Msk
         | (TC_BMR_POSEN_Msk);
 
     status = TC0_REGS->TC_QISR;  /* Clear interrupt status */
