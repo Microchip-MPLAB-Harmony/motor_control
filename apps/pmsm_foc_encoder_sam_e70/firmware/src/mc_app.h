@@ -158,10 +158,12 @@ typedef struct
     uint32_t startup_lock_count; /* lock variable for initial ramp */
     uint32_t sync_cnt;   /* counter in main loop (5ms) synchronization function */
 	tMotorStatus motorStatus;   /* Motor status, STOPPED - 0, RUNNING -1 */
+    tMotorStatus oldStatus;
 	bool         openLoop;      /* Indicated motor running in open loop; */
 	bool         changeMode;    /* Switch from open loop to close loop */  
     bool     adc_calibration_done;
 	int16_t   direction;
+  uint8_t   fieldAlignmentFlag;   /* Power On Reset Flag*/
 } MCAPP_CONTROL_PARAM;
 
 typedef struct 

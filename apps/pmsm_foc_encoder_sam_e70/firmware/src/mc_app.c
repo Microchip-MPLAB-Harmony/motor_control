@@ -104,6 +104,8 @@ MCAPP_POSITION_CALC gPositionCalc;
 float speed_ref_filtered = 0.0f;
 float phaseCurrentUOffset;
 float phaseCurrentVOffset;
+ float speed_elec_rad_per_sec;
+ uint8_t first_motor_start =1;
 
 /*****************ISR Functions *******************************/
 
@@ -115,11 +117,18 @@ float phaseCurrentVOffset;
 /* Executes one PI iteration for each of the three loops Id,Iq,Speed          */
 /******************************************************************************/
 __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
-{
+{   
+    if( 0U == gCtrlParam.fieldAlignmentFlag )
+    {
+        /* switch to close loop */
+        gCtrlParam.changeMode = false;
+        gCtrlParam.openLoop = false;
+    }
+
     if( gCtrlParam.openLoop == true )
     {
         /* OPENLOOP:  force rotating angle,Vd,Vq */
-        if( gCtrlParam.changeMode == true )
+        if( gCtrlParam.changeMode == true ) 
         {
             /* just changed to open loop */
             gCtrlParam.changeMode = false;
@@ -163,6 +172,8 @@ __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
             /* Load velocity control loop with Iq reference for smooth transition */
             gPIParmQref.dSum = 0.0;
             gCtrlParam.idRef = 0.0;
+            gCtrlParam.iqRef = 0.0;
+            speed_elec_rad_per_sec = 0.0f;
             gCtrlParam.sync_cnt = 0;
         }
 
@@ -200,9 +211,8 @@ __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
 /* in open loop control, forcing the motor to align and to start speeding up  */
 /******************************************************************************/
 __STATIC_INLINE void MCAPP_MotorAngleCalc(void)
-{
-    
-    if(gCtrlParam.openLoop == true)
+{    
+    if( gCtrlParam.openLoop == true)
     {
         /* begin with the lock sequence, for field alignment */
         if (gCtrlParam.startup_lock_count < LOCK_COUNT_FOR_LOCK_TIME)
@@ -219,9 +229,13 @@ __STATIC_INLINE void MCAPP_MotorAngleCalc(void)
             }
             else
             {
+                /* Reset field alignment Flag */
+                gCtrlParam.fieldAlignmentFlag = 0U;
+                
                 /* switch to close loop */
                 gCtrlParam.changeMode = true;
                 gCtrlParam.openLoop = false;
+
                 /* Start QDEC timer */
                 TC0_QuadratureStart();
                 gPositionCalc.QDECcntZ = 0u;
@@ -401,10 +415,6 @@ void MCAPP_MotorPIParamInit(void)
 static void MCAPP_MotorControlParamInit(void)
 {
     /* Parameter initialization for FOC */
-    gCtrlParam.openLoop = true;
-    gCtrlParam.changeMode = false;
-    gCtrlParam.startup_lock_count = 0;
-    gMCLIBPosition.angle = 0;
     gMCLIBSVPWM.period = MAX_DUTY;
     gCtrlParam.motorStatus = MOTOR_STATUS_STOPPED;
     gMCLIBCurrentDQ.id = 0;
@@ -415,9 +425,6 @@ static void MCAPP_MotorControlParamInit(void)
     MCAPP_PIOutputInit(&gPIParmQ);
     MCAPP_PIOutputInit(&gPIParmQref);
 
-    gPositionCalc.rotor_angle_rad_per_sec = 0;
-    gPositionCalc.prev_position_count = 0;
-    gPositionCalc.present_position_count = 0;
     speed_ref_filtered = 0.0f;
 }
 
@@ -609,7 +616,7 @@ void MCAPP_ControlLoopISR(uint32_t status, uintptr_t context)
     dcBusVoltage = AFEC0_ChannelResultGet(DC_BUS_VOLTAGE_ADC_CH);
 	  gfocParam.dcBusVoltage = (float)(dcBusVoltage) * VOLTAGE_ADC_TO_PHY_RATIO;
     gfocParam.dcBusVoltageBySqrt3 = (float)(gfocParam.dcBusVoltage/SQRT3);
-
+    
     /* Calculate control values  */
     MCAPP_MotorCurrentControl();
 
@@ -646,18 +653,18 @@ void MCAPP_ControlLoopISR(uint32_t status, uintptr_t context)
 /*              be in multiple of PWM frequency and be configured by          */
 /*              "SLOW_LOOP_TIME_SEC" MACRO in "userparms.h file.              */
 /*               Speed ramp and speed control loop is executed from this loop */
-/******************************************************************************/
-__STATIC_INLINE void MCAPP_SlowControlLoop(void)
+/******************************************************************************/ 
+
+ __STATIC_INLINE void MCAPP_SlowControlLoop(void)
 {
 
     #if(TORQUE_MODE == false)
-    float speed_elec_rad_per_sec;
+    float PotReading;
     int16_t pos_count_diff;  
-
-    if(gCtrlParam.openLoop == false)
+    
+    if( gCtrlParam.openLoop == false)
     {
         /* Velocity reference will be taken from potentiometer. */
-        float PotReading;
         PotReading = (float)AFEC0_ChannelResultGet(POT_ADC_CH) * gCtrlParam.direction;
         speed_ref_filtered = speed_ref_filtered + ((PotReading - speed_ref_filtered) * KFILTER_POT );
 
@@ -668,6 +675,11 @@ __STATIC_INLINE void MCAPP_SlowControlLoop(void)
 
         /* Speed Calculation from Encoder */
         gPositionCalc.present_position_count = (int16_t)(TC0_REGS->TC_CHANNEL[0].TC_CV);
+        if( ( gCtrlParam.oldStatus == MOTOR_STATUS_STOPPED ) && ( gCtrlParam.motorStatus == MOTOR_STATUS_RUNNING ))
+        {
+           gPositionCalc.prev_position_count = gPositionCalc.present_position_count;
+        }
+           
         pos_count_diff = (gPositionCalc.present_position_count - gPositionCalc.prev_position_count);
         speed_elec_rad_per_sec = (pos_count_diff * 2*M_PI)/(ENCODER_PULSES_PER_EREV *SLOW_LOOP_TIME_SEC );
         gPositionCalc.prev_position_count = gPositionCalc.present_position_count;
@@ -677,6 +689,8 @@ __STATIC_INLINE void MCAPP_SlowControlLoop(void)
         gPIParmQref.inRef  = gCtrlParam.velRef;
         MCLIB_PIControl(&gPIParmQref);
         gCtrlParam.iqRef = gPIParmQref.out;
+        
+        gCtrlParam.oldStatus = gCtrlParam.motorStatus;
 
     }
 #endif	// End of #if(TORQUE_MODE == false)
@@ -691,8 +705,7 @@ __STATIC_INLINE void MCAPP_SlowControlLoop(void)
 void MCAPP_MotorStart(void)
 {
     float PotReading;
-    /* Stop QDEC Timer */
-    TC0_REGS->TC_CHANNEL[0].TC_CCR = TC_CCR_SWTRG_Msk;
+    
     /* Initialize motor control variables */
     MCAPP_MotorControlParamInit();
     
@@ -703,14 +716,6 @@ void MCAPP_MotorStart(void)
     gCtrlParam.velRef = 0.0;
     gCtrlParam.endSpeed = 0.0;
 
-    gPositionCalc.QDECcnt = 0;
-    gPositionCalc.QDECcntZ = 0;
-    gPositionCalc.posCnt = 0;
-    gPositionCalc.posCntTmp = 0;
-    gPositionCalc.posCompensation =0;
-    gPositionCalc.present_position_count =0;
-    gPositionCalc.prev_position_count = 0;
-
     /* Velocity reference will be taken from potentiometer. */
     PotReading = (float)AFEC0_ChannelResultGet(POT_ADC_CH) * gCtrlParam.direction;
     speed_ref_filtered = speed_ref_filtered + ((PotReading - speed_ref_filtered) * KFILTER_POT );
@@ -720,6 +725,19 @@ void MCAPP_MotorStart(void)
     gMCAPPData.mcState = MC_APP_STATE_RUNNING;
     /* Clear fault before start */
     PWM0_FaultStatusClear(PWM_FAULT_ID_2);
+    
+    gCtrlParam.openLoop = false;
+    gCtrlParam.changeMode = false;
+    if (first_motor_start ==1)
+    {
+       gCtrlParam.openLoop = true;
+       gCtrlParam.changeMode = false;
+       first_motor_start = 0;
+       /* Enable PWM outputs */
+        PWM0_REGS->PWM_OS = 0x0;
+        /* Enable PWM channels. */
+        PWM0_ChannelsStart(PWM_CHANNEL_0_MASK); 
+    }
     /* Enable PWM outputs */
     PWM0_REGS->PWM_OS = 0x0;
 }
@@ -737,8 +755,17 @@ void MCAPP_MotorStop(void)
 
     /* disable PWM outputs */
     PWM0_REGS->PWM_OS = 0xF000F;
+    
+    gPIParmQref.inMeas = 0.0f;
+    gPIParmQref.inRef = 0.0f;
+    gPIParmQref.dSum = 0.0f;
+    gCtrlParam.velRef =  0.0f;
+    speed_ref_filtered = 0.0f;
+    speed_elec_rad_per_sec = 0.0f;
+    
 
 	gCtrlParam.motorStatus = MOTOR_STATUS_STOPPED;
+    gCtrlParam.oldStatus = MOTOR_STATUS_STOPPED;
     gMCAPPData.mcState = MC_APP_STATE_STOP;
 
 #if(ENABLE_FLUX_WEAKENING == 1U)
@@ -835,6 +862,9 @@ void MCAPP_Tasks()
     switch (gMCAPPData.mcState)
     {
         case MC_APP_STATE_INIT:
+            /* Set field alignment flag */
+            gCtrlParam.fieldAlignmentFlag = 1U; 
+
             MCAPP_MotorPIParamInit();
             NVIC_DisableIRQ(AFEC0_IRQn);
             NVIC_ClearPendingIRQ(AFEC0_IRQn);
@@ -847,18 +877,12 @@ void MCAPP_Tasks()
             {
                 MCAPP_ADCOffsetCalibration();
             }
-            
-            gCtrlParam.openLoop = true;
-            gCtrlParam.changeMode = false;
-              
+                   
             NVIC_SetPriority(AFEC0_IRQn, 0);
             AFEC0_CallbackRegister(MCAPP_ControlLoopISR, (uintptr_t)NULL);
             NVIC_EnableIRQ(AFEC0_IRQn);
             AFEC0_ChannelsInterruptEnable(AFEC_INTERRUPT_EOC_7_MASK);          
-            NVIC_EnableIRQ(AFEC0_IRQn);
-            
-            /* Enable PWM channels. */
-            PWM0_ChannelsStart(PWM_CHANNEL_0_MASK);          
+            NVIC_EnableIRQ(AFEC0_IRQn);        
             gMCAPPData.switchCount = 0xFF;
             MCAPP_SwitchDebounce(MC_APP_STATE_START);
             break;
