@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Package name="motor_control">
     <Dependencies>
-        <Dependency name="csp" version="v3.2.0"/>
+        <Dependency name="csp" version="v3.5.0"/>
     </Dependencies>
 </Package>
