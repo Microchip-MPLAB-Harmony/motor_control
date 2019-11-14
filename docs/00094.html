@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Hardware Setup</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00078.html">Reduced Order Luenberger Observer (ROLO)</a> &gt; <a href="00091.html">pmsm_foc_rolo_wm_sam_c21</a> &gt; <a href="00094.html">Hardware Setup</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+Microchip 32-bit Motor Control</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00093.html">Previous</a> | <a href="00091.html">Up</a> | <a href="00096.html">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo_wm pmsm_foc_rolo_wm_sam_c21 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Hardware Setup</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+
+<ol class="Element630">
+<li value="1" class="Element600"><strong>Project mchv3_sam_c21_pim.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/dm330023-3');"><img src="indicator_external_link.gif" border="0" alt="" title="">dsPICDEMTM MCHV3 Development Board (High Voltage)</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/MA320206');"><img src="indicator_external_link.gif" border="0" alt="" title="">ATSAMC21 Motor Control Plug In Module</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated Embedded Debugger Interface for MCHV</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/AC300025');"><img src="indicator_external_link.gif" border="0" alt="" title="">Leadshine EL5-M0400-1-24 Motor</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup</strong>
+<ol class="Element632">
+<li value="1" class="Element602"><span style="color: #000000">Mount the ATSAMC21 Motor Control Plug In Module on U9 header.</span></li>
+</ol></li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="samc21_pim_mchv3_reduced.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+2. <span style="color: #000000">Place the &quot;PFC - External Opamp Configuration&quot; Matrix board at J4.</span> </p><p class="Element10" style="text-align: center;">
+<img src="pfc_external_opamp_matrix_board.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p><p class="Element10">
+3. <span style="color: #000000">Motor Connections:</span></p>
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000">Phase U - M1</span></li>
+<li class="Element600"><span style="color: #000000">Phase V - M2</span></li>
+<li class="Element600"><span style="color: #000000">Phase W - M3</span></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="Motor Connections_MCHV3.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10">
+4. Jumper Settings:</p>
+<ul class="Element630">
+<li class="Element600">J11 - VAC ( Short Pin 3 - 4)</li>
+<li class="Element600">J12 - IA ( Short Pin 1 - 2)</li>
+<li class="Element600">J13 - IB ( Short Pin 1 - 2)</li>
+<li class="Element600">J14 - Fault_IP/IBUS ( Short Pin 1 - 2)</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="mchv3_jumper_settings.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10">
+5. Power the board with (110V/220V) AC mains. For additional safety, it is recommended to use a current limited power supply while testing this demo on a non-default hardware and motor. </p><p class="Element10" style="text-align: center;">
+<img src="AC mains_MCHV3.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">Installing Isolated Embedded Debugger
+<ul class="Element631">
+<li class="Element601">Default programmer or debugger daughter card shipped with the MCHV3 board cannot program or debug SAM series MCU and therefore, it needs to be replaced with <a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated Embedded Debugger Interface for MCHV</a>.</li>
+</ul></li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="replacing_isolated_edbg.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">Complete Setup</li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="mchv3_complete_setup.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="2" class="Element600"><strong>Project mclv2_sam_c21_pim.X.</strong></li>
+</ol>
+<ul class="Element630">
+<li class="Element600"><strong>Hardware Used</strong>
+<ul class="Element631">
+<li class="Element601"><a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/DM330021-2');"><img src="indicator_external_link.gif" border="0" alt="" title="">dsPICDEMTM MCLV2 Development Board (Low Voltage)</a></li>
+<li class="Element601"><a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/MA320206');"><img src="indicator_external_link.gif" border="0" alt="" title="">ATSAMC21 Motor Control Plug In Module</a></li>
+<li class="Element601"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNo/AC300022');"><img src="indicator_external_link.gif" border="0" alt="" title="">Long Hurst DMA0204024B101 Motor</a></li>
+</ul></li>
+<li class="Element600"><strong>Hardware Setup</strong>
+<ol class="Element631">
+<li value="1" class="Element601"><span style="color: #000000">Mount the ATSAMC21 Motor Control Plug In Module on U9 header.</span></li>
+</ol></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="SAMC21_pim.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10">
+2. <span style="color: #000000">Place the &quot;External Opamp Configuration&quot; Matrix board at J14.</span> </p><p class="Element10" style="text-align: center;">
+<img src="mclv2_ext_opamp.png" border="0" alt="" title=""></p><p class="Element10">
+3. <span style="color: #000000">Motor Connections:</span></p>
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000">Phase U - M1</span></li>
+<li class="Element600"><span style="color: #000000">Phase V - M2</span></li>
+<li class="Element600"><span style="color: #000000">Phase W - M3</span></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="mclv2_motor_sensor_interface.png" border="0" alt="" title=""></p><p class="Element10">
+4. Jumper Settings:</p>
+<ul class="Element630">
+<li class="Element600">JP1 - Curr, JP2 - Curr, JP3 - Curr</li>
+<li class="Element600">In order to use RS232 port for X2CScope Communication JP4 - UART, JP5 - UART</li>
+<li class="Element600">In order to use USB port for X2CScope Communication JP4 - USB, JP5 - USB</li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="jumper_mclv2.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10">
+5. <span style="color: #000000">Power the board with a 24V DC supply using J2 or BP1-BP2. </span>For additional safety, it is recommended to use a current limited power supply while testing this software demonstration on a non-default hardware and motor. </p><p class="Element10" style="text-align: center;">
+<img src="power_mclv2.png" border="0" alt="" title=""></p>
+<ul class="Element630">
+<li class="Element600"><strong>Complete Setup</strong></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="mclv2_complete_setup.png" border="0" alt="" title=""></p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00078.html">Reduced Order Luenberger Observer (ROLO)</a> &gt; <a href="00091.html">pmsm_foc_rolo_wm_sam_c21</a> &gt; <a href="00094.html">Hardware Setup</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="100%">
+<div class="Element3">
+ Microchip 32-bit Motor Control</div>
+</td></tr><tr><td width="100%">
+<div class="Element4">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+</td></tr><tr><td width="100%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo_wm pmsm_foc_rolo_wm_sam_c21 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

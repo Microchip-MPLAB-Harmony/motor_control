@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00015.html">Motor Control Overview</a> &gt; <a href="00007.html">Applications Help</a> &gt; <a href="00042.html">FOC Based Position Control of PMSM Using Quadrature Encoder</a> &gt; <a href="00043.html">pmsm_foc_encoder_position_sam_e54</a> &gt; <a href="00045.html">Control Algorithm</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00027.html">Sensor feedback using Quadrature Encoder</a> &gt; <a href="00030.html">pmsm_foc_encoder_sam_e70</a> &gt; <a href="00045.html">Control Algorithm</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,13 +28,13 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00015.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00047.html">Previous</a> | <a href="00043.html">Up</a> | <a href="00046.html">Next</a></div>
+<a href="00043.html">Previous</a> | <a href="00030.html">Up</a> | <a href="00042.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_position_control pmsm_foc_encoder_position_sam_e54  Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_sam_e70_control_algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Control Algorithm</div>
 </div>
@@ -51,30 +51,24 @@ Control Algorithm</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The project implements an encoder based Field Oriented Control ( FOC ) algorithm on the SAME54 32-bit micro-controller to track the position of the PMSM motor. The following section describes briefly about the FOC algorithm, software design and implementation.&nbsp;</p>
+ &nbsp;</p>
+<p class="Element10">
+The project implements an encoder based Field Oriented Control ( FOC ) algorithm on the SAME70 32-bit micro-controller to regulate the speed of the PMSM motor. For details of encoder based FOC, refer to <a href="#" onclick="openExternalLink('https://www.microchip.com/wwwAppNotes/AppNotes.aspx?appnote=en607365');"><img src="indicator_external_link.gif" border="0" alt="" title="">Application Note AN2757</a>. The following section describes briefly about the FOC algorithm, software design and implementation.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
 Field Oriented Control is the technique used to achieve the decoupled control of torque and flux. This is done by transforming the stator current quantities (phase currents) from a stationary reference frame to torque and flux producing currents components in a rotating reference frame using mathematical transformations. The Field Oriented Control is done as follows:&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
-<p class="Element10">
-1. Measure the motor phase currents.&nbsp;</p>
-<p class="Element10">
-2. Transform them into the two-phase system (a, b) using the Clarke transformation.&nbsp;</p>
-<p class="Element10">
-3. Calculate the rotor position angle.&nbsp;</p>
-<p class="Element10">
-4. Transform stator currents into the d,q-coordinate system using the Park transformation.&nbsp;</p>
-<p class="Element10">
-5. Position and speed are controlled by position and speed PI controllers respectively.&nbsp;</p>
-<p class="Element10">
-6. The stator current torque (iq) and flux (id) producing components are controlled separately by the corresponding PI controllers.&nbsp;</p>
-<p class="Element10">
-7. The output stator voltage space vector is transformed back from the d,q-coordinate system into the two phase system fixed with the stator by the Inverse Park transformation.&nbsp;</p>
-<p class="Element10">
-8. Using the space vector modulation, the three-phase output voltage is generated.&nbsp;</p>
-<p class="Element10">
+<ol class="Element630">
+<li value="1" class="Element600">Measure the motor phase currents.</li>
+<li value="2" class="Element600">Transform them into the two phase system (a, b) using the Clarke transformation.</li>
+<li value="3" class="Element600">Calculate the rotor position angle.</li>
+<li value="4" class="Element600">Transform stator currents into the d,q-coordinate system using the Park transformation.</li>
+<li value="5" class="Element600">The stator current torque (i<sub>q</sub>) and flux (i<sub>d</sub>) producing components are controlled separately by the controllers.</li>
+<li value="6" class="Element600">The output stator voltage space vector is transformed back from the d,q-coordinate system into the two phase system fixed with the stator by the Inverse Park transformation.</li>
+<li value="7" class="Element600">Using the space vector modulation, the three-phase output voltage is generated.</li>
+</ol><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
 The phase currents are measured using two shunt resistors connected to Phase U and Phase V inverter legs respectively. The W phase current is determined based on Kirchoff's current law.&nbsp;</p>
@@ -83,15 +77,37 @@ The rotor position angle is determined from the Quadrature encoder.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-The following block diagram shows the software realization of the FOC algorithm. </p><p class="Element10" style="text-align: center;">
-<img src="encoder_pos_control_same54_block_diagram.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Flux Weakening:</strong>&nbsp;</p>
+<p class="Element10">
+The field weakening for PMSM implies imposing a negative value of d-axis current, which has the role of weakening the air gap flux linkage. Field weakening is required to enable the PMSM motor to rotate above its rated speed. In this example project, an equation based field weakening is implemented. </p><p class="Element10" style="text-align: center;">
+<img src="encoder_same70__flux_weakening.png" border="0" alt="" title=""></p><p class="Element10">
+For more details refer &quot;Equation-based Flux weakening&quot; section of Application note <a href="#" onclick="openExternalLink('https://www.microchip.com/wwwAppNotes/AppNotes.aspx?appnote=en599773');"><img src="indicator_external_link.gif" border="0" alt="" title="">AN2520</a>.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+The following block diagram shows the software realization of the FOC algorithm.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<img src="Encoder_same70_block_diagram.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
 &nbsp;</p>
 <p class="Element10">
 <strong>Software Design:</strong>&nbsp;</p>
 <p class="Element10">
-The following figure shows the various state machines of the the motor control software. </p><p class="Element10" style="text-align: center;">
-<img src="encoder_pos_control_same54_motor_control_flow.png" border="0" alt="" title=""></p><p class="Element10">
-In the software, the PMSM position control task is realized by a state machine as shown in the previous figure. The following sections briefly describes the various states in the PMSM position control task:&nbsp;</p>
+The following figure shows the various state machines of the the motor control software.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<img src="Encoder_same70_motor_control_flow.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+In the software, the PMSM speed control task is realized by a state machine as shown in the previous figure. The following sections briefly describes the various states in the PMSM speed control task:&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
@@ -99,7 +115,7 @@ In the software, the PMSM position control task is realized by a state machine a
 <p class="Element10">
 In this state, following tasks are performed:</p>
 <ul class="Element630">
-<li class="Element600">Initialization and configuration of motor control peripherals for generation of periodic ADC triggers and ADC conversion interrupt</li>
+<li class="Element600">Initialization andconfiguration of NVIC, AFEC, PWM, TC QDEC motor control peripherals for generation of periodic ADC triggers and ADC conversion interrupt</li>
 <li class="Element600">Current Offset measurement and calibration</li>
 <li class="Element600">Initialize PI controller parameters for speed and current control loops</li>
 </ul><p class="Element10">
@@ -117,11 +133,15 @@ In this state, the motor starts spinning. The below flow chart and the timing di
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="encoder_pos_control_same54_timing_diagram.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+<img src="Encoder_same70_adc_isr_flow.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-The position control is carried out in the ADC interrupt task.&nbsp;</p>
+<img src="Encoder_same70_timing_diagram.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+In run state, two threads are executed; the Main task thread and ADC Interrupt task thread. The current control is carried out in the ADC interrupt task thread, while the speed control is carried out in the main task thread. Therefore, the ADC interrupt cycle indicates the current control frequency.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <ul class="Element630">
@@ -147,14 +167,13 @@ After the alignment, the close loop control using the FOC algorithm is done.&nbs
 <p class="Element10">
 <strong>Software Configuration:</strong>&nbsp;</p>
 <p class="Element10">
-The FOC algorithm is used across different application fields. In order to get the optimal control of the PMSM motor, the motor specific parameters, board specific parameters and application parameter macros have to be updated in the software. The following section describes how to update both motor and application specific parameters in the the project. These parameter macros can be found in userparams.h header file which can be found under logical path: <i>Header Files &gt; config &gt; &lt;config_name&gt; &gt;userparams.h </i>in MPLABX IDE. </p><p class="Element10" style="text-align: center;">
-<img src="encoder_pos_control_userparam_selection.png" border="0" alt="" title=""></p><p class="Element10">
+The FOC algorithm is used across different application fields. In order to get the optimal control of the PMSM motor, both the motor specific parameters and application parameters need to be updated in the software . The following section describes how to update both motor and application specific parameters in the the project.&nbsp;</p>
+<p class="Element10">
 &nbsp;</p>
-
 <ol class="Element630">
 <li value="1" class="Element600"><strong>Setting motor control PWM frequency:</strong></li>
 </ol><p class="Element10">
-The PWM controller frequency ( in Hz ) can be configured by setting the following macro in userparams.h<i> </i>file.&nbsp;</p>
+The PWM controller frequency ( in Hz ) can be configured by setting the following macro in <span class="Element146">userparams.h</span><i> </i>file.&nbsp;</p>
 <p class="Element10">
 <strong>This frequency should be same as the frequency configured in the PWM peripheral in the MHC.</strong>&nbsp;</p>
 <p class="Element10">
@@ -180,7 +199,7 @@ Current controller and PWM frequency in Hz.&nbsp;</div></td></tr></table></div><
 <ol class="Element630">
 <li value="2" class="Element600"><strong>Setting motor specific -parameter:</strong></li>
 </ol><p class="Element10">
-Set the following motor parameters in userparams.h<i> </i>file.&nbsp;</p>
+Set the following motor parameters in <span class="Element146">userparams.h</span><i> </i>file.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p><div class="Element63">
 <div class="TableDiv">
@@ -249,39 +268,7 @@ Number of encoder pulses per mechanical revolution&nbsp;</div></td><td class="El
 <p class="Element10">
 <strong>3. Setting PI Controller parameters:</strong>&nbsp;</p>
 <p class="Element10">
-Depending on the type of motor used and the corresponding application, PI controller parameters should to be updated in userparams.h<i> </i>file.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-Parameters for position Control loop: </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="24%">
-<div class="Element66">
-Macro&nbsp;</div></td><td class="Element65" valign="top" width="76%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="24%">
-<div class="Element68">
-POSCNTR_PTERM&nbsp;</div></td><td class="Element67" valign="top" width="76%">
-<div class="Element68">
-Proportional gain of position control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="24%">
-<div class="Element68">
-POSCNTR_ITERM&nbsp;</div></td><td class="Element67" valign="top" width="76%">
-<div class="Element68">
-Integral gain of speed position loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="24%">
-<div class="Element68">
-POSCNTR_CTERM&nbsp;</div></td><td class="Element67" valign="top" width="76%">
-<div class="Element68">
-Anti-windup term of position control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="24%">
-<div class="Element68">
-POSCNTR_OUTMAX&nbsp;</div></td><td class="Element67" valign="top" width="76%">
-<div class="Element68">
-Maximum controller output of position control loop&nbsp;</div></td></tr></table></div></div>
+Depending on the type of motor used and the corresponding application, PI controller parameters should to be updated in <span class="Element146">userparams.h</span><i> </i>file.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
@@ -378,6 +365,54 @@ Anti-windup term of Iq current control loop&nbsp;</div></td></tr><tr>
 Q_CURRCNTR_OUTMAX&nbsp;</div></td><td class="Element67" valign="top" width="73%">
 <div class="Element68">
 Maximum controller output of Iq current control loop&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>4. Special Features:</strong>&nbsp;</p>
+<p class="Element10">
+The low voltage drive application project mclv2_sam_e70_pim.X supports high speed operation of the PMSM motor by using equation based flux weakening. This feature can be enabled by setting the following macro:&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="38%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="62%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="38%">
+<div class="Element68">
+ENABLE_FLUX_WEAKENING&nbsp;</div></td><td class="Element67" valign="top" width="62%">
+<div class="Element68">
+Enable macro for flux weakening&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+( Note: Flux weakening feature is only available for mclv2_sam_e70_pim.X. This feature is currently removed in mchv3_sam_e70_pim.X)&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>5. Debugging Features:</strong>&nbsp;</p>
+<p class="Element10">
+The software integrates features to enable user to tune their motor drive with ease. Some of them are listed as follows:&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="6%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="94%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="6%">
+<div class="Element68">
+TORQUE_MODE&nbsp;</div></td><td class="Element67" valign="top" width="94%">
+<div class="Element68">
+This is a special mode where the speed control loop can be bypassed. The input of potentiometer is scaled and is fed directly to the q-axis<sub> </sub>PI controller. Torque mode enable switch (0 - Disable, 1 - Enable ).&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -385,7 +420,7 @@ Maximum controller output of Iq current control loop&nbsp;</div></td></tr></tabl
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00015.html">Motor Control Overview</a> &gt; <a href="00007.html">Applications Help</a> &gt; <a href="00042.html">FOC Based Position Control of PMSM Using Quadrature Encoder</a> &gt; <a href="00043.html">pmsm_foc_encoder_position_sam_e54</a> &gt; <a href="00045.html">Control Algorithm</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00027.html">Sensor feedback using Quadrature Encoder</a> &gt; <a href="00030.html">pmsm_foc_encoder_sam_e70</a> &gt; <a href="00045.html">Control Algorithm</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -393,10 +428,10 @@ Maximum controller output of Iq current control loop&nbsp;</div></td></tr></tabl
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00015.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_position_control pmsm_foc_encoder_position_sam_e54  Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_sam_e70_control_algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

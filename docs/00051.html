@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Building The Application</title>
+<title>MPLAB Harmony Configurations</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00015.html">Motor Control Overview</a> &gt; <a href="00007.html">Applications Help</a> &gt; <a href="00049.html">PMSM FOC Using Reduced Order Luenberger Observer</a> &gt; <a href="00050.html">pmsm_foc_rolo_sam_c21</a> &gt; <a href="00051.html">Building The Application</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00020.html">PLL Estimator</a> &gt; <a href="00047.html">pmsm_foc_pll_estimator_pic32_mk</a> &gt; <a href="00051.html">MPLAB Harmony Configurations</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +28,15 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00015.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00050.html">Previous</a> | <a href="00050.html">Up</a> | <a href="00054.html">Next</a></div>
+<a href="00048.html">Previous</a> | <a href="00047.html">Up</a> | <a href="00049.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo pmsm_foc_rolo_sam_c21 Building The Application Topic Title: Building The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_help pmsm_foc_pll_estimator_pic32_mk MPLAB Harmony Configurations Topic Title: MPLAB Harmony Configurations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building The Application</div>
+MPLAB Harmony Configurations</div>
 </div>
 </div>
 
@@ -51,45 +51,38 @@ Building The Application</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The parent folder for all the MPLAB X projects for this application is given below: </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="46%">
-<div class="Element66">
-Application Path&nbsp;</div></td><td class="Element65" valign="top" width="54%">
-<div class="Element66">
-motor_control\apps&nbsp;</div></td></tr></table></div></div>
+The following project graph shows the MPLAB Harmony components that are included in this application:&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">To build the application, refer to the following table and open the appropriate project file in MPLAB X IDE.</span> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="25%">
-<div class="Element66">
-Project Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-mchv3_sam_c21_pim.X&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-pmsm_foc_rolo_sam_c21 is setup to work with ATSAMC21 Motor Control Plug In Module +<br>dsPICDEM<sup>TM </sup>MCHV-3 Development Board (High Voltage)&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-mclv2_sam_c21_pim.X&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-pmsm_foc_rolo_sam_c21 is setup to work with ATSAMC21 Motor Control Plug In Module +<br>dsPICDEM<sup>TM </sup>MCLV-2 Development Board (Low Voltage)&nbsp;</div></td></tr></table></div></div>
-</div>
+<strong>mchv2_pic32mk_pim.X</strong> &nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="pll_estimator_pic32mk_project_graph.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Components Used</strong></p>
+<ol class="Element630">
+<li value="1" class="Element600">ADCHS<span style="color: #000000"> Peripheral:</span>
+<ul class="Element631">
+<li class="Element601">The ADCHS is used to measure analog quantities. Four channels are used to measure the Phase Current A, the Phase Current B, the DC Bus Voltage and the Potentiometer. Conversion is triggered at the PWM (zero match + offset of the switch delay)</li>
+</ul></li>
+<li value="2" class="Element600">MC<span style="color: #000000">PWM Peripheral:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">This peripheral is used to generated three phase synchronous PWM waveforms. Fault functionality is also enabled to switch off the output waveforms asynchronously</span></li>
+</ul></li>
+<li value="3" class="Element600"><span style="color: #000000">UART2 Peripheral:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">The UART is used for X2CScope communication to observe graphs and variable values in run time</span></li>
+</ul></li>
+</ol></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00015.html">Motor Control Overview</a> &gt; <a href="00007.html">Applications Help</a> &gt; <a href="00049.html">PMSM FOC Using Reduced Order Luenberger Observer</a> &gt; <a href="00050.html">pmsm_foc_rolo_sam_c21</a> &gt; <a href="00051.html">Building The Application</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00020.html">PLL Estimator</a> &gt; <a href="00047.html">pmsm_foc_pll_estimator_pic32_mk</a> &gt; <a href="00051.html">MPLAB Harmony Configurations</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -97,10 +90,10 @@ pmsm_foc_rolo_sam_c21 is setup to work with ATSAMC21 Motor Control Plug In Modul
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00015.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo pmsm_foc_rolo_sam_c21 Building The Application Topic Title: Building The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_help pmsm_foc_pll_estimator_pic32_mk MPLAB Harmony Configurations Topic Title: MPLAB Harmony Configurations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

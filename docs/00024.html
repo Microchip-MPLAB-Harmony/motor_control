@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>pmsm_foc_encoder_sam_e54</title>
+<title>Hardware Setup</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00015.html">Motor Control Overview</a> &gt; <a href="00007.html">Applications Help</a> &gt; <a href="00023.html">PMSM FOC Using Quadrature Encoder</a> &gt; <a href="00024.html">pmsm_foc_encoder_sam_e54</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00020.html">PLL Estimator</a> &gt; <a href="00021.html">pmsm_foc_pll_estimator_sam_e70</a> &gt; <a href="00024.html">Hardware Setup</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +28,15 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00015.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00034.html">Previous</a> | <a href="00023.html">Up</a> | <a href="00026.html">Next</a></div>
+<a href="00023.html">Previous</a> | <a href="00021.html">Up</a> | <a href="00026.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder Applications pmsm_foc_encoder_sam_e54 Topic Title: pmsm_foc_encoder_sam_e54)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc pmsm_foc_pll_estimator_sam_e70 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-pmsm_foc_encoder_sam_e54</div>
+Hardware Setup</div>
 </div>
 </div>
 
@@ -50,51 +50,149 @@ pmsm_foc_encoder_sam_e54</div>
 <div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
+
+<ol class="Element630">
+<li value="1" class="Element600"><strong>Project mchv3_sam_e70_pim.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/dm330023-3');"><img src="indicator_external_link.gif" border="0" alt="" title="">MCHV3 Development Board (High Voltage)</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated Embedded Debugger Interface</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/ATSAME70-100-Pin-Motor-Control-Plug-In%20Module-Information-Sheet-DS50002776A.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">ATSAME70 PIM</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/AC300025');"><img src="indicator_external_link.gif" border="0" alt="" title="">Leadshine EL5-M0400-1-24 Motor</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup</strong>
+<ol class="Element632">
+<li value="1" class="Element602"><span style="color: #000000">Mount the ATSAME70 Motor Control Plug In Module on U9 header.</span></li>
+</ol></li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_pim_mchv3.png" border="0" alt="" title=""></p>
+<ol class="Element630">
+<li value="2" class="Element600"><span style="color: #000000">Place the &quot;PFC - External Opamp Configuration&quot; Matrix </span>board at J4.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_pfc_external_opamp_mchv3.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="3" class="Element600"><span style="color: #000000">Motor Connections:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Phase U - M1</span></li>
+<li class="Element601"><span style="color: #000000">Phase V - M2</span></li>
+<li class="Element601"><span style="color: #000000">Phase W - M3</span></li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="Motor Connections_MCHV3.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
 <p class="Element10">
-The permanent magnet synchronous motors ( PMSM ) is widely used in various industries due to its high power density, smaller size and high efficiency. The Field oriented control is one of the most popular control mechanisms for the PMSM motor for applications which requires high dynamic performance.&nbsp;</p>
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="4" class="Element600">Jumper Settings:
+<ul class="Element631">
+<li class="Element601">J11 - VAC ( Short Pin 3 - 4)</li>
+<li class="Element601">J12 - IA ( Short Pin 1 - 2)</li>
+<li class="Element601">J13 - IB ( Short Pin 1 - 2)</li>
+<li class="Element601">J14 - Fault_IP/IBUS ( Short Pin 1 - 2)</li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_mchv3_jumper_settings.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="5" class="Element600">Power the board with (110V/220V) AC mains. For additional safety, it is recommended to use a current limited power supply while testing this software demonstration on a non-default hardware and motor.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_ac_mains.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>Installing Isolated Embedded Debugger</strong>
+<ul class="Element631">
+<li class="Element601">Default programmer or debugger daughter card shipped with the MCHV3 board cannot program or debug SAM series MCU and therefore, it needs to be replaced with an <a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated Embedded Debugger Interface for MCHV</a>.</li>
+</ul></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="replacing_isolated_edbg.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">This example shows how to configure motor control peripherals ADC, PDEC and TCC for the control operation. The control strategy is the sensored FOC, in which rotor position is determined by the Quadrature Encoder. And speed is calculated from the position.</span>&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">The following sections describe the basics of the sensored FOC motor control algorithm and the steps to build, configure and run the PMSM motor for low voltage PMSM motor drive.</span>&nbsp;</p></div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00026.html">Building The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to build an application using MPLAB X IDE.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00029.html">MPLAB Harmony Configurations</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00027.html">Control Algorithm</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This section describes the control strategy and explains the control loop flow.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00028.html">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00030.html">Running The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to run the application using MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>Complete Setup</strong></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="pll_same70_hv_hardware_setup.png" border="0" alt="" title=""> &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+======= &gt;&gt;&gt;&gt;&gt;&gt;&gt; 4fd8e18e... [PLL_ESTIMATOR_PIC32_MK] Adding hep document for PLL based sensorless FOC on PIC32MK</p>
+<ol class="Element630">
+<li value="2" class="Element600"><strong>Project mclv2_sam_e70_pim.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2');"><img src="indicator_external_link.gif" border="0" alt="" title="">MCLV2 Development Board (Low Voltage)</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/ATSAME70-100-Pin-Motor-Control-Plug-In%20Module-Information-Sheet-DS50002776A.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">ATSAME70 PIM</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNo/AC300022');"><img src="indicator_external_link.gif" border="0" alt="" title="">Long Hurst DMA0204024B101 Motor</a></li>
+</ul></li>
+</ul></li>
+</ol>
+<ul class="Element630">
+<li class="Element600"><strong>Hardware Setup</strong>
+<ol class="Element631">
+<li value="1" class="Element601"><span style="color: #000000">Mount the ATSAME70 Motor Control Plug In Module on U9 header.</span></li>
+</ol></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="pll_same70_pim.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="2" class="Element600"><span style="color: #000000">Place the &quot;External Opamp Configuration&quot; Matrix board at J14</span></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_mclv2_ext_opamp.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="3" class="Element600"><span style="color: #000000">Motor Connections:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Phase U - M1</span></li>
+<li class="Element601"><span style="color: #000000">Phase V - M2</span></li>
+<li class="Element601"><span style="color: #000000">Phase W - M3</span></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="pll_same70_motor_connection.png" border="0" alt="" title=""></p>
+<ol class="Element630">
+<li value="4" class="Element600">Jumper Settings:
+<ul class="Element631">
+<li class="Element601">JP1 - Curr, JP2 - Curr, JP3 - Curr</li>
+<li class="Element601">In order to use RS232 port for X2CScope Communication JP4 - UART, JP5 - UART</li>
+<li class="Element601">In order to use USB port for X2CScope Communication JP4 - USB, JP5 - USB</li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_mclv2_jumper_settings.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="5" class="Element600"><span style="color: #000000">Power the board with a 24V DC supply using J2 or BP1-BP2. </span>For additional safety, it is recommended to use a current limited power supply while testing this software demonstration on a non-default hardware and motor.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_same70_power_mclv2.png" border="0" alt="" title=""></p>
+<ul class="Element630">
+<li class="Element600"><strong>Complete Setup</strong></li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="pll_same70_mclv2.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
 </div>
 </div>
 </div>
@@ -102,7 +200,7 @@ This section provides information on how to run the application using MPLAB X ID
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00015.html">Motor Control Overview</a> &gt; <a href="00007.html">Applications Help</a> &gt; <a href="00023.html">PMSM FOC Using Quadrature Encoder</a> &gt; <a href="00024.html">pmsm_foc_encoder_sam_e54</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00020.html">PLL Estimator</a> &gt; <a href="00021.html">pmsm_foc_pll_estimator_sam_e70</a> &gt; <a href="00024.html">Hardware Setup</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -110,10 +208,10 @@ This section provides information on how to run the application using MPLAB X ID
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00015.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder Applications pmsm_foc_encoder_sam_e54 Topic Title: pmsm_foc_encoder_sam_e54)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc pmsm_foc_pll_estimator_sam_e70 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

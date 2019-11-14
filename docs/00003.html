@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>MPLAB Harmony Configurations</title>
+<title>Hardware Setup</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00015.html">Motor Control Overview</a> &gt; <a href="00007.html">Applications Help</a> &gt; <a href="00006.html">ACIM VHz Open loop</a> &gt; <a href="00005.html">acim_vhz_sam_c21</a> &gt; <a href="00003.html">MPLAB Harmony Configurations</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00000.html">ACIM Applications</a> &gt; <a href="00007.html">ACIM VHz Open loop</a> &gt; <a href="00006.html">acim_vhz_sam_c21</a> &gt; <a href="00003.html">Hardware Setup</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +28,15 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00015.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00000.html">Previous</a> | <a href="00005.html">Up</a> | <a href="00001.html">Next</a></div>
+<a href="00002.html">Previous</a> | <a href="00006.html">Up</a> | <a href="00005.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: acim_vhz acim_vhz_sam_c21 MPLAB Harmony Configurations Topic Title: MPLAB Harmony Configurations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: acim_vhz acim_vhz_sam_c21 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-MPLAB Harmony Configurations</div>
+Hardware Setup</div>
 </div>
 </div>
 
@@ -50,66 +50,111 @@ MPLAB Harmony Configurations</div>
 <div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The following project graph shows the MPLAB Harmony components that are included in this application:</p><div class="Element15">
-acim_vhz_sam_c21</div>
+
+<ol class="Element630">
+<li value="1" class="Element600"><strong>Project mchv3_sam_c21_pim.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/dm330023-3');"><img src="indicator_external_link.gif" border="0" alt="" title="">dsPICDEMTM MCHV3 Development Board (High Voltage)</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/MA320206');"><img src="indicator_external_link.gif" border="0" alt="" title="">ATSAMC21 Motor Control Plug In Module</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated Embedded Debugger Interface for MCHV</a></li>
+<li class="Element602">230 volts ACIM motor</li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>Hardware Setup</strong>
+<ol class="Element631">
+<li value="1" class="Element601"><span style="color: #000000">Mount the ATSAMC21 Motor Control Plug In Module on U9 header.</span></li>
+</ol></li>
+</ul><p class="Element10">
+&nbsp;</p>
 <p class="Element10" style="text-align: center;">
-<img src="acim_vhz_project_graph.png" border="0" alt="" title=""></p><div class="Element15">
-Components Used</div>
-<p class="Element10">
+<img src="acim_vhz_samc21_pim_mchv3_reduced.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
 &nbsp;</p>
 <p class="Element10">
-<span style="color: #000000"><strong>TCC0:</strong></span></p>
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="2" class="Element600"> <span style="color: #000000"> Place the &quot;PFC - External Opamp Configuration&quot; Matrix </span>board at J4.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="acim_vhz_pfc_external_opamp_matrix_board.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10">
+3. <span style="color: #000000">Motor Connections:</span></p>
 <ul class="Element630">
-<li class="Element600"><span style="color: #000000">Configured to generate 3 pairs of complimentary PWM signals at a frequency of 20 kHz in &quot;Dual Slope PWM with interrupt and event when the counter = ZERO&quot;.</span></li>
-<li class="Element600"><span style="color: #000000">Event output is enabled, which is generated when the counter reaches ZERO.</span></li>
-<li class="Element600"><span style="color: #000000">Dead-time is enabled and set to 1 µs.</span></li>
-<li class="Element600"><span style="color: #000000">Non-recoverable Fault is enabled on EV0. When an event is detected on EV0, all PWM channels are held low.</span></li>
+<li class="Element600"><span style="color: #000000">Phase U - M1</span></li>
+<li class="Element600"><span style="color: #000000">Phase V - M2</span></li>
+<li class="Element600"><span style="color: #000000">Phase W - M3</span></li>
+</ul><p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="acim_vhz_Motor Connections_MCHV3.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+4. Jumper Settings:</p>
+<ul class="Element630">
+<li class="Element600">J11 - VAC ( Short Pin 3 - 4)</li>
+<li class="Element600">J12 - IA ( Short Pin 1 - 2)</li>
+<li class="Element600">J13 - IB ( Short Pin 1 - 2)</li>
+<li class="Element600">J14 - Fault_IP/IBUS ( Short Pin 1 - 2)</li>
 </ul><p class="Element10">
 &nbsp;</p>
-<p class="Element10">
-<span style="color: #000000"><strong>ADC1:</strong></span></p>
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">ADC1 operates to read the Potentiometer Speed Reference.</span></li>
-<li class="Element600"><span style="color: #000000">The ADC is hardware triggered by an event generated from the TCC0.</span></li>
-<li class="Element600"><span style="color: #000000">Enable Ready interrupt is generated by ADC1.</span></li>
-</ul><p class="Element10">
+<p class="Element10" style="text-align: center;">
+<img src="acim_vhz_mchv3_jumper_settings.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
 &nbsp;</p>
 <p class="Element10">
-<span style="color: #000000"><strong>EIC:</strong></span></p>
+5. Power the board with (110V/220V) AC mains. For additional safety, it is recommended to use a current limited power supply while testing this software demonstration on a non-default hardware and motor.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="acim_vhz_AC mains_MCHV3.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
 <ul class="Element630">
-<li class="Element600">EIC Channel 2: <span style="color: #000000">External Interrupt Controller detects the hardware over current fault input and generates a non-recoverable fault event for the TCC0, thereby shutting down the PWM in the event of an over-current fault.</span></li>
-<li class="Element600">EIC Channel 11: External Interrupt Controller detects the Start and Stop push button command.</li>
+<li class="Element600"><strong>Installing Isolated Embedded Debugger</strong>
+<ul class="Element631">
+<li class="Element601">Default programmer or debugger daughter card shipped with the MCHV3 board cannot program or debug SAM series MCU and therefore, it needs to be replaced with an <a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated Embedded Debugger Interface for MCHV</a>.</li>
+</ul></li>
 </ul><p class="Element10">
 &nbsp;</p>
-<p class="Element10">
-<span style="color: #000000"><strong>EVSYS:</strong></span></p>
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">Event System acts as a moderator between the event generator and event users.</span></li>
-<li class="Element600"><span style="color: #000000">Event generated by the TCC0 when the counter reaches ZERO, is used by the ADC1 as a hardware trigger source via the Event System.</span></li>
-<li class="Element600"><span style="color: #000000">Event generated by the EIC upon over-current fault, is used by the TCC0 as a non-recoverable fault event via the Event System.</span></li>
-</ul><p class="Element10">
+<p class="Element10" style="text-align: center;">
+<img src="acim_vhz_replacing_isolated_edbg.png" border="0" alt="" title=""></p><p class="Element10">
 &nbsp;</p>
-<p class="Element10">
-<strong>DIVAS:</strong></p>
+
 <ul class="Element630">
-<li class="Element600">This project uses &quot;Divide and Square Root Accelerator&quot; to perform 32-bit signed and unsigned division and 32-bit unsigned square root operations.</li>
-<li class="Element600">DIVAS is set to overload &quot;Divide - / &quot; operator i.e. c = a / b; would use DIVAS accelerator for division without using a special API. However, the square root operation would still require a special API. Refer to the DIVAS help for more details.</li>
-</ul><p class="Element10">
+<li class="Element600">Complete Setup</li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="acim_vhz_mchv3_complete_setup.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
 &nbsp;</p>
-<p class="Element10">
-<span style="color: #000000"><strong>SERCOM3:</strong></span></p>
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">Configured in USART mode and is set to operate at 115200 bps.</span></li>
-<li class="Element600"><span style="color: #000000">This USART channel is used by the X2CScope plugin to plot or watch global variables in run-time.</span></li>
-</ul></div>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00015.html">Motor Control Overview</a> &gt; <a href="00007.html">Applications Help</a> &gt; <a href="00006.html">ACIM VHz Open loop</a> &gt; <a href="00005.html">acim_vhz_sam_c21</a> &gt; <a href="00003.html">MPLAB Harmony Configurations</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00000.html">ACIM Applications</a> &gt; <a href="00007.html">ACIM VHz Open loop</a> &gt; <a href="00006.html">acim_vhz_sam_c21</a> &gt; <a href="00003.html">Hardware Setup</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -117,10 +162,10 @@ Components Used</div>
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00015.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: acim_vhz acim_vhz_sam_c21 MPLAB Harmony Configurations Topic Title: MPLAB Harmony Configurations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: acim_vhz acim_vhz_sam_c21 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
