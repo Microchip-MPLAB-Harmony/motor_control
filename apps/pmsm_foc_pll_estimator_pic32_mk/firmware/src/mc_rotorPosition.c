@@ -54,6 +54,7 @@
 #define MCRPOS_C
 #include "mc_rotorPosition.h"
 #include "mc_voltageMeasurement.h"
+#include "mc_picontrol.h"
 #include "math.h"
 #include "assert.h"
 
@@ -70,15 +71,10 @@
 /******************************************************************************/
 /*                   Global Variables                                         */
 /******************************************************************************/
-tMCRPOS_PARAMETER_S               gMCRPOS_Parameters = { 0.0f } ;
-tMCRPOS_STATE_S                   gMCRPOS_StateSignals = { 0.0f };
-tMCRPOS_INPUT_S                   gMCRPOS_InputSignals =  { &gMCLIB_CurrentAlphaBeta.alphaAxis, 
-                                                            &gMCLIB_CurrentAlphaBeta.betaAxis, 
-                                                            &gMCLIB_VoltageAlphaBeta.alphaAxis,
-                                                            &gMCLIB_VoltageAlphaBeta.betaAxis,
-                                                            &gMCVOL_Voltage.Umax };
-tMCRPOS_OUTPUT_S                  gMCRPOS_OutputSignals = { 0.0f, 0.0f, 0.0f };
-tMCRPOS_OUTPUT_S                  gMCRPOS_OutputSignals2 = { 0.0f, 0.0f, 0.0f };
+tMCRPO_PARAMETERS_S               gMCRPOS_Parameters = { 0.0f } ;
+tMCRPO_STATE_SIGNAL_S             gMCRPOS_StateSignals = { 0.0f };
+tMCRPO_INPUT_SIGNAL_S             gMCRPOS_InputSignals =  {0.0f };
+tMCRPO_OUTPUT_SIGNALS_S           gMCRPOS_OutputSignals = { 0.0f, 0.0f, 0.0f };
 tMCRPOS_ROTOR_ALIGN_INPUT_S       gMCRPOS_RotorAlignInput = { { 0.0f, 1U } };
 tMCRPOS_ROTOR_ALIGN_STATE_S       gMCRPOS_RotorAlignState = { FORCE_ALIGN,  {0U, 0U, 0U },0U,  0U };
 tMCRPOS_ROTOR_ALIGN_OUTPUT_S      gMCRPOS_RotorAlignOutput = {0U,  0U };
@@ -89,7 +85,24 @@ tMCRPOS_ROTOR_ALIGN_PARAM_S       gMCRPOS_RotorAlignParam  = {
 
 /******************************************************************************/
 /*                          LOCAL FUNCTIONS                                   */
-/******************************************************************************/ 
+/******************************************************************************/
+
+/******************************************************************************/
+/* Function name: MCRPO_ReadInputSignals                                      */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* IRead input signals                                                        */
+/******************************************************************************/
+void MCRPO_ReadInputSignals( void )
+{
+    /* Initialize input pointers  */
+    gMCRPOS_InputSignals.ialpha =  gMCLIB_CurrentAlphaBeta.alphaAxis;
+    gMCRPOS_InputSignals.ibeta  =  gMCLIB_CurrentAlphaBeta.betaAxis;
+    gMCRPOS_InputSignals.Ualpha =  gMCLIB_VoltageAlphaBeta.alphaAxis;
+    gMCRPOS_InputSignals.Ubeta  =  gMCLIB_VoltageAlphaBeta.betaAxis;
+    gMCRPOS_InputSignals.Umax   =  gMCVOL_OutputSignals.Umax;
+}
 
 /******************************************************************************/
 /* Function name: MCRPOS_InitializePLLEstimator                               */
@@ -120,18 +133,18 @@ void MCRPOS_InitializePLLEstimator( void )
     gMCRPOS_StateSignals.Ubeta_1 = 0;
     gMCRPOS_StateSignals.esdf = 0;
     gMCRPOS_StateSignals.esqf = 0;
-    gMCRPOS_StateSignals.rho = 0;   
+    gMCRPOS_StateSignals.rho = 0; 
+    
 }
 
 /******************************************************************************/
 /* Function name: MCRPOS_PLLEstimator                                         */
-/* Function parameters: gMCRPOS_InputSignals, gMCRPOS_OutputSignals           */
+/* Function parameters:   None                                                */
 /* Function return: None                                                      */
 /* Description:                                                               */
 /* PLL Estimator                                                              */
 /******************************************************************************/
-void MCRPOS_PLLEstimator( const tMCRPOS_INPUT_S * const gMCRPOS_InputSignals,
-                                         tMCRPOS_OUTPUT_S * const gMCRPOS_OutputSignals )
+void MCRPOS_PLLEstimator( void )
 {
     float tempqVelEstim;
     tMCLIB_POSITION_S position;
@@ -151,13 +164,13 @@ void MCRPOS_PLLEstimator( const tMCRPOS_INPUT_S * const gMCRPOS_InputSignals,
     /* Stator voltage equations along alpha axis : Ealpha = Ualpha - Rs ialpha - Ls dialpha/dt    */
 
     gMCRPOS_StateSignals.esa	= 	( gMCRPOS_StateSignals.Ualpha_1 )
-                                -   ( gMCRPOS_Parameters.rs  * (*gMCRPOS_InputSignals->ialpha) )
-                                -   ( gMCRPOS_Parameters.lsDt  * ( (*gMCRPOS_InputSignals->ialpha) - gMCRPOS_StateSignals.ialpha_1 ) );
+                                -   ( gMCRPOS_Parameters.rs  * gMCRPOS_InputSignals.ialpha )
+                                -   ( gMCRPOS_Parameters.lsDt  * ( gMCRPOS_InputSignals.ialpha - gMCRPOS_StateSignals.ialpha_1 ) );
 
     /*  Stator voltage equations along beta axis :  Ebeta = Ubeta - Rs ibeta - Ls dibeta/dt      */
     gMCRPOS_StateSignals.esb		= 	( gMCRPOS_StateSignals.Ubeta_1 )
-                                  -   ( gMCRPOS_Parameters.rs  * (*gMCRPOS_InputSignals->ibeta) )
-                                  -   ( gMCRPOS_Parameters.lsDt* ((*gMCRPOS_InputSignals->ibeta) - gMCRPOS_StateSignals.ibeta_1 ) );
+                                  -   ( gMCRPOS_Parameters.rs  * gMCRPOS_InputSignals.ibeta )
+                                  -   ( gMCRPOS_Parameters.lsDt* ( gMCRPOS_InputSignals.ibeta - gMCRPOS_StateSignals.ibeta_1 ) );
 
   #if ( 1U == FIELD_WEAKENING )
     /* In field weakening BEMF amplitude is estimated to calculate Id_ref */
@@ -167,7 +180,7 @@ void MCRPOS_PLLEstimator( const tMCRPOS_INPUT_S * const gMCRPOS_InputSignals,
     gMCRPOS_StateSignals.bemfFilt = gMCRPOS_StateSignals.bemfFilt +
                                     ((bemfAmp - gMCRPOS_StateSignals.bemfFilt) * gMCRPOS_Parameters.kFilterEsdq) ;
 
-    gMCRPOS_OutputSignals->Esfilt =  gMCRPOS_StateSignals.bemfFilt;
+    gMCRPOS_OutputSignals.Esfilt =  gMCRPOS_StateSignals.bemfFilt;
 
   #endif
 
@@ -235,14 +248,14 @@ void MCRPOS_PLLEstimator( const tMCRPOS_INPUT_S * const gMCRPOS_InputSignals,
                                      * ( gMCRPOS_Parameters.velEstimFilterK ) );
 
     /* Update output signals */ 
-    gMCRPOS_OutputSignals->Angle = gMCRPOS_StateSignals.rho;
-    gMCRPOS_OutputSignals->Speed = gMCRPOS_StateSignals.velEstim;
+    gMCRPOS_OutputSignals.Angle = gMCRPOS_StateSignals.rho;
+    gMCRPOS_OutputSignals.Speed = gMCRPOS_StateSignals.velEstim;
 
     /* Update  state variables for next loop  */
-    gMCRPOS_StateSignals.ialpha_1	=     (*gMCRPOS_InputSignals->ialpha );
-    gMCRPOS_StateSignals.ibeta_1 	=     (*gMCRPOS_InputSignals->ibeta );
-    gMCRPOS_StateSignals.Ualpha_1 =   (*gMCRPOS_InputSignals->Umax) * (*gMCRPOS_InputSignals->Ualpha);
-    gMCRPOS_StateSignals.Ubeta_1 =   (*gMCRPOS_InputSignals->Umax) * (*gMCRPOS_InputSignals->Ubeta);
+    gMCRPOS_StateSignals.ialpha_1	=  gMCRPOS_InputSignals.ialpha;
+    gMCRPOS_StateSignals.ibeta_1 	=  gMCRPOS_InputSignals.ibeta;
+    gMCRPOS_StateSignals.Ualpha_1 =  gMCRPOS_InputSignals.Umax * gMCRPOS_InputSignals.Ualpha;
+    gMCRPOS_StateSignals.Ubeta_1  =  gMCRPOS_InputSignals.Umax * gMCRPOS_InputSignals.Ubeta;
 }
 
 /******************************************************************************/
@@ -279,14 +292,7 @@ void MCRPOS_ResetPLLEstimator( void )
 /* initializes parameters and state variables for rotor position sensing      */
 /******************************************************************************/
 INLINE_FUNCTION  void MCRPOS_InitializeRotorPositionSensing( void )
-{
-    /* Initialize input pointers  */
-    gMCRPOS_InputSignals.ialpha =  &gMCLIB_CurrentAlphaBeta.alphaAxis;
-    gMCRPOS_InputSignals.ibeta =  &gMCLIB_CurrentAlphaBeta.betaAxis;
-    gMCRPOS_InputSignals.Ualpha = &gMCLIB_VoltageAlphaBeta.alphaAxis;
-    gMCRPOS_InputSignals.Ubeta = &gMCLIB_VoltageAlphaBeta.betaAxis;
-    gMCRPOS_InputSignals.Umax =  &gMCVOL_Voltage.Umax;
-    
+{    
     /* Initialize PLL Estimator */
     MCRPOS_InitializePLLEstimator( );
   
@@ -312,9 +318,7 @@ INLINE_FUNCTION tMCRPOS_STATUS_E MCRPOS_InitialRotorPositonDetection(   const tM
                 /* PLL initialization */
                 MCRPOS_InitializeRotorPositionSensing(  );
                 MCCON_ResetPIParameters();
-                MCRPOS_offsetCalibration(gCtrlParam.rotationSign);
-                gPIParmD.dSum = 0.0f;
-                gPIParmQ.dSum = 0.0f;               
+                MCRPOS_OffsetCalibration(gCtrlParam.rotationSign);            
                 gMCRPOS_RotorAlignState.rotorAlignState = FORCE_ALIGN;
             }
         }
@@ -340,7 +344,21 @@ INLINE_FUNCTION tMCRPOS_STATUS_E MCAPP_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPU
     tMCRPOS_STATUS_E status = RUNNING ;
 
   #if( 1U == FORCED_ALIGNMENT )
-    if ( gMCRPOS_RotorAlignState.startup_lock_count < gMCRPOS_RotorAlignParam.lockTimeCount)
+    if ( gMCRPOS_RotorAlignState.startup_lock_count < ( gMCRPOS_RotorAlignParam.lockTimeCount >> 1))
+    {
+      #if(1U == Q_AXIS_ALIGNMENT )
+        alignOutput->idRef =  0.0f;
+        alignOutput->iqRef +=  ( gMCRPOS_RotorAlignParam.lockCurrent/ (float) ( gMCRPOS_RotorAlignParam.lockTimeCount >> 1));
+        alignOutput->angle = (3*M_PI_2);
+        gMCRPOS_RotorAlignState.startup_lock_count++;
+      #else 
+        alignOutput->idRef =  gMCRPOS_RotorAlignParam.lockCurrent;
+        alignOutput->iqRef =  0.0f;
+        alignOutput->angle =  0.0f;
+        gMCRPOS_RotorAlignState.startup_lock_count++;
+      #endif
+    }
+    else if ( gMCRPOS_RotorAlignState.startup_lock_count < gMCRPOS_RotorAlignParam.lockTimeCount)
     {
       #if(1U == Q_AXIS_ALIGNMENT )
         alignOutput->idRef =  0.0f;
@@ -353,6 +371,7 @@ INLINE_FUNCTION tMCRPOS_STATUS_E MCAPP_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPU
         alignOutput->angle =  0.0f;
         gMCRPOS_RotorAlignState.startup_lock_count++;
       #endif
+       
     }
     else
     {
@@ -373,7 +392,7 @@ INLINE_FUNCTION tMCRPOS_STATUS_E MCAPP_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPU
 /* Description:                                                               */
 /* Determines rotor position offset calibration value                         */
 /******************************************************************************/
-INLINE_FUNCTION void MCRPOS_offsetCalibration( const int16_t direction )
+INLINE_FUNCTION void MCRPOS_OffsetCalibration( const int16_t direction )
 {
     if( 1 == direction)
     {
@@ -392,18 +411,18 @@ INLINE_FUNCTION void MCRPOS_offsetCalibration( const int16_t direction )
 /* Description:                                                               */
 /* Determines the rotor position                                              */
 /******************************************************************************/
-INLINE_FUNCTION void MCRPOS_PositionMeasurement( const tMCRPOS_INPUT_S * const rposInput,
-                                       tMCRPOS_OUTPUT_S * const rposOutput )
+INLINE_FUNCTION void MCRPOS_PositionMeasurement( void )
 {
-    MCRPOS_PLLEstimator( rposInput, rposOutput );
+    MCRPO_ReadInputSignals( );
+    MCRPOS_PLLEstimator( );
 }
 
 /******************************************************************************/
-/* Function name: MCRPOS_ResetPositionSensing                                    */
-/* Function parameters: None                                                                    */
-/* Function return: None                                                                            */
-/* Description:                                                                                            */
-/* reset state variables for rotor position sensing                                  */
+/* Function name: MCRPOS_ResetPositionSensing                                 */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* reset state variables for rotor position sensing                           */
 /******************************************************************************/
 INLINE_FUNCTION  void MCRPOS_ResetPositionSensing( void )
 {

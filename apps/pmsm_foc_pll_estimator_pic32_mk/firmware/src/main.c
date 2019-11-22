@@ -28,6 +28,7 @@
 #include "definitions.h"                // SYS function prototypes
 #include "mc_app.h"
 #include "mc_picontrol.h"
+#include "mc_errorHandler.h"
 #include "mc_infrastructure.h"
 #include "X2CScope.h"
 #include "X2CScopeCommunication.h"
@@ -41,8 +42,13 @@
 
 int main ( void )
 {
-    /* Initialize all modules */
+    /* Start-up Check  */
+    MCERR_StartupCheck();
+    
+    /* System Initialization  */
     SYS_Initialize ( NULL );
+
+    /* X2C Scope initialization */
     X2CScope_Init();
 
     /* Initialize peripheral for motor control */

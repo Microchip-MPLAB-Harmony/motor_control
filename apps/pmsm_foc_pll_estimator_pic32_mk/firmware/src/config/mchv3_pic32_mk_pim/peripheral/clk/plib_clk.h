@@ -1,23 +1,32 @@
 /*******************************************************************************
- Motor Control App interface file
+  SYS CLK Static Functions for Clock System Service
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    mc_infrastructure.h
+    plib_clk.h
 
   Summary:
-    Header file for infrastructure
+    SYS CLK static function interface for the Clock System Service.
 
   Description:
-    This file contains the data structures and function prototypes used by
-    infrastructure module.
- *******************************************************************************/
+    The Clock System Service provides a simple interface to manage the
+    oscillators on Microchip microcontrollers. This file defines the static
+    implementation for the Clock System Service.
 
-// DOM-IGNORE-BEGIN
+  Remarks:
+    Static functions incorporate all system clock configuration settings as
+    determined by the user via the Microchip Harmony Configurator GUI.
+    It provides static version of the routines, eliminating the need for an
+    object ID or object handle.
+
+    Static single-open interfaces also eliminate the need for the open handle.
+
+*******************************************************************************/
+
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -38,11 +47,9 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-// DOM-IGNORE-END
 
-#ifndef MCINF_H    // Guards against multiple inclusion
-#define MCINF_H
-
+#ifndef PLIB_CLK_H
+#define PLIB_CLK_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -50,77 +57,62 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/*  This section lists the other files that are included in this file.
-*/
-
 #include <stddef.h>
-#include "mc_lib.h"
-
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-extern "C" {
-
-#endif
-
-// DOM-IGNORE-END
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Data Types
-// *****************************************************************************
-// *****************************************************************************
-#define POSITION_LOOP_PWM_COUNT   (uint32_t)( 100*SPEED_LOOP_PWM_COUNT )
-typedef enum 
-{
-         LOOP_INACTIVE,
-         LOOP_ACTIVE
-}tMCINF_LOOP_STATE_E;
-
-typedef struct 
-{ 
-         tMCINF_LOOP_STATE_E  SpeedLoopActive;
-         tMCINF_LOOP_STATE_E  PositionLoopActive;
-}tMCINF_STATE_S;
-
-typedef struct 
-{
-         uint32_t  SpeedLoopCount;
-         uint32_t  PositionLoopCount;
-}tMCINF_PARAM_S;
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
-// *****************************************************************************
-// *****************************************************************************
-
-extern void MCINF_Tasks();
-extern void MCINF_InitializeControl(void);
-extern void MCINF_InitializeInfrastructure(void);
-extern void MCINF_ResetInfrastructure(void);
-extern void MCINF_StartAdcInterrupt( void );
-extern void MCINF_MotorStart( void );
-extern void MCINF_MotorStop( void );
-
-#ifndef MCHV3
-extern void MCINF_DirectionToggle(void);
-#endif
-extern tMCINF_LOOP_STATE_E  MCINF_IsSpeedLoopActive( void );
-extern tMCINF_LOOP_STATE_E MCINF_IsPositionLoopActive( void );
+#include <stdbool.h>  
 
 // DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
+#ifdef __cplusplus // Provide C++ Compatibility
 
-}
+	extern "C" {
 
 #endif
 // DOM-IGNORE-END
+ 
+// *****************************************************************************
+// *****************************************************************************
+// Section: CLK Module System Interface Routines
+// *****************************************************************************
+// *****************************************************************************
 
-#endif //MCINF_H
+// *****************************************************************************
+/* Function:
+    void CLK_Initialize( void )
 
-/**
- End of File
+  Summary:
+    Initializes hardware of the System Clock and Peripheral Clock.
+    
+  Description:
+    This function initializes the hardware of System Clock and Peripheral Clocks.
+
+  Precondition:
+    None.
+
+  Parameters:
+    None.
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+    //Example 1: Do not alter the configuration bit settings
+    CLK_Initialize ( );
+
+    </code>
+
+  Remarks:
+    None.
 */
+
+void CLK_Initialize( void );
+
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    }
+
+#endif
+// DOM-IGNORE-END
+
+#endif //PLIB_CLK_H
+

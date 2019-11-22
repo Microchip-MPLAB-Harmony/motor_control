@@ -62,7 +62,7 @@ __STATIC_INLINE void MCLIB_SVPWMTimeCalc(tMCLIB_SVPWM_S* svm);
 /******************************************************************************/
 /*                   Global Variables                                         */
 /******************************************************************************/
-tMCLIB_THREE_PHASE_S                      gMCLIB_CurrentABC = {0.0f, 0.0f, 0.0f};
+
 tMCLIB_CLARK_TRANSFORM_S            gMCLIB_CurrentAlphaBeta = {0.0f, 0.0f};
 tMCLIB_PARK_TRANSFORM_S              gMCLIB_CurrentDQ = {0.0f, 0.0f};
 tMCLIB_POSITION_S                            gMCLIB_Position = {0.0f, 0.0f, 1.0f };
@@ -152,11 +152,11 @@ float cosineTable[TABLE_SIZE] =
     0.980785,  0.985278,  0.989177,  0.992480,  0.995185,  0.997290,  0.998795,  0.999699
 };
 // </editor-fold>
-/*******************************************************************************/
-/* Function name: MCLIB_ClarkeTransform                                                */
-/* Function parameters: None                                                                      */
-/* Function return: None                                                                              */
-/* Description: Clarke Transformation                                                        */
+/******************************************************************************/
+/* Function name: MCLIB_ClarkeTransform                                       */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description: Clarke Transformation                                         */
 /******************************************************************************/
  void MCLIB_ClarkeTransform(const tPHASE_CURRENTS_S * const  input, tMCLIB_CLARK_TRANSFORM_S * const output)
 {
@@ -164,11 +164,11 @@ float cosineTable[TABLE_SIZE] =
     output->betaAxis = (input->iu * ONE_BY_SQRT3) + (input->iv * TWO_BY_SQRT3);
 }
 
-/******************************************************************************/
-/* Function name: MCLIB_ParkTransform                                                  */
-/* Function parameters: None                                                                     */
-/* Function return: None                                                                             */
-/* Description: Park Transformation.                                                          */
+/*****************************************************************************/
+/* Function name: MCLIB_ParkTransform                                        */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description: Park Transformation.                                         */
 /******************************************************************************/
 void MCLIB_ParkTransform( const tMCLIB_CLARK_TRANSFORM_S * const input, const tMCLIB_POSITION_S * const position, tMCLIB_PARK_TRANSFORM_S * const output)
 {
@@ -179,10 +179,10 @@ void MCLIB_ParkTransform( const tMCLIB_CLARK_TRANSFORM_S * const input, const tM
 }
 
 /******************************************************************************/
-/* Function name: MCLIB_InvParkTransform                                            */
-/* Function parameters: None                                                                     */
-/* Function return: None                                                                              */
-/* Description: Inverse Park Transformation.                                            */
+/* Function name: MCLIB_InvParkTransform                                      */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description: Inverse Park Transformation.                                  */
 /******************************************************************************/
  void MCLIB_InvParkTransform(const tMCLIB_PARK_TRANSFORM_S * const input, const tMCLIB_POSITION_S * const position, tMCLIB_CLARK_TRANSFORM_S * const output)
 {
@@ -190,12 +190,12 @@ void MCLIB_ParkTransform( const tMCLIB_CLARK_TRANSFORM_S * const input, const tM
     output->betaAxis  =  input->directAxis * position->sineAngle + input->quadratureAxis * position->cosAngle;
 }
 
-/*******************************************************************************/
-/* Function name: MCLIB_SinCosCalc                                                          */
-/* Function parameters: None                                                                     */
-/* Function return: None                                                                             */
-/* Description: Calculates the sin and cosine of angle based upon              */
-/*              interpolation technique from the table.                                     */
+/******************************************************************************/
+/* Function name: MCLIB_SinCosCalc                                            */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description: Calculates the sin and cosine of angle based upon             */
+/*              interpolation technique from the table.                       */
 /******************************************************************************/
 void MCLIB_SinCosCalc( tMCLIB_POSITION_S * const position )
 {
@@ -246,11 +246,11 @@ void MCLIB_SinCosCalc( tMCLIB_POSITION_S * const position )
 
 }
 
-/*******************************************************************************/
-/* Function name: MCLIB_SVPWMTimeCalc                                                */
-/* Function parameters: None                                                                      */
-/* Function return: None                                                                              */
-/* Description: Calculates time to apply vector a,b,c                                  */
+/******************************************************************************/
+/* Function name: MCLIB_SVPWMTimeCalc                                         */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description: Calculates time to apply vector a,b,c                         */
 /******************************************************************************/
 __STATIC_INLINE void MCLIB_SVPWMTimeCalc(tMCLIB_SVPWM_S * const svm)
 {
@@ -262,11 +262,11 @@ __STATIC_INLINE void MCLIB_SVPWMTimeCalc(tMCLIB_SVPWM_S * const svm)
 }
 
 /******************************************************************************/
-/* Function name: MCLIB_SVPWMGen                                                       */
-/* Function parameters: None                                                                     */
-/* Function return: None                                                                             */
-/* Description: Determines sector based upon three reference               */
-/*              vectors amplitude and updates duty.                                         */
+/* Function name: MCLIB_SVPWMGen                                              */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description: Determines sector based upon three reference                  */
+/*              vectors amplitude and updates duty.                           */
 /******************************************************************************/
 void MCLIB_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCLIB_SVPWM_S * const svm )
 {
@@ -357,10 +357,10 @@ void MCLIB_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCLIB_S
 }
 
 /******************************************************************************/
-/* Function name: MCLIB_WrapAngle                                                         */
-/* Function parameters: None                                                                     */
-/* Function return: None                                                                             */
-/* Description:  Maps angle to [ 0, 2pi ] range                                            */
+/* Function name: MCLIB_WrapAngle                                             */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description:  Maps angle to [ 0, 2pi ] range                               */
 /******************************************************************************/
 void MCLIB_WrapAngle( float * const angle )
 {
@@ -379,10 +379,10 @@ void MCLIB_WrapAngle( float * const angle )
 }
 
 /******************************************************************************/
-/* Function name: MCLIB_linearRamp                                                         */
-/* Function parameters: None                                                                     */
-/* Function return: None                                                                             */
-/* Description:  linearly ramps input to final value                                     */
+/* Function name: MCLIB_linearRamp                                            */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description:  linearly ramps input to final value                          */
 /******************************************************************************/
 void MCLIB_linearRamp(float * const input, const float stepSize, const float finalValue )
 {
@@ -400,12 +400,34 @@ void MCLIB_linearRamp(float * const input, const float stepSize, const float fin
     }
 }
 
+/******************************************************************************/
+/* Function name: MCLIB_ImposeLimits                                          */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description:  impose lower and upper limits                                */
+/******************************************************************************/
+void MCLIB_ImposeLimits( float * const input, const float lowerLimit, const float upperLimit )
+{
+    if( *input > upperLimit )
+    {
+        *input  = upperLimit;
+    }
+    else if( *input < lowerLimit )
+    {
+        *input  = lowerLimit;
+    }
+    else
+    {
+       /* Do nothing */ 
+    }
+   
+}
 
 /******************************************************************************/
-/* Function name: MCLIB_ButtonResponse                                                 */
-/* Function parameters: None                                                                     */
-/* Function return: None                                                                             */
-/* Description: Push button debounce function                                           */
+/* Function name: MCLIB_ButtonResponse                                        */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description: Push button debounce function                                 */
 /******************************************************************************/
 void MCLIB_ButtonResponse( const tMCLIB_SWITCH_STATE_E  buttonState,  void (*buttonFunction)(void) )
 {
@@ -426,12 +448,12 @@ void MCLIB_ButtonResponse( const tMCLIB_SWITCH_STATE_E  buttonState,  void (*but
         {
             if( SW_DEBOUNCE_DLY_500MS <= gMCLIB_StartStopState.DebounceCounter)
             {
-                 gMCLIB_StartStopState.State = BUTTON_READY;
-                 gMCLIB_StartStopState.DebounceCounter = 0;
+                gMCLIB_StartStopState.State = BUTTON_READY;
+                gMCLIB_StartStopState.DebounceCounter = 0;
             }
             else 
             {
-                 gMCLIB_StartStopState.DebounceCounter++;
+                gMCLIB_StartStopState.DebounceCounter++;
             }
         }
         break;

@@ -84,7 +84,7 @@ extern "C" {
 typedef enum
 {
 
-         MC_APP_SWITCH_RELEASED,
+    MC_APP_SWITCH_RELEASED,
   	MC_APP_SWITCH_PRESSED
 
 }MC_APP_SWITCH_STATE;
@@ -102,8 +102,8 @@ typedef enum
 */
 typedef enum
 {
-	MOTOR_CTRL_CMD_STOP,
-	MOTOR_CTRL_CMD_START
+	  MOTOR_CTRL_CMD_STOP,
+	  MOTOR_CTRL_CMD_START
 
 }tMotorCtrlCmd;
 
@@ -121,11 +121,11 @@ typedef enum
 
 typedef enum
 {
-         MCAPP_IDLE,
-         MCAPP_FIELD_ALIGNMENT,
-         MCAPP_OPEN_LOOP,
-         MCAPP_CLOSING_LOOP,
-	MCAPP_CLOSED_LOOP
+    MCAPP_IDLE,
+    MCAPP_FIELD_ALIGNMENT,
+    MCAPP_OPEN_LOOP,
+    MCAPP_CLOSING_LOOP,
+  	MCAPP_CLOSED_LOOP
 }tCONTROL_STATUS_E;
 
 
@@ -156,46 +156,46 @@ typedef struct
 */
 typedef struct
 {
-         float                                 velRef;                                    /*   Reference velocity from Ramp               */
-         float                                 idRef;                                      /*   Vd flux reference value                         */
-         float                                 iqRef;                                      /*   Vq torque reference value                    */
-         uint32_t                          sync_cnt;                                 /*   Sync Counter                                         */
-	int16_t                             rotationSign;                           /*   Motor direction switch                         */
-	tCONTROL_STATUS_E s_ControlStatus_e;                /*   Controller status                                  */
-	tCONTROL_STATUS_E s_ControlStatus_Old_e;        /*   Controller status of previous cycle      */
+    float             velRef;                                    /*   Reference velocity from Ramp           */
+    float             idRef;                                     /*   Vd flux reference value                */
+    float             iqRef;                                     /*   Vq torque reference value              */
+    uint32_t          sync_cnt;                                  /*   Sync Counter                           */
+	  int16_t           rotationSign;                              /*   Motor direction switch                 */
+   	tCONTROL_STATUS_E s_ControlStatus_e;                         /*   Controller status                      */
+	  tCONTROL_STATUS_E s_ControlStatus_Old_e;                     /*   Controller status of previous cycle    */
 } MCAPP_CONTROL_PARAM;
 
 typedef struct
-{
-         float             yd;                                 /*   D- axis controller output                 */
-         float             Ud;                                /*   D- axis voltage                           */
-         float             Ws;                               /*   mechanical speed of motor in RPM          */
-         float             iqref;                            /*   Q-axis reference current                  */
-         float             Esfilt;                           /*   Filtered back emf magnitude               */
-         float             Umax;                            /*   Maximum voltage  (Udc / VdSquareroot(3))  */
+{ 
+    float             yd;                                        /*   D- axis controller output                 */
+    float             Ud;                                        /*   D- axis voltage                           */
+    float             Ws;                                        /*   mechanical speed of motor in RPM          */
+    float             iqref;                                     /*   Q-axis reference current                  */
+    float             Esfilt;                                    /*   Filtered back emf magnitude               */
+    float             Umax;                                      /*   Maximum voltage  (Udc / VdSquareroot(3))  */
 }tMCAPP_FIELD_WEAKENING_INPUT_S;
 
 typedef struct  
 {
-         float              Wbase;                        /*      Base motor speed                                */ 
-         float              UmaxSqr;                    /*       Maximum stator voltage squared      */
-         float              EsFiltCoeff;               /*        Back emf filter coefficient              */
-         float              Ls;                              /*        Per phase inductance                         */
-         float              Rs;                              /*        Per phase resistance                        */
-         float              fs;                              /*         PWM frequency                                */
-         float              idmax;                       /*          maximum d- axis current                 */
+    float              Wbase;                                    /*      Base motor speed                       */ 
+    float              UmaxSqr;                                  /*      Maximum stator voltage squared         */
+    float              EsFiltCoeff;                              /*      Back emf filter coefficient            */
+    float              Ls;                                       /*      Per phase inductance                   */
+    float              Rs;                                       /*      Per phase resistance                   */
+    float              fs;                                       /*      PWM frequency                          */
+    float              idmax;                                    /*      maximum d- axis current                */
 }tMCAPP_FIELD_WEAKENING_PARAM_S;
 
 typedef struct
 {
-         float            UqrefFilt;                       /*   Filtered q-axis voltage squared           */
-         float            iqrefFilt;                         /*   Filtered q-axis reference current         */
-         float            iqref_1;                            /*   Last q-axis reference current             */
+    float            UqrefFilt;                                 /*   Filtered q-axis voltage squared           */
+    float            iqrefFilt;                                 /*   Filtered q-axis reference current         */
+    float            iqref_1;                                   /*   Last q-axis reference current             */
 }tMCAPP_FIELD_WEAKENING_STATE_S;
 
 typedef struct
 {
-         float           idref;                             /*   D-axis reference current                  */
+    float           idref;                                      /*   D-axis reference current                  */
 
 }tMCAPP_FIELD_WEAKENING_OUTPUT_S;
 
@@ -217,7 +217,7 @@ typedef struct
 // *****************************************************************************
 extern MCAPP_CONTROL_PARAM gCtrlParam;
 void MCAPP_InitializeMotorControl(void);
-void MCAPP_ControlLoopISR(uint32_t status, uintptr_t context);
+void MCAPP_MotorControl(void );
 void MCAPP_ResetMotorControl(void);
 
 // DOM-IGNORE-BEGIN

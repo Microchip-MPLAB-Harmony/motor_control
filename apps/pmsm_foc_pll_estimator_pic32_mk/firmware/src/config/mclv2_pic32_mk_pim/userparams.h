@@ -90,6 +90,7 @@
 #define NUM_POLE_PAIRS                               ((float)5)
 #define RATED_SPEED_RPM                              ((float)2054)
 #define MAX_SPEED_RPM                                ((float)4000)
+#define MAX_MOTOR_CURRENT                            ((float)4.0)
 #define ELECTRICAL_TIME_CONSTANT                     ((float)0.0114)
 #define MECHANICAL_TIME_CONSTANT                     ((float)0.00374)
 
@@ -101,6 +102,7 @@
 #define NUM_POLE_PAIRS                               ((float)5)
 #define RATED_SPEED_RPM                              ((float)2804)
 #define MAX_SPEED_RPM                                ((float)3450)
+#define MAX_MOTOR_CURRENT                            ((float)4.0)
 #define ELECTRICAL_TIME_CONSTANT                     ((float)0.001123)
 #define MECHANICAL_TIME_CONSTANT                     ((float)0.002882)
 #endif
@@ -144,19 +146,19 @@
 #define     SPEEDCNTR_PTERM                       0.005              /*     Speed Proportional Gain                           */ 
 #define     SPEEDCNTR_ITERM                       0.00000020         /*     Speed Integral Gain                               */
 #define     SPEEDCNTR_CTERM                       0.5                /*     Speed Anti-Windup Gain                            */
-#define     SPEEDCNTR_OUTMAX                      MAX_CURRENT        /*     Speed PI Controller Maximum Output                */ 
+#define     SPEEDCNTR_OUTMAX                      MAX_MOTOR_CURRENT  /*     Speed PI Controller Maximum Output                */ 
 
 #elif(MOTOR == MOTOR_2_HURST_DMA0204024B101)
 
 /* PI controllers tuning values - */
 /*________________________ D Control Loop Coefficients  ___________________________________ */
-#define     D_CURRCNTR_PTERM                      0.025              /*     D axis Proportional Gain                          */ 
+#define     D_CURRCNTR_PTERM                      0.2              /*     D axis Proportional Gain                          */ 
 #define     D_CURRCNTR_ITERM                      0.0003             /*     D axis Integral Gain                              */ 
 #define     D_CURRCNTR_CTERM                      0.5                /*     D axis Anti-Windup Gain                           */
 #define     D_CURRCNTR_OUTMAX                     0.98               /*     D axis PI Controller Maximum Output  (Normalized) */ 
 
 /*________________________ Q Control Loop Coefficients  ___________________________________ */
-#define     Q_CURRCNTR_PTERM                      0.025              /*     Q axis Proportional Gain                          */ 
+#define     Q_CURRCNTR_PTERM                      0.2              /*     Q axis Proportional Gain                          */ 
 #define     Q_CURRCNTR_ITERM                      0.0003             /*     Q axis Integral Gain                              */
 #define     Q_CURRCNTR_CTERM                      0.5                /*     Q axis Anti-Windup Gain                           */
 #define     Q_CURRCNTR_OUTMAX                     0.98               /*     Q axis PI Controller Maximum Output  (Normalized) */ 
@@ -196,7 +198,6 @@
  * x = 4.4Amps */
 
 #define MAX_CURRENT                               (float)(4.4)    /*    Max current    */
-#define MAX_CURRENT_SQUARED                       (float)( MAX_CURRENT * MAX_CURRENT )
 #define MAX_ADC_COUNT                             (float)4095     /*    12-bit ADC     */
 #define MAX_ADC_INPUT_VOLTAGE                     (float)3.3      /*    volts          */
 
@@ -208,7 +209,7 @@
 /***********************************************************************************************/
 /* Peripheral Configuration parameters */
 /***********************************************************************************************/
-
+#define INTERRUPT_SOURCE                          INT_SOURCE_ADC_DATA0
 
 /**********************************************************************************************/
 
@@ -228,6 +229,7 @@
 /***********************************************************************************************/
 /* Derived Parameters - Don't Change                                                                                 */
 /***********************************************************************************************/
+#define MAX_CURRENT_SQUARED                               (float)( MAX_MOTOR_CURRENT * MAX_MOTOR_CURRENT )
 #define ADC_CURRENT_SCALE                                 (float)(MAX_CURRENT/(float)(2048))
 #define DCBUS_SENSE_RATIO                                 (float)(DCBUS_SENSE_BOTTOM_RESISTOR/(DCBUS_SENSE_BOTTOM_RESISTOR + DCBUS_SENSE_TOP_RESISTOR))
 #define VOLTAGE_ADC_TO_PHY_RATIO                          (float)(MAX_ADC_INPUT_VOLTAGE/(MAX_ADC_COUNT * DCBUS_SENSE_RATIO))

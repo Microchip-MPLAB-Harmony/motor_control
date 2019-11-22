@@ -66,7 +66,6 @@ extern "C" {
 
 // DOM-IGNORE-END
 /*___________________________________PLL PARAMETERS  _____________________________________________________ */
-#define     SQRT3                                   ((float)1.732)
 #define     ANGLE_OFFSET_MIN                        ((float)(M_PI_2)/(float)(32767))
 #define     DECIMATE_RATED_SPEED                     (float)((RATED_SPEED_RPM *((float)M_PI/30)) * NUM_POLE_PAIRS/10)
     
@@ -164,12 +163,12 @@ typedef struct
 
 typedef struct
 {
-    float                         * ialpha;
-    float                         * ibeta;
-    float                         * Ualpha;
-    float                         * Ubeta;
-    float                         * Umax;
-}tMCRPOS_INPUT_S;
+    float                           ialpha;
+    float                           ibeta;
+    float                           Ualpha;
+    float                           Ubeta;
+    float                           Umax;
+}tMCRPO_INPUT_SIGNAL_S;
 
 typedef struct
 {
@@ -181,7 +180,7 @@ typedef struct
     float                           velEstimFilterK;
     float                           deltaT;
     float                           decimateRotorSpeed;
-}tMCRPOS_PARAMETER_S;
+}tMCRPO_PARAMETERS_S;
 
 typedef struct
 {
@@ -201,7 +200,7 @@ typedef struct
     float                            esdf;
     float                            esqf;
     float                            rho;
-}tMCRPOS_STATE_S;
+}tMCRPO_STATE_SIGNAL_S;
 
 typedef struct
 {
@@ -211,7 +210,7 @@ typedef struct
   #if(1U == FIELD_WEAKENING )
     float                            Esfilt;
   #endif
-}tMCRPOS_OUTPUT_S;
+}tMCRPO_OUTPUT_SIGNALS_S;
 
 
 // *****************************************************************************
@@ -219,19 +218,18 @@ typedef struct
 // Section: Interface Routines
 // *****************************************************************************
 // *****************************************************************************
-extern tMCRPOS_INPUT_S gMCRPOS_InputSignals;
-extern tMCRPOS_STATE_S gMCRPOS_StateSignals;
-extern tMCRPOS_OUTPUT_S gMCRPOS_OutputSignals;
-extern tMCRPOS_ROTOR_ALIGN_INPUT_S       gMCRPOS_RotorAlignInput;
-extern tMCRPOS_ROTOR_ALIGN_OUTPUT_S gMCRPOS_RotorAlignOutput;
-extern tMCAPP_OPEN_LOOP_STATE_S gMCAPP_OpenLoopState;
+extern tMCRPO_INPUT_SIGNAL_S         gMCRPOS_InputSignals;
+extern tMCRPO_STATE_SIGNAL_S         gMCRPOS_StateSignals;
+extern tMCRPO_OUTPUT_SIGNALS_S       gMCRPOS_OutputSignals;
+extern tMCRPOS_ROTOR_ALIGN_INPUT_S   gMCRPOS_RotorAlignInput;
+extern tMCRPOS_ROTOR_ALIGN_OUTPUT_S  gMCRPOS_RotorAlignOutput;
 
 INLINE_FUNCTION   void MCRPOS_InitializeRotorPositionSensing(void);
 INLINE_FUNCTION tMCRPOS_STATUS_E MCAPP_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput );
 INLINE_FUNCTION tMCRPOS_STATUS_E MCRPOS_InitialRotorPositonDetection(  const  tMCRPOS_ROTOR_ALIGN_INPUT_S * const alignInput,
                                                                                                                                                 tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput );
-INLINE_FUNCTION  void MCRPOS_offsetCalibration(const int16_t direction );
-INLINE_FUNCTION  void MCRPOS_PositionMeasurement( const tMCRPOS_INPUT_S * const rposInput, tMCRPOS_OUTPUT_S * const rposOutput );
+INLINE_FUNCTION  void MCRPOS_OffsetCalibration(const int16_t direction );
+INLINE_FUNCTION  void MCRPOS_PositionMeasurement( void );
 INLINE_FUNCTION  void MCRPOS_ResetPositionSensing( void );
 
 // DOM-IGNORE-BEGIN

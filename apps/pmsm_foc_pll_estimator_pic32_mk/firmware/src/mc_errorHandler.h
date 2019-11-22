@@ -43,12 +43,44 @@
 #ifndef MC_ERRORHANDLER_H
 #define	MC_ERRORHANDLER_H
 
+typedef enum 
+{
+    MCERR_POWER_ON_RESET,
+    MCERR_BROWN_OUT_RESET,
+    MCERR_MASTER_CLR_RESET,
+    MCERR_CONFIG_MISMATCH_RESET,
+    MCERR_SOFTWARE_RESET,
+    MCERR_WATCHDOG_RESET,
+    MCERR_DEADMAN_RESET
+}tMCERR_RESET_SOURCE_E;
+
+typedef enum 
+{
+    MCERR_NORMAL,
+    MCERR_UNINTENTIONAL_RESET,
+    MCERR_WATCHDOG_ERROR,
+    MCERR_DEADMAN_TIMER_ERROR,
+    MCERR_POSITION_LOSS,
+    MCERR_PHASE_CURRENT_OOR,
+    MCERR_UNDER_VOLTAGE,
+    MCERR_OVER_VOLTAGE
+}tMCERR_ERROR_SOURCE_E;
+
+
+
+typedef struct 
+{
+    tMCERR_RESET_SOURCE_E     resetSource;
+    tMCERR_ERROR_SOURCE_E     errorSource;
+}tMCERR_STATE_SIGNAL_S;
+
 
 extern void MCERR_ErrorLogging( void );
+extern void MCERR_StartupCheck( void );
+
 #ifdef	__cplusplus
 extern "C" {
 #endif
-
 
 
 

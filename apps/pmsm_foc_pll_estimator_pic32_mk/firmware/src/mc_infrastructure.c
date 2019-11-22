@@ -56,6 +56,7 @@
 #include "mc_rotorPosition.h"
 #include "mc_infrastructure.h"
 #include "mc_currMeasurement.h"
+#include "mc_voltageMeasurement.h"
 #include "mc_speed.h"
 #include "mc_pwm.h"
 #include "mc_lib.h"
@@ -74,8 +75,9 @@
 /******************************************************************************/
 
 extern void MCERR_FaultControlISR(uint32_t status, uintptr_t context);
-static void MCINF_ButtonPolling(void);
-void MCINF_SpeedLoopTasks(void);
+static void MCINF_ButtonPolling( void );
+void MCINF_SpeedLoopTasks( void );
+void MCINF_CurrentLoopTasks( uint32_t status, uintptr_t context );
 
 
 
@@ -99,15 +101,42 @@ tMCINF_STATE_S gMCINF_StateSignals = { LOOP_INACTIVE, LOOP_INACTIVE };
 /******************************************************************************/
 void MCINF_InitiaizeInfrastructure( void )
 {
-         /* Initialize  infrastructure state variables */
-         gMCINF_StateSignals.PositionLoopActive = LOOP_INACTIVE;
-         gMCINF_StateSignals.SpeedLoopActive = LOOP_INACTIVE;      
+    /* Initialize  infrastructure state variables */
+    gMCINF_StateSignals.PositionLoopActive = LOOP_INACTIVE;
+    gMCINF_StateSignals.SpeedLoopActive = LOOP_INACTIVE;      
          
-         /* Initialize infrastructure parameters */     
-         gMCINF_Parameters.PositionLoopCount = POSITION_LOOP_PWM_COUNT;
-         gMCINF_Parameters.SpeedLoopCount = SPEED_LOOP_PWM_COUNT;
+    /* Initialize infrastructure parameters */     
+    gMCINF_Parameters.PositionLoopCount = POSITION_LOOP_PWM_COUNT;
+    gMCINF_Parameters.SpeedLoopCount = SPEED_LOOP_PWM_COUNT;
 }
 
+
+
+/*******************************************************************************/
+/* Function name: MCINF_LoopSynchronization                                    */
+/* Function parameters: None                                                   */
+/* Function return: Bool( True - executes slow control loop )                  */
+/* Description: To be used in a state machine to decide whether                */
+/* to execute slow control loop                                                */
+/*******************************************************************************/
+__STATIC_INLINE void  MCINF_LoopSynchronization(void)
+{
+	static uint32_t speedLoopCounter = 0U;
+    static uint32_t positionLoopCounter = 0U;
+    speedLoopCounter++;
+    positionLoopCounter++;
+	if( gMCINF_Parameters.SpeedLoopCount <= speedLoopCounter)
+	{
+	    speedLoopCounter = 0;
+	    gMCINF_StateSignals.SpeedLoopActive = LOOP_ACTIVE;
+	}
+         
+    if( gMCINF_Parameters.PositionLoopCount <= positionLoopCounter )
+    {
+        positionLoopCounter = 0;
+        gMCINF_StateSignals.PositionLoopActive = LOOP_ACTIVE;
+    }
+}
 /******************************************************************************/
 /* Function name: MCINF_InitializeControl                                     */
 /* Function parameters: None                                                  */
@@ -118,23 +147,30 @@ void MCINF_InitiaizeInfrastructure( void )
 void MCINF_InitializeControl( void )
 {
     gCtrlParam.rotationSign = 1U;
+
     /* Disable PWM output */
     MCPWM_Stop();
 
     /* Disable interrupt, and clear pending interrupts */
-    EVIC_SourceDisable( INT_SOURCE_ADC_DATA0);
-    EVIC_SourceStatusClear( INT_SOURCE_ADC_DATA0 );
+    EVIC_SourceDisable( INTERRUPT_SOURCE);
+    EVIC_SourceStatusClear( INTERRUPT_SOURCE);
 
     /* Current sense amplifiers offset calculation */
-    if(gMCCUR_PhaseCurrentOffset.Calib_done == 0U)
+    if(gMCCUR_OutputSignals.calibDone == 0U)
     {
-        MCCUR_offsetCalibration();
+        MCCUR_OffsetCalibration();
     }
     else
     {
         asm("NOP");
     }
 
+    /* Initialize speed command function */
+    MCSPE_InitializeSpeedControl();
+    
+    /* Initialize current measurement module */
+    MCCUR_InitializeCurrentMeasurement();   
+    
     /* Motor Controller parameter initialization */
     MCAPP_InitializeMotorControl();
 
@@ -148,12 +184,12 @@ void MCINF_InitializeControl( void )
 void MCINF_StartAdcInterrupt( void )
 {
     /* ADC end of conversion interrupt generation for FOC control */
-	EVIC_SourceDisable(INT_SOURCE_ADC_DATA0);
-	EVIC_SourceStatusClear(INT_SOURCE_ADC_DATA0);
+	EVIC_SourceDisable(INTERRUPT_SOURCE);
+	EVIC_SourceStatusClear(INTERRUPT_SOURCE);
  
     /* Enable ADC interrupt for field oriented control */
-    ADCHS_CallbackRegister( PHASE_CURRENT_U, MCAPP_ControlLoopISR, (uintptr_t)NULL );
-	EVIC_SourceEnable(INT_SOURCE_ADC_DATA0);
+    ADCHS_CallbackRegister( PHASE_CURRENT_U, MCINF_CurrentLoopTasks, (uintptr_t)NULL );
+	EVIC_SourceEnable(INTERRUPT_SOURCE);
 
     /* Enable interrupt for fault detection */
     MCPWM_CallbackRegister(MCPWM_CH_1, MCERR_FaultControlISR, (uintptr_t)NULL);
@@ -167,7 +203,6 @@ void MCINF_StartAdcInterrupt( void )
     IOCON2bits.PENL = 0;    IOCON2bits.PENH = 0;
     IOCON3bits.PENL = 0;    IOCON3bits.PENH = 0;
 }
-
 
 
 /******************************************************************************/
@@ -186,6 +221,32 @@ void MCINF_Tasks()
     /* Current control Loop Tasks */
 
  }
+
+ 
+/******************************************************************************/
+/* Function name: MCINF_CurrentLoopTasks                                      */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description:Current loop tasks                                             */
+/******************************************************************************/
+void MCINF_CurrentLoopTasks( uint32_t status, uintptr_t context )
+{       
+    /* Current Measurement */
+    MCCUR_CurrentMeasurement( );
+
+    /* Voltage measurement */
+    MCVOL_VoltageMeasurement( );
+         
+    /* Rotor position estimation */
+    MCRPOS_PositionMeasurement( );
+
+    /* Motor control */
+    MCAPP_MotorControl( );
+    
+     /* sync count for slow control loop execution */
+    MCINF_LoopSynchronization();
+
+}
 
 /******************************************************************************/
 /* Function name: MCAPP_SpeedLoopTasks                                        */
@@ -252,33 +313,6 @@ tMCINF_LOOP_STATE_E  MCINF_IsPositionLoopActive(void)
 	return gMCINF_StateSignals.PositionLoopActive;
 }
 
-
-/*******************************************************************************/
-/* Function name: MCINF_LoopSynchronization                                    */
-/* Function parameters: None                                                   */
-/* Function return: Bool( True - executes slow control loop )                  */
-/* Description: To be used in a state machine to decide whether                */
-/* to execute slow control loop                                                */
-/*******************************************************************************/
-__STATIC_INLINE void  MCINF_LoopSynchronization(void)
-{
-	static uint32_t speedLoopCounter = 0U;
-    static uint32_t positionLoopCounter = 0U;
-    speedLoopCounter++;
-    positionLoopCounter++;
-	if( gMCINF_Parameters.SpeedLoopCount <= speedLoopCounter)
-	{
-	    speedLoopCounter = 0;
-	    gMCINF_StateSignals.SpeedLoopActive = LOOP_ACTIVE;
-	}
-         
-    if( gMCINF_Parameters.PositionLoopCount <= positionLoopCounter )
-    {
-        positionLoopCounter = 0;
-        gMCINF_StateSignals.PositionLoopActive = LOOP_ACTIVE;
-    }
-}
-
 /*******************************************************************************/
 /* Function name: MCINF_ButtonPolling                                          */
 /* Function parameters: None                                                   */
@@ -291,7 +325,11 @@ void MCINF_ButtonPolling()
     if( MCAPP_IDLE == gCtrlParam.s_ControlStatus_e )
     {
         MCLIB_ButtonResponse((tMCLIB_SWITCH_STATE_E)(!START_STOP_BUTTON_Get()), &MCINF_MotorStart);
+        
+      #ifndef MCHV3
         MCLIB_ButtonResponse((tMCLIB_SWITCH_STATE_E)(!DIRECTION_TOGGLE_BUTTON_Get()), &MCINF_DirectionToggle);
+      #endif
+
     }
     else 
     {
@@ -310,7 +348,7 @@ extern tMCRPOS_ROTOR_ALIGN_STATE_S       gMCRPOS_RotorAlignState;
 void MCINF_MotorStart(void)
 {
     /* Change motor status to RUNNING */
-    
+        
     /* Reset PI Controller integrator values */
     MCCON_ResetPIParameters();
          
@@ -352,6 +390,8 @@ void MCINF_MotorStop(void)
     MCAPP_ResetMotorControl();
 }
 
+
+#ifndef MCHV3
 /******************************************************************************/
 /* Function name: MCAPP_DirectionToggle                                       */
 /* Function parameters: None                                                  */
@@ -367,6 +407,7 @@ void MCINF_DirectionToggle(void)
     DIRECTION_INDICATOR_Toggle();
     
 }
+#endif
 
 /******************************************************************************/
 /* Function name: MCINF_ResetInfrastructure                                   */

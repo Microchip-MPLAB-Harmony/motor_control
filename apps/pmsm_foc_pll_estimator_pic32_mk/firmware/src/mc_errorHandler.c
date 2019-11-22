@@ -54,6 +54,7 @@
 #ifndef MCERR_C
 #define MCERR_C
 #include "mc_errorHandler.h"
+#include "mc_infrastructure.h"
 #include "math.h"
 #include "assert.h"
 
@@ -72,36 +73,85 @@
 /******************************************************************************/
 /*                   Global Variables                                         */
 /******************************************************************************/
-
+tMCERR_STATE_SIGNAL_S    gMCERR_StateSignals;
 
 /******************************************************************************/
-/* Function name: MCERR_ErrorLogging                                                    */
-/* Function parameters: None                                                                    */
-/* Function return: None                                                                            */
-/* Description: Logs error                                                                          */
+/* Function name: MCERR_ErrorLogging                                          */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description: Logs error                                                    */
 /******************************************************************************/
 void MCERR_ErrorLogging( void )
 {
-        /* ToDo: Conceptualize error logging mechanism */
+    /* ToDo: Conceptualize error logging mechanism */
 }
 
 
 
 /******************************************************************************/
-/*  Function name: MCERRFaultControlISR                                                */
-/*  Function parameters: None                                                                    */
-/*  Function return: None                                                                            */
-/*  Description: Fault ISR when the external failure at                            */
-/*                       FLT15 pin detects failure                                                 */
+/*  Function name: MCERR_FaultControlISR                                      */
+/*  Function parameters: None                                                 */
+/*  Function return: None                                                     */
+/*  Description: Fault ISR when the external failure at                       */
+/*                       FLT15 pin detects failure                            */
 /******************************************************************************/
 
 void MCERR_FaultControlISR(uint32_t status, uintptr_t context)
 {
-         /* Stop the motor */
-         MCINF_MotorStop();
+    /* Stop the motor */
+    MCINF_MotorStop();
 
-         /* Indicate the failure status by glowing LED D2 */
-         FAULT_INDICATOR_Set();
+    /* Indicate the failure status by glowing LED D2 */
+    FAULT_INDICATOR_Set();
+}
+
+/******************************************************************************/
+/*  Function name: MCERR_StartupCheck                                         */
+/*  Function parameters: None                                                 */
+/*  Function return: None                                                     */
+/*  Description: Start up check                                               */
+/******************************************************************************/
+void MCERR_StartupCheck( void )
+{
+    /* Check for unintentional reset */
+    if(RCON & 0x0003)
+    {
+        gMCERR_StateSignals.resetSource = ( 1 << MCERR_POWER_ON_RESET );
+        gMCERR_StateSignals.errorSource = MCERR_NORMAL;
+    }
+    if(RCON & 0x0002)
+    {
+        gMCERR_StateSignals.resetSource |=  ( 1 << MCERR_BROWN_OUT_RESET );
+        gMCERR_StateSignals.errorSource = MCERR_UNINTENTIONAL_RESET;
+    }
+    if(RCON & 0x0080)
+    {
+        gMCERR_StateSignals.resetSource |=  ( 1 << MCERR_MASTER_CLR_RESET );
+        gMCERR_StateSignals.errorSource = MCERR_UNINTENTIONAL_RESET;
+    }
+    if(RCON & 0x0040)
+    {
+        gMCERR_StateSignals.resetSource |=  ( 1 << MCERR_SOFTWARE_RESET );
+        gMCERR_StateSignals.errorSource = MCERR_UNINTENTIONAL_RESET;
+    }
+    if (RCON & 0x0200)
+    {
+        gMCERR_StateSignals.resetSource |=  ( 1 << MCERR_CONFIG_MISMATCH_RESET );
+        gMCERR_StateSignals.errorSource = MCERR_UNINTENTIONAL_RESET;
+    }
+    if (RCON & 0x0010)
+    {
+        gMCERR_StateSignals.resetSource |=  ( 1 << MCERR_WATCHDOG_RESET );
+        gMCERR_StateSignals.errorSource = MCERR_UNINTENTIONAL_RESET;
+    }
+    if (RCON & 0x0020)
+    {
+        gMCERR_StateSignals.resetSource |=  ( 1 << MCERR_DEADMAN_RESET  );
+        gMCERR_StateSignals.errorSource = MCERR_UNINTENTIONAL_RESET;
+    } 
+
+    /* Reset RCON status  */
+    RCON =  0x0000;
 }
 #endif
 #endif

@@ -73,7 +73,8 @@ extern "C" {
 
 #define     M_PI		                               (float)3.14159265358979323846
 #define     M_PI_2		                             (float)1.57079632679489661923
- 
+
+#define     SQRT3                                   ((float)1.732)
 #define     SQRT3_BY2                              (float)(0.866025403788)
 
 #define     ONE_BY_SQRT3                           (float)(0.5773502691)
@@ -94,15 +95,8 @@ extern "C" {
 typedef enum
 {
     SWITCH_RELEASED,
- 	  SWITCH_PRESSED
+ 	SWITCH_PRESSED
 }tMCLIB_SWITCH_STATE_E;
-
-typedef struct
-{
-    float phaseU;
-    float phaseV;
-    float phaseW;
-}tMCLIB_THREE_PHASE_S;
 
 typedef struct
 {
@@ -176,6 +170,7 @@ void MCLIB_SinCosCalc(tMCLIB_POSITION_S * const position );
 void MCLIB_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCLIB_SVPWM_S * const svm );
 void MCLIB_WrapAngle( float * const angle );
 void MCLIB_linearRamp(float * const input, const float stepSize, const float finalValue );
+void MCLIB_ImposeLimits(float * const input, const float stepSize, const float finalValue );
 void MCLIB_ButtonResponse( const tMCLIB_SWITCH_STATE_E  buttonState,  void (*buttonFunction)(void) );
 
 // DOM-IGNORE-BEGIN

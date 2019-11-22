@@ -1,21 +1,18 @@
 /*******************************************************************************
- Motor Control App interface file
-
-  Company:
-    Microchip Technology Inc.
+  System Definitions
 
   File Name:
-    mc_infrastructure.h
+    definitions.h
 
   Summary:
-    Header file for infrastructure
+    project system definitions.
 
   Description:
-    This file contains the data structures and function prototypes used by
-    infrastructure module.
+    This file contains the system-wide prototypes and definitions for a project.
+
  *******************************************************************************/
 
-// DOM-IGNORE-BEGIN
+//DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -37,25 +34,26 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*******************************************************************************/
-// DOM-IGNORE-END
+ *******************************************************************************/
+//DOM-IGNORE-END
 
-#ifndef MCINF_H    // Guards against multiple inclusion
-#define MCINF_H
-
+#ifndef DEFINITIONS_H
+#define DEFINITIONS_H
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
-/*  This section lists the other files that are included in this file.
-*/
-
+#include <stdint.h>
 #include <stddef.h>
-#include "mc_lib.h"
-
+#include <stdbool.h>
+#include "peripheral/adchs/plib_adchs.h"
+#include "peripheral/uart/plib_uart2.h"
+#include "peripheral/clk/plib_clk.h"
+#include "peripheral/gpio/plib_gpio.h"
+#include "peripheral/evic/plib_evic.h"
+#include "peripheral/mcpwm/plib_mcpwm.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -63,64 +61,75 @@
 extern "C" {
 
 #endif
-
 // DOM-IGNORE-END
 
-
 // *****************************************************************************
 // *****************************************************************************
-// Section: Data Types
-// *****************************************************************************
-// *****************************************************************************
-#define POSITION_LOOP_PWM_COUNT   (uint32_t)( 100*SPEED_LOOP_PWM_COUNT )
-typedef enum 
-{
-         LOOP_INACTIVE,
-         LOOP_ACTIVE
-}tMCINF_LOOP_STATE_E;
-
-typedef struct 
-{ 
-         tMCINF_LOOP_STATE_E  SpeedLoopActive;
-         tMCINF_LOOP_STATE_E  PositionLoopActive;
-}tMCINF_STATE_S;
-
-typedef struct 
-{
-         uint32_t  SpeedLoopCount;
-         uint32_t  PositionLoopCount;
-}tMCINF_PARAM_S;
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
+// Section: System Functions
 // *****************************************************************************
 // *****************************************************************************
 
-extern void MCINF_Tasks();
-extern void MCINF_InitializeControl(void);
-extern void MCINF_InitializeInfrastructure(void);
-extern void MCINF_ResetInfrastructure(void);
-extern void MCINF_StartAdcInterrupt( void );
-extern void MCINF_MotorStart( void );
-extern void MCINF_MotorStop( void );
+// *****************************************************************************
+/* System Initialization Function
 
-#ifndef MCHV3
-extern void MCINF_DirectionToggle(void);
-#endif
-extern tMCINF_LOOP_STATE_E  MCINF_IsSpeedLoopActive( void );
-extern tMCINF_LOOP_STATE_E MCINF_IsPositionLoopActive( void );
+  Function:
+    void SYS_Initialize( void *data )
 
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
+  Summary:
+    Function that initializes all modules in the system.
 
+  Description:
+    This function initializes all modules in the system, including any drivers,
+    services, middleware, and applications.
+
+  Precondition:
+    None.
+
+  Parameters:
+    data            - Pointer to the data structure containing any data
+                      necessary to initialize the module. This pointer may
+                      be null if no data is required and default initialization
+                      is to be used.
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+    SYS_Initialize ( NULL );
+
+    while ( true )
+    {
+        SYS_Tasks ( );
+    }
+    </code>
+
+  Remarks:
+    This function will only be called once, after system reset.
+*/
+
+void SYS_Initialize( void *data );
+
+/* Nullify SYS_Tasks() if only PLIBs are used. */
+#define     SYS_Tasks()
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: extern declarations
+// *****************************************************************************
+// *****************************************************************************
+
+
+
+
+//DOM-IGNORE-BEGIN
+#ifdef __cplusplus
 }
-
 #endif
-// DOM-IGNORE-END
+//DOM-IGNORE-END
 
-#endif //MCINF_H
-
-/**
+#endif /* DEFINITIONS_H */
+/*******************************************************************************
  End of File
 */
+

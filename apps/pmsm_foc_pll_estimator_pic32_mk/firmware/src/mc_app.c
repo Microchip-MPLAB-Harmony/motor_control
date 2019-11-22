@@ -68,7 +68,7 @@
         #include "mc_pwm.h"
         #include "mc_speed.h"
         #include "mc_errorHandler.h"
-        #include "mc_control.h"
+        #include "mc_picontrol.h"
 #endif
 
 #include "X2CScope.h"
@@ -88,7 +88,6 @@
 __STATIC_INLINE float MCAPP_IdrefCalculation( void );
 __STATIC_INLINE float MCAPP_IqrefCalculation( void );
 
-void MCAPP_SignalMeasurement( void );
 void MCAPP_SignalTransformation(void);
 void MCAPP_StateMachine( void );
 void MCAPP_CurrentControl(void);
@@ -120,9 +119,10 @@ tMCAPP_OPEN_LOOP_PARAM_S             gMCAPP_OpenLoopParam = {
                                                               };
 
 
-/******************************************************************************/
-/*                   LOCAL FUNCTIONS                                          */
-/******************************************************************************/
+/*****************************************************************************/
+/*                   LOCAL FUNCTIONS                                         */
+/*****************************************************************************/
+
 /*****************************************************************************/
 /* Function name: MCAPP_InitilaizeOpenLoopControl                            */
 /* Function parameters: None                                                 */
@@ -280,29 +280,10 @@ static void MCAPP_ResetFieldWeakening( void )
 #endif
 
 
-/******************************************************************************/
-/* Function name: MCAPP_SignalProcessing                                      */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
-/* Description: Read and process inputs for field oriented Control            */
-/******************************************************************************/
-void MCAPP_SignalMeasurement( void )
-{
-    /* Current Measurement */
-    MCCUR_CurrentMeasurement(&gMCCUR_PhaseCurrent);
-
-    /* Voltage measurement */
-    MCVOL_voltageMeasurement(&gMCVOL_Voltage);
-         
-    /* Estimates the rotor angle and speed. */
-    if(gCtrlParam.s_ControlStatus_e != MCAPP_IDLE)
-    MCRPOS_PositionMeasurement(&gMCRPOS_InputSignals, &gMCRPOS_OutputSignals);
-}
-
 void MCAPP_SignalTransformation(void )
 {
     /* Clarke transform */
-    MCLIB_ClarkeTransform(&gMCCUR_PhaseCurrent, &gMCLIB_CurrentAlphaBeta);
+    MCLIB_ClarkeTransform(&gMCCUR_OutputSignals.phaseCurrents, &gMCLIB_CurrentAlphaBeta);
 
     /* Park transform */
     MCLIB_ParkTransform(&gMCLIB_CurrentAlphaBeta, &gMCLIB_Position, &gMCLIB_CurrentDQ);
@@ -321,17 +302,23 @@ float MCAPP_IqrefCalculation( void )
   #if( 0U == TORQUE_MODE )
 
     /* Quadrature axis reference current limitation */
-    if( gPIParmD.inRef < 0.0f )
+    if( gMCCON_IdController.inRef < MAX_MOTOR_CURRENT )
     {
-        gPIParmQref.outMax = sqrtf((float)(MAX_CURRENT_SQUARED - (float)( gPIParmD.inRef * gPIParmD.inRef )));
-        gPIParmQref.outMin = -gPIParmQref.outMax;
+        gMCCON_SpeedController.outMax = sqrtf((float)(MAX_CURRENT_SQUARED - (float)( gMCCON_IdController.inRef * gMCCON_IdController.inRef )));
+        gMCCON_SpeedController.outMin = -gMCCON_SpeedController.outMax;
+    }
+    else 
+    {
+        gMCCON_SpeedController.outMax = 0.0f;
+        gMCCON_SpeedController.outMin = 0.0f;
     }
     
     /* Execute the velocity control loop */
-    gPIParmQref.inMeas = gMCRPOS_OutputSignals.Speed;
-    gPIParmQref.inRef  = ( gCtrlParam.rotationSign * gCtrlParam.velRef );
-    MCCON_PIControl(&gPIParmQref);
-    iqRef = gPIParmQref.out;
+    gMCCON_SpeedController.inMeas = gMCRPOS_OutputSignals.Speed;
+    gMCCON_SpeedController.inRef  = ( gCtrlParam.rotationSign * gMCSPE_OutputSignals.commandSpeed );
+    MCCON_PIControl(&gMCCON_SpeedController);
+    iqRef = gMCCON_SpeedController.out;
+
     
   #else
     iqRef = gCtrlParam.rotationSign * Q_CURRENT_REF_OPENLOOP;
@@ -339,12 +326,12 @@ float MCAPP_IqrefCalculation( void )
    return iqRef;
 }
 
-/*******************************************************************************/
-/* Function name: MCAPP_iqrefCalculation                                                   */
-/* Function parameters: None                                                                      */
-/* Function return: None                                                                              */
-/* Description: D-axis reference current calculation in close loop             */
-/*                        control                                                                               */
+/******************************************************************************/
+/* Function name: MCAPP_iqrefCalculation                                      */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description: D-axis reference current calculation in close loop            */
+/*                        control                                             */
 /******************************************************************************/
 float MCAPP_IdrefCalculation( void )
 {
@@ -353,16 +340,16 @@ float MCAPP_IdrefCalculation( void )
     float VqRefSquare;
 
     /* Dynamic d-q adjustment with d component priority */
-    VqRefSquare = MAX_STATOR_VOLT_SQUARE - gPIParmD.out * gPIParmD.out;
+    VqRefSquare = MAX_STATOR_VOLT_SQUARE - gMCCON_IdController.out * gMCCON_IdController.out;
 
-    gPIParmQ.outMax = sqrtf((float)(VqRefSquare));
+    gMCCON_IqController.outMax = sqrtf((float)(VqRefSquare));
 
     /* Read inputs for field weakening  */
-    gFieldWeakeningInput.yd = gPIParmD.out;
-    gFieldWeakeningInput.Ws = gCtrlParam.velRef;
+    gFieldWeakeningInput.yd = gMCCON_IdController.out;
+    gFieldWeakeningInput.Ws = gMCSPE_OutputSignals.commandSpeed;
     gFieldWeakeningInput.iqref =  ( gCtrlParam.iqRef >= 0.0f )? (gCtrlParam.iqRef):(-gCtrlParam.iqRef);
     gFieldWeakeningInput.Ud =  gMCLIB_VoltageDQ.directAxis;
-    gFieldWeakeningInput.Umax = gMCVOL_Voltage.Umax;
+    gFieldWeakeningInput.Umax = gMCVOL_OutputSignals.Umax;
     gFieldWeakeningInput.Esfilt = gMCRPOS_OutputSignals.Esfilt;
 
     MCAPP_FieldWeakening(&gFieldWeakeningInput, &gFieldWeakeningOutput);
@@ -377,11 +364,11 @@ float MCAPP_IdrefCalculation( void )
     return idRef;
 }
 
-/*******************************************************************************/
-/* Function name: MCAPP_MotorControl                                           */
-/* Function parameters: None                                                   */
-/* Function return: None                                                       */
-/* Description: Motor Control state                                            */
+/******************************************************************************/
+/* Function name: MCAPP_MotorControl                                          */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description: Motor Control state                                           */
 /******************************************************************************/
 void MCAPP_StateMachine( void )
 {
@@ -390,6 +377,7 @@ void MCAPP_StateMachine( void )
         case MCAPP_IDLE:
         {
             /* Do not do anything */
+            gMCRPOS_RotorAlignOutput.iqRef = 0;
            
         }
         break;
@@ -410,7 +398,7 @@ void MCAPP_StateMachine( void )
         {
             if( COMPLETE == MCAPP_OpenLoopControl( gCtrlParam.rotationSign))
             {
-                gPIParmQref.dSum = gCtrlParam.iqRef;
+                gMCCON_SpeedController.dSum = gCtrlParam.iqRef;
                 gCtrlParam.s_ControlStatus_e = MCAPP_CLOSING_LOOP;
             }
         }
@@ -435,7 +423,7 @@ void MCAPP_StateMachine( void )
                 }
             }
             /* the angle set depends on startup ramp */
-            gMCLIB_Position.angle += ( gCtrlParam.rotationSign * gCtrlParam.velRef * FAST_LOOP_TIME_SEC );
+            gMCLIB_Position.angle += ( gCtrlParam.rotationSign * gCtrlParam.velRef  * FAST_LOOP_TIME_SEC );
             MCLIB_WrapAngle( &gMCLIB_Position.angle);
         }
         break;
@@ -472,16 +460,16 @@ void MCAPP_StateMachine( void )
 void MCAPP_CurrentControl( void )
 {
     /* PI control for Iq torque control loop */
-    gPIParmQ.inMeas = gMCLIB_CurrentDQ.quadratureAxis;
-    gPIParmQ.inRef  = gCtrlParam.iqRef;
-    MCCON_PIControl(&gPIParmQ);
-    gMCLIB_VoltageDQ.quadratureAxis = gPIParmQ.out;
+    gMCCON_IqController.inMeas = gMCLIB_CurrentDQ.quadratureAxis;
+    gMCCON_IqController.inRef  = gCtrlParam.iqRef;
+    MCCON_PIControl(&gMCCON_IqController);
+    gMCLIB_VoltageDQ.quadratureAxis = gMCCON_IqController.out;
 
     /* PI control for Id flux control loop */
-    gPIParmD.inMeas = gMCLIB_CurrentDQ.directAxis;
-    gPIParmD.inRef  = gCtrlParam.idRef;
-    MCCON_PIControl(&gPIParmD);
-    gMCLIB_VoltageDQ.directAxis = gPIParmD.out;
+    gMCCON_IdController.inMeas = gMCLIB_CurrentDQ.directAxis;
+    gMCCON_IdController.inRef  = gCtrlParam.idRef;
+    MCCON_PIControl(&gMCCON_IdController);
+    gMCLIB_VoltageDQ.directAxis = gMCCON_IdController.out;
 }
 
 
@@ -512,18 +500,15 @@ void MCAPP_CurrentControl( void )
 
 
 /******************************************************************************/
-/* Function name: MCAPP_ControlLoopISR                                      *
+/* Function name: MCAPP_MotorControl                                      *
  * Function parameters: None                                                  *
  * Function return: None                                                      *
  * Description: ADC end of conversion interrupt is used for executing fast    *
  *              control loop.It estimates speed and rotor angle based upon    *
  *              the phase current measurements and updates duty.              *
  ******************************************************************************/
-void MCAPP_ControlLoopISR(uint32_t status, uintptr_t context)
-{          
-    /* Get input signals for motor control */
-    MCAPP_SignalMeasurement();
-
+void MCAPP_MotorControl( void )
+{             
     /* Get input signals for motor control */
     MCAPP_SignalTransformation();
 
@@ -536,9 +521,6 @@ void MCAPP_ControlLoopISR(uint32_t status, uintptr_t context)
     /* PWM modulation */
     MCPWM_PWMModulator();
        
-    /* sync count for slow control loop execution */
-    MCINF_LoopSynchronization();
-
     /* X2C scope update */
     X2CScope_Update();
 

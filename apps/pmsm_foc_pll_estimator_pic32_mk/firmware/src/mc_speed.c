@@ -75,11 +75,49 @@
 /******************************************************************************/
 /*                   Global Variables                                         */
 /******************************************************************************/
-tMCSPE_PARAM_S   gMCSPE_Parameters = { 
-                                          KFILTER_POT, 
-                                          POT_ADC_COUNT_FW_SPEED_RATIO, 
-                                          OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC
-                                     };
+
+tMCSPE_INPUT_SIGNAL_S   gMCSPE_InputSignals;
+tMCSPE_STATE_SIGNAL_S   gMCSPE_StateSignals;
+tMCSPE_PARAMETERS_S     gMCSPE_Parameters = { 
+                                              KFILTER_POT, 
+                                              POT_ADC_COUNT_FW_SPEED_RATIO, 
+                                              OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC
+                                            };
+tMCSPE_OUTPUT_SIGNAL_S   gMCSPE_OutputSignals;
+
+
+                                          
+
+/******************************************************************************/
+/*                          LOCAL  FUNCTIONS                                  */
+/******************************************************************************/
+__STATIC_INLINE void MCSPE_ReadInputSignals( void )
+{
+    gMCSPE_InputSignals.s_ControlStatus_e   =  gCtrlParam.s_ControlStatus_e;
+    gMCSPE_InputSignals.n_openLoopSpeed_f32 =  gCtrlParam.velRef;
+}
+
+/******************************************************************************/
+/*                       INTERFACE FUNCTIONS                                  */
+/******************************************************************************/
+
+/******************************************************************************/
+/* Function name: MCSPE_InitializeSpeedControl                                */
+/* Function parameters: None                                                  */
+/* Function return: uint8_t                                                   */
+/* Description: Reset speed control state variables                           */
+/******************************************************************************/
+void  MCSPE_InitializeSpeedControl(void)
+{
+    /* Initialize speed command function parameters */
+    gMCSPE_Parameters.filterParam    =   KFILTER_POT;
+    gMCSPE_Parameters.minSpeed       =   OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC ; 
+    gMCSPE_Parameters.pot2SpeedRatio =   POT_ADC_COUNT_FW_SPEED_RATIO; 
+
+    /* Initialize speed command function states */   
+    gMCSPE_StateSignals.potFiltered =  0.0f;                                                         
+}
+
 /******************************************************************************/
 /* Function name: MCSPE_SpeedCommand                                          */
 /* Function parameters: None                                                  */
@@ -90,21 +128,24 @@ tMCSPE_PARAM_S   gMCSPE_Parameters = {
 void MCSPE_SpeedCommand( void )
 {
 #if( 1U  == POTENTIOMETER_INPUT_ENABLED )
-    if( MCAPP_CLOSED_LOOP  == gCtrlParam.s_ControlStatus_e)
-    {
-        float PotReading;
-        float RefSpeed;
-                       
-        PotReading = (float)ADCHS_ChannelResultGet(ADCHS_CH15);
-        RefSpeed = PotReading * gMCSPE_Parameters.pot2SpeedRatio;
+    MCSPE_ReadInputSignals();
+    if( MCAPP_CLOSED_LOOP  == gMCSPE_InputSignals.s_ControlStatus_e )
+    {                      
+        gMCSPE_OutputSignals.potReading = (float)ADCHS_ChannelResultGet(ADCHS_CH15);
+        gMCSPE_StateSignals.potFiltered =   gMCSPE_StateSignals.potFiltered  
+                                      + ((  gMCSPE_OutputSignals.potReading -  gMCSPE_StateSignals.potFiltered ) * gMCSPE_Parameters.filterParam );
 
-        gCtrlParam.velRef = gCtrlParam.velRef + (( RefSpeed - gCtrlParam.velRef) * gMCSPE_Parameters.filterParam );
+        gMCSPE_OutputSignals.commandSpeed = gMCSPE_StateSignals.potFiltered * gMCSPE_Parameters.pot2SpeedRatio;
           
         /* Restrict velocity reference so motor will be spinning in closed loop. */
-        if(gCtrlParam.velRef < gMCSPE_Parameters.minSpeed )
+        if( gMCSPE_OutputSignals.commandSpeed < gMCSPE_Parameters.minSpeed )
         {
-              gCtrlParam.velRef = gMCSPE_Parameters.minSpeed;
+            gMCSPE_OutputSignals.commandSpeed = gMCSPE_Parameters.minSpeed;
         }
+    }
+    else
+    {
+        gMCSPE_OutputSignals.commandSpeed = gMCSPE_InputSignals.n_openLoopSpeed_f32;
     }
              
 #else
@@ -120,23 +161,8 @@ void MCSPE_SpeedCommand( void )
 /******************************************************************************/
 void  MCSPE_ResetSpeedControl(void)
 {
-	/* Reset the speed control state variables */
-                
-}
-
-
-/*******************************************************************************/
-/* Function name: MCSPE_InitializeSpeedControl                                 */
-/* Function parameters: None                                                   */
-/* Function return: uint8_t                                                    */
-/* Description: Reset speed control state variables                            */
-/*******************************************************************************/
-void  MCSPE_InitializeSpeedControl(void)
-{
-         /* Initialize speed control parameters */
-         gMCSPE_Parameters.filterParam =   KFILTER_POT;
-         gMCSPE_Parameters.minSpeed =   OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC ; 
-         gMCSPE_Parameters.pot2SpeedRatio = POT_ADC_COUNT_FW_SPEED_RATIO;                                                               
+    /* Reset speed command function states */   
+    gMCSPE_StateSignals.potFiltered =  0.0f;            
 }
 
 #endif

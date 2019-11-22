@@ -70,7 +70,33 @@
 /******************************************************************************/
 /*                   Global Variables                                         */
 /******************************************************************************/
-tMCVOL_OUTPUT_S gMCVOL_Voltage = {0.0f, 0.0f };
+tMCVOL_PARAMETERS_S    gMCVOL_Parameters = { VOLTAGE_ADC_TO_PHY_RATIO };
+tMCVOL_OUTPUT_SIGNAL_S gMCVOL_OutputSignals = {0.0f, 0.0f };
+
+
+/*****************************************************************************/
+/*                       LOCAL FUNCTIONS                                     */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/*                       INTERFACE FUNCTIONS                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/* Function name: MCVOL_InitializeVoltageMeasurement                         */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* initializes parameters and state variables for voltage measurement        */
+/*****************************************************************************/
+void MCVOL_InitializeVoltageMeasurement( void )
+{
+    /* Initialize parameters */
+    gMCVOL_Parameters.dig2PhyConversion= VOLTAGE_ADC_TO_PHY_RATIO;
+
+    /* Initilaize state variables */
+}
+
 
 /******************************************************************************/
 /* Function name: MCINF_Initialization                                       */
@@ -79,12 +105,31 @@ tMCVOL_OUTPUT_S gMCVOL_Voltage = {0.0f, 0.0f };
 /* Description:                                                               */
 /* initializes parameters and state variables for rotor position sensing      */
 /******************************************************************************/
-INLINE_FUNCTION void MCVOL_voltageMeasurement( tMCVOL_OUTPUT_S * voltage )
+INLINE_FUNCTION void MCVOL_VoltageMeasurement( void )
 {
-         /* Read DC bus voltage */
-         voltage->Udc = VOLTAGE_ADC_TO_PHY_RATIO * ADCHS_ChannelResultGet(ADCHS_CH10);
-         voltage->Umax = voltage->Udc/SQRT3;
+    /* Read DC bus voltage */
+    gMCVOL_OutputSignals.rawValue =   ADCHS_ChannelResultGet(ADCHS_CH10);
+    gMCVOL_OutputSignals.Udc      =   gMCVOL_Parameters.dig2PhyConversion * gMCVOL_OutputSignals.rawValue;
+    gMCVOL_OutputSignals.Umax     =   gMCVOL_OutputSignals.Udc/SQRT3;
 }
+
+
+
+/*****************************************************************************/
+/* Function name: MCVOL_ResetVoltageMeasurement                              */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* resets parameters and state variables for voltage measurement             */
+/*****************************************************************************/
+void MCVOL_ResetVoltageMeasurement( void )
+{
+    /* Initialize parameters */
+    gMCVOL_Parameters.dig2PhyConversion= VOLTAGE_ADC_TO_PHY_RATIO;
+
+    /* Initilaize state variables */
+}
+
 
 #endif
 
