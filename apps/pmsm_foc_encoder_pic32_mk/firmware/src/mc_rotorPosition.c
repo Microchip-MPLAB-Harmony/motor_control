@@ -70,20 +70,9 @@
 /******************************************************************************/
 /*                   Global Variables                                         */
 /******************************************************************************/
-tMCRPOS_PARAMETER_S               gMCRPOS_Parameters = { 0.0f } ;
-tMCRPOS_STATE_S                   gMCRPOS_StateSignals = { 0.0f };
-tMCRPOS_INPUT_S                   gMCRPOS_InputSignals =  { &gMCLIB_CurrentAlphaBeta.alphaAxis, 
-                                                            &gMCLIB_CurrentAlphaBeta.betaAxis, 
-                                                            &gMCLIB_VoltageAlphaBeta.alphaAxis,
-                                                            &gMCLIB_VoltageAlphaBeta.betaAxis,
-                                                            &gMCVOL_Voltage.Umax };
-tMCRPOS_OUTPUT_S                  gMCRPOS_OutputSignals = { 0.0f, 0.0f, 0.0f };
-tMCRPOS_ROTOR_ALIGN_INPUT_S       gMCRPOS_RotorAlignInput = { { 0.0f, 1U } };
-#if (1U ==  ENABLE_WINDMILLING)
-tMCRPOS_ROTOR_ALIGN_STATE_S       gMCRPOS_RotorAlignState = { WINDMILLING,  {0U, 0U, 0U },0U,  0U };
-#else 
-tMCRPOS_ROTOR_ALIGN_STATE_S       gMCRPOS_RotorAlignState = { FORCE_ALIGN,  {0U, 0U, 0U },0U,  0U };
-#endif
+tMCRPO_STATE_SIGNAL_S            gMCRPOS_StateSignals = { 0.0f };
+tMCRPO_OUTPUT_SIGNAL_S            gMCRPOS_OutputSignals = { 0.0f };
+tMCRPOS_ROTOR_ALIGN_STATE_S       gMCRPOS_RotorAlignState = { FORCE_ALIGN, 0U,  0U };
 tMCRPOS_ROTOR_ALIGN_OUTPUT_S      gMCRPOS_RotorAlignOutput = {0U,  0U };
 tMCRPOS_ROTOR_ALIGN_PARAM_S       gMCRPOS_RotorAlignParam  = {
                                                                   Q_CURRENT_REF_OPENLOOP,
@@ -109,12 +98,12 @@ void MCRPOS_InitializeEncoder( void )
 
 /******************************************************************************/
 /* Function name: MCRPOS_EncoderCalculations                                  */
-/* Function parameters: gMCRPOS_InputSignals, gMCRPOS_OutputSignals           */
+/* Function parameters: None                                                  */
 /* Function return: None                                                      */
 /* Description:                                                               */
 /* Encoder Calculations                                                       */
 /******************************************************************************/
-void MCRPOS_EncoderCalculations( tMCRPOS_OUTPUT_S * const gMCRPOS_OutputSignals )
+void MCRPOS_EncoderCalculations( void )
 {   
     gMCRPOS_StateSignals.SynCounter++;
     /* Calculate position */
@@ -128,8 +117,8 @@ void MCRPOS_EncoderCalculations( tMCRPOS_OUTPUT_S * const gMCRPOS_OutputSignals 
     } 
 
     /* Write speed and position output */   
-    gMCRPOS_OutputSignals->Speed = (float)( 0.5* gMCRPOS_StateSignals.velocity * QEI_VELOCITY_COUNT_TO_RAD_PER_SEC );
-    gMCRPOS_OutputSignals->Angle = gMCRPOS_StateSignals.position * (float)QEI_COUNT_TO_ELECTRICAL_ANGLE;
+    gMCRPOS_OutputSignals.Speed = (float)( gMCRPOS_StateSignals.velocity * QEI_VELOCITY_COUNT_TO_RAD_PER_SEC );
+    gMCRPOS_OutputSignals.Angle = gMCRPOS_StateSignals.position * (float)QEI_COUNT_TO_ELECTRICAL_ANGLE;
 }
 
 /******************************************************************************/
@@ -161,8 +150,7 @@ void MCRPOS_ResetEncoder( void )
 /* Function return: None                                                      */
 /* Description: Initial rotor position alignment                              */
 /******************************************************************************/
-INLINE_FUNCTION tMCRPOS_STATUS_E MCRPOS_InitialRotorPositonDetection(   const tMCRPOS_ROTOR_ALIGN_INPUT_S * const alignInput,
-                                                                              tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput )
+INLINE_FUNCTION tMCRPOS_STATUS_E MCRPO_InitialRotorPositonDetection( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput )
 {
     tMCRPOS_STATUS_E status = RUNNING ;
 
@@ -214,7 +202,7 @@ INLINE_FUNCTION tMCRPOS_STATUS_E MCRPOS_InitialRotorPositonDetection(   const tM
 /* Description:                                                               */
 /* initializes parameters and state variables for rotor position sensing      */
 /******************************************************************************/
-INLINE_FUNCTION  void MCRPOS_InitializeRotorPositionSensing( void )
+INLINE_FUNCTION  void MCRPO_InitializeRotorPositionSensing( void )
 {
     MCRPOS_InitializeEncoder(); 
 }
@@ -226,10 +214,9 @@ INLINE_FUNCTION  void MCRPOS_InitializeRotorPositionSensing( void )
 /* Description:                                                               */
 /* Determines the rotor position                                              */
 /******************************************************************************/
-INLINE_FUNCTION void MCRPOS_PositionMeasurement( const tMCRPOS_INPUT_S * const rposInput,
-                                       tMCRPOS_OUTPUT_S * const rposOutput )
+INLINE_FUNCTION void MCRPO_PositionMeasurement(  )
 {
-    MCRPOS_EncoderCalculations( rposOutput );
+    MCRPOS_EncoderCalculations( );
 }
 
 /******************************************************************************/

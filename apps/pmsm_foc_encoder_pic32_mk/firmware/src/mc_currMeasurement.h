@@ -63,59 +63,74 @@ extern "C" {
 
 // DOM-IGNORE-END
 
+
+/******************************************************************************/
+/*                          CONFIGURATION PARAMETERS                          */
+/******************************************************************************/
+
 /* Current measurement algorithms */
 #define SINGLE_SHUNT                      0U
 #define DUAL_SHUNT                        1U
 
 /* Motor phase current offset calibration limits. */
-#define CURRENT_OFFSET_MAX                (2200) /* current offset max limit in terms of ADC count*/
-#define CURRENT_OFFSET_MIN                (1900) /* current offset min limit in terms of ADC count*/
-/** Phase Current Offset calibration samples */
-#define CURRENTS_OFFSET_SAMPLES           (100U)
+#define CURRENT_OFFSET_MAX                (2200) /* current offset max limit in terms of ADC count */
+#define CURRENT_OFFSET_MIN                (1900) /* current offset min limit in terms of ADC count */
+#define CURRENTS_OFFSET_SAMPLES           (100U) /* Phase Current Offset calibration samples       */
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Data Types
-// *****************************************************************************
-// *****************************************************************************
-/* Phase currents
 
-  Summary:
-    Indicates motor phase currents
+/******************************************************************************/
+/*                          USER DEFINED DATATYPES                            */
+/******************************************************************************/
 
-  Description:
-    Datastructure for motor phase currents
-
-  Remarks:
-    None.
-*/
-typedef struct
-{
-         uint8_t Calib_done;
-         float iu_offset;
-         float iv_offset;
-}tPHASE_CURRENTS_OFFSET_S;
 
 typedef struct
 {
-         float iu;
-         float iv;
-         float iw;
-         float idc;
+    float iu;
+    float iv;
+    float iw;
 }tPHASE_CURRENTS_S;
 
+typedef struct 
+{
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
-// *****************************************************************************
-// *****************************************************************************
-extern tPHASE_CURRENTS_OFFSET_S gMCCUR_PhaseCurrentOffset;
-extern tPHASE_CURRENTS_S gMCCUR_PhaseCurrent;
+}tMCCUR_INPUT_SIGNAL_S;
 
-void MCCUR_initialization(void);
-void MCCUR_offsetCalibration(void);
-void MCCUR_CurrentMeasurement(tPHASE_CURRENTS_S * const phaseCurrents);
+
+typedef struct 
+{
+   float minOffset;
+   float maxOffset;
+}tMCCUR_PARAMETERS_S;
+
+typedef struct 
+{
+  
+
+}tMCCUR_STATE_SIGNAL_S;
+
+typedef struct 
+{
+    tPHASE_CURRENTS_S phaseCurrents;
+    float idc;
+    float iuOffset;
+    float ivOffset;
+    uint8_t calibDone;
+}tMCCUR_OUTPUT_SIGNAL_S;
+
+
+
+/******************************************************************************/
+/*                          INTERFACE VARIABLES                               */
+/******************************************************************************/
+extern tMCCUR_INPUT_SIGNAL_S   gMCCUR_InputSignals;
+extern tMCCUR_OUTPUT_SIGNAL_S  gMCCUR_OutputSignals;
+
+/******************************************************************************/
+/*                          INTERFACE FUNCTIONS                               */
+/******************************************************************************/
+void MCCUR_InitializeCurrentMeasurement(void);
+void MCCUR_OffsetCalibration(void);
+void MCCUR_CurrentMeasurement( void );
 
 
 // DOM-IGNORE-BEGIN

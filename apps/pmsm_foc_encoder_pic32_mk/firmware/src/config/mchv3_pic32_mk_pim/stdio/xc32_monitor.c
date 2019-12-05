@@ -1,21 +1,20 @@
 /*******************************************************************************
- * PI Controller interface file
+ Debug Console Source file 
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    mc_picontrol.h
+    debug_console.c
 
   Summary:
-    Header file for PI controller functions
+    RSTC Source File
 
   Description:
-    This file contains the data structures and function prototypes used by
-   PI controller module.
- *******************************************************************************/
+    None
 
-// DOM-IGNORE-BEGIN
+*******************************************************************************/
+
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -38,42 +37,13 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-// DOM-IGNORE-END
 
-#ifndef MC_CONTROL_H
-#define	MC_CONTROL_H
 
-typedef struct
+int _mon_getc(int canblock)
 {
-    float   dSum;
-    float   kp;
-    float   ki;
-    float   kc;
-    float   outMax;
-    float   outMin;
-    float   inRef;
-    float   inMeas;
-    float   out;
-
-} tMCCON_PICONTROLLER_S;
-
-
-extern tMCCON_PICONTROLLER_S     gMCCON_IqController;        /* Iq PI controllers */
-extern tMCCON_PICONTROLLER_S     gMCCON_IdController;        /* Id PI controllers */
-extern tMCCON_PICONTROLLER_S     gMCCON_SpeedController;     /* Speed PI controllers */
-
-void MCCON_PIControl( tMCCON_PICONTROLLER_S * const pParm);
-void MCCON_InitializePIParameters(void);
-void MCCON_ResetPIParameters(void);
-
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
-
-#ifdef	__cplusplus
+   return 0;
 }
-#endif
 
-#endif	/* MC_CONTROL_H */
-
+void _mon_putc(char c)
+{
+}

@@ -1,19 +1,20 @@
 /*******************************************************************************
- Motor Control App interface file
+  ADCHS Peripheral Library Interface Header File
 
-  Company:
+  Company
     Microchip Technology Inc.
 
-  File Name:
-    mc_infrastructure.h
+  File Name
+    plib_adchs_common.h
 
-  Summary:
-    Header file for infrastructure
+  Summary
+    Commonly needed stuff for the ADCHS peripheral libraries interfaces.
 
-  Description:
-    This file contains the data structures and function prototypes used by
-    infrastructure module.
- *******************************************************************************/
+  Description
+    This file defines several items commonly needed by the interfaces to
+    the ADCHS peripheral libraries.
+
+*******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -40,8 +41,8 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef MCINF_H    // Guards against multiple inclusion
-#define MCINF_H
+#ifndef PLIB_ADCHS_COMMON_H    // Guards against multiple inclusion
+#define PLIB_ADCHS_COMMON_H
 
 
 // *****************************************************************************
@@ -54,8 +55,7 @@
 */
 
 #include <stddef.h>
-#include "mc_lib.h"
-#include "userparams.h"
+#include <stdbool.h>
 
 
 // DOM-IGNORE-BEGIN
@@ -67,50 +67,86 @@ extern "C" {
 
 // DOM-IGNORE-END
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Types
 // *****************************************************************************
 // *****************************************************************************
-#define POSITION_LOOP_PWM_COUNT   (uint32_t)( 100*SPEED_LOOP_PWM_COUNT )
-typedef enum 
+
+// *****************************************************************************
+
+typedef enum
 {
-         LOOP_INACTIVE,
-         LOOP_ACTIVE
-}tMCINF_LOOP_STATE_E;
+    ADCHS_MODULE0_MASK = (1U << 0U),
+    ADCHS_MODULE1_MASK = (1U << 1U),
+    ADCHS_MODULE2_MASK = (1U << 2U),
+    ADCHS_MODULE3_MASK = (1U << 3U),
+    ADCHS_MODULE4_MASK = (1U << 4U),
+    ADCHS_MODULE5_MASK = (1U << 5U),
+    ADCHS_MODULE7_MASK = (1U << 7U)
+}ADCHS_MODULE_MASK;
 
-typedef struct 
-{ 
-         tMCINF_LOOP_STATE_E  SpeedLoopActive;
-         tMCINF_LOOP_STATE_E  PositionLoopActive;
-}tMCINF_STATE_S;
 
-typedef struct 
+typedef enum
 {
-         uint32_t  SpeedLoopCount;
-         uint32_t  PositionLoopCount;
-}tMCINF_PARAM_S;
+    ADCHS_CH0 = 0U,
+    ADCHS_CH1 = 1U,
+    ADCHS_CH2 = 2U,
+    ADCHS_CH3 = 3U,
+    ADCHS_CH4 = 4U,
+    ADCHS_CH5 = 5U,
+    ADCHS_CH6 = 6U,
+    ADCHS_CH7 = 7U,
+    ADCHS_CH8 = 8U,
+    ADCHS_CH9 = 9U,
+    ADCHS_CH10 = 10U,
+    ADCHS_CH11 = 11U,
+    ADCHS_CH12 = 12U,
+    ADCHS_CH13 = 13U,
+    ADCHS_CH14 = 14U,
+    ADCHS_CH15 = 15U,
+    ADCHS_CH16 = 16U,
+    ADCHS_CH17 = 17U,
+    ADCHS_CH18 = 18U,
+    ADCHS_CH19 = 19U,
+    ADCHS_CH20 = 20U,
+    ADCHS_CH21 = 21U,
+    ADCHS_CH22 = 22U,
+    ADCHS_CH23 = 23U,
+    ADCHS_CH24 = 24U,
+    ADCHS_CH25 = 25U,
+    ADCHS_CH26 = 26U,
+    ADCHS_CH27 = 27U,
+    ADCHS_CH33 = 33U,
+    ADCHS_CH34 = 34U,
+    ADCHS_CH35 = 35U,
+    ADCHS_CH36 = 36U,
+    ADCHS_CH37 = 37U,
+    ADCHS_CH38 = 38U,
+    ADCHS_CH39 = 39U,
+    ADCHS_CH40 = 40U,
+    ADCHS_CH41 = 41U,
+    ADCHS_CH45 = 45U,
+    ADCHS_CH46 = 46U,
+    ADCHS_CH47 = 47U,
+    ADCHS_CH48 = 48U,
+    ADCHS_CH49 = 49U,
+    ADCHS_CH50 = 50U,
+    ADCHS_CH52 = 52U,
+    ADCHS_CH53 = 53U,
+}ADCHS_CHANNEL_NUM;
+
 
 // *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
-// *****************************************************************************
+
+typedef void (*ADCHS_CALLBACK)(ADCHS_CHANNEL_NUM channel, uintptr_t context);
 // *****************************************************************************
 
-extern void MCINF_Tasks();
-extern void MCINF_InitializeControl(void);
-extern void MCINF_InitializeInfrastructure(void);
-extern void MCINF_ResetInfrastructure(void);
-extern void MCINF_StartAdcInterrupt( void );
-extern void MCINF_MotorStart( void );
-extern void MCINF_MotorStop( void );
-
-#ifndef MCHV3
-extern void MCINF_DirectionToggle(void);
-#endif
-extern tMCINF_LOOP_STATE_E  MCINF_IsSpeedLoopActive( void );
-extern tMCINF_LOOP_STATE_E MCINF_IsPositionLoopActive( void );
+typedef struct
+{
+    ADCHS_CALLBACK callback_fn;
+    uintptr_t context;
+}ADCHS_CALLBACK_OBJECT;
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -120,7 +156,7 @@ extern tMCINF_LOOP_STATE_E MCINF_IsPositionLoopActive( void );
 #endif
 // DOM-IGNORE-END
 
-#endif //MCINF_H
+#endif //PLIB_ADCHS_COMMMON_H
 
 /**
  End of File

@@ -70,103 +70,102 @@
 /******************************************************************************/
 /*                   Global Variables                                         */
 /******************************************************************************/
-MCCON_PI                gPIParmQ;          /* Iq PI controllers */
-MCCON_PI                gPIParmD;           /* Id PI controllers */
-MCCON_PI                gPIParmQref;     /* Speed PI controllers */
+tMCCON_PICONTROLLER_S                gMCCON_IqController;           /* Iq PI controllers */
+tMCCON_PICONTROLLER_S                gMCCON_IdController;           /* Id PI controllers */
+tMCCON_PICONTROLLER_S                gMCCON_SpeedController;        /* Speed PI controllers */
 
 /******************************************************************************/
-/* Function name: MCAPP_InitializePIParameters                                     */
-/* Function parameters: None                                                                     */
-/* Function return: None                                                                             */
-/* Description:                                                                                             */
-/* Initialize control parameters: PI coefficients for D,Q and                  */
-/* Velocity control loop.                                                                               */
+/* Function name: MCAPP_InitializePIParameters                                */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* Initialize control parameters: PI coefficients for D,Q and                 */
+/* Velocity control loop.                                                     */
 /******************************************************************************/
 void MCCON_InitializePIParameters(void)
 {
-  	/**************** PI D Term ***********************************************/
-  	gPIParmD.kp = D_CURRCNTR_PTERM;
-  	gPIParmD.ki = D_CURRCNTR_ITERM;
-  	gPIParmD.kc = D_CURRCNTR_CTERM;
-  	gPIParmD.outMax = D_CURRCNTR_OUTMAX;
-  	gPIParmD.outMin = -gPIParmD.outMax;
-         gPIParmD.dSum = 0;
-         gPIParmD.out = 0;
+    /**************** PI D Term ***********************************************/
+    gMCCON_IdController.kp = D_CURRCNTR_PTERM;
+    gMCCON_IdController.ki = D_CURRCNTR_ITERM;
+    gMCCON_IdController.kc = D_CURRCNTR_CTERM;
+    gMCCON_IdController.outMax = D_CURRCNTR_OUTMAX;
+    gMCCON_IdController.outMin = -gMCCON_IdController.outMax;
+    gMCCON_IdController.dSum = 0;
+    gMCCON_IdController.out = 0;
 
-  	/**************** PI Q Term ************************************************/
-  	gPIParmQ.kp = Q_CURRCNTR_PTERM;
-  	gPIParmQ.ki = Q_CURRCNTR_ITERM;
-  	gPIParmQ.kc = Q_CURRCNTR_CTERM;
-  	gPIParmQ.outMax = Q_CURRCNTR_OUTMAX;
-  	gPIParmQ.outMin = -gPIParmQ.outMax;
-         gPIParmQ.dSum = 0;
-         gPIParmQ.out = 0;
+    /**************** PI Q Term ************************************************/
+    gMCCON_IqController.kp = Q_CURRCNTR_PTERM;
+    gMCCON_IqController.ki = Q_CURRCNTR_ITERM;
+    gMCCON_IqController.kc = Q_CURRCNTR_CTERM;
+    gMCCON_IqController.outMax = Q_CURRCNTR_OUTMAX;
+    gMCCON_IqController.outMin = -gMCCON_IqController.outMax;
+    gMCCON_IqController.dSum = 0;
+    gMCCON_IqController.out = 0;
 
-  	/**************** PI Velocity Control **************************************/
-  	gPIParmQref.kp = SPEEDCNTR_PTERM;
-  	gPIParmQref.ki = SPEEDCNTR_ITERM;
-  	gPIParmQref.kc = SPEEDCNTR_CTERM;
-  	gPIParmQref.outMax = SPEEDCNTR_OUTMAX;
-  	gPIParmQref.outMin = -gPIParmQref.outMax;
-         gPIParmQref.dSum = 0;
-         gPIParmQref.out = 0;
+    /**************** PI Velocity Control **************************************/
+    gMCCON_SpeedController.kp = SPEEDCNTR_PTERM;
+    gMCCON_SpeedController.ki = SPEEDCNTR_ITERM;
+    gMCCON_SpeedController.kc = SPEEDCNTR_CTERM;
+    gMCCON_SpeedController.outMax = SPEEDCNTR_OUTMAX;
+    gMCCON_SpeedController.outMin = -gMCCON_SpeedController.outMax;
+    gMCCON_SpeedController.dSum = 0;
+    gMCCON_SpeedController.out = 0;
 }
 
 /******************************************************************************/
-/* Function name: MCCON_PIControl                                                         */
+/* Function name: MCCON_PIControl                                             */
 /* Function parameters: pParm - PI parameter structure                        */
-/* Function return: None                                                                            */
-/* Description: Execute PI control                                                            */
+/* Function return: None                                                      */
+/* Description: Execute PI control                                            */
 /******************************************************************************/
-void MCCON_PIControl( MCCON_PI * const pParm)
+void MCCON_PIControl( tMCCON_PICONTROLLER_S * const pParm)
 {
-  	float Err;
-  	float Out;
-  	float Exc;
+    float Err;
+    float Out;
+    float Exc;
 
-  	Err  = pParm->inRef - pParm->inMeas;
-  	Out  = pParm->dSum + pParm->kp * Err;
+    Err  = pParm->inRef - pParm->inMeas;
+    Out  = pParm->dSum + pParm->kp * Err;
 
-  	/* Limit checking for PI output */
-  	if( Out > pParm->outMax )
-         {
-            pParm->out = pParm->outMax;
-         }
-         else if( Out < pParm->outMin )
-         {
-                  pParm->out = pParm->outMin;
-         }
-         else
-         {
-                  pParm->out = Out;
-         }
+    /* Limit checking for PI output */
+    if( Out > pParm->outMax )
+    {
+       pParm->out = pParm->outMax;
+    }
+    else if( Out < pParm->outMin )
+    {
+       pParm->out = pParm->outMin;
+    }
+    else
+    {
+       pParm->out = Out;
+    }
 
-  	Exc = Out - pParm->out;
-  	pParm->dSum = pParm->dSum + pParm->ki * Err - pParm->kc * Exc;
-
+    Exc = Out - pParm->out;
+    pParm->dSum = pParm->dSum + pParm->ki * Err - pParm->kc * Exc;
 }
 
 
 /******************************************************************************/
-/* Function name: MCAPP_ResetPIParameters                                          */
-/* Function parameters: None                                                                     */
-/* Function return: None                                                                             */
-/* Description:                                                                                             */
-/* Reset control parameters                                                                      */
+/* Function name: MCAPP_ResetPIParameters                                     */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* Reset control parameters                                                   */
 /******************************************************************************/
 void MCCON_ResetPIParameters(void)
 {
-  	/**************** PI D Term ***********************************************/
-         gPIParmD.dSum = 0;
-         gPIParmD.out = 0;
+    /**************** PI D Term ***********************************************/
+    gMCCON_IdController.dSum = 0;
+    gMCCON_IdController.out = 0;
 
-  	/**************** PI Q Term ************************************************/
-         gPIParmQ.dSum = 0;
-         gPIParmQ.out = 0;
+    /**************** PI Q Term ************************************************/
+    gMCCON_IqController.dSum = 0;
+    gMCCON_IqController.out = 0;
 
-  	/**************** PI Velocity Control **************************************/
-         gPIParmQref.dSum = 0;
-         gPIParmQref.out = 0;
+    /**************** PI Velocity Control **************************************/
+    gMCCON_SpeedController.dSum = 0;
+    gMCCON_SpeedController.out = 0;
 }
 
 #endif

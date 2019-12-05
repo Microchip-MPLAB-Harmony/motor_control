@@ -84,19 +84,54 @@ extern "C" {
     None.
 */
 
+typedef struct 
+{
+  float dig2PhyConversion;   
+}tMCVOL_PARAMETERS_S;
+
 typedef struct
 {
-   float Udc;                        /*  DC link voltage                           */
-   float Umax;                       /*  Maximum achievable voltage by SVPWM       */
-}tMCVOL_OUTPUT_S;
+    
+    float rawValue;                   /*  Raw ADC value                             */
+    float Udc;                        /*  DC link voltage                           */
+    float Umax;                       /*  Maximum achievable voltage by SVPWM       */
+}tMCVOL_OUTPUT_SIGNAL_S;
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
-// *****************************************************************************
-// *****************************************************************************
-extern tMCVOL_OUTPUT_S gMCVOL_Voltage;
-INLINE_FUNCTION  void MCVOL_voltageMeasurement( tMCVOL_OUTPUT_S * voltage );
+/*****************************************************************************/
+/*                       INTERFACE VARIABLES                                 */
+/*****************************************************************************/
+extern tMCVOL_OUTPUT_SIGNAL_S gMCVOL_OutputSignals;
+
+/*****************************************************************************/
+/*                       INTERFACE FUNCTIONS                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/* Function name: MCVOL_InitializeVoltageMeasurement                         */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* initializes parameters and state variables for voltage measurement        */
+/*****************************************************************************/
+void MCVOL_InitializeVoltageMeasurement( void );
+
+/******************************************************************************/
+/* Function name: MCINF_Initialization                                       */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* initializes parameters and state variables for rotor position sensing      */
+/******************************************************************************/
+INLINE_FUNCTION void MCVOL_VoltageMeasurement( void );
+
+/*****************************************************************************/
+/* Function name: MCVOL_ResetVoltageMeasurement                              */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* resets parameters and state variables for voltage measurement             */
+/*****************************************************************************/
+void MCVOL_ResetVoltageMeasurement( void );
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

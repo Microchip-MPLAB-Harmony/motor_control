@@ -1,23 +1,25 @@
 /*******************************************************************************
- Motor Control App interface file
+  Quadrature Encoder Interface (QEI) Peripheral Library Interface Header File
 
-  Company:
+  Company
     Microchip Technology Inc.
 
-  File Name:
-    mc_infrastructure.h
+  File Name
+    plib_qei_common.h
 
-  Summary:
-    Header file for infrastructure
+  Summary
+    Data Type definition of the QEI Peripheral Interface Plib.
 
-  Description:
-    This file contains the data structures and function prototypes used by
-    infrastructure module.
- *******************************************************************************/
+  Description
+    This file defines the Data Types for the QEI Plib.
 
+  Remarks:
+    None.
+
+*******************************************************************************/
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -40,88 +42,77 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef MCINF_H    // Guards against multiple inclusion
-#define MCINF_H
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Included Files
-// *****************************************************************************
-// *****************************************************************************
-
-/*  This section lists the other files that are included in this file.
-*/
-
-#include <stddef.h>
-#include "mc_lib.h"
-#include "userparams.h"
-
+#ifndef PLIB_QEI_COMMON_H    // Guards against multiple inclusion
+#define PLIB_QEI_COMMON_H
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
-extern "C" {
+    extern "C" {
 
 #endif
-
 // DOM-IGNORE-END
-
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Types
 // *****************************************************************************
 // *****************************************************************************
-#define POSITION_LOOP_PWM_COUNT   (uint32_t)( 100*SPEED_LOOP_PWM_COUNT )
-typedef enum 
+
+/*  The following data type definitions are used by the functions in this
+    interface.
+*/
+
+// *****************************************************************************
+
+
+typedef enum
 {
-         LOOP_INACTIVE,
-         LOOP_ACTIVE
-}tMCINF_LOOP_STATE_E;
+    QEI_NONE = 0,
+    QEI_INDEX = _QEI1STAT_IDXIEN_MASK,
+    QEI_HOME = _QEI1STAT_HOMIEN_MASK,
+    QEI_VELOCITY_OVERFLOW = _QEI1STAT_VELOVIEN_MASK,
+    QEI_POSITION_OVERFLOW = _QEI1STAT_POSOVIEN_MASK,
+    QEI_POS_INIT_COMPLETE = _QEI1STAT_PCIIEN_MASK,
+    QEI_POS_LESS_EQ = _QEI1STAT_PCLEQIEN_MASK,
+    QEI_POS_HIGH_EQ = _QEI1STAT_PCHEQIEN_MASK
+}QEI_INTERRUPT;
 
-typedef struct 
-{ 
-         tMCINF_LOOP_STATE_E  SpeedLoopActive;
-         tMCINF_LOOP_STATE_E  PositionLoopActive;
-}tMCINF_STATE_S;
-
-typedef struct 
+typedef enum
 {
-         uint32_t  SpeedLoopCount;
-         uint32_t  PositionLoopCount;
-}tMCINF_PARAM_S;
+    QEI_STATUS_NONE = 0,
+    QEI_INDEX_STATUS = _QEI1STAT_IDXIRQ_MASK,
+    QEI_HOME_STATUS = _QEI1STAT_HOMIRQ_MASK,
+    QEI_VELOCITY_OVERFLOW_STATUS = _QEI1STAT_VELOVIRQ_MASK,
+    QEI_POSITION_OVERFLOW_STATUS = _QEI1STAT_POSOVIRQ_MASK,
+    QEI_POS_INIT_COMPLETE_STATUS = _QEI1STAT_PCIIRQ_MASK,
+    QEI_POS_LESS_EQ_STATUS = _QEI1STAT_PCLEQIRQ_MASK,
+    QEI_POS_HIGH_EQ_STATUS = _QEI1STAT_PCHEQIRQ_MASK,
+    QEI_STATUS_MASK = QEI_INDEX_STATUS | QEI_HOME_STATUS | QEI_VELOCITY_OVERFLOW_STATUS | QEI_POSITION_OVERFLOW_STATUS
+                        | QEI_POSITION_OVERFLOW_STATUS | QEI_POS_INIT_COMPLETE_STATUS | QEI_POS_LESS_EQ_STATUS | QEI_POS_HIGH_EQ_STATUS
+}QEI_STATUS;
+
+typedef void (*QEI_CALLBACK) (QEI_STATUS status, uintptr_t context);
+
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Interface Routines
+// Section: Local: **** Do Not Use ****
 // *****************************************************************************
 // *****************************************************************************
 
-extern void MCINF_Tasks();
-extern void MCINF_InitializeControl(void);
-extern void MCINF_InitializeInfrastructure(void);
-extern void MCINF_ResetInfrastructure(void);
-extern void MCINF_StartAdcInterrupt( void );
-extern void MCINF_MotorStart( void );
-extern void MCINF_MotorStop( void );
+typedef struct
+{
+    QEI_CALLBACK callback;
+    uintptr_t    context;
 
-#ifndef MCHV3
-extern void MCINF_DirectionToggle(void);
-#endif
-extern tMCINF_LOOP_STATE_E  MCINF_IsSpeedLoopActive( void );
-extern tMCINF_LOOP_STATE_E MCINF_IsPositionLoopActive( void );
+} QEI_CH_OBJECT ;
+
+
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
-
-}
-
+    }
 #endif
 // DOM-IGNORE-END
-
-#endif //MCINF_H
-
-/**
- End of File
-*/
+#endif // PLIB_ACC_COMMON_H

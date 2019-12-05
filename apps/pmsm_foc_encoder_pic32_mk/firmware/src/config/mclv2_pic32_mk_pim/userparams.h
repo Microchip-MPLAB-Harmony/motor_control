@@ -90,6 +90,7 @@
 #define NUM_POLE_PAIRS                               ((float)5)
 #define RATED_SPEED_RPM                              ((float)2054)
 #define MAX_SPEED_RPM                                ((float)4000)
+#define MAX_MOTOR_CURRENT                            ((float)(4.4))
 #define ELECTRICAL_TIME_CONSTANT                     ((float)0.0114)
 #define MECHANICAL_TIME_CONSTANT                     ((float)0.00374)
 
@@ -101,6 +102,7 @@
 #define NUM_POLE_PAIRS                               ((float)5)
 #define RATED_SPEED_RPM                              ((float)2804)
 #define MAX_SPEED_RPM                                ((float)3500)
+#define MAX_MOTOR_CURRENT                            ((float)(4.4))
 #define ENCODER_PULSES_PER_REV                       ((float)1000)
 #define ENCODER_PULSES_PER_EREV                      ((uint16_t)(ENCODER_PULSES_PER_REV/NUM_POLE_PAIRS))
 #define ELECTRICAL_TIME_CONSTANT                     ((float)0.001123)
@@ -182,7 +184,7 @@
 #define KFILTER_ESDQ                             (float)( FAST_LOOP_TIME_SEC / ( FAST_LOOP_TIME_SEC + ELECTRICAL_TIME_CONSTANT) )
 #define KFILTER_BEMF_AMPLITUDE                   KFILTER_ESDQ 
 
-
+#define QEI_VELOCITY_COUNT_PRESCALER                (float)100.0f
 /***********************************************************************************************/
 /* Driver board configuration Parameters */
 /***********************************************************************************************/
@@ -195,7 +197,6 @@
  * x = 4.4Amps */
 
 #define MAX_CURRENT                               (float)(4.4)    /*    Max current    */
-#define MAX_CURRENT_SQUARED                       (float)( MAX_CURRENT * MAX_CURRENT )
 #define MAX_ADC_COUNT                             (float)4095     /*    12-bit ADC     */
 #define MAX_ADC_INPUT_VOLTAGE                     (float)3.3      /*    volts          */
 
@@ -207,7 +208,7 @@
 /***********************************************************************************************/
 /* Peripheral Configuration parameters */
 /***********************************************************************************************/
-
+#define INTERRUPT_SOURCE                                 INT_SOURCE_ADC_DATA0
 
 /**********************************************************************************************/
 
@@ -227,6 +228,7 @@
 /***********************************************************************************************/
 /* Derived Parameters - Don't Change                                                                                 */
 /***********************************************************************************************/
+#define MAX_CURRENT_SQUARED                               (float)(MAX_MOTOR_CURRENT * MAX_CURRENT )
 #define ADC_CURRENT_SCALE                                 (float)(MAX_CURRENT/(float)(2048))
 #define DCBUS_SENSE_RATIO                                 (float)(DCBUS_SENSE_BOTTOM_RESISTOR/(DCBUS_SENSE_BOTTOM_RESISTOR + DCBUS_SENSE_TOP_RESISTOR))
 #define VOLTAGE_ADC_TO_PHY_RATIO                          (float)(MAX_ADC_INPUT_VOLTAGE/(MAX_ADC_COUNT * DCBUS_SENSE_RATIO))

@@ -73,12 +73,12 @@
 
 
 
-/*******************************************************************************/
-/* Function name: MCPWM_PWMModulator                                           */
-/* Function parameters: None                                                   */
-/* Function return: None                                                       */
-/* Description: PWM Modulator                                                  */
-/*******************************************************************************/
+/******************************************************************************/
+/* Function name: MCPWM_PWMModulator                                          */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description: PWM Modulator                                                 */
+/******************************************************************************/
 void MCPWM_PWMModulator( void )
 {
     /* Calculate qSin,qCos from qAngle  */
@@ -90,43 +90,43 @@ void MCPWM_PWMModulator( void )
     /* Calculate and set PWM duty cycles from Vr1,Vr2,Vr3 */
     MCLIB_SVPWMGen(&gMCLIB_VoltageAlphaBeta, &gMCLIB_SVPWM);
     MCPWM_PWMDutyUpdate(gMCLIB_SVPWM.dPWM1, gMCLIB_SVPWM.dPWM2, gMCLIB_SVPWM.dPWM3);
- }
-
-/******************************************************************************/
-/* Function name: MCPWM_PWMDutyUpdate                                         */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* interface to update duty ratio in PWM timers                               */
-/******************************************************************************/
-INLINE_FUNCTION void MCPWM_PWMDutyUpdate(uint16_t duty_PhU, uint16_t duty_PhV, uint16_t duty_PhW)
-{
-    MCPWM_ChannelPrimaryDutySet( MCPWM_CH_1, duty_PhU );
-    MCPWM_ChannelPrimaryDutySet( MCPWM_CH_2, duty_PhV );
-    MCPWM_ChannelPrimaryDutySet( MCPWM_CH_3, duty_PhW );
 }
 
-/******************************************************************************/
-/* Function name: MCPWM_AdjustDutyRatio                                       */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* modifies PWM duty  ratio for current measurement. In case of dual          */
-/* shunt measurement, it limits PWM ratios, while in case of single           */
-/* shunt measurement it re-adjusts PWM                                        */
-/******************************************************************************/
+/*****************************************************************************/
+/* Function name: MCPWM_PWMDutyUpdate                                        */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* interface to update duty ratio in PWM timers                              */
+/*****************************************************************************/
+INLINE_FUNCTION void MCPWM_PWMDutyUpdate(uint16_t duty_PhU, uint16_t duty_PhV, uint16_t duty_PhW)
+{
+    MCPWM_ChannelPrimaryDutySet(MCPWM_CH_1, duty_PhU);
+    MCPWM_ChannelPrimaryDutySet(MCPWM_CH_2, duty_PhV);
+    MCPWM_ChannelPrimaryDutySet(MCPWM_CH_3, duty_PhW);
+}
+
+/*****************************************************************************/
+/* Function name: MCPWM_AdjustDutyRatio                                      */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* modifies PWM duty  ratio for current measurement. In case of dual         */
+/* shunt measurement, it limits PWM ratios, while in case of single          */
+/* shunt measurement it re-adjusts PWM                                       */
+/*****************************************************************************/
 INLINE_FUNCTION void MCPWM_AdjustDutyRatio( void )
 {
     /* Function to be developed */
 }
 
-/******************************************************************************/
-/* Function name: MCPWM_DeadTimeCompensation                                  */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* modifies PWM duty  ratio for dead time compensation                        */
-/******************************************************************************/
+/*****************************************************************************/
+/* Function name: MCPWM_DeadTimeCompensation                                 */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* modifies PWM duty  ratio for dead time compensation                       */
+/*****************************************************************************/
 INLINE_FUNCTION void MCPWM_DeadTimeCompensation( void )
 {
     /* Function to be developed */

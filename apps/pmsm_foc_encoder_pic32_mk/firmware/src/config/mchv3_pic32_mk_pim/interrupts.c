@@ -1,18 +1,21 @@
 /*******************************************************************************
- Motor Control App interface file
+ System Interrupts File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    mc_infrastructure.h
+    interrupt.c
 
   Summary:
-    Header file for infrastructure
+    Interrupt vectors mapping
 
   Description:
-    This file contains the data structures and function prototypes used by
-    infrastructure module.
+    This file maps all the interrupt vectors to their corresponding
+    implementations. If a particular module interrupt is used, then its ISR
+    definition can be found in corresponding PLIB source file. If a module
+    interrupt is not used, then its ISR implementation is mapped to dummy
+    handler.
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -37,12 +40,8 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*******************************************************************************/
+ *******************************************************************************/
 // DOM-IGNORE-END
-
-#ifndef MCINF_H    // Guards against multiple inclusion
-#define MCINF_H
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -50,78 +49,34 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/*  This section lists the other files that are included in this file.
-*/
-
-#include <stddef.h>
-#include "mc_lib.h"
-#include "userparams.h"
-
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-extern "C" {
-
-#endif
-
-// DOM-IGNORE-END
-
+#include "definitions.h"
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Data Types
+// Section: System Interrupt Vector Functions
 // *****************************************************************************
 // *****************************************************************************
-#define POSITION_LOOP_PWM_COUNT   (uint32_t)( 100*SPEED_LOOP_PWM_COUNT )
-typedef enum 
+
+
+void ADC_DATA3_InterruptHandler( void );
+void PWM1_InterruptHandler( void );
+
+
+
+/* All the handlers are defined here.  Each will call its PLIB-specific function. */
+void __ISR(_ADC_DATA3_VECTOR, ipl3AUTO) ADC_DATA3_Handler (void)
 {
-         LOOP_INACTIVE,
-         LOOP_ACTIVE
-}tMCINF_LOOP_STATE_E;
-
-typedef struct 
-{ 
-         tMCINF_LOOP_STATE_E  SpeedLoopActive;
-         tMCINF_LOOP_STATE_E  PositionLoopActive;
-}tMCINF_STATE_S;
-
-typedef struct 
-{
-         uint32_t  SpeedLoopCount;
-         uint32_t  PositionLoopCount;
-}tMCINF_PARAM_S;
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
-// *****************************************************************************
-// *****************************************************************************
-
-extern void MCINF_Tasks();
-extern void MCINF_InitializeControl(void);
-extern void MCINF_InitializeInfrastructure(void);
-extern void MCINF_ResetInfrastructure(void);
-extern void MCINF_StartAdcInterrupt( void );
-extern void MCINF_MotorStart( void );
-extern void MCINF_MotorStop( void );
-
-#ifndef MCHV3
-extern void MCINF_DirectionToggle(void);
-#endif
-extern tMCINF_LOOP_STATE_E  MCINF_IsSpeedLoopActive( void );
-extern tMCINF_LOOP_STATE_E MCINF_IsPositionLoopActive( void );
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
+    ADC_DATA3_InterruptHandler();
 }
 
-#endif
-// DOM-IGNORE-END
+void __ISR(_PWM1_VECTOR, ipl4AUTO) PWM1_Handler (void)
+{
+    PWM1_InterruptHandler();
+}
 
-#endif //MCINF_H
 
-/**
+
+
+/*******************************************************************************
  End of File
 */
