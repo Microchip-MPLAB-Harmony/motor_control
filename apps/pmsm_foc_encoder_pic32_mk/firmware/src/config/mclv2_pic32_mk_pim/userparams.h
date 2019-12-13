@@ -68,9 +68,8 @@
 /***********************************************************************************************/
 /* Algorithm Configuration parameters                                                          */
 /***********************************************************************************************/
-#define OPEN_LOOP_FUNCTIONING                  (0U)  /* If enabled - Keep running in open loop */
 #define TORQUE_MODE                            (0U)  /* If enabled - torque control            */
-#define FIELD_WEAKENING                        (1U)  /* If enabled - Field weakening           */
+#define FIELD_WEAKENING                        (0U)  /* If enabled - Field weakening           */
 
 /** PWM frequency in Hz */
 #define PWM_FREQUENCY                          (20000U)
@@ -102,7 +101,7 @@
 #define NUM_POLE_PAIRS                               ((float)5)
 #define RATED_SPEED_RPM                              ((float)2804)
 #define MAX_SPEED_RPM                                ((float)3500)
-#define MAX_MOTOR_CURRENT                            ((float)(4.4))
+#define MAX_MOTOR_CURRENT                            ((float)(3.5))
 #define ENCODER_PULSES_PER_REV                       ((float)1000)
 #define ENCODER_PULSES_PER_EREV                      ((uint16_t)(ENCODER_PULSES_PER_REV/NUM_POLE_PAIRS))
 #define ELECTRICAL_TIME_CONSTANT                     ((float)0.001123)
@@ -125,7 +124,7 @@
 
 /* Field weakening - Limit for -ve Idref */
 #if(FIELD_WEAKENING == 1U)
-#define MAX_FW_NEGATIVE_ID_REF                      (float)(-3.7)
+#define MAX_FW_NEGATIVE_ID_REF                      (float)(-3.5)
 #endif
 
 /******************************************************************************/
@@ -148,28 +147,28 @@
 #define     SPEEDCNTR_PTERM                       0.005              /*     Speed Proportional Gain                           */ 
 #define     SPEEDCNTR_ITERM                       0.00000020         /*     Speed Integral Gain                               */
 #define     SPEEDCNTR_CTERM                       0.5                /*     Speed Anti-Windup Gain                            */
-#define     SPEEDCNTR_OUTMAX                      MAX_CURRENT        /*     Speed PI Controller Maximum Output                */ 
+#define     SPEEDCNTR_OUTMAX                      MAX_MOTOR_CURRENT  /*     Speed PI Controller Maximum Output                */ 
 
 #elif(MOTOR == MOTOR_2_HURST_DMA0204024B101)
 
 /* PI controllers tuning values - */
 /*________________________ D Control Loop Coefficients  ___________________________________ */
-#define     D_CURRCNTR_PTERM                      0.01               /*     D axis Proportional Gain                          */ 
-#define     D_CURRCNTR_ITERM                      0.000015           /*     D axis Integral Gain                              */ 
+#define     D_CURRCNTR_PTERM                      0.004              /*     D axis Proportional Gain                          */ 
+#define     D_CURRCNTR_ITERM                      0.00005            /*     D axis Integral Gain                              */ 
 #define     D_CURRCNTR_CTERM                      0.5                /*     D axis Anti-Windup Gain                           */
 #define     D_CURRCNTR_OUTMAX                     0.98               /*     D axis PI Controller Maximum Output  (Normalized) */ 
 
 /*________________________ Q Control Loop Coefficients  ___________________________________ */
-#define     Q_CURRCNTR_PTERM                      0.01                /*     Q axis Proportional Gain                          */ 
-#define     Q_CURRCNTR_ITERM                      0.000015            /*     Q axis Integral Gain                              */
-#define     Q_CURRCNTR_CTERM                      0.5                 /*     Q axis Anti-Windup Gain                           */
-#define     Q_CURRCNTR_OUTMAX                     0.98                /*     Q axis PI Controller Maximum Output  (Normalized) */ 
+#define     Q_CURRCNTR_PTERM                      0.004               /*     Q axis Proportional Gain                          */ 
+#define     Q_CURRCNTR_ITERM                      0.00005             /*     Q axis Integral Gain                              */
+#define     Q_CURRCNTR_CTERM                      0.5                /*     Q axis Anti-Windup Gain                           */
+#define     Q_CURRCNTR_OUTMAX                     0.98               /*     Q axis PI Controller Maximum Output  (Normalized) */ 
 
 /*________________________Speed  Control Loop Coefficients  ___________________________________ */
-#define     SPEEDCNTR_PTERM                       0.001              /*     Speed Proportional Gain                           */ 
-#define     SPEEDCNTR_ITERM                       0.000000010         /*     Speed Integral Gain                               */
+#define     SPEEDCNTR_PTERM                       0.004              /*     Speed Proportional Gain                           */ 
+#define     SPEEDCNTR_ITERM                       0.0000040          /*     Speed Integral Gain                               */
 #define     SPEEDCNTR_CTERM                       0.999              /*     Speed Anti-Windup Gain                            */
-#define     SPEEDCNTR_OUTMAX                      MAX_CURRENT        /*     Speed PI Controller Maximum Output                */ 
+#define     SPEEDCNTR_OUTMAX                      MAX_MOTOR_CURRENT  /*     Speed PI Controller Maximum Output                */ 
 
 #endif 
 
@@ -184,7 +183,7 @@
 #define KFILTER_ESDQ                             (float)( FAST_LOOP_TIME_SEC / ( FAST_LOOP_TIME_SEC + ELECTRICAL_TIME_CONSTANT) )
 #define KFILTER_BEMF_AMPLITUDE                   KFILTER_ESDQ 
 
-#define QEI_VELOCITY_COUNT_PRESCALER                (float)100.0f
+#define QEI_VELOCITY_COUNT_PRESCALER             (float)100.0f
 /***********************************************************************************************/
 /* Driver board configuration Parameters */
 /***********************************************************************************************/

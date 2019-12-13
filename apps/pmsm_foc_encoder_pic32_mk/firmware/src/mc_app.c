@@ -111,9 +111,9 @@ tMCAPP_FIELD_WEAKENING_STATE_S        gFieldWeakeningState;
 tMCAPP_FIELD_WEAKENING_PARAM_S        gFieldWeakeningParam;
 tMCAPP_CLOSING_LOOP_STATE_S           gMCAPP_ClosingLoopState;
 tMCAPP_CLOSING_LOOP_PARAM_S           gMCAPP_ClosingLoopParam;
-tMCAPP_OPEN_LOOP_STATE_S             gMCAPP_OpenLoopState = { 0.0f };
-tMCAPP_OPEN_LOOP_PARAM_S             gMCAPP_OpenLoopParam = { 
-                                                                  OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC_IN_LOOPTIME,
+tMCAPP_OPEN_LOOP_STATE_S              gMCAPP_OpenLoopState = { 0.0f };
+tMCAPP_OPEN_LOOP_PARAM_S              gMCAPP_OpenLoopParam = { 
+                                                                   OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC_IN_LOOPTIME,
                                                                   OPEN_LOOP_RAMPSPEED_INCREASERATE,
                                                                   Q_CURRENT_REF_OPENLOOP
                                                               };
@@ -220,46 +220,37 @@ __STATIC_INLINE void MCAPP_FieldWeakening( const tMCAPP_FIELD_WEAKENING_INPUT_S 
 
     UdSquare = fieldWeakeningInput->Ud * fieldWeakeningInput->Ud;
 
-    if( fieldWeakeningInput->Ws > gFieldWeakeningParam.Wbase )
+    if(UdSquare >= gFieldWeakeningParam.UmaxSqr)
     {
-        if(UdSquare >= gFieldWeakeningParam.UmaxSqr)
-        {
-            UdSquare = gFieldWeakeningParam.UmaxSqr;
-        }
+        UdSquare = gFieldWeakeningParam.UmaxSqr;
+    }
 
-        UqRef = sqrtf((float)(  gFieldWeakeningParam.UmaxSqr - UdSquare));
+    UqRef = sqrtf((float)(  gFieldWeakeningParam.UmaxSqr - UdSquare));
 
-        gFieldWeakeningState.UqrefFilt =     gFieldWeakeningState.UqrefFilt
+    gFieldWeakeningState.UqrefFilt =     gFieldWeakeningState.UqrefFilt
                                         + ( ( UqRef - gFieldWeakeningState.UqrefFilt) *  gFieldWeakeningParam.EsFiltCoeff );
 
-        OmegaLs = ( fieldWeakeningInput->Ws *  gFieldWeakeningParam.Ls);
+    OmegaLs = ( fieldWeakeningInput->Ws *  gFieldWeakeningParam.Ls);
 
-        /* Id reference for feed forward control */
-        idref = (( gFieldWeakeningState.UqrefFilt * fieldWeakeningInput->Umax )
+    /* Id reference for feed forward control */
+    idref = (( gFieldWeakeningState.UqrefFilt * fieldWeakeningInput->Umax )
               - (  gFieldWeakeningParam.Rs * fieldWeakeningInput->iqref )
-              - (  gFieldWeakeningParam.Ls * (( fieldWeakeningInput->iqref - gFieldWeakeningState.iqref_1) *  gFieldWeakeningParam.fs) )
               - ( fieldWeakeningInput->Esfilt )) / OmegaLs;
 
-        gFieldWeakeningState.iqref_1 = fieldWeakeningInput->iqref;
+    gFieldWeakeningState.iqref_1 = fieldWeakeningInput->iqref;
      
-        /* d-axis current saturation  */
-        if(idref > 0)
-        {
-            fieldWeakeningOutput->idref = 0;
-        }
-        else if( idref <  gFieldWeakeningParam.idmax)
-        {
-            fieldWeakeningOutput->idref =  gFieldWeakeningParam.idmax;
-        }
-        else
-        {
-            fieldWeakeningOutput->idref = idref;
-        }
+    /* d-axis current saturation  */
+    if(idref > 0)
+    {
+        fieldWeakeningOutput->idref = 0;
+    }
+    else if( idref <  gFieldWeakeningParam.idmax)
+    {
+        fieldWeakeningOutput->idref =  gFieldWeakeningParam.idmax;
     }
     else
     {
-        /* Field weakening is disabled below rated speed. */
-        fieldWeakeningOutput->idref = 0;
+        fieldWeakeningOutput->idref = idref;
     }
 }
 
@@ -302,17 +293,12 @@ float MCAPP_IqrefCalculation( void )
   #if( 0U == TORQUE_MODE )
 
     /* Quadrature axis reference current limitation */
-    if( gMCCON_IdController.inRef < MAX_MOTOR_CURRENT )
+    if( gMCCON_IdController.inRef < 0 )
     {
         gMCCON_SpeedController.outMax = sqrtf((float)(MAX_CURRENT_SQUARED - (float)( gMCCON_IdController.inRef * gMCCON_IdController.inRef )));
         gMCCON_SpeedController.outMin = -gMCCON_SpeedController.outMax;
     }
-    else 
-    {
-        gMCCON_SpeedController.outMax = 0.0f;
-        gMCCON_SpeedController.outMin = 0.0f;
-    }
-    
+        
     /* Execute the velocity control loop */
     gMCCON_SpeedController.inMeas = gMCRPOS_OutputSignals.Speed;
     gMCCON_SpeedController.inRef  = ( gCtrlParam.rotationSign * gMCSPE_OutputSignals.commandSpeed );
@@ -350,8 +336,8 @@ float MCAPP_IdrefCalculation( void )
     gFieldWeakeningInput.iqref =  ( gCtrlParam.iqRef >= 0.0f )? (gCtrlParam.iqRef):(-gCtrlParam.iqRef);
     gFieldWeakeningInput.Ud =  gMCLIB_VoltageDQ.directAxis;
     gFieldWeakeningInput.Umax = gMCVOL_OutputSignals.Umax;
-    gFieldWeakeningInput.Esfilt = gMCRPOS_OutputSignals.Esfilt;
-
+    gFieldWeakeningInput.Esfilt = MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC * gMCSPE_OutputSignals.commandSpeed;
+                                
     MCAPP_FieldWeakening(&gFieldWeakeningInput, &gFieldWeakeningOutput);
 
     /* Write field weakening output */
@@ -422,17 +408,19 @@ void MCAPP_StateMachine( void )
 /*******************************************************************************/
 void MCAPP_CurrentControl( void )
 {
+    /* PI control for Id flux control loop */
+    gMCCON_IdController.inMeas = gMCLIB_CurrentDQ.directAxis;
+    gMCCON_IdController.inRef  = gCtrlParam.idRef;
+    MCCON_PIControl(&gMCCON_IdController);
+    gMCLIB_VoltageDQ.directAxis = gMCCON_IdController.out;
+    
     /* PI control for Iq torque control loop */
     gMCCON_IqController.inMeas = gMCLIB_CurrentDQ.quadratureAxis;
     gMCCON_IqController.inRef  = gCtrlParam.iqRef;
     MCCON_PIControl(&gMCCON_IqController);
     gMCLIB_VoltageDQ.quadratureAxis = gMCCON_IqController.out;
 
-    /* PI control for Id flux control loop */
-    gMCCON_IdController.inMeas = gMCLIB_CurrentDQ.directAxis;
-    gMCCON_IdController.inRef  = gCtrlParam.idRef;
-    MCCON_PIControl(&gMCCON_IdController);
-    gMCLIB_VoltageDQ.directAxis = gMCCON_IdController.out;
+    
 }
 
 

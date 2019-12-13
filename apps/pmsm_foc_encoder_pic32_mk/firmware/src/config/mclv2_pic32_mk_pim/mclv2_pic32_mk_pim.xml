@@ -2686,12 +2686,7 @@
           </Values>
         </KeyValueSet>
         <KeyValueSet dnOrder="287" id="SYS_PORT_PPS_OUTPUT_FUNCTION_1">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <User dnOrder="0" value="53"/>
           </Values>
         </KeyValueSet>
@@ -2711,12 +2706,7 @@
           </Values>
         </Combo>
         <Combo dnOrder="290" id="SYS_PORT_PPS_OUTPUT_PIN_1">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <User dnOrder="0" value="RPB9"/>
           </Values>
         </Combo>
@@ -3479,7 +3469,7 @@
         </Comment>
         <Hex dnOrder="94" id="MCPWM_TRGCON1">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="mcpwm" value="6144"/>
+            <Dynamic dnOrder="0" id="mcpwm" value="1024"/>
           </Values>
         </Hex>
         <Hex dnOrder="95" id="MCPWM_TRGCON2">
@@ -3716,12 +3706,12 @@
         </Integer>
         <KeyValueSet dnOrder="130" id="TRGCON1__TRGDIV">
           <Values dnOrder="0">
-            <User dnOrder="0" value="1"/>
+            <User dnOrder="0" value="0"/>
           </Values>
         </KeyValueSet>
         <KeyValueSet dnOrder="131" id="TRGCON1__TRGSEL">
           <Values dnOrder="0">
-            <User dnOrder="0" value="2"/>
+            <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
         <KeyValueSet dnOrder="132" id="TRGCON2__TRGSEL">
@@ -3736,7 +3726,7 @@
         </KeyValueSet>
         <Integer dnOrder="134" id="TRIG1__TRGCMP">
           <Values dnOrder="0">
-            <User dnOrder="0" value="2999"/>
+            <User dnOrder="0" value="2990"/>
           </Values>
         </Integer>
         <Integer dnOrder="135" id="TRIG2__TRGCMP">
@@ -3816,7 +3806,8 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="adchs" x="98" y="134"/>
         <ElementPosition dnOrder="1" id="core" x="103" y="49"/>
@@ -3826,6 +3817,5 @@
         <ElementPosition dnOrder="5" id="uart2" x="98" y="294"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
