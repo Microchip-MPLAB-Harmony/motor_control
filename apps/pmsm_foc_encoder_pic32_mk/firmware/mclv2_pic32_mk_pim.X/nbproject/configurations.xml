@@ -171,7 +171,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/mclv2_pic32_mk_pim;../src/packs/PIC32MK1024MCF100_DFP;../src/mips"/>
+                  value="../src;../src/config/mclv2_pic32_mk_pim;../src/packs/PIC32MK1024MCF100_DFP;;../src/mips"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
