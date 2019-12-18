@@ -52,8 +52,102 @@ Hardware Setup</div>
 <div class="Element10">
 
 <ol class="Element630">
-<li value="1" class="Element600"> <strong>Project mclv2_pic32_mk_pim.X.</strong></li>
-</ol>
+<li value="1" class="Element600"> <strong>Project mchv3_pic32_mk_pim.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/dm330023-3');"><img src="indicator_external_link.gif" border="0" alt="" title="">MCHV3 Development Board (High Voltage)</a>
+<ul class="Element633">
+<li class="Element603"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated Embedded Debugger Interface</a></li>
+<li class="Element603"><a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/MA320024');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MK PIM</a></li>
+<li class="Element603"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/AC300025');"><img src="indicator_external_link.gif" border="0" alt="" title="">Leadshine EL5-M0400-1-24 Motor</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>Hardware Setup</strong>
+<ol class="Element631">
+<li value="1" class="Element601"><span style="color: #000000">Mount the PIC32MK Motor Control Plug In Module on U9 header.</span></li>
+</ol></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="Encoder_pic32mk_pim_mchv3.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="2" class="Element600"><span style="color: #000000">Place the &quot;External Opamp Configuration&quot; Matrix </span>board at J4.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="External_opamp.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="3" class="Element600"><span style="color: #000000">Motor Connections:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Phase V - M1</span></li>
+<li class="Element601"><span style="color: #000000">Phase U - M2</span></li>
+<li class="Element601"><span style="color: #000000">Phase W - M3</span></li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="Motor Connections_MCHV3.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="4" class="Element600">Encoder Connections:
+<ul class="Element631">
+<li class="Element601">HA - QEA</li>
+<li class="Element601">HB - QEB</li>
+<li class="Element601">+5V - 5V supply</li>
+<li class="Element601">GND - Ground</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="Encoder Connections_MCHV3.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="5" class="Element600">Jumper Settings:
+<ul class="Element631">
+<li class="Element601">J11 - VAC ( Short Pin 3 - 4)</li>
+<li class="Element601">J12 - IA ( Short Pin 1 - 2)</li>
+<li class="Element601">J13 - IB ( Short Pin 1 - 2)</li>
+<li class="Element601">J14 - Fault_IP/IBUS ( Short Pin 1 - 2)</li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="encoder_pic32mk_mchv3_jumper_settings.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="5" class="Element600">Power the board with (110V/220V) AC mains. For additional safety, it is recommended to use a current limited power supply while testing this software demonstration on a non-default hardware and motor.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="encoder_pic32mk_ac_mains.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>Embedded Debugger</strong>
+<ul class="Element631">
+<li class="Element601">Connect the default debugger daughter card shipped with the MCHV3 board to program the microcontroller.</li>
+</ul></li>
+</ul><p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>Complete Setup</strong></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="encoder_pic32mk_hv_hardware_setup.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>2. Project mclv2_pic32_mk_pim.X.</strong></p>
 <ul class="Element630">
 <li class="Element600"><strong>Hardware Used</strong>
 <ul class="Element631">
