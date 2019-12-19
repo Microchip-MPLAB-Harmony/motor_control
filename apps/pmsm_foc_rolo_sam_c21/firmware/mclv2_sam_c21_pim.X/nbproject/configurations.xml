@@ -220,7 +220,6 @@
       </toolsSet>
       <packs>
         <pack name="SAMC21_DFP" vendor="Microchip" version="3.0.22"/>
-        <pack name="SAMC21_DFP" vendor="Microchip" version="3.0.22"/>
       </packs>
       <compileType>
         <linkerTool>

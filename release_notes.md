@@ -5,11 +5,11 @@
 
 ## Motor Control Release v3.4.1
 
-### Updated Algorithms
+### Updated Applications
 
-- The following table provides the list of algorithms updated in this release.
+- The following table provides the list of applications updated in this release.
 
-| Algorithm | Description | Supported Plug In Module | dsPICDEM™ MCHV-3 Support | dsPICDEM™ MCLV-2 Support  | Revision History  |
+| Application | Description | Supported Plug In Module | dsPICDEM™ MCHV-3 Support | dsPICDEM™ MCLV-2 Support  | Revision History  |
 | --- | --- | --- | --- | --- | --- |
 | pmsm_foc_encoder_pic32_mk| Sensored Field Oriented Control of PMSM using Quadrature Encoder | [PIC32MK Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320024)   | Yes | Yes | <li> PWM to Control Frequency was made 1:1 in Low Voltage Demo (MCLV-2) </li><li> Added High Voltage Support (MCHV-3)</li>|
 | pmsm_foc_pll_estimator_pic32_mk| Sensorless Field Oriented Control of PMSM using PLL Estimator | [PIC32MK Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320024)   | No | Yes | Added High Voltage Support (MCHV-3)|
