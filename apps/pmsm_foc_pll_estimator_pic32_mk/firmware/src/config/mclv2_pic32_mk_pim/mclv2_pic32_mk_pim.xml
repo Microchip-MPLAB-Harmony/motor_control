@@ -3304,7 +3304,7 @@
         </Comment>
         <Hex dnOrder="94" id="MCPWM_TRGCON1">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="mcpwm" value="2048"/>
+            <Dynamic dnOrder="0" id="mcpwm" value="1024"/>
           </Values>
         </Hex>
         <Hex dnOrder="95" id="MCPWM_TRGCON2">
@@ -3546,7 +3546,7 @@
         </KeyValueSet>
         <KeyValueSet dnOrder="131" id="TRGCON1__TRGSEL">
           <Values dnOrder="0">
-            <User dnOrder="0" value="2"/>
+            <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
         <KeyValueSet dnOrder="132" id="TRGCON2__TRGSEL">
@@ -3561,7 +3561,7 @@
         </KeyValueSet>
         <Integer dnOrder="134" id="TRIG1__TRGCMP">
           <Values dnOrder="0">
-            <User dnOrder="0" value="2999"/>
+            <User dnOrder="0" value="2990"/>
           </Values>
         </Integer>
         <Integer dnOrder="135" id="TRIG2__TRGCMP">

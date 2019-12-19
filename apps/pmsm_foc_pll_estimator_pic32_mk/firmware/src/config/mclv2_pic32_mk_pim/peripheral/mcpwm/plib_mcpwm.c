@@ -106,8 +106,8 @@ void MCPWM_Initialize (void)
     ALTDTR1 = 120;
 
     /* Trigger Generator */
-    TRGCON1 = 0x800;
-    TRIG1 = 2999;
+    TRGCON1 = 0x400;
+    TRIG1 = 2990;
     STRIG1 = 0;
 
     /* leading edge blanking */
