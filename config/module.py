@@ -32,3 +32,5 @@ def loadModule():
         mcPmsmFocComponent.setDisplayType("Motor Control Algorithm")
         mcPmsmFocComponent.addDependency("ADC", "ADC", False, True)
         mcPmsmFocComponent.addDependency("PWM", "PWM", False, True)
+        mcPmsmFocComponent.addDependency("QDEC", "QDEC", False, True)
+        mcPmsmFocComponent.setDependencyEnabled("QDEC", False)

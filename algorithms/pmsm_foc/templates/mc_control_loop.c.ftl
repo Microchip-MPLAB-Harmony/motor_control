@@ -72,9 +72,11 @@ __STATIC_INLINE void MCCTRL_StateMachine( void );
 __STATIC_INLINE void MCCTRL_CurrentControl(void);
 __STATIC_INLINE void MCCTRL_MotorControl(void );
 
+<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
 __STATIC_INLINE tMCAPP_STATUS_E MCCTRL_OpenLoopControl( const int16_t rotationSign );
 static void MCCTRL_InitilaizeOpenLoopControl( void );
 static void MCCTRL_ResetOpenLoopControl( void );
+</#if>
 
 __STATIC_INLINE void  MCCTRL_LoopSynchronization(void);
 static void MCCTRL_InitiaizeInfrastructure( void );
@@ -92,10 +94,13 @@ static void MCCTRL_ResetFieldWeakening( void );
 /*                   Global Variables                                         */
 /******************************************************************************/
 tMCAPP_CONTROL_PARAM_S                  gMCCTRL_CtrlParam;
+#if (1U == FIELD_WEAKENING )
 tMCCTRL_FW_INPUT_SIGNALS_S              gMCCTRL_FieldWeakeningInput;
 tMCCTRL_FW_OUTPUT_SIGNALS_S             gMCCTRL_FieldWeakeningOutput;
 tMCCTRL_FW_STATE_SIGNALS_S              gMCCTRL_FieldWeakeningState;
 tMCCTRL_FW_PARAM_S                      gMCCTRL_FieldWeakeningParam;
+#endif
+<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
 tMCCTRL_CLOSING_LOOP_STATE_SIGNALS_S    gMCCTRL_ClosingLoopState;
 tMCCTRL_CLOSING_LOOP_PARAM_S            gMCCTRL_ClosingLoopParam;
 tMCCTRL_OPEN_LOOP_STATE_SIGNALS_S       gMCCTRL_OpenLoopState = { 0.0f };
@@ -104,7 +109,7 @@ tMCCTRL_OPEN_LOOP_PARAM_S               gMCCTRL_OpenLoopParam = {
                                                                   OPEN_LOOP_RAMPSPEED_INCREASERATE,
                                                                   Q_CURRENT_REF_OPENLOOP
                                                                 };
-
+</#if>
 
 tMCCTRL_TASK_PARAM_S gMCCTRL_TaskParameters = {
                                                   SPEED_LOOP_PWM_COUNT,
@@ -150,7 +155,7 @@ tMCLIB_PICONTROLLER_S gMCLIB_SpeedPIController =
 /*****************************************************************************/
 /*                   LOCAL FUNCTIONS                                         */
 /*****************************************************************************/
-
+<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
 /*****************************************************************************/
 /* Function name: MCAPP_InitilaizeOpenLoopControl                            */
 /* Function parameters: None                                                 */
@@ -207,7 +212,7 @@ static void MCCTRL_ResetOpenLoopControl( void )
     /* Reset open loop state */
     gMCCTRL_OpenLoopState.openLoopAngle = 0.0f;
 }
-
+</#if>
 
 #if(1U == FIELD_WEAKENING )
 /*****************************************************************************/
@@ -365,7 +370,7 @@ __STATIC_INLINE float MCCTRL_IqrefCalculation( void )
 
 
   #else
-    iqRef = gMCCTRL_CtrlParam.rotationSign * Q_CURRENT_REF_OPENLOOP;
+    iqRef = gMCCTRL_CtrlParam.rotationSign * Q_CURRENT_REF_TORQUE;
   #endif
     return iqRef;
 }
@@ -394,7 +399,11 @@ __STATIC_INLINE float MCCTRL_IdrefCalculation( void )
     gMCCTRL_FieldWeakeningInput.iqref =  ( gMCCTRL_CtrlParam.iqRef >= 0.0f )? (gMCCTRL_CtrlParam.iqRef):(-gMCCTRL_CtrlParam.iqRef);
     gMCCTRL_FieldWeakeningInput.ud =  gMCLIB_VoltageDQ.directAxis;
     gMCCTRL_FieldWeakeningInput.umax = gMCVOL_OutputSignals.umax;
+<#if MCPMSMFOC_POSITION_FB == "SENSORED_ENCODER">
+    gMCCTRL_FieldWeakeningInput.esFilt = MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC * gMCSPE_OutputSignals.commandSpeed;
+<#else>
     gMCCTRL_FieldWeakeningInput.esFilt = gMCRPOS_OutputSignals.esfilt;
+</#if>
 
     MCCTRL_FieldWeakening(&gMCCTRL_FieldWeakeningInput, &gMCCTRL_FieldWeakeningOutput);
 
@@ -427,17 +436,26 @@ __STATIC_INLINE void MCCTRL_StateMachine( void )
         break;
         case MCAPP_FIELD_ALIGNMENT:
         {
+            <#if MCPMSMFOC_POSITION_FB == "SENSORED_ENCODER">
             /* Read inputs for initial rotor position detection */
-            if( MCAPP_SUCCESS == MCRPOS_InitialRotorPositonDetection( &gMCRPOS_RotorAlignInput, &gMCRPOS_RotorAlignOutput))
+            if( MCAPP_SUCCESS == MCRPOS_InitialRotorPositonDetection(&gMCRPOS_RotorAlignOutput))
+            {
+                gMCCTRL_CtrlParam.mcState = MCAPP_CLOSED_LOOP;
+            }
+            <#else>
+            /* Read inputs for initial rotor position detection */
+            if( MCAPP_SUCCESS == MCRPOS_InitialRotorPositonDetection(&gMCRPOS_RotorAlignOutput))
             {
                 gMCCTRL_CtrlParam.mcState = MCAPP_OPEN_LOOP;
             }
+            </#if>
             gMCCTRL_CtrlParam.iqRef =  gMCCTRL_CtrlParam.rotationSign * gMCRPOS_RotorAlignOutput.iqRef;
             gMCCTRL_CtrlParam.idRef =  gMCRPOS_RotorAlignOutput.idRef;
             gMCLIB_Position.angle =  gMCCTRL_CtrlParam.rotationSign *  gMCRPOS_RotorAlignOutput.angle;
         }
         break;
 
+<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
         case MCAPP_OPEN_LOOP:
         {
             if( MCAPP_SUCCESS == MCCTRL_OpenLoopControl( gMCCTRL_CtrlParam.rotationSign))
@@ -451,8 +469,6 @@ __STATIC_INLINE void MCCTRL_StateMachine( void )
         case MCAPP_CLOSING_LOOP:
         {
             {
-                /* ToDo: Logic to ramp the reference current gracefully */
-               // MCLIB_linearRamp(&gCtrlParam.iqRef, Q_CURRENT_OPENLOOP_STEP, MCAPP_IqrefCalculation() );
                 if( gMCCTRL_ClosingLoopState.stabilizationCounter < CLOSING_LOOP_TIME_COUNTS )
                 {
                     gMCCTRL_ClosingLoopState.stabilizationCounter++;
@@ -471,14 +487,16 @@ __STATIC_INLINE void MCCTRL_StateMachine( void )
             MCLIB_WrapAngle( &gMCLIB_Position.angle);
         }
         break;
-
+</#if>
         case MCAPP_CLOSED_LOOP:
         {
             /* Switched to closed by slowly decreasing the offset which is present in the estimated angle during open loop */
             gMCLIB_Position.angle = gMCRPOS_OutputSignals.angle;
 
+<#if MCPMSMFOC_POSITION_FB == "SENSORLESS_PLL">
             /* Linearly ramp the rhoOffset to zero */
             MCLIB_LinearRamp( &gMCRPOS_StateSignals.rhoOffset, ANGLE_OFFSET_MIN, 0.0f );
+</#if>
 
             /* d- axis reference current calculation */
             gMCCTRL_CtrlParam.idRef = MCCTRL_IdrefCalculation();
@@ -586,13 +604,14 @@ __STATIC_INLINE void  MCCTRL_LoopSynchronization(void)
  void MCCTRL_InitializeMotorControl(void)
 {
     MCCTRL_InitiaizeInfrastructure();
+<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
     /* Initilaize open loop control */
     MCCTRL_InitilaizeOpenLoopControl();
+</#if>
 #if (1U == FIELD_WEAKENING )
     MCCTRL_InitializeFieldWeakening();
 #endif
 
-    /* Todo : Add SVM Initialize function */
     gMCPWM_SVPWM.period = MCHAL_PWMPrimaryPeriodGet();
     gMCPWM_SVPWM.neutralPWM = (uint32_t)(0.5f * gMCPWM_SVPWM.period );
 }
@@ -639,8 +658,10 @@ void MCCTRL_CurrentLoopTasks( uint32_t status, uintptr_t context )
     MCLIB_ResetPIParameters(&gMCLIB_IdPIController);
     MCLIB_ResetPIParameters(&gMCLIB_SpeedPIController);
 
-    /* Initilaize open loop control */
+<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
+    /* Reset open loop control */
     MCCTRL_ResetOpenLoopControl();
+</#if>
 #if (1U == FIELD_WEAKENING )
     MCCTRL_ResetFieldWeakening();
 #endif

@@ -96,7 +96,6 @@ static void PMSM_FOC_StartAdcInterrupt( void )
 
     /* Enable interrupt for fault detection */
     MCHAL_PWMCallbackRegister(MCHAL_PWM_PH_U, MCERR_FaultControlISR, (uintptr_t)NULL);
-    //MCERR_FaultCallbackRegister(MCINF_FaultHandler, (uintptr_t)NULL);
     MCHAL_IntEnable(MCHAL_FAULT_IRQ);
 
     /* Enables PWM channels. */
@@ -186,6 +185,7 @@ void PMSM_FOC_Initialize( void )
 /*****************************************************************************/
 void PMSM_FOC_MotorStart(void)
 {
+    MCERR_ErrorClear();
     /* Change motor status to RUNNING */
     PMSM_FOC_ResetParameters();
 

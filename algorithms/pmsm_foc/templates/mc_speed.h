@@ -73,6 +73,11 @@ typedef struct
 
 typedef struct
 {
+  float speedRef;
+}tMCSPE_INPUT_SIGNAL_S;
+
+typedef struct
+{
     float potReading;
     float commandRpm;
     float commandSpeed;

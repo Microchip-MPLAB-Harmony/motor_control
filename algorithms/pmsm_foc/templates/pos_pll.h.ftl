@@ -78,41 +78,12 @@ extern "C" {
 
 typedef enum
 {
-    MCRPOS_WINDMILLING,
-    MCRPOS_WINDMILLING_DECIDE,
-    MCRPOS_WINDMILLING_PASSIVE_BRAKE,
     MCRPOS_FORCE_ALIGN
 }tMCRPOS_ALIGN_STATE_E;
 
 typedef struct
 {
-    uint32_t                       wmCount;
-    uint32_t                       wmDecideCount;
-    uint32_t                       wmPassiveBrakeCount;
-}tMCRPOS_WINDMILLING_STATE_S;
-
-typedef struct
-{
-    tMCAPP_CONTROL_STATE_E              s_ControlStatus_e;
-}tMCRPOS_WINDMILLING_OUTPUT_S;
-
-/*---------------------------------------------------------------------------*/
-typedef struct
-{
-    float                           estSpeed;
-    int16_t                         rotationSign;
-}tMCRPOS_WINDMILLING_INPUT_S;
-
-typedef struct
-{
-    tMCRPOS_WINDMILLING_INPUT_S     windmillingInput;
-}tMCRPOS_ROTOR_ALIGN_INPUT_S;
-
-
-typedef struct
-{
-    tMCRPOS_ALIGN_STATE_E        rotorAlignState;
-    tMCRPOS_WINDMILLING_STATE_S     windmillingState;
+    tMCRPOS_ALIGN_STATE_E           rotorAlignState;
     uint32_t                        startupLockCount;
     uint8_t                         status;
 }tMCRPOS_ROTOR_ALIGN_STATE_S;
@@ -128,7 +99,6 @@ typedef struct
     float                           idRef;
     float                           iqRef;
     float                           angle;
-    tMCRPOS_WINDMILLING_OUTPUT_S    windmillingOutput;
 }tMCRPOS_ROTOR_ALIGN_OUTPUT_S;
 
 /*--------------------------------------------------------------------------*/
@@ -139,7 +109,7 @@ typedef struct
     float                           ualpha;
     float                           ubeta;
     float                           umax;
-}tMCRPO_INPUT_SIGNAL_S;
+}tMCRPOS_INPUT_SIGNAL_S;
 
 typedef struct
 {
@@ -151,7 +121,7 @@ typedef struct
     float                           velEstimFilterK;
     float                           deltaT;
     float                           decimateRotorSpeed;
-}tMCRPO_PARAMETERS_S;
+}tMCRPOS_PARAMETERS_S;
 
 typedef struct
 {
@@ -171,7 +141,7 @@ typedef struct
     float                            esdf;
     float                            esqf;
     float                            rho;
-}tMCRPO_STATE_SIGNAL_S;
+}tMCRPOS_STATE_SIGNAL_S;
 
 typedef struct
 {
@@ -181,7 +151,7 @@ typedef struct
   #if(1U == FIELD_WEAKENING )
     float                            esfilt;
   #endif
-}tMCRPO_OUTPUT_SIGNALS_S;
+}tMCRPOS_OUTPUT_SIGNALS_S;
 
 
 // *****************************************************************************
@@ -189,16 +159,13 @@ typedef struct
 // Section: Interface Routines
 // *****************************************************************************
 // *****************************************************************************
-extern tMCRPO_INPUT_SIGNAL_S         gMCRPOS_InputSignals;
-extern tMCRPO_STATE_SIGNAL_S         gMCRPOS_StateSignals;
-extern tMCRPO_OUTPUT_SIGNALS_S       gMCRPOS_OutputSignals;
-extern tMCRPOS_ROTOR_ALIGN_INPUT_S   gMCRPOS_RotorAlignInput;
+extern tMCRPOS_STATE_SIGNAL_S         gMCRPOS_StateSignals;
+extern tMCRPOS_OUTPUT_SIGNALS_S       gMCRPOS_OutputSignals;
 extern tMCRPOS_ROTOR_ALIGN_OUTPUT_S  gMCRPOS_RotorAlignOutput;
 
 void MCRPOS_InitializeRotorPositionSensing(void);
 tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput );
-tMCAPP_STATUS_E MCRPOS_InitialRotorPositonDetection(  const  tMCRPOS_ROTOR_ALIGN_INPUT_S * const alignInput,
-                                                                                                                                                tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput );
+tMCAPP_STATUS_E MCRPOS_InitialRotorPositonDetection(tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput );
 void MCRPOS_OffsetCalibration(const int16_t direction );
 void MCRPOS_PositionMeasurement( void );
 void MCRPOS_ResetPositionSensing( tMCRPOS_ALIGN_STATE_E state );

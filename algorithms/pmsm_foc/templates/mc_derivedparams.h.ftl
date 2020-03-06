@@ -75,8 +75,17 @@ Derived Parameters interface file
 #define MAX_STATOR_VOLT_SQUARE                           (float)(0.98 * 0.98)
 #define POT_ADC_COUNT_FW_SPEED_RATIO                     (float)(MAX_SPEED_RAD_PER_SEC_ELEC/MAX_ADC_COUNT)
 
-<#if MCPMSMFOC_POSITION_FB == "1">
-#define ENCODER_PULSES_PER_EREV                             ((uint16_t)(ENCODER_PULSES_PER_REV/NUM_POLE_PAIRS))
+<#if MCPMSMFOC_SPEED_REF_INPUT != "Potentiometer Analog Input">
+#define SPEED_REF_RAD_PER_SEC_ELEC                       (float)(((SPEED_REF_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)
+</#if>
+
+<#if MCPMSMFOC_POSITION_FB == "SENSORED_ENCODER">
+#define QEI_VELOCITY_COUNT_PRESCALER             (float)100.0f
+#define ENCODER_PULSES_PER_EREV                  ((uint16_t)((ENCODER_PULSES_PER_REV * 4)/NUM_POLE_PAIRS))
+#define QEI_COUNT_TO_ELECTRICAL_ANGLE            (float)(2*M_PI/ENCODER_PULSES_PER_EREV)
+#define QEI_VELOCITY_SAMPLE_FREQUENCY            (float)((float)PWM_FREQUENCY / (float)QEI_VELOCITY_COUNT_PRESCALER)
+#define QEI_VELOCITY_COUNT_TO_RAD_PER_SEC        (float)(((float)QEI_VELOCITY_SAMPLE_FREQUENCY * 2.0f * M_PI )/((float)ENCODER_PULSES_PER_EREV ))
+
 </#if>
 /*____________________________ Rated speed of the motor in RPM___________________________________________ */
 #define RATED_SPEED_RAD_PER_SEC_ELEC                      (float)(RATED_SPEED_RPM *(2*(float)M_PI/60) * NUM_POLE_PAIRS)
@@ -84,15 +93,21 @@ Derived Parameters interface file
 #define RAMP_RAD_PER_SEC_ELEC                             (float)(CLOSE_LOOP_RAMP_RATE * NUM_POLE_PAIRS * PI/30.0)
 #define SPEED_RAMP_INC_SLOW_LOOP                          (float)(RAMP_RAD_PER_SEC_ELEC*SLOW_LOOP_TIME_SEC)
 
-/*_____________________________ Open loop end speed conversions__________________________________________ */
 #define SINGLE_ELEC_ROT_RADS_PER_SEC                      ((float)((float)(2.0) * (float)M_PI))
+<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
+/*_____________________________ Open loop end speed conversions__________________________________________ */
 #define END_SPEED_RADS_PER_SEC_MECH                       (float)(OPEN_LOOP_END_SPEED_RPS * SINGLE_ELEC_ROT_RADS_PER_SEC)
 #define OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC             (float)(END_SPEED_RADS_PER_SEC_MECH * NUM_POLE_PAIRS)
 #define OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC_IN_LOOPTIME (float)(OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC * FAST_LOOP_TIME_SEC)
 #define OPEN_LOOP_RAMPSPEED_INCREASERATE                  (float)(OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC_IN_LOOPTIME/(OPEN_LOOP_RAMP_TIME_IN_SEC/FAST_LOOP_TIME_SEC))
+</#if>
 
 /*________________________________ BEMF constant___________________________________________________ */
+<#if MCPMSMFOC_MOTOR_CONNECTION == "STAR">
 #define MOTOR_BEMF_CONST_V_PEAK_PHASE_PER_RPM_MECH       (float)((MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH/SQRT3)/1000.0)
+<#else>
+#define MOTOR_BEMF_CONST_V_PEAK_PHASE_PER_RPM_MECH       (float)((MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH)/1000.0)
+</#if>
 #define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_PER_RPM_MECH / (float)(2.0 * M_PI/60.0))
 #define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH / NUM_POLE_PAIRS)
 

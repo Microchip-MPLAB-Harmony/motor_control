@@ -138,8 +138,8 @@ void MCCUR_OffsetCalibration( void )
         /* re-load delay counter for next adc sample */
         delayCounter = 0xFFFF;
 
-        phaseUOffsetBuffer += MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_U);
-        phaseVOffsetBuffer += MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_V);
+        phaseUOffsetBuffer += (MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_U) >> MCHAL_ADC_RESULT_SHIFT);
+        phaseVOffsetBuffer += (MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_V) >> MCHAL_ADC_RESULT_SHIFT);
     }
 
     phaseCurrentUOffset = (float)(phaseUOffsetBuffer/CURRENTS_OFFSET_SAMPLES);
@@ -171,8 +171,8 @@ void MCCUR_CurrentMeasurement( void )
   #if( DUAL_SHUNT == CURRENT_MEASUREMENT )
 
     /* Get motor currents  */
-    iu = MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_U);
-    iv = MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_V);
+    iu = MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_U) >> MCHAL_ADC_RESULT_SHIFT;
+    iv = MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_V) >> MCHAL_ADC_RESULT_SHIFT;
 
     /* Current sensor offset correction */
     gMCCUR_OutputSignals.phaseCurrents.iu = ADC_CURRENT_SCALE * ( gMCCUR_OutputSignals.iuOffset - iu );

@@ -50,7 +50,7 @@
 /* USER CONFIGURABLE PARAMETERS - START                                                        */
 /***********************************************************************************************/
 
-#define POTENTIOMETER_INPUT_ENABLED 1U
+
 
 #define NO_ALIGNMENT                    (0U)
 #define FORCED_ALIGNMENT                (1U)
@@ -80,15 +80,20 @@
 #define ANGLE_OFFSET_DEG                 (float)45.0    /* Angle offset while switching to closed loop */
 <#else>
 #define D_AXIS_ALIGNMENT                 (1U)
-#define ANGLE_OFFSET_DEG                 (float)0       /* Angle offset while switching to closed loop */
+#define ANGLE_OFFSET_DEG                 (float)45.0       /* Angle offset while switching to closed loop */
 </#if>
 
 #define CURRENT_MEASUREMENT              (${MCPMSMFOC_CURRENT_MEAS})  /* Current measurement shunts */
 
+<#if MCPMSMFOC_SPEED_REF_INPUT == "Potentiometer Analog Input">
+#define POTENTIOMETER_INPUT_ENABLED       1U
+<#else>
+#define POTENTIOMETER_INPUT_ENABLED       0U
+#define SPEED_REF_RPM                     (float)${MCPMSMFOC_SPEED_REF}
+</#if>
 /***********************************************************************************************/
 /* Motor Configuration Parameters */
 /***********************************************************************************************/
-
 #define MOTOR_PER_PHASE_RESISTANCE                          ((float)${MCPMSMFOC_R})
 #define MOTOR_PER_PHASE_INDUCTANCE                          ((float)${MCPMSMFOC_LD})
 #define MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH                ((float)${MCPMSMFOC_BEMF_CONST})
@@ -96,7 +101,8 @@
 #define RATED_SPEED_RPM                                     ((float)${MCPMSMFOC_RATED_SPEED})
 #define MAX_SPEED_RPM                                       ((float)${MCPMSMFOC_MAX_SPEED})
 #define MAX_MOTOR_CURRENT                                   ((float)${MCPMSMFOC_MAX_MOTOR_CURRENT})
-<#if MCPMSMFOC_POSITION_FB == "1">
+#define MOTOR_CONNECTION                                    (${MCPMSMFOC_MOTOR_CONNECTION})
+<#if MCPMSMFOC_POSITION_FB == "SENSORED_ENCODER">
 #define ENCODER_PULSES_PER_REV                              ((float)${MCPMSMFOC_QE_PULSES_PER_REV})
 </#if>
 
@@ -106,9 +112,14 @@
 
 /* Motor Start-up configuration parameters */
 #define LOCK_TIME_IN_SEC                (${MCPMSMFOC_LOCK_TIME})   /* Startup - Rotor alignment time */
+<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
 #define OPEN_LOOP_END_SPEED_RPM         (${MCPMSMFOC_OL_END_SPEED}) /* Startup - Control loop switches to close loop at this speed */
 #define OPEN_LOOP_RAMP_TIME_IN_SEC      (${MCPMSMFOC_OL_RAMP_TIME})   /* Startup - Time to reach OPEN_LOOP_END_SPEED_RPM in seconds */
+</#if>
 #define Q_CURRENT_REF_OPENLOOP          (${MCPMSMFOC_OL_IQ_REF}) /* Startup - Motor start to ramp up in current control mode */
+<#if MCPMSMFOC_TORQUE_MODE == true>
+#define Q_CURRENT_REF_TORQUE            (${MCPMSMFOC_END_TORQUE})   /* Iq ref for torque mode */
+</#if>
 
 /* Current ramp parameters for open loop to close loop transition  */
 #define Q_CURRENT_OPENLOOP_STEP                    ((float)0.001)

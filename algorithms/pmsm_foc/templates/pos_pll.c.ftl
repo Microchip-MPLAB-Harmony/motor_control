@@ -65,7 +65,7 @@
 /* Local Function Prototype                                                   */
 /******************************************************************************/
 
-__STATIC_INLINE void MCRPO_ReadInputSignals( void );
+__STATIC_INLINE void MCRPOS_ReadInputSignals( void );
 static void MCRPOS_ResetPLLEstimator( void );
 static void MCRPOS_InitializePLLEstimator ( void );
 __STATIC_INLINE void MCRPOS_PLLEstimator( void );
@@ -73,12 +73,11 @@ __STATIC_INLINE void MCRPOS_PLLEstimator( void );
 /******************************************************************************/
 /*                   Global Variables                                         */
 /******************************************************************************/
-tMCRPO_PARAMETERS_S               gMCRPOS_Parameters = { 0.0f } ;
-tMCRPO_STATE_SIGNAL_S             gMCRPOS_StateSignals = { 0.0f };
-tMCRPO_INPUT_SIGNAL_S             gMCRPOS_InputSignals =  {0.0f };
-tMCRPO_OUTPUT_SIGNALS_S           gMCRPOS_OutputSignals = { 0.0f, 0.0f, 0.0f };
-tMCRPOS_ROTOR_ALIGN_INPUT_S       gMCRPOS_RotorAlignInput = { { 0.0f, 1U } };
-tMCRPOS_ROTOR_ALIGN_STATE_S       gMCRPOS_RotorAlignState = { MCRPOS_FORCE_ALIGN,  {0U, 0U, 0U },0U,  0U };
+tMCRPOS_PARAMETERS_S               gMCRPOS_Parameters = { 0.0f } ;
+tMCRPOS_STATE_SIGNAL_S             gMCRPOS_StateSignals = { 0.0f };
+tMCRPOS_INPUT_SIGNAL_S             gMCRPOS_InputSignals =  {0.0f };
+tMCRPOS_OUTPUT_SIGNALS_S           gMCRPOS_OutputSignals = { 0.0f, 0.0f, 0.0f };
+tMCRPOS_ROTOR_ALIGN_STATE_S       gMCRPOS_RotorAlignState = { MCRPOS_FORCE_ALIGN, 0U,  0U };
 tMCRPOS_ROTOR_ALIGN_OUTPUT_S      gMCRPOS_RotorAlignOutput = {0U,  0U };
 tMCRPOS_ROTOR_ALIGN_PARAM_S       gMCRPOS_RotorAlignParam  = {
                                                                   Q_CURRENT_REF_OPENLOOP,
@@ -89,7 +88,7 @@ tMCRPOS_ROTOR_ALIGN_PARAM_S       gMCRPOS_RotorAlignParam  = {
 /*                          LOCAL FUNCTIONS                                   */
 /******************************************************************************/
 
-__STATIC_INLINE void MCRPO_ReadInputSignals( void )
+__STATIC_INLINE void MCRPOS_ReadInputSignals( void )
 {
     /* Initialize input pointers  */
     gMCRPOS_InputSignals.ialpha =  gMCLIB_CurrentAlphaBeta.alphaAxis;
@@ -276,8 +275,7 @@ void MCRPOS_InitializeRotorPositionSensing( void )
 }
 
 
-tMCAPP_STATUS_E MCRPOS_InitialRotorPositonDetection(   const tMCRPOS_ROTOR_ALIGN_INPUT_S * const alignInput,
-                                                                              tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput )
+tMCAPP_STATUS_E MCRPOS_InitialRotorPositonDetection(tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput )
 {
     tMCAPP_STATUS_E status = MCAPP_IN_PROGRESS ;
     switch( gMCRPOS_RotorAlignState.rotorAlignState )
@@ -367,7 +365,7 @@ void MCRPOS_OffsetCalibration( const int16_t direction )
 
 void MCRPOS_PositionMeasurement( void )
 {
-    MCRPO_ReadInputSignals( );
+    MCRPOS_ReadInputSignals( );
     MCRPOS_PLLEstimator( );
 }
 

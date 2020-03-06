@@ -1,18 +1,17 @@
 /*******************************************************************************
- * Error Handler interface file
+Rotor Position interface file
 
-  Company:
-    Microchip Technology Inc.
+ Company:
+   Microchip Technology Inc.
 
-  File Name:
-    mc_errorHandler.h
+ File Name:
+   mc_rotorposition.h
 
-  Summary:
-    Header file for error handler functions
+ Summary:
+   Header file for rotor position
 
-  Description:
-    This file contains the data structures and function prototypes used by
-     Error handler module.
+ Description:
+   This file contains the data structures and function prototypes of rotor position.
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -40,16 +39,22 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
+#ifndef MCRPOS_H    // Guards against multiple inclusion
+#define MCRPOS_H
+
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
 
-#ifndef MC_ERRORHANDLER_H
-#define MC_ERRORHANDLER_H
+/*  This section lists the other files that are included in this file.
+*/
 
 #include <stddef.h>
+#include "mc_pmsm_foc_common.h"
+
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -60,6 +65,7 @@ extern "C" {
 
 // DOM-IGNORE-END
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Types
@@ -68,45 +74,72 @@ extern "C" {
 
 typedef enum
 {
-    MCERR_OVERCURRENT,
-    MCERR_UNDEROVERVOLTAGE,
-    MCERR_STALL,
-}tMCERR_ERROR_CODE_E;
+    MCRPOS_FORCE_ALIGN
+}tMCRPOS_ALIGN_STATE_E;
 
 typedef struct
 {
-    uint32_t errorCode;
-}tMCERR_STATE_SIGNAL_S;
-
-typedef void (*MCERR_FAULT_CALLBACK)(tMCERR_ERROR_CODE_E error, uintptr_t context);
-// *****************************************************************************
+    tMCRPOS_ALIGN_STATE_E	    rotorAlignState;
+    uint32_t                        startupLockCount;
+    uint8_t                         status;
+}tMCRPOS_ROTOR_ALIGN_STATE_S;
 
 typedef struct
 {
-    MCERR_FAULT_CALLBACK callback_fn;
-    uintptr_t context;
-}MCERR_CALLBACK_OBJECT;
+    float                           lockCurrent;
+    uint32_t                        lockTimeCount;
+}tMCRPOS_ROTOR_ALIGN_PARAM_S;
 
-extern tMCERR_STATE_SIGNAL_S    gMCERR_StateSignals;
+typedef struct
+{
+    float                           idRef;
+    float                           iqRef;
+    float                           angle;
+}tMCRPOS_ROTOR_ALIGN_OUTPUT_S;
+
+typedef struct
+{
+    int32_t                         position;
+    int32_t                         velocity;
+    int32_t                         synCounter;
+}tMCRPOS_STATE_SIGNAL_S;
+
+typedef struct
+{
+    float                            angle;
+    float                            speed;
+    float                            acceleration;
+  #if(1U == FIELD_WEAKENING )
+    float                            esfilt;
+  #endif
+}tMCRPOS_OUTPUT_SIGNAL_S;
+
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Interface Routines
 // *****************************************************************************
 // *****************************************************************************
+extern tMCRPOS_STATE_SIGNAL_S gMCRPOS_StateSignals;
+extern tMCRPOS_OUTPUT_SIGNAL_S gMCRPOS_OutputSignals;
+extern tMCRPOS_ROTOR_ALIGN_OUTPUT_S gMCRPOS_RotorAlignOutput;
 
-void MCERR_FaultCallbackRegister(MCERR_FAULT_CALLBACK callback, uintptr_t context);
-void MCERR_ErrorClear( void );
-void MCERR_FaultControlISR(uint32_t status, uintptr_t context);
+void MCRPOS_InitializeRotorPositionSensing(void);
+tMCAPP_STATUS_E MCRPOS_InitialRotorPositonDetection( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput );
+tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput );
+void MCRPOS_PositionMeasurement( void );
+void MCRPOS_ResetPositionSensing( tMCRPOS_ALIGN_STATE_E state );
 
-#ifdef    __cplusplus
-extern "C" {
-#endif
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-
-
-#ifdef    __cplusplus
 }
-#endif
 
-#endif    /* MC_ERRORHANDLER_H */
+#endif
+// DOM-IGNORE-END
+
+#endif //MCRPOS_H
+
+/**
+ End of File
+*/

@@ -63,10 +63,17 @@
 /******************************************************************************/
 
 tMCSPE_STATE_SIGNAL_S   gMCSPE_StateSignals;
+<#if MCPMSMFOC_SPEED_REF_INPUT != "Potentiometer Analog Input">
+tMCSPE_INPUT_SIGNAL_S   gMCSPE_InputSignals = {SPEED_REF_RAD_PER_SEC_ELEC};
+</#if>
 tMCSPE_PARAMETERS_S     gMCSPE_Parameters = {
                                               KFILTER_POT,
                                               POT_ADC_COUNT_FW_SPEED_RATIO,
+                                              <#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
                                               OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC
+                                              <#else>
+                                              0
+                                              </#if>
                                             };
 tMCSPE_OUTPUT_SIGNAL_S   gMCSPE_OutputSignals;
 
@@ -85,32 +92,44 @@ void  MCSPE_InitializeSpeedControl(void)
 {
     /* Initialize speed command function parameters */
     gMCSPE_Parameters.filterParam    =   KFILTER_POT;
+    <#if MCPMSMFOC_POSITION_FB == "SENSORED_ENCODER">
+    gMCSPE_Parameters.minSpeed       =   0;
+    <#else>
     gMCSPE_Parameters.minSpeed       =   OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC ;
+    </#if>
     gMCSPE_Parameters.pot2SpeedRatio =   POT_ADC_COUNT_FW_SPEED_RATIO;
 
     /* Initialize speed command function states */
     gMCSPE_StateSignals.potFiltered =  0.0f;
+<#if MCPMSMFOC_SPEED_REF_INPUT != "Potentiometer Analog Input">
+    gMCSPE_InputSignals.speedRef = SPEED_REF_RAD_PER_SEC_ELEC;
+</#if>
+
 }
 
 
 void MCSPE_SpeedCommand( void )
 {
-#if( 1U  == POTENTIOMETER_INPUT_ENABLED )
+<#if MCPMSMFOC_SPEED_REF_INPUT == "Potentiometer Analog Input">
 
-    gMCSPE_OutputSignals.potReading = (float)MCHAL_ADCChannelResultGet(MCHAL_ADC_POT);
+    gMCSPE_OutputSignals.potReading = (float)(MCHAL_ADCChannelResultGet(MCHAL_ADC_POT) >> MCHAL_ADC_RESULT_SHIFT);
     gMCSPE_StateSignals.potFiltered =   gMCSPE_StateSignals.potFiltered
                                   + ((  gMCSPE_OutputSignals.potReading -  gMCSPE_StateSignals.potFiltered ) * gMCSPE_Parameters.filterParam );
 
     gMCSPE_OutputSignals.commandSpeed = gMCSPE_StateSignals.potFiltered * gMCSPE_Parameters.pot2SpeedRatio;
 
+<#else>
+    /* External speed command  */
+    gMCSPE_OutputSignals.commandSpeed = gMCSPE_InputSignals.speedRef;
+
+</#if>
+<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
     /* Restrict velocity reference so motor will be spinning in closed loop. */
     if( gMCSPE_OutputSignals.commandSpeed < gMCSPE_Parameters.minSpeed )
     {
         gMCSPE_OutputSignals.commandSpeed = gMCSPE_Parameters.minSpeed;
     }
-#else
-             /* External speed command  */
-#endif
+</#if>
 }
 
 

@@ -75,6 +75,12 @@ void MCERR_FaultCallbackRegister(MCERR_FAULT_CALLBACK callback, uintptr_t contex
     MCERR_CallbackObj.context = context;
 }
 
+void MCERR_ErrorClear( void )
+{
+    gMCERR_StateSignals.errorCode = 0;
+    MCHAL_FAULT_LED_CLEAR();
+}
+
 
 /******************************************************************************/
 /*  Function name: MCERR_FaultControlISR                                      */
@@ -88,11 +94,11 @@ void MCERR_FaultControlISR(uint32_t status, uintptr_t context)
 {
    /* Indicate the failure status by glowing LED D2 */
     MCHAL_FAULT_LED_SET();
-    gMCERR_StateSignals.errorCode |= (1 << MCERR_FAULT);
+    gMCERR_StateSignals.errorCode |= (1 << MCERR_OVERCURRENT);
     PMSM_FOC_MotorStop();
 
     if (MCERR_CallbackObj.callback_fn != NULL)
     {
-        MCERR_CallbackObj.callback_fn(MCERR_FAULT, MCERR_CallbackObj.context);
+        MCERR_CallbackObj.callback_fn(MCERR_OVERCURRENT, MCERR_CallbackObj.context);
     }
 }
