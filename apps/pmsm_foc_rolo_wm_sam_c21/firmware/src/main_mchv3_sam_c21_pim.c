@@ -219,38 +219,37 @@ void ADC_CALIB_ISR (uintptr_t context)
 #ifdef CTRL_PWM_1_1
 void ADC_ISR(uintptr_t context)
 {
-        adc_result_data[0] = ADC0_ConversionResultGet();
-        adc_result_data[1] = ADC1_ConversionResultGet();
-        X2CScope_Update();
-  
-    /* Clear all interrupt flags */
-       ADC0_REGS->ADC_INTFLAG = ADC_INTFLAG_Msk;
+         adc_result_data[0] = ADC0_ConversionResultGet();
+         adc_result_data[1] = ADC1_ConversionResultGet();
+     
+         /* Clear all interrupt flags */
+         ADC0_REGS->ADC_INTFLAG = ADC_INTFLAG_Msk;
 
-       ADC0_REGS->ADC_INTENCLR = ADC_INTFLAG_RESRDY_Msk;// Disable ADC interrupt
+         ADC0_REGS->ADC_INTENCLR = ADC_INTFLAG_RESRDY_Msk;// Disable ADC interrupt
 	
     	/* select the next channel */
-		/* select the next ADC channel for conversion */
-        ADC0_ChannelSelect(ADC_POSINPUT_AIN9,ADC_NEGINPUT_GND); // DC Bus Voltage to ADC0
-        ADC1_ChannelSelect(ADC_POSINPUT_AIN0,ADC_NEGINPUT_GND); // Potentiometer to ADC1
+	/* select the next ADC channel for conversion */
+         ADC0_ChannelSelect(ADC_POSINPUT_AIN9,ADC_NEGINPUT_GND); // DC Bus Voltage to ADC0
+         ADC1_ChannelSelect(ADC_POSINPUT_AIN0,ADC_NEGINPUT_GND); // Potentiometer to ADC1
 		
-        ADC0_REGS->ADC_SWTRIG |= ADC_SWTRIG_START_Msk; 
+         ADC0_REGS->ADC_SWTRIG |= ADC_SWTRIG_START_Msk; 
         
-        current_measurement_management();
-        
-        /* store the first ADC result value */
-	    cur_mea[0] = ((int16_t)adc_result_data[0] - (int16_t)adc_0_offset);               
+         /* store the first ADC result value */
+	cur_mea[0] = ((int16_t)adc_result_data[0] - (int16_t)adc_0_offset);               
 							
          /* store the first ADC result value */
-        cur_mea[1] =  ((int16_t)adc_result_data[1] - (int16_t)adc_1_offset);   
+         cur_mea[1] =  ((int16_t)adc_result_data[1] - (int16_t)adc_1_offset);  
+         
+         current_measurement_management();
+   		 
+	/* motor control */
+	motorcontrol();
 		 
-		/* motor control */
-		motorcontrol();
-		 
-		while(ADC0_REGS->ADC_INTFLAG != ADC_INTFLAG_RESRDY_Msk);
+	while(ADC0_REGS->ADC_INTFLAG != ADC_INTFLAG_RESRDY_Msk);
                        
-        /* Read the ADC result value */
-        adc_dc_bus_voltage =  ADC0_ConversionResultGet();
-		pot_input = ADC1_ConversionResultGet();
+         /* Read the ADC result value */
+         adc_dc_bus_voltage =  ADC0_ConversionResultGet();
+         pot_input = ADC1_ConversionResultGet();
   
         /* select the next ADC channel for conversion */
         ADC0_ChannelSelect(ADC_POSINPUT_AIN2,ADC_NEGINPUT_GND); // Phase U to ADC0
@@ -258,48 +257,48 @@ void ADC_ISR(uintptr_t context)
         ADC0_REGS->ADC_INTENSET = ADC_INTFLAG_RESRDY_Msk;// Enable ADC interrupt
         /* Clear all interrupt flags */
         ADC0_REGS->ADC_INTFLAG = ADC_INTFLAG_Msk;	
-    return;
+        
+         X2CScope_Update();
+         
+         return;
 }
 #else
 void ADC_ISR(uintptr_t context)
 {
-    adc_result_data[0] = ADC0_ConversionResultGet();
-    adc_result_data[1] = ADC1_ConversionResultGet();
-    X2CScope_Update();
-  
- /* Clear all interrupt flags */
-    ADC0_REGS->ADC_INTFLAG = ADC_INTFLAG_Msk;
+         adc_result_data[0] = ADC0_ConversionResultGet();
+         adc_result_data[1] = ADC1_ConversionResultGet();
+
+        /* Clear all interrupt flags */
+         ADC0_REGS->ADC_INTFLAG = ADC_INTFLAG_Msk;
 	if (0U == adc_interrupt_counter)
 	{
-    	
-		current_measurement_management();
-		 
 		/* store the first ADC result value */
-	     cur_mea[0] = ((int16_t)adc_result_data[0] - (int16_t)adc_0_offset);               
+	         cur_mea[0] = ((int16_t)adc_result_data[0] - (int16_t)adc_0_offset);               
 							
-         /* store the first ADC result value */
-         cur_mea[1] =  ((int16_t)adc_result_data[1] - (int16_t)adc_1_offset); 
+                  /* store the first ADC result value */
+                  cur_mea[1] =  ((int16_t)adc_result_data[1] - (int16_t)adc_1_offset); 
          
-         /* motor control */
+                  current_measurement_management();
+         
+                  /* motor control */
 		motorcontrol();
-          adc_interrupt_counter = 1;
-	      /* select the next channel */
-		/* select the next ADC channel for conversion */
-        ADC0_ChannelSelect(ADC_POSINPUT_AIN9,ADC_NEGINPUT_GND); // DC Bus Voltage to ADC0
-        ADC1_ChannelSelect(ADC_POSINPUT_AIN0,ADC_NEGINPUT_GND); // Potentiometer to ADC1
+                  adc_interrupt_counter = 1;
+                  /* select the next channel */
+                  /* select the next ADC channel for conversion */
+                  ADC0_ChannelSelect(ADC_POSINPUT_AIN9,ADC_NEGINPUT_GND); // DC Bus Voltage to ADC0
+                  ADC1_ChannelSelect(ADC_POSINPUT_AIN0,ADC_NEGINPUT_GND); // Potentiometer to ADC1
 	}
 	else if (1U == adc_interrupt_counter)
-	{
-                      
-         adc_interrupt_counter = 0;	    
-         
-         /* Read the ADC result value */
-          adc_dc_bus_voltage =  adc_result_data[0];
-		  pot_input = adc_result_data[1];
-  
-          /* select the next ADC channel for conversion */
-          ADC0_ChannelSelect(ADC_POSINPUT_AIN2,ADC_NEGINPUT_GND); // Phase U to ADC0
-          ADC1_ChannelSelect(ADC_POSINPUT_AIN5,ADC_NEGINPUT_GND); // Phase V to ADC1
+	{     
+                  adc_interrupt_counter = 0;	    
+
+                  /* Read the ADC result value */
+                  adc_dc_bus_voltage =  adc_result_data[0];
+                  pot_input = adc_result_data[1];
+
+                  /* select the next ADC channel for conversion */
+                  ADC0_ChannelSelect(ADC_POSINPUT_AIN2,ADC_NEGINPUT_GND); // Phase U to ADC0
+                  ADC1_ChannelSelect(ADC_POSINPUT_AIN5,ADC_NEGINPUT_GND); // Phase V to ADC1
 
 	}
 	else
@@ -308,7 +307,9 @@ void ADC_ISR(uintptr_t context)
       
 
 	}
-    return;
+         
+         X2CScope_Update();
+         return;
 }
 
 #endif
