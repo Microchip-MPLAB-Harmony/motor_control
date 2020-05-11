@@ -749,7 +749,7 @@ int16_t library_pi_control(int32_t erl, pi_cntrl_t *pi)
 		}
 		else if(s16t > (pi->hlim))	/* case possible only if limit is changed */
 		{
-			s16t = (pi->llim);
+			s16t = (pi->hlim);
 			s32t = s16t;
 			(pi->imem) = s32t << (pi->shp);
 		}
