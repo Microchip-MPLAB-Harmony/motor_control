@@ -68,13 +68,13 @@ extern "C" {
 /*                          CONFIGURATION PARAMETERS                          */
 /******************************************************************************/
 
-<#assign max = ((MCPMSMFOC_ADC_MAX+1)/2) + 150>
-<#assign min = ((MCPMSMFOC_ADC_MAX+1)/2) - 150>
+<#assign max = ((MCPMSMFOC_ADC_MAX+1)/2) + ((MCPMSMFOC_ADC_MAX+1)/16)>
+<#assign min = ((MCPMSMFOC_ADC_MAX+1)/2) - ((MCPMSMFOC_ADC_MAX+1)/16)>
 
 /* Motor phase current offset calibration limits. */
 #define CURRENT_OFFSET_MAX                (${max}) /* current offset max limit in terms of ADC count */
 #define CURRENT_OFFSET_MIN                (${min}) /* current offset min limit in terms of ADC count */
-#define CURRENTS_OFFSET_SAMPLES           (100U) /* Phase Current Offset calibration samples       */
+#define CURRENTS_OFFSET_SAMPLES           (128U) /* Phase Current Offset calibration samples       */
 
 
 /******************************************************************************/
@@ -103,7 +103,9 @@ typedef struct
 
 typedef struct
 {
-
+    uint32_t  adcSampleCounter;
+    uint32_t  phaseUOffsetBuffer;
+    uint32_t  phaseVOffsetBuffer;
 
 }tMCCUR_STATE_SIGNAL_S;
 
@@ -123,14 +125,15 @@ typedef struct
 /******************************************************************************/
 extern tMCCUR_INPUT_SIGNAL_S   gMCCUR_InputSignals;
 extern tMCCUR_OUTPUT_SIGNAL_S  gMCCUR_OutputSignals;
+extern tMCCUR_STATE_SIGNAL_S   gMCCUR_StateSignals;
 
 /******************************************************************************/
 /*                          INTERFACE FUNCTIONS                               */
 /******************************************************************************/
 
 void MCCUR_InitializeCurrentMeasurement(void);
-void MCCUR_OffsetCalibration(void);
 void MCCUR_CurrentMeasurement( void );
+void MCCUR_OffsetCalibration(void);
 
 
 // DOM-IGNORE-BEGIN

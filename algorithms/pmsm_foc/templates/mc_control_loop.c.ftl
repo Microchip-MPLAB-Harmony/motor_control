@@ -440,6 +440,7 @@ __STATIC_INLINE void MCCTRL_StateMachine( void )
             /* Read inputs for initial rotor position detection */
             if( MCAPP_SUCCESS == MCRPOS_InitialRotorPositonDetection(&gMCRPOS_RotorAlignOutput))
             {
+                gMCCTRL_CtrlParam.mcStateLast = gMCCTRL_CtrlParam.mcState;
                 gMCCTRL_CtrlParam.mcState = MCAPP_CLOSED_LOOP;
             }
             <#else>
@@ -612,10 +613,23 @@ __STATIC_INLINE void  MCCTRL_LoopSynchronization(void)
     MCCTRL_InitializeFieldWeakening();
 #endif
 
-    gMCPWM_SVPWM.period = MCHAL_PWMPrimaryPeriodGet();
+    gMCPWM_SVPWM.period = MCHAL_PWMPrimaryPeriodGet(MCHAL_PWM_PH_U);
     gMCPWM_SVPWM.neutralPWM = (uint32_t)(0.5f * gMCPWM_SVPWM.period );
 }
 
+
+void MCCTRL_CurrentOffsetCalibration( uint32_t status, uintptr_t context )
+{
+    /* Current sense amplifiers offset calculation */
+    if(gMCCUR_OutputSignals.calibDone == 0U)
+    {
+        MCCUR_OffsetCalibration();
+    }
+    else
+    {
+        MCHAL_ADCCallbackRegister( MCHAL_ADC_PH_U, MCCTRL_CurrentLoopTasks, (uintptr_t)NULL );
+    }
+}
 
  /******************************************************************************/
 /* Function name: MCINF_CurrentLoopTasks                                      */
@@ -666,7 +680,7 @@ void MCCTRL_CurrentLoopTasks( uint32_t status, uintptr_t context )
     MCCTRL_ResetFieldWeakening();
 #endif
 
-    gMCPWM_SVPWM.period = MCHAL_PWMPrimaryPeriodGet();
+    gMCPWM_SVPWM.period = MCHAL_PWMPrimaryPeriodGet(MCHAL_PWM_PH_U);
     gMCPWM_SVPWM.neutralPWM = (uint32_t)(0.5f * gMCPWM_SVPWM.period );
 }
 

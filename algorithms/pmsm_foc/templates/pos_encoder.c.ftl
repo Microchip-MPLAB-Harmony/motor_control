@@ -65,7 +65,6 @@
 
 __STATIC_INLINE void MCRPOS_InitializeEncoder( void );
 __STATIC_INLINE void MCRPOS_EncoderCalculations( void );
-__STATIC_INLINE void MCRPOS_ResetEncoder( void );
 
 /******************************************************************************/
 /*                   Global Variables                                         */
@@ -92,10 +91,13 @@ tMCRPOS_ROTOR_ALIGN_PARAM_S       gMCRPOS_RotorAlignParam  = {
 /******************************************************************************/
 __STATIC_INLINE void MCRPOS_InitializeEncoder( void )
 {
+<#if __PROCESSOR?matches("PIC32M.*") == true>
     /* Start QEI Interface */
     MCHAL_EncoderStart();
+</#if>
 }
 
+<#if __PROCESSOR?matches("PIC32M.*") == true>
 /******************************************************************************/
 /* Function name: MCRPOS_EncoderCalculations                                  */
 /* Function parameters: None                                                  */
@@ -121,24 +123,59 @@ __STATIC_INLINE void MCRPOS_EncoderCalculations( void )
     gMCRPOS_OutputSignals.angle = gMCRPOS_StateSignals.position * (float)QEI_COUNT_TO_ELECTRICAL_ANGLE;
 }
 
-/******************************************************************************/
-/* Function name: MCRPOS_ResetEncoder                                         */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Reset Encoder                                                              */
-/******************************************************************************/
-__STATIC_INLINE void MCRPOS_ResetEncoder( void )
+<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+__STATIC_INLINE void MCRPOS_EncoderCalculations( void )
 {
-   /* Reset State variables if any */
-    gMCRPOS_OutputSignals.speed = 0.0f;
-    gMCRPOS_OutputSignals.angle = 0.0f;
+    float angle;
+    gMCRPOS_StateSignals.synCounter++;
+    /* Calculate position */
+    gMCRPOS_StateSignals.position = (uint16_t)MCHAL_EncoderPositionGet();
 
-    /* Reset Encoder counters */
-    MCHAL_EncoderPositionSet(1);
-    MCHAL_EncoderSpeedSet(0);
+    if((gMCRPOS_StateSignals.position > QDEC_UPPER_THRESHOLD) && (gMCRPOS_StateSignals.positionLast < QDEC_LOWER_THRESHOLD))
+    {
+        gMCRPOS_StateSignals.positionCompensation += QDEC_UNDERFLOW;
+    }
+    else if((gMCRPOS_StateSignals.positionLast > QDEC_UPPER_THRESHOLD) && (gMCRPOS_StateSignals.position < QDEC_LOWER_THRESHOLD))
+    {
+        gMCRPOS_StateSignals.positionCompensation += QDEC_OVERFLOW;
+    }
+    else
+    {
+    }
+
+    gMCRPOS_StateSignals.positionCompensation = gMCRPOS_StateSignals.positionCompensation % ENCODER_PULSES_PER_EREV;
+    gMCRPOS_StateSignals.positionCount = (gMCRPOS_StateSignals.position + gMCRPOS_StateSignals.positionCompensation) % ENCODER_PULSES_PER_EREV;
+    gMCRPOS_StateSignals.positionLast = gMCRPOS_StateSignals.position;
+
+    /* Calculate velocity */
+    if( gMCRPOS_StateSignals.synCounter > QEI_VELOCITY_COUNT_PRESCALER )
+    {
+        gMCRPOS_StateSignals.synCounter = 0;
+        gMCRPOS_StateSignals.positionForSpeed = (int16_t)MCHAL_EncoderPositionGet();
+        gMCRPOS_StateSignals.velocity = (gMCRPOS_StateSignals.positionForSpeed - gMCRPOS_StateSignals.positionLastForSpeed);
+        gMCRPOS_StateSignals.positionLastForSpeed = (int16_t)gMCRPOS_StateSignals.positionForSpeed;
+    }
+
+    /* Write speed and position output */
+    gMCRPOS_OutputSignals.speed = (float)( gMCRPOS_StateSignals.velocity * QEI_VELOCITY_COUNT_TO_RAD_PER_SEC );
+    angle = gMCRPOS_StateSignals.positionCount * (float)QEI_COUNT_TO_ELECTRICAL_ANGLE;
+    /* Limit rotor angle range to 0 to 2*M_PI for lookup table */
+    if(angle > (2*M_PI))
+    {
+        gMCRPOS_OutputSignals.angle = angle - (2*M_PI);
+    }
+    else if(angle < 0)
+    {
+        gMCRPOS_OutputSignals.angle = 2*M_PI + angle;
+    }
+    else
+    {
+        gMCRPOS_OutputSignals.angle = angle;
+    }
 
 }
+</#if>
+
 
 /******************************************************************************/
 /*                      INTERFACE FUNCTIONS                                   */
@@ -209,6 +246,9 @@ tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alig
     else
     {
         gMCRPOS_RotorAlignState.startupLockCount = 0;
+<#if __PROCESSOR?matches(".*SAME70.*") == true>
+        MCHAL_EncoderStart();
+</#if>
         status = MCAPP_SUCCESS;
     }
   #else
@@ -251,7 +291,6 @@ void MCRPOS_PositionMeasurement(  )
 /******************************************************************************/
 void MCRPOS_ResetPositionSensing( tMCRPOS_ALIGN_STATE_E state )
 {
-    MCRPOS_ResetEncoder();
     gMCRPOS_RotorAlignState.rotorAlignState = state;
     gMCRPOS_StateSignals.position = 0;
     gMCRPOS_StateSignals.velocity = 0;

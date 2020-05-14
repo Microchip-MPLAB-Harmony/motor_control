@@ -78,7 +78,6 @@ tMCCUR_OUTPUT_SIGNAL_S  gMCCUR_OutputSignals;
 /*                        LOCAL FUNCTIONS                                     */
 /******************************************************************************/
 
-
 /******************************************************************************/
 /* Function name: MCCUR_InitializeCurrentMeasurement                          */
 /* Function parameters: None                                                  */
@@ -94,9 +93,8 @@ void MCCUR_InitializeCurrentMeasurement( void )
 
     /* Initialize state variables */
     gMCCUR_OutputSignals.calibDone = 0U;
+    MCCUR_OffsetCalibration();
 }
-
-
 
 /******************************************************************************/
 /* Function name: MCCUR_offsetCalibration                                     */
@@ -107,55 +105,33 @@ void MCCUR_InitializeCurrentMeasurement( void )
 /******************************************************************************/
 void MCCUR_OffsetCalibration( void )
 {
-    uint32_t  adcSampleCounter = 0.0f;
-    uint32_t  phaseUOffsetBuffer = 0.0f;
-    uint32_t  phaseVOffsetBuffer = 0.0f;
-    int32_t   delayCounter = 0xFFFF;
-    float     phaseCurrentUOffset = 0.0f;
-    float     phaseCurrentVOffset = 0.0f;
+  float     phaseCurrentUOffset = 0.0f;
+  float     phaseCurrentVOffset = 0.0f;
 
-    /* Software trigger used for ADC conversion. Note: MCPWM timer should be disabled before */
-    MCHAL_ADCChannelConversionStart(MCHAL_ADC_PH_U);
-    MCHAL_ADCChannelConversionStart(MCHAL_ADC_PH_V);
+  if (gMCCUR_StateSignals.adcSampleCounter < CURRENTS_OFFSET_SAMPLES)
+  {
+      gMCCUR_StateSignals.phaseUOffsetBuffer += (MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_U) >> MCHAL_ADC_RESULT_SHIFT);
+      gMCCUR_StateSignals.phaseVOffsetBuffer += (MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_V) >> MCHAL_ADC_RESULT_SHIFT);
+      gMCCUR_StateSignals.adcSampleCounter++;
+  }
+  else
+  {
 
-    for(adcSampleCounter = 0; adcSampleCounter < CURRENTS_OFFSET_SAMPLES; adcSampleCounter++)
-    {
-        /* Software trigger for phase current measurements */
-        MCHAL_ADCChannelConversionStart(MCHAL_ADC_PH_U);
-        MCHAL_ADCChannelConversionStart(MCHAL_ADC_PH_V);
+      phaseCurrentUOffset = (float)(gMCCUR_StateSignals.phaseUOffsetBuffer/CURRENTS_OFFSET_SAMPLES);
+      phaseCurrentVOffset = (float)(gMCCUR_StateSignals.phaseVOffsetBuffer/CURRENTS_OFFSET_SAMPLES);
 
-        /* Delay to stabilize voltage levels on board and adc conversion to complete */
-        do
-        {
-            asm("NOP");
-            asm("NOP");
-            asm("NOP");
-            asm("NOP");
-            asm("NOP");
-            delayCounter--;
-        } while (delayCounter > 0);
+      /* Limit motor phase current offset calibration to configured Min/Max levels. */
+      MCLIB_ImposeLimits(&phaseCurrentUOffset, gMCCUR_Parameters.minOffset, gMCCUR_Parameters.maxOffset );
+      MCLIB_ImposeLimits(&phaseCurrentVOffset, gMCCUR_Parameters.minOffset, gMCCUR_Parameters.maxOffset );
 
-        /* re-load delay counter for next adc sample */
-        delayCounter = 0xFFFF;
+      gMCCUR_OutputSignals.iuOffset = phaseCurrentUOffset;
+      gMCCUR_OutputSignals.ivOffset = phaseCurrentVOffset;
 
-        phaseUOffsetBuffer += (MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_U) >> MCHAL_ADC_RESULT_SHIFT);
-        phaseVOffsetBuffer += (MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_V) >> MCHAL_ADC_RESULT_SHIFT);
-    }
+      /*Set ADC Calibration Done Flag*/
+      gMCCUR_OutputSignals.calibDone = 1U;
 
-    phaseCurrentUOffset = (float)(phaseUOffsetBuffer/CURRENTS_OFFSET_SAMPLES);
-    phaseCurrentVOffset = (float)(phaseVOffsetBuffer/CURRENTS_OFFSET_SAMPLES);
-
-    /* Limit motor phase current offset calibration to configured Min/Max levels. */
-    MCLIB_ImposeLimits(&phaseCurrentUOffset, gMCCUR_Parameters.minOffset, gMCCUR_Parameters.maxOffset );
-    MCLIB_ImposeLimits(&phaseCurrentVOffset, gMCCUR_Parameters.minOffset, gMCCUR_Parameters.maxOffset );
-
-    gMCCUR_OutputSignals.iuOffset = phaseCurrentUOffset;
-    gMCCUR_OutputSignals.ivOffset = phaseCurrentVOffset;
-
-    /*Set ADC Calibration Done Flag*/
-    gMCCUR_OutputSignals.calibDone = 1U;
+  }
 }
-
 
 /******************************************************************************/
 /* Function name: MCCUR_currMeasurement                                       */

@@ -79,7 +79,7 @@ typedef enum
 
 typedef struct
 {
-    tMCRPOS_ALIGN_STATE_E	    rotorAlignState;
+    tMCRPOS_ALIGN_STATE_E           rotorAlignState;
     uint32_t                        startupLockCount;
     uint8_t                         status;
 }tMCRPOS_ROTOR_ALIGN_STATE_S;
@@ -99,9 +99,21 @@ typedef struct
 
 typedef struct
 {
+<#if __PROCESSOR?matches("PIC32M.*") == true>
     int32_t                         position;
     int32_t                         velocity;
     int32_t                         synCounter;
+
+<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+    uint16_t                        position;
+    int16_t                         velocity;
+    uint16_t                        synCounter;
+    int16_t                         positionForSpeed;
+    int16_t                         positionLastForSpeed;
+    uint16_t                        positionLast;
+    uint16_t                        positionCount;
+    uint16_t                        positionCompensation;
+</#if>
 }tMCRPOS_STATE_SIGNAL_S;
 
 typedef struct

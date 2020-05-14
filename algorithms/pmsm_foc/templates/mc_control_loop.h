@@ -165,6 +165,7 @@ extern tMCCTRL_TASK_STATE_SIGNALS_S gMCCTRL_TaskStateSignals;
 void MCCTRL_InitializeMotorControl(void);
 void MCCTRL_ResetMotorControl(void);
 void MCCTRL_CurrentLoopTasks( uint32_t status, uintptr_t context );
+void MCCTRL_CurrentOffsetCalibration( uint32_t status, uintptr_t context );
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

@@ -86,6 +86,13 @@ Derived Parameters interface file
 #define QEI_VELOCITY_SAMPLE_FREQUENCY            (float)((float)PWM_FREQUENCY / (float)QEI_VELOCITY_COUNT_PRESCALER)
 #define QEI_VELOCITY_COUNT_TO_RAD_PER_SEC        (float)(((float)QEI_VELOCITY_SAMPLE_FREQUENCY * 2.0f * M_PI )/((float)ENCODER_PULSES_PER_EREV ))
 
+<#if __PROCESSOR?matches("PIC32M.*") == false>
+#define QDEC_RC                                   65536u
+#define QDEC_UPPER_THRESHOLD                      49151u
+#define QDEC_LOWER_THRESHOLD                      16384u
+#define QDEC_OVERFLOW                             (uint16_t)(QDEC_RC % ENCODER_PULSES_PER_EREV)
+#define QDEC_UNDERFLOW                            (uint16_t)(ENCODER_PULSES_PER_EREV - QDEC_OVERFLOW)
+</#if>
 </#if>
 /*____________________________ Rated speed of the motor in RPM___________________________________________ */
 #define RATED_SPEED_RAD_PER_SEC_ELEC                      (float)(RATED_SPEED_RPM *(2*(float)M_PI/60) * NUM_POLE_PAIRS)

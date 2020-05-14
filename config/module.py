@@ -25,12 +25,12 @@ def loadModule():
             encoderPresent = True
 ###############################################################################
 
-    if all(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "MC"]):
+    if all(x in processor for x in ["PIC32MK", "MC"]) or ("SAME70" in processor):
         mcPmsmFocComponent = Module.CreateComponent("pmsm_foc",
                                                  "PMSM FOC",
                                                  "/Motor Control/", "algorithms/pmsm_foc/config/pmsm_foc.py")
         mcPmsmFocComponent.setDisplayType("Motor Control Algorithm")
-        mcPmsmFocComponent.addDependency("ADC", "ADC", False, True)
-        mcPmsmFocComponent.addDependency("PWM", "PWM", False, True)
-        mcPmsmFocComponent.addDependency("QDEC", "QDEC", False, True)
-        mcPmsmFocComponent.setDependencyEnabled("QDEC", False)
+        mcPmsmFocComponent.addMultiDependency("pmsmfoc_ADC", "ADC", "ADC", True)
+        mcPmsmFocComponent.addDependency("pmsmfoc_PWM", "PWM", False, True)
+        mcPmsmFocComponent.addDependency("pmsmfoc_QDEC", "QDEC", False, True)
+        mcPmsmFocComponent.setDependencyEnabled("pmsmfoc_QDEC", False)

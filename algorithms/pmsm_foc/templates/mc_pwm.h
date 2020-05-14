@@ -101,9 +101,8 @@ void MCPWM_PWMOutputDisable(void);
 void MCPWM_PWMOutputEnable(void);
 
 void MCPWM_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCPWM_SVPWM_S * const svm );
-void MCPWM_PWMDutyUpdate(uint16_t dutyPhU, uint16_t dutyPhV, uint16_t dutyPhW);
-void MCPWM_AdjustDutyRatio( void ) ;
-void MCPWM_DeadTimeCompensation( void );
+void MCPWM_PWMDutyUpdate(tMCPWM_SVPWM_S * const svm);
+
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

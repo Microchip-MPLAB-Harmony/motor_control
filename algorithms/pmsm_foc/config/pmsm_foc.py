@@ -31,6 +31,7 @@ import os
 global mcPmsmFocInstanceName
 global mcPmsmFocSeries
 global mcPmsmFocAdc
+global mcPmsmFocAdc1
 global mcPmsmFocPWM
 global mcPmsmFocEncoder
 
@@ -98,18 +99,35 @@ mcPmsmFocMotorParamDict = {'LONG_HURST' : { 'R'           : 0.285,
 mcPmsmFocBoardParamDict = {'MCLV2' :       { 'MAX_CURRENT'         : 4.4,
                                             'DC_BUS_VOLT'          : 24,
                                             'DC_BUS_RATIO'         : 0.0625,
-                                            'START_STOP_SWITCH'    : 'RG1',
-                                            'DIRECTION_SWITCH'     : 'RC7',
-                                            'DIRECTION_LED'        : 'RF5',
-                                            'FAULT_LED'            : 'RG15',
                                            },
                             'MCHV3' :     { 'MAX_CURRENT'          : 16.4,
                                             'DC_BUS_VOLT'          : 400,
                                             'DC_BUS_RATIO'         : 0.00766,
-                                            'START_STOP_SWITCH'    : 'RG1',
-                                            'DIRECTION_SWITCH'     : 'RC7',
-                                            'DIRECTION_LED'        : 'RF5',
-                                            'FAULT_LED'            : 'RG15',
+                                          }
+                         }
+
+#board and PIM specific parameters
+mcPmsmFocBoardPimParamDict =  {'MCLV2' :  {
+                                            'PIC32MK': {
+                                                        'START_STOP_SWITCH'    : 'RG1',
+                                                        'DIRECTION_SWITCH'     : 'RC7',
+                                                        'DIRECTION_LED'        : 'RF5',
+                                                        'FAULT_LED'            : 'RG15',
+                                                        },
+                                            'SAME70': {
+                                                        'START_STOP_SWITCH'    : 'PC3',
+                                                        'DIRECTION_SWITCH'     : 'PC1',
+                                                        'DIRECTION_LED'        : 'PC23',
+                                                        'FAULT_LED'            : 'PA24',
+                                                        },
+                                           },
+                            'MCHV3' :     {
+                                            'PIC32MK': {
+                                                        'START_STOP_SWITCH'    : 'RG1',
+                                                        'DIRECTION_SWITCH'     : 'RC7',
+                                                        'DIRECTION_LED'        : 'RF5',
+                                                        'FAULT_LED'            : 'RG15',
+                                                        },
                                           }
                          }
 
@@ -135,6 +153,17 @@ mcPmsmFocMclv2ADCDict = { 'MCLV2'  : {
                                                             'POT_CH'        : 15,
                                                             'RESOLUTION'    : 12,
                                                             'TRIGGER'       : 1,
+                                                          },
+                                        'SAME70' :     {    'PHASE_U'       : 0,
+                                                            'PHASE_U_CH'    : 0,
+                                                            'PHASE_V'       : 0,
+                                                            'PHASE_V_CH'    : 6,
+                                                            'VDC'           : 0,
+                                                            'VDC_CH'        : 7,
+                                                            'POT'           : 0,
+                                                            'POT_CH'        : 10,
+                                                            'RESOLUTION'    : 12,
+                                                            'TRIGGER'       : 0,
                                                           },
                                     },
                             'MCHV3'  : {
@@ -163,6 +192,13 @@ mcPmsmFocMclv2PwmDict = {'MCLV2' : {
                                                     'PWM_PH_W' : '3',
                                                     'PWM_DEAD_TIME': '1',
                                                     'PWM_FAULT': 'FLT15',
+                                                },
+                                    'SAME70':    { 'PWM_FREQ' : 20000,
+                                                    'PWM_PH_U' : '0',
+                                                    'PWM_PH_V' : '1',
+                                                    'PWM_PH_W' : '2',
+                                                    'PWM_DEAD_TIME': '1',
+                                                    'PWM_FAULT': 'FAULT_PWM_ID2',
                                                 },
                                     },
                          'MCHV3'  : {
@@ -237,10 +273,10 @@ def mcPmsmFocBoardParamSet(symbol, event):
         mcPmsmFocSym_dc_bus_volt.setValue(float(mcPmsmFocBoardParamDict[board_key]['DC_BUS_VOLT']))
         mcPmsmFocSym_dc_bus_ratio.setValue(float(mcPmsmFocBoardParamDict[board_key]['DC_BUS_RATIO']))
 
-        mcPmsmFocSym_start_button.setSelectedKey((mcPmsmFocBoardParamDict[board_key]['START_STOP_SWITCH']))
-        mcPmsmFocSym_dir_button.setSelectedKey((mcPmsmFocBoardParamDict[board_key]['DIRECTION_SWITCH']))
-        mcPmsmFocSym_dir_led.setSelectedKey((mcPmsmFocBoardParamDict[board_key]['DIRECTION_LED']))
-        mcPmsmFocSym_fault_led.setSelectedKey((mcPmsmFocBoardParamDict[board_key]['FAULT_LED']))
+        mcPmsmFocSym_start_button.setSelectedKey((mcPmsmFocBoardPimParamDict[board_key][series]['START_STOP_SWITCH']))
+        mcPmsmFocSym_dir_button.setSelectedKey((mcPmsmFocBoardPimParamDict[board_key][series]['DIRECTION_SWITCH']))
+        mcPmsmFocSym_dir_led.setSelectedKey((mcPmsmFocBoardPimParamDict[board_key][series]['DIRECTION_LED']))
+        mcPmsmFocSym_fault_led.setSelectedKey((mcPmsmFocBoardPimParamDict[board_key][series]['FAULT_LED']))
 
         #PWM
         Database.setSymbolValue(component, "MCPMSMFOC_PWM_BOARD_DEP", True)
@@ -274,10 +310,10 @@ def mcPmsmFocEncoderHide(symbol, event):
     component = symbol.getComponent()
     if(event["value"] == 1):
         symbol.setVisible(False)
-        component.setDependencyEnabled("QDEC", True)
+        component.setDependencyEnabled("pmsmfoc_QDEC", True)
     else:
         symbol.setVisible(True)
-        component.setDependencyEnabled("QDEC", False)
+        component.setDependencyEnabled("pmsmfoc_QDEC", False)
 
 def mcPmsmFocVisibleOnTrue(symbol, event):
     symbol.setVisible(event["value"])
@@ -360,8 +396,12 @@ def mcPmsmFocADCChanDep(symbol, event):
     adcChDict['RESOLUTION'] = (component.getSymbolValue("MCPMSMFOC_ADC_RESOLUTION"))
     adcChDict['TRIGGER'] = (component.getSymbolValue("MCPMSMFOC_PWM_PH_U"))
     mcPmsmFocADCMax.setValue(pow(2,int(adcChDict['RESOLUTION'])) - 1)
+
     if (component.getSymbolValue("MCPMSMFOC_ADC_BOARD_DEP") == False):
         Database.sendMessage(mcPmsmFocAdc.getValue().lower(), "PMSM_FOC_ADC_CH_CONF", adcChDict)
+        if (mcPmsmFocAdc1 != "None"):
+            Database.sendMessage(mcPmsmFocAdc1.getValue().lower(), "PMSM_FOC_ADC_CH_CONF", adcChDict)
+
 
 #Send message to PWM PLIB when PWM channels are changed
 def mcPmsmFocPwmPlibDep(symbol, event):
@@ -374,7 +414,6 @@ def mcPmsmFocPwmPlibDep(symbol, event):
     pwmDict['PWM_DEAD_TIME'] = (component.getSymbolValue("MCPMSMFOC_PWM_DEAD_TIME"))
     pwmDict['PWM_FAULT'] = (mcPmsmFocPwmFault.getSelectedKey())
     if (component.getSymbolValue("MCPMSMFOC_PWM_BOARD_DEP") == False):
-        print("****************************************************")
         Database.sendMessage(mcPmsmFocPWM.getValue().lower(), "PMSM_FOC_PWM_CONF", pwmDict)
 
 #Send message to Encoder PLIB when encoder configurations are changed
@@ -393,6 +432,8 @@ def onAttachmentConnected(source, target):
     remoteID = remoteComponent.getID()
     connectID = source["id"]
     targetID = target["id"]
+
+    dict = {}
 
     series = mcPmsmFocSeries.getValue()
     global mcPmsmFocPwmFault
@@ -418,15 +459,35 @@ def onAttachmentConnected(source, target):
     pulses = (float(localComponent.getSymbolValue("MCPMSMFOC_QE_PULSES_PER_REV")) * 4) / localComponent.getSymbolValue("MCPMSMFOC_POLE_PAIRS")
     encoderDict['PULSES_PER_REV'] = pulses
 
-    if (connectID == "ADC"):
-        Database.sendMessage(remoteID, "PMSM_FOC_ADC_CH_CONF", adcChDict)
-        mcPmsmFocAdc.setValue(remoteID)
+    if (connectID == "pmsmfoc_ADC"):
+        instanceNum = (filter(str.isdigit,str(remoteID)))
+        if (instanceNum == str(0) or instanceNum == ""):
+            mcPmsmFocAdc.setValue(remoteID)
+        else:
+            mcPmsmFocAdc1.setValue(remoteID)
+        dict = Database.sendMessage(remoteID, "PMSM_FOC_ADC_CH_CONF", adcChDict)
+        # Set the max num of channels
+        adcMaxCh = dict['ADC_MAX_CH']
+        adcMaxModules = dict['ADC_MAX_MODULES']
+        localComponent.getSymbolByID("MCPMSMFOC_PHASEU_CH").setMax(adcMaxCh - 1)
+        localComponent.getSymbolByID("MCPMSMFOC_PHASEV_CH").setMax(adcMaxCh - 1)
+        localComponent.getSymbolByID("MCPMSMFOC_DCBUSV_CH").setMax(adcMaxCh - 1)
+        localComponent.getSymbolByID("MCPMSMFOC_POT_CH").setMax(adcMaxCh - 1)
+        localComponent.getSymbolByID("MCPMSMFOC_PHASEU_MODULE").setMax(adcMaxModules - 1)
+        localComponent.getSymbolByID("MCPMSMFOC_PHASEV_MODULE").setMax(adcMaxModules - 1)
+        localComponent.getSymbolByID("MCPMSMFOC_POT_MODULE").setMax(adcMaxModules - 1)
+        localComponent.getSymbolByID("MCPMSMFOC_DCBUSV_MODULE").setMax(adcMaxModules - 1)
 
-    if (connectID == "PWM"):
-        Database.sendMessage(remoteID, "PMSM_FOC_PWM_CONF", pwmDict)
+    if (connectID == "pmsmfoc_PWM"):
         mcPmsmFocPWM.setValue(remoteID)
+        dict = Database.sendMessage(remoteID, "PMSM_FOC_PWM_CONF", pwmDict)
+        #set the max number of Channels
+        pwmMaxCh = dict['PWM_MAX_CH']
+        localComponent.getSymbolByID("MCPMSMFOC_PWM_PH_U").setMax(pwmMaxCh - 1)
+        localComponent.getSymbolByID("MCPMSMFOC_PWM_PH_V").setMax(pwmMaxCh - 1)
+        localComponent.getSymbolByID("MCPMSMFOC_PWM_PH_W").setMax(pwmMaxCh - 1)
 
-    if (connectID == "QDEC"):
+    if (connectID == "pmsmfoc_QDEC"):
         Database.sendMessage(remoteID, "PMSM_FOC_ENCODER_CONF", encoderDict)
         mcPmsmFocEncoder.setValue(remoteID)
 
@@ -437,13 +498,14 @@ def onAttachmentDisconnected(source, target):
     connectID = source["id"]
     targetID = target["id"]
 
-    if (connectID == "ADC"):
+    if (connectID == "pmsmfoc_ADC"):
         mcPmsmFocAdc.setValue("None")
+        mcPmsmFocAdc1.setValue("None")
 
-    if (connectID == "PWM"):
+    if (connectID == "pmsmfoc_PWM"):
         mcPmsmFocPWM.setValue("None")
 
-    if (connectID == "QDEC"):
+    if (connectID == "pmsmfoc_QDEC"):
         mcPmsmFocEncoder.setValue("None")
 
 ###################################################################################################
@@ -453,6 +515,7 @@ def instantiateComponent(mcPmsmFocComponent):
     global mcPmsmFocSeries
     global mcPmsmFocInstanceName
     global mcPmsmFocAdc
+    global mcPmsmFocAdc1
     global mcPmsmFocPWM
     global mcPmsmFocEncoder
 
@@ -469,6 +532,10 @@ def instantiateComponent(mcPmsmFocComponent):
 
     mcPmsmFocAdc = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_ADCPLIB", None)
     mcPmsmFocAdc.setVisible(False)
+
+    mcPmsmFocAdc1 = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_ADCPLIB1", None)
+    mcPmsmFocAdc1.setVisible(False)
+    mcPmsmFocAdc1.setDefaultValue("None")
 
     mcPmsmFocPWM = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_PWMPLIB", None)
     mcPmsmFocPWM.setVisible(False)
@@ -492,6 +559,7 @@ def instantiateComponent(mcPmsmFocComponent):
         mcPmsmFocPwmCh = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PWM_PH_"+str(ph), mcPmsmFocPwmMenu)
         mcPmsmFocPwmCh.setLabel("PWM Phase " + str(ph) + " Channel")
         mcPmsmFocPwmCh.setDefaultValue(int(mcPmsmFocMclv2PwmDict['MCLV2'][mcPmsmFocSeries.getValue()]['PWM_PH_'+str(ph)]))
+        mcPmsmFocPwmCh.setMin(0)
 
     global mcPmsmFocDeadTime
     mcPmsmFocDeadTime = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_PWM_DEAD_TIME", mcPmsmFocPwmMenu)
@@ -509,6 +577,13 @@ def instantiateComponent(mcPmsmFocComponent):
         for fault in reversed(valueNodes):
             mcPmsmFocPwmFault.addKey(fault.getAttribute("caption"), fault.getAttribute("value"),
                 fault.getAttribute("caption"))
+    elif "SAME70" in Variables.get("__PROCESSOR"):
+        mcPmsmFocPwmFault.setDisplayMode("Description")
+        pwm = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PWM\"]/instance@[name=\"PWM0\"]/parameters")
+        fault_id = pwm.getChildren()
+        for param in range(0, len(fault_id)):
+            if "FAULT" in fault_id[param].getAttribute("name"):
+                mcPmsmFocPwmFault.addKey(fault_id[param].getAttribute("name"), fault_id[param].getAttribute("value"), fault_id[param].getAttribute("caption"))
     mcPmsmFocPwmFault.setSelectedKey((mcPmsmFocMclv2PwmDict['MCLV2'][mcPmsmFocSeries.getValue()]['PWM_FAULT']))
 
     msPmsmFocPwmBoardDep = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_PWM_BOARD_DEP", mcPmsmFocPwmMenu)
@@ -524,10 +599,17 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocADCMenu = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_ADC_MENU", None)
     mcPmsmFocADCMenu.setLabel("ADC Configurations")
 
-    resolution = ["12", "10", "8", "6"]
+    if "PIC32MK" in Variables.get("__PROCESSOR"):
+        resolution = ["12", "10", "8", "6"]
+        maxChannels = 47
+    elif "SAME70" in Variables.get("__PROCESSOR"):
+        resolution = ["12", "13", "14", "15", "16"]
+        maxChannels = 12
+
     mcPmsmFocADCResolution = mcPmsmFocComponent.createComboSymbol("MCPMSMFOC_ADC_RESOLUTION", mcPmsmFocADCMenu, resolution)
     mcPmsmFocADCResolution.setLabel("Select ADC Resolution")
-    mcPmsmFocADCResolution.setReadOnly(False)
+    if "SAME70" in Variables.get("__PROCESSOR"):
+        mcPmsmFocADCResolution.setReadOnly(True)
 
     global mcPmsmFocADCMax
     mcPmsmFocADCMax = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_ADC_MAX", mcPmsmFocADCMenu)
@@ -543,6 +625,8 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocPhaseUCh = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEU_CH", mcPmsmFocPhaseU)
     mcPmsmFocPhaseUCh.setLabel("Phase U Channel Number")
     mcPmsmFocPhaseUCh.setDefaultValue(int(mcPmsmFocMclv2ADCDict['MCLV2'][mcPmsmFocSeries.getValue()]['PHASE_U_CH']))
+    mcPmsmFocPhaseUCh.setMin(0)
+    mcPmsmFocPhaseUCh.setMax(maxChannels - 1)
 
     mcPmsmFocPhaseV = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEV_MODULE", mcPmsmFocADCMenu)
     mcPmsmFocPhaseV.setLabel("Phase V ADC Module")
@@ -553,6 +637,8 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocPhaseVCh = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEV_CH", mcPmsmFocPhaseV)
     mcPmsmFocPhaseVCh.setLabel("Phase V Channel Number")
     mcPmsmFocPhaseVCh.setDefaultValue(int(mcPmsmFocMclv2ADCDict['MCLV2'][mcPmsmFocSeries.getValue()]['PHASE_V_CH']))
+    mcPmsmFocPhaseVCh.setMin(0)
+    mcPmsmFocPhaseVCh.setMax(maxChannels - 1)
 
     mcPmsmFocPot = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_POT_MODULE", mcPmsmFocADCMenu)
     mcPmsmFocPot.setLabel("Potentiometer ADC Module")
@@ -563,6 +649,8 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocPotCh = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_POT_CH", mcPmsmFocPot)
     mcPmsmFocPotCh.setLabel("Potentiometer channel number")
     mcPmsmFocPotCh.setDefaultValue(int(mcPmsmFocMclv2ADCDict['MCLV2'][mcPmsmFocSeries.getValue()]['POT_CH']))
+    mcPmsmFocPotCh.setMin(0)
+    mcPmsmFocPotCh.setMax(maxChannels - 1)
 
     mcPmsmFocDCBusV = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_DCBUSV_MODULE", mcPmsmFocADCMenu)
     mcPmsmFocDCBusV.setLabel("DC Bus Voltage ADC Module")
@@ -573,6 +661,8 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocDCBusVCh = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_DCBUSV_CH", mcPmsmFocDCBusV)
     mcPmsmFocDCBusVCh.setLabel("DC Bus Voltage channel number")
     mcPmsmFocDCBusVCh.setDefaultValue(int(mcPmsmFocMclv2ADCDict['MCLV2'][mcPmsmFocSeries.getValue()]['VDC_CH']))
+    mcPmsmFocDCBusVCh.setMin(0)
+    mcPmsmFocDCBusVCh.setMax(maxChannels - 1)
 
     msPmsmFocAdcBoardDep = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_ADC_BOARD_DEP", mcPmsmFocADCMenu)
     msPmsmFocAdcBoardDep.setVisible(False)
@@ -755,7 +845,7 @@ def instantiateComponent(mcPmsmFocComponent):
     for pad in sort_alphanumeric(availablePinDictionary.values()):
         mcPmsmFocSym_start_button.addKey(pad, str(i), pad)
         i = i+1
-    mcPmsmFocSym_start_button.setSelectedKey(str(mcPmsmFocBoardParamDict['MCLV2']['START_STOP_SWITCH']))
+    mcPmsmFocSym_start_button.setSelectedKey(str(mcPmsmFocBoardPimParamDict['MCLV2'][series]['START_STOP_SWITCH']))
 
     global mcPmsmFocSym_dir_button
     mcPmsmFocSym_dir_button = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_DIRECTION_BUTTON", mcPmsmFocSym_board)
@@ -766,7 +856,7 @@ def instantiateComponent(mcPmsmFocComponent):
     for pad in sort_alphanumeric(availablePinDictionary.values()):
         mcPmsmFocSym_dir_button.addKey(pad, str(i), pad)
         i = i+1
-    mcPmsmFocSym_dir_button.setSelectedKey(str(mcPmsmFocBoardParamDict['MCLV2']['DIRECTION_SWITCH']))
+    mcPmsmFocSym_dir_button.setSelectedKey(str(mcPmsmFocBoardPimParamDict['MCLV2'][series]['DIRECTION_SWITCH']))
 
     global mcPmsmFocSym_dir_led
     mcPmsmFocSym_dir_led = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_DIRECTION_LED", mcPmsmFocSym_board)
@@ -777,7 +867,7 @@ def instantiateComponent(mcPmsmFocComponent):
     for pad in sort_alphanumeric(availablePinDictionary.values()):
         mcPmsmFocSym_dir_led.addKey(pad, str(i), pad)
         i = i+1
-    mcPmsmFocSym_dir_led.setSelectedKey(str(mcPmsmFocBoardParamDict['MCLV2']['DIRECTION_LED']))
+    mcPmsmFocSym_dir_led.setSelectedKey(str(mcPmsmFocBoardPimParamDict['MCLV2'][series]['DIRECTION_LED']))
 
     global mcPmsmFocSym_fault_led
     mcPmsmFocSym_fault_led = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_FAULT_LED", mcPmsmFocSym_board)
@@ -788,7 +878,7 @@ def instantiateComponent(mcPmsmFocComponent):
     for pad in sort_alphanumeric(availablePinDictionary.values()):
         mcPmsmFocSym_fault_led.addKey(pad, str(i), pad)
         i = i+1
-    mcPmsmFocSym_fault_led.setSelectedKey(str(mcPmsmFocBoardParamDict['MCLV2']['FAULT_LED']))
+    mcPmsmFocSym_fault_led.setSelectedKey(str(mcPmsmFocBoardPimParamDict['MCLV2'][series]['FAULT_LED']))
 
     mcPmsmFocSym_pin_comment = mcPmsmFocComponent.createCommentSymbol("MCPMSMFOC_PIN_COMMENT", mcPmsmFocSym_board)
     mcPmsmFocSym_pin_comment.setLabel("**** Configure above selected pins in the Pin Manager ****")

@@ -65,7 +65,7 @@
 /* Local Function Prototype                                                   */
 /******************************************************************************/
 
-__STATIC_INLINE void MCLIB_SVPWMTimeCalc(tMCPWM_SVPWM_S* svm);
+__STATIC_INLINE void MCPWM_SVPWMTimeCalc(tMCPWM_SVPWM_S* svm);
 
 /******************************************************************************/
 /*                   Global Variables                                         */
@@ -76,11 +76,11 @@ tMCPWM_SVPWM_S    gMCPWM_SVPWM = {0.0f};
 /******************************************************************************/
 /*                          LOCAL FUNCTIONS                                   */
 /******************************************************************************/
-__STATIC_INLINE void MCLIB_SVPWMTimeCalc(tMCPWM_SVPWM_S * const svm)
+__STATIC_INLINE void MCPWM_SVPWMTimeCalc(tMCPWM_SVPWM_S * const svm)
 {
-    svm->t1 = (gMCPWM_SVPWM.period) * svm->t1;
-    svm->t2 = (gMCPWM_SVPWM.period) * svm->t2;
-    svm->tc = (gMCPWM_SVPWM.period - svm->t1 - svm->t2)/2;
+    svm->t1 = (svm->period) * svm->t1;
+    svm->t2 = (svm->period) * svm->t2;
+    svm->tc = (svm->period - svm->t1 - svm->t2)/2;
     svm->tb = svm->tc + svm->t2;
     svm->ta = svm->tb + svm->t1;
 }
@@ -112,7 +112,7 @@ void MCPWM_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCPWM_S
                   // Sector 3: (0,1,1)  0-60 degrees
                   svm->t1 = svm->vr2;
                   svm->t2 = svm->vr1;
-                  MCLIB_SVPWMTimeCalc(svm);
+                  MCPWM_SVPWMTimeCalc(svm);
                   svm->dPwm1 = (uint32_t)svm->ta;
                   svm->dPwm2 = (uint32_t)svm->tb;
                   svm->dPwm3 = (uint32_t)svm->tc;
@@ -125,7 +125,7 @@ void MCPWM_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCPWM_S
                         // Sector 5: (1,0,1)  120-180 degrees
                         svm->t1 = svm->vr1;
                         svm->t2 = svm->vr3;
-                        MCLIB_SVPWMTimeCalc(svm);
+                        MCPWM_SVPWMTimeCalc(svm);
                         svm->dPwm1 = (uint32_t)svm->tc;
                         svm->dPwm2 = (uint32_t)svm->ta;
                         svm->dPwm3 = (uint32_t)svm->tb;
@@ -135,7 +135,7 @@ void MCPWM_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCPWM_S
                         // Sector 1: (0,0,1)  60-120 degrees
                         svm->t1 = -svm->vr2;
                         svm->t2 = -svm->vr3;
-                        MCLIB_SVPWMTimeCalc(svm);
+                        MCPWM_SVPWMTimeCalc(svm);
                         svm->dPwm1 = (uint32_t)svm->tb;
                         svm->dPwm2 = (uint32_t)svm->ta;
                         svm->dPwm3 = (uint32_t)svm->tc;
@@ -153,7 +153,7 @@ void MCPWM_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCPWM_S
                         // Sector 6: (1,1,0)  240-300 degrees
                         svm->t1 = svm->vr3;
                         svm->t2 = svm->vr2;
-                        MCLIB_SVPWMTimeCalc(svm);
+                        MCPWM_SVPWMTimeCalc(svm);
                         svm->dPwm1 = (uint32_t)svm->tb;
                         svm->dPwm2 = (uint32_t)svm->tc;
                         svm->dPwm3 = (uint32_t)svm->ta;
@@ -163,7 +163,7 @@ void MCPWM_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCPWM_S
                         // Sector 2: (0,1,0)  300-0 degrees
                         svm->t1 = -svm->vr3;
                         svm->t2 = -svm->vr1;
-                        MCLIB_SVPWMTimeCalc(svm);
+                        MCPWM_SVPWMTimeCalc(svm);
                         svm->dPwm1 = (uint32_t)svm->ta;
                         svm->dPwm2 = (uint32_t)svm->tc;
                         svm->dPwm3 = (uint32_t)svm->tb;
@@ -176,7 +176,7 @@ void MCPWM_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCPWM_S
                   // Sector 4: (1,0,0)  180-240 degrees
                   svm->t1 = -svm->vr1;
                   svm->t2 = -svm->vr2;
-                  MCLIB_SVPWMTimeCalc(svm);
+                  MCPWM_SVPWMTimeCalc(svm);
                   svm->dPwm1 = (uint32_t)svm->tc;
                   svm->dPwm2 = (uint32_t)svm->tb;
                   svm->dPwm3 = (uint32_t)svm->ta;
@@ -194,7 +194,7 @@ void MCPWM_PWMModulator( void )
 {
     /* Calculate and set PWM duty cycles from Vr1,Vr2,Vr3 */
     MCPWM_SVPWMGen(&gMCLIB_VoltageAlphaBeta, &gMCPWM_SVPWM);
-    MCPWM_PWMDutyUpdate(gMCPWM_SVPWM.dPwm1, gMCPWM_SVPWM.dPwm2, gMCPWM_SVPWM.dPwm3);
+    MCPWM_PWMDutyUpdate(&gMCPWM_SVPWM);
 }
 
 void MCPWM_PWMOutputDisable(void)
@@ -219,35 +219,15 @@ void MCPWM_PWMOutputEnable(void)
 /* Description:                                                              */
 /* interface to update duty ratio in PWM timers                              */
 /*****************************************************************************/
-void MCPWM_PWMDutyUpdate(uint16_t duty_PhU, uint16_t duty_PhV, uint16_t duty_PhW)
+void MCPWM_PWMDutyUpdate(tMCPWM_SVPWM_S * const svm)
 {
-    MCHAL_PWMDutySet(MCHAL_PWM_PH_U, duty_PhU);
-    MCHAL_PWMDutySet(MCHAL_PWM_PH_V, duty_PhV);
-    MCHAL_PWMDutySet(MCHAL_PWM_PH_W, duty_PhW);
-}
-
-/*****************************************************************************/
-/* Function name: MCPWM_AdjustDutyRatio                                      */
-/* Function parameters: None                                                 */
-/* Function return: None                                                     */
-/* Description:                                                              */
-/* modifies PWM duty  ratio for current measurement. In case of dual         */
-/* shunt measurement, it limits PWM ratios, while in case of single          */
-/* shunt measurement it re-adjusts PWM                                       */
-/*****************************************************************************/
-void MCPWM_AdjustDutyRatio( void )
-{
-    /* Function to be developed */
-}
-
-/*****************************************************************************/
-/* Function name: MCPWM_DeadTimeCompensation                                 */
-/* Function parameters: None                                                 */
-/* Function return: None                                                     */
-/* Description:                                                              */
-/* modifies PWM duty  ratio for dead time compensation                       */
-/*****************************************************************************/
-void MCPWM_DeadTimeCompensation( void )
-{
-    /* Function to be developed */
+<#if __PROCESSOR?matches("PIC32M.*") == true>
+    MCHAL_PWMDutySet(MCHAL_PWM_PH_U, svm->dPwm1);
+    MCHAL_PWMDutySet(MCHAL_PWM_PH_V, svm->dPwm2);
+    MCHAL_PWMDutySet(MCHAL_PWM_PH_W, svm->dPwm3);
+<#else>
+    MCHAL_PWMDutySet(MCHAL_PWM_PH_U, svm->period - svm->dPwm1);
+    MCHAL_PWMDutySet(MCHAL_PWM_PH_V, svm->period - svm->dPwm2);
+    MCHAL_PWMDutySet(MCHAL_PWM_PH_W, svm->period - svm->dPwm3);
+</#if>
 }

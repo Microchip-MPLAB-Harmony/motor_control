@@ -115,6 +115,7 @@ typedef struct
     float             idRef;                                     /*   Vd flux reference value                */
     float             iqRef;                                     /*   Vq torque reference value              */
     int16_t           rotationSign;                              /*   Motor direction switch                 */
+    bool              firstStart;                                /*  Start after reset                     */
     tMCAPP_CONTROL_STATE_E mcState;                             /*   Controller state                      */
     tMCAPP_CONTROL_STATE_E mcStateLast;                         /*   Controller state of previous cycle    */
 } tMCAPP_CONTROL_PARAM_S;

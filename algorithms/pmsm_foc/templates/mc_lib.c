@@ -89,10 +89,10 @@ tMCLIB_CLARK_TRANSFORM_S            gMCLIB_VoltageAlphaBeta = {0.0f, 0.0f};
 /******************************************************************************/
 void MCLIB_ParkTransform( const tMCLIB_CLARK_TRANSFORM_S * const input, const tMCLIB_POSITION_S * const position, tMCLIB_PARK_TRANSFORM_S * const output)
 {
-    output->directAxis =  gMCLIB_CurrentAlphaBeta.alphaAxis * position->cosAngle
-                        + gMCLIB_CurrentAlphaBeta.betaAxis * position->sineAngle;
-    output->quadratureAxis = -gMCLIB_CurrentAlphaBeta.alphaAxis * position->sineAngle
-                        + gMCLIB_CurrentAlphaBeta.betaAxis * position->cosAngle;
+    output->directAxis =  input->alphaAxis * position->cosAngle
+                        + input->betaAxis * position->sineAngle;
+    output->quadratureAxis = -input->alphaAxis * position->sineAngle
+                        + input->betaAxis * position->cosAngle;
 }
 
 /******************************************************************************/

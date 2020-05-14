@@ -91,7 +91,7 @@ static void PMSM_FOC_StartAdcInterrupt( void )
     MCHAL_IntClear(MCHAL_CTRL_IRQ);
 
     /* Enable ADC interrupt for field oriented control */
-    MCHAL_ADCCallbackRegister( MCHAL_ADC_PH_U, MCCTRL_CurrentLoopTasks, (uintptr_t)NULL );
+    MCHAL_ADCCallbackRegister( MCHAL_ADC_PH_U, MCCTRL_CurrentOffsetCalibration, (uintptr_t)NULL );
     MCHAL_IntEnable(MCHAL_CTRL_IRQ);
 
     /* Enable interrupt for fault detection */
@@ -99,9 +99,8 @@ static void PMSM_FOC_StartAdcInterrupt( void )
     MCHAL_IntEnable(MCHAL_FAULT_IRQ);
 
     /* Enables PWM channels. */
-    MCHAL_PWMStart();
-
-    /* Disable PWM output when the interface is available */
+    MCHAL_PWMStart(MCHAL_PWM_PH_MASK);
+    /* Disable PWM output */
     MCPWM_PWMOutputDisable();
 }
 
@@ -143,23 +142,13 @@ static tMCCTRL_TASK_STATE_E  PMSM_FOC_IsPositionLoopActive(void)
 void PMSM_FOC_Initialize( void )
 {
     gMCCTRL_CtrlParam.rotationSign = 1U;
-
-    /* Disable PWM output */
-    MCHAL_PWMStop();
+    gMCCTRL_CtrlParam.firstStart = true;
+    gMCCTRL_CtrlParam.mcState = MCAPP_IDLE;
+    gMCCTRL_CtrlParam.mcStateLast = MCAPP_IDLE;
 
     /* Disable interrupt, and clear pending interrupts */
     MCHAL_IntDisable( MCHAL_CTRL_IRQ);
     MCHAL_IntClear( MCHAL_CTRL_IRQ);
-
-    /* Current sense amplifiers offset calculation */
-    if(gMCCUR_OutputSignals.calibDone == 0U)
-    {
-        MCCUR_OffsetCalibration();
-    }
-    else
-    {
-        asm("NOP");
-    }
 
     /* Initialize speed command function */
     MCSPE_InitializeSpeedControl();
@@ -193,11 +182,31 @@ void PMSM_FOC_MotorStart(void)
 
     MCRPOS_ResetPositionSensing(MCRPOS_FORCE_ALIGN);
 
+<#if MCPMSMFOC_POSITION_FB == "SENSORED_ENCODER">
+
+    if (gMCCTRL_CtrlParam.firstStart == true)
+    {
+        gMCCTRL_CtrlParam.mcStateLast = gMCCTRL_CtrlParam.mcState;
+        /* Switch the motor control state to MCAPP_FIELD_ALIGNMENT after reset */
+        gMCCTRL_CtrlParam.mcState = MCAPP_FIELD_ALIGNMENT;
+        gMCCTRL_CtrlParam.firstStart = false;
+    }
+    else
+    {
+        gMCCTRL_CtrlParam.mcStateLast = gMCCTRL_CtrlParam.mcState;
+        /* Do not align the rotor for consecutive starts */
+        gMCCTRL_CtrlParam.mcState = MCAPP_CLOSED_LOOP;
+    }
+<#else>
+    gMCCTRL_CtrlParam.mcStateLast = gMCCTRL_CtrlParam.mcState;
     /* Switch the motor control state to MCAPP_FIELD_ALIGNMENT */
     gMCCTRL_CtrlParam.mcState = MCAPP_FIELD_ALIGNMENT;
-
+</#if>
     /* Enable / Re-enable PWM output */
-    MCPWM_PWMDutyUpdate(gMCPWM_SVPWM.neutralPWM, gMCPWM_SVPWM.neutralPWM, gMCPWM_SVPWM.neutralPWM );
+    gMCPWM_SVPWM.dPwm1 = gMCPWM_SVPWM.neutralPWM;
+    gMCPWM_SVPWM.dPwm2 = gMCPWM_SVPWM.neutralPWM;
+    gMCPWM_SVPWM.dPwm3 = gMCPWM_SVPWM.neutralPWM;
+    MCPWM_PWMDutyUpdate(&gMCPWM_SVPWM);
     MCPWM_PWMOutputEnable();
 
 }
@@ -210,9 +219,9 @@ void PMSM_FOC_MotorStart(void)
 /******************************************************************************/
 void PMSM_FOC_MotorStop(void)
 {
-    /* Disable PWM output when the interface is available */
+    /* Disable PWM output */
     MCPWM_PWMOutputDisable();
-
+    gMCCTRL_CtrlParam.mcStateLast = gMCCTRL_CtrlParam.mcState;
     /* Switch the motor control state to MCAPP_FIELD_ALIGNMENT */
     gMCCTRL_CtrlParam.mcState = MCAPP_IDLE;
 
