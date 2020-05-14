@@ -172,8 +172,11 @@ extern "C" {
 
 #define MCHAL_DIR_SWITCH_GET()         GPIO_${MCPMSMFOC_DIRECTION_BUTTON}_Get()
 
-
-#define MCHAL_X2C_Update()          //X2CScope_Update()
+<#if MCPMSMFOC_X2CScope != "None">
+#define MCHAL_X2C_Update()          X2CScope_Update()
+<#else>
+#define MCHAL_X2C_Update()
+</#if>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

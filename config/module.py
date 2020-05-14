@@ -30,7 +30,12 @@ def loadModule():
                                                  "PMSM FOC",
                                                  "/Motor Control/", "algorithms/pmsm_foc/config/pmsm_foc.py")
         mcPmsmFocComponent.setDisplayType("Motor Control Algorithm")
+
         mcPmsmFocComponent.addMultiDependency("pmsmfoc_ADC", "ADC", "ADC", True)
+
         mcPmsmFocComponent.addDependency("pmsmfoc_PWM", "PWM", False, True)
+
         mcPmsmFocComponent.addDependency("pmsmfoc_QDEC", "QDEC", False, True)
         mcPmsmFocComponent.setDependencyEnabled("pmsmfoc_QDEC", False)
+
+        mcPmsmFocComponent.addDependency("pmsmfoc_X2CSCOPE", "X2CScope", False, True)

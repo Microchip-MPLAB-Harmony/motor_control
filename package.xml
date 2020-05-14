@@ -2,5 +2,6 @@
 <Package name="motor_control">
     <Dependencies>
         <Dependency name="csp" version="v3.5.0"/>
+        <Dependency name="x2c" version="v1.0.0"/>
     </Dependencies>
 </Package>

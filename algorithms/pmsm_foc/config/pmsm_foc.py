@@ -491,6 +491,9 @@ def onAttachmentConnected(source, target):
         Database.sendMessage(remoteID, "PMSM_FOC_ENCODER_CONF", encoderDict)
         mcPmsmFocEncoder.setValue(remoteID)
 
+    if (connectID == "pmsmfoc_X2CSCOPE"):
+        mcPmsmFocX2CScope.setValue(remoteID)
+
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -508,6 +511,8 @@ def onAttachmentDisconnected(source, target):
     if (connectID == "pmsmfoc_QDEC"):
         mcPmsmFocEncoder.setValue("None")
 
+    if (connectID == "pmsmfoc_X2CSCOPE"):
+        mcPmsmFocX2CScope.setValue("None")
 ###################################################################################################
 ########################### Component   #################################
 ###################################################################################################
@@ -518,6 +523,7 @@ def instantiateComponent(mcPmsmFocComponent):
     global mcPmsmFocAdc1
     global mcPmsmFocPWM
     global mcPmsmFocEncoder
+    global mcPmsmFocX2CScope
 
     Log.writeInfoMessage("Running PMSM FOC")
 
@@ -542,6 +548,9 @@ def instantiateComponent(mcPmsmFocComponent):
 
     mcPmsmFocEncoder = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_ENCODERPLIB", None)
     mcPmsmFocEncoder.setVisible(False)
+
+    mcPmsmFocX2CScope = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_X2CScope", None)
+    mcPmsmFocX2CScope.setVisible(False)
 
 ########################### PLIB   #################################
     mcPmsmFocPwmMenu = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_PWM", None)
