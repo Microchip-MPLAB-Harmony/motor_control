@@ -98,7 +98,7 @@ void AFEC0_Initialize()
 
 
     /* Enable interrupt */
-    AFEC0_REGS->AFEC_IER = AFEC_IER_EOC7_Msk;
+    AFEC0_REGS->AFEC_IER = AFEC_IER_EOC0_Msk;
     AFEC0_CallbackObj.callback_fn = NULL;
 
     /* Enable channel */

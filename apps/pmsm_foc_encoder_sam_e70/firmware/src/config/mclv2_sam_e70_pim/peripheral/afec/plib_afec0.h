@@ -76,19 +76,19 @@ extern "C" {
 */
 #define AFEC0_CH0_MAX_OUTPUT (65535U)
 #define AFEC0_CH0_MIN_OUTPUT (0U)
-#define PH_U_CURRENT_ADC_CH (0U)
+#define CHANNEL_0 (0U)
 /***********************************************************************/
 #define AFEC0_CH6_MAX_OUTPUT (65535U)
 #define AFEC0_CH6_MIN_OUTPUT (0U)
-#define PH_V_CURRENT_ADC_CH (6U)
+#define CHANNEL_6 (6U)
 /***********************************************************************/
 #define AFEC0_CH7_MAX_OUTPUT (65535U)
 #define AFEC0_CH7_MIN_OUTPUT (0U)
-#define DC_BUS_VOLTAGE_ADC_CH (7U)
+#define CHANNEL_7 (7U)
 /***********************************************************************/
 #define AFEC0_CH10_MAX_OUTPUT (65535U)
 #define AFEC0_CH10_MIN_OUTPUT (0U)
-#define POT_ADC_CH (10U)
+#define CHANNEL_10 (10U)
 /***********************************************************************/
 
 // *****************************************************************************
