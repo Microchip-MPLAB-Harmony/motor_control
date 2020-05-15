@@ -6,7 +6,26 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mclv2_pic32_mk_pim" projectFiles="true">
-          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
+          <logicalFolder name="f3" displayName="motor_control" projectFiles="true">
+            <logicalFolder name="f1" displayName="pmsm_foc" projectFiles="true">
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_rotorposition.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_control_loop.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_currmeasurement.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_derivedparams.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_errorhandler.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_generic_lib.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_hal.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_lib.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_picontrol.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_pmsm_foc.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_pmsm_foc_common.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_pwm.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_speed.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_userparams.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_voltagemeasurement.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="adchs" projectFiles="true">
               <itemPath>../src/config/mclv2_pic32_mk_pim/peripheral/adchs/plib_adchs.h</itemPath>
               <itemPath>../src/config/mclv2_pic32_mk_pim/peripheral/adchs/plib_adchs_common.h</itemPath>
@@ -33,10 +52,15 @@
               <itemPath>../src/config/mclv2_pic32_mk_pim/peripheral/uart/plib_uart2.h</itemPath>
             </logicalFolder>
           </logicalFolder>
+          <logicalFolder name="f1" displayName="X2CCode" projectFiles="true">
+            <logicalFolder name="f1" displayName="X2CScope" projectFiles="true">
+              <itemPath>../src/config/mclv2_pic32_mk_pim/X2CCode/X2CScope/inc/X2CScope.h</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/X2CCode/X2CScope/inc/X2CScopeCommunication.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
           <itemPath>../src/config/mclv2_pic32_mk_pim/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/mclv2_pic32_mk_pim/definitions.h</itemPath>
         </logicalFolder>
-        <itemPath>../src/config/mclv2_pic32_mk_pim/userparams.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1"
@@ -45,18 +69,6 @@
           <itemPath>../src/packs/PIC32MK1024MCF100_DFP/device.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/X2CScope.h</itemPath>
-      <itemPath>../src/X2CScopeCommunication.h</itemPath>
-      <itemPath>../src/mc_app.h</itemPath>
-      <itemPath>../src/mc_currMeasurement.h</itemPath>
-      <itemPath>../src/mc_errorHandler.h</itemPath>
-      <itemPath>../src/mc_infrastructure.h</itemPath>
-      <itemPath>../src/mc_lib.h</itemPath>
-      <itemPath>../src/mc_picontrol.h</itemPath>
-      <itemPath>../src/mc_pwm.h</itemPath>
-      <itemPath>../src/mc_rotorPosition.h</itemPath>
-      <itemPath>../src/mc_speed.h</itemPath>
-      <itemPath>../src/mc_voltageMeasurement.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -67,7 +79,22 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mclv2_pic32_mk_pim" projectFiles="true">
-          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
+          <logicalFolder name="f4" displayName="motor_control" projectFiles="true">
+            <logicalFolder name="f1" displayName="pmsm_foc" projectFiles="true">
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_rotorposition.c</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_control_loop.c</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_currmeasurement.c</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_errorhandler.c</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_generic_lib.c</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_lib.c</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_picontrol.c</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_pmsm_foc.c</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_pwm.c</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_speed.c</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/motor_control/pmsm_foc/mc_voltagemeasurement.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="adchs" projectFiles="true">
               <itemPath>../src/config/mclv2_pic32_mk_pim/peripheral/adchs/plib_adchs.c</itemPath>
             </logicalFolder>
@@ -90,27 +117,21 @@
               <itemPath>../src/config/mclv2_pic32_mk_pim/peripheral/uart/plib_uart2.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f3" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/mclv2_pic32_mk_pim/stdio/xc32_monitor.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f1" displayName="X2CCode" projectFiles="true">
+            <logicalFolder name="f1" displayName="X2CScope" projectFiles="true">
+              <itemPath>../src/config/mclv2_pic32_mk_pim/X2CCode/X2CScope/src/X2CScope.c</itemPath>
+              <itemPath>../src/config/mclv2_pic32_mk_pim/X2CCode/X2CScope/src/X2CScopeCommunication.c</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/mclv2_pic32_mk_pim/initialization.c</itemPath>
           <itemPath>../src/config/mclv2_pic32_mk_pim/interrupts.c</itemPath>
           <itemPath>../src/config/mclv2_pic32_mk_pim/exceptions.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/X2CScope.c</itemPath>
-      <itemPath>../src/X2CScopeCommunication.c</itemPath>
-      <itemPath>../src/mc_app.c</itemPath>
-      <itemPath>../src/mc_currMeasurement.c</itemPath>
-      <itemPath>../src/mc_errorHandler.c</itemPath>
-      <itemPath>../src/mc_infrastructure.c</itemPath>
-      <itemPath>../src/mc_lib.c</itemPath>
-      <itemPath>../src/mc_picontrol.c</itemPath>
-      <itemPath>../src/mc_pwm.c</itemPath>
-      <itemPath>../src/mc_rotorPosition.c</itemPath>
-      <itemPath>../src/mc_speed.c</itemPath>
-      <itemPath>../src/mc_voltageMeasurement.c</itemPath>
-      <itemPath>../src/main.c</itemPath>
+      <itemPath>../src/main_mclv2.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -131,16 +152,18 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>ICD4Tool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.30</languageToolchainVersion>
+        <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.1.53"/>
+        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.4.94"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../src/X2CScopeLib_PIC32MK.X.a</linkerLibFileItem>
+            <linkerLibFileItem>../src/config/mclv2_pic32_mk_pim/X2CCode/X2CScope/lib/libPIC32MK_X2CScope.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <archiverTool>
@@ -171,7 +194,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/mclv2_pic32_mk_pim;../src/packs/PIC32MK1024MCF100_DFP;;../src/mips"/>
+                  value="../src/config/mclv2_pic32_mk_pim/X2CCode;../src;../src/config/mclv2_pic32_mk_pim;../src/packs/PIC32MK1024MCF100_DFP"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -291,6 +314,7 @@
         <property key="mdtcm" value=""/>
         <property key="mitcm" value=""/>
         <property key="mstacktcm" value="false"/>
+        <property key="omit-pack-options" value="1"/>
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
@@ -377,12 +401,15 @@
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UpdateOptions"
                   value="ToolFirmwareOption.UseLatest"/>
+        <property key="ToolFirmwareToolPack"
+                  value="Press to select which tool pack to use"/>
         <property key="UART1" value="true"/>
         <property key="UART2" value="true"/>
         <property key="UART3" value="true"/>
         <property key="UART4" value="true"/>
         <property key="UART5" value="true"/>
         <property key="UART6" value="true"/>
+        <property key="communication.interface.jtag" value="2wire"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
@@ -399,6 +426,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="1d000000-1d0fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="E:/Harmony3/motor_control/apps/pmsm_foc_encoder_pic32_mk/firmware/mclv2_pic32_mk_pim.X/debug/mclv2_pic32_mk_pim/mclv2_pic32_mk_pim_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.ledbrightness" value="5"/>
@@ -409,6 +438,8 @@
         <property key="programoptions.pgmentry.voltage" value="low"/>
         <property key="programoptions.pgmspeed" value="Med"/>
         <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value="1d000000-1d0fffff"/>
@@ -417,6 +448,10 @@
         <property key="programoptions.programcalmem" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
         <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
+        <property key="toolpack.updateoptions"
+                  value="toolpack.updateoptions.uselatestoolpack"/>
+        <property key="toolpack.updateoptions.packversion"
+                  value="Press to select which tool pack to use"/>
         <property key="voltagevalue" value="3.25"/>
       </ICD4Tool>
       <PICkit3PlatformTool>
