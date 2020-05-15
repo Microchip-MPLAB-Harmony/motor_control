@@ -57,6 +57,7 @@
 */
 void PIO_Initialize ( void )
 {
+    MATRIX_REGS->CCFG_SYSIO = 0x0;
 
     /************************ PIO A Initialization ************************/
     /* PORTA Peripheral Function Selection */
@@ -73,8 +74,8 @@ void PIO_Initialize ( void )
     /* PORTA Output Write Enable */
     ((pio_registers_t*)PIO_PORT_A)->PIO_OWER = PIO_OWER_Msk;
     /* PORTA Output Direction Enable */
-    ((pio_registers_t*)PIO_PORT_A)->PIO_OER = 0x0;
-    ((pio_registers_t*)PIO_PORT_A)->PIO_ODR = ~0x0;
+    ((pio_registers_t*)PIO_PORT_A)->PIO_OER = 0x1000000;
+    ((pio_registers_t*)PIO_PORT_A)->PIO_ODR = ~0x1000000;
     /* PORTA Initial state High */
     ((pio_registers_t*)PIO_PORT_A)->PIO_ODSR = 0x0;
     /* PORTA drive control */
@@ -111,9 +112,6 @@ void PIO_Initialize ( void )
     ((pio_registers_t*)PIO_PORT_C)->PIO_ODR = ~0x800000;
     /* PORTC Initial state High */
     ((pio_registers_t*)PIO_PORT_C)->PIO_ODSR = 0x0;
-    /* PORTC Glitch/Debounce Filter Enable */
-    ((pio_registers_t*)PIO_PORT_C)->PIO_IFER = 0x8;
-    ((pio_registers_t*)PIO_PORT_C)->PIO_IFSCER = 0x8;
     /* PORTC drive control */
     ((pio_registers_t*)PIO_PORT_C)->PIO_DRIVER = 0x0;
 

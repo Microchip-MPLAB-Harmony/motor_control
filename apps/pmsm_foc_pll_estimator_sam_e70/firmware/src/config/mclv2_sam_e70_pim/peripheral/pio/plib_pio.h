@@ -62,32 +62,41 @@
 // *****************************************************************************
 
 
-/*** Macros for DIRECTION_TOGGLE_BUTTON pin ***/
-#define DIRECTION_TOGGLE_BUTTON_Set()               (PIOC_REGS->PIO_SODR = (1<<1))
-#define DIRECTION_TOGGLE_BUTTON_Clear()             (PIOC_REGS->PIO_CODR = (1<<1))
-#define DIRECTION_TOGGLE_BUTTON_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<1))
-#define DIRECTION_TOGGLE_BUTTON_Get()               ((PIOC_REGS->PIO_PDSR >> 1) & 0x1)
-#define DIRECTION_TOGGLE_BUTTON_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<1))
-#define DIRECTION_TOGGLE_BUTTON_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<1))
-#define DIRECTION_TOGGLE_BUTTON_PIN                  PIO_PIN_PC1
+/*** Macros for GPIO_PC1 pin ***/
+#define GPIO_PC1_Set()               (PIOC_REGS->PIO_SODR = (1<<1))
+#define GPIO_PC1_Clear()             (PIOC_REGS->PIO_CODR = (1<<1))
+#define GPIO_PC1_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<1))
+#define GPIO_PC1_Get()               ((PIOC_REGS->PIO_PDSR >> 1) & 0x1)
+#define GPIO_PC1_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<1))
+#define GPIO_PC1_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<1))
+#define GPIO_PC1_PIN                  PIO_PIN_PC1
 
-/*** Macros for START_STOP_BUTTON pin ***/
-#define START_STOP_BUTTON_Set()               (PIOC_REGS->PIO_SODR = (1<<3))
-#define START_STOP_BUTTON_Clear()             (PIOC_REGS->PIO_CODR = (1<<3))
-#define START_STOP_BUTTON_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<3))
-#define START_STOP_BUTTON_Get()               ((PIOC_REGS->PIO_PDSR >> 3) & 0x1)
-#define START_STOP_BUTTON_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<3))
-#define START_STOP_BUTTON_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<3))
-#define START_STOP_BUTTON_PIN                  PIO_PIN_PC3
+/*** Macros for GPIO_PC3 pin ***/
+#define GPIO_PC3_Set()               (PIOC_REGS->PIO_SODR = (1<<3))
+#define GPIO_PC3_Clear()             (PIOC_REGS->PIO_CODR = (1<<3))
+#define GPIO_PC3_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<3))
+#define GPIO_PC3_Get()               ((PIOC_REGS->PIO_PDSR >> 3) & 0x1)
+#define GPIO_PC3_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<3))
+#define GPIO_PC3_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<3))
+#define GPIO_PC3_PIN                  PIO_PIN_PC3
 
-/*** Macros for LED pin ***/
-#define LED_Set()               (PIOC_REGS->PIO_SODR = (1<<23))
-#define LED_Clear()             (PIOC_REGS->PIO_CODR = (1<<23))
-#define LED_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<23))
-#define LED_Get()               ((PIOC_REGS->PIO_PDSR >> 23) & 0x1)
-#define LED_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<23))
-#define LED_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<23))
-#define LED_PIN                  PIO_PIN_PC23
+/*** Macros for GPIO_PA24 pin ***/
+#define GPIO_PA24_Set()               (PIOA_REGS->PIO_SODR = (1<<24))
+#define GPIO_PA24_Clear()             (PIOA_REGS->PIO_CODR = (1<<24))
+#define GPIO_PA24_Toggle()            (PIOA_REGS->PIO_ODSR ^= (1<<24))
+#define GPIO_PA24_Get()               ((PIOA_REGS->PIO_PDSR >> 24) & 0x1)
+#define GPIO_PA24_OutputEnable()      (PIOA_REGS->PIO_OER = (1<<24))
+#define GPIO_PA24_InputEnable()       (PIOA_REGS->PIO_ODR = (1<<24))
+#define GPIO_PA24_PIN                  PIO_PIN_PA24
+
+/*** Macros for GPIO_PC23 pin ***/
+#define GPIO_PC23_Set()               (PIOC_REGS->PIO_SODR = (1<<23))
+#define GPIO_PC23_Clear()             (PIOC_REGS->PIO_CODR = (1<<23))
+#define GPIO_PC23_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<23))
+#define GPIO_PC23_Get()               ((PIOC_REGS->PIO_PDSR >> 23) & 0x1)
+#define GPIO_PC23_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<23))
+#define GPIO_PC23_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<23))
+#define GPIO_PC23_PIN                  PIO_PIN_PC23
 
 
 // *****************************************************************************

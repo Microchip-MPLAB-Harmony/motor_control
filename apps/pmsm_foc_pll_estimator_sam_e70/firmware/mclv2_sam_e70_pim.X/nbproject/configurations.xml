@@ -6,6 +6,25 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mclv2_sam_e70_pim" projectFiles="true">
+          <logicalFolder name="f3" displayName="motor_control" projectFiles="true">
+            <logicalFolder name="f1" displayName="pmsm_foc" projectFiles="true">
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_rotorposition.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_control_loop.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_currmeasurement.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_derivedparams.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_errorhandler.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_generic_lib.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_hal.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_lib.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_picontrol.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_pmsm_foc.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_pmsm_foc_common.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_pwm.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_speed.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_userparams.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_voltagemeasurement.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="afec" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e70_pim/peripheral/afec/plib_afec0.h</itemPath>
@@ -32,15 +51,16 @@
               <itemPath>../src/config/mclv2_sam_e70_pim/peripheral/uart/plib_uart0.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../src/config/mclv2_sam_e70_pim/userparams.h</itemPath>
+          <logicalFolder name="f2" displayName="X2CCode" projectFiles="true">
+            <logicalFolder name="f1" displayName="X2CScope" projectFiles="true">
+              <itemPath>../src/config/mclv2_sam_e70_pim/X2CCode/X2CScope/inc/X2CScope.h</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/X2CCode/X2CScope/inc/X2CScopeCommunication.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
           <itemPath>../src/config/mclv2_sam_e70_pim/device_cache.h</itemPath>
           <itemPath>../src/config/mclv2_sam_e70_pim/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/mclv2_sam_e70_pim/definitions.h</itemPath>
         </logicalFolder>
-      </logicalFolder>
-      <logicalFolder name="f5" displayName="MotorControl" projectFiles="true">
-        <itemPath>../src/mclib_generic_float.h</itemPath>
-        <itemPath>../src/mc_app.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME70Q21B_DFP" projectFiles="true">
@@ -92,31 +112,19 @@
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
-              </logicalFolder>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="DSP" projectFiles="true">
-              <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
-      </logicalFolder>
-      <logicalFolder name="f4" displayName="X2CScope" projectFiles="true">
-        <itemPath>../src/X2CScope.h</itemPath>
-        <itemPath>../src/X2CScopeCommunication.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -128,6 +136,21 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mclv2_sam_e70_pim" projectFiles="true">
+          <logicalFolder name="f4" displayName="motor_control" projectFiles="true">
+            <logicalFolder name="f1" displayName="pmsm_foc" projectFiles="true">
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_rotorposition.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_control_loop.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_currmeasurement.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_errorhandler.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_generic_lib.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_lib.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_picontrol.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_pmsm_foc.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_pwm.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_speed.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/motor_control/pmsm_foc/mc_voltagemeasurement.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="afec" projectFiles="true">
               <itemPath>../src/config/mclv2_sam_e70_pim/peripheral/afec/plib_afec0.c</itemPath>
@@ -151,8 +174,14 @@
               <itemPath>../src/config/mclv2_sam_e70_pim/peripheral/uart/plib_uart0.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f3" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/mclv2_sam_e70_pim/stdio/xc32_monitor.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="X2CCode" projectFiles="true">
+            <logicalFolder name="f1" displayName="X2CScope" projectFiles="true">
+              <itemPath>../src/config/mclv2_sam_e70_pim/X2CCode/X2CScope/src/X2CScope.c</itemPath>
+              <itemPath>../src/config/mclv2_sam_e70_pim/X2CCode/X2CScope/src/X2CScopeCommunication.c</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/mclv2_sam_e70_pim/initialization.c</itemPath>
           <itemPath>../src/config/mclv2_sam_e70_pim/interrupts.c</itemPath>
@@ -161,15 +190,7 @@
           <itemPath>../src/config/mclv2_sam_e70_pim/libc_syscalls.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="MotorControl" projectFiles="true">
-        <itemPath>../src/mclib_generic_float.c</itemPath>
-        <itemPath>../src/mc_app.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="X2CScope" projectFiles="true">
-        <itemPath>../src/X2CScope.c</itemPath>
-        <itemPath>../src/X2CScopeCommunication.c</itemPath>
-      </logicalFolder>
-      <itemPath>../src/main.c</itemPath>
+      <itemPath>../src/main_mclv2.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -190,17 +211,19 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>ICD4Tool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.30</languageToolchainVersion>
+        <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAME70_DFP" vendor="Microchip" version="4.0.40"/>
+        <pack name="SAME70_DFP" vendor="Microchip" version="4.2.59"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../src/X2CScopeLib_SAME70_XC32_215.a</linkerLibFileItem>
+            <linkerLibFileItem>../src/config/mclv2_sam_e70_pim/X2CCode/X2CScope/lib/libCORTEXM7_X2CScope.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <archiverTool>
@@ -255,7 +278,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/mclv2_sam_e70_pim;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+                  value="../src/config/mclv2_sam_e70_pim/X2CCode;../src;../src/config/mclv2_sam_e70_pim;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -296,6 +319,9 @@
         <property key="preprocessor-macros" value=""/>
         <property key="warning-level" value=""/>
       </C32-AS>
+      <C32-CO>
+        <property key="coverage-enable" value=""/>
+      </C32-CO>
       <C32-LD>
         <property key="additional-options-use-response-files" value="false"/>
         <property key="additional-options-write-sla" value="false"/>
@@ -372,6 +398,7 @@
         <property key="mdtcm" value=""/>
         <property key="mitcm" value=""/>
         <property key="mstacktcm" value="false"/>
+        <property key="omit-pack-options" value="1"/>
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
@@ -383,6 +410,9 @@
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UpdateOptions"
                   value="ToolFirmwareOption.UseLatest"/>
+        <property key="ToolFirmwareToolPack"
+                  value="Press to select which tool pack to use"/>
+        <property key="communication.interface.jtag" value="2wire"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
@@ -409,6 +439,8 @@
         <property key="programoptions.pgmentry.voltage" value="low"/>
         <property key="programoptions.pgmspeed" value="Med"/>
         <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value=""/>
@@ -417,6 +449,10 @@
         <property key="programoptions.programcalmem" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
         <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
+        <property key="toolpack.updateoptions"
+                  value="toolpack.updateoptions.uselatestoolpack"/>
+        <property key="toolpack.updateoptions.packversion"
+                  value="Press to select which tool pack to use"/>
         <property key="voltagevalue" value="3.25"/>
       </ICD4Tool>
       <PICkit3PlatformTool>
