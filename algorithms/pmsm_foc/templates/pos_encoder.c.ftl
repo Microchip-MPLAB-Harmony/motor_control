@@ -246,6 +246,7 @@ tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alig
     else
     {
         gMCRPOS_RotorAlignState.startupLockCount = 0;
+        MCHAL_EncoderPositionSet(1);
 <#if __PROCESSOR?matches(".*SAME70.*") == true>
         MCHAL_EncoderStart();
 </#if>

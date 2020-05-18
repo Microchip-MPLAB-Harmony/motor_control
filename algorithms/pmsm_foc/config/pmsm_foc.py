@@ -715,7 +715,7 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocSym_curr_meas.setLabel("Select Current Measurement Method")
     mcPmsmFocSym_curr_meas.addKey("DUAL_SHUNT", "0", "Dual Shunt")
     #mcPmsmFocSym_curr_meas.addKey("SINGLE_SHUNT", "0", "Single Shunt")
-    mcPmsmFocSym_curr_meas.setOutputMode("Value")
+    mcPmsmFocSym_curr_meas.setOutputMode("Key")
     mcPmsmFocSym_curr_meas.setDisplayMode("Description")
 
     mcPmsmFocSym_open_loop = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_OPEN_LOOP", mcPmsmFocAlgoMenu)
@@ -906,11 +906,11 @@ def instantiateComponent(mcPmsmFocComponent):
 
     mcPmsmFocSym_alignment_method = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_ALIGNMENT_METHOD", mcPmsmFocStartupMenu)
     mcPmsmFocSym_alignment_method.setLabel("Select Startup Alignment Method")
-    mcPmsmFocSym_alignment_method.addKey("NO_ALIGNMENT", "0", "No Alignment")
-    mcPmsmFocSym_alignment_method.addKey("FORCED_ALIGNMENT", "1", "Forced Alignment")
+    #mcPmsmFocSym_alignment_method.addKey("NO_ALIGNMENT", "0", "No Alignment")
+    mcPmsmFocSym_alignment_method.addKey("FORCED_ALIGNMENT", "0", "Forced Alignment")
     #mcPmsmFocSym_alignment_method.addKey("IPD", "2", "Initial Position Detection")
-    mcPmsmFocSym_alignment_method.setDefaultValue(1)
-    mcPmsmFocSym_alignment_method.setOutputMode("Value")
+    mcPmsmFocSym_alignment_method.setDefaultValue(0)
+    mcPmsmFocSym_alignment_method.setOutputMode("Key")
     mcPmsmFocSym_alignment_method.setDisplayMode("Description")
 
     mcPmsmFocSym_alignment = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_ALIGNMENT", mcPmsmFocStartupMenu)

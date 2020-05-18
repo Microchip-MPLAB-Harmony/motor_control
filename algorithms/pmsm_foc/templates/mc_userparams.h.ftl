@@ -52,17 +52,12 @@
 
 
 
-#define NO_ALIGNMENT                    (0U)
-#define FORCED_ALIGNMENT                (1U)
-#define IPD                             (2U)
+#define FORCED_ALIGNMENT                (0U)
 
 #define SENSORLESS_PLL                  (0U)
 #define SENSORED_ENCODER                (1U)
-#define SENSORLESS_ROLO                 (2U)
-#define SENSORLESS_SMO                  (3U)
 
-#define DUAL_SHUNT                        0U
-#define SINGLE_SHUNT                      1U
+#define DUAL_SHUNT                       (0U)
 
 
 /***********************************************************************************************/
@@ -73,7 +68,7 @@
 #define OPEN_LOOP_FUNCTIONING            (${MCPMSMFOC_OPEN_LOOP?then('1','0')}U)  /* If enabled - Keep running in open loop */
 #define TORQUE_MODE                      (${MCPMSMFOC_TORQUE_MODE?then('1','0')}U)  /* If enabled - torque control */
 #define FIELD_WEAKENING                  (${MCPMSMFOC_FIELD_WEAKENING?then('1','0')}U)  /* If enabled - Field weakening */
-#define ALIGNMENT_METHOD                 (${MCPMSMFOC_ALIGNMENT_METHOD}U)  /* alignment method  */
+#define ALIGNMENT_METHOD                 (${MCPMSMFOC_ALIGNMENT_METHOD})  /* alignment method  */
 
 <#if MCPMSMFOC_ALIGNMENT == "0">
 #define Q_AXIS_ALIGNMENT                 (1U)
@@ -117,9 +112,9 @@
 #define OPEN_LOOP_RAMP_TIME_IN_SEC      (${MCPMSMFOC_OL_RAMP_TIME})   /* Startup - Time to reach OPEN_LOOP_END_SPEED_RPM in seconds */
 </#if>
 #define Q_CURRENT_REF_OPENLOOP          (${MCPMSMFOC_OL_IQ_REF}) /* Startup - Motor start to ramp up in current control mode */
-<#if MCPMSMFOC_TORQUE_MODE == true>
+#if (TORQUE_MODE == 1U)
 #define Q_CURRENT_REF_TORQUE            (${MCPMSMFOC_END_TORQUE})   /* Iq ref for torque mode */
-</#if>
+#endif
 
 /* Current ramp parameters for open loop to close loop transition  */
 #define Q_CURRENT_OPENLOOP_STEP                    ((float)0.001)
@@ -156,7 +151,7 @@
 #define KFILTER_ESDQ                   (float)((float)200/(float)32767)
 #define KFILTER_BEMF_AMPLITUDE         (float)((float)100/(float)32767)
 #define KFILTER_VELESTIM               (float)((float)174/(float)32767)
-#define KFILTER_POT                    (float)((float)50/(float)32767)
+#define KFILTER_POT                    (float)((float)250/(float)32767)
 
 /***********************************************************************************************/
 /* Driver board configuration Parameters */
