@@ -5,34 +5,36 @@
                    displayName="Header Files"
                    projectFiles="true">
       <logicalFolder name="f2" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="mchv3_pic32_mk_pim" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="mchv3_pic32_mk_mcf_pim"
+                       projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="adchs" projectFiles="true">
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/adchs/plib_adchs.h</itemPath>
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/adchs/plib_adchs_common.h</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/adchs/plib_adchs.h</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/adchs/plib_adchs_common.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/clk/plib_clk.h</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f5" displayName="evic" projectFiles="true">
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/evic/plib_evic.h</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/evic/plib_evic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="gpio" projectFiles="true">
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/gpio/plib_gpio.h</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/gpio/plib_gpio.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f6" displayName="mcpwm" projectFiles="true">
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/mcpwm/plib_mcpwm_common.h</itemPath>
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/mcpwm/plib_mcpwm.h</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/mcpwm/plib_mcpwm_common.h</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/mcpwm/plib_mcpwm.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="uart" projectFiles="true">
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/uart/plib_uart_common.h</itemPath>
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/uart/plib_uart2.h</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/uart/plib_uart_common.h</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/uart/plib_uart2.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../src/config/mchv3_pic32_mk_pim/toolchain_specifics.h</itemPath>
-          <itemPath>../src/config/mchv3_pic32_mk_pim/definitions.h</itemPath>
+          <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/toolchain_specifics.h</itemPath>
+          <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/definitions.h</itemPath>
         </logicalFolder>
-        <itemPath>../src/config/mchv3_pic32_mk_pim/userparams.h</itemPath>
+        <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/userparams.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="packs" projectFiles="true">
         <logicalFolder name="f1"
@@ -62,33 +64,35 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="mchv3_pic32_mk_pim" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="mchv3_pic32_mk_mcf_pim"
+                       projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="adchs" projectFiles="true">
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/adchs/plib_adchs.c</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/adchs/plib_adchs.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/clk/plib_clk.c</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f5" displayName="evic" projectFiles="true">
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/evic/plib_evic.c</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/evic/plib_evic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="gpio" projectFiles="true">
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/gpio/plib_gpio.c</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/gpio/plib_gpio.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f6" displayName="mcpwm" projectFiles="true">
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/mcpwm/plib_mcpwm.c</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/mcpwm/plib_mcpwm.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="uart" projectFiles="true">
-              <itemPath>../src/config/mchv3_pic32_mk_pim/peripheral/uart/plib_uart2.c</itemPath>
+              <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/peripheral/uart/plib_uart2.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="stdio" projectFiles="true">
-            <itemPath>../src/config/mchv3_pic32_mk_pim/stdio/xc32_monitor.c</itemPath>
+            <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/mchv3_pic32_mk_pim/initialization.c</itemPath>
-          <itemPath>../src/config/mchv3_pic32_mk_pim/interrupts.c</itemPath>
-          <itemPath>../src/config/mchv3_pic32_mk_pim/exceptions.c</itemPath>
+          <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/initialization.c</itemPath>
+          <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/interrupts.c</itemPath>
+          <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/exceptions.c</itemPath>
         </logicalFolder>
       </logicalFolder>
       <itemPath>../src/X2CScope.c</itemPath>
@@ -116,7 +120,7 @@
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
-    <conf name="mchv3_pic32_mk_pim" type="2">
+    <conf name="mchv3_pic32_mk_mcf_pim" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>PIC32MK1024MCF100</targetDevice>
@@ -130,6 +134,8 @@
       <packs>
         <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.1.53"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -164,7 +170,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/mchv3_pic32_mk_pim;../src/packs/PIC32MK1024MCF100_DFP;;../src/mips"/>
+                  value="../src;../src/config/mchv3_pic32_mk_mcf_pim;../src/packs/PIC32MK1024MCF100_DFP;;../src/mips"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
