@@ -94,14 +94,13 @@ int main ( void )
 
 /* Initialize all modules */
     SYS_Initialize ( NULL );
-    motor_stop();
     ADC0_CallbackRegister((ADC_CALLBACK) ADC_CALIB_ISR, (uintptr_t)NULL);
-    EIC_CallbackRegister ((EIC_PIN)EIC_PIN_2, (EIC_CALLBACK) OC_FAULT_ISR,(uintptr_t)NULL);
     motorcontrol_vars_init();
     ADC0_Enable();
     X2CScope_Init();
     TCC0_PWMStart();
-
+    motor_stop();
+    EIC_CallbackRegister ((EIC_PIN)EIC_PIN_2, (EIC_CALLBACK) OC_FAULT_ISR,(uintptr_t)NULL);
     while ( true )
     {
         
@@ -197,21 +196,23 @@ void ADC_ISR(uintptr_t context)
          ADC0_REGS->ADC_SWTRIG |= ADC_SWTRIG_START_Msk; 
                
          /* store the first ADC result value */
-	cur_mea[0] = ((int16_t)adc_result_data[0] - (int16_t)adc_0_offset);               
+        cur_mea[0] = ((int16_t)adc_result_data[0] - (int16_t)adc_0_offset);               
 							
          /* store the first ADC result value */
          cur_mea[1] =  ((int16_t)adc_result_data[1] - (int16_t)adc_1_offset);   
          
          current_measurement_management();
 		 
-	/* motor control */
-	motorcontrol();
+        /* motor control */
+        motorcontrol();
 		 
-	while(ADC0_REGS->ADC_INTFLAG != ADC_INTFLAG_RESRDY_Msk);
+        while(ADC0_REGS->ADC_INTFLAG != ADC_INTFLAG_RESRDY_Msk)
+        {
+        }
                        
          /* Read the ADC result value */
          adc_dc_bus_voltage =  ADC0_ConversionResultGet();
-	pot_input = ADC1_ConversionResultGet();
+        pot_input = ADC1_ConversionResultGet();
   
          /* select the next ADC channel for conversion */
          ADC0_ChannelSelect(ADC_POSINPUT_AIN2,ADC_NEGINPUT_GND); // Phase U to ADC0

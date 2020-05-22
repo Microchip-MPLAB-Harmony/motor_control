@@ -1,7 +1,7 @@
 /**
  * \brief Component description for OSC32KCTRL
  *
- * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2020 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-08-07T06:35:22Z */
+/* file generated from device description version 2019-11-25T02:24:13Z */
 #ifndef _SAMC21_OSC32KCTRL_COMPONENT_H_
 #define _SAMC21_OSC32KCTRL_COMPONENT_H_
 
@@ -136,22 +136,20 @@
 #define OSC32KCTRL_XOSC32K_STARTUP_Pos        _U_(8)                                               /**< (OSC32KCTRL_XOSC32K) Oscillator Start-Up Time Position */
 #define OSC32KCTRL_XOSC32K_STARTUP_Msk        (_U_(0x7) << OSC32KCTRL_XOSC32K_STARTUP_Pos)         /**< (OSC32KCTRL_XOSC32K) Oscillator Start-Up Time Mask */
 #define OSC32KCTRL_XOSC32K_STARTUP(value)     (OSC32KCTRL_XOSC32K_STARTUP_Msk & ((value) << OSC32KCTRL_XOSC32K_STARTUP_Pos))
-#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE1_Val _U_(0x0)                                             /**< (OSC32KCTRL_XOSC32K) 0.122 ms  */
-#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE32_Val _U_(0x1)                                             /**< (OSC32KCTRL_XOSC32K) 1.068 ms  */
-#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE2048_Val _U_(0x2)                                             /**< (OSC32KCTRL_XOSC32K) 62.6 ms  */
-#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE4096_Val _U_(0x3)                                             /**< (OSC32KCTRL_XOSC32K) 125 ms  */
-#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE16384_Val _U_(0x4)                                             /**< (OSC32KCTRL_XOSC32K) 500 ms  */
-#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE32768_Val _U_(0x5)                                             /**< (OSC32KCTRL_XOSC32K) 1000 ms  */
-#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE65536_Val _U_(0x6)                                             /**< (OSC32KCTRL_XOSC32K) 2000 ms  */
-#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE131072_Val _U_(0x7)                                             /**< (OSC32KCTRL_XOSC32K) 4000 ms  */
-#define OSC32KCTRL_XOSC32K_STARTUP_CYCLE1     (OSC32KCTRL_XOSC32K_STARTUP_CYCLE1_Val << OSC32KCTRL_XOSC32K_STARTUP_Pos) /**< (OSC32KCTRL_XOSC32K) 0.122 ms Position  */
-#define OSC32KCTRL_XOSC32K_STARTUP_CYCLE32    (OSC32KCTRL_XOSC32K_STARTUP_CYCLE32_Val << OSC32KCTRL_XOSC32K_STARTUP_Pos) /**< (OSC32KCTRL_XOSC32K) 1.068 ms Position  */
-#define OSC32KCTRL_XOSC32K_STARTUP_CYCLE2048  (OSC32KCTRL_XOSC32K_STARTUP_CYCLE2048_Val << OSC32KCTRL_XOSC32K_STARTUP_Pos) /**< (OSC32KCTRL_XOSC32K) 62.6 ms Position  */
+#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE2048_Val _U_(0x0)                                             /**< (OSC32KCTRL_XOSC32K) 62.5 ms  */
+#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE4096_Val _U_(0x1)                                             /**< (OSC32KCTRL_XOSC32K) 125 ms  */
+#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE16384_Val _U_(0x2)                                             /**< (OSC32KCTRL_XOSC32K) 500 ms  */
+#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE32768_Val _U_(0x3)                                             /**< (OSC32KCTRL_XOSC32K) 1000 ms  */
+#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE65536_Val _U_(0x4)                                             /**< (OSC32KCTRL_XOSC32K) 2000 ms  */
+#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE131072_Val _U_(0x5)                                             /**< (OSC32KCTRL_XOSC32K) 4000 ms  */
+#define   OSC32KCTRL_XOSC32K_STARTUP_CYCLE262144_Val _U_(0x6)                                             /**< (OSC32KCTRL_XOSC32K) 8000 ms  */
+#define OSC32KCTRL_XOSC32K_STARTUP_CYCLE2048  (OSC32KCTRL_XOSC32K_STARTUP_CYCLE2048_Val << OSC32KCTRL_XOSC32K_STARTUP_Pos) /**< (OSC32KCTRL_XOSC32K) 62.5 ms Position  */
 #define OSC32KCTRL_XOSC32K_STARTUP_CYCLE4096  (OSC32KCTRL_XOSC32K_STARTUP_CYCLE4096_Val << OSC32KCTRL_XOSC32K_STARTUP_Pos) /**< (OSC32KCTRL_XOSC32K) 125 ms Position  */
 #define OSC32KCTRL_XOSC32K_STARTUP_CYCLE16384 (OSC32KCTRL_XOSC32K_STARTUP_CYCLE16384_Val << OSC32KCTRL_XOSC32K_STARTUP_Pos) /**< (OSC32KCTRL_XOSC32K) 500 ms Position  */
 #define OSC32KCTRL_XOSC32K_STARTUP_CYCLE32768 (OSC32KCTRL_XOSC32K_STARTUP_CYCLE32768_Val << OSC32KCTRL_XOSC32K_STARTUP_Pos) /**< (OSC32KCTRL_XOSC32K) 1000 ms Position  */
 #define OSC32KCTRL_XOSC32K_STARTUP_CYCLE65536 (OSC32KCTRL_XOSC32K_STARTUP_CYCLE65536_Val << OSC32KCTRL_XOSC32K_STARTUP_Pos) /**< (OSC32KCTRL_XOSC32K) 2000 ms Position  */
 #define OSC32KCTRL_XOSC32K_STARTUP_CYCLE131072 (OSC32KCTRL_XOSC32K_STARTUP_CYCLE131072_Val << OSC32KCTRL_XOSC32K_STARTUP_Pos) /**< (OSC32KCTRL_XOSC32K) 4000 ms Position  */
+#define OSC32KCTRL_XOSC32K_STARTUP_CYCLE262144 (OSC32KCTRL_XOSC32K_STARTUP_CYCLE262144_Val << OSC32KCTRL_XOSC32K_STARTUP_Pos) /**< (OSC32KCTRL_XOSC32K) 8000 ms Position  */
 #define OSC32KCTRL_XOSC32K_WRTLOCK_Pos        _U_(12)                                              /**< (OSC32KCTRL_XOSC32K) Write Lock Position */
 #define OSC32KCTRL_XOSC32K_WRTLOCK_Msk        (_U_(0x1) << OSC32KCTRL_XOSC32K_WRTLOCK_Pos)         /**< (OSC32KCTRL_XOSC32K) Write Lock Mask */
 #define OSC32KCTRL_XOSC32K_WRTLOCK(value)     (OSC32KCTRL_XOSC32K_WRTLOCK_Msk & ((value) << OSC32KCTRL_XOSC32K_WRTLOCK_Pos))
