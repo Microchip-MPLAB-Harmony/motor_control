@@ -47,43 +47,43 @@
         <itemPath>../src/mclib_generic_float.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
-        <logicalFolder name="f1" displayName="ATSAMRH71F20B_DFP" projectFiles="true">
+        <logicalFolder name="f1" displayName="ATSAMRH71F20C_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/chipid.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/flexcom.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/flexramecc.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/gmac.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/hefc.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/hemc.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/hsdramc.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/hsmc.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/icm.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/ip1553.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/matrix.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/mcan.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/nmic.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/pio.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/pmc.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/pwm.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/qspi.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/rstc.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/rtc.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/rtt.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/sfr.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/sha.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/spw.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/supc.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/tc.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/tcmecc.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/trng.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/wdt.h</itemPath>
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/xdmac.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/chipid.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/flexcom.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/flexramecc.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/gmac.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/hefc.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/hemc.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/hsdramc.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/hsmc.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/icm.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/ip1553.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/matrix.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/mcan.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/nmic.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/pio.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/pmc.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/pwm.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/qspi.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/rstc.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/rtc.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/rtt.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/sfr.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/sha.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/spw.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/supc.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/tc.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/tcmecc.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/trng.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/wdt.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/component/xdmac.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
-            <itemPath>../src/packs/ATSAMRH71F20B_DFP/pio/samrh71f20b.h</itemPath>
+            <itemPath>../src/packs/ATSAMRH71F20C_DFP/pio/samrh71f20c.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/packs/ATSAMRH71F20B_DFP/device.h</itemPath>
-          <itemPath>../src/packs/ATSAMRH71F20B_DFP/atsamrh71f20b.h</itemPath>
+          <itemPath>../src/packs/ATSAMRH71F20C_DFP/device.h</itemPath>
+          <itemPath>../src/packs/ATSAMRH71F20C_DFP/atsamrh71f20c.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
@@ -168,6 +168,7 @@
                    displayName="Important Files"
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_rh71_ek/harmony.prj</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -178,18 +179,20 @@
     <conf name="sam_rh71_ek" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
-        <targetDevice>ATSAMRH71F20B</targetDevice>
+        <targetDevice>ATSAMRH71F20C</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>samice</platformTool>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.40</languageToolchainVersion>
+        <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMRH71_DFP" vendor="Microchip" version="1.2.79"/>
+        <pack name="SAMRH71_DFP" vendor="Microchip" version="2.0.89"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -265,7 +268,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/sam_rh71_ek;../src/packs/ATSAMRH71F20B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+                  value="../src;../src/config/sam_rh71_ek;../src/packs/ATSAMRH71F20C_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -935,6 +938,7 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.end" value="0x5fffff"/>
         <property key="memories.programmemory.start" value="0x400000"/>
+        <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservebootflash" value="false"/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveprogramrange.end" value="0x5fffff"/>
