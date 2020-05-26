@@ -148,7 +148,7 @@ typedef struct
     float                            angle;
     float                            speed;
     float                            acceleration;
-  #if(1U == FIELD_WEAKENING )
+  #if(ENABLED == FIELD_WEAKENING )
     float                            esfilt;
   #endif
 }tMCRPOS_OUTPUT_SIGNALS_S;

@@ -68,6 +68,19 @@ extern "C" {
 // Section: Data Types
 // *****************************************************************************
 // *****************************************************************************
+/* Alignment methods */
+#define FORCED_ALIGNMENT                (0U)
+
+/* Position feedback methods */
+#define SENSORLESS_PLL                  (0U)
+#define SENSORED_ENCODER                (1U)
+
+/* Current measurement methods */
+#define DUAL_SHUNT                      (0U)
+
+#define ENABLED                          (1U)
+#define DISABLED                         (0U)
+
 
 typedef enum
 {

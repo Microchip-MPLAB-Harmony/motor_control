@@ -382,6 +382,30 @@ def mcPmsmFocCurrentKiCalc(symbol, event):
             ki = mcPmsmFocCurrentPIDict[board]['KI']
     symbol.setValue(ki)
 
+def mcPmsmFocControl(symbol, event):
+    if event["value"] == True:
+        symbol.setVisible(False)
+    else:
+        symbol.setVisible(True)
+
+def mcPmsmFocOpenloop(symbol, event):
+    component = symbol.getComponent()
+    print(event["id"])
+    if (event["id"] == "MCPMSMFOC_POSITION_FB"):
+        if(event["value"] == 1):
+            symbol.setVisible(False)
+            component.setDependencyEnabled("pmsmfoc_QDEC", True)
+        else:
+            symbol.setVisible(True)
+            component.setDependencyEnabled("pmsmfoc_QDEC", False)
+    else:
+        if event["value"] == True:
+            symbol.setVisible(False)
+        else:
+            print(component.getSymbolValue("MCPMSMFOC_POSITION_FB"))
+            if (component.getSymbolValue("MCPMSMFOC_POSITION_FB") != 1):
+                symbol.setVisible(True)
+
 # Send message to ADC PLIB when ADC channels are changed
 def mcPmsmFocADCChanDep(symbol, event):
     component = symbol.getComponent()
@@ -720,10 +744,11 @@ def instantiateComponent(mcPmsmFocComponent):
 
     mcPmsmFocSym_open_loop = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_OPEN_LOOP", mcPmsmFocAlgoMenu)
     mcPmsmFocSym_open_loop.setLabel("Run in Open Loop?")
-    mcPmsmFocSym_open_loop.setDependencies(mcPmsmFocEncoderHide, ["MCPMSMFOC_POSITION_FB"])
+    mcPmsmFocSym_open_loop.setDependencies(mcPmsmFocOpenloop, ["MCPMSMFOC_POSITION_FB", "MCPMSMFOC_TORQUE_MODE", "MCPMSMFOC_FIELD_WEAKENING"])
 
     mcPmsmFocSym_torque_mode = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_TORQUE_MODE", mcPmsmFocAlgoMenu)
     mcPmsmFocSym_torque_mode.setLabel("Run in Torque Control?")
+    mcPmsmFocSym_torque_mode.setDependencies(mcPmsmFocControl, ["MCPMSMFOC_OPEN_LOOP", "MCPMSMFOC_FIELD_WEAKENING"])
 
     mcPmsmFocSym_end_torque = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_END_TORQUE", mcPmsmFocSym_torque_mode)
     mcPmsmFocSym_end_torque.setLabel("Ref. Quadrature Current (A)")
@@ -733,6 +758,7 @@ def instantiateComponent(mcPmsmFocComponent):
 
     mcPmsmFocSym_field_weakening = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_FIELD_WEAKENING", mcPmsmFocAlgoMenu)
     mcPmsmFocSym_field_weakening.setLabel("Enable Field Weakening?")
+    mcPmsmFocSym_field_weakening.setDependencies(mcPmsmFocControl, ["MCPMSMFOC_OPEN_LOOP", "MCPMSMFOC_TORQUE_MODE"])
 
     global mcPmsmFocSym_max_fw_current
     mcPmsmFocSym_max_fw_current = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_MAX_FW_CURRENT", mcPmsmFocSym_field_weakening)
@@ -919,7 +945,7 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocSym_alignment.addKey("D_AXIS", "1", "D Axis")
     mcPmsmFocSym_alignment.setOutputMode("Value")
     mcPmsmFocSym_alignment.setDisplayMode("Description")
-    mcPmsmFocSym_alignment.setDependencies(mcPmsmFocEncoderHide, ["MCPMSMFOC_POSITION_FB"])
+    #mcPmsmFocSym_alignment.setDependencies(mcPmsmFocEncoderHide, ["MCPMSMFOC_POSITION_FB"])
 
     mcPmsmFocSym_lock_time = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_LOCK_TIME", mcPmsmFocStartupMenu)
     mcPmsmFocSym_lock_time.setLabel("Alignment Lock Time (sec)")

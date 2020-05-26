@@ -50,40 +50,33 @@
 /* USER CONFIGURABLE PARAMETERS - START                                                        */
 /***********************************************************************************************/
 
-
-
-#define FORCED_ALIGNMENT                (0U)
-
-#define SENSORLESS_PLL                  (0U)
-#define SENSORED_ENCODER                (1U)
-
-#define DUAL_SHUNT                       (0U)
-
-
 /***********************************************************************************************/
 /* Algorithm Configuration parameters                                                          */
 /***********************************************************************************************/
 #define POSITION_FEEDBACK                (${MCPMSMFOC_POSITION_FB})
 
-#define OPEN_LOOP_FUNCTIONING            (${MCPMSMFOC_OPEN_LOOP?then('1','0')}U)  /* If enabled - Keep running in open loop */
-#define TORQUE_MODE                      (${MCPMSMFOC_TORQUE_MODE?then('1','0')}U)  /* If enabled - torque control */
-#define FIELD_WEAKENING                  (${MCPMSMFOC_FIELD_WEAKENING?then('1','0')}U)  /* If enabled - Field weakening */
+<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
+#define OPEN_LOOP_FUNCTIONING            (${MCPMSMFOC_OPEN_LOOP?then('ENABLED','DISABLED')})  /* If enabled - Keep running in open loop */
+</#if>
+#define TORQUE_MODE                      (${MCPMSMFOC_TORQUE_MODE?then('ENABLED','DISABLED')})  /* If enabled - torque control */
+#define FIELD_WEAKENING                  (${MCPMSMFOC_FIELD_WEAKENING?then('ENABLED','DISABLED')})  /* If enabled - Field weakening */
 #define ALIGNMENT_METHOD                 (${MCPMSMFOC_ALIGNMENT_METHOD})  /* alignment method  */
 
 <#if MCPMSMFOC_ALIGNMENT == "0">
-#define Q_AXIS_ALIGNMENT                 (1U)
-#define ANGLE_OFFSET_DEG                 (float)45.0    /* Angle offset while switching to closed loop */
+#define Q_AXIS_ALIGNMENT                 (ENABLED)
 <#else>
-#define D_AXIS_ALIGNMENT                 (1U)
-#define ANGLE_OFFSET_DEG                 (float)45.0       /* Angle offset while switching to closed loop */
+#define D_AXIS_ALIGNMENT                 (ENABLED)
+</#if>
+<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
+#define ANGLE_OFFSET_DEG                 (float)45.0    /* Angle offset while switching to closed loop */
 </#if>
 
 #define CURRENT_MEASUREMENT              (${MCPMSMFOC_CURRENT_MEAS})  /* Current measurement shunts */
 
 <#if MCPMSMFOC_SPEED_REF_INPUT == "Potentiometer Analog Input">
-#define POTENTIOMETER_INPUT_ENABLED       1U
+#define POTENTIOMETER_INPUT_ENABLED       ENABLED
 <#else>
-#define POTENTIOMETER_INPUT_ENABLED       0U
+#define POTENTIOMETER_INPUT_ENABLED       DISABLED
 #define SPEED_REF_RPM                     (float)${MCPMSMFOC_SPEED_REF}
 </#if>
 /***********************************************************************************************/
@@ -112,7 +105,7 @@
 #define OPEN_LOOP_RAMP_TIME_IN_SEC      (${MCPMSMFOC_OL_RAMP_TIME})   /* Startup - Time to reach OPEN_LOOP_END_SPEED_RPM in seconds */
 </#if>
 #define Q_CURRENT_REF_OPENLOOP          (${MCPMSMFOC_OL_IQ_REF}) /* Startup - Motor start to ramp up in current control mode */
-#if (TORQUE_MODE == 1U)
+#if (TORQUE_MODE == ENABLED)
 #define Q_CURRENT_REF_TORQUE            (${MCPMSMFOC_END_TORQUE})   /* Iq ref for torque mode */
 #endif
 
@@ -121,7 +114,7 @@
 #define CLOSING_LOOP_TIME_COUNTS                   (uint32_t)( Q_CURRENT_REF_OPENLOOP / Q_CURRENT_OPENLOOP_STEP)
 
 /* Field weakening - Limit for -ve Idref */
-#if(FIELD_WEAKENING == 1U)
+#if(FIELD_WEAKENING == ENABLED)
 #define MAX_FW_NEGATIVE_ID_REF              (float)(${MCPMSMFOC_MAX_FW_CURRENT})
 #endif
 
@@ -169,7 +162,6 @@
 /***********************************************************************************************/
 /* Peripheral Configuration parameters */
 /***********************************************************************************************/
-/* Current measurement algorithms */
 
 /** PWM frequency in Hz */
 #define PWM_FREQUENCY                     (${MCPMSMFOC_PWM_FREQ}U)

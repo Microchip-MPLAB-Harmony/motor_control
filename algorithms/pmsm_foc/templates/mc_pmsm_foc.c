@@ -106,11 +106,11 @@ static void PMSM_FOC_StartAdcInterrupt( void )
 
 
 /******************************************************************************/
-/* Function name: MCINF_IsSpeedLoopActive                                     */
+/* Function name: PMSM_FOC_IsSpeedLoopActive                                     */
 /* Function parameters: None                                                  */
 /* Function return: tMCINF_LOOP_STATE_E                                       */
 /* Description: To be used in a state machine to decide whether               */
-/* to execute slow control loop                                               */
+/* to execute speed control loop                                               */
 /******************************************************************************/
 static tMCCTRL_TASK_STATE_E  PMSM_FOC_IsSpeedLoopActive(void)
 {
@@ -118,11 +118,11 @@ static tMCCTRL_TASK_STATE_E  PMSM_FOC_IsSpeedLoopActive(void)
 }
 
 /*******************************************************************************/
-/* Function name: MCINF_IsPositionLoopActive                                   */
+/* Function name: PMSM_FOC_IsPositionLoopActive                                   */
 /* Function parameters: None                                                   */
 /* Function return: tMCINF_LOOP_STATE_E                                        */
 /* Description: To be used in a state machine to decide whether                */
-/* to execute slow control loop                                                */
+/* to execute position control loop                                                */
 /*******************************************************************************/
 static tMCCTRL_TASK_STATE_E  PMSM_FOC_IsPositionLoopActive(void)
 {
@@ -133,7 +133,7 @@ static tMCCTRL_TASK_STATE_E  PMSM_FOC_IsPositionLoopActive(void)
 /*                   Implementation                                        */
 /******************************************************************************/
 /******************************************************************************/
-/* Function name: MCINF_Initialize                                     */
+/* Function name: PMSM_FOC_Initialize                                     */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
 /* Description:                                                               */
@@ -167,7 +167,7 @@ void PMSM_FOC_Initialize( void )
 }
 
 /*****************************************************************************/
-/* Function name: MotorStart                                                 */
+/* Function name: PMSM_FOC_MotorStart                                        */
 /* Function parameters: None                                                 */
 /* Function return: None                                                     */
 /* Description: Enables fast control loop and starts the PWMs.               */
@@ -212,10 +212,10 @@ void PMSM_FOC_MotorStart(void)
 }
 
 /******************************************************************************/
-/* Function name: MotorStop                                                   */
+/* Function name: PMSM_FOC_MotorStop                                          */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
-/* Description: Stops PWM and disables fast control loop.                     */
+/* Description: Disable PWM outputs.                                          */
 /******************************************************************************/
 void PMSM_FOC_MotorStop(void)
 {
@@ -235,7 +235,7 @@ void PMSM_FOC_MotorStop(void)
 
 #ifndef MCHV3
 /******************************************************************************/
-/* Function name: MCAPP_DirectionToggle                                       */
+/* Function name: PMSM_FOC_DirectionToggle                                    */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
 /* Description: Updates global variable for motor direction change            */
@@ -252,7 +252,7 @@ void PMSM_FOC_DirectionToggle(void)
 #endif
 
 /******************************************************************************/
-/* Function name: MCINF_Tasks                                                 */
+/* Function name: PMSM_FOC_Tasks                                              */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
 /* Description: Motor start stop and direction switch polling                 */
@@ -266,12 +266,6 @@ void PMSM_FOC_Tasks()
     }
     /* Speed Loop Control tasks  */
     PMSM_FOC_SpeedLoopTasks();
-
-    /* Motor start stop task */
-
-
-    /* Current control Loop Tasks */
-
  }
 
 
@@ -281,7 +275,7 @@ void PMSM_FOC_Tasks()
 /* Function name: MCAPP_SpeedLoopTasks                                        */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
-/* Description: Motor start stop and direction switch polling                 */
+/* Description: Speed loop Tasks                                              */
 /******************************************************************************/
 void PMSM_FOC_SpeedLoopTasks()
 {
@@ -306,10 +300,10 @@ void PMSM_FOC_SpeedLoopTasks()
 
 
 /*****************************************************************************/
-/* Function name: MCINF_PositionLoopTasks                                       */
+/* Function name: MCINF_PositionLoopTasks                                    */
 /* Function parameters: None                                                 */
 /* Function return: None                                                     */
-/* Description: Motor start stop and direction switch polling                */
+/* Description: Position loop tasks                                          */
 /*****************************************************************************/
 void MCINF_PositionLoopTasks()
 {
@@ -324,7 +318,7 @@ void MCINF_PositionLoopTasks()
  }
 
 /*******************************************************************************/
-/* Function name: MCINF_ButtonPolling                                          */
+/* Function name: PMSM_FOC_ButtonPolling                                          */
 /* Function parameters: None                                                   */
 /* Function return: None                                                       */
 /* Description: Button Polling                                                 */
@@ -348,7 +342,7 @@ void PMSM_FOC_ButtonPolling()
  }
 
 /******************************************************************************/
-/* Function name: MCINF_ResetInfrastructure                                   */
+/* Function name: PMSM_FOC_ResetParameters                                   */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
 /* Description: Reset infrastructure                                          */
@@ -361,7 +355,7 @@ void PMSM_FOC_ResetParameters( void )
 }
 
 /******************************************************************************/
-/* Function name: MCLIB_ButtonResponse                                        */
+/* Function name: PMSM_FOC_ButtonResponse                                        */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
 /* Description: Push button debounce function                                 */
