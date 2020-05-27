@@ -75,6 +75,10 @@ bool UART2_Read( void *buffer, const size_t size );
 
 UART_ERROR UART2_ErrorGet( void );
 
+bool UART2_AutoBaudQuery( void );
+
+void UART2_AutoBaudSet( bool enable );
+
 int UART2_ReadByte( void );
 
 bool UART2_ReceiverIsReady( void );

@@ -90,7 +90,7 @@ void ADCHS_Initialize()
 
     /* Input scan */
     ADCCSS1 = 0x0;
-    ADCCSS2 = 0x0;
+    ADCCSS2 = 0x0; 
 
     /* Result interrupt enable */
     ADCGIRQEN1 = 0x9;
@@ -202,7 +202,7 @@ void ADCHS_ChannelConversionStart(ADCHS_CHANNEL_NUM channel)
 /*Check if conversion result is available */
 bool ADCHS_ChannelResultIsReady(ADCHS_CHANNEL_NUM channel)
 {
-    bool status;
+    bool status = false;
     if (channel < ADCHS_CHANNEL_32)
     {
         status = (ADCDSTAT1 >> channel) & 0x01;
@@ -218,6 +218,7 @@ bool ADCHS_ChannelResultIsReady(ADCHS_CHANNEL_NUM channel)
 uint16_t ADCHS_ChannelResultGet(ADCHS_CHANNEL_NUM channel)
 {
     return (uint16_t) (*((&ADCDATA0) + (channel << 2)));
+
 }
 
 void ADCHS_CallbackRegister(ADCHS_CHANNEL_NUM channel, ADCHS_CALLBACK callback, uintptr_t context)
@@ -225,6 +226,7 @@ void ADCHS_CallbackRegister(ADCHS_CHANNEL_NUM channel, ADCHS_CALLBACK callback, 
     ADCHS_CallbackObj[channel].callback_fn = callback;
     ADCHS_CallbackObj[channel].context = context;
 }
+
 
 void ADC_DATA0_InterruptHandler(void)
 {

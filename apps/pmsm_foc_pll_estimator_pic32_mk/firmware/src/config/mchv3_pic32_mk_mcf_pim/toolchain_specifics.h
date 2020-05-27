@@ -69,6 +69,7 @@
     #define __RESTRICT                 __restrict__
 #endif
 
+#define CACHE_LINE_SIZE                (4u)
 #define CACHE_ALIGN
 
 #endif // end of header
