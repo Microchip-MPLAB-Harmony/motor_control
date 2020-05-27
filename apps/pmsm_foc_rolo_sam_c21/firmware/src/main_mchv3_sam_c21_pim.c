@@ -81,6 +81,8 @@ void motor_start_stop(void);
 void motor_direction_toggle(void);
 void buttonRespond(button_response_t * buttonResData, void (* buttonJob)(void));
 
+
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Main Entry Point
@@ -89,17 +91,16 @@ void buttonRespond(button_response_t * buttonResData, void (* buttonJob)(void));
 
 int main ( void )
 {
+
 /* Initialize all modules */
     SYS_Initialize ( NULL );
-    motor_stop();
     ADC0_CallbackRegister((ADC_CALLBACK) ADC_CALIB_ISR, (uintptr_t)NULL);
-    EIC_CallbackRegister ((EIC_PIN)EIC_PIN_2, (EIC_CALLBACK) OC_FAULT_ISR,(uintptr_t)NULL);
     motorcontrol_vars_init();
     ADC0_Enable();
     X2CScope_Init();
     TCC0_PWMStart();
-
-
+    motor_stop();
+    EIC_CallbackRegister ((EIC_PIN)EIC_PIN_2, (EIC_CALLBACK) OC_FAULT_ISR,(uintptr_t)NULL);
     while ( true )
     {
         
@@ -111,10 +112,6 @@ int main ( void )
         {
             if(overCurrentFaultActive == 0)
             {
-                /* This if loop ensures that when the motor direction is changed, 
-                 * the PWM is disabled for 10mS before re-starting the windmilling 
-                 * state to avoid current spike*/
- 
                 speed_ramp(); 
 
                 button_S2_data.inputVal = BTN_START_STOP_Get();
@@ -170,56 +167,60 @@ void ADC_CALIB_ISR (uintptr_t context)
         ADC0_Disable();
         ADC0_CallbackRegister((ADC_CALLBACK) ADC_ISR, (uintptr_t)NULL);
         ADC0_Enable();
+
     }
+    
     ADC0_REGS->ADC_INTFLAG = ADC_INTFLAG_Msk;
     
     
 }
-
 #ifdef CTRL_PWM_1_1
 void ADC_ISR(uintptr_t context)
 {
          adc_result_data[0] = ADC0_ConversionResultGet();
          adc_result_data[1] = ADC1_ConversionResultGet();
-        
+
          /* Clear all interrupt flags */
          ADC0_REGS->ADC_INTFLAG = ADC_INTFLAG_Msk;
 
          ADC0_REGS->ADC_INTENCLR = ADC_INTFLAG_RESRDY_Msk;// Disable ADC interrupt
 	
     	/* select the next channel */
-	/* select the next ADC channel for conversion */
+         /* select the next ADC channel for conversion */
          ADC0_ChannelSelect(ADC_POSINPUT_AIN9,ADC_NEGINPUT_GND); // DC Bus Voltage to ADC0
          ADC1_ChannelSelect(ADC_POSINPUT_AIN0,ADC_NEGINPUT_GND); // Potentiometer to ADC1
 		
          ADC0_REGS->ADC_SWTRIG |= ADC_SWTRIG_START_Msk; 
                
          /* store the first ADC result value */
-	cur_mea[0] = ((int16_t)adc_result_data[0] - (int16_t)adc_0_offset);               
+        cur_mea[0] = ((int16_t)adc_result_data[0] - (int16_t)adc_0_offset);               
 							
          /* store the first ADC result value */
          cur_mea[1] =  ((int16_t)adc_result_data[1] - (int16_t)adc_1_offset);   
          
          current_measurement_management();
 		 
-	/* motor control */
-	motorcontrol();
+        /* motor control */
+        motorcontrol();
 		 
-	while(ADC0_REGS->ADC_INTFLAG != ADC_INTFLAG_RESRDY_Msk);
+        while(ADC0_REGS->ADC_INTFLAG != ADC_INTFLAG_RESRDY_Msk)
+        {
+        }
                        
          /* Read the ADC result value */
          adc_dc_bus_voltage =  ADC0_ConversionResultGet();
-	pot_input = ADC1_ConversionResultGet();
+        pot_input = ADC1_ConversionResultGet();
   
-        /* select the next ADC channel for conversion */
-        ADC0_ChannelSelect(ADC_POSINPUT_AIN2,ADC_NEGINPUT_GND); // Phase U to ADC0
-        ADC1_ChannelSelect(ADC_POSINPUT_AIN5,ADC_NEGINPUT_GND); // Phase V to ADC1
-        ADC0_REGS->ADC_INTENSET = ADC_INTFLAG_RESRDY_Msk;// Enable ADC interrupt
-        /* Clear all interrupt flags */
-        ADC0_REGS->ADC_INTFLAG = ADC_INTFLAG_Msk;	
+         /* select the next ADC channel for conversion */
+         ADC0_ChannelSelect(ADC_POSINPUT_AIN2,ADC_NEGINPUT_GND); // Phase U to ADC0
+         ADC1_ChannelSelect(ADC_POSINPUT_AIN5,ADC_NEGINPUT_GND); // Phase V to ADC1
+         ADC0_REGS->ADC_INTENSET = ADC_INTFLAG_RESRDY_Msk;// Enable ADC interrupt
+        
+         /* Clear all interrupt flags */
+         ADC0_REGS->ADC_INTFLAG = ADC_INTFLAG_Msk;	
         
          X2CScope_Update();
-         
+  
          return;
 }
 #else
@@ -227,29 +228,30 @@ void ADC_ISR(uintptr_t context)
 {
          adc_result_data[0] = ADC0_ConversionResultGet();
          adc_result_data[1] = ADC1_ConversionResultGet();
-        
+      
          /* Clear all interrupt flags */
          ADC0_REGS->ADC_INTFLAG = ADC_INTFLAG_Msk;
 	if (0U == adc_interrupt_counter)
-	{
+	{ 
 		/* store the first ADC result value */
 	         cur_mea[0] = ((int16_t)adc_result_data[0] - (int16_t)adc_0_offset);               
 							
                   /* store the first ADC result value */
                   cur_mea[1] =  ((int16_t)adc_result_data[1] - (int16_t)adc_1_offset); 
                   
-                  current_measurement_management();
-
+		current_measurement_management();
+         
                   /* motor control */
 		motorcontrol();
                   adc_interrupt_counter = 1;
 	         /* select the next channel */
 		/* select the next ADC channel for conversion */
-                 ADC0_ChannelSelect(ADC_POSINPUT_AIN9,ADC_NEGINPUT_GND); // DC Bus Voltage to ADC0
-                 ADC1_ChannelSelect(ADC_POSINPUT_AIN0,ADC_NEGINPUT_GND); // Potentiometer to ADC1
+                  ADC0_ChannelSelect(ADC_POSINPUT_AIN9,ADC_NEGINPUT_GND); // DC Bus Voltage to ADC0
+                  ADC1_ChannelSelect(ADC_POSINPUT_AIN0,ADC_NEGINPUT_GND); // Potentiometer to ADC1
 	}
 	else if (1U == adc_interrupt_counter)
 	{
+                      
                   adc_interrupt_counter = 0;	    
          
                   /* Read the ADC result value */
@@ -259,6 +261,7 @@ void ADC_ISR(uintptr_t context)
                   /* select the next ADC channel for conversion */
                   ADC0_ChannelSelect(ADC_POSINPUT_AIN2,ADC_NEGINPUT_GND); // Phase U to ADC0
                   ADC1_ChannelSelect(ADC_POSINPUT_AIN5,ADC_NEGINPUT_GND); // Phase V to ADC1
+
 	}
 	else
 	{
@@ -266,25 +269,24 @@ void ADC_ISR(uintptr_t context)
       
 
 	}
-         
          X2CScope_Update();
+  
          return;
 }
 
 #endif
-
 void motor_start_stop(void)
 {
     start_toggle = !start_toggle; // Calling this function starts/stops motor
 
 }
 
-void motor_direction_toggle(void) // Calling this function toggles direction of the motor (only if motor is stationary).
+void motor_direction_toggle(void)
 {
-    if(!start_toggle)
+    if(!start_toggle) // Calling this function toggles direction of the motor (only if motor is stationary).
     {
         direction = !direction; 
-        LED2_DIRECTION_Toggle(); 
+        LED2_DIRECTION_Toggle();
     }
 }
 

@@ -25,10 +25,12 @@
 #define TOOLCHAIN_SPECIFICS_H
 
 
+#include "cmsis_compiler.h"
 #include <sys/types.h>
 #define NO_INIT        __attribute__((section(".no_init")))
 #define SECTION(a)     __attribute__((__section__(a)))
 
+#define CACHE_LINE_SIZE    (4u)
 #define CACHE_ALIGN
 
 
