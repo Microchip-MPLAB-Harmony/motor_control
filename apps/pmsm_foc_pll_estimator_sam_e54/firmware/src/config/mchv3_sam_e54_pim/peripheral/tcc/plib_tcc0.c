@@ -83,18 +83,16 @@ void TCC0_PWMInitialize(void)
     TCC0_REGS->TCC_CC[5] = 0U;
     TCC0_REGS->TCC_PER = 6000U;
 
-    /* Fault configurations */
-    TCC0_REGS->TCC_EVCTRL = TCC_EVCTRL_TCEI0_Msk | TCC_EVCTRL_EVACT0_FAULT;
-    TCC0_REGS->TCC_DRVCTRL = TCC_DRVCTRL_FILTERVAL0(3U) | TCC_DRVCTRL_NRE0_Msk
+    TCC0_REGS->TCC_DRVCTRL = TCC_DRVCTRL_FILTERVAL0(3U)
+          | TCC_DRVCTRL_FILTERVAL1(0U)| TCC_DRVCTRL_NRE0_Msk
 		 | TCC_DRVCTRL_NRE1_Msk
 		 | TCC_DRVCTRL_NRE2_Msk
 		 | TCC_DRVCTRL_NRE4_Msk
 		 | TCC_DRVCTRL_NRE5_Msk
 		 | TCC_DRVCTRL_NRE6_Msk;
 
-
-
-    TCC0_REGS->TCC_EVCTRL |= TCC_EVCTRL_OVFEO_Msk;
+    TCC0_REGS->TCC_EVCTRL = TCC_EVCTRL_OVFEO_Msk
+ 	 	 | TCC_EVCTRL_TCEI0_Msk | TCC_EVCTRL_EVACT0_FAULT;
     while (TCC0_REGS->TCC_SYNCBUSY)
     {
         /* Wait for sync */
@@ -126,6 +124,10 @@ void TCC0_PWMStop (void)
 void TCC0_PWM24bitPeriodSet (uint32_t period)
 {
     TCC0_REGS->TCC_PERBUF = period & 0xFFFFFF;
+    while ((TCC0_REGS->TCC_SYNCBUSY & (TCC_SYNCBUSY_PER_Msk)) == TCC_SYNCBUSY_PER_Msk)
+    {
+        /* Wait for sync */
+    }
 }
 
 /* Read TCC period */
@@ -148,6 +150,10 @@ void TCC0_PWMDeadTimeSet (uint8_t deadtime_high, uint8_t deadtime_low)
 void TCC0_PWMPatternSet(uint8_t pattern_enable, uint8_t pattern_output)
 {
     TCC0_REGS->TCC_PATTBUF = (uint16_t)(pattern_enable | (pattern_output << 8));
+    while ((TCC0_REGS->TCC_SYNCBUSY & (TCC_SYNCBUSY_PATT_Msk)) == TCC_SYNCBUSY_PATT_Msk)
+    {
+        /* Wait for sync */
+    }
 }
 
 /* Set the counter*/

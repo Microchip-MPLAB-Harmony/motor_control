@@ -86,11 +86,11 @@ bool NVMCTRL_Read( uint32_t *data, uint32_t length, uint32_t address );
 
 void NVMCTRL_SetWriteMode(NVMCTRL_WRITEMODE mode);
 
-bool NVMCTRL_QuadWordWrite(uint32_t *data, const uint32_t address);
+bool NVMCTRL_QuadWordWrite(const uint32_t *data, const uint32_t address);
 
-bool NVMCTRL_DoubleWordWrite(uint32_t *data, const uint32_t address);
+bool NVMCTRL_DoubleWordWrite(const uint32_t *data, const uint32_t address);
 
-bool NVMCTRL_PageWrite( uint32_t* data, uint32_t address );
+bool NVMCTRL_PageWrite( const uint32_t* data, uint32_t address );
 
 bool NVMCTRL_BlockErase( uint32_t address );
 

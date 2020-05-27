@@ -53,10 +53,10 @@ int main ( void )
     SYS_Initialize ( NULL );
     delay_10ms.period = DELAY_10MS_COUNT;
     ADC0_CallbackRegister((ADC_CALLBACK) ADC_CALIB_ISR, (uintptr_t)NULL);
-    EIC_CallbackRegister ((EIC_PIN)EIC_PIN_2, (EIC_CALLBACK) OC_FAULT_ISR,(uintptr_t)NULL);
-    PWM_Output_Disable();
     TCC0_PWMStart(); 
     ADC0_Enable();
+    PWM_Output_Disable();
+    EIC_CallbackRegister ((EIC_PIN)EIC_PIN_2, (EIC_CALLBACK) OC_FAULT_ISR,(uintptr_t)NULL);
     X2CScope_Init();
 
     
