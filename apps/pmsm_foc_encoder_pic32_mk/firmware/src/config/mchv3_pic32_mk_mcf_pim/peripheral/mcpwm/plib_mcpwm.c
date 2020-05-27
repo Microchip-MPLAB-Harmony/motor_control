@@ -146,7 +146,7 @@ void MCPWM_Initialize (void)
     /*  POLH    = 0*/
     /*  POLL    = 0*/
     /*  FLTDAT  = 0b00 */
-    /*  FLTMOD  = 0 */
+    /*  FLTMOD  = 3 */
     /*  FLTPOL  = 0  */
     /*  FLTSRC  = 0  */
     /*  CLDAT  = 0b00 */
@@ -201,7 +201,7 @@ void MCPWM_Initialize (void)
     /*  POLH    = 0*/
     /*  POLL    = 0*/
     /*  FLTDAT  = 0b00 */
-    /*  FLTMOD  = 0 */
+    /*  FLTMOD  = 3 */
     /*  FLTPOL  = 0  */
     /*  FLTSRC  = 0  */
     /*  CLDAT  = 0b00 */

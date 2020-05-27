@@ -85,7 +85,7 @@ void UART2_Initialize( void )
     /* Set up UxMODE bits */
     /* STSEL  = 0*/
     /* PDSEL = 0 */
-    /* BRGH = 1 */
+    /* BRGH = 0 */
     /* RXINV = 0 */
     /* ABAUD = 0 */
     /* LPBACK = 0 */
@@ -94,13 +94,13 @@ void UART2_Initialize( void )
     /* RUNOVF = 0 */
     /* CLKSEL = 0 */
     /* SLPEN = 0 */
-    U2MODE = 0x8;
+    U2MODE = 0x0;
 
     /* Enable UART2 Receiver and Transmitter */
     U2STASET = (_U2STA_UTXEN_MASK | _U2STA_URXEN_MASK);
 
     /* BAUD Rate register Setup */
-    U2BRG = 129;
+    U2BRG = 32;
 
     /* Turn ON UART2 */
     U2MODESET = _U2MODE_ON_MASK;
@@ -262,6 +262,26 @@ UART_ERROR UART2_ErrorGet( void )
     return errors;
 }
 
+bool UART2_AutoBaudQuery( void )
+{
+    if(U2MODE & _U2MODE_ABAUD_MASK)
+        return true;
+    else
+        return false;
+}
+
+void UART2_AutoBaudSet( bool enable )
+{
+    if( enable == true )
+    {
+        U2MODESET = _U2MODE_ABAUD_MASK;
+    }
+
+    /* Turning off ABAUD if it was on can lead to unpredictable behavior, so that
+       direction of control is not allowed in this function.                      */
+}
+
+  
 void UART2_WriteByte(int data)
 {
     while ((U2STA & _U2STA_UTXBF_MASK));

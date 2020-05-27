@@ -87,6 +87,10 @@ uint32_t QEI2_PulseIntervalGet();
 
 void QEI2_PositionWindowSet(uint32_t high_threshold, uint32_t low_threshold);
 
+void QEI2_PositionCountSet(uint32_t position_count);
+
+void QEI2_VelocityCountSet(uint32_t velocity_count);
+
 
 
 // DOM-IGNORE-BEGIN

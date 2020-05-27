@@ -111,4 +111,14 @@ void QEI2_PositionWindowSet(uint32_t high_threshold, uint32_t low_threshold)
     QEI2CMPL = low_threshold;
 }
 
+void QEI2_PositionCountSet(uint32_t position_count)
+{
+    POS2CNT = position_count;
+}
+
+void QEI2_VelocityCountSet(uint32_t velocity_count)
+{
+    VEL2CNT = velocity_count;
+}
+
 

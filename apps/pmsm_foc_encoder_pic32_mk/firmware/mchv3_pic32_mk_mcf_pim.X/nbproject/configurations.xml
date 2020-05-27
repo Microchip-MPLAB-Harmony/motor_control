@@ -120,6 +120,8 @@
                    displayName="Important Files"
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/harmony.prj</itemPath>
+      <itemPath>../src/config/mchv3_pic32_mk_mcf_pim/mchv3_pic32_mk_mcf_pim.xml</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -135,11 +137,11 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.30</languageToolchainVersion>
+        <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.1.53"/>
+        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.4.94"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -177,7 +179,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/mchv3_pic32_mk_mcf_pim;../src/packs/PIC32MK1024MCF100_DFP;;../src/mips"/>
+                  value="../src;../src/config/mchv3_pic32_mk_mcf_pim;../src/packs/PIC32MK1024MCF100_DFP"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -297,6 +299,7 @@
         <property key="mdtcm" value=""/>
         <property key="mitcm" value=""/>
         <property key="mstacktcm" value="false"/>
+        <property key="omit-pack-options" value="1"/>
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
@@ -429,7 +432,6 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.dataflash" value="true"/>
         <property key="memories.eeprom" value="true"/>
