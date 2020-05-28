@@ -48,9 +48,6 @@
 #include "definitions.h"                // SYS function prototypes
 #include "mc_generic_lib.h"
 
-
-
-
 /******************************************************************************/
 /*                   SIN Table  256  -  0.0244rad resolution                            */
 /******************************************************************************/
@@ -134,8 +131,8 @@ float cosineTable[TABLE_SIZE] =
 
 /******************************************************************************/
 /* Function name: MCLIB_SinCosCalc                                            */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
+/* Function parameters: rotor_angle                                           */
+/* Function return: sineAngle, cosAngle                                       */
 /* Description: Calculates the sin and cosine of angle based upon             */
 /*              interpolation technique from the table.                       */
 /******************************************************************************/
@@ -191,7 +188,7 @@ void MCLIB_SinCosCalc( float const rotor_angle, float* sineAngle, float* cosAngl
 
 /******************************************************************************/
 /* Function name: MCLIB_WrapAngle                                             */
-/* Function parameters: None                                                  */
+/* Function parameters: angle                                                  */
 /* Function return: None                                                      */
 /* Description:  Maps angle to [ 0, 2pi ] range                               */
 /******************************************************************************/

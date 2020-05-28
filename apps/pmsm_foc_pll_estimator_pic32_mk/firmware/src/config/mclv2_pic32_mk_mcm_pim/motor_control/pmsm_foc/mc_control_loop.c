@@ -80,7 +80,7 @@ __STATIC_INLINE void  MCCTRL_LoopSynchronization(void);
 static void MCCTRL_InitiaizeInfrastructure( void );
 
 
-#if (1U == FIELD_WEAKENING )
+#if (ENABLED == FIELD_WEAKENING )
 static void MCCTRL_InitializeFieldWeakening( void );
 __STATIC_INLINE void MCCTRL_FieldWeakening(const tMCCTRL_FW_INPUT_SIGNALS_S  * const fieldWeakeningInput,
                                    tMCCTRL_FW_OUTPUT_SIGNALS_S * const fieldWeakeningOutput );
@@ -92,7 +92,7 @@ static void MCCTRL_ResetFieldWeakening( void );
 /*                   Global Variables                                         */
 /******************************************************************************/
 tMCAPP_CONTROL_PARAM_S                  gMCCTRL_CtrlParam;
-#if (1U == FIELD_WEAKENING )
+#if (ENABLED == FIELD_WEAKENING )
 tMCCTRL_FW_INPUT_SIGNALS_S              gMCCTRL_FieldWeakeningInput;
 tMCCTRL_FW_OUTPUT_SIGNALS_S             gMCCTRL_FieldWeakeningOutput;
 tMCCTRL_FW_STATE_SIGNALS_S              gMCCTRL_FieldWeakeningState;
@@ -152,7 +152,7 @@ tMCLIB_PICONTROLLER_S gMCLIB_SpeedPIController =
 /*                   LOCAL FUNCTIONS                                         */
 /*****************************************************************************/
 /*****************************************************************************/
-/* Function name: MCAPP_InitilaizeOpenLoopControl                            */
+/* Function name: MCCTRL_InitilaizeOpenLoopControl                            */
 /* Function parameters: None                                                 */
 /* Function return: None                                                     */
 /* Description: Initialize open loop parameters and state                    */
@@ -169,10 +169,10 @@ static void MCCTRL_InitilaizeOpenLoopControl( void )
 }
 
 /*****************************************************************************/
-/* Function name: MCAPP_OpenLoopControl                                      */
-/* Function parameters: None                                                 */
-/* Function return: None                                                     */
-/* Description: Open Loop Current                                            */
+/* Function name: MCCTRL_OpenLoopControl                                      */
+/* Function parameters: rotationSign                                          */
+/* Function return: status                                                     */
+/* Description: Open Loop control                                            */
 /*****************************************************************************/
 __STATIC_INLINE tMCAPP_STATUS_E MCCTRL_OpenLoopControl( const int16_t rotationSign )
 {
@@ -197,7 +197,7 @@ __STATIC_INLINE tMCAPP_STATUS_E MCCTRL_OpenLoopControl( const int16_t rotationSi
 }
 
 /*****************************************************************************/
-/* Function name: MCAPP_ResetOpenLoopControl                                 */
+/* Function name: MCCTRL_ResetOpenLoopControl                                 */
 /* Function parameters: None                                                 */
 /* Function return: None                                                     */
 /* Description: Reset open loop parameters and state                         */
@@ -208,9 +208,9 @@ static void MCCTRL_ResetOpenLoopControl( void )
     gMCCTRL_OpenLoopState.openLoopAngle = 0.0f;
 }
 
-#if(1U == FIELD_WEAKENING )
+#if(ENABLED == FIELD_WEAKENING )
 /*****************************************************************************/
-/* Function name: MCAPP_InitializeFieldWeakening                             */
+/* Function name: MCCTRL_InitializeFieldWeakening                             */
 /* Function parameters: None                                                 */
 /* Function return: None                                                     */
 /* Description: Initialize field weakening parameters and state              */
@@ -235,8 +235,9 @@ static void MCCTRL_InitializeFieldWeakening( void )
 
 
 /******************************************************************************/
-/* Function name: MCAPP_FieldWeakening                                        */
-/* Function parameters: None                                                  */
+/* Function name: MCCTRL_FieldWeakening                                       */
+/* Function parameters:  tMCCTRL_FW_INPUT_SIGNALS_S input                     */
+/*                       tMCCTRL_FW_OUTPUT_SIGNALS_S output                   */
 /* Function return: None                                                      */
 /* Description: Field weakening                                               */
 /******************************************************************************/
@@ -291,7 +292,7 @@ __STATIC_INLINE void MCCTRL_FieldWeakening( const tMCCTRL_FW_INPUT_SIGNALS_S * c
 }
 
 /*****************************************************************************/
-/* Function name: MCAPP_ResetFieldWeakening                                  */
+/* Function name: MCCTRL_ResetFieldWeakening                                 */
 /* Function parameters: None                                                 */
 /* Function return: None                                                     */
 /* Description: Reset field weakening state                                  */
@@ -307,10 +308,10 @@ static void MCCTRL_ResetFieldWeakening( void )
 #endif
 
 /******************************************************************************/
-/* Function name: MCINF_InitiaizeInfrastructure                               */
+/* Function name: MCCTRL_InitiaizeInfrastructure                               */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
-/* Description: Initialize  infrastructure                                    */
+/* Description: Initialize slow loop variables                                */
 /******************************************************************************/
 static void MCCTRL_InitiaizeInfrastructure( void )
 {
@@ -323,6 +324,12 @@ static void MCCTRL_InitiaizeInfrastructure( void )
    gMCCTRL_TaskParameters.speedLoopCount = SPEED_LOOP_PWM_COUNT;
 }
 
+/******************************************************************************/
+/* Function name: MCCTRL_SignalTransformation                               */
+/* Function parameters: None                                                  */
+/* Function return: None                                                      */
+/* Description: Clarke and Park transform                                     */
+/******************************************************************************/
 __STATIC_INLINE void MCCTRL_SignalTransformation(void )
 {
     /* Clarke transform */
@@ -333,7 +340,7 @@ __STATIC_INLINE void MCCTRL_SignalTransformation(void )
 }
 
 /*******************************************************************************/
-/* Function name: MCAPP_iqrefCalculation                                       */
+/* Function name: MCCTRL_IqrefCalculation                                       */
 /* Function parameters: None                                                   */
 /* Function return: None                                                       */
 /* Description: Q-axis reference current calculation in close loop             */
@@ -342,7 +349,7 @@ __STATIC_INLINE void MCCTRL_SignalTransformation(void )
 __STATIC_INLINE float MCCTRL_IqrefCalculation( void )
 {
     float iqRef = 0.0f;
-  #if( 0U == TORQUE_MODE )
+  #if( DISABLED == TORQUE_MODE )
 
     /* Quadrature axis reference current limitation */
     if( gMCLIB_IdPIController.inRef < MAX_MOTOR_CURRENT )
@@ -370,7 +377,7 @@ __STATIC_INLINE float MCCTRL_IqrefCalculation( void )
 }
 
 /******************************************************************************/
-/* Function name: MCAPP_iqrefCalculation                                      */
+/* Function name: MCCTRL_IdrefCalculation                                      */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
 /* Description: D-axis reference current calculation in close loop            */
@@ -379,7 +386,7 @@ __STATIC_INLINE float MCCTRL_IqrefCalculation( void )
 __STATIC_INLINE float MCCTRL_IdrefCalculation( void )
 {
     static float idRef;
-#if(FIELD_WEAKENING == 1U)
+#if(FIELD_WEAKENING == ENABLED)
     float VqRefSquare;
 
     /* Dynamic d-q adjustment with d component priority */
@@ -408,10 +415,10 @@ __STATIC_INLINE float MCCTRL_IdrefCalculation( void )
 }
 
 /******************************************************************************/
-/* Function name: MCAPP_MotorControl                                          */
+/* Function name: MCCTRL_StateMachine                                          */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
-/* Description: Motor Control state                                           */
+/* Description: Motor Control state machine                                   */
 /******************************************************************************/
 __STATIC_INLINE void MCCTRL_StateMachine( void )
 {
@@ -457,7 +464,7 @@ __STATIC_INLINE void MCCTRL_StateMachine( void )
                 else
                 {
                     /* switch to close loop */
-                  #if(OPEN_LOOP_FUNCTIONING == false)
+                  #if(OPEN_LOOP_FUNCTIONING == DISABLED)
                     gMCCTRL_CtrlParam.mcState = MCAPP_CLOSED_LOOP;
                     gMCCTRL_ClosingLoopState.stabilizationCounter = 0;
                   #endif
@@ -492,10 +499,10 @@ __STATIC_INLINE void MCCTRL_StateMachine( void )
 }
 
 /*******************************************************************************/
-/* Function name: MCAPP_CurrentControl                                         */
+/* Function name: MCCTRL_CurrentControl                                        */
 /* Function parameters: None                                                   */
 /* Function return: None                                                       */
-/* Description: Current control                                                */
+/* Description: PI control for Id and Iq                                       */
 /*******************************************************************************/
 __STATIC_INLINE void MCCTRL_CurrentControl( void )
 {
@@ -513,7 +520,7 @@ __STATIC_INLINE void MCCTRL_CurrentControl( void )
 }
 
 /******************************************************************************/
-/* Function name: MCAPP_MotorControl                                      *
+/* Function name: MCCTRL_MotorControl                                         *
  * Function parameters: None                                                  *
  * Function return: None                                                      *
  * Description: ADC end of conversion interrupt is used for executing fast    *
@@ -522,7 +529,7 @@ __STATIC_INLINE void MCCTRL_CurrentControl( void )
  ******************************************************************************/
 __STATIC_INLINE void MCCTRL_MotorControl( void )
 {
-    /* D and Q axis Current control */
+    /* Control state machine */
     MCCTRL_StateMachine();
 
     /* Direct and Quadrature axis current control */
@@ -543,7 +550,7 @@ __STATIC_INLINE void MCCTRL_MotorControl( void )
 }
 
 /*******************************************************************************/
-/* Function name: MCINF_LoopSynchronization                                    */
+/* Function name: MCCTRL_LoopSynchronization                                    */
 /* Function parameters: None                                                   */
 /* Function return: Bool( True - executes slow control loop )                  */
 /* Description: To be used in a state machine to decide whether                */
@@ -574,7 +581,7 @@ __STATIC_INLINE void  MCCTRL_LoopSynchronization(void)
 /******************************************************************************/
 
 /******************************************************************************/
-/* Function name: MCAPP_InitializeMotorControl                                */
+/* Function name: MCCTRL_InitializeMotorControl                                */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
 /* Description: Initialize control loop variables.                            */
@@ -584,7 +591,7 @@ __STATIC_INLINE void  MCCTRL_LoopSynchronization(void)
     MCCTRL_InitiaizeInfrastructure();
     /* Initilaize open loop control */
     MCCTRL_InitilaizeOpenLoopControl();
-#if (1U == FIELD_WEAKENING )
+#if (ENABLED == FIELD_WEAKENING )
     MCCTRL_InitializeFieldWeakening();
 #endif
 
@@ -610,7 +617,7 @@ void MCCTRL_CurrentOffsetCalibration( uint32_t status, uintptr_t context )
 /* Function name: MCINF_CurrentLoopTasks                                      */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
-/* Description:Current loop tasks                                             */
+/* Description: Current loop tasks executed in the ADC ISR                    */
 /******************************************************************************/
 void MCCTRL_CurrentLoopTasks( uint32_t status, uintptr_t context )
 {
@@ -635,10 +642,10 @@ void MCCTRL_CurrentLoopTasks( uint32_t status, uintptr_t context )
 }
 
 /******************************************************************************/
-/* Function name: MCAPP_InitializeMotorControl                                */
+/* Function name: MCCTRL_ResetMotorControl                                    */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
-/* Description: Initialize control loop variables.                            */
+/* Description: Reset control loop variables.                            */
 /******************************************************************************/
  void MCCTRL_ResetMotorControl(void)
 {
@@ -649,7 +656,7 @@ void MCCTRL_CurrentLoopTasks( uint32_t status, uintptr_t context )
 
     /* Reset open loop control */
     MCCTRL_ResetOpenLoopControl();
-#if (1U == FIELD_WEAKENING )
+#if (ENABLED == FIELD_WEAKENING )
     MCCTRL_ResetFieldWeakening();
 #endif
 
