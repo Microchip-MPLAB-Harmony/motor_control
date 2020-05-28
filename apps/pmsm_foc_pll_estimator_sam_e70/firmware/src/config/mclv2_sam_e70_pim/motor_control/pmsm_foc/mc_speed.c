@@ -80,7 +80,13 @@ tMCSPE_OUTPUT_SIGNAL_S   gMCSPE_OutputSignals;
 /******************************************************************************/
 /*                       INTERFACE FUNCTIONS                                  */
 /******************************************************************************/
-
+/*****************************************************************************/
+/* Function name: MCSPE_InitializeSpeedControl                                    */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* initialize speed control variables                                             */
+/*****************************************************************************/
 void  MCSPE_InitializeSpeedControl(void)
 {
     /* Initialize speed command function parameters */
@@ -93,7 +99,13 @@ void  MCSPE_InitializeSpeedControl(void)
 
 }
 
-
+/*****************************************************************************/
+/* Function name: MCSPE_SpeedCommand                                    */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* Calculate reference speed                                                 */
+/*****************************************************************************/
 void MCSPE_SpeedCommand( void )
 {
 
@@ -111,7 +123,13 @@ void MCSPE_SpeedCommand( void )
 }
 
 
-
+/*****************************************************************************/
+/* Function name: MCSPE_ResetSpeedControl                                    */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* Reset speed control variables                                             */
+/*****************************************************************************/
 void  MCSPE_ResetSpeedControl(void)
 {
     /* Reset speed command function states */

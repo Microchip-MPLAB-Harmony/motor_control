@@ -90,7 +90,7 @@ __STATIC_INLINE void MCPWM_SVPWMTimeCalc(tMCPWM_SVPWM_S * const svm)
 /******************************************************************************/
 
 /******************************************************************************/
-/* Function name: MCLIB_SVPWMGen                                              */
+/* Function name: MCPWM_SVPWMGen                                              */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
 /* Description: Determines sector based upon three reference                  */
@@ -197,6 +197,13 @@ void MCPWM_PWMModulator( void )
     MCPWM_PWMDutyUpdate(&gMCPWM_SVPWM);
 }
 
+/*****************************************************************************/
+/* Function name: MCPWM_PWMOutputDisable                                        */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* Disable three phase PWM outputs                                           */
+/*****************************************************************************/
 void MCPWM_PWMOutputDisable(void)
 {
     MCHAL_PWMOutputDisable(MCHAL_PWM_PH_U);
@@ -204,7 +211,13 @@ void MCPWM_PWMOutputDisable(void)
     MCHAL_PWMOutputDisable(MCHAL_PWM_PH_W);
 }
 
-
+/*****************************************************************************/
+/* Function name: MCPWM_PWMOutputEnable                                        */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* Enable three phase PWM outputs                                           */
+/*****************************************************************************/
 void MCPWM_PWMOutputEnable(void)
 {
     MCHAL_PWMOutputEnable(MCHAL_PWM_PH_U);

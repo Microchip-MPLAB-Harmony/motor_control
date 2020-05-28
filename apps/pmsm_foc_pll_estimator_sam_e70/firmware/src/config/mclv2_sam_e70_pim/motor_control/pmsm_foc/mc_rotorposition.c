@@ -87,7 +87,13 @@ tMCRPOS_ROTOR_ALIGN_PARAM_S       gMCRPOS_RotorAlignParam  = {
 /******************************************************************************/
 /*                          LOCAL FUNCTIONS                                   */
 /******************************************************************************/
-
+/******************************************************************************/
+/* Function name: MCRPOS_ReadInputSignals                                     */
+/* Function parameters:   None                                                */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* Read input variables required for PLL estimator                            */
+/******************************************************************************/
 __STATIC_INLINE void MCRPOS_ReadInputSignals( void )
 {
     /* Initialize input pointers  */
@@ -98,7 +104,13 @@ __STATIC_INLINE void MCRPOS_ReadInputSignals( void )
     gMCRPOS_InputSignals.umax   =  gMCVOL_OutputSignals.umax;
 }
 
-
+/******************************************************************************/
+/* Function name: MCRPOS_InitializePLLEstimator                               */
+/* Function parameters:   None                                                */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* Initialize PLL Estimator variables                                         */
+/******************************************************************************/
 static void MCRPOS_InitializePLLEstimator( void )
 {
     /*  Observer state and parameters initialization */
@@ -130,13 +142,13 @@ static void MCRPOS_InitializePLLEstimator( void )
 /* Function parameters:   None                                                */
 /* Function return: None                                                      */
 /* Description:                                                               */
-/* PLL Estimator                                                              */
+/* PLL Estimator to get the position and speed                                */
 /******************************************************************************/
 __STATIC_INLINE void MCRPOS_PLLEstimator( void )
 {
     float tempqVelEstim;
     tMCLIB_POSITION_S position;
-  #if(FIELD_WEAKENING == true)
+  #if(FIELD_WEAKENING == ENABLED)
       float bemfAmp;
   #endif
 
@@ -160,7 +172,7 @@ __STATIC_INLINE void MCRPOS_PLLEstimator( void )
                                   -   ( gMCRPOS_Parameters.rs  * gMCRPOS_InputSignals.ibeta )
                                   -   ( gMCRPOS_Parameters.lsDt* ( gMCRPOS_InputSignals.ibeta - gMCRPOS_StateSignals.ibetaLast ) );
 
-  #if ( 1U == FIELD_WEAKENING )
+  #if (ENABLED == FIELD_WEAKENING )
     /* In field weakening BEMF amplitude is estimated to calculate Id_ref */
     bemfAmp = sqrtf((gMCRPOS_StateSignals.esa * gMCRPOS_StateSignals.esa) + (gMCRPOS_StateSignals.esb * gMCRPOS_StateSignals.esb));
 
@@ -246,7 +258,13 @@ __STATIC_INLINE void MCRPOS_PLLEstimator( void )
     gMCRPOS_StateSignals.ubetaLast  =  gMCRPOS_InputSignals.umax * gMCRPOS_InputSignals.ubeta;
 }
 
-
+/******************************************************************************/
+/* Function name: MCRPOS_ResetPLLEstimator                                    */
+/* Function parameters:   None                                                */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* Reset PLL Estimator variables                                              */
+/******************************************************************************/
 static void MCRPOS_ResetPLLEstimator( void )
 {
     /* Reset state variables */
@@ -266,7 +284,13 @@ static void MCRPOS_ResetPLLEstimator( void )
 /*                      INTERFACE FUNCTIONS                                   */
 /******************************************************************************/
 
-
+/******************************************************************************/
+/* Function name: MCRPOS_InitializeRotorPositionSensing                       */
+/* Function parameters:   None                                                */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* Initialize rotor position variables                                         */
+/******************************************************************************/
 void MCRPOS_InitializeRotorPositionSensing( void )
 {
     /* Initialize PLL Estimator */
@@ -274,7 +298,13 @@ void MCRPOS_InitializeRotorPositionSensing( void )
 
 }
 
-
+/******************************************************************************/
+/* Function name: MCRPOS_InitialRotorPositonDetection                         */
+/* Function parameters:   None                                                */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* Initial rotor position detection                                           */
+/******************************************************************************/
 tMCAPP_STATUS_E MCRPOS_InitialRotorPositonDetection(tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput )
 {
     tMCAPP_STATUS_E status = MCAPP_IN_PROGRESS ;
@@ -302,7 +332,13 @@ tMCAPP_STATUS_E MCRPOS_InitialRotorPositonDetection(tMCRPOS_ROTOR_ALIGN_OUTPUT_S
 }
 
 
-
+/******************************************************************************/
+/* Function name: MCRPOS_FieldAlignment                               */
+/* Function parameters:   None                                                */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* Initial field alignment to known position                                  */
+/******************************************************************************/
 tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput )
 {
     tMCAPP_STATUS_E status = MCAPP_IN_PROGRESS ;
@@ -310,7 +346,7 @@ tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alig
   #if( FORCED_ALIGNMENT == ALIGNMENT_METHOD)
     if ( gMCRPOS_RotorAlignState.startupLockCount < ( gMCRPOS_RotorAlignParam.lockTimeCount >> 1))
     {
-      #if(1U == Q_AXIS_ALIGNMENT )
+      #if(ENABLED == Q_AXIS_ALIGNMENT )
         alignOutput->idRef =  0.0f;
         alignOutput->iqRef +=  ( gMCRPOS_RotorAlignParam.lockCurrent/ (float) ( gMCRPOS_RotorAlignParam.lockTimeCount >> 1));
         alignOutput->angle = (3*M_PI_2);
@@ -324,7 +360,7 @@ tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alig
     }
     else if ( gMCRPOS_RotorAlignState.startupLockCount < gMCRPOS_RotorAlignParam.lockTimeCount)
     {
-      #if(1U == Q_AXIS_ALIGNMENT )
+      #if(ENABLED == Q_AXIS_ALIGNMENT )
         alignOutput->idRef =  0.0f;
         alignOutput->iqRef =  gMCRPOS_RotorAlignParam.lockCurrent;
         alignOutput->angle = (3*M_PI_2);
@@ -349,7 +385,13 @@ tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alig
     return status;
 }
 
-
+/******************************************************************************/
+/* Function name: MCRPOS_OffsetCalibration                               */
+/* Function parameters:   None                                                */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* Angle offset calibration while switching to closed loop                    */
+/******************************************************************************/
 void MCRPOS_OffsetCalibration( const int16_t direction )
 {
     if( 1 == direction)
@@ -362,14 +404,26 @@ void MCRPOS_OffsetCalibration( const int16_t direction )
     }
 }
 
-
+/******************************************************************************/
+/* Function name: MCRPOS_PositionMeasurement                               */
+/* Function parameters:   None                                                */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* Get the position using PLL estimator                                         */
+/******************************************************************************/
 void MCRPOS_PositionMeasurement( void )
 {
     MCRPOS_ReadInputSignals( );
     MCRPOS_PLLEstimator( );
 }
 
-
+/******************************************************************************/
+/* Function name: MCRPOS_ResetPositionSensing                               */
+/* Function parameters:   None                                                */
+/* Function return: None                                                      */
+/* Description:                                                               */
+/* Reset PLL Estimator variables                                         */
+/******************************************************************************/
 void MCRPOS_ResetPositionSensing( tMCRPOS_ALIGN_STATE_E state )
 {
     gMCRPOS_RotorAlignState.rotorAlignState = state;
