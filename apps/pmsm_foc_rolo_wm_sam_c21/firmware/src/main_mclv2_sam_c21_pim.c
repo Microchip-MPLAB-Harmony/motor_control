@@ -122,14 +122,14 @@ int main ( void )
 
 /* Initialize all modules */
     SYS_Initialize ( NULL );
-    motor_stop();
     ADC0_CallbackRegister((ADC_CALLBACK) ADC_CALIB_ISR, (uintptr_t)NULL);
-    EIC_CallbackRegister ((EIC_PIN)EIC_PIN_2, (EIC_CALLBACK) OC_FAULT_ISR,(uintptr_t)NULL);
     motorcontrol_vars_init();
     ADC0_Enable();
     state_run = 0;
     X2CScope_Init();
     TCC0_PWMStart();
+    motor_stop();
+    EIC_CallbackRegister ((EIC_PIN)EIC_PIN_2, (EIC_CALLBACK) OC_FAULT_ISR,(uintptr_t)NULL);
 
     while ( true )
     {

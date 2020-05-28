@@ -1,7 +1,7 @@
 /**
  * \brief Component description for RSTC
  *
- * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2020 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-08-07T06:35:22Z */
+/* file generated from device description version 2019-11-25T02:24:13Z */
 #ifndef _SAMC21_RSTC_COMPONENT_H_
 #define _SAMC21_RSTC_COMPONENT_H_
 
