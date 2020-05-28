@@ -157,7 +157,6 @@ void MCCUR_CurrentMeasurement( void )
     /* Calculate phase W current by Kirchoff's principle  */
     gMCCUR_OutputSignals.phaseCurrents.iw = -gMCCUR_OutputSignals.phaseCurrents.iu -gMCCUR_OutputSignals.phaseCurrents.iv;
 
-  #elif( SINGLE_SHUNT == CURRENT_MEASUREMENT )
   #else
     assert( ("CURRENT MEASUREMENT TECHNIQUE HAS NOT BEEN SELECTED" , 0 ));
   #endif

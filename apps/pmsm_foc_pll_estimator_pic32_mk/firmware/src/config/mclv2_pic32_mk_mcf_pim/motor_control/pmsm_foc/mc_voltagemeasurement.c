@@ -78,7 +78,13 @@ tMCVOL_OUTPUT_SIGNAL_S gMCVOL_OutputSignals = {0.0f, 0.0f };
 /*                       INTERFACE FUNCTIONS                                 */
 /*****************************************************************************/
 
-
+/*****************************************************************************/
+/* Function name: MCVOL_InitializeVoltageMeasurement                         */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* initialize voltage measurement variables                                  */
+/****************************************************************************/
 void MCVOL_InitializeVoltageMeasurement( void )
 {
     /* Initialize parameters */
@@ -88,7 +94,13 @@ void MCVOL_InitializeVoltageMeasurement( void )
 }
 
 
-
+/*****************************************************************************/
+/* Function name: MCVOL_VoltageMeasurement                                   */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* DC bus voltage measurement                                                */
+/****************************************************************************/
 void MCVOL_VoltageMeasurement( void )
 {
     /* Read DC bus voltage */
@@ -98,7 +110,13 @@ void MCVOL_VoltageMeasurement( void )
 }
 
 
-
+/*****************************************************************************/
+/* Function name: MCVOL_ResetVoltageMeasurement                              */
+/* Function parameters: None                                                 */
+/* Function return: None                                                     */
+/* Description:                                                              */
+/* reset voltage measurement variables                                       */
+/****************************************************************************/
 void MCVOL_ResetVoltageMeasurement( void )
 {
     /* Initialize parameters */

@@ -50,32 +50,22 @@
 /* USER CONFIGURABLE PARAMETERS - START                                                        */
 /***********************************************************************************************/
 
-
-
-#define FORCED_ALIGNMENT                (0U)
-
-#define SENSORLESS_PLL                  (0U)
-#define SENSORED_ENCODER                (1U)
-
-#define DUAL_SHUNT                       (0U)
-
-
 /***********************************************************************************************/
 /* Algorithm Configuration parameters                                                          */
 /***********************************************************************************************/
 #define POSITION_FEEDBACK                (SENSORLESS_PLL)
 
-#define OPEN_LOOP_FUNCTIONING            (0U)  /* If enabled - Keep running in open loop */
-#define TORQUE_MODE                      (0U)  /* If enabled - torque control */
-#define FIELD_WEAKENING                  (0U)  /* If enabled - Field weakening */
+#define OPEN_LOOP_FUNCTIONING            (DISABLED)  /* If enabled - Keep running in open loop */
+#define TORQUE_MODE                      (DISABLED)  /* If enabled - torque control */
+#define FIELD_WEAKENING                  (DISABLED)  /* If enabled - Field weakening */
 #define ALIGNMENT_METHOD                 (FORCED_ALIGNMENT)  /* alignment method  */
 
-#define Q_AXIS_ALIGNMENT                 (1U)
+#define Q_AXIS_ALIGNMENT                 (ENABLED)
 #define ANGLE_OFFSET_DEG                 (float)45.0    /* Angle offset while switching to closed loop */
 
 #define CURRENT_MEASUREMENT              (DUAL_SHUNT)  /* Current measurement shunts */
 
-#define POTENTIOMETER_INPUT_ENABLED       1U
+#define POTENTIOMETER_INPUT_ENABLED       ENABLED
 /***********************************************************************************************/
 /* Motor Configuration Parameters */
 /***********************************************************************************************/
@@ -97,7 +87,7 @@
 #define OPEN_LOOP_END_SPEED_RPM         (500) /* Startup - Control loop switches to close loop at this speed */
 #define OPEN_LOOP_RAMP_TIME_IN_SEC      (5)   /* Startup - Time to reach OPEN_LOOP_END_SPEED_RPM in seconds */
 #define Q_CURRENT_REF_OPENLOOP          (0.4) /* Startup - Motor start to ramp up in current control mode */
-#if (TORQUE_MODE == 1U)
+#if (TORQUE_MODE == ENABLED)
 #define Q_CURRENT_REF_TORQUE            (0.2)   /* Iq ref for torque mode */
 #endif
 
@@ -106,7 +96,7 @@
 #define CLOSING_LOOP_TIME_COUNTS                   (uint32_t)( Q_CURRENT_REF_OPENLOOP / Q_CURRENT_OPENLOOP_STEP)
 
 /* Field weakening - Limit for -ve Idref */
-#if(FIELD_WEAKENING == 1U)
+#if(FIELD_WEAKENING == ENABLED)
 #define MAX_FW_NEGATIVE_ID_REF              (float)(-2)
 #endif
 
@@ -154,7 +144,6 @@
 /***********************************************************************************************/
 /* Peripheral Configuration parameters */
 /***********************************************************************************************/
-/* Current measurement algorithms */
 
 /** PWM frequency in Hz */
 #define PWM_FREQUENCY                     (20000U)
