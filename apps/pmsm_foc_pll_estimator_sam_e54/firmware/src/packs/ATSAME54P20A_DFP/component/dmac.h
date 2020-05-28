@@ -1,7 +1,7 @@
 /**
  * \brief Component description for DMAC
  *
- * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2020 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-06-03T16:18:52Z */
+/* file generated from device description version 2020-03-12T17:27:04Z */
 #ifndef _SAME54_DMAC_COMPONENT_H_
 #define _SAME54_DMAC_COMPONENT_H_
 
@@ -1082,7 +1082,7 @@ typedef struct
   __IO  uint8_t                        DMAC_CHSTATUS;      /**< Offset: 0x0F (R/W  8) Channel n Status */
 } dmac_channel_registers_t;
 
-#define CHANNEL_NUMBER _U_(32)
+#define DMAC_CHANNEL_NUMBER _U_(32)
 
 /** \brief DMAC register API structure */
 typedef struct
@@ -1106,7 +1106,7 @@ typedef struct
   __IO  uint32_t                       DMAC_BASEADDR;      /**< Offset: 0x34 (R/W  32) Descriptor Memory Section Base Address */
   __IO  uint32_t                       DMAC_WRBADDR;       /**< Offset: 0x38 (R/W  32) Write-Back Memory Section Base Address */
   __I   uint8_t                        Reserved4[0x04];
-        dmac_channel_registers_t       CHANNEL[CHANNEL_NUMBER]; /**< Offset: 0x40  */
+        dmac_channel_registers_t       CHANNEL[DMAC_CHANNEL_NUMBER]; /**< Offset: 0x40  */
 } dmac_registers_t;
 
 

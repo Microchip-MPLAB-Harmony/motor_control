@@ -106,6 +106,12 @@ void ADC1_WindowModeSet(ADC_WINMODE mode);
 
 uint16_t ADC1_LastConversionResultGet( void );
 
+void ADC1_InterruptsClear(ADC_STATUS interruptMask);
+
+void ADC1_InterruptsEnable(ADC_STATUS interruptMask);
+
+void ADC1_InterruptsDisable(ADC_STATUS interruptMask);
+
 
 bool ADC1_ConversionStatusGet( void );
 

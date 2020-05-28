@@ -1,7 +1,7 @@
 /**
  * \brief Component description for GMAC
  *
- * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2020 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-06-03T16:18:52Z */
+/* file generated from device description version 2020-03-12T17:27:04Z */
 #ifndef _SAME54_GMAC_COMPONENT_H_
 #define _SAME54_GMAC_COMPONENT_H_
 
@@ -1561,7 +1561,7 @@ typedef struct
   __IO  uint32_t                       GMAC_SAT;           /**< Offset: 0x04 (R/W  32) Specific Address Top [47:32] Register */
 } gmac_sa_registers_t;
 
-#define SA_NUMBER _U_(4)
+#define GMAC_SA_NUMBER _U_(4)
 
 /** \brief GMAC register API structure */
 typedef struct
@@ -1588,7 +1588,7 @@ typedef struct
   __I   uint8_t                        Reserved1[0x34];
   __IO  uint32_t                       GMAC_HRB;           /**< Offset: 0x80 (R/W  32) Hash Register Bottom [31:0] */
   __IO  uint32_t                       GMAC_HRT;           /**< Offset: 0x84 (R/W  32) Hash Register Top [63:32] */
-        gmac_sa_registers_t            SA[SA_NUMBER];  /**< Offset: 0x88  */
+        gmac_sa_registers_t            SA[GMAC_SA_NUMBER]; /**< Offset: 0x88  */
   __IO  uint32_t                       GMAC_TIDM[4];       /**< Offset: 0xA8 (R/W  32) Type ID Match Register */
   __IO  uint32_t                       GMAC_WOL;           /**< Offset: 0xB8 (R/W  32) Wake on LAN */
   __IO  uint32_t                       GMAC_IPGS;          /**< Offset: 0xBC (R/W  32) IPG Stretch Register */

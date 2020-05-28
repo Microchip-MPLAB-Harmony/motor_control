@@ -1,7 +1,7 @@
 /**
  * \brief Component description for QSPI
  *
- * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2020 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-06-03T16:18:52Z */
+/* file generated from device description version 2020-03-12T17:27:04Z */
 #ifndef _SAME54_QSPI_COMPONENT_H_
 #define _SAME54_QSPI_COMPONENT_H_
 
@@ -56,6 +56,10 @@
 #define QSPI_CTRLB_LOOPEN_Pos                 _U_(1)                                               /**< (QSPI_CTRLB) Local Loopback Enable Position */
 #define QSPI_CTRLB_LOOPEN_Msk                 (_U_(0x1) << QSPI_CTRLB_LOOPEN_Pos)                  /**< (QSPI_CTRLB) Local Loopback Enable Mask */
 #define QSPI_CTRLB_LOOPEN(value)              (QSPI_CTRLB_LOOPEN_Msk & ((value) << QSPI_CTRLB_LOOPEN_Pos))
+#define   QSPI_CTRLB_LOOPEN_DISABLED_Val      _U_(0x0)                                             /**< (QSPI_CTRLB) Local Loopback is disabled  */
+#define   QSPI_CTRLB_LOOPEN_ENABLED_Val       _U_(0x1)                                             /**< (QSPI_CTRLB) Local Loopback is enabled  */
+#define QSPI_CTRLB_LOOPEN_DISABLED            (QSPI_CTRLB_LOOPEN_DISABLED_Val << QSPI_CTRLB_LOOPEN_Pos) /**< (QSPI_CTRLB) Local Loopback is disabled Position  */
+#define QSPI_CTRLB_LOOPEN_ENABLED             (QSPI_CTRLB_LOOPEN_ENABLED_Val << QSPI_CTRLB_LOOPEN_Pos) /**< (QSPI_CTRLB) Local Loopback is enabled Position  */
 #define QSPI_CTRLB_WDRBT_Pos                  _U_(2)                                               /**< (QSPI_CTRLB) Wait Data Read Before Transfer Position */
 #define QSPI_CTRLB_WDRBT_Msk                  (_U_(0x1) << QSPI_CTRLB_WDRBT_Pos)                   /**< (QSPI_CTRLB) Wait Data Read Before Transfer Mask */
 #define QSPI_CTRLB_WDRBT(value)               (QSPI_CTRLB_WDRBT_Msk & ((value) << QSPI_CTRLB_WDRBT_Pos))

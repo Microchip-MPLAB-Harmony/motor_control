@@ -85,7 +85,7 @@ __STATIC_INLINE void DCache_Enable(void);
 /** Program CMCC CSIZESW bits for TCM and cache configuration */
 __STATIC_INLINE void TCM_Configure(uint32_t tcmSize)
 {
-        CMCC_REGS->CMCC_CFG = CMCC_CFG_CSIZESW(tcmSize);
+    CMCC_REGS->CMCC_CFG = CMCC_CFG_CSIZESW(tcmSize);
 }
 
 /** Enable TCM memory */
@@ -146,6 +146,10 @@ void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call))
     FPU_Enable();
 #endif
 
+	TCM_Configure(2);
+
+    /* Enable TCM   */
+    TCM_Enable();
 
     /* Initialize data after TCM is enabled.
      * Data initialization from the XC32 .dinit template */

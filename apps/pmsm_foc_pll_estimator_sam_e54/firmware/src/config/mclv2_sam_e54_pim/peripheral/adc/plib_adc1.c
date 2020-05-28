@@ -103,7 +103,7 @@ void ADC1_Initialize( void )
 
 
     /* positive and negative input pins */
-    ADC1_REGS->ADC_INPUTCTRL = ADC_POSINPUT_AIN0 | ADC_NEGINPUT_GND ;
+    ADC1_REGS->ADC_INPUTCTRL = (uint16_t) ADC_POSINPUT_AIN0 | (uint16_t) ADC_NEGINPUT_GND ;
 
     /* Resolution & Operation Mode */
     ADC1_REGS->ADC_CTRLB = ADC_CTRLB_RESSEL_12BIT | ADC_CTRLB_WINMODE(0) ;
@@ -141,8 +141,12 @@ void ADC1_Disable( void )
 /* Configure channel input */
 void ADC1_ChannelSelect( ADC_POSINPUT positiveInput, ADC_NEGINPUT negativeInput )
 {
-    /* Configure pin scan mode and positive and negative input pins */
-    ADC1_REGS->ADC_INPUTCTRL = positiveInput | negativeInput;
+    /* Configure positive and negative input pins */
+    uint32_t channel;
+    channel = ADC1_REGS->ADC_INPUTCTRL;
+    channel &= ~(ADC_INPUTCTRL_MUXPOS_Msk | ADC_INPUTCTRL_MUXNEG_Msk);
+    channel |= (uint16_t) positiveInput | (uint16_t) negativeInput;
+    ADC1_REGS->ADC_INPUTCTRL = channel;
 
     while((ADC1_REGS->ADC_SYNCBUSY & ADC_SYNCBUSY_INPUTCTRL_Msk) == ADC_SYNCBUSY_INPUTCTRL_Msk)
     {
@@ -193,6 +197,21 @@ uint16_t ADC1_ConversionResultGet( void )
 uint16_t ADC1_LastConversionResultGet( void )
 {
     return (uint16_t)ADC1_REGS->ADC_RESS;
+}
+
+void ADC1_InterruptsClear(ADC_STATUS interruptMask)
+{
+    ADC1_REGS->ADC_INTFLAG = interruptMask;
+}
+
+void ADC1_InterruptsEnable(ADC_STATUS interruptMask)
+{
+    ADC1_REGS->ADC_INTENSET = interruptMask;
+}
+
+void ADC1_InterruptsDisable(ADC_STATUS interruptMask)
+{
+    ADC1_REGS->ADC_INTENCLR = interruptMask;
 }
 
 /* Check whether result is ready */

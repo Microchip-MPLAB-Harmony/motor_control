@@ -43,5 +43,6 @@
 
 #include "atsame54p20a.h"
 #include "device_cache.h"
+#include "atsame54p20a_compat.h"
 #include "toolchain_specifics.h"
 
