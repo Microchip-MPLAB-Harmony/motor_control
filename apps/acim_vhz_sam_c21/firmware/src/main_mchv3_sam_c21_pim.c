@@ -81,7 +81,8 @@ int main ( void )
     motorcontrol_vars_init();
     ADC1_Enable();
     X2CScope_Init();
-    TCC0_PWMStart();     
+    TCC0_PWMStart(); 
+    PWM_Output_Disable();    
 
     while ( true )
     {
@@ -132,7 +133,8 @@ void motor_start_stop(void)
 		
 	if(1U == switch_state)
 	{
-		state_run = 1;
+		PWM_Output_Enable();
+        state_run = 1;
 		state_halt = 0;	
 		ref_abs = 0;
 		direction = 0;
@@ -140,7 +142,8 @@ void motor_start_stop(void)
 	}
 	else
 	{
-		state_run = 0;
+		PWM_Output_Disable();
+        state_run = 0;
 		ref_abs = 0;
 		ext_speed_ref_rpm = 0;
 	}	

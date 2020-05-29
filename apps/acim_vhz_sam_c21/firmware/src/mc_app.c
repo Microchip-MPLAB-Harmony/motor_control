@@ -435,5 +435,23 @@ void motorcontrol(void)
    
 }
 
+void PWM_Output_Disable( void )
+{
+    TCC0_PWM24bitDutySet(TCC0_CHANNEL0,(uint32_t)HALF_PWM_HPER_TICKS);
+    TCC0_PWM24bitDutySet(TCC0_CHANNEL1,(uint32_t)HALF_PWM_HPER_TICKS);
+    TCC0_PWM24bitDutySet(TCC0_CHANNEL2,(uint32_t)HALF_PWM_HPER_TICKS);
+    
+    /*Override all PWM outputs to low*/
+    TCC0_PWMPatternSet((TCC_PATT_PGE0_Msk|TCC_PATT_PGE1_Msk|TCC_PATT_PGE2_Msk
+            |TCC_PATT_PGE4_Msk|TCC_PATT_PGE5_Msk|TCC_PATT_PGE6_Msk),
+            (TCC_PATT_PGE0(0)|TCC_PATT_PGE1(0)|TCC_PATT_PGE2(0)|TCC_PATT_PGE4(0)
+            |TCC_PATT_PGE5(0)|TCC_PATT_PGE6(0)));
+}
+
+void PWM_Output_Enable( void)
+{
+    TCC0_PWMPatternSet(0x00,0x00);/*Disable PWM override*/
+}
+
 /* EOF motor_control.c */
 

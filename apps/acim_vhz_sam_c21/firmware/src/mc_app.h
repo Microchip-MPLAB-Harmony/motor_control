@@ -131,5 +131,8 @@ void  __ramfunc__ motorcontrol(void);
 void motorcontrol(void);
 #endif
 
+extern void PWM_Output_Disable( void );
+extern void PWM_Output_Enable( void);
+
 
 #endif // MC_APP_H

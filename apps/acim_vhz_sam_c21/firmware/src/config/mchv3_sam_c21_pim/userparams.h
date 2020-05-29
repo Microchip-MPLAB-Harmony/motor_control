@@ -56,7 +56,8 @@ Macro definitions
 
 #define PWM_FREQUENCY 20       /* in kHz   */
 
-#define PWM_HPER_TICKS  ( 1200U )  /* 4000 ticks, total period 8000 ticks @48MHz -> 167us */
+#define PWM_HPER_TICKS       ( 1200U )  /* 4000 ticks, total period 8000 ticks @48MHz -> 167us */
+#define HALF_PWM_HPER_TICKS  ( PWM_HPER_TICKS >> 1)
 /* 1200 ticks , total period 2400 ticks -> 50 micro seconds */
 
 /* motor and application related parameters */

@@ -8,7 +8,7 @@
     debug_console.c
 
   Summary:
-    RSTC Source File
+    debug console Source File
 
   Description:
     None
