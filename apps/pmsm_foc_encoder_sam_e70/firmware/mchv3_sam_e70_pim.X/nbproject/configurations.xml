@@ -166,6 +166,7 @@
                    displayName="Important Files"
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/mchv3_sam_e70_pim/harmony.prj</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -181,12 +182,12 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.30</languageToolchainVersion>
+        <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
+        <pack name="SAME70_DFP" vendor="Microchip" version="4.2.59"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAME70_DFP" vendor="Microchip" version="4.0.40"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -246,7 +247,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/mchv3_sam_e70_pim;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+                  value="../src;../src/config/mchv3_sam_e70_pim;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -366,15 +367,22 @@
         <property key="mdtcm" value=""/>
         <property key="mitcm" value=""/>
         <property key="mstacktcm" value="false"/>
+        <property key="omit-pack-options" value="1"/>
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
       </C32Global>
       <EdbgTool>
         <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="communication.activationmode" value="nohv"/>
         <property key="communication.interface" value="jtag"/>
         <property key="communication.speed" value="${communication.speed.default}"/>
         <property key="debugoptions.useswbreakpoints" value="true"/>
+        <property key="firmware.path"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="firmware.toolpack"
+                  value="Press to select which tool pack to use"/>
+        <property key="firmware.update.action" value="firmware.update.use.latest"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
         <property key="memories.configurationmemory" value="true"/>
@@ -399,6 +407,10 @@
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="toolpack.updateoptions"
+                  value="toolpack.updateoptions.uselatestoolpack"/>
+        <property key="toolpack.updateoptions.packversion"
+                  value="Press to select which tool pack to use"/>
         <property key="voltagevalue" value=""/>
       </EdbgTool>
       <PICkit3PlatformTool>

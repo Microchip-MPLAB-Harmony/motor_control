@@ -47,16 +47,16 @@
 // *****************************************************************************
 // *****************************************************************************
 
-void static UART0_ErrorClear( void )
+static void UART0_ErrorClear( void )
 {
     uint8_t dummyData = 0u;
 
     UART0_REGS->UART_CR = UART_CR_RSTSTA_Msk;
 
     /* Flush existing error bytes from the RX FIFO */
-    while( UART_SR_RXRDY_Msk == (UART0_REGS->UART_SR& UART_SR_RXRDY_Msk) )
+    while( UART_SR_RXRDY_Msk == (UART0_REGS->UART_SR & UART_SR_RXRDY_Msk) )
     {
-        dummyData = (UART0_REGS->UART_RHR& UART_RHR_RXCHR_Msk);
+        dummyData = (UART0_REGS->UART_RHR & UART_RHR_RXCHR_Msk);
     }
 
     /* Ignore the warning */
@@ -155,7 +155,7 @@ bool UART0_Read( void *buffer, const size_t size )
 
             if(UART_SR_RXRDY_Msk == (UART0_REGS->UART_SR & UART_SR_RXRDY_Msk))
             {
-                *lBuffer++ = (UART0_REGS->UART_RHR & UART_RHR_RXCHR_Msk);
+                *lBuffer++ = (UART0_REGS->UART_RHR& UART_RHR_RXCHR_Msk);
                 processedSize++;
             }
         }
@@ -197,7 +197,7 @@ int UART0_ReadByte(void)
     return(UART0_REGS->UART_RHR& UART_RHR_RXCHR_Msk);
 }
 
-void UART0_WriteByte(int data)
+void UART0_WriteByte( int data )
 {
     while ((UART_SR_TXRDY_Msk == (UART0_REGS->UART_SR & UART_SR_TXRDY_Msk)) == 0);
 
