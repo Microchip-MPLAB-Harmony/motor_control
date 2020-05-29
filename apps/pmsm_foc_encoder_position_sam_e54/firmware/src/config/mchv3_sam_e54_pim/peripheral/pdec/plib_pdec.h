@@ -96,6 +96,10 @@ void PDEC_QDECStop( void );
 
 int16_t PDEC_QDECPositionGet( void );
 
+uint16_t PDEC_QDECRevolutionsGet( void );
+
+uint16_t PDEC_QDECAngleGet( void );
+
 PDEC_QDEC_STATUS PDEC_QDECStatusGet(void);
 
 // DOM-IGNORE-BEGIN

@@ -1,7 +1,7 @@
 /**
  * \brief Component description for MCLK
  *
- * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2020 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-06-03T16:18:52Z */
+/* file generated from device description version 2020-03-12T17:27:04Z */
 #ifndef _SAME54_MCLK_COMPONENT_H_
 #define _SAME54_MCLK_COMPONENT_H_
 

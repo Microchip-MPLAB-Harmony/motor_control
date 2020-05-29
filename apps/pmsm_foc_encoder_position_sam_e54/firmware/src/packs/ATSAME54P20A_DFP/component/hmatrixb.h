@@ -1,7 +1,7 @@
 /**
  * \brief Component description for HMATRIXB
  *
- * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2020 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-06-03T16:18:52Z */
+/* file generated from device description version 2020-03-12T17:27:04Z */
 #ifndef _SAME54_HMATRIXB_COMPONENT_H_
 #define _SAME54_HMATRIXB_COMPONENT_H_
 
@@ -52,13 +52,13 @@ typedef struct
   __IO  uint32_t                       HMATRIXB_PRBS;      /**< Offset: 0x04 (R/W  32) Priority B for Slave */
 } hmatrixb_prs_registers_t;
 
-#define PRS_NUMBER _U_(16)
+#define HMATRIXB_PRS_NUMBER _U_(16)
 
 /** \brief HMATRIXB register API structure */
 typedef struct
 {  /* HSB Matrix */
   __I   uint8_t                        Reserved1[0x80];
-        hmatrixb_prs_registers_t       PRS[PRS_NUMBER]; /**< Offset: 0x80  */
+        hmatrixb_prs_registers_t       PRS[HMATRIXB_PRS_NUMBER]; /**< Offset: 0x80  */
 } hmatrixb_registers_t;
 
 
