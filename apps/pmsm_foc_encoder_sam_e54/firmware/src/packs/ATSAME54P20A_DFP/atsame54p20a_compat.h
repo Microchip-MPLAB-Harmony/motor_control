@@ -1,21 +1,26 @@
 /*******************************************************************************
-  Interface definition of CMCC PLIB.
+  Device compatibility Header File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_cmcc.h
+    atsame54p20a_compat.h
 
   Summary:
-    Interface definition of the CMCC(Cortex M Cache Controller) Peripheral Library
+    This file includes deprecated macro names that are retained for the purpose
+    of compatibility with Harmony 3 Middleware. Users are discouraged from using
+    macros defined in this file. Recommend to use macros defined in the device
+    header file instead.
 
   Description:
-    This file defines the interface for the CMCC Plib.
+    None
+
 *******************************************************************************/
 
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -36,39 +41,24 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
+// DOM-IGNORE-END
 
-#ifndef PLIB_CMCC_H    // Guards against multiple inclusion
-#define PLIB_CMCC_H
+#ifndef ATSAME54P20A_COMPAT_H
 
+#ifndef DEVICE_DESC_BANK_NUMBER
+#define DEVICE_DESC_BANK_NUMBER USB_DEVICE_DESC_BANK_NUMBER
+#endif //DEVICE_DESC_BANK_NUMBER
 
-#ifdef __cplusplus // Provide C++ Compatibility
-	extern "C" {
-#endif
+#ifndef HOST_DESC_BANK_NUMBER
+#define HOST_DESC_BANK_NUMBER USB_HOST_DESC_BANK_NUMBER
+#endif //HOST_DESC_BANK_NUMBER
 
+#ifndef DEVICE_ENDPOINT_NUMBER
+#define DEVICE_ENDPOINT_NUMBER USB_DEVICE_ENDPOINT_NUMBER
+#endif //DEVICE_ENDPOINT_NUMBER
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface
-// *****************************************************************************
-// *****************************************************************************
+#ifndef HOST_PIPE_NUMBER
+#define HOST_PIPE_NUMBER USB_HOST_PIPE_NUMBER
+#endif //HOST_PIPE_NUMBER
 
-#define CMCC_NO_OF_WAYS     4
-#define CMCC_LINE_PER_WAY   64
-#define CMCC_LINE_SIZE      16
-#define CMCC_WAY_SIZE       1024
-
-/***************************** CMCC API *******************************/
-void CMCC_Disable (void );
-void CMCC_EnableDCache (void );
-void CMCC_DisableDCache (void );
-
-void CMCC_EnableICache (void );
-void CMCC_DisableICache (void );
-
-void CMCC_InvalidateAll (void );
-
-#ifdef __cplusplus  // Provide C++ Compatibility
-    }
-#endif
-
-#endif
+#endif //ATSAME54P20A_COMPAT_H

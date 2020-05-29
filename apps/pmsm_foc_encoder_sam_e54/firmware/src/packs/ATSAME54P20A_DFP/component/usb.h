@@ -1,7 +1,7 @@
 /**
  * \brief Component description for USB
  *
- * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2020 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-06-03T16:18:52Z */
+/* file generated from device description version 2020-03-12T17:27:04Z */
 #ifndef _SAME54_USB_COMPONENT_H_
 #define _SAME54_USB_COMPONENT_H_
 
@@ -1179,20 +1179,20 @@ typedef struct
   __I   uint8_t                        Reserved2[0x16];
 } usb_host_pipe_registers_t;
 
-#define DEVICE_DESC_BANK_NUMBER _U_(2)
+#define USB_DEVICE_DESC_BANK_NUMBER _U_(2)
 
 /** \brief USB_DESCRIPTOR register API structure */
 typedef struct
 {  /* Universal Serial Bus */
-        usb_device_desc_bank_registers_t DEVICE_DESC_BANK[DEVICE_DESC_BANK_NUMBER]; /**< Offset: 0x00  */
+        usb_device_desc_bank_registers_t DEVICE_DESC_BANK[USB_DEVICE_DESC_BANK_NUMBER]; /**< Offset: 0x00  */
 } usb_descriptor_device_registers_t;
 
-#define HOST_DESC_BANK_NUMBER _U_(2)
+#define USB_HOST_DESC_BANK_NUMBER _U_(2)
 
 /** \brief USB_DESCRIPTOR register API structure */
 typedef struct
 {  /* Universal Serial Bus */
-        usb_host_desc_bank_registers_t HOST_DESC_BANK[HOST_DESC_BANK_NUMBER]; /**< Offset: 0x00  */
+        usb_host_desc_bank_registers_t HOST_DESC_BANK[USB_HOST_DESC_BANK_NUMBER]; /**< Offset: 0x00  */
 } usb_descriptor_host_registers_t;
 
 /** \brief USB_DESCRIPTOR hardware registers */
@@ -1202,7 +1202,7 @@ typedef union
        usb_descriptor_host_registers_t HOST;           /**< USB is Host */
 } usb_descriptor_registers_t;
 
-#define DEVICE_ENDPOINT_NUMBER _U_(8)
+#define USB_DEVICE_ENDPOINT_NUMBER _U_(8)
 
 /** \brief USB register API structure */
 typedef struct
@@ -1231,10 +1231,10 @@ typedef struct
   __IO  uint32_t                       USB_DESCADD;        /**< Offset: 0x24 (R/W  32) Descriptor Address */
   __IO  uint16_t                       USB_PADCAL;         /**< Offset: 0x28 (R/W  16) USB PAD Calibration */
   __I   uint8_t                        Reserved10[0xD6];
-        usb_device_endpoint_registers_t DEVICE_ENDPOINT[DEVICE_ENDPOINT_NUMBER]; /**< Offset: 0x100  */
+        usb_device_endpoint_registers_t DEVICE_ENDPOINT[USB_DEVICE_ENDPOINT_NUMBER]; /**< Offset: 0x100  */
 } usb_device_registers_t;
 
-#define HOST_PIPE_NUMBER _U_(8)
+#define USB_HOST_PIPE_NUMBER _U_(8)
 
 /** \brief USB register API structure */
 typedef struct
@@ -1264,7 +1264,7 @@ typedef struct
   __IO  uint32_t                       USB_DESCADD;        /**< Offset: 0x24 (R/W  32) Descriptor Address */
   __IO  uint16_t                       USB_PADCAL;         /**< Offset: 0x28 (R/W  16) USB PAD Calibration */
   __I   uint8_t                        Reserved10[0xD6];
-        usb_host_pipe_registers_t      HOST_PIPE[HOST_PIPE_NUMBER]; /**< Offset: 0x100  */
+        usb_host_pipe_registers_t      HOST_PIPE[USB_HOST_PIPE_NUMBER]; /**< Offset: 0x100  */
 } usb_host_registers_t;
 
 /** \brief USB hardware registers */

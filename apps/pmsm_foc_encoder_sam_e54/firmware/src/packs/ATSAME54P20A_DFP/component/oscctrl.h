@@ -1,7 +1,7 @@
 /**
  * \brief Component description for OSCCTRL
  *
- * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2020 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-06-03T16:18:52Z */
+/* file generated from device description version 2020-03-12T17:27:04Z */
 #ifndef _SAME54_OSCCTRL_COMPONENT_H_
 #define _SAME54_OSCCTRL_COMPONENT_H_
 
@@ -664,7 +664,7 @@ typedef struct
   __I   uint32_t                       OSCCTRL_DPLLSTATUS; /**< Offset: 0x10 (R/   32) DPLL Status */
 } oscctrl_dpll_registers_t;
 
-#define DPLL_NUMBER _U_(2)
+#define OSCCTRL_DPLL_NUMBER _U_(2)
 
 /** \brief OSCCTRL register API structure */
 typedef struct
@@ -684,7 +684,7 @@ typedef struct
   __IO  uint32_t                       OSCCTRL_DFLLMUL;    /**< Offset: 0x28 (R/W  32) DFLL48M Multiplier */
   __IO  uint8_t                        OSCCTRL_DFLLSYNC;   /**< Offset: 0x2C (R/W  8) DFLL48M Synchronization */
   __I   uint8_t                        Reserved4[0x03];
-        oscctrl_dpll_registers_t       DPLL[DPLL_NUMBER]; /**< Offset: 0x30  */
+        oscctrl_dpll_registers_t       DPLL[OSCCTRL_DPLL_NUMBER]; /**< Offset: 0x30  */
 } oscctrl_registers_t;
 
 

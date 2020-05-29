@@ -51,9 +51,9 @@ int main ( void )
     /* Initialize all modules */
     SYS_Initialize ( NULL );
     delay_10ms.period = DELAY_10MS_COUNT;
+    TCC0_PWMStart(); 
     ADC0_CallbackRegister((ADC_CALLBACK) ADC_CALIB_ISR, (uintptr_t)NULL);
     PWM_Output_Disable();
-    TCC0_PWMStart(); 
     ADC0_Enable();
     X2CScope_Init();
 
