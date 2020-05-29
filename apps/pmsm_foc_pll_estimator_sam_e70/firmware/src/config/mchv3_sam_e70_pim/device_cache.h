@@ -12,8 +12,8 @@
     invalidates etc. For the DCache and ICache.
 
   Remarks:
-    This header should not define any prototypes or data definitions, or 
-    include any files that do.  The file only provides macro definitions for 
+    This header should not define any prototypes or data definitions, or
+    include any files that do.  The file only provides macro definitions for
     build-time.
 
 *******************************************************************************/
@@ -55,6 +55,8 @@
     define this configuration.
 */
 
+#include "device.h"
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
@@ -68,10 +70,13 @@ extern "C" {
 // Section: L1 Cache Configuration
 // *****************************************************************************
 // *****************************************************************************
+
+#define DATA_CACHE_IS_ENABLED()            			   (SCB->CCR & (uint32_t)SCB_CCR_DC_Msk)
+#define INSTRUCTION_CACHE_IS_ENABLED()     			   (SCB->CCR & (uint32_t)SCB_CCR_IC_Msk)
+
 #define ICACHE_ENABLE()                                SCB_EnableICache()
 #define ICACHE_DISABLE()                               SCB_DisableICache()
 #define ICACHE_INVALIDATE()                            SCB_InvalidateICache()
-#define INSTRUCTION_CACHE_ENABLED                      true
 
 #define DCACHE_ENABLE()                                SCB_EnableDCache()
 #define DCACHE_DISABLE()                               SCB_DisableDCache()
@@ -81,7 +86,6 @@ extern "C" {
 #define DCACHE_CLEAN_BY_ADDR(addr,sz)                  SCB_CleanDCache_by_Addr(addr,sz)
 #define DCACHE_INVALIDATE_BY_ADDR(addr,sz)             SCB_InvalidateDCache_by_Addr(addr,sz)
 #define DCACHE_CLEAN_INVALIDATE_BY_ADDR(addr,sz)       SCB_CleanInvalidateDCache_by_Addr(addr,sz)
-#define DATA_CACHE_ENABLED                             true
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

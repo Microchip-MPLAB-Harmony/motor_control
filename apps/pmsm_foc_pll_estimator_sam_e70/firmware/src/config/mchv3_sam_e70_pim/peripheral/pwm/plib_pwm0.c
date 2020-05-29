@@ -109,6 +109,7 @@ void PWM0_Initialize (void)
     PWM0_REGS->PWM_FPV1 = (0 << PWM_FPV1_FPVH0_Pos) | (1 << PWM_FPV1_FPVL0_Pos)
 		 | (0 << PWM_FPV1_FPVH1_Pos) | (1 << PWM_FPV1_FPVL1_Pos)
 		 | (0 << PWM_FPV1_FPVH2_Pos) | (1 << PWM_FPV1_FPVL2_Pos);
+    PWM0_REGS->PWM_FPV2 = 0x0;
     /* Fault mode configuration */
     PWM0_REGS->PWM_FMR = PWM_FMR_FFIL(0x0) | PWM_FMR_FPOL(0xF8) | PWM_FMR_FMOD(0xFF);
 
@@ -180,6 +181,19 @@ void PWM0_SyncUpdateEnable (void)
 void PWM0_FaultStatusClear(PWM_FAULT_ID fault_id)
 {
     PWM0_REGS->PWM_FCR = 0x1U << fault_id;
+}
+
+/* Override PWM outputs */
+void PWM0_ChannelOverrideEnable(PWM_CHANNEL_NUM channel)
+{
+    PWM0_REGS->PWM_OS &= ~((1 << channel) | (1 << (channel + 16)));
+    PWM0_REGS->PWM_OS |= ((0 << channel) | (0 << (channel + 16)));
+}
+
+/* Disable override of PWM outputs */
+void PWM0_ChannelOverrideDisable(PWM_CHANNEL_NUM channel)
+{
+    PWM0_REGS->PWM_OS |= ((1 << channel) | (1 << (channel + 16)));
 }
 
 
