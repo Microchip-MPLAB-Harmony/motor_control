@@ -112,6 +112,10 @@ void PWM1_SyncUpdateEnable (void);
 
 void PWM1_FaultStatusClear(PWM_FAULT_ID fault_id);
 
+void PWM1_ChannelOverrideEnable(PWM_CHANNEL_NUM channel);
+
+void PWM1_ChannelOverrideDisable(PWM_CHANNEL_NUM channel);
+
 bool PWM1_ChannelCounterEventStatusGet (PWM_CHANNEL_NUM channel);
 
 #endif //PLIB_PWM1_H

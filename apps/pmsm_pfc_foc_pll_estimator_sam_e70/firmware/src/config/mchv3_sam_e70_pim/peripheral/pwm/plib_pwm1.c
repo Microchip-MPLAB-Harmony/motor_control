@@ -147,6 +147,19 @@ void PWM1_FaultStatusClear(PWM_FAULT_ID fault_id)
     PWM1_REGS->PWM_FCR = 0x1U << fault_id;
 }
 
+/* Override PWM outputs */
+void PWM1_ChannelOverrideEnable(PWM_CHANNEL_NUM channel)
+{
+    PWM1_REGS->PWM_OS &= ~((1 << channel) | (1 << (channel + 16)));
+    PWM1_REGS->PWM_OS |= ((0 << channel) | (0 << (channel + 16)));
+}
+
+/* Disable override of PWM outputs */
+void PWM1_ChannelOverrideDisable(PWM_CHANNEL_NUM channel)
+{
+    PWM1_REGS->PWM_OS |= ((1 << channel) | (1 << (channel + 16)));
+}
+
 
 /* Check the status of counter event */
 bool PWM1_ChannelCounterEventStatusGet (PWM_CHANNEL_NUM channel)
