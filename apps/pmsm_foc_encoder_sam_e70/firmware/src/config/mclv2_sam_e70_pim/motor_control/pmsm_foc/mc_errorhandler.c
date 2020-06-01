@@ -69,12 +69,24 @@
 tMCERR_STATE_SIGNAL_S    gMCERR_StateSignals;
 MCERR_CALLBACK_OBJECT    MCERR_CallbackObj;
 
+/******************************************************************************/
+/*  Function name: MCERR_FaultCallbackRegister                                */
+/*  Function parameters: callback function, context                           */
+/*  Function return: None                                                     */
+/*  Description: Register the callback function which is called when fault is detected */
+/******************************************************************************/
 void MCERR_FaultCallbackRegister(MCERR_FAULT_CALLBACK callback, uintptr_t context)
 {
     MCERR_CallbackObj.callback_fn = callback;
     MCERR_CallbackObj.context = context;
 }
 
+/******************************************************************************/
+/*  Function name: MCERR_ErrorClear                                           */
+/*  Function parameters: None                                                 */
+/*  Function return: None                                                     */
+/*  Description: Clear the error status                                      */
+/******************************************************************************/
 void MCERR_ErrorClear( void )
 {
     gMCERR_StateSignals.errorCode = 0;
@@ -84,11 +96,10 @@ void MCERR_ErrorClear( void )
 
 /******************************************************************************/
 /*  Function name: MCERR_FaultControlISR                                      */
-/*  Function parameters: None                                                 */
+/*  Function parameters: status, context                                      */
 /*  Function return: None                                                     */
-/*  Description: Fault ISR when the external failure at                       */
-/*                       FLT15 pin detects failure                            */
-/******************************************************************************/
+/*  Description: Fault ISR when the overcurrent is detected at external pin   */
+/***************************************************************************/
 
 void MCERR_FaultControlISR(uint32_t status, uintptr_t context)
 {

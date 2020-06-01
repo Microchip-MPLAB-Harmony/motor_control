@@ -101,7 +101,7 @@ Derived Parameters interface file
 #define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH / NUM_POLE_PAIRS)
 
 /*_______________________________ Field weakening ___________________________________________________*/
-#if(FIELD_WEAKENING == 1U)
+#if(FIELD_WEAKENING == ENABLED)
 #define MAX_SPEED_RAD_PER_SEC_ELEC                       (float)(((MAX_SPEED_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)
 #else
 #define MAX_SPEED_RAD_PER_SEC_ELEC                       (float)(((RATED_SPEED_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)

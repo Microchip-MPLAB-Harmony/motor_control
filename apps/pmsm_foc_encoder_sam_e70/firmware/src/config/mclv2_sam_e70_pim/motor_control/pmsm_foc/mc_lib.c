@@ -71,7 +71,8 @@ tMCLIB_CLARK_TRANSFORM_S            gMCLIB_VoltageAlphaBeta = {0.0f, 0.0f};
 
 /******************************************************************************/
 /* Function name: MCLIB_ClarkeTransform                                       */
-/* Function parameters: None                                                  */
+/* Function parameters: input - phase currents                                */
+/*                      output - clarke transform output                      */
 /* Function return: None                                                      */
 /* Description: Clarke Transformation                                         */
 /******************************************************************************/
@@ -83,7 +84,9 @@ tMCLIB_CLARK_TRANSFORM_S            gMCLIB_VoltageAlphaBeta = {0.0f, 0.0f};
 
 /*****************************************************************************/
 /* Function name: MCLIB_ParkTransform                                        */
-/* Function parameters: None                                                 */
+/* Function parameters: input - clarke transform input                       */
+/*                      output - park transform output                       */
+/*                      position - rotor angle                               */
 /* Function return: None                                                     */
 /* Description: Park Transformation.                                         */
 /******************************************************************************/
@@ -97,7 +100,9 @@ void MCLIB_ParkTransform( const tMCLIB_CLARK_TRANSFORM_S * const input, const tM
 
 /******************************************************************************/
 /* Function name: MCLIB_InvParkTransform                                      */
-/* Function parameters: None                                                  */
+/* Function parameters: input - park transform inputs                         */
+/*                      output - clarke transform output                      */
+/*                      position - rotor angle                                */
 /* Function return: None                                                      */
 /* Description: Inverse Park Transformation.                                  */
 /******************************************************************************/
@@ -106,17 +111,6 @@ void MCLIB_ParkTransform( const tMCLIB_CLARK_TRANSFORM_S * const input, const tM
     output->alphaAxis =  input->directAxis * position->cosAngle - input->quadratureAxis * position->sineAngle;
     output->betaAxis  =  input->directAxis * position->sineAngle + input->quadratureAxis * position->cosAngle;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /*******************************************************************************
  End of File
