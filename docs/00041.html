@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Building The Application</title>
+<title>Hardware Setup</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00027.html">Sensor feedback using Quadrature Encoder</a> &gt; <a href="00030.html">pmsm_foc_encoder_sam_e70</a> &gt; <a href="00041.html">Building The Application</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00032.html">Sensor feedback using Quadrature Encoder</a> &gt; <a href="00033.html">pmsm_foc_encoder_lx7720_sam_rh71_ek</a> &gt; <a href="00041.html">Hardware Setup</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -31,12 +31,12 @@ Microchip 32-bit Motor Control</div>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00030.html">Previous</a> | <a href="00030.html">Up</a> | <a href="00043.html">Next</a></div>
+<a href="00038.html">Previous</a> | <a href="00033.html">Up</a> | <a href="00040.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_sam_e70 Building The Application Topic Title: Building The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_lx7720_sam_rh71_ekHardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building The Application</div>
+Hardware Setup</div>
 </div>
 </div>
 
@@ -50,46 +50,122 @@ Building The Application</div>
 <div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The parent folder for all the MPLAB X projects for this application is given below: </p><div class="Element63">
+
+<ol class="Element630">
+<li value="1" class="Element600">Project sam_rh71_xult.X
+<ul class="Element631">
+<li class="Element601">Hardware Used
+<ul class="Element632">
+<li class="Element602">SAM RH71 Evaluation Kit</li>
+<li class="Element602">LX7720 board</li>
+<li class="Element602">Hurst DMA0204024B101 BLDC Motor</li>
+</ul></li>
+<li class="Element601">Hardware Setup
+<ul class="Element632">
+<li class="Element602">Connect the debugger probe to J33</li>
+<li class="Element602">Connect the USB port on the board to the computer using a mini USB cable.</li>
+<li class="Element602">Connect the 3 motors phases to the LX board.</li>
+<li class="Element602">Connect the motor encoders A and B respectively to LX7720 BLI1 and BLI2. Connecter encoder VCC to LX7720 5V and encoder GND to LX7720 SGND.</li>
+<li class="Element602">LX7720 jumpers configuration
+<ul class="Element633">
+<li class="Element603">SM_EN to ON with J39</li>
+<li class="Element603">SCP forced high with J38</li>
+</ul></li>
+<li class="Element602">Connect the followings signals between SAMRH71-EK board and LX7720 board</li>
+</ul></li>
+</ul></li>
+</ol><div class="Element63">
 <div class="TableDiv">
 <table cellspacing="0" class="Table1">
 <tr>
-<td class="Element65" valign="top" width="26%">
-<div class="Element66">
-Application Path&nbsp;</div></td><td class="Element65" valign="top" width="74%">
-<div class="Element66">
-motor_control\apps\pmsm_foc_encoder_sam_e70&nbsp;</div></td></tr></table></div></div>
+<td class="Element75" valign="top" width="49%">
+<div class="Element76">
+SAMRH71F20-EK&nbsp;</div></td><td class="Element75" valign="top" width="51%">
+<div class="Element76">
+LX7720&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PA4 (J24.8)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+LD_IN_A_C (J20.2)&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PA0 (J24.7)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+UD_IN_A_C (J20.1)&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PA5 (J24.6)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+LD_IN_B_C (J20.6)&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PA1 (J24.9)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+UD_IN_B_C (J20.5)&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PA6 (J24.17)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+LD_IN_C_C (J20.10)&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PA2 (J24.16)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+UD_IN_C_C (J20.9)&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PA09 (J24.3)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+OC_FAULT (J20.32)&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PC21 (J30.16) (TCLK9)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+SNS_OUT_A (J20.3)&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PC28 (J30.9) (TCLK10)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+SNS_OUT_B (J20.7)&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PB9 (J30.6) (TIOB9)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+BLO2 (J20.36)&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PB10 (J30.7) (TIOA9)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+BLO1 (J20.35)&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PA11 (J24.5) (PCK0)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+MOD_CLK (J20.18)&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="49%">
+<div class="Element78">
+PA10 (J24.4) (PCK2)&nbsp;</div></td><td class="Element77" valign="top" width="51%">
+<div class="Element78">
+CP_CLK (J20.17)&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
 &nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">To build the application, refer to the following table and open the appropriate project file in MPLAB X IDE.</span> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="25%">
-<div class="Element66">
-Project Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-mchv3_sam_e70_pim.X&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-MCHV3 Development Board (High Voltage)&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-mclv2_sam_e70_pim.X&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-MCLV2 Development Board (Low Voltage)&nbsp;</div></td></tr></table></div></div>
-</div>
+
+<ul class="Element630">
+<li class="Element600">Add external buttons with pullup and debounce filter
+<ul class="Element631">
+<li class="Element601">Start/Stop switch : PA22 (J25.6)</li>
+<li class="Element601">Increase speed switch : PA23 (J25.3)</li>
+<li class="Element601">Decrease speed switch : PA24 (J25.4)</li>
+</ul></li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00027.html">Sensor feedback using Quadrature Encoder</a> &gt; <a href="00030.html">pmsm_foc_encoder_sam_e70</a> &gt; <a href="00041.html">Building The Application</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00032.html">Sensor feedback using Quadrature Encoder</a> &gt; <a href="00033.html">pmsm_foc_encoder_lx7720_sam_rh71_ek</a> &gt; <a href="00041.html">Hardware Setup</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -100,7 +176,7 @@ MCLV2 Development Board (Low Voltage)&nbsp;</div></td></tr></table></div></div>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_sam_e70 Building The Application Topic Title: Building The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_lx7720_sam_rh71_ekHardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

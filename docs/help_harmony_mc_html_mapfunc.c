@@ -7,11 +7,17 @@ int HTML_ID_Mapping(int id)
   {
     case IDH_Motor_Control_Overview                            : return IDH_HTML_Motor_Control_Overview;
     case IDH_X2CScope_Plugin                                   : return IDH_HTML_X2CScope_Plugin;
+    case IDH_PMSM_FOC_Module                                   : return IDH_HTML_PMSM_FOC_Module;
+    case IDH_PMSM_FOC_Introduction                             : return IDH_HTML_PMSM_FOC_Introduction;
+    case IDH_PMSM_FOC_Control_Algorithm                        : return IDH_HTML_PMSM_FOC_Control_Algorithm;
+    case IDH_PMSM_FOC_Configuring_the_Library                  : return IDH_HTML_PMSM_FOC_Configuring_the_Library;
+    case IDH_PMSM_FOC_Using_The_Library                        : return IDH_HTML_PMSM_FOC_Using_The_Library;
     case IDH_Applications_Help                                 : return IDH_HTML_Applications_Help;
     case IDH_SAM_E70_Applications                              : return IDH_HTML_SAM_E70_Applications;
     case IDH_SAM_E54_Applications                              : return IDH_HTML_SAM_E54_Applications;
     case IDH_SAM_C21                                           : return IDH_HTML_SAM_C21;
     case IDH_PIC32_MK_Applications                             : return IDH_HTML_PIC32_MK_Applications;
+    case IDH_SAM_RH71_Applications                             : return IDH_HTML_SAM_RH71_Applications;
     case IDH_ACIM_Applications                                 : return IDH_HTML_ACIM_Applications;
     case IDH_acim_vhz_Applications_Help                        : return IDH_HTML_acim_vhz_Applications_Help;
     case IDH_acim_vhz_Applications_acim_vhz_sam_c21            : return IDH_HTML_acim_vhz_Applications_acim_vhz_sam_c21;
@@ -106,6 +112,12 @@ int HTML_ID_Mapping(int id)
     case IDH_pmsm_foc_encoder_pmsm_foc_encoder_pic32_mk_Control_Algorithm: return IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_pic32_mk_Control_Algorithm;
     case IDH_pmsm_foc_encoder_pmsm_foc_encoder_pic32_mkHardware_Setup: return IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_pic32_mkHardware_Setup;
     case IDH_pmsm_foc_encoder_pmsm_foc_encoder_pic32_mk_Running_The_Application: return IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_pic32_mk_Running_The_Application;
+    case IDH_pmsm_foc_encoder_Applications_Help_pmsm_foc_encoder_lx7720_sam_rh71_ek: return IDH_HTML_pmsm_foc_encoder_Applications_Help_pmsm_foc_encoder_lx7720_sam_rh71_ek;
+    case IDH_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_Building_The_Application: return IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_Building_The_Application;
+    case IDH_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_MPLAB_Harmony_Configurations: return IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_MPLAB_Harmony_Configurations;
+    case IDH_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_Control_Algorithm: return IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_Control_Algorithm;
+    case IDH_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ekHardware_Setup: return IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ekHardware_Setup;
+    case IDH_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_Running_The_Application: return IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_Running_The_Application;
     case IDH_pmsm_foc_position_control_Applications_Help       : return IDH_HTML_pmsm_foc_position_control_Applications_Help;
     case IDH_pmsm_foc_position_control_Applications_pmsm_foc_position_control_sam_e54: return IDH_HTML_pmsm_foc_position_control_Applications_pmsm_foc_position_control_sam_e54;
     case IDH_pmsm_foc_position_control_pmsm_foc_encoder_position_sam_e54__Building_The_Application: return IDH_HTML_pmsm_foc_position_control_pmsm_foc_encoder_position_sam_e54__Building_The_Application;

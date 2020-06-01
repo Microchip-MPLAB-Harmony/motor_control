@@ -20,8 +20,30 @@
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="X2CScope Plugin">
-    <PARAM name="Local" value="00107.html">
+    <PARAM name="Local" value="00119.html">
     </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="PMSM_FOC Module">
+    <PARAM name="Local" value="00025.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00024.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00023.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00022.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00031.html">
+    </OBJECT>
+</ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Applications Help">
     <PARAM name="Local" value="00008.html">
@@ -29,19 +51,23 @@
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="SAM E70 Applications">
-    <PARAM name="Local" value="00106.html">
+    <PARAM name="Local" value="00117.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="SAM E54 Applications">
-    <PARAM name="Local" value="00105.html">
+    <PARAM name="Local" value="00116.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="SAM C21 Applications">
-    <PARAM name="Local" value="00104.html">
+    <PARAM name="Local" value="00115.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="PIC32 MK Applications">
     <PARAM name="Local" value="00018.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="SAM RH71 Applications">
+    <PARAM name="Local" value="00118.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="ACIM Applications">
@@ -136,207 +162,375 @@
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00022.html">
+    <PARAM name="Local" value="00026.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00025.html">
+    <PARAM name="Local" value="00029.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00023.html">
+    <PARAM name="Local" value="00027.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00024.html">
+    <PARAM name="Local" value="00028.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00026.html">
+    <PARAM name="Local" value="00030.html">
     </OBJECT>
 </ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="pmsm_foc_pll_estimator_sam_e54">
-    <PARAM name="Local" value="00065.html">
+    <PARAM name="Local" value="00076.html">
     </OBJECT>
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00066.html">
+    <PARAM name="Local" value="00077.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00069.html">
+    <PARAM name="Local" value="00080.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00067.html">
+    <PARAM name="Local" value="00078.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00068.html">
+    <PARAM name="Local" value="00079.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00070.html">
+    <PARAM name="Local" value="00081.html">
     </OBJECT>
 </ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="pmsm_foc_pll_estimator_pic32_mk">
-    <PARAM name="Local" value="00047.html">
+    <PARAM name="Local" value="00058.html">
     </OBJECT>
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00048.html">
+    <PARAM name="Local" value="00059.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00051.html">
+    <PARAM name="Local" value="00062.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00049.html">
+    <PARAM name="Local" value="00060.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00050.html">
+    <PARAM name="Local" value="00061.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00052.html">
+    <PARAM name="Local" value="00063.html">
     </OBJECT>
 </ul>
 </ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="PLL Estimator with PFC">
-    <PARAM name="Local" value="00097.html">
+    <PARAM name="Local" value="00108.html">
     </OBJECT>
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="pmsm_pfc_foc_pll_estimator_sam_e70">
-    <PARAM name="Local" value="00098.html">
+    <PARAM name="Local" value="00109.html">
     </OBJECT>
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00099.html">
+    <PARAM name="Local" value="00110.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00102.html">
+    <PARAM name="Local" value="00113.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00100.html">
+    <PARAM name="Local" value="00111.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00101.html">
+    <PARAM name="Local" value="00112.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00103.html">
+    <PARAM name="Local" value="00114.html">
     </OBJECT>
 </ul>
 </ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Sliding Mode Observer (SMO)">
-    <PARAM name="Local" value="00046.html">
+    <PARAM name="Local" value="00057.html">
     </OBJECT>
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="pmsm_foc_smo_sam_e70">
-    <PARAM name="Local" value="00059.html">
+    <PARAM name="Local" value="00070.html">
     </OBJECT>
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00060.html">
+    <PARAM name="Local" value="00071.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00063.html">
+    <PARAM name="Local" value="00074.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00061.html">
+    <PARAM name="Local" value="00072.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00062.html">
+    <PARAM name="Local" value="00073.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00064.html">
+    <PARAM name="Local" value="00075.html">
     </OBJECT>
 </ul>
 </ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Reduced Order Luenberger Observer (ROLO)">
-    <PARAM name="Local" value="00078.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="pmsm_foc_rolo_sam_c21">
-    <PARAM name="Local" value="00079.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00080.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00083.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00081.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00082.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00084.html">
-    </OBJECT>
-</ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="pmsm_foc_rolo_1shunt_samc21">
-    <PARAM name="Local" value="00055.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00053.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00057.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00054.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00056.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00058.html">
-    </OBJECT>
-</ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="pmsm_foc_rolo_fw_mtpa_sam_c21">
     <PARAM name="Local" value="00089.html">
     </OBJECT>
 <ul>
 <li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="pmsm_foc_rolo_sam_c21">
+    <PARAM name="Local" value="00090.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00085.html">
+    <PARAM name="Local" value="00091.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00094.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00092.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00093.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00095.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="pmsm_foc_rolo_1shunt_samc21">
+    <PARAM name="Local" value="00066.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00064.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00068.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00065.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00067.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00069.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="pmsm_foc_rolo_fw_mtpa_sam_c21">
+    <PARAM name="Local" value="00100.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00096.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00098.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00101.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00097.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00099.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="pmsm_foc_rolo_wm_sam_c21">
+    <PARAM name="Local" value="00102.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00103.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00106.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00104.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00105.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00107.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Sensor feedback using Quadrature Encoder">
+    <PARAM name="Local" value="00032.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="pmsm_foc_encoder_sam_e70">
+    <PARAM name="Local" value="00036.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00052.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00054.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00056.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00053.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00055.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="pmsm_foc_encoder_sam_e54">
+    <PARAM name="Local" value="00035.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00047.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00050.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00048.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00049.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00051.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="pmsm_foc_encoder_pic32_mk">
+    <PARAM name="Local" value="00034.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00042.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00044.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00043.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00046.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00045.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="pmsm_foc_encoder_lx7720_sam_rh71_ek">
+    <PARAM name="Local" value="00033.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00037.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00039.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Algorithm">
+    <PARAM name="Local" value="00038.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00041.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00040.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="FOC Based Position Control of PMSM Using Quadrature Encoder">
+    <PARAM name="Local" value="00082.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="pmsm_foc_encoder_position_sam_e54">
+    <PARAM name="Local" value="00083.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00084.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="MPLAB Harmony Configurations">
@@ -344,7 +538,7 @@
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00090.html">
+    <PARAM name="Local" value="00085.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Hardware Setup">
@@ -353,148 +547,6 @@
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Running The Application">
     <PARAM name="Local" value="00088.html">
-    </OBJECT>
-</ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="pmsm_foc_rolo_wm_sam_c21">
-    <PARAM name="Local" value="00091.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00092.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00095.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00093.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00094.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00096.html">
-    </OBJECT>
-</ul>
-</ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Sensor feedback using Quadrature Encoder">
-    <PARAM name="Local" value="00027.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="pmsm_foc_encoder_sam_e70">
-    <PARAM name="Local" value="00030.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00041.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00043.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00045.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00042.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00044.html">
-    </OBJECT>
-</ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="pmsm_foc_encoder_sam_e54">
-    <PARAM name="Local" value="00029.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00036.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00039.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00037.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00038.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00040.html">
-    </OBJECT>
-</ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="pmsm_foc_encoder_pic32_mk">
-    <PARAM name="Local" value="00028.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00031.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00033.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00032.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00035.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00034.html">
-    </OBJECT>
-</ul>
-</ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="FOC Based Position Control of PMSM Using Quadrature Encoder">
-    <PARAM name="Local" value="00071.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="pmsm_foc_encoder_position_sam_e54">
-    <PARAM name="Local" value="00072.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00073.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00076.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Control Algorithm">
-    <PARAM name="Local" value="00074.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00075.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00077.html">
     </OBJECT>
 </ul>
 </ul>

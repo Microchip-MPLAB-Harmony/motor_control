@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00078.html">Reduced Order Luenberger Observer (ROLO)</a> &gt; <a href="00089.html">pmsm_foc_rolo_fw_mtpa_sam_c21</a> &gt; <a href="00088.html">Running The Application</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00082.html">FOC Based Position Control of PMSM Using Quadrature Encoder</a> &gt; <a href="00083.html">pmsm_foc_encoder_position_sam_e54</a> &gt; <a href="00088.html">Running The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -31,10 +31,10 @@ Microchip 32-bit Motor Control</div>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00086.html">Previous</a> | <a href="00089.html">Up</a> | <a href="00091.html">Next</a></div>
+<a href="00086.html">Previous</a> | <a href="00083.html">Up</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo_fw_mtpa APP1 Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_position_control pmsm_foc_position_control_sam_e54 Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Running The Application</div>
 </div>
@@ -51,80 +51,103 @@ Running The Application</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<strong>Running the Application : pmsm_foc_rolo_fw_mtpa_sam_c21 - MCLV2</strong></p>
+<strong>Running the Application : pmsm_foc_encoder_position_sam_e54 - MCLV2</strong></p>
 <ol class="Element630">
-<li value="1" class="Element600">Open the project in MPLAB X IDE from : <i>&lt;install-directory&gt;\motor_control\apps\pmsm_foc_rolo_fw_mtpa_sam_c21\firmware\mclv2_sam_c21_pim.X</i></li>
-<li value="2" class="Element600">Clean and Build Project:</li>
+<li value="1" class="Element600">Open the project in MPLAB X IDE from : <i>&lt;install-directory&gt;\motor_control\apps\pmsm_foc_encoder_position_sam_e54\firmware\mclv2_sam_e54_pim.X</i></li>
+<li value="2" class="Element600">Clean and Build Project</li>
 </ol><p class="Element10">
-<img src="pmsm_rolo_fw_mtpa_Clean_project.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10">
-3. Program the project:&nbsp;</p>
-<p class="Element10">
-<img src="pmsm_rolo_fw_mtpa_program_project.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">4. Press the switch S2 to start/stop the motor.</span>&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">5. Press the switch S3 to toggle motor direction.</span> &nbsp;</p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="18%">
-<div class="Element66">
-LED D2 Status&nbsp;</div></td><td class="Element65" valign="top" width="82%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="18%">
-<div class="Element68">
-OFF&nbsp;</div></td><td class="Element67" valign="top" width="82%">
-<div class="Element68">
-Motor spin direction is &quot;positive&quot;&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="18%">
-<div class="Element68">
-ON&nbsp;</div></td><td class="Element67" valign="top" width="82%">
-<div class="Element68">
-Motor spin direction is &quot;negative&quot;&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-<span style="color: #000000"><strong>NOTE:</strong> Direction toggle command is accepted only when the motor is stationary.</span>&nbsp;</p>
+<img src="encoder_pos_control_same54_Clean_project.png" border="0" alt="" title=""> </p><p class="Element10" style="text-align: center;">
+&nbsp;</p>
 
 <ol class="Element630">
-<li value="6" class="Element600"><span style="color: #000000">Vary the Potentiometer to change the speed of the motor.</span></li>
+<li value="3" class="Element600">Program the project</li>
+</ol><p class="Element10">
+<img src="encoder_pos_control_same54_program_project.png" border="0" alt="" title=""> </p><p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="4" class="Element600">Put the potentiometer knob at mid-point for zero position.</li>
+<li value="5" class="Element600"><span style="color: #000000">Press the switch S2 to start/stop the motor.</span></li>
+<li value="6" class="Element600"><span style="color: #000000">Rotate the potentiometer knob for clockwise position control, and anti-clockwise for anti-clockwise position control.</span></li>
 </ol><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<span style="color: #000000"><strong>Fault Indication and Recovery </span>: pmsm_foc_rolo_fw_mtpa_sam_c21 - MCLV2</strong>&nbsp;</p>
+&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">If LED D17 is ON, it indicates a non-recoverable fault caused by either over-current, phase loss or due to erroneous rotor position estimation. The MCU needs to be reset in order to recover from this fault mode.</span>&nbsp;</p>
+<span style="color: #000000"><strong>Fault Indication and Recovery </span>: pmsm_foc_encoder_position_sam_e54 - MCLV2</strong>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">If LED D17 is ON, it indicates a non-recoverable fault caused by over-current condition. The MCU needs to be reset in order to recover from this fault mode.</span>&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
-<div class="Element63">
+<p class="Element10">
+<strong>Running the Application : pmsm_foc_encoder_position_sam_e54_mchv3 - MCHV3</strong></p>
+<ol class="Element630">
+<li value="1" class="Element600">Open the project in MPLAB X IDE from : <i>&lt;install-directory&gt;\motor_control\apps\pmsm_foc_encoder_position_sam_e54_mchv3\firmware\mchv3_sam_e54_pim.X</i></li>
+<li value="2" class="Element600">Clean and Build Project</li>
+</ol><p class="Element10">
+<img src="encoder_pos_control_same54_Clean_project.png" border="0" alt="" title=""> </p><p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="3" class="Element600">Program the project</li>
+</ol><p class="Element10">
+<img src="encoder_pos_control_same54_program_project.png" border="0" alt="" title=""></p>
+<ol class="Element630">
+<li value="4" class="Element600">Vary the POT (position reference) before Start button press.</li>
+<li value="5" class="Element600">Press button for 'motor start'. Observe the position control response. Then press button for 'motor stop'.</li>
+<li value="6" class="Element600">Vary the POT again for different position reference.</li>
+<li value="7" class="Element600">Press button for 'motor start'. Observe the position control response. Then press button for 'motor stop'.</li>
+<li value="8" class="Element600">Continue the steps above for different reference positions.</li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Note:</strong> To make the position control response fast, maximum speed reference is set to 1000rpm. Change 'POSCNTR_OUTMAX' in 'userparams.h' to increase or decrease the speed of rotation.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element63">
 <div class="TableDiv">
 <table cellspacing="0" class="Table1">
 <tr>
-<td class="Element65" valign="top" width="16%">
+<td class="Element65" valign="top" width="9%">
 <div class="Element66">
-Project Name&nbsp;</div></td><td class="Element65" valign="top" width="84%">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="91%">
 <div class="Element66">
 Output&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="16%">
+<td class="Element67" valign="top" width="9%">
 <div class="Element68">
-<span class="Element146">mclv2_sam_c21_pim.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<span class="Element146">mclv2_sam_e54_pim.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="91%">
 <div class="Element68">
-</p>
+&nbsp;</p>
 <ol class="Element630">
 <li value="1" class="Element600">Press the Switch S2 to start the motor.</li>
-<li value="2" class="Element600">Vary Potentiometer to change the speed of the motor.</li>
+<li value="2" class="Element600">Vary Potentiometer to change the reference rotor position of the motor.</li>
 <li value="3" class="Element600">Observe waveforms on X2CScope scope view.</li>
 <li value="4" class="Element600">Press the Switch S2 to stop the motor.</li>
 </ol><p class="Element68">
+&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="9%">
+<div class="Element68">
+<span class="Element146">mchv3_sam_e54_pim.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="91%">
+<div class="Element68">
+1. Vary the POT (position reference) before Start button press.<br>2. Press button for 'motor start'. Observe the position control response. Then press button for 'motor stop'.<br>3. Vary the POT again for different position reference.<br>4. Press button for 'motor start'. Observe the position control response. Then press button for 'motor stop'.</p>
+<ol class="Element630">
+<li value="5" class="Element600">Continue the steps above for different reference positions.</li>
+</ol><p class="Element68">
 &nbsp;</div></td></tr></table></div></div>
-</div>
+<p class="Element10">
+Note: The range of rotor position control is in terms of the number of encoder pulses.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00078.html">Reduced Order Luenberger Observer (ROLO)</a> &gt; <a href="00089.html">pmsm_foc_rolo_fw_mtpa_sam_c21</a> &gt; <a href="00088.html">Running The Application</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00082.html">FOC Based Position Control of PMSM Using Quadrature Encoder</a> &gt; <a href="00083.html">pmsm_foc_encoder_position_sam_e54</a> &gt; <a href="00088.html">Running The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -135,7 +158,7 @@ Output&nbsp;</div></td></tr><tr>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo_fw_mtpa APP1 Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_position_control pmsm_foc_position_control_sam_e54 Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

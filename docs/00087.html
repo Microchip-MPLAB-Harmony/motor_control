@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00078.html">Reduced Order Luenberger Observer (ROLO)</a> &gt; <a href="00089.html">pmsm_foc_rolo_fw_mtpa_sam_c21</a> &gt; <a href="00087.html">MPLAB Harmony Configurations</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00082.html">FOC Based Position Control of PMSM Using Quadrature Encoder</a> &gt; <a href="00083.html">pmsm_foc_encoder_position_sam_e54</a> &gt; <a href="00087.html">MPLAB Harmony Configurations</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -31,10 +31,10 @@ Microchip 32-bit Motor Control</div>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00085.html">Previous</a> | <a href="00089.html">Up</a> | <a href="00090.html">Next</a></div>
+<a href="00084.html">Previous</a> | <a href="00083.html">Up</a> | <a href="00085.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo_fw_mtpa APP1 MPLAB Harmony Configurations Topic Title: MPLAB Harmony Configurations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_position_control pmsm_foc_position_control_sam_e54 MPLAB Harmony Configurations Topic Title: MPLAB Harmony Configurations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 MPLAB Harmony Configurations</div>
 </div>
@@ -53,18 +53,18 @@ MPLAB Harmony Configurations</div>
 <p class="Element10">
 The following project graph shows the MPLAB Harmony components that are included in this application:&nbsp;</p>
 <p class="Element10">
-<strong>pmsm_foc_rolo_fw_mtpa_sam_c21</strong> &nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="pmsm_rolo_fw_mtpa_project_graph.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+<strong>mclv2_sam_e54_pim.X and mchv3_sam_e54_pim.X</strong>&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="encoder_pos_control_same54_project_graph.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
 <strong>Components Used</strong>&nbsp;</p>
 <p class="Element10">
 <span style="color: #000000"><strong>TCC0:</strong></span></p>
 <ul class="Element630">
-<li class="Element600"><span style="color: #000000">Configured to generate three pairs of complimentary PWM signals at a frequency of 10 kHz in &quot;Dual Slope PWM with interrupt/event when counter = ZERO&quot; i.e. &quot;Center Aligned Mode&quot;</span></li>
-<li class="Element600"><span style="color: #000000">Event output is enabled which is generated when the counter reaches ZERO</span></li>
-<li class="Element600"><span style="color: #000000">Dead-time is enabled and set to</span>
-<ul class="Element631">
-<li class="Element601">mclv2_sam_c21_pim.X<span style="color: #000000">. - 1uS</span></li>
-</ul></li>
+<li class="Element600"><span style="color: #000000">Configured to generate three pairs of complimentary PWM signals at a frequency of 20 kHz in &quot;Dual Slope PWM with interrupt/event when counter = TOP&quot; i.e. &quot;Center Aligned Mode&quot;</span></li>
+<li class="Element600"><span style="color: #000000">In &quot;Dual Slop PWM&quot; mode, the PWM duty cyle has an inverse relation with the compare value. For example, for a Period Count (PER) = 3000, Compare Count (CCx) = 2000 (66%); would result in a PWM with a 33% duty cycle. In order to achieve a direct relation between compare count and duty cycle, the PWMxH and PWMxL outputs are swapped</span></li>
+<li class="Element600"><span style="color: #000000">In dual shunt configuration, phase current measurements are performed at the end of the PWM cycle. Since the PWM outputs are swapped, the ADC conversion event is generated when the counter reaches TOP</span></li>
+<li class="Element600"><span style="color: #000000">Dead-time is enabled and set to 1uS</span></li>
 <li class="Element600"><span style="color: #000000">Non-recoverable Fault is enabled on EV0. When an event is detected on EV0, all PWM channels are held low</span></li>
 </ul><p class="Element10">
 &nbsp;</p>
@@ -74,7 +74,14 @@ The following project graph shows the MPLAB Harmony components that are included
 <li class="Element600"><span style="color: #000000">ADC0 and ADC1 are setup to operate in Master - Slave mode with ADC0 acting as a Master</span></li>
 <li class="Element600"><span style="color: #000000">Both ADCs convert single ended inputs. Phase U current is sampled and converted by ADC0 and Phase V current is sampled and converted by ADC1</span></li>
 <li class="Element600"><span style="color: #000000">Both ADCs are hardware triggered simultaneously by an event generated from TCC0 at the end of each PWM cycle</span></li>
-<li class="Element600">Conversion<span style="color: #000000"> Ready interrupt is generated by ADC0. Since both ADCs are triggered simultaneously and have same resolution and sampling time, both ADCs complete conversion at the same time</span></li>
+<li class="Element600">Conversion<span style="color: #000000"> Ready interrupt is generated by ADC0. Since both ADCs are triggered simultaneously and have the same resolution and sampling time, both ADCs complete conversion at the same time</span></li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000"><strong>PDEC:</strong></span></p>
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000">PDEC is configured to Quadrature decoder direction ( X4 ) in QDEC mode to detect the quadrature encoder signals</span></li>
+<li class="Element600"><span style="color: #000000">All the 16-bits of the QDEC counter are used to measure the angular position (CTRLA.ANGULAR = 0x7 )</span></li>
 </ul><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
@@ -87,22 +94,15 @@ The following project graph shows the MPLAB Harmony components that are included
 <span style="color: #000000"><strong>EVSYS:</strong></span></p>
 <ul class="Element630">
 <li class="Element600"><span style="color: #000000">Event System acts as an intermediary between event generator and event users</span></li>
-<li class="Element600"><span style="color: #000000">Event generated by the TCC0 when the counter reaches ZERO, is used by the ADC0 as a hardware trigger source via the Event System</span></li>
-<li class="Element600"><span style="color: #000000">Event generated by the EIC upon over-current fault, is used by the TCC0 as a non-recoverable fault event via the Event System</span></li>
+<li class="Element600"><span style="color: #000000">Event generated by the TCC0 when the counter reaches TOP, is used by the ADC0 as a hardware trigger source via the Event System</span></li>
+<li class="Element600"><span style="color: #000000">Event generated by the EIC upon over-current fault, is used by the TCC0 as a non-recoverable fault event via Event System</span></li>
 </ul><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<strong>DIVAS:</strong></p>
+<span style="color: #000000"><strong>SERCOM2:</strong></span></p>
 <ul class="Element630">
-<li class="Element600">This demo uses &quot;Divide and Square Root Accelerator&quot; to perform 32-bit signed and unsigned division and 32-bit unsigned square root operations</li>
-<li class="Element600">DIVAS is set to overload &quot;Divide - / &quot; operator i.e. c = a / b; would use DIVAS accelerator for division without using a special API. However, square root operation would still require a special API. Refer to the DIVAS help for more details</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000"><strong>SERCOM3:</strong></span></p>
-<ul class="Element630">
-<li class="Element600">SERCOM3 is c<span style="color: #000000">onfigured in USART mode and is set to operate at 115200 bps</span></li>
-<li class="Element600"><span style="color: #000000">This USART channel is used by the X2CScope plugin to plot or watch global variables in run-time. Refer to </span><a href="00107.html">X2C Scope Plugin</a><span style="color: #000000"> section for more details on how to install and use the X2CScope</span></li>
+<li class="Element600">SERCOM2 is c<span style="color: #000000">onfigured in USART mode and is set to operate at 115200 bps</span></li>
+<li class="Element600"><span style="color: #000000">This USART channel is used by the X2CScope plugin to plot or watch global variables in run-time. Refer to </span><a href="00119.html">X2C Scope Plugin</a><span style="color: #000000"> section for more details on how to install and use the X2CScope</span></li>
 </ul></div>
 </div>
 </div>
@@ -110,7 +110,7 @@ The following project graph shows the MPLAB Harmony components that are included
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00078.html">Reduced Order Luenberger Observer (ROLO)</a> &gt; <a href="00089.html">pmsm_foc_rolo_fw_mtpa_sam_c21</a> &gt; <a href="00087.html">MPLAB Harmony Configurations</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00082.html">FOC Based Position Control of PMSM Using Quadrature Encoder</a> &gt; <a href="00083.html">pmsm_foc_encoder_position_sam_e54</a> &gt; <a href="00087.html">MPLAB Harmony Configurations</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -121,7 +121,7 @@ The following project graph shows the MPLAB Harmony components that are included
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo_fw_mtpa APP1 MPLAB Harmony Configurations Topic Title: MPLAB Harmony Configurations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_position_control pmsm_foc_position_control_sam_e54 MPLAB Harmony Configurations Topic Title: MPLAB Harmony Configurations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

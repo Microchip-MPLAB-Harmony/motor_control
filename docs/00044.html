@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Running The Application</title>
+<title>MPLAB Harmony Configurations</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00027.html">Sensor feedback using Quadrature Encoder</a> &gt; <a href="00030.html">pmsm_foc_encoder_sam_e70</a> &gt; <a href="00044.html">Running The Application</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00032.html">Sensor feedback using Quadrature Encoder</a> &gt; <a href="00034.html">pmsm_foc_encoder_pic32_mk</a> &gt; <a href="00044.html">MPLAB Harmony Configurations</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -31,12 +31,12 @@ Microchip 32-bit Motor Control</div>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00042.html">Previous</a> | <a href="00030.html">Up</a> | <a href="00029.html">Next</a></div>
+<a href="00042.html">Previous</a> | <a href="00034.html">Up</a> | <a href="00043.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_sam_e70 Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_pic32_mk MPLAB Harmony Configurations Topic Title: MPLAB Harmony Configurations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Running The Application</div>
+MPLAB Harmony Configurations</div>
 </div>
 </div>
 
@@ -51,83 +51,79 @@ Running The Application</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<strong>Running the Application : pmsm_foc_pll_estimator_sam_e70_mchv3</strong></p>
+The following project graph shows the MPLAB Harmony components that are included in this application:&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>mclv2_pic32mk_mcf_pim.X and mclv2_pic32mk_mcm_pim.X</strong>&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="pmsm_foc_encoder_pic32_mk_project_gaph.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+
 <ol class="Element630">
-<li value="1" class="Element600">Open the project in MPLAB X IDE from : <i>&lt;install-directory&gt;\motor_control\apps\pmsm_foc_encoder_sam_e70\firmware\mchv3_sam_e70_pim.X</i></li>
-<li value="2" class="Element600">Clean and Build Project:</li>
-</ol><p class="Element10">
-<img src="Encoder_same70_program_project.png" border="0" alt="" title=""></p>
-<ol class="Element630">
-<li value="3" class="Element600">Program the project:</li>
-</ol><p class="Element10">
-<img src="Encoder_same70_Clean_project.png" border="0" alt="" title=""></p>
-<ol class="Element630">
-<li value="4" class="Element600"><span style="color: #000000">Press the switch &quot;Push Button&quot; to start/stop the motor.</span></li>
-<li value="5" class="Element600"><span style="color: #000000">Vary Potentiometer to change the speed of the motor.</span></li>
+<li value="1" class="Element600">PMSM_FOC:
+<ul class="Element631">
+<li class="Element601"> This component configures FOC algorithm parameters, PMSM motor parameters and motor control board parameters. It connects to underlying peripheral libraries ADCHS, MCPWM and QEI. This components auto configures ADC channels and PWM channels as per PMSM_FOC component configurations.</li>
+</ul></li>
+<li value="2" class="Element600">ADCHS<span style="color: #000000"> Peripheral:</span>
+<ul class="Element631">
+<li class="Element601">The ADCHS is used to measure analog quantities. Four channels are used to measure the Phase Current U, the Phase Current V, the DC Bus Voltage and the Potentiometer. Conversion is triggered at the PWM (zero match + offset of the switch delay)</li>
+</ul></li>
+<li value="3" class="Element600">MC<span style="color: #000000">PWM Peripheral:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">This peripheral is used to generated three phase synchronous PWM waveforms. Fault functionality is also enabled to switch off the output waveforms asynchronously</span></li>
+</ul></li>
+<li value="4" class="Element600"><span style="color: #000000">QEI Peripheral:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">This peripheral is used to decode the rotor position and speed from quadrature encoder signals.</span></li>
+</ul></li>
+<li value="5" class="Element600"><span style="color: #000000">X2CScope:</span>
+<ul class="Element631">
+<li class="Element601"> This component adds X2C scope protocol code. This uses UART to communicate to the host PC. X2CScope allows user to monitor variable values runtime</li>
+</ul></li>
+<li value="6" class="Element600"><span style="color: #000000">UART2 Peripheral:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">The UART is used for X2CScope communication to observe graphs and variable values in run time</span></li>
+</ul></li>
 </ol><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<strong>Running the Application : pmsm_foc_encoder_sam_e70 - MCLV2</strong></p>
-<ol class="Element630">
-<li value="1" class="Element600">Open the project in MPLAB X IDE from : <i>&lt;install-directory&gt;\motor_control\apps\pmsm_foc_encoder_sam_e70\firmware\mclv2_sam_e70_pim.X</i></li>
-<li value="2" class="Element600">Clean and Build Project</li>
-</ol><p class="Element10">
-<img src="Encoder_same70_Clean_project.png" border="0" alt="" title=""></p>
-<ol class="Element630">
-<li value="3" class="Element600">Program the project</li>
-</ol><p class="Element10">
-<img src="Encoder_same70_program_project.png" border="0" alt="" title=""></p>
-<ol class="Element630">
-<li value="4" class="Element600"><span style="color: #000000">Press the switch S2 to start the motor.</span></li>
-<li value="5" class="Element600"><span style="color: #000000">Vary Potentiometer to change the speed of the motor in clockwise direction.</span></li>
-<li value="6" class="Element600"><span style="color: #000000">Press the switch S2 to stop the motor.</span></li>
-<li value="7" class="Element600"><span style="color: #000000">Press the switch S3 to change the motor direction.</span></li>
-<li value="8" class="Element600"><span style="color: #000000">Vary Potentiometer to change the speed of the motor in counter-clockwise direction.</span></li>
-</ol><p class="Element10">
+<strong>mchv3_pic32mk_mcf_pim.X</strong>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="encoder_pic32mk_project_graph.png" border="0" alt="" title=""></p><div class="Element15">
+Components Used</div>
+<p class="Element10">
 &nbsp;</p>
-<div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="11%">
-<div class="Element66">
-Project Name&nbsp;</div></td><td class="Element65" valign="top" width="89%">
-<div class="Element66">
-Output&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="11%">
-<div class="Element68">
-mchv3_sam_e70_pim.X&nbsp;</div></td><td class="Element67" valign="top" width="89%">
-<div class="Element68">
-</p>
+<p class="Element10">
+<strong>Components Used</strong></p>
 <ol class="Element630">
-<li value="1" class="Element600">Press the push button to start the motor.</li>
-<li value="2" class="Element600">Vary Potentiometer to change the speed of the motor.</li>
-<li value="3" class="Element600">Observe waveforms on X2CScope scope view.</li>
-<li value="4" class="Element600">Press the push button to stop the motor.</li>
-</ol><p class="Element68">
-&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="11%">
-<div class="Element68">
-mclv2_sam_e70_pim.X&nbsp;</div></td><td class="Element67" valign="top" width="89%">
-<div class="Element68">
-</p>
-<ol class="Element630">
-<li value="1" class="Element600">Press the Switch S2 to start the motor.</li>
-<li value="2" class="Element600">Vary Potentiometer to change the speed of the motor.</li>
-<li value="3" class="Element600">Observe waveforms on X2CScope scope view.</li>
-<li value="4" class="Element600">Press reset switch to stop the motor.</li>
-</ol><p class="Element68">
-&nbsp;</div></td></tr></table></div></div>
-</div>
+<li value="1" class="Element600">ADCHS<span style="color: #000000"> Peripheral:</span>
+<ul class="Element631">
+<li class="Element601">The ADCHS is used to measure analog quantities. Four channels are used to measure the Phase Current A, the Phase Current B, the DC Bus Voltage and the Potentiometer. Conversion is triggered at the PWM (zero match + offset of the switch delay)</li>
+</ul></li>
+<li value="2" class="Element600">MC<span style="color: #000000">PWM Peripheral:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">This peripheral is used to generated three phase synchronous PWM waveforms. Fault functionality is also enabled to switch off the output waveforms asynchronously</span></li>
+</ul></li>
+<li value="3" class="Element600"><span style="color: #000000">QEI2 Peripheral:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">The QEI2 is used for rotor position and speed measurement.</span></li>
+</ul></li>
+<li value="4" class="Element600"><span style="color: #000000">UART2 Peripheral:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">The UART is used for X2CScope communication to observe graphs and variable values in run time</span></li>
+</ul></li>
+</ol></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00027.html">Sensor feedback using Quadrature Encoder</a> &gt; <a href="00030.html">pmsm_foc_encoder_sam_e70</a> &gt; <a href="00044.html">Running The Application</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00032.html">Sensor feedback using Quadrature Encoder</a> &gt; <a href="00034.html">pmsm_foc_encoder_pic32_mk</a> &gt; <a href="00044.html">MPLAB Harmony Configurations</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -138,7 +134,7 @@ mclv2_sam_e70_pim.X&nbsp;</div></td><td class="Element67" valign="top" width="89
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_sam_e70 Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder pmsm_foc_encoder_pic32_mk MPLAB Harmony Configurations Topic Title: MPLAB Harmony Configurations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

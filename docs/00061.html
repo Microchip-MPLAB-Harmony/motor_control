@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Control Algorithm</title>
+<title>Hardware Setup</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00046.html">Sliding Mode Observer (SMO)</a> &gt; <a href="00059.html">pmsm_foc_smo_sam_e70</a> &gt; <a href="00061.html">Control Algorithm</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00020.html">PLL Estimator</a> &gt; <a href="00058.html">pmsm_foc_pll_estimator_pic32_mk</a> &gt; <a href="00061.html">Hardware Setup</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -31,12 +31,12 @@ Microchip 32-bit Motor Control</div>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00063.html">Previous</a> | <a href="00059.html">Up</a> | <a href="00062.html">Next</a></div>
+<a href="00060.html">Previous</a> | <a href="00058.html">Up</a> | <a href="00063.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_help pmsm_foc_smo_sam_e70 Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_help pmsm_foc_pll_estimator_pic32_mk Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Control Algorithm</div>
+Hardware Setup</div>
 </div>
 </div>
 
@@ -50,365 +50,148 @@ Control Algorithm</div>
 <div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The project implements a PLL based sensor-less Field Oriented Control ( FOC ) algorithm on SAME70 32-bit micro-controller to regulate the speed of the PMSM motor. The following section describes briefly about the SMO based sensor-less FOC algorithm, software design and implementation.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-Field Oriented Control is the technique used to achieve the decoupled control of torque and flux. This is done by transforming the stator current quantities (phase currents) from stationary reference frame to torque and flux producing currents components in rotating reference frame using mathematical transformations. The Field Oriented Control is done as follows:&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
+
 <ol class="Element630">
-<li value="1" class="Element600">Measure the motor phase currents.</li>
-<li value="2" class="Element600">Transform them into the two phase system (a, b) using the Clarke transformation.</li>
-<li value="3" class="Element600">Calculate the rotor position angle.</li>
-<li value="4" class="Element600">Transform stator currents into the d,q-coordinate system using the Park transformation.</li>
-<li value="5" class="Element600">The stator current torque (i<sub>q</sub>) and flux (i<sub>d</sub>) producing components are controlled separately by the controllers.</li>
-<li value="6" class="Element600">The output stator voltage space vector is transformed back from the d,q-coordinate system into the two phase system fixed with the stator by the Inverse Park transformation.</li>
-<li value="7" class="Element600">Using the space vector modulation, the three-phase output voltage is generated.</li>
+<li value="1" class="Element600"> <strong>Project mchv3_pic32_mk_pim.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/dm330023-3');"><img src="indicator_external_link.gif" border="0" alt="" title="">MCHV3 Development Board (High Voltage)</a>
+<ul class="Element633">
+<li class="Element603"><a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/MA320024');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MK PIM</a></li>
+<li class="Element603"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/AC300025');"><img src="indicator_external_link.gif" border="0" alt="" title="">Leadshine EL5-M0400-1-24 Motor</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
 </ol><p class="Element10">
 &nbsp;</p>
-<p class="Element10">
-The phase currents are measured using two shunt resistors connected to Phase U and Phase V inverter legs respectively. The W phase current is determined based on Kirchoff's current law.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-The electrical rotor position and speed is calculated using the Sliding Mode Observer. The main disadvantage of SMO Observer is its inability to estimate the rotor angle at lower rotor speeds because of very low value of back EMF. Therefore, the FOC algorithm also integrates the ramp-up profile for motor start. The reference speed is incremented linearly using a open loop phase voltage control until the required minimum reference speed for the SMO observer is reached.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-The following block diagram shows the software realization of the FOC algorithm.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="smo_same70_block_diagram.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Sliding Mode Observer:</strong>&nbsp;</p>
-<p class="Element10">
-The Sliding Mode Observer ( SMO ) is based on the principle of sliding mode control. It generates a sliding motion on the error between the plant output and the output of the observer such it produces a set of states that are precisely drives the estimated output to the actual output of the plant.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-The sliding mode observer consists of a model based current observer followed by a back EMF Observer. The observed back EMF is filtered and then used to extract the position information from it. The following figure shows a typical Sliding Mode Observer:&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<img src="smo_block_diagram.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-The current and back EMF observer is modeled in discrete time by following equations:&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Current Observer:</strong>&nbsp;</p>
-<p class="Element10">
-<img src="smo_current_observer.png" border="0" alt="" title=""> &nbsp;</p><p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Back EMF Observer:</strong>&nbsp;</p>
-<p class="Element10">
-<img src="smo_backEmfObserver.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10">
-<img src="smo_parameters.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Software Design:</strong>&nbsp;</p>
-<p class="Element10">
-The following figure shows the various state machines of the the motor control software.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="smo_same70_motor_control_flow.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-In the software, the PMSM speed control task is realized by a state machine as shown in the previous figure. The following sections briefly describes the various states in the PMSM speed control task:&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>1. Initialize:</strong>&nbsp;</p>
-<p class="Element10">
-In this state, following tasks are performed:</p>
+
 <ul class="Element630">
-<li class="Element600">Initialization and configuration of NVIC, AFEC, PWM motor control peripherals for generation of periodic ADC triggers and ADC conversion interrupt</li>
-<li class="Element600">Current Offset measurement and calibration</li>
-<li class="Element600">Initialize PI controller parameters for speed and current control loops</li>
-</ul><p class="Element10">
+<li class="Element600"><strong>Hardware Setup</strong>
+<ol class="Element631">
+<li value="1" class="Element601"><span style="color: #000000">Mount the PIC32MK Motor Control Plug In Module on U9 header.</span></li>
+</ol></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="Encoder_pic32mk_pim_mchv3.png" border="0" alt="" title=""></p><p class="Element10">
 &nbsp;</p>
-<p class="Element10">
-<strong>2. Start:</strong>&nbsp;</p>
-<p class="Element10">
-In this state, the motor control state variables are reset and periodic ADC conversion interrupt is enabled. Control waits for the switch press.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>3. Run:</strong>&nbsp;</p>
-<p class="Element10">
-In this state, the motor starts spinning. The following flow chart and the timing diagram shows the tasks performed in run state: </p><p class="Element10" style="text-align: center;">
-<img src="smo_same70_motor_run_task.png" border="0" alt="" title=""></p><p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="smo_same70_timing_diagram.png" border="0" alt="" title=""></p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-In run state, two threads are executed- Main task thread and ADC Interrupt task thread. The current control and speed control is carried out in the ADC interrupt task thread. The main task thread monitors the external switches and maintains the state machine. Therefore, the ADC interrupt cycle indicates the current and speed control frequency.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-As pointed out earlier, the SMO is unable to estimate the rotor position information at the start-up phase when the speed is very low. This necessitates the motor control algorithm to integrate an open-loop control mechanism to linearly ramp the motor speed to the required minimum speed before switching over to closed loop control. Therefore, the motor control state can further be classified into three sub-states - Field Alignment, Open-loop Control and Close-loop Control.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<ul class="Element630">
-<li class="Element600"><strong>Field Alignment:</strong></li>
-</ul><p class="Element10">
-In this mode, a limited value of DC current is applied to the U phase of PMSM motor in order to align the rotor magnetic field with the U-phase of the motor. The time for which DC current has to be applied to achieve the field alignment depends on the time constant of the PMSM motor drive.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<ul class="Element630">
-<li class="Element600"><strong>Open Loop Control:</strong></li>
-</ul><p class="Element10">
-In this mode, the speed of the PMSM motor is gradually ramped up using an open loop control. The speed is ramped up linearly to a minimum value required for the sensor-less SMO observer to estimate the speed of the PMSM motor with required accuracy.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<ul class="Element630">
-<li class="Element600"><strong>Close Loop Control:</strong></li>
-</ul><p class="Element10">
-In this mode, the speed can be regulated using closed loop SMO based sensor-less FOC algorithm.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>4. Stop:</strong>&nbsp;</p>
-<p class="Element10">
-In this state, the PWM channels are disabled thereby stopping the motor<strong>. </strong>The periodic ADC trigger and conversion interrupt is disabled.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Software Configuration:</strong>&nbsp;</p>
-<p class="Element10">
-The FOC algorithm is used across different application fields. In order to get the optimal control of the PMSM motor, both the motor specific parameters and application parameters need to be updated in the software . The following section describes how to update both motor and application specific parameters in the the project.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
+
 <ol class="Element630">
-<li value="1" class="Element600"><strong>Setting motor control PWM frequency:</strong></li>
-</ol><p class="Element10">
-The PWM controller frequency ( in Hz ) can be configured by setting the following macro in userparams.h<i> </i>file.&nbsp;</p>
-<p class="Element10">
-<strong>This frequency should be same as the frequency configured in the PWM peripheral in the MHC.</strong>&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="25%">
-<div class="Element66">
-Macro&nbsp;</div></td><td class="Element65" valign="top" width="75%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-PWM_FREQUENCY&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-Current controller and PWM frequency in Hz.&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
+<li value="2" class="Element600"><span style="color: #000000">Place the &quot;External Opamp Configuration&quot; Matrix </span>board at J4.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="External_opamp.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="3" class="Element600"><span style="color: #000000">Motor Connections:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Phase V - M1</span></li>
+<li class="Element601"><span style="color: #000000">Phase U - M2</span></li>
+<li class="Element601"><span style="color: #000000">Phase W - M3</span></li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="Motor Connections_MCHV3.png" border="0" alt="" title=""></p><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 
 <ol class="Element630">
-<li value="2" class="Element600"><strong>Setting motor specific -parameter:</strong></li>
+<li value="4" class="Element600">Jumper Settings:
+<ul class="Element631">
+<li class="Element601">J11 - VAC ( Short Pin 3 - 4)</li>
+<li class="Element601">J12 - IA ( Short Pin 1 - 2)</li>
+<li class="Element601">J13 - IB ( Short Pin 1 - 2)</li>
+<li class="Element601">J14 - Fault_IP/IBUS ( Short Pin 1 - 2)</li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="encoder_pic32mk_mchv3_jumper_settings.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="5" class="Element600">Power the board with (110V/220V) AC mains. For additional safety, it is recommended to use a current limited power supply while testing this software demonstration on a non-default hardware and motor.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="encoder_pic32mk_ac_mains.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="6" class="Element600">Connect the default debugger daughter card shipped with the MCHV3 board to program the microcontroller.</li>
+</ol><p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>Complete Setup</strong></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="encoder_pic32mk_hv_hardware_setup.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>2. Project mclv2_pic32_mk_mcf_pim.X and mclv2_pic32_mk_mcm_pim.X</strong></p>
+<ul class="Element630">
+<li class="Element600"><strong>Hardware Used</strong>
+<ul class="Element631">
+<li class="Element601"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2');"><img src="indicator_external_link.gif" border="0" alt="" title="">MCLV2 Development Board (Low Voltage)</a></li>
+<li class="Element601"><a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/MA320024');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MK PIM</a></li>
+<li class="Element601"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNo/AC300022');"><img src="indicator_external_link.gif" border="0" alt="" title="">Long Hurst DMA0204024B101 Motor</a></li>
+</ul></li>
+</ul><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>Hardware Setup</strong>
+<ol class="Element631">
+<li value="1" class="Element601"><span style="color: #000000">Mount the PIC32MK Motor Control Plug In Module on U9 header.</span></li>
+</ol></li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="pll_estimator_pic32mk_same54_mclv2_pim.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="2" class="Element600"><span style="color: #000000">Place the &quot;External Opamp Configuration&quot; Matrix board at J14</span></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_estimator_pic32mk_mclv2_ext_opamp.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="3" class="Element600"><span style="color: #000000">Motor Connections:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Phase U - M1</span></li>
+<li class="Element601"><span style="color: #000000">Phase V - M2</span></li>
+<li class="Element601"><span style="color: #000000">Phase W - M3</span></li>
+</ul></li>
 </ol><p class="Element10">
-Set the motor following motor parameters in <i>userparams.h </i>file. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="45%">
-<div class="Element66">
-Macro&nbsp;</div></td><td class="Element65" valign="top" width="46%">
-<div class="Element66">
-Description&nbsp;</div></td><td class="Element65" valign="top" width="8%">
-<div class="Element66">
-Units&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="45%">
-<div class="Element68">
-MOTOR_PER_PHASE_RESISTANCE&nbsp;</div></td><td class="Element67" valign="top" width="46%">
-<div class="Element68">
-Motor per phase resistance&nbsp;</div></td><td class="Element67" valign="top" width="8%">
-<div class="Element68">
-Ohm&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="45%">
-<div class="Element68">
-MOTOR_PER_PHASE_INDUCTANCE&nbsp;</div></td><td class="Element67" valign="top" width="46%">
-<div class="Element68">
-Motor per phase inductance&nbsp;</div></td><td class="Element67" valign="top" width="8%">
-<div class="Element68">
-H&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="45%">
-<div class="Element68">
-MOTOR_BACK_EMF_CONSTANT_Vpeak_Line_Line_KRPM_MECH&nbsp;</div></td><td class="Element67" valign="top" width="46%">
-<div class="Element68">
-Back EMF constant&nbsp;</div></td><td class="Element67" valign="top" width="8%">
-<div class="Element68">
-Vpk(L-L)/KRPM&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="45%">
-<div class="Element68">
-NOPOLESPAIRS&nbsp;</div></td><td class="Element67" valign="top" width="46%">
-<div class="Element68">
-Number of pole pairs&nbsp;</div></td><td class="Element67" valign="top" width="8%">
-<div class="Element68">
-&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="45%">
-<div class="Element68">
-NOMINAL_SPEED_RPM&nbsp;</div></td><td class="Element67" valign="top" width="46%">
-<div class="Element68">
-Rated mechanical speed of the motor&nbsp;</div></td><td class="Element67" valign="top" width="8%">
-<div class="Element68">
-RPM&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
 &nbsp;</p>
-<p class="Element10">
+<p class="Element10" style="text-align: center;">
+<img src="pll_estimator_pic32mk_mclv2_motor_sensor_interface.png" border="0" alt="" title=""></p>
+<ol class="Element630">
+<li value="4" class="Element600">Jumper Settings:</li>
+</ol>
+<ul class="Element630">
+<li class="Element600">JP1 - Curr, JP2 - Curr, JP3 - Curr</li>
+<li class="Element600">In order to use RS232 port for X2CScope Communication JP4 - UART, JP5 - UART</li>
+<li class="Element600">In order to use USB port for X2CScope Communication JP4 - USB, JP5 - USB</li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="pll_estimator_pic32mk_mclv2_jumper_settings.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
 &nbsp;</p>
-<p class="Element10">
-<strong>3. Setting PI Controller parameters:</strong>&nbsp;</p>
-<p class="Element10">
-Depending on the type of motor used, and the corresponding application PI controller parameters should to be updated in userparams.h<i> </i>file.&nbsp;</p>
-<p class="Element10">
+
+<ol class="Element630">
+<li value="5" class="Element600"><span style="color: #000000">Power the board with a 24V DC supply using J2 or BP1-BP2. </span>For additional safety, it is recommended to use a current limited power supply while testing this software demonstration on a non-default hardware and motor.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="pll_estimator_pic32mk_power_mclv2.png" border="0" alt="" title=""></p>
+<ul class="Element630">
+<li class="Element600"><strong>Complete Setup</strong></li>
+</ul><p class="Element10">
 &nbsp;</p>
-<p class="Element10">
-Parameters for speed Control loop: </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="28%">
-<div class="Element66">
-Macro&nbsp;</div></td><td class="Element65" valign="top" width="72%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
-<div class="Element68">
-SPEEDCNTR_PTERM&nbsp;</div></td><td class="Element67" valign="top" width="72%">
-<div class="Element68">
-Proportional gain of speed control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
-<div class="Element68">
-SPEEDCNTR_ITERM&nbsp;</div></td><td class="Element67" valign="top" width="72%">
-<div class="Element68">
-Integral gain of speed control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
-<div class="Element68">
-SPEEDCNTR_CTERM&nbsp;</div></td><td class="Element67" valign="top" width="72%">
-<div class="Element68">
-Anti-windup term of speed control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
-<div class="Element68">
-SPEEDCNTR_OUTMAX&nbsp;</div></td><td class="Element67" valign="top" width="72%">
-<div class="Element68">
-Maximum controller output of speed control loop&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
+<p class="Element10" style="text-align: center;">
+<img src="pll_estimator_pic32mk_same54_mclv2.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
 &nbsp;</p>
-<p class="Element10">
-Parameters for I<sub>d</sub> current loop: </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="27%">
-<div class="Element66">
-Macro&nbsp;</div></td><td class="Element65" valign="top" width="73%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-D_CURRCNTR_PTERM&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-Proportional gain of Id current control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-D_CURRCNTR_ITERM&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-Integral gain of Id current control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-D_CURRCNTR_CTERM&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-Anti-windup term of Id current control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-D_CURRCNTR_OUTMAX&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-Maximum controller output of Id current control loop&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-Parameters for I<sub>q</sub> current loop: </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="27%">
-<div class="Element66">
-Macro&nbsp;</div></td><td class="Element65" valign="top" width="73%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-Q_CURRCNTR_PTERM&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-Proportional gain of Iq current control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-Q_CURRCNTR_ITERM&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-Integral gain of Iq current control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-Q_CURRCNTR_CTERM&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-Anti-windup term of Iq current control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-Q_CURRCNTR_OUTMAX&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-Maximum controller output of Iq current control loop&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>4. Debugging Features:</strong>&nbsp;</p>
-<p class="Element10">
-Open loop functioning is useful for debugging when using new motor. This feature can be enabled by setting the following <strong> </strong>macros in userparams.h<i> </i>file.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="40%">
-<div class="Element66">
-Macro&nbsp;</div></td><td class="Element65" valign="top" width="60%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="40%">
-<div class="Element68">
-OPEN_LOOP_FUNCTIONING&nbsp;</div></td><td class="Element67" valign="top" width="60%">
-<div class="Element68">
-Open loop enable switch (0 - Disable, 1 - Enable )&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="40%">
-<div class="Element68">
-Q_CURRENT_REF_OPENLOOP&nbsp;</div></td><td class="Element67" valign="top" width="60%">
-<div class="Element68">
-Startup current in open loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="40%">
-<div class="Element68">
-TORQUE_MODE&nbsp;</div></td><td class="Element67" valign="top" width="60%">
-<div class="Element68">
-This a special mode where the speed control loop can be bypassed. The input of potentiometer is scaled and is fed directly to the q-axis<sub> </sub>PI controller. Torque mode enable switch (0 - Disable, 1 - Enable )&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -416,7 +199,7 @@ This a special mode where the speed control loop can be bypassed. The input of p
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00046.html">Sliding Mode Observer (SMO)</a> &gt; <a href="00059.html">pmsm_foc_smo_sam_e70</a> &gt; <a href="00061.html">Control Algorithm</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00020.html">PLL Estimator</a> &gt; <a href="00058.html">pmsm_foc_pll_estimator_pic32_mk</a> &gt; <a href="00061.html">Hardware Setup</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -427,7 +210,7 @@ This a special mode where the speed control loop can be bypassed. The input of p
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_help pmsm_foc_smo_sam_e70 Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_help pmsm_foc_pll_estimator_pic32_mk Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

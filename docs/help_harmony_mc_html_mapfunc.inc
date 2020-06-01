@@ -3,11 +3,17 @@ begin
   case id of
     IDH_Motor_Control_Overview                            : result := IDH_HTML_Motor_Control_Overview;
     IDH_X2CScope_Plugin                                   : result := IDH_HTML_X2CScope_Plugin;
+    IDH_PMSM_FOC_Module                                   : result := IDH_HTML_PMSM_FOC_Module;
+    IDH_PMSM_FOC_Introduction                             : result := IDH_HTML_PMSM_FOC_Introduction;
+    IDH_PMSM_FOC_Control_Algorithm                        : result := IDH_HTML_PMSM_FOC_Control_Algorithm;
+    IDH_PMSM_FOC_Configuring_the_Library                  : result := IDH_HTML_PMSM_FOC_Configuring_the_Library;
+    IDH_PMSM_FOC_Using_The_Library                        : result := IDH_HTML_PMSM_FOC_Using_The_Library;
     IDH_Applications_Help                                 : result := IDH_HTML_Applications_Help;
     IDH_SAM_E70_Applications                              : result := IDH_HTML_SAM_E70_Applications;
     IDH_SAM_E54_Applications                              : result := IDH_HTML_SAM_E54_Applications;
     IDH_SAM_C21                                           : result := IDH_HTML_SAM_C21;
     IDH_PIC32_MK_Applications                             : result := IDH_HTML_PIC32_MK_Applications;
+    IDH_SAM_RH71_Applications                             : result := IDH_HTML_SAM_RH71_Applications;
     IDH_ACIM_Applications                                 : result := IDH_HTML_ACIM_Applications;
     IDH_acim_vhz_Applications_Help                        : result := IDH_HTML_acim_vhz_Applications_Help;
     IDH_acim_vhz_Applications_acim_vhz_sam_c21            : result := IDH_HTML_acim_vhz_Applications_acim_vhz_sam_c21;
@@ -102,6 +108,12 @@ begin
     IDH_pmsm_foc_encoder_pmsm_foc_encoder_pic32_mk_Control_Algorithm: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_pic32_mk_Control_Algorithm;
     IDH_pmsm_foc_encoder_pmsm_foc_encoder_pic32_mkHardware_Setup: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_pic32_mkHardware_Setup;
     IDH_pmsm_foc_encoder_pmsm_foc_encoder_pic32_mk_Running_The_Application: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_pic32_mk_Running_The_Application;
+    IDH_pmsm_foc_encoder_Applications_Help_pmsm_foc_encoder_lx7720_sam_rh71_ek: result := IDH_HTML_pmsm_foc_encoder_Applications_Help_pmsm_foc_encoder_lx7720_sam_rh71_ek;
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_Building_The_Application: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_Building_The_Application;
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_MPLAB_Harmony_Configurations: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_MPLAB_Harmony_Configurations;
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_Control_Algorithm: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_Control_Algorithm;
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ekHardware_Setup: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ekHardware_Setup;
+    IDH_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_Running_The_Application: result := IDH_HTML_pmsm_foc_encoder_pmsm_foc_encoder_lx7720_sam_rh71_ek_Running_The_Application;
     IDH_pmsm_foc_position_control_Applications_Help       : result := IDH_HTML_pmsm_foc_position_control_Applications_Help;
     IDH_pmsm_foc_position_control_Applications_pmsm_foc_position_control_sam_e54: result := IDH_HTML_pmsm_foc_position_control_Applications_pmsm_foc_position_control_sam_e54;
     IDH_pmsm_foc_position_control_pmsm_foc_encoder_position_sam_e54__Building_The_Application: result := IDH_HTML_pmsm_foc_position_control_pmsm_foc_encoder_position_sam_e54__Building_The_Application;

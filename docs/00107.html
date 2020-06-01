@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>X2CScope Plugin</title>
+<title>Running The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00107.html">X2CScope Plugin</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00089.html">Reduced Order Luenberger Observer (ROLO)</a> &gt; <a href="00102.html">pmsm_foc_rolo_wm_sam_c21</a> &gt; <a href="00107.html">Running The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -31,12 +31,12 @@ Microchip 32-bit Motor Control</div>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00017.html">Previous</a> | <a href="00017.html">Up</a> | <a href="00008.html">Next</a></div>
+<a href="00105.html">Previous</a> | <a href="00102.html">Up</a> | <a href="00032.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: X2CScope Plugin Topic Title: X2CScope Plugin)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo_wm pmsm_foc_rolo_wm_sam_c21 Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-X2CScope Plugin</div>
+Running The Application</div>
 </div>
 </div>
 
@@ -51,57 +51,117 @@ X2CScope Plugin</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
- &nbsp;</p>
+<strong>Running the Application : pmsm_foc_rolo_wm_sam_c21 - MCHV3</strong></p>
+<ol class="Element630">
+<li value="1" class="Element600">Open the project in MPLAB X IDE from : <i>&lt;install-directory&gt;\motor_control\apps\pmsm_foc_rolo_sam_c21\firmware\mchv3_sam_c21_pim.X</i></li>
+<li value="2" class="Element600">Clean and Build Project:</li>
+</ol><p class="Element10">
+<img src="Clean_project.png" border="0" alt="" title="">&nbsp;</p>
 <p class="Element10">
-The MPLAB X IDE enables use of the X2C-Scope plug-in to read, write, and plot global variables in real time. The X2C-Scope communicates with the target using the UART. The baud rate of the UART communication can be modified using the MHC.&nbsp;</p>
+3. Program the project:&nbsp;</p>
 <p class="Element10">
-&nbsp;</p><div class="Element15">
-Installation</div>
+<img src="program_project.png" border="0" alt="" title="">&nbsp;</p>
 <p class="Element10">
-1. If not already installed, in MPLAB X IDE, select Tools &gt; Plugins &gt; Available Plugins &gt; Select X2C-Scope&gt; Install.&nbsp;</p>
+<span style="color: #000000">4. Press the switch &quot;Push Button&quot; to start or stop the motor.</span>&nbsp;</p>
 <p class="Element10">
-2. Restart MPLAB X IDE to complete the plug-in installation.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="x2cscope_install.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-3. Open the X2CScope by selecting Tools &gt; Embedded &gt; X2CScope.&nbsp;</p>
-<p class="Element10">
-4. Ensure the symbols are loaded during the project build by selecting Project Properties &gt; Selected Configuration &gt; Loading, and ensure that the check box for Load Symbols when programming or building for production (slows process) is selected. If this check box was not selected, rebuild the project and reprogram the device.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="x2cscope_loading.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-5. In the <strong>X2CScope Configuration</strong> tab, select the project. </p><p class="Element10" style="text-align: center;">
-<img src="x2cscope_projectselect.png" border="0" alt="" title=""></p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-6. In the <strong>Connection Setup</strong>, set the Baud Rate to '115200', Data bits to '8', Parity to 'None', Stop Bits to '1', and then select the associated COM port.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="x2cscope_settings.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-7. In Project Setup, Set the Scope <strong>Sampletime</strong> to '50 us.' This is equal to PWM frequency. Set the <strong>Watch Sample time</strong> to a value at which you want to update the watch window variables (the default is 1000 ms). Click Set Values after setting the Scope <strong>Sampletime</strong> and <strong>Watch Sampletime</strong>.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="x2cscope_projectsetup.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-9. In <strong>Data Views</strong>, select <strong>Open Scope View</strong> to plot any two global variables in run-time.&nbsp;</p>
+5. <span style="color: #000000">Vary the Potentiometer to change the speed of the motor.</span>&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-10. In <strong>Data Views</strong>, select <strong>Open Watch View</strong> to read or write to any global variables in run time.</p></div>
+<span style="color: #000000"><strong>Fault Indication and Recovery</span> : pmsm_foc_rolo_wm_sam_c21 - MCHV3</strong>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">If LED D19 is ON, it indicates a non-recoverable fault caused by either over-current, phase loss or due to erroneous rotor position estimation. The MCU needs to be reset in order to recover from this fault mode.</span>&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Running the Application : pmsm_foc_rolo_wm_sam_c21 - MCLV2</strong>&nbsp;</p>
+<ol class="Element630">
+<li value="1" class="Element600">Open the project in MPLAB X IDE from : <i>&lt;install-directory&gt;\motor_control\apps\pmsm_foc_rolo_sam_c21\firmware\mclv2_sam_c21_pim.X</i></li>
+<li value="2" class="Element600">Clean and Build Project:</li>
+</ol><p class="Element10">
+<img src="Clean_project.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+3. Program the project:&nbsp;</p>
+<p class="Element10">
+<img src="program_project.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">4. Press the switch S2 to start/stop the motor.</span>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">5. Press the switch S3 to toggle motor direction.</span> &nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="18%">
+<div class="Element66">
+LED D2 Status&nbsp;</div></td><td class="Element65" valign="top" width="82%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="18%">
+<div class="Element68">
+OFF&nbsp;</div></td><td class="Element67" valign="top" width="82%">
+<div class="Element68">
+Motor spin direction is &quot;positive&quot;&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="18%">
+<div class="Element68">
+ON&nbsp;</div></td><td class="Element67" valign="top" width="82%">
+<div class="Element68">
+Motor spin direction is &quot;negative&quot;&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<span style="color: #000000"><strong>NOTE:</strong> Direction toggle command is accepted only when the motor is stationary.</span>&nbsp;</p>
+
+<ol class="Element630">
+<li value="6" class="Element600"><span style="color: #000000">Vary the Potentiometer to change the speed of the motor.</span></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000"><strong>Fault Indication and Recovery </span>: pmsm_foc_rolo_wm_sam_c21 - MCLV2</strong>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">If LED D17 is ON, it indicates a non-recoverable fault caused by either over-current, phase loss or due to erroneous rotor position estimation. The MCU needs to be reset in order to recover from this fault mode.</span>&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="11%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="89%">
+<div class="Element66">
+Output&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="11%">
+<div class="Element68">
+mchv3_sam_c21_pim.X&nbsp;</div></td><td class="Element67" valign="top" width="89%">
+<div class="Element68">
+</p>
+<ol class="Element630">
+<li value="1" class="Element600">Press the push button to start the motor.</li>
+<li value="2" class="Element600">Vary Potentiometer to change the speed of the motor.</li>
+<li value="3" class="Element600">Observe waveforms on X2CScope scope view.</li>
+<li value="4" class="Element600">Press the push button to stop the motor.</li>
+</ol><p class="Element68">
+&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="11%">
+<div class="Element68">
+mclv2_sam_c21_pim.X&nbsp;</div></td><td class="Element67" valign="top" width="89%">
+<div class="Element68">
+</p>
+<ol class="Element630">
+<li value="1" class="Element600">Press the Switch S2 to start the motor.</li>
+<li value="2" class="Element600">Vary Potentiometer to change the speed of the motor.</li>
+<li value="3" class="Element600">Observe waveforms on X2CScope scope view.</li>
+<li value="4" class="Element600">Press the Switch S2 to stop the motor.</li>
+</ol><p class="Element68">
+&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00107.html">X2CScope Plugin</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00089.html">Reduced Order Luenberger Observer (ROLO)</a> &gt; <a href="00102.html">pmsm_foc_rolo_wm_sam_c21</a> &gt; <a href="00107.html">Running The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -112,7 +172,7 @@ Installation</div>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: X2CScope Plugin Topic Title: X2CScope Plugin)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo_wm pmsm_foc_rolo_wm_sam_c21 Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

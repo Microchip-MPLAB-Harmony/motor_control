@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Control Algorithm</title>
+<title>pmsm_foc_rolo_fw_mtpa_sam_c21</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00097.html">PLL Estimator with PFC</a> &gt; <a href="00098.html">pmsm_pfc_foc_pll_estimator_sam_e70</a> &gt; <a href="00100.html">Control Algorithm</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00089.html">Reduced Order Luenberger Observer (ROLO)</a> &gt; <a href="00100.html">pmsm_foc_rolo_fw_mtpa_sam_c21</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -31,12 +31,12 @@ Microchip 32-bit Motor Control</div>
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00102.html">Previous</a> | <a href="00098.html">Up</a> | <a href="00101.html">Next</a></div>
+<a href="00069.html">Previous</a> | <a href="00089.html">Up</a> | <a href="00096.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_pfc pmsm_pfc_foc_pll_estimator_sam_e70 Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo_fw_mtpa Applications APP1 Topic Title: pmsm_foc_rolo_fw_mtpa_sam_c21)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Control Algorithm</div>
+pmsm_foc_rolo_fw_mtpa_sam_c21</div>
 </div>
 </div>
 
@@ -51,212 +51,46 @@ Control Algorithm</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This project implements a active Power Factor Correction ( PFC ) control algorithm on SAME70 32-bit micro-controller. The following section introduces briefly to PFC theory, PFC algorithm, software design and implementation.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">The Power Factor Correction is a technique of increasing the power factor of the input AC power supply, thereby providing following advantages:</span>&nbsp;</p>
-<ol class="Element630">
-<li value="1" class="Element600"><span style="color: #000000">Low line harmonics.</span></li>
-<li value="2" class="Element600"><span style="color: #000000">Reduced input current.</span></li>
-<li value="3" class="Element600"><span style="color: #000000">Reduced kVA requirement.</span></li>
-<li value="4" class="Element600"><span style="color: #000000">Improved line efficiency, and improved electromagnetic compatibility.</span></li>
-</ol><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">The Power Factor Correction techniques can be classified as - Passive and Active. The Passive Power Factor Correction uses passive components, while the active Power Factor Correction Technique uses power electronic switches to carry out Power Factor Correction. Following figure shows the various Power Factor Correction techniques classification:</span>&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="pfc_Classification.png" border="0" alt="" title=""></p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">This project uses Boost topology for Power Factor Correction. A boost converter is placed between the rectifier and output inverter stage to synchronize input AC current to the input AC voltage. For details, refer to application note </span><span class="Element145">AN1106</span><span style="color: #000000">. The block diagram of a typical boost converter topology based Power Factor Correction is shown as follows:</span>&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">Block Diagram:</span>&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="pfc_block_diagram.png" border="0" alt="" title=""></p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-The power factor correction is implemented in following steps:</p>
-<ol class="Element630">
-<li value="1" class="Element600">Measure the rectifier stage rectified AC voltage and rectified AC current, and output inverter stage DC bus voltage via high speed ADC channels.</li>
-<li value="2" class="Element600">Regulate the DC bus voltage using the Voltage Error Compensator.</li>
-<li value="3" class="Element600">Determine the reference input for Current Error Compensator based on the output of Voltage Error Compensator and Voltage Feed-Forward Compensator.</li>
-<li value="4" class="Element600">Track the rectified reference AC current using a Current Error Compensator.</li>
-</ol><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Current Error Compensator:</strong>&nbsp;</p>
-<p class="Element10">
-The inner loop in the control block forms the current loop. The input to the current loop is the reference current signal I<sub>ACREF</sub> and the actual inductor current I<sub>AC</sub>. The current error compensator is designed to produce a control output such that the inductor current I<sub>AC</sub> follows the reference current I<sub>ACREF</sub>. The current loop should run at a much faster rate when compared to the voltage loop. The bandwidth of the current compensator should be higher for correctly tracking the semi-sinusoidal waveform at twice the input frequency. The current controller GI produces a duty cycle value after appropriate scaling to drive the gate of the boost converter MOSFET.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Voltage Error Compensator:</strong>&nbsp;</p>
-<p class="Element10">
-The outer loop in the control block forms the voltage loop. The input to the voltage loop is the reference DC voltage V<sub>DCREF</sub> and the actual sensed output DC voltage V<sub>DC</sub>. The voltage error compensator is designed to produce a control output such that the DC bus voltage V<sub>DC</sub> remains constant at the reference value V<sub>DCREF</sub> regardless of variations in the load current I<sub>O</sub> and the supply voltage V<sub>AC</sub>. The voltage controller GV produces a control signal, which determines the reference current I<sub>ACREF</sub> for the inner current loop. The output voltage is controlled by the voltage error compensator. When the input voltage increases, the product of V<sub>AC</sub> and V<sub>PI</sub> increases, and thereby increasing the programming signal. When this signal is divided by the square of the average voltage signal, it results in the current reference signal being reduced proportionally. The outcome is that the current is reduced proportionally to the increase in voltage, thereby keeping the input power constant. This ensures that the reference control output I<sub>ACREF</sub> from the voltage compensator is maximum such that the rated output power is delivered at minimum input voltage.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Voltage Feed-Forward Compensator:</strong>&nbsp;</p>
-<p class="Element10">
-If the voltage decreases, the product (V<sub>AC</sub> · V<sub>PI</sub>), which determines I<sub>ACREF</sub>, also proportionally decreases. However, to maintain a constant output power at reduced input voltage, the term I<sub>ACREF</sub> should proportionally increase. The purpose of having an input voltage feed-forward, is to maintain the output power constant as determined by the load regardless of variations in the input line voltage. This compensator implemented digitally by calculating the average value of the input line voltage, squaring this average value and using the result as a divider for the input reference current, which is fed to the current error compensator.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><div class="Element15">
-Software Design:</div>
-<p class="Element10">
-The following section describes the software flow diagram for the power factor correction application project. The power factor correction algorithm in this example project is realized by following state machines.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="pfc_state_machine.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>1. PFC Init State</strong>&nbsp;</p>
-<p class="Element10">
-In this state following tasks are performed:</p>
-<ul class="Element630">
-<li class="Element600">Initialization and configuration of NVIC, AFEC, PWM peripherals for generation of periodic ADC triggers and ADC conversion interrupt.</li>
-<li class="Element600">Calibration of input rectified AC current sense amplifiers.</li>
-<li class="Element600">Initialization of reference DC voltage and reference rectified AC current PI controllers used for Power Factor Correction.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>2. PFC Start state</strong>&nbsp;</p>
-<p class="Element10">
-In this state following tasks are performed:</p>
-<ul class="Element630">
-<li class="Element600">Start PWM peripherals timer to trigger ADC conversion interrupt.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>3. PFC Running State</strong>&nbsp;</p>
-<p class="Element10">
-In this state, the power factor correction ISR is executed.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="pfc_isr_tasks.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>4. PFC Stop State</strong>&nbsp;</p>
-<p class="Element10">
-In this state, the power factor correction is disabled.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p><div class="Element15">
-Software Configuration:</div>
-<p class="Element10">
-The following section describes user specific parameters used the the project.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>1.</strong> <strong>Setting the PFC boost converter stage frequency:</strong>&nbsp;</p>
-<p class="Element10">
-The boost converter stage PWM frequency ( in Hz ) can be configured by setting the following macro in <span class="Element146">userparams.h</span><i> </i>file.&nbsp;</p>
-<p class="Element10">
-This period timer ticks should be configured properly for PWM peripheral in the MHC to get the desired frequency as shown below:&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="pfc_pwm_freq_setting.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<div class="Element63">
+<span style="color: #000000">This application implements the sensor-less field oriented control (FOC) of a permanent magnet synchronous motor (PMSM) with Field Weakening and MTPA capability. It estimates rotor position from measured phase currents and a reduced order luenberger observer (ROLO). This algorithm is implemented on a SAMC21J18A MCU.</span></p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table1">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element65" valign="top" width="32%">
-<div class="Element66">
-Macro&nbsp;</div></td><td class="Element65" valign="top" width="68%">
-<div class="Element66">
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="32%">
-<div class="Element68">
-PFC_PWM_FREQUENCY&nbsp;</div></td><td class="Element67" valign="top" width="68%">
-<div class="Element68">
-Boost converter stage PWM frequency&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>2. Setting PI Controller parameters of Boost Converter Controller:</strong>&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-The voltage and current controllers used in the PFC algorithm has to be tuned to get the optimal control.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-Parameters for reference DC bus voltage PI Controller: </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="29%">
-<div class="Element66">
-Macro&nbsp;</div></td><td class="Element65" valign="top" width="71%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="29%">
-<div class="Element68">
-PFC_VOLTAGE_PTERM&nbsp;</div></td><td class="Element67" valign="top" width="71%">
-<div class="Element68">
-Proportional gain of voltage control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="29%">
-<div class="Element68">
-PFC_VOLTAGE_ITERM&nbsp;</div></td><td class="Element67" valign="top" width="71%">
-<div class="Element68">
-Integral gain of voltage control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="29%">
-<div class="Element68">
-PFC_VOLTAGE_CTERM&nbsp;</div></td><td class="Element67" valign="top" width="71%">
-<div class="Element68">
-Anti-windup term of voltage control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="29%">
-<div class="Element68">
-PFC_VOLTAGE_OUTMAX&nbsp;</div></td><td class="Element67" valign="top" width="71%">
-<div class="Element68">
-Maximum controller output of voltage control loop&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-Parameters for reference rectified AC current PI Controller: </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="28%">
-<div class="Element66">
-Macro&nbsp;</div></td><td class="Element65" valign="top" width="72%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
-<div class="Element68">
-PFC_CURRCNTR_PTERM&nbsp;</div></td><td class="Element67" valign="top" width="72%">
-<div class="Element68">
-Proportional gain of input current control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
-<div class="Element68">
-PFC_CURRCNTR_ITERM&nbsp;</div></td><td class="Element67" valign="top" width="72%">
-<div class="Element68">
-Integral gain of input current control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
-<div class="Element68">
-PFC_CURRCNTR_CTERM&nbsp;</div></td><td class="Element67" valign="top" width="72%">
-<div class="Element68">
-Anti-windup term of input current control loop&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
-<div class="Element68">
-PFC_CURRCNTR_OUTMAX&nbsp;</div></td><td class="Element67" valign="top" width="72%">
-<div class="Element68">
-Maximum controller output of input current control loop&nbsp;</div></td></tr></table></div></div>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00096.html">Building The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to build an application using MPLAB X IDE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00098.html">MPLAB Harmony Configurations</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This topic provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00101.html">Control Algorithm</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This section describes the control strategy and explains the control loop flow.</span>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00097.html">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00099.html">Running The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to run the application using MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -264,7 +98,7 @@ Maximum controller output of input current control loop&nbsp;</div></td></tr></t
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00097.html">PLL Estimator with PFC</a> &gt; <a href="00098.html">pmsm_pfc_foc_pll_estimator_sam_e70</a> &gt; <a href="00100.html">Control Algorithm</a></div>
+<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00089.html">Reduced Order Luenberger Observer (ROLO)</a> &gt; <a href="00100.html">pmsm_foc_rolo_fw_mtpa_sam_c21</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -275,7 +109,7 @@ Maximum controller output of input current control loop&nbsp;</div></td></tr></t
 <a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_pfc pmsm_pfc_foc_pll_estimator_sam_e70 Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo_fw_mtpa Applications APP1 Topic Title: pmsm_foc_rolo_fw_mtpa_sam_c21)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
