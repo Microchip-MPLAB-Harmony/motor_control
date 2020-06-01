@@ -100,7 +100,7 @@ __STATIC_INLINE void MCRPOS_InitializeEncoder( void )
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
 /* Description:                                                               */
-/* Encoder Calculations                                                       */
+/* Encoder Calculations to get angle and speed                                */
 /******************************************************************************/
 __STATIC_INLINE void MCRPOS_EncoderCalculations( void )
 {
@@ -127,7 +127,7 @@ __STATIC_INLINE void MCRPOS_EncoderCalculations( void )
 /******************************************************************************/
 
 /******************************************************************************/
-/* Function name: MCRPOS_InitialRotorPositonDetection                                        */
+/* Function name: MCRPOS_InitialRotorPositonDetection                         */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
 /* Description: Initial rotor position alignment                              */
@@ -162,7 +162,7 @@ tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alig
   #if( FORCED_ALIGNMENT == ALIGNMENT_METHOD)
     if ( gMCRPOS_RotorAlignState.startupLockCount < ( 0.5* gMCRPOS_RotorAlignParam.lockTimeCount))
     {
-      #if(1U == Q_AXIS_ALIGNMENT )
+      #if(ENABLED == Q_AXIS_ALIGNMENT )
         alignOutput->idRef =  0.0f;
         alignOutput->iqRef =  gMCRPOS_RotorAlignParam.lockCurrent;
         alignOutput->angle = (M_PI);
@@ -176,7 +176,7 @@ tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alig
     }
     else if ( gMCRPOS_RotorAlignState.startupLockCount < gMCRPOS_RotorAlignParam.lockTimeCount)
     {
-      #if(1U == Q_AXIS_ALIGNMENT )
+      #if(ENABLED == Q_AXIS_ALIGNMENT )
         alignOutput->idRef =  0.0f;
         alignOutput->iqRef =  gMCRPOS_RotorAlignParam.lockCurrent;
         alignOutput->angle = (3*M_PI_2);
@@ -202,7 +202,7 @@ tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alig
 }
 
 /******************************************************************************/
-/* Function name: MCRPOS_initialization                                       */
+/* Function name: MCRPOS_InitializeRotorPositionSensing                       */
 /* Function parameters: None                                                  */
 /* Function return: None                                                      */
 /* Description:                                                               */
