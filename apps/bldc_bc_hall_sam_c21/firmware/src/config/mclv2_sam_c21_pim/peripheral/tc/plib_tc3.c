@@ -136,6 +136,11 @@ uint16_t TC3_Timer16bitCounterGet( void )
         /* Wait for Write Synchronization */
     }
 
+    while((TC3_REGS->COUNT16.TC_CTRLBSET & TC_CTRLBSET_CMD_Msk) != 0)
+    {
+        /* Wait for CMD to become zero */
+    }
+
     /* Read current count value */
     return (uint16_t)TC3_REGS->COUNT16.TC_COUNT;
 }

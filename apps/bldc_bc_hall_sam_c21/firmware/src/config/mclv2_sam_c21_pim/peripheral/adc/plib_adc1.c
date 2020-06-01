@@ -97,7 +97,7 @@ void ADC1_Initialize( void )
     ADC1_REGS->ADC_REFCTRL = ADC_REFCTRL_REFSEL_INTVCC2;
 
     /* Input pin */
-    ADC1_REGS->ADC_INPUTCTRL = ADC_POSINPUT_AIN0;
+    ADC1_REGS->ADC_INPUTCTRL = (uint16_t) ADC_POSINPUT_AIN0;
 
     /* Resolution & Operation Mode */
     ADC1_REGS->ADC_CTRLC = ADC_CTRLC_RESSEL_12BIT | ADC_CTRLC_WINMODE(0) ;
@@ -136,7 +136,7 @@ void ADC1_Disable( void )
 void ADC1_ChannelSelect( ADC_POSINPUT positiveInput, ADC_NEGINPUT negativeInput )
 {
     /* Configure pin scan mode and positive and negative input pins */
-    ADC1_REGS->ADC_INPUTCTRL = positiveInput | negativeInput;
+    ADC1_REGS->ADC_INPUTCTRL = (uint16_t) positiveInput | (uint16_t) negativeInput;
 
     while((ADC1_REGS->ADC_SYNCBUSY & ADC_SYNCBUSY_INPUTCTRL_Msk) == ADC_SYNCBUSY_INPUTCTRL_Msk)
     {

@@ -140,6 +140,11 @@ uint16_t TC4_Timer16bitCounterGet( void )
         /* Wait for Write Synchronization */
     }
 
+    while((TC4_REGS->COUNT16.TC_CTRLBSET & TC_CTRLBSET_CMD_Msk) != 0)
+    {
+        /* Wait for CMD to become zero */
+    }
+
     /* Read current count value */
     return (uint16_t)TC4_REGS->COUNT16.TC_COUNT;
 }
@@ -187,7 +192,7 @@ void TC4_TimerInterruptHandler( void )
     if (TC4_REGS->COUNT16.TC_INTENSET != 0)
     {
         TC_TIMER_STATUS status;
-        status = TC4_REGS->COUNT16.TC_INTFLAG;
+        status = (TC_TIMER_STATUS) TC4_REGS->COUNT16.TC_INTFLAG;
         /* Clear interrupt flags */
         TC4_REGS->COUNT16.TC_INTFLAG = TC_INTFLAG_Msk;
         if((status != TC_TIMER_STATUS_NONE) && TC4_CallbackObject.callback != NULL)

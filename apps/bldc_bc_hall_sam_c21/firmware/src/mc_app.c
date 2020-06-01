@@ -174,10 +174,13 @@ void MCAPP_Start(void)
     
     /* Enable ADC0 and thus it's slave ADC1 */
     ADC0_Enable();
+    
+    TCC0_PWMStart(); 
+    
     /* Disable all PWM outputs */
     TCC0_PWMPatternSet(0x77, 0x00);
     
-    TCC0_PWMStart();     
+    
 
     /* Start 1 mS timer */
     TC4_TimerStart();    
