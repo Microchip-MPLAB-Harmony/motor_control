@@ -517,8 +517,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/mclv2_sam_e70_pim/motor_control/pmsm_foc/</LogicalPath>
           <PhysicalPath dnOrder="4">/motor_control/pmsm_foc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">E667C692681ECBA38400506C99668143</GeneratedChecksum>
-          <UserChecksum dnOrder="6">E667C692681ECBA38400506C99668143</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6481453B07380DA8C20173D2A1113474</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6481453B07380DA8C20173D2A1113474</UserChecksum>
         </File>
         <File dnOrder="57">
           <Type dnOrder="0">HEADER</Type>
@@ -616,8 +616,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/mclv2_sam_e70_pim/motor_control/pmsm_foc/</LogicalPath>
           <PhysicalPath dnOrder="4">/motor_control/pmsm_foc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">93CD59EBC0A760A6A280E825674C88A6</GeneratedChecksum>
-          <UserChecksum dnOrder="6">93CD59EBC0A760A6A280E825674C88A6</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DADC82061E30215178A9DFB9E4C8C975</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DADC82061E30215178A9DFB9E4C8C975</UserChecksum>
         </File>
         <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>

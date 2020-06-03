@@ -105,13 +105,13 @@
 
 /********* D Control Loop Coefficients ****************************************/
 #define     D_CURRCNTR_PTERM           (float)(0.02)
-#define     D_CURRCNTR_ITERM           (float)(0.000099)
+#define     D_CURRCNTR_ITERM           (float)(0.00005)
 #define     D_CURRCNTR_CTERM           (float)(0.5)
 #define     D_CURRCNTR_OUTMAX          (float)(0.98)
 
 /******** Q Control Loop Coefficients ****************************************/
 #define     Q_CURRCNTR_PTERM           (float)(0.02)
-#define     Q_CURRCNTR_ITERM           (float)(0.000099)
+#define     Q_CURRCNTR_ITERM           (float)(0.00005)
 #define     Q_CURRCNTR_CTERM           (float)(0.5)
 #define     Q_CURRCNTR_OUTMAX          (float)(0.98)
 
