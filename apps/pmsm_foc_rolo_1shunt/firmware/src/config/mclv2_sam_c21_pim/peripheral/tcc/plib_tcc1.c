@@ -76,9 +76,9 @@ void TCC1_PWMInitialize(void)
     TCC1_REGS->TCC_PER = 6000U;
 
 
-
-
-    TCC1_REGS->TCC_EVCTRL |= TCC_EVCTRL_MCEO0_Msk | TCC_EVCTRL_MCEO1_Msk;
+    TCC1_REGS->TCC_EVCTRL = TCC_EVCTRL_MCEO0_Msk
+ 	 	 | TCC_EVCTRL_MCEO1_Msk
+ 	 	 | TCC_EVCTRL_TCEI0_Msk | TCC_EVCTRL_EVACT0_START;
     while (TCC1_REGS->TCC_SYNCBUSY)
     {
         /* Wait for sync */
@@ -110,6 +110,10 @@ void TCC1_PWMStop (void)
 void TCC1_PWM24bitPeriodSet (uint32_t period)
 {
     TCC1_REGS->TCC_PERBUF = period & 0xFFFFFF;
+    while ((TCC1_REGS->TCC_SYNCBUSY & (TCC_SYNCBUSY_PER_Msk)) == TCC_SYNCBUSY_PER_Msk)
+    {
+        /* Wait for sync */
+    }
 }
 
 /* Read TCC period */
@@ -126,6 +130,10 @@ uint32_t TCC1_PWM24bitPeriodGet (void)
 void TCC1_PWMPatternSet(uint8_t pattern_enable, uint8_t pattern_output)
 {
     TCC1_REGS->TCC_PATTBUF = (uint16_t)(pattern_enable | (pattern_output << 8));
+    while ((TCC1_REGS->TCC_SYNCBUSY & (TCC_SYNCBUSY_PATT_Msk)) == TCC_SYNCBUSY_PATT_Msk)
+    {
+        /* Wait for sync */
+    }
 }
 
 /* Set the counter*/

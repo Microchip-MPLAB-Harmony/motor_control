@@ -508,8 +508,7 @@ void motor_stop(void)
             |TCC_PATT_PGE4_Msk|TCC_PATT_PGE5_Msk|TCC_PATT_PGE6_Msk),
             (TCC_PATT_PGE0(0)|TCC_PATT_PGE1(0)|TCC_PATT_PGE2(0)|TCC_PATT_PGE4(0)
             |TCC_PATT_PGE5(0)|TCC_PATT_PGE6(0)));
-
-    
+        
     state_run = 0;
     stop_count++;
         
