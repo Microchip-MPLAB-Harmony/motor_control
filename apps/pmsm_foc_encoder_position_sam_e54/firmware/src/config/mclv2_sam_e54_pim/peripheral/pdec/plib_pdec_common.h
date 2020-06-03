@@ -78,17 +78,17 @@
 typedef enum
 {
     PDEC_QDEC_STATUS_NONE = 0,
-    
+
     /* Capture status overflow */
     PDEC_QDEC_STATUS_OVERFLOW = PDEC_INTFLAG_OVF_Msk,
 
     /* Capture status error */
     PDEC_QDEC_STATUS_ERROR = PDEC_INTFLAG_ERR_Msk,
-    
+
     /* Direction change */
     PDEC_QDEC_STATUS_DIR = PDEC_INTFLAG_DIR_Msk,
-    
-    /* Direction change */
+
+    /* Velocity */
     PDEC_QDEC_STATUS_VELOCITY = PDEC_INTFLAG_VLC_Msk,
 
     /* Capture status ready for channel 0 */
@@ -96,18 +96,71 @@ typedef enum
 
     /* Capture status ready for channel 1 */
     PDEC_QDEC_STATUS_COMPARE_MATCH1 = PDEC_INTFLAG_MC1_Msk,
-    
+
     PDEC_QDEC_STATUS_MSK = PDEC_QDEC_STATUS_OVERFLOW | PDEC_QDEC_STATUS_ERROR | PDEC_QDEC_STATUS_DIR | PDEC_QDEC_STATUS_VELOCITY \
                         | PDEC_QDEC_STAUTS_COMPARE_MATCH0 | PDEC_QDEC_STATUS_COMPARE_MATCH1,
-    
+
     /* Force the compiler to reserve 32-bit memory for enum */
     PDEC_QDEC_STATUS_INVALID = 0xFFFFFFFF
 
 } PDEC_QDEC_STATUS;
 
+typedef enum
+{
+    PDEC_HALL_STATUS_NONE = 0,
+
+    /* Capture status overflow */
+    PDEC_HALL_STATUS_OVERFLOW = PDEC_INTFLAG_OVF_Msk,
+
+    /* Capture status error */
+    PDEC_HALL_STATUS_ERROR = PDEC_INTFLAG_ERR_Msk,
+
+    /* Direction change */
+    PDEC_HALL_STATUS_DIR = PDEC_INTFLAG_DIR_Msk,
+
+    /* Velocity */
+    PDEC_HALL_STATUS_VELOCITY = PDEC_INTFLAG_VLC_Msk,
+
+    /* Capture status ready for channel 0 */
+    PDEC_HALL_STAUTS_COMPARE_MATCH0 = PDEC_INTFLAG_MC0_Msk,
+
+    /* Capture status ready for channel 1 */
+    PDEC_HALL_STATUS_COMPARE_MATCH1 = PDEC_INTFLAG_MC1_Msk,
+
+    PDEC_HALL_STATUS_MSK = PDEC_HALL_STATUS_OVERFLOW | PDEC_HALL_STATUS_ERROR | PDEC_HALL_STATUS_DIR | PDEC_HALL_STATUS_VELOCITY \
+                        | PDEC_HALL_STAUTS_COMPARE_MATCH0 | PDEC_HALL_STATUS_COMPARE_MATCH1,
+
+    /* Force the compiler to reserve 32-bit memory for enum */
+    PDEC_HALL_STATUS_INVALID = 0xFFFFFFFF
+
+} PDEC_HALL_STATUS;
+
+typedef enum
+{
+    PDEC_COUNTER_STATUS_NONE = 0,
+
+    /* Capture status overflow */
+    PDEC_COUNTER_STATUS_OVERFLOW = PDEC_INTFLAG_OVF_Msk,
+
+    /* Capture status ready for channel 0 */
+    PDEC_COUNTER_STAUTS_COMPARE_MATCH0 = PDEC_INTFLAG_MC0_Msk,
+
+    /* Capture status ready for channel 1 */
+    PDEC_COUNTER_STATUS_COMPARE_MATCH1 = PDEC_INTFLAG_MC1_Msk,
+
+    PDEC_COUNTER_STATUS_MSK = PDEC_COUNTER_STATUS_OVERFLOW |   \
+                         PDEC_COUNTER_STAUTS_COMPARE_MATCH0 | PDEC_COUNTER_STATUS_COMPARE_MATCH1,
+
+    /* Force the compiler to reserve 32-bit memory for enum */
+    PDEC_COUNTER_STATUS_INVALID = 0xFFFFFFFF
+
+} PDEC_COUNTER_STATUS;
+
 // *****************************************************************************
 
 typedef void (*PDEC_QDEC_CALLBACK) (PDEC_QDEC_STATUS status, uintptr_t context);
+typedef void (*PDEC_HALL_CALLBACK) (PDEC_HALL_STATUS status, uintptr_t context);
+typedef void (*PDEC_COUNTER_CALLBACK) (PDEC_COUNTER_STATUS status, uintptr_t context);
 
 // *****************************************************************************
 typedef struct
@@ -117,6 +170,22 @@ typedef struct
     uintptr_t context;
 
 } PDEC_QDEC_CALLBACK_OBJ;
+
+typedef struct
+{
+    PDEC_HALL_CALLBACK callback;
+
+    uintptr_t context;
+
+} PDEC_HALL_CALLBACK_OBJ;
+
+typedef struct
+{
+    PDEC_COUNTER_CALLBACK callback;
+
+    uintptr_t context;
+
+} PDEC_COUNTER_CALLBACK_OBJ;
 
 
 // DOM-IGNORE-BEGIN
