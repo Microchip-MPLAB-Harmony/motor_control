@@ -283,8 +283,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/mclv2_pic32_mk_mcm_pim/motor_control/pmsm_foc/</LogicalPath>
           <PhysicalPath dnOrder="4">/motor_control/pmsm_foc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">E667C692681ECBA38400506C99668143</GeneratedChecksum>
-          <UserChecksum dnOrder="6">E667C692681ECBA38400506C99668143</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6481453B07380DA8C20173D2A1113474</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6481453B07380DA8C20173D2A1113474</UserChecksum>
         </File>
         <File dnOrder="31">
           <Type dnOrder="0">HEADER</Type>
