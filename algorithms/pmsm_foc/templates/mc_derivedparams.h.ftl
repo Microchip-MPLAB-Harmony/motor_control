@@ -43,6 +43,7 @@ Derived Parameters interface file
 #define _DERIVED_PARAMS_HEADER
 
 #include "mc_userparams.h"
+#include "mc_pmsm_foc_common.h"
 
 /***********************************************************************************************/
 /* Derived Parameters - Don't Change                                                           */
