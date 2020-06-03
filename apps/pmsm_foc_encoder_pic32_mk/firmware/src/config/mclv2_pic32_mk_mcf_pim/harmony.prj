@@ -292,8 +292,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/mclv2_pic32_mk_mcf_pim/motor_control/pmsm_foc/</LogicalPath>
           <PhysicalPath dnOrder="4">/motor_control/pmsm_foc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">FE98A4AD4E3526D98A2BB71F435FBC76</GeneratedChecksum>
-          <UserChecksum dnOrder="6">FE98A4AD4E3526D98A2BB71F435FBC76</UserChecksum>
+          <GeneratedChecksum dnOrder="5">21A4814C8FE716D13D8FCC30F5BEB5BF</GeneratedChecksum>
+          <UserChecksum dnOrder="6">21A4814C8FE716D13D8FCC30F5BEB5BF</UserChecksum>
         </File>
         <File dnOrder="32">
           <Type dnOrder="0">HEADER</Type>
