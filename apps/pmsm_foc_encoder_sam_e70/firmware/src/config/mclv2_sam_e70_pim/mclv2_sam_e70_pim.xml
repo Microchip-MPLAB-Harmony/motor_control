@@ -62,14 +62,7 @@
             </Boolean>
           </Attributes>
         </Integer>
-        <Comment dnOrder="11" id="AFEC_0_DUAL_CHANNEL">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Comment>
-        <Boolean dnOrder="12" id="AFEC_0_IER_EOC">
+        <Boolean dnOrder="11" id="AFEC_0_IER_EOC">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -79,28 +72,28 @@
             <Dynamic dnOrder="0" id="afec0" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="13" id="AFEC_0_NAME">
+        <String dnOrder="12" id="AFEC_0_NAME">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </String>
-        <Combo dnOrder="14" id="AFEC_0_NEG_INP">
+        <Combo dnOrder="13" id="AFEC_0_NEG_INP">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Combo>
-        <String dnOrder="15" id="AFEC_0_POS_INP">
+        <String dnOrder="14" id="AFEC_0_POS_INP">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </String>
-        <Boolean dnOrder="16" id="AFEC_0_SHMR_DUAL">
+        <Boolean dnOrder="15" id="AFEC_0_SHMR_DUAL">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -110,172 +103,172 @@
             <Dynamic dnOrder="0" id="afec0" value="true"/>
           </Values>
         </Boolean>
-        <Combo dnOrder="17" id="AFEC_10_CGR_GAIN">
+        <Combo dnOrder="16" id="AFEC_10_CGR_GAIN">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Combo>
-        <Boolean dnOrder="18" id="AFEC_10_CHER">
+        <Boolean dnOrder="17" id="AFEC_10_CHER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="afec0" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="19" id="AFEC_10_COCR_AOFF">
+        <Integer dnOrder="18" id="AFEC_10_COCR_AOFF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Integer>
-        <Boolean dnOrder="20" id="AFEC_10_IER_EOC">
+        <Boolean dnOrder="19" id="AFEC_10_IER_EOC">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Boolean>
-        <String dnOrder="21" id="AFEC_10_NAME">
+        <String dnOrder="20" id="AFEC_10_NAME">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </String>
-        <Combo dnOrder="22" id="AFEC_10_NEG_INP">
+        <Combo dnOrder="21" id="AFEC_10_NEG_INP">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Combo>
-        <String dnOrder="23" id="AFEC_10_POS_INP">
+        <String dnOrder="22" id="AFEC_10_POS_INP">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </String>
-        <Combo dnOrder="24" id="AFEC_6_CGR_GAIN">
+        <Combo dnOrder="23" id="AFEC_6_CGR_GAIN">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Combo>
-        <Boolean dnOrder="25" id="AFEC_6_CHER">
+        <Boolean dnOrder="24" id="AFEC_6_CHER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="afec0" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="26" id="AFEC_6_COCR_AOFF">
+        <Integer dnOrder="25" id="AFEC_6_COCR_AOFF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Integer>
-        <Boolean dnOrder="27" id="AFEC_6_IER_EOC">
+        <Boolean dnOrder="26" id="AFEC_6_IER_EOC">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Boolean>
-        <String dnOrder="28" id="AFEC_6_NAME">
+        <String dnOrder="27" id="AFEC_6_NAME">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </String>
-        <Combo dnOrder="29" id="AFEC_6_NEG_INP">
+        <Combo dnOrder="28" id="AFEC_6_NEG_INP">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Combo>
-        <String dnOrder="30" id="AFEC_6_POS_INP">
+        <String dnOrder="29" id="AFEC_6_POS_INP">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </String>
-        <Combo dnOrder="31" id="AFEC_7_CGR_GAIN">
+        <Combo dnOrder="30" id="AFEC_7_CGR_GAIN">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Combo>
-        <Boolean dnOrder="32" id="AFEC_7_CHER">
+        <Boolean dnOrder="31" id="AFEC_7_CHER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="afec0" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="33" id="AFEC_7_COCR_AOFF">
+        <Integer dnOrder="32" id="AFEC_7_COCR_AOFF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Integer>
-        <Boolean dnOrder="34" id="AFEC_7_IER_EOC">
+        <Boolean dnOrder="33" id="AFEC_7_IER_EOC">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Boolean>
-        <String dnOrder="35" id="AFEC_7_NAME">
+        <String dnOrder="34" id="AFEC_7_NAME">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </String>
-        <Combo dnOrder="36" id="AFEC_7_NEG_INP">
+        <Combo dnOrder="35" id="AFEC_7_NEG_INP">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Combo>
-        <String dnOrder="37" id="AFEC_7_POS_INP">
+        <String dnOrder="36" id="AFEC_7_POS_INP">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </String>
-        <Comment dnOrder="38" id="AFEC_CLK_ENABLE_COMMENT">
+        <Comment dnOrder="37" id="AFEC_CLK_ENABLE_COMMENT">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </Comment>
-        <KeyValueSet dnOrder="39" id="AFEC_CONV_MODE">
+        <KeyValueSet dnOrder="38" id="AFEC_CONV_MODE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="afec0" value="2"/>
           </Values>
         </KeyValueSet>
-        <Comment dnOrder="40" id="AFEC_CONV_TIME">
+        <Comment dnOrder="39" id="AFEC_CONV_TIME">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
               <Value dnOrder="0">****&amp;#160;Conversion&amp;#160;Time&amp;#160;is&amp;#160;1.22666666667&amp;#160;us&amp;#160;****</Value>
             </String>
           </Attributes>
         </Comment>
-        <KeyValueSet dnOrder="41" id="AFEC_EMR_RES_VALUE">
+        <KeyValueSet dnOrder="40" id="AFEC_EMR_RES_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="afec0" value="0"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="42" id="AFEC_MR_TRGSEL_VALUE">
+        <KeyValueSet dnOrder="41" id="AFEC_MR_TRGSEL_VALUE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -285,13 +278,20 @@
             <Dynamic dnOrder="0" id="afec0" value="4"/>
           </Values>
         </KeyValueSet>
-        <Comment dnOrder="43" id="AFEC_NVIC_ENABLE_COMMENT">
+        <Comment dnOrder="42" id="AFEC_NVIC_ENABLE_COMMENT">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </Comment>
+        <Menu dnOrder="43" id="CH11">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
         <String dnOrder="44" id="INTERRUPT_ADC_RESULT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="afec0" value="AFEC0_IRQn"/>
@@ -2593,120 +2593,114 @@
             <Dynamic dnOrder="0" id="pmsm_foc" value="2000.0"/>
           </Values>
         </Float>
-        <Integer dnOrder="4" id="MCPMSMFOC_DCBUSV_MODULE">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">1</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <KeyValueSet dnOrder="5" id="MCPMSMFOC_DIRECTION_BUTTON">
+        <KeyValueSet dnOrder="4" id="MCPMSMFOC_DIRECTION_BUTTON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pmsm_foc" value="45"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="6" id="MCPMSMFOC_DIRECTION_LED">
+        <KeyValueSet dnOrder="5" id="MCPMSMFOC_DIRECTION_LED">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pmsm_foc" value="67"/>
           </Values>
         </KeyValueSet>
-        <Menu dnOrder="7" id="MCPMSMFOC_ENCODER">
+        <Menu dnOrder="6" id="MCPMSMFOC_ENCODER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <String dnOrder="8" id="MCPMSMFOC_ENCODERPLIB">
+        <String dnOrder="7" id="MCPMSMFOC_ENCODERPLIB">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pmsm_foc" value="tc0"/>
           </Values>
         </String>
-        <KeyValueSet dnOrder="9" id="MCPMSMFOC_FAULT_LED">
+        <KeyValueSet dnOrder="8" id="MCPMSMFOC_FAULT_LED">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pmsm_foc" value="24"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="10" id="MCPMSMFOC_MOTOR_CONNECTION">
+        <Float dnOrder="9" id="MCPMSMFOC_ID_KI">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="pmsm_foc" value="9.9E-5"/>
+            <User dnOrder="1" value="5.0E-5"/>
+          </Values>
+        </Float>
+        <Float dnOrder="10" id="MCPMSMFOC_ID_KP">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="pmsm_foc" value="0.02"/>
+          </Values>
+        </Float>
+        <Float dnOrder="11" id="MCPMSMFOC_IQ_KI">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="pmsm_foc" value="9.9E-5"/>
+            <User dnOrder="1" value="5.0E-5"/>
+          </Values>
+        </Float>
+        <Float dnOrder="12" id="MCPMSMFOC_IQ_KP">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="pmsm_foc" value="0.02"/>
+          </Values>
+        </Float>
+        <KeyValueSet dnOrder="13" id="MCPMSMFOC_MOTOR_CONNECTION">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pmsm_foc" value="0"/>
           </Values>
         </KeyValueSet>
-        <Float dnOrder="11" id="MCPMSMFOC_OL_END_SPEED">
+        <Float dnOrder="14" id="MCPMSMFOC_OL_END_SPEED">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </Float>
-        <Float dnOrder="12" id="MCPMSMFOC_OL_RAMP_TIME">
+        <Float dnOrder="15" id="MCPMSMFOC_OL_RAMP_TIME">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </Float>
-        <Boolean dnOrder="13" id="MCPMSMFOC_OPEN_LOOP">
+        <Boolean dnOrder="16" id="MCPMSMFOC_OPEN_LOOP">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </Boolean>
-        <Integer dnOrder="14" id="MCPMSMFOC_PHASEU_MODULE">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">1</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <Integer dnOrder="15" id="MCPMSMFOC_PHASEV_MODULE">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">1</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <KeyValueSet dnOrder="16" id="MCPMSMFOC_POSITION_FB">
+        <KeyValueSet dnOrder="17" id="MCPMSMFOC_POSITION_FB">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <File dnOrder="17" id="MCPMSMFOC_POS_ENCODER_HEADER">
+        <File dnOrder="18" id="MCPMSMFOC_POS_ENCODER_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="18" id="MCPMSMFOC_POS_ENCODER_SOURCE">
+        <File dnOrder="19" id="MCPMSMFOC_POS_ENCODER_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="19" id="MCPMSMFOC_POS_PLL_HEADER">
+        <File dnOrder="20" id="MCPMSMFOC_POS_PLL_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="20" id="MCPMSMFOC_POS_PLL_SOURCE">
+        <File dnOrder="21" id="MCPMSMFOC_POS_PLL_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Integer dnOrder="21" id="MCPMSMFOC_POT_MODULE">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">1</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
         <String dnOrder="22" id="MCPMSMFOC_PWMPLIB">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pmsm_foc" value="pwm0"/>
@@ -2717,33 +2711,22 @@
             <Dynamic dnOrder="0" id="pmsm_foc" value="2"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="24" id="MCPMSMFOC_PWM_PH_U">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <Integer dnOrder="25" id="MCPMSMFOC_PWM_PH_V">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <Integer dnOrder="26" id="MCPMSMFOC_PWM_PH_W">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <KeyValueSet dnOrder="27" id="MCPMSMFOC_START_BUTTON">
+        <Float dnOrder="24" id="MCPMSMFOC_SPEED_KI">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="2.0E-5"/>
+          </Values>
+        </Float>
+        <Float dnOrder="25" id="MCPMSMFOC_SPEED_KP">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="0.01"/>
+          </Values>
+        </Float>
+        <KeyValueSet dnOrder="26" id="MCPMSMFOC_START_BUTTON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pmsm_foc" value="47"/>
           </Values>
         </KeyValueSet>
-        <String dnOrder="28" id="MCPMSMFOC_X2CScope">
+        <String dnOrder="27" id="MCPMSMFOC_X2CScope">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pmsm_foc" value="X2CScope"/>
           </Values>
@@ -2804,10 +2787,7 @@
         </String>
         <Integer dnOrder="2" id="PWM_CH_0_CDTY">
           <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3750</Value>
-            </Integer>
-            <Boolean dnOrder="1" id="visible">
+            <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
@@ -2885,12 +2865,7 @@
           </Values>
         </Boolean>
         <KeyValueSet dnOrder="12" id="PWM_CH_0_FPE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="2"/>
           </Values>
         </KeyValueSet>
@@ -2913,10 +2888,7 @@
         </Boolean>
         <Integer dnOrder="15" id="PWM_CH_1_CDTY">
           <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3750</Value>
-            </Integer>
-            <Boolean dnOrder="1" id="visible">
+            <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
@@ -2970,12 +2942,7 @@
           </Values>
         </Boolean>
         <KeyValueSet dnOrder="23" id="PWM_CH_1_FPE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="2"/>
           </Values>
         </KeyValueSet>
@@ -3012,10 +2979,7 @@
         </Comment>
         <Integer dnOrder="28" id="PWM_CH_2_CDTY">
           <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3750</Value>
-            </Integer>
-            <Boolean dnOrder="1" id="visible">
+            <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
@@ -3069,12 +3033,7 @@
           </Values>
         </Boolean>
         <KeyValueSet dnOrder="36" id="PWM_CH_2_FPE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="2"/>
           </Values>
         </KeyValueSet>
@@ -3122,12 +3081,7 @@
           </Values>
         </Boolean>
         <Integer dnOrder="43" id="PWM_COMP_0_CMPV_CV">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3750</Value>
-            </Integer>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="10"/>
           </Values>
         </Integer>
@@ -3136,207 +3090,83 @@
             <Dynamic dnOrder="0" id="pwm0" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="45" id="PWM_COMP_1_CMPV_CV">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3750</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <Integer dnOrder="46" id="PWM_COMP_2_CMPV_CV">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3750</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <Integer dnOrder="47" id="PWM_COMP_3_CMPV_CV">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3750</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <Integer dnOrder="48" id="PWM_COMP_4_CMPV_CV">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3750</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <Integer dnOrder="49" id="PWM_COMP_5_CMPV_CV">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3750</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <Integer dnOrder="50" id="PWM_COMP_6_CMPV_CV">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3750</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <Integer dnOrder="51" id="PWM_COMP_7_CMPV_CV">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">3750</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <Menu dnOrder="52" id="PWM_FAULT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Menu>
-        <KeyValueSet dnOrder="53" id="PWM_FAULT_0_FPV_FPVH">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="54" id="PWM_FAULT_0_FPV_FPVL">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </KeyValueSet>
-        <Boolean dnOrder="55" id="PWM_FAULT_0_IER1_FCHID">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+        <Boolean dnOrder="45" id="PWM_FAULT_0_IER1_FCHID">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="true"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="56" id="PWM_FAULT_1_FPV_FPVH">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="57" id="PWM_FAULT_1_FPV_FPVL">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </KeyValueSet>
-        <Boolean dnOrder="58" id="PWM_FAULT_1_IER1_FCHID">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Boolean>
-        <KeyValueSet dnOrder="59" id="PWM_FAULT_2_FPV_FPVH">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="60" id="PWM_FAULT_2_FPV_FPVL">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </KeyValueSet>
-        <Boolean dnOrder="61" id="PWM_FAULT_2_IER1_FCHID">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Boolean>
-        <KeyValueSet dnOrder="62" id="PWM_FMR_FMOD_INDEX_2">
+        <KeyValueSet dnOrder="46" id="PWM_FMR_FMOD_INDEX_2">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="0"/>
           </Values>
         </KeyValueSet>
-        <Hex dnOrder="63" id="PWM_FMR_FMOD_VAL">
+        <Hex dnOrder="47" id="PWM_FMR_FMOD_VAL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="251"/>
           </Values>
         </Hex>
-        <String dnOrder="64" id="PWM_GET_PERIOD_API">
+        <String dnOrder="48" id="PWM_GET_PERIOD_API">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="PWM0_ChannelPeriodGet"/>
           </Values>
         </String>
-        <Hex dnOrder="65" id="PWM_IER1_REG">
+        <Hex dnOrder="49" id="PWM_IER1_REG">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="65536"/>
           </Values>
         </Hex>
-        <Comment dnOrder="66" id="PWM_NVIC_ENABLE_COMMENT">
+        <Comment dnOrder="50" id="PWM_NVIC_ENABLE_COMMENT">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </Comment>
-        <String dnOrder="67" id="PWM_OUTPUT_DISABLE_API">
+        <String dnOrder="51" id="PWM_OUTPUT_DISABLE_API">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="PWM0_ChannelOverrideDisable"/>
           </Values>
         </String>
-        <String dnOrder="68" id="PWM_OUTPUT_ENABLE_API">
+        <String dnOrder="52" id="PWM_OUTPUT_ENABLE_API">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="PWM0_ChannelOverrideEnable"/>
           </Values>
         </String>
-        <Hex dnOrder="69" id="PWM_PH_MASK">
+        <Hex dnOrder="53" id="PWM_PH_MASK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="7"/>
           </Values>
         </Hex>
-        <String dnOrder="70" id="PWM_PH_U">
+        <String dnOrder="54" id="PWM_PH_U">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="PWM_CHANNEL_0"/>
           </Values>
         </String>
-        <String dnOrder="71" id="PWM_PH_V">
+        <String dnOrder="55" id="PWM_PH_V">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="PWM_CHANNEL_1"/>
           </Values>
         </String>
-        <String dnOrder="72" id="PWM_PH_W">
+        <String dnOrder="56" id="PWM_PH_W">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="PWM_CHANNEL_2"/>
           </Values>
         </String>
-        <String dnOrder="73" id="PWM_SET_DUTY_API">
+        <String dnOrder="57" id="PWM_SET_DUTY_API">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="PWM0_ChannelDutySet"/>
           </Values>
         </String>
-        <String dnOrder="74" id="PWM_START_API">
+        <String dnOrder="58" id="PWM_START_API">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="PWM0_ChannelsStart"/>
           </Values>
         </String>
-        <String dnOrder="75" id="PWM_STOP_API">
+        <String dnOrder="59" id="PWM_STOP_API">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pwm0" value="PWM0_ChannelsStop"/>
           </Values>
         </String>
-        <Menu dnOrder="76" id="PWM_SYNC_CHANNELS">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Menu>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="PWM0_PWM">
@@ -3353,53 +3183,53 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="7" id="tc0">
       <Symbols dnOrder="0">
-        <Menu dnOrder="0" id="Channel 0">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </Menu>
-        <String dnOrder="1" id="ENCODER_POS_GET_API">
+        <String dnOrder="0" id="ENCODER_POS_GET_API">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="TC0_QuadraturePositionGet"/>
           </Values>
         </String>
-        <String dnOrder="2" id="ENCODER_POS_SET_API">
+        <String dnOrder="1" id="ENCODER_POS_SET_API">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value=""/>
           </Values>
         </String>
-        <String dnOrder="3" id="ENCODER_SPEED_GET_API">
+        <String dnOrder="2" id="ENCODER_SPEED_GET_API">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value=""/>
           </Values>
         </String>
-        <String dnOrder="4" id="ENCODER_SPEED_SET_API">
+        <String dnOrder="3" id="ENCODER_SPEED_SET_API">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value=""/>
           </Values>
         </String>
-        <String dnOrder="5" id="ENCODER_START_API">
+        <String dnOrder="4" id="ENCODER_START_API">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="TC0_QuadratureStart"/>
           </Values>
         </String>
-        <String dnOrder="6" id="ENCODER_STOP_API">
+        <String dnOrder="5" id="ENCODER_STOP_API">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="TC0_QuadratureStop"/>
           </Values>
         </String>
-        <Integer dnOrder="7" id="TC3_CLOCK_FREQ">
+        <Integer dnOrder="6" id="TC3_CLOCK_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="32000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="8" id="TC3_PCK7">
+        <Boolean dnOrder="7" id="TC3_PCK7">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="false"/>
           </Values>
         </Boolean>
+        <Comment dnOrder="8" id="TC3_Resolution">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="text">
+              <Value dnOrder="0">****Clock&amp;#160;resolution&amp;#160;is&amp;#160;31250.0&amp;#160;nS****</Value>
+            </String>
+          </Attributes>
+        </Comment>
         <Combo dnOrder="9" id="TC_BMR_POSEN">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="POSITION"/>
@@ -3410,33 +3240,19 @@
             <Dynamic dnOrder="0" id="tc0" value="2"/>
           </Values>
         </KeyValueSet>
-        <Comment dnOrder="11" id="TC_CLK_ENABLE_COMMENT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </Comment>
-        <Boolean dnOrder="12" id="TC_ENABLE_QEI">
+        <Boolean dnOrder="11" id="TC_ENABLE_QEI">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="true"/>
           </Values>
         </Boolean>
-        <Comment dnOrder="13" id="TC_QEI_PERIOD_COMMENT">
+        <Comment dnOrder="12" id="TC_QEI_PERIOD_COMMENT">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
               <Value dnOrder="0">****Time&amp;#160;Base&amp;#160;is&amp;#160;469218.75&amp;#160;uS****</Value>
             </String>
           </Attributes>
         </Comment>
-        <Menu dnOrder="14" id="TC_QUADRATURE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Menu>
-        <Comment dnOrder="15" id="TC_QUADRATURE_COMMENT">
+        <Comment dnOrder="13" id="TC_QUADRATURE_COMMENT">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
               <Value dnOrder="0">****&amp;#160;Quadrature&amp;#160;mode&amp;#160;uses&amp;#160;one&amp;#160;channel.&amp;#160;Channel&amp;#160;0&amp;#160;to&amp;#160;capture&amp;#160;number&amp;#160;of&amp;#160;edges&amp;#160;****</Value>
@@ -3469,13 +3285,11 @@
             <Dynamic dnOrder="0" id="uart0" value="81"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="2" id="UART_RING_BUFFER_ENABLE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </Boolean>
+        <Integer dnOrder="2" id="UART_CLOCK_FREQ">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="uart0" value="150000000"/>
+          </Values>
+        </Integer>
         <Boolean dnOrder="3" id="USART_INTERRUPT_MODE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="X2CScope" value="false"/>
@@ -3538,8 +3352,7 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="X2CScope" x="176" y="241"/>
         <ElementPosition dnOrder="1" id="afec0" x="30" y="60"/>
@@ -3553,5 +3366,6 @@
         <ElementPosition dnOrder="9" id="uart0" x="7" y="244"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
