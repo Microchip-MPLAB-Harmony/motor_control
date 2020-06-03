@@ -41,6 +41,7 @@
 #include "plib_evsys.h"
 
 
+
 void EVSYS_Initialize( void )
 {
 	/*Event Channel User Configuration*/
@@ -54,5 +55,4 @@ void EVSYS_Initialize( void )
 	EVSYS_REGS->CHANNEL[1].EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(20) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(1) \
 									 ;
 }
-
 

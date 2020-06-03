@@ -52,7 +52,7 @@
 #define LONG_HURST
 
 #define MCLV2
-#define ENABLE_FLUX_WEAKENING 
+#undef ENABLE_FLUX_WEAKENING 
 
 
 /*Application Configuration Switches*/

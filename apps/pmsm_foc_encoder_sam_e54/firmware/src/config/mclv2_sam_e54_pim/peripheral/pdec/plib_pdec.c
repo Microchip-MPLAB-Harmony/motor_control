@@ -87,14 +87,14 @@ void PDEC_QDECInitialize( void )
                                  | PDEC_CTRLA_ANGULAR(7)
                                  | PDEC_CTRLA_MAXCMP(4); 
     PDEC_REGS->PDEC_PRESC = PDEC_PRESC_PRESC_DIV1;
-    PDEC_REGS->PDEC_FILTER = PDEC_FILTER_FILTER(5);
-                                
+    PDEC_REGS->PDEC_FILTER = PDEC_FILTER_FILTER(2);
+
     /* Configure angular and revolution period */
     PDEC_REGS->PDEC_CC[0U] = 1023U | (0U << PDEC_ANGULAR_COUNTER_BITS);
-    
+
     /* Clear all interrupt flags */
     PDEC_REGS->PDEC_INTFLAG = PDEC_INTFLAG_Msk;
-    
+
 
     PDEC_REGS->PDEC_EVCTRL = 0x0;
 
@@ -134,15 +134,49 @@ int16_t PDEC_QDECPositionGet( void )
     {
         /* Wait for read Synchronization */
     }
+    while((PDEC_REGS->PDEC_CTRLBSET & PDEC_CTRLBSET_CMD_Msk) != PDEC_CTRLBSET_CMD_NONE)
+    {
+        /* Wait for CMD to become zero */
+    }
     return (int16_t)PDEC_REGS->PDEC_COUNT;
+}
+
+/* Read the number of revolutions */
+uint16_t PDEC_QDECRevolutionsGet( void )
+{
+    PDEC_REGS->PDEC_CTRLBSET = PDEC_CTRLBSET_CMD_READSYNC;
+    while(PDEC_REGS->PDEC_SYNCBUSY)
+    {
+        /* Wait for read Synchronization */
+    }
+    while((PDEC_REGS->PDEC_CTRLBSET & PDEC_CTRLBSET_CMD_Msk) != PDEC_CTRLBSET_CMD_NONE)
+    {
+        /* Wait for CMD to become zero */
+    }
+    return (uint16_t)(PDEC_REGS->PDEC_COUNT & 0x0);
+}
+
+/* Read the angular position */
+uint16_t PDEC_QDECAngleGet( void )
+{
+    PDEC_REGS->PDEC_CTRLBSET = PDEC_CTRLBSET_CMD_READSYNC;
+    while(PDEC_REGS->PDEC_SYNCBUSY)
+    {
+        /* Wait for read Synchronization */
+    }
+    while((PDEC_REGS->PDEC_CTRLBSET & PDEC_CTRLBSET_CMD_Msk) != PDEC_CTRLBSET_CMD_NONE)
+    {
+        /* Wait for CMD to become zero */
+    }    
+    return (uint16_t)(PDEC_REGS->PDEC_COUNT & 0xffff);
 }
 
 PDEC_QDEC_STATUS PDEC_QDECStatusGet( void )
 {
     PDEC_QDEC_STATUS status;
-    status = PDEC_REGS->PDEC_INTFLAG;
+    status = (PDEC_QDEC_STATUS) PDEC_REGS->PDEC_INTFLAG;
     /* Clear interrupt flags */
-    PDEC_REGS->PDEC_INTFLAG = PDEC_QDEC_STATUS_MSK;
+    PDEC_REGS->PDEC_INTFLAG = status;
     return status;
 }
 
