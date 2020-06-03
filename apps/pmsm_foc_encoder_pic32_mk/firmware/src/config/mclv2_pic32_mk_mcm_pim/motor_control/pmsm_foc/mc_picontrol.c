@@ -67,7 +67,7 @@
 
 
 /******************************************************************************/
-/* Function name: MCCON_PIControl                                             */
+/* Function name: MCLIB_PIControl                                             */
 /* Function parameters: pParm - PI parameter structure                        */
 /* Function return: None                                                      */
 /* Description: Execute PI control                                            */
@@ -101,8 +101,8 @@ void MCLIB_PIControl( tMCLIB_PICONTROLLER_S * const pParm)
 
 
 /******************************************************************************/
-/* Function name: MCAPP_ResetPIParameters                                     */
-/* Function parameters: None                                                  */
+/* Function name: MCLIB_ResetPIParameters                                     */
+/* Function parameters: pParm - PI parameter structure                        */
 /* Function return: None                                                      */
 /* Description:                                                               */
 /* Reset control parameters                                                   */
