@@ -128,7 +128,7 @@
 #define     NOPOLESPAIRS                                        5                       // Number of Pole Pairs of the PMSM Motor
 #define     STAR_CONNECTED_MOTOR                                1                       // 1 - Motor is Star Connected, 0 - Motor is Delta Connected    
 #define     NOMINAL_SPEED_RPM                                   (float)3000             // Nominal Rated Speed of the Motor - Value in RPM
-#define     FW_SPEED_RPM                                        (float)5000
+#define     FW_SPEED_RPM                                        (float)4600
 //--------------Motor Startup Behavior Configuration----------//
 #define     ALIGN_TIME_IN_SEC                                   2                       // Duration of Motor Alignment in seconds
 #define     OPENLOOP_RAMP_TIME_IN_SEC                           3                       // Ramp time to reach from 0 to Open Loop Speed in seconds
@@ -137,7 +137,7 @@
 #define     ALIGN_D_CURRENT_REF                                 0.4                     // Maximum Torque Reference during Motor Alignment in A
 #define     OPENLOOP_D_CURRENT_REF                              0.4                     // Maximum Torque Reference during Open Loop Mode in A
 #define     RHO_OFFSET_ELEC_DEG                                 45                      // Angle Offset between actual rotor angle and estimated angle during open loop mode. This offset helps in smooth transition from Open Loop to Closed Loop
-#define     MAX_FW_NEGATIVE_ID_REF                              (float)(-1.8)           // Maximum negative D axis reference current during Flux Weakening in A
+#define     MAX_FW_NEGATIVE_ID_REF                              (float)(-2)           // Maximum negative D axis reference current during Flux Weakening in A
 #define     TORQUE_MODE_MAX_CUR                                 0.4                     // Maximum Torque Mode Current Reference in A
 #define     MAX_MOTOR_CURRENT                                   (float)(4.4)            // Maximum Motor Current in A
 #define     WINDMILL_TIME_SEC                                   0.5                       // Duration of Motor Windmilling in seconds
@@ -175,7 +175,7 @@
 #define     NOPOLESPAIRS                                        5                       // Number of Pole Pairs of the PMSM Motor        
 #define     STAR_CONNECTED_MOTOR                                1                       // 1 - Motor is Star Connected, 0 - Motor is Delta Connected
 #define     NOMINAL_SPEED_RPM                                   (float)3000             // Nominal Rated Speed of the Motor - Value in RPM
-#define     FW_SPEED_RPM                                        (float)3600             // Maximum Speed of the Motor in Flux Weakening Mode - Value in RPM
+#define     FW_SPEED_RPM                                        (float)3430             // Maximum Speed of the Motor in Flux Weakening Mode - Value in RPM
 //--------------Motor Startup Behavior Configuration----------//
 #define     ALIGN_TIME_IN_SEC                                   2                       // Duration of Motor Alignment in seconds
 #define     OPENLOOP_RAMP_TIME_IN_SEC                           3                       // Ramp time to reach from 0 to Open Loop Speed in seconds
@@ -183,7 +183,7 @@
 #define     CLOSEDLOOP_RAMP_RATE_RPM_SEC                        500                     // Closed Loop Speed Ramp rate in Rev/min/Sec
 #define     ALIGN_D_CURRENT_REF                                 0.4                     // Maximum Torque Reference during Motor Alignment in A
 #define     OPENLOOP_D_CURRENT_REF                              0.4                     // Maximum Torque Reference during Open Loop Mode in A
-#define     MAX_FW_NEGATIVE_ID_REF                              (float)(-1.2)           // Maximum negative D axis reference current (in A) during Flux Weakening
+#define     MAX_FW_NEGATIVE_ID_REF                              (float)(-2.0)           // Maximum negative D axis reference current (in A) during Flux Weakening
 #define     TORQUE_MODE_MAX_CUR                                 0.4                     // Maximum Torque Mode Current Reference in A
 #define     MAX_MOTOR_CURRENT                                   (float)(4.4)            // Maximum Motor Current in A
 #define     WINDMILL_TIME_SEC                                   0.5                       // Duration of Motor Windmilling in seconds
