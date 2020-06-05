@@ -4,27 +4,15 @@
 
 
 project: pmsm_foc_rolo_sam_c21
-creation_date: 2020-05-28T18:27:48.051+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-06-05T15:34:12.376+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
 mhc_mode: IDE            # [IDE|Standalone|Headless]
-mplabx_version: v5.40        # if MPLAB X plugin only
-plugin_version: v3.5.0        # if MPLAB X plugin only
+mplabx_version: v5.35   # if MPLAB X plugin only
+plugin_version: v3.5.0  # if MPLAB X plugin only
 
 modules:
-    - {name: "apps", version: "unknown"}
-    - {name: "bsp", version: "unknown"}
-    - {name: "core", version: "unknown"}
-    - {name: "crypto", version: "unknown"}
     - {name: "csp", version: "v3.7.1"}
     - {name: "dev_packs", version: "v3.7.0"}
-    - {name: "doc_o_matic_h3", version: "unknown"}
-    - {name: "gfx", version: "unknown"}
-    - {name: "h3_apps_regenerator", version: "unknown"}
     - {name: "mhc", version: "v3.4.0"}
-    - {name: "motor_control", version: "unknown"}
-    - {name: "mplabx_plugin", version: "v3.5.0-tc.1"}
-    - {name: "packs", version: "unknown"}
-    - {name: "touch", version: "v3.6.0"}
-    - {name: "validation", version: "unknown"}
-    - {name: "x2c", version: "v1.0.0"}
-
+    - {name: "x2c", version: "v1.0.1"}
+    - {name: "motor_control", version: "v3.5.0"}
