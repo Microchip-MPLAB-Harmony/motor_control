@@ -64,17 +64,94 @@ Hardware Setup</div>
 <ul class="Element632">
 <li class="Element602">Connect the debugger probe to J33</li>
 <li class="Element602">Connect the USB port on the board to the computer using a mini USB cable.</li>
-<li class="Element602">Connect the 3 motors phases to the LX board.</li>
-<li class="Element602">Connect the motor encoders A and B respectively to LX7720 BLI1 and BLI2. Connecter encoder VCC to LX7720 5V and encoder GND to LX7720 SGND.</li>
-<li class="Element602">LX7720 jumpers configuration
-<ul class="Element633">
-<li class="Element603">SM_EN to ON with J39</li>
-<li class="Element603">SCP forced high with J38</li>
-</ul></li>
-<li class="Element602">Connect the followings signals between SAMRH71-EK board and LX7720 board</li>
+<li class="Element602">Connect the Hurst DMA0204024B101 BLDC motor's phase windings and encoder connections as specified in the table below</li>
 </ul></li>
 </ul></li>
 </ol><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="44%">
+<div class="Element66">
+Hurst Motor Connection&nbsp;</div></td><td class="Element65" valign="top" width="13%">
+<div class="Element66">
+Wire Color&nbsp;</div></td><td class="Element65" valign="top" width="25%">
+<div class="Element66">
+LX7720DB Connector&nbsp;</div></td><td class="Element65" valign="top" width="19%">
+<div class="Element66">
+LX7720DB Signal&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="44%">
+<div class="Element68">
+Motor winding phase A&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+white&nbsp;</div></td><td class="Element67" valign="top" width="25%">
+<div class="Element68">
+J9 pin 1&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Phase A&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="44%">
+<div class="Element68">
+Motor winding phase B&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+black&nbsp;</div></td><td class="Element67" valign="top" width="25%">
+<div class="Element68">
+J9 pin 2&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Phase B&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="44%">
+<div class="Element68">
+Motor winding phase C&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+red&nbsp;</div></td><td class="Element67" valign="top" width="25%">
+<div class="Element68">
+J9 pin 3&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Phase C&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="44%">
+<div class="Element68">
+Encoder VDD&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+red&nbsp;</div></td><td class="Element67" valign="top" width="25%">
+<div class="Element68">
+J15 pin 1&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+VCC (+3.3V)&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="44%">
+<div class="Element68">
+Encoder GND&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+black&nbsp;</div></td><td class="Element67" valign="top" width="25%">
+<div class="Element68">
+J15 pin 2&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+GND&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="44%">
+<div class="Element68">
+Encoder Output A&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+white&nbsp;</div></td><td class="Element67" valign="top" width="25%">
+<div class="Element68">
+J15 pin 3&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+BLI1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="44%">
+<div class="Element68">
+Encoder Output B&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+blue&nbsp;</div></td><td class="Element67" valign="top" width="25%">
+<div class="Element68">
+J15 pin 3&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+BLI2&nbsp;</div></td></tr></table></div></div>
+
+<ul class="Element630">
+<li class="Element600">LX7720 jumpers configuration
+<ul class="Element631">
+<li class="Element601">SM_EN to ON with J39</li>
+<li class="Element601">SCP forced high with J38</li>
+</ul></li>
+<li class="Element600">Connect the followings signals between SAMRH71-EK board and LX7720 board</li>
+</ul><div class="Element63">
 <div class="TableDiv">
 <table cellspacing="0" class="Table1">
 <tr>
