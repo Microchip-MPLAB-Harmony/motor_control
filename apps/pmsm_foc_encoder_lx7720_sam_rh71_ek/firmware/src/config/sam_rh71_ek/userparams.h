@@ -139,20 +139,20 @@
 ///* PI controllers tuning values - */
 
 //******** D Control Loop Coefficients *******
-#define     D_CURRCNTR_PTERM                         (0.02)
+#define     D_CURRCNTR_PTERM                         (0.1)
 #define     D_CURRCNTR_ITERM                         (0.0005)
 #define     D_CURRCNTR_CTERM                         (0.5)
 #define     D_CURRCNTR_OUTMAX                        MAX_CURRENT
 
 //******** Q Control Loop Coefficients *******
-#define     Q_CURRCNTR_PTERM                         (0.02)
+#define     Q_CURRCNTR_PTERM                         (0.1)
 #define     Q_CURRCNTR_ITERM                         (0.0005)
 #define     Q_CURRCNTR_CTERM                         (0.5)
 #define     Q_CURRCNTR_OUTMAX                        MAX_CURRENT
 
 //*** Velocity Control Loop Coefficients *****
-#define     SPEEDCNTR_PTERM                            (0.001)
-#define     SPEEDCNTR_ITERM                            (0.0000020)
+#define     SPEEDCNTR_PTERM                            (0.01)
+#define     SPEEDCNTR_ITERM                            (0.00020)
 #define     SPEEDCNTR_CTERM                            0.5
 #define     SPEEDCNTR_OUTMAX                           MAX_CURRENT
 

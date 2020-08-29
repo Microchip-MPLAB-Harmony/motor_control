@@ -169,6 +169,7 @@
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/sam_rh71_ek/harmony.prj</itemPath>
+      <itemPath>../src/config/sam_rh71_ek/sam_rh71_ek.xml</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -182,7 +183,7 @@
         <targetDevice>ATSAMRH71F20C</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool>ICD4Tool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>

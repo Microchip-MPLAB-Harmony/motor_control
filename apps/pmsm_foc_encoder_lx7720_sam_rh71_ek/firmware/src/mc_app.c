@@ -121,6 +121,13 @@ uint32_t motor_activity_count = 0;
 /******************************************************************************/
 __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
 {
+    if( 0U == gCtrlParam.fieldAlignmentFlag )
+    {
+        /* switch to close loop */
+        gCtrlParam.changeMode = false;
+        gCtrlParam.openLoop = false;
+    }
+    
     if( gCtrlParam.openLoop == true )
     {
         /* OPENLOOP:  force rotating angle,Vd,Vq */
@@ -143,7 +150,7 @@ __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
          * for maximum startup torque, set the q current to maximum acceptable
          * value represents the maximum peak value 	 */
 
-        gCtrlParam.iqRef = Q_CURRENT_REF_OPENLOOP;
+        gCtrlParam.iqRef = Q_CURRENT_REF_OPENLOOP*gCtrlParam.direction;
 
         /* PI control for Iq torque control loop */
         gPIParmQ.inMeas = gMCLIBCurrentDQ.iq;
@@ -176,7 +183,7 @@ __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
 
 #if(TORQUE_MODE == true)
         /* If TORQUE MODE is enabled then skip the velocity control loop */
-        gCtrlParam.iqRef = Q_CURRENT_REF_OPENLOOP;
+        gCtrlParam.iqRef = Q_CURRENT_REF_OPENLOOP*gCtrlParam.direction;
 #endif
 
         /* PI control for Id flux control loop */
@@ -219,10 +226,13 @@ __STATIC_INLINE void MCAPP_MotorAngleCalc(void)
             if(gCtrlParam.startup_lock_count < 2*LOCK_COUNT_FOR_LOCK_TIME)
             {
                 gCtrlParam.startup_lock_count++;
-                gPositionCalc.rotor_angle_rad_per_sec = (3*M_PI_2);
+                gPositionCalc.rotor_angle_rad_per_sec = (M_PI + (M_PI_2 * gCtrlParam.direction));
             }
             else
             {
+                /* Reset field alignment Flag */
+                gCtrlParam.fieldAlignmentFlag = 0U;
+                
                 /* switch to close loop */
                 gCtrlParam.changeMode = true;
                 gCtrlParam.openLoop = false;
@@ -552,16 +562,20 @@ __STATIC_INLINE void MCAPP_SlowControlLoop(void)
 
         /* Speed Calculation from Encoder */
         gPositionCalc.present_position_count = (int16_t)(TC1_REGS->TC_CHANNEL[0].TC_CV);
+        if( ( gCtrlParam.oldStatus == MOTOR_STATUS_STOPPED ) && ( gCtrlParam.motorStatus == MOTOR_STATUS_RUNNING ))
+        {
+           gPositionCalc.prev_position_count = gPositionCalc.present_position_count;
+        }
         pos_count_diff = gPositionCalc.present_position_count - gPositionCalc.prev_position_count;
         speed_elec_rad_per_sec = (pos_count_diff * 2*M_PI)/(ENCODER_PULSES_PER_EREV *SLOW_LOOP_TIME_SEC );
         gPositionCalc.prev_position_count = gPositionCalc.present_position_count;
             
         /* Execute the velocity control loop */
         gPIParmQref.inMeas = speed_elec_rad_per_sec;
-        gPIParmQref.inRef  = gCtrlParam.velRef;
+        gPIParmQref.inRef  = gCtrlParam.velRef*gCtrlParam.direction;
         MCLIB_PIControl(&gPIParmQref);
         gCtrlParam.iqRef = gPIParmQref.out;
-
+        gCtrlParam.oldStatus = gCtrlParam.motorStatus;
         /* PB18 GPIO is used for timing measurement. - Set Low*/
         PIOB_REGS->PIO_CODR = 1 << (18 & 0x1F);
     }
@@ -746,9 +760,13 @@ void MCAPP_MotorStop(void)
     TC3_CH0_CaptureStop();
     TC3_CH1_CaptureStop();
 	
-	gCtrlParam.endSpeed = 0;
+    gPIParmQref.inMeas = 0.0f;
+    gPIParmQref.inRef = 0.0f;
+    gPIParmQref.dSum = 0.0f;
+    gCtrlParam.endSpeed = 0;
 	gCtrlParam.velRef = 0;
 	gCtrlParam.motorStatus = MOTOR_STATUS_STOPPED;
+    gCtrlParam.oldStatus = MOTOR_STATUS_STOPPED;
     gMCAPPData.mcState = MC_APP_STATE_STOP;
     speed_ref_filtered = 0;
 }
@@ -961,18 +979,17 @@ static void MCAPP_SwitchDirectionDebounce(void)
             gMCAPPData.switchDirectionCount = 0;
             gMCAPPData.switchDirectionState = MC_APP_SWITCH_RELEASED;
  
-            /* Perform direction change : To be implemented */
-            if ( (gMCAPPData.mcState == MC_APP_STATE_START) ||
-                 (gMCAPPData.mcState == MC_APP_STATE_RUNNING) ||
-                 (gMCAPPData.mcState == MC_APP_STATE_STOP_DECREASE) )
+            if (gMCAPPData.mcState == MC_APP_STATE_WAIT_START)
             {
                 if (gMCAPPData.mcDirection == MC_APP_DIRECTION_FORWARD)
                 {
                     gMCAPPData.mcDirection = MC_APP_DIRECTION_REVERSE;
+                    gCtrlParam.direction = -1;
                 }
                 else
                 {
                     gMCAPPData.mcDirection = MC_APP_DIRECTION_FORWARD;
+                    gCtrlParam.direction = 1;
                 }
                 MCAPP_LedDirectionUpdate(true);
             }
@@ -991,7 +1008,8 @@ void MCAPP_Tasks()
   switch (gMCAPPData.mcState)
   {
       case MC_APP_STATE_INIT:
-
+                      /* Set field alignment flag */
+            gCtrlParam.fieldAlignmentFlag = 1U;
           //Disable peripheral control of the PWM low pins : PA4, PA5, PA6
           PIOA_REGS->PIO_MSKR = 0x70;
           PIOA_REGS->PIO_CFGR = 0x0;
@@ -1017,16 +1035,18 @@ void MCAPP_Tasks()
           TC3_REGS->TC_CHANNEL[1].TC_CMR |= TC_CMR_BURST_XC1;
 
           gMCAPPData.switchStartCount = 0xFF;
+          gMCAPPData.mcDirection = MC_APP_DIRECTION_FORWARD;
+          gCtrlParam.direction = 1;
           gMCAPPData.mcState = MC_APP_STATE_WAIT_START;
           break;
           
       case MC_APP_STATE_WAIT_START:
           MCAPP_SwitchStartDebounce(MC_APP_STATE_START);  
+          MCAPP_SwitchDirectionDebounce();
           break;
 
       case MC_APP_STATE_START:
           LED0_Set();
-          gMCAPPData.mcDirection = MC_APP_DIRECTION_FORWARD;
           MCAPP_LedDirectionUpdate(true);
           MCAPP_MotorStart();
           motor_activity_count = 0;
@@ -1057,12 +1077,11 @@ void MCAPP_Tasks()
           MCAPP_SwitchDecrDebounce();
           MCAPP_SwitchIncrDebounce();
           MCAPP_SwitchResetDebounce();
-          MCAPP_SwitchDirectionDebounce();
          break;
 
         case MC_APP_STATE_STOP_DECREASE:
 
-            if (speed_elec_rad_per_sec <= 110)
+            if (speed_elec_rad_per_sec*gCtrlParam.direction <= 110)
             {
                 gMCAPPData.mcState = MC_APP_STATE_STOP;
 
@@ -1073,7 +1092,7 @@ void MCAPP_Tasks()
                 {
                     MCAPP_SlowControlLoop();
                   
-                    if(speed_elec_rad_per_sec <= (motor_speed_target_elec_rad_per_sec + 10))
+                    if((speed_elec_rad_per_sec*gCtrlParam.direction) <= (motor_speed_target_elec_rad_per_sec + 10))
                     {
                        MCAPP_SpeedDecrease();
                     }

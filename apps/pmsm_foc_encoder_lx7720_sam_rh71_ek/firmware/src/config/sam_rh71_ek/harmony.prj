@@ -672,7 +672,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="aerospace;csp;motor_control;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;csp;csp_apps_pic32mk;motor_control;training;x2c;"/>
     </Settings>
   </Configurator>
 </Configuration>
