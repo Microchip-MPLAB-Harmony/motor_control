@@ -3,6 +3,55 @@
 
 # Microchip MPLAB Harmony 3 Release Notes
 
+## Motor Control Release v3.5.1
+
+
+### New Applications
+
+- The following table provides the list of algorithms added in this release.
+
+| Algorithm | Description |Control Board | Inverter Board |
+| --- | --- | --- | --- |
+|[pmsm_foc_rolo_pic32_cm_mc](apps/pmsm_foc_rolo_pic32_cm_mc)| Sensorless Field Oriented Control of PMSM using Reduced Order Luenberger Observer | PIC32CM MC 00 Motor Control Plugin Module|<li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> <li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li>|
+| [acim_vhz_pic32_cm_mc](apps/acim_vhz_pic32_cm_mc)| Open Loop V/F Control of AC Induction Motor | PIC32CM MC 00 Motor Control Plugin Module| <li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li> |
+| [bldc_bc_hall_pic32_cm_mc](apps/bldc_bc_hall_pic32_cm_mc)| Block Commutation based control of BLDC motor using Hall Sensors | PIC32CM MC 00 Motor Control Plugin Module|<li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li>|
+
+### Updated Applications
+
+| Application | Description | Control Board | Inverter Board| Revision History  |
+| --- | --- | --- | --- | --- |
+| [pmsm_foc_encoder_lx7720_sam_rh71_ek](apps/pmsm_foc_encoder_lx7720_sam_rh71_ek) | Sensored Field Oriented Control of PMSM using SAMRH71 MCU and LX7720 Motor Driver and Position decoder | [SAMRH71F20-EK Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/SAMRH71F20-EK) | [LX7720 Daughter Board](https://www.microsemi.com/product-directory/space-system-managers/3708-position-motor-controller-ic#resources) | <li> Regenerated demo applications using csp v3.8.1 </li><li>Added reverse direction capability</li><li> Optimized Speed Controller response </li>
+
+
+### Required MPLAB Harmony v3 Modules
+* csp v3.8.1
+* x2c v1.1.2
+* dev_packs v3.8.0
+* mhc v3.5.1
+
+### Known Issues
+
+* Isolated EDBG Card 
+  * This board is not supported in MPLABX v5.40. We recommend using [MPLABX v5.45 or above](https://www.microchip.com/mplab/mplab-x-ide) for programming/debugging any PIC32CM_MC, SAM C/D2x, SAM D/E5x and SAM E/V/S7x applications dsPICDEM™ MCHV-3 High Voltage Development Board
+
+  * If programming failure occurs with message "java.lang.RuntimeException:RDDI_DAP_OPERATION_FAILED", then reset the Isolated EDBG Card's configuration by Go to File -> Project Properties -> EDBG -> Reset 
+
+  * Programming or debugging PIC32CM, SAM C/D2x or SAM D/E5x MCU, using Isolated EDBG Card (board revision #02-10824-R1) on dsPICDEM™ MCHV-3 High Voltage Development Board may inhibit MCU from executing instructions if the MCU is reset by pressing on board 'Reset' switch or power cycling the board. Refer to the [Isolated EDBG Debugger Product Change Notice](https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202) for details of hardware modification needed to resolve this issue.
+
+* pmsm_foc_encoder_<device_family> applications running on dsPICDEM MCHV-3 requires increasing bandwidth of the quadrature encoder signal filter to maintain signal integrity of quadrature sensor signals at higher motor speeds. Without these modifications, motor operation may fail at higher speeds.
+  * Reduce the capacitance value of C25, C26 and C27 from 100pF to 10pF 50V NPO 0805
+* pmsm_foc_rolo_1shunt may experience false over-current faults during alternate motor start command when operated in "TORQUE_MODE". Workaround - Reset the MCU before re-starting the motor in "TORQUE_MODE".
+* For any demos running on ATSAMC21 Motor Control PIM, if any failures are observed while trying to use X2CScope, these failures may occur due to shortage of CPU computation bandwidth. In such cases, enable "RAM_EXECUTE" mode which speeds up execution by executing certain functions from RAM memory instead of Flash memory.
+
+
+### Development Tools
+
+* [MPLAB X IDE v5.45](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB XC32 C/C++ Compiler v2.41](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.6.0.
+  * X2CScope v1.3.0.
+
 ## Motor Control Release v3.5.0
 
 ### New Features
@@ -11,6 +60,7 @@
  | Feature | Description | Supported Device Family |
  | --- | --- | ---|
  | PMSM_FOC Component | An application library for Field Oriented Control (FOC) of Permanent Magnet Synchronous Motors (PMSM). This library can be configured using MPLAB Harmony Configurator (MHC) to auto-generate a fully functional application code which can drive a permanent magnet synchronous motor. | PIC32MK, SAME7x|
+ 
 
 ### New Applications
 
@@ -41,29 +91,7 @@
 |pmsm_foc_rolo_1shunt| Sensorless Field Oriented Control of PMSM using Reduced Order Luenberger Observer with Single Shunt Current Sense | [ATSAMC21 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320206)|<li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> | <li> Implemented bug fix in integral saturation logic (upper limit) of the PI compensator </li>
 
 
-### Complete list of Demo Applications
-- The following table provides the consolidated list of demo applications in this release
 
-| Algorithm | Description |Control Board | Inverter Board |
-| --- | --- | --- | --- |
-| acim_vhz_sam_c21| Open Loop V/F Control of AC Induction Motor | [ATSAMC21 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320206)   | <li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li> | 
-| bldc_bc_hall_sam_c21| Block Commutation based control of BLDC motor using Hall Sensors | [ATSAMC21 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320206)   | <li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> |
-| pmsm_foc_encoder_lx7720_sam_rh71_ek | Sensored Field Oriented Control of PMSM using SAMRH71 MCU and LX7720 Motor Driver and Position decoder | [SAMRH71F20-EK Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/SAMRH71F20-EK) |<li>  [LX7720 Daughter Board](https://www.microsemi.com/product-directory/space-system-managers/3708-position-motor-controller-ic#resources) </li> |
-| pmsm_foc_encoder_pic32_mk| Sensored Field Oriented Control of PMSM using Quadrature Encoder | PIC32MK MCM Motor Control Plugin Module| <li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li>| 
-| pmsm_foc_encoder_pic32_mk| Sensored Field Oriented Control of PMSM using Quadrature Encoder | [PIC32MK Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320024)| <li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> <li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li>|
-| pmsm_foc_encoder_position_sam_e54| FOC based Position Control of PMSM  using Quadrature Encoder | [ATSAME54 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320207)   |<li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> <li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li>|
-| pmsm_foc_encoder_sam_e54| Sensored Field Oriented Control of PMSM using Quadrature Encoder | [ATSAME54 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320207)   |<li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> <li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li>|
-| pmsm_foc_encoder_sam_e70|  Sensored Field Oriented Control of PMSM using Quadrature Encoder  | [ATSAME70 Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320203)   |<li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> <li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li>|
-| pmsm_foc_pll_estimator_pic32_mk| Sensorless Field Oriented Control of PMSM using PLL Estimator | PIC32MK MCM Motor Control Plugin Module| <li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li>| 
-| pmsm_foc_pll_estimator_pic32_mk| Sensorless Field Oriented Control of PMSM using PLL Estimator| [PIC32MK Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320024)| <li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> <li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li>|
-| pmsm_foc_pll_estimator_sam_e54|Sensorless Field Oriented Control of PMSM using PLL Estimator | [ATSAME54 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320207)   |<li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> <li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li>|
-| pmsm_foc_pll_estimator_sam_e70| Sensorless Field Oriented Control of PMSM using PLL Estimator | [ATSAME70 Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320203)   |<li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> <li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li>|
-|pmsm_foc_rolo_1shunt| Sensorless Field Oriented Control of PMSM using Reduced Order Luenberger Observer with Single Shunt Current Sense | [ATSAMC21 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320206)|<li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> |
-| pmsm_foc_rolo_fw_mtpa_sam_c21| Sensorless Field Oriented Control of PMSM using Reduced Order Luenberger Observer with Field Weakening and MTPA Capability | [ATSAMC21 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320206)  |<li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li>|
-|pmsm_foc_rolo_sam_c21| Sensorless Field Oriented Control of PMSM using Reduced Order Luenberger Observer | [ATSAMC21 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320206)   |<li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> <li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li>|
-| pmsm_foc_rolo_wm_sam_c21| Sensorless Field Oriented Control of PMSM using Reduced Order Luenberger Observer with Windmilling Capability | [ATSAMC21 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320206)   | <li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li> <li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li>|
-| pmsm_foc_smo_sam_e70| Sensorless Field Oriented Control of PMSM using Sliding Mode Observer | [ATSAME70 Motor Control Plugin Module](https://www.microchip.com/Developmenttools/ProductDetails/MA320203)   |<li>[dsPICDEM™ MCLV-2 Support](https://www.microchip.com/DevelopmentTools/ProductDetails/DM330021-2)</li>|  
-| pmsm_pfc_foc_pll_estimator_sam_e70| PFC and Sensorless Field Oriented Control of PMSM using PLL Estimator | [ATSAME70 Motor Control Plugin Module](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA320203)   |<li>[dsPICDEM™ MCHV-3 Support](https://www.microchip.com/developmenttools/ProductDetails/dm330023-3)</li>|
 
 
 
