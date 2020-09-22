@@ -64,6 +64,17 @@
 #define FIELD_WEAKENING                  (${MCPMSMFOC_FIELD_WEAKENING?then('ENABLED','DISABLED')})  /* If enabled - Field weakening */
 #define ALIGNMENT_METHOD                 (${MCPMSMFOC_ALIGNMENT_METHOD})  /* alignment method  */
 
+<#if MCPMSMFOC_INTERM_FLYING_START>
+#define FLYING_START_TIME_SEC              (float)(${MCPMSMFOC_FLYING_START_TIME})
+#define MIN_FLYING_START_SPEED_RPM         (float)(${MCPMSMFOC_FLYING_START_SPEED})
+#define FLYING_START_START_CURRRENT_A      (float)(${MCPMSMFOC_FLYING_START_STARTUP_CURRENT})
+#define NULL_BRAKE_TIME_SEC               (float)(${MCPMSMFOC_FLYING_START_NULL_BRAKING_TIME})
+<#if MCPMSMFOC_FLYING_START_REGENERATIVE_BRAKING_ENABLE>
+#define REGENERATIVE_BRAKING_CURRRENT_A   (float)(${MCPMSMFOC_FLYING_START_REGENERATIVE_BRAKING_CURRENT})
+#define REGENERATIVE_BRAKE_CURRENT_RAMP_TIME_SEC (float)(${MCPMSMFOC_FLYING_START_REGENERATIVE_BRAKING_RAMP_TIME})
+</#if>
+</#if>
+
 <#if MCPMSMFOC_ALIGNMENT == "0">
 #define Q_AXIS_ALIGNMENT                 (ENABLED)
 <#else>
@@ -148,7 +159,7 @@
 #define KFILTER_VELESTIM               (float)((float)4000/(float)32767)
 #define KFILTER_POT                    (float)((float)250/(float)32767)
 <#else>
-#define KFILTER_ESDQ                   (float)((float)200/(float)32767)
+#define KFILTER_ESDQ                   (float)((float)600/(float)32767)
 #define KFILTER_BEMF_AMPLITUDE         (float)((float)100/(float)32767)
 #define KFILTER_VELESTIM               (float)((float)174/(float)32767)
 #define KFILTER_POT                    (float)((float)250/(float)32767)

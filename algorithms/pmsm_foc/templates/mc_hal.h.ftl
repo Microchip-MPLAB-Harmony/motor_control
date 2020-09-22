@@ -113,17 +113,22 @@ __STATIC_INLINE void MCHAL_DisableInverterPwm( void )
 {
 
     /*Override all PWM outputs to low*/
-    ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_OUTPUT_DISABLE_API}(
-            (TCC_PATT_PGE0_Msk|TCC_PATT_PGE1_Msk|TCC_PATT_PGE2_Msk
-            |TCC_PATT_PGE4_Msk|TCC_PATT_PGE5_Msk|TCC_PATT_PGE6_Msk),
-            (TCC_PATT_PGE0(0)|TCC_PATT_PGE1(0)|TCC_PATT_PGE2(0)|TCC_PATT_PGE4(0)
-            |TCC_PATT_PGE5(0)|TCC_PATT_PGE6(0)));
+    while ((${MCPMSMFOC_PWMPLIB?upper_case}_REGS->TCC_SYNCBUSY & (TCC_SYNCBUSY_PATT_Msk)) == TCC_SYNCBUSY_PATT_Msk)
+    {
+        /* Wait for sync */
+    }
+    ${MCPMSMFOC_PWMPLIB?upper_case}_REGS->TCC_PATT = 0x00FF;
+     
 }
 
 __STATIC_INLINE void MCHAL_EnableInverterPwm( void )
 {
     /*Disable PWM override*/
-    ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_OUTPUT_ENABLE_API}(0x00,0x00);
+    while ((${MCPMSMFOC_PWMPLIB?upper_case}_REGS->TCC_SYNCBUSY & (TCC_SYNCBUSY_PATT_Msk)) == TCC_SYNCBUSY_PATT_Msk)
+    {
+        /* Wait for sync */
+    }
+    ${MCPMSMFOC_PWMPLIB?upper_case}_REGS->TCC_PATT = 0x0000;
 }
 
 #define MCHAL_PWMOutputDisable(ch)          MCHAL_DisableInverterPwm()

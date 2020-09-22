@@ -60,27 +60,73 @@ execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_Startup.py"  
 # Execute file for data monitoring module 
 execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_DataMonitoring.py"   )
 
+# Execute file for Flying Start module 
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_FlyingStart.py"   )
 
 
 #=========================================================================================================#
 #                                       CALLBACK FUCNTIONS                                                #
 #=========================================================================================================#
+
 def mcPmsmFocCodeGenUpdate(symbol, event):
     component = symbol.getComponent()
-    component.getSymbolByID("MCPMSMFOC_POS_PLL_HEADER").setEnabled(False)
-    component.getSymbolByID("MCPMSMFOC_POS_PLL_SOURCE").setEnabled(False)
-    component.getSymbolByID("MCPMSMFOC_POS_ENCODER_HEADER").setEnabled(False)
-    component.getSymbolByID("MCPMSMFOC_POS_ENCODER_SOURCE").setEnabled(False)
+    if (event["id"] == "MCPMSMFOC_POSITION_FB"):
+        symObj = event["symbol"]
+        key = symObj.getSelectedKey()
+        if(key == "SENSORED_ENCODER"):
+            component.getSymbolByID("MCPMSMFOC_POS_ENCODER_HEADER").setEnabled(True)    
+            component.getSymbolByID("MCPMSMFOC_POS_ENCODER_SOURCE").setEnabled(True)            
+        else:
+            component.getSymbolByID("MCPMSMFOC_POS_ENCODER_HEADER").setEnabled(False)    
+            component.getSymbolByID("MCPMSMFOC_POS_ENCODER_SOURCE").setEnabled(False)
+        if(key == "SENSORLESS_PLL"):
+            component.getSymbolByID("MCPMSMFOC_POS_PLL_HEADER").setEnabled(True)
+            component.getSymbolByID("MCPMSMFOC_POS_PLL_SOURCE").setEnabled(True)
+        else:
+            component.getSymbolByID("MCPMSMFOC_POS_PLL_HEADER").setEnabled(False)
+            component.getSymbolByID("MCPMSMFOC_POS_PLL_SOURCE").setEnabled(False)
+    elif (event["id"] == "MCPMSMFOC_FLYING_START_CODE_TYPE"):
+        if event["value"] == 1:
+            if(component.getSymbolByID("MCPMSMFOC_FLYING_START").getValue() == True):
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(True)
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(True)
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
+                
+            else:
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(False)
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)                
+                
+        else:
+            if(component.getSymbolByID("MCPMSMFOC_FLYING_START").getValue() == True):
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(True)
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(True)
+                
+            else:
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(False)
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
+                
+    elif (event["id"] == "MCPMSMFOC_FLYING_START"):
+        if event["value"] == True:
+            if(component.getSymbolByID("MCPMSMFOC_FLYING_START_CODE_TYPE").getValue() == 1):
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(True)
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(True)
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
+                
+            else:
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(True)
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
+                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(True)
+                
+        else:
+            component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(False)
+            component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
+            component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
+            
 
-    symObj = event["symbol"]
-    key = symObj.getSelectedKey()
-
-    if key == "SENSORLESS_PLL": #PLL
-        component.getSymbolByID("MCPMSMFOC_POS_PLL_HEADER").setEnabled(True)
-        component.getSymbolByID("MCPMSMFOC_POS_PLL_SOURCE").setEnabled(True)
-    elif key == "SENSORED_ENCODER":  #Encoder
-        component.getSymbolByID("MCPMSMFOC_POS_ENCODER_HEADER").setEnabled(True)
-        component.getSymbolByID("MCPMSMFOC_POS_ENCODER_SOURCE").setEnabled(True)
+            
 
 
 def mcPmsmFocSpeedRefVisible(symbol, event):
@@ -109,7 +155,11 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocSeries = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_SERIES", None)
     mcPmsmFocSeries.setVisible(False)
     mcPmsmFocSeries.setDefaultValue(ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series"))
-    
+ 
+    global mcPmsmFocArch
+    mcPmsmFocArch = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_ARCH", None)
+    mcPmsmFocArch.setVisible(False)
+    mcPmsmFocArch.setDefaultValue(ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("architecture")) 
    
   
     #-----------------------------------------------------------------------------------------------------#
@@ -199,8 +249,8 @@ def instantiateComponent(mcPmsmFocComponent):
 
     mcPmsmFocCodeGen = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_CODE_GEN", None)
     mcPmsmFocCodeGen.setVisible(False)
-    mcPmsmFocCodeGen.setDependencies(mcPmsmFocCodeGenUpdate, ["MCPMSMFOC_POSITION_FB"])
-
+    mcPmsmFocCodeGen.setDependencies(mcPmsmFocCodeGenUpdate, ["MCPMSMFOC_POSITION_FB","MCPMSMFOC_FLYING_START","MCPMSMFOC_FLYING_START_CODE_TYPE"])
+    
     mcPmsmFocSystemDefFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_DEF", None)
     mcPmsmFocSystemDefFile.setType("STRING")
     mcPmsmFocSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
@@ -244,6 +294,38 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocPosEncHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
     mcPmsmFocPosEncHeaderFile.setType("HEADER")
     mcPmsmFocPosEncHeaderFile.setMarkup(True)
+
+    mcPmsmFocPosFlyingStartHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_FLYING_START_HEADER", None)
+    mcPmsmFocPosFlyingStartHeaderFile.setSourcePath("/algorithms/pmsm_foc/templates/flyingstart.h")
+    mcPmsmFocPosFlyingStartHeaderFile.setOutputName("mc_flyingstart.h")
+    mcPmsmFocPosFlyingStartHeaderFile.setDestPath("motor_control/pmsm_foc/")
+    mcPmsmFocPosFlyingStartHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+    mcPmsmFocPosFlyingStartHeaderFile.setType("HEADER")
+    mcPmsmFocPosFlyingStartHeaderFile.setMarkup(True)
+    mcPmsmFocPosFlyingStartHeaderFile.setEnabled(False)
+  
+
+    mcPmsmFocPosFlyingStartSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_FLYING_START_SOURCE", None)
+    mcPmsmFocPosFlyingStartSourceFile.setSourcePath("../mc_src_flying_start/src/mc_flyingstart.c")
+    mcPmsmFocPosFlyingStartSourceFile.setOutputName("mc_flyingstart.c")
+    mcPmsmFocPosFlyingStartSourceFile.setDestPath("motor_control/pmsm_foc/")
+    mcPmsmFocPosFlyingStartSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+    mcPmsmFocPosFlyingStartSourceFile.setType("SOURCE")
+    mcPmsmFocPosFlyingStartSourceFile.setMarkup(True)
+    mcPmsmFocPosFlyingStartSourceFile.setEnabled(False)
+    
+    mcPmsmFocPosFlyingStartLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_FLYING_START_LIB", None)
+    if(("SAMD5" in Variables.get("__PROCESSOR")) or ("SAME5" in Variables.get("__PROCESSOR"))):
+        mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_D5x_E5x_MC_FLYINGSTART.X.a")
+    elif(("SAME7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR"))):
+        mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_E7x_S7x_V7x_MC_FLYINGSTART.X.a")
+    elif("PIC32MK" in Variables.get("__PROCESSOR")):
+        mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_PIC32MK_MC_FLYINGSTART.X.a")
+    mcPmsmFocPosFlyingStartLibraryFile.setOutputName("lib_mc_flyingstart.a")
+    mcPmsmFocPosFlyingStartLibraryFile.setDestPath("motor_control/pmsm_foc/")
+    mcPmsmFocPosFlyingStartLibraryFile.setEnabled(False)
+   
+   
 
     for root, dirs, files in os.walk(Module.getPath()+"/algorithms/pmsm_foc/templates/"):
         for filename in files:

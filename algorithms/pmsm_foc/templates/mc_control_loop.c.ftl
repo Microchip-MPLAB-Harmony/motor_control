@@ -58,7 +58,11 @@
 #include "mc_pwm.h"
 #include "mc_speed.h"
 #include "mc_picontrol.h"
+<#if MCPMSMFOC_INTERM_FLYING_START>
+#include "mc_flyingstart.h"
+</#if> 
 #include "math.h"
+
 
 
 /******************************************************************************/
@@ -81,6 +85,7 @@ static void MCCTRL_ResetOpenLoopControl( void );
 __STATIC_INLINE void  MCCTRL_LoopSynchronization(void);
 static void MCCTRL_InitiaizeInfrastructure( void );
 
+   
 
 #if (ENABLED == FIELD_WEAKENING )
 static void MCCTRL_InitializeFieldWeakening( void );
@@ -441,6 +446,47 @@ __STATIC_INLINE void MCCTRL_StateMachine( void )
 
         }
         break;
+        
+<#if MCPMSMFOC_INTERM_FLYING_START>
+        case MCAPP_FLYING_START:
+        {
+            tMC_FLYING_START_STATUS_E status;
+            status = MCCTRL_FlyingStartControl();
+            switch(status)
+            {
+
+                case MC_FLYING_START_IN_PROGRESS:
+                {
+                    gMCCTRL_CtrlParam.mcState = MCAPP_FLYING_START;
+                }
+                break;
+                
+                case MC_FLYING_START_DETECTED:
+                {
+                    gMCCTRL_CtrlParam.mcState = MCAPP_CLOSED_LOOP;
+                }
+                break;                
+                
+                case MC_FLYING_START_NOT_DETECTED:
+                {
+                    gMCCTRL_CtrlParam.mcState = MCAPP_FIELD_ALIGNMENT;
+                }
+                break;
+                
+                default:
+                {
+                    /* Undefined state: Should never come here */
+                    gMCCTRL_CtrlParam.mcState = MCAPP_FIELD_ALIGNMENT;
+                }
+                break;                    
+            }
+
+            gMCLIB_Position.angle = gMCRPOS_OutputSignals.angle;
+        }
+        break;
+        
+</#if>        
+        
         case MCAPP_FIELD_ALIGNMENT:
         {
             <#if MCPMSMFOC_POSITION_FB == "SENSORED_ENCODER">
@@ -612,6 +658,10 @@ __STATIC_INLINE void  MCCTRL_LoopSynchronization(void)
  void MCCTRL_InitializeMotorControl(void)
 {
     MCCTRL_InitiaizeInfrastructure();
+<#if MCPMSMFOC_INTERM_FLYING_START>
+    /*Initialize Flying Start Control*/
+    MCCTRL_InitializeFlyingStartControl();
+</#if>    
 <#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
     /* Initialize open loop control */
     MCCTRL_InitializeOpenLoopControl();
@@ -622,6 +672,7 @@ __STATIC_INLINE void  MCCTRL_LoopSynchronization(void)
 
     gMCPWM_SVPWM.period = MCHAL_PWMPrimaryPeriodGet(MCHAL_PWM_PH_U);
     gMCPWM_SVPWM.neutralPWM = (uint32_t)(0.5f * gMCPWM_SVPWM.period );
+    gMCPWM_SVPWM.enableSVPWM = 1;
 }
 
 
@@ -703,6 +754,17 @@ void MCCTRL_CurrentLoopTasks( uint32_t status, uintptr_t context )
     MCLIB_ResetPIParameters(&gMCLIB_IqPIController);
     MCLIB_ResetPIParameters(&gMCLIB_IdPIController);
     MCLIB_ResetPIParameters(&gMCLIB_SpeedPIController);
+    gMCCTRL_CtrlParam.idRef = 0;
+    gMCCTRL_CtrlParam.iqRef = 0;
+    gMCRPOS_OutputSignals.speed = 0;
+    gMCRPOS_OutputSignals.angle = 0;
+    gMCSPE_OutputSignals.commandSpeed = 0;
+    gMCCTRL_CtrlParam.velRef = 0;
+
+<#if MCPMSMFOC_INTERM_FLYING_START>     
+    /*Reset Flying Start Control*/
+    MCCTRL_ResetFlyingStartControl();
+</#if>    
 
 <#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
     /* Reset open loop control */

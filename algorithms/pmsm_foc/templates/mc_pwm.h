@@ -87,6 +87,7 @@ typedef struct
     uint32_t dPwm1;
     uint32_t dPwm2;
     uint32_t dPwm3;
+    bool     enableSVPWM;
 } tMCPWM_SVPWM_S;
 
 extern tMCPWM_SVPWM_S gMCPWM_SVPWM;

@@ -192,8 +192,18 @@ void MCPWM_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCPWM_S
 /******************************************************************************/
 void MCPWM_PWMModulator( void )
 {
-    /* Calculate and set PWM duty cycles from Vr1,Vr2,Vr3 */
-    MCPWM_SVPWMGen(&gMCLIB_VoltageAlphaBeta, &gMCPWM_SVPWM);
+    if(gMCPWM_SVPWM.enableSVPWM)
+    {
+        /* Calculate and set PWM duty cycles from Vr1,Vr2,Vr3 */
+        MCPWM_SVPWMGen(&gMCLIB_VoltageAlphaBeta, &gMCPWM_SVPWM);
+    }
+    else
+    {
+        /* Set PWM duty cycles to 50% which applies a NULL Vector Brake */    
+        gMCPWM_SVPWM.dPwm1 = gMCPWM_SVPWM.neutralPWM;
+        gMCPWM_SVPWM.dPwm2 = gMCPWM_SVPWM.neutralPWM;
+        gMCPWM_SVPWM.dPwm3 = gMCPWM_SVPWM.neutralPWM;
+    }
     MCPWM_PWMDutyUpdate(&gMCPWM_SVPWM);
 }
 

@@ -202,8 +202,13 @@ void PMSM_FOC_MotorStart(void)
     }
 <#else>
     gMCCTRL_CtrlParam.mcStateLast = gMCCTRL_CtrlParam.mcState;
-    /* Switch the motor control state to MCAPP_FIELD_ALIGNMENT */
-    gMCCTRL_CtrlParam.mcState = MCAPP_FIELD_ALIGNMENT;
+    <#if MCPMSMFOC_INTERM_FLYING_START>
+        /* Switch the motor control state to MCAPP_FIELD_ALIGNMENT */
+        gMCCTRL_CtrlParam.mcState = MCAPP_FLYING_START;
+    <#else>    
+        /* Switch the motor control state to MCAPP_FIELD_ALIGNMENT */
+        gMCCTRL_CtrlParam.mcState = MCAPP_FIELD_ALIGNMENT;
+    </#if>
 </#if>
     /* Enable / Re-enable PWM output */
     gMCPWM_SVPWM.dPwm1 = gMCPWM_SVPWM.neutralPWM;

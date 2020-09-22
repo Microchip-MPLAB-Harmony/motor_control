@@ -49,6 +49,8 @@ def mcStC_CreateMHCSymbols( mcPmsmFocComponent):
     mcStC_RootNode = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_STARTUP", mcPmsmFocCtrlMenu)
     mcStC_RootNode.setLabel("Startup Parameters")
 
+    mcFlyingStart_CreateMHCSymbols(mcPmsmFocComponent,mcStC_RootNode)
+
     mcStC_AlignAlgorithm = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_ALIGNMENT_METHOD", mcStC_RootNode)
     mcStC_AlignAlgorithm.setLabel("Select Startup Alignment Method")
     mcStC_AlignAlgorithm.addKey("NO_ALIGNMENT", "0", "No Alignment")
