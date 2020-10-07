@@ -2040,12 +2040,7 @@
           </Values>
         </String>
         <KeyValueSet dnOrder="3" id="SERCOM_MODE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom3" value="0"/>
           </Values>
         </KeyValueSet>
@@ -2109,9 +2104,6 @@
         <Boolean dnOrder="14" id="USART_RING_BUFFER_ENABLE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-            <Boolean dnOrder="1" id="visible">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
