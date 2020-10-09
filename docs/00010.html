@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Hardware Setup</title>
+<title>Running The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00009.html">BLDC Applications</a> &gt; <a href="00014.html">BLDC Block Commutation Using Hall Sensors</a> &gt; <a href="00013.html">bldc_bc_hall_sam_c21</a> &gt; <a href="00010.html">Hardware Setup</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00000.html">ACIM Applications</a> &gt; <a href="00013.html">ACIM VHz Open loop</a> &gt; <a href="00012.html">acim_vhz_sam_c21</a> &gt; <a href="00010.html">Running The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +28,15 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00016.html">Previous</a> | <a href="00013.html">Up</a> | <a href="00012.html">Next</a></div>
+<a href="00008.html">Previous</a> | <a href="00012.html">Up</a> | <a href="00011.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: bldc_hall APP1 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: acim_vhz acim_vhz_sam_c21 Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Hardware Setup</div>
+Running The Application</div>
 </div>
 </div>
 
@@ -51,117 +51,55 @@ Hardware Setup</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<strong> Project mclv2_sam_c21_pim.X.</strong></p>
-<ul class="Element630">
-<li class="Element600"><strong>Hardware Used</strong>
-<ul class="Element631">
-<li class="Element601"><a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/DM330021-2');"><img src="indicator_external_link.gif" border="0" alt="" title="">dsPICDEMTM MCLV2 Development Board (Low Voltage)</a></li>
-<li class="Element601"><a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/MA320206');"><img src="indicator_external_link.gif" border="0" alt="" title="">ATSAMC21 Motor Control Plug In Module</a></li>
-<li class="Element601"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNo/AC300022');"><img src="indicator_external_link.gif" border="0" alt="" title="">Long Hurst DMA0204024B101 Motor</a></li>
-</ul></li>
-</ul><p class="Element10">
-&nbsp;</p>
-
-<ul class="Element630">
-<li class="Element600"><strong>Hardware Setup</strong>
-<ol class="Element631">
-<li value="1" class="Element601"><span style="color: #000000">Mount the ATSAMC21 Motor Control Plug In Module on U9 header.</span></li>
-</ol></li>
-</ul><p class="Element10" style="text-align: center;">
-<img src="bldc_hall_SAMC21_pim.png" border="0" alt="" title=""></p>
+<strong>Running the Application : acim_vhz_sam_c21_mchv3 - MCHV3</strong></p>
 <ol class="Element630">
-<li value="2" class="Element600"><span style="color: #000000">Place the &quot;External Opamp Configuration&quot; Matrix board at J14.</span></li>
-</ol><p class="Element10" style="text-align: center;">
-<img src="bldc_hall_mclv2_ext_opamp.png" border="0" alt="" title=""></p>
-<ol class="Element630">
-<li value="3" class="Element600"><span style="color: #000000">Connect the motor phases and hall sensor interfaces. Hall and phase connections for long hurst motor are given below:</span></li>
+<li value="1" class="Element600">Open the project in MPLAB X IDE from : <i>&lt;install-directory&gt;\motor_control\apps\acim_vhz_sam_c21_mchv3\firmware\mchv3_sam_c21_pim.X</i></li>
+<li value="2" class="Element600">Clean and Build Project:</li>
 </ol><p class="Element10">
-&nbsp;</p>
-<div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="71%">
-<div class="Element66">
-Hall Connector&nbsp;</div></td><td class="Element65" valign="top" width="29%">
-<div class="Element66">
-&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="71%">
-<div class="Element68">
-Red&nbsp;</div></td><td class="Element67" valign="top" width="29%">
-<div class="Element68">
-+5 V&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="71%">
-<div class="Element68">
-Black&nbsp;</div></td><td class="Element67" valign="top" width="29%">
-<div class="Element68">
-GND&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="71%">
-<div class="Element68">
-White&nbsp;</div></td><td class="Element67" valign="top" width="29%">
-<div class="Element68">
-HA&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="71%">
-<div class="Element68">
-Brown&nbsp;</div></td><td class="Element67" valign="top" width="29%">
-<div class="Element68">
-HB&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="71%">
-<div class="Element68">
-Green&nbsp;</div></td><td class="Element67" valign="top" width="29%">
-<div class="Element68">
-HC&nbsp;</div></td></tr></table></div></div>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="81%">
-<div class="Element66">
-Phase Connections&nbsp;</div></td><td class="Element65" valign="top" width="19%">
-<div class="Element66">
-&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="81%">
-<div class="Element68">
-Red&nbsp;</div></td><td class="Element67" valign="top" width="19%">
-<div class="Element68">
-M3&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="81%">
-<div class="Element68">
-Black&nbsp;</div></td><td class="Element67" valign="top" width="19%">
-<div class="Element68">
-M2&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="81%">
-<div class="Element68">
-White&nbsp;</div></td><td class="Element67" valign="top" width="19%">
-<div class="Element68">
-M1&nbsp;</div></td></tr></table></div></div>
+<img src="acim_vhz_Clean_project.png" border="0" alt="" title=""></p>
+<ol class="Element630">
+<li value="3" class="Element600">Program the project:</li>
+<li value="4" class="Element600"><span style="color: #000000">Press the switch &quot;Push Button&quot; to start/stop the motor.</span></li>
+</ol><p class="Element10">
+<img src="acim_vhz_program_project.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">4. Press the switch &quot;Push Button&quot; to start/stop the motor.</span>&nbsp;</p>
+<p class="Element10">
+5. <span style="color: #000000">Vary Potentiometer knob from mid point to extreme left to change the speed of the motor in clock-wise direction.</span>&nbsp;</p>
+<p class="Element10">
+6. <span style="color: #000000">Vary Potentiometer knob from mid point to extreme right to change the speed of the motor in clock-wise direction.</span>&nbsp;</p>
 <p class="Element10">
 &nbsp;</p>
-<p class="Element10" style="text-align: center;">
+<p class="Element10">
+&nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="16%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="84%">
+<div class="Element66">
+Output&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+<span class="Element146">mchv3_sam_c21_pim.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
 &nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="bldc_hall_mclv2_motor_sensor_interface.jpg" border="0" alt="" title=""></p><p class="Element10">
-&nbsp;</p>
-
 <ol class="Element630">
-<li value="4" class="Element600"><span style="color: #000000">Connect the j</span>umpers.</li>
-</ol><p class="Element10" style="text-align: center;">
-<img src="bldc_hall_jumper_mclv2.png" border="0" alt="" title=""></p>
-<ol class="Element630">
-<li value="5" class="Element600">P<span style="color: #000000">ower the board with a 24V DC power supply using J2 or BP1-BP2. </span>For additional safety, it is recommended to use a current limited power supply while testing this software demonstration on a non-default hardware and motor.</li>
-</ol><p class="Element10" style="text-align: center;">
-<img src="bldc_hall_power_mclv2.png" border="0" alt="" title=""></p></div>
+<li value="1" class="Element600">Press the push button to start the motor.</li>
+<li value="2" class="Element600">Vary Potentiometer to change the speed of the motor.</li>
+<li value="3" class="Element600">Observe waveforms on X2CScope scope view.</li>
+<li value="4" class="Element600">Press the push button to stop the motor.</li>
+</ol><p class="Element68">
+&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00009.html">BLDC Applications</a> &gt; <a href="00014.html">BLDC Block Commutation Using Hall Sensors</a> &gt; <a href="00013.html">bldc_bc_hall_sam_c21</a> &gt; <a href="00010.html">Hardware Setup</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00000.html">ACIM Applications</a> &gt; <a href="00013.html">ACIM VHz Open loop</a> &gt; <a href="00012.html">acim_vhz_sam_c21</a> &gt; <a href="00010.html">Running The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -169,10 +107,10 @@ M1&nbsp;</div></td></tr></table></div></div>
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: bldc_hall APP1 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: acim_vhz acim_vhz_sam_c21 Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

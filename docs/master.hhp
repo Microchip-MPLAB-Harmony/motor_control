@@ -2,7 +2,7 @@
 Compatibility=1.1 or later
 Compiled file=C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\help_harmony_mc.chm
 Contents file=C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\master.hhc
-Default topic=C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00017.html
+Default topic=C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00029.html
 Index file=C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\master.hhk
 Language=0x0409 0x0 0x0 ; 
 Title=Microchip 32-bit Motor Control
@@ -15,7 +15,7 @@ Binary TOC=No
 Default Window=main
 
 [WINDOWS]
-main="Microchip 32-bit Motor Control","C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\master.hhc","C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\master.hhk","C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00017.html",,,,,,0x63520,,0x384e,,,,,,,,0
+main="Microchip 32-bit Motor Control","C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\master.hhc","C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\master.hhk","C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00029.html",,,,,,0x63520,,0x384e,,,,,,,,0
 
 [FILES]
 C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00000.html
@@ -138,6 +138,25 @@ C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00116.html
 C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00117.html
 C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00118.html
 C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00119.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00120.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00121.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00122.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00123.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00124.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00125.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00126.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00127.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00128.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00129.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00130.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00131.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00132.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00133.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00134.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00135.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00136.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00137.html
+C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\00138.html
 C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\contents.htm
 C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\idx.html
 C:\harmony\harmony3\doc_o_matic_h3\motor_control\master\output\index.html

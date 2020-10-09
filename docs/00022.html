@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Configuring the Library</title>
+<title>Running The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00025.html">PMSM_FOC Module</a> &gt; <a href="00022.html">Configuring the Library</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00015.html">BLDC Applications</a> &gt; <a href="00016.html">BLDC Block Commutation Using Hall Sensors</a> &gt; <a href="00017.html">bldc_bc_hall_pic32_cm_mc</a> &gt; <a href="00022.html">Running The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +28,15 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00023.html">Previous</a> | <a href="00025.html">Up</a> | <a href="00031.html">Next</a></div>
+<a href="00020.html">Previous</a> | <a href="00017.html">Up</a> | <a href="00032.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PMSM_FOC Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: bldc_hall bldc_bc_hall_pic32_cm_mc Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Library</div>
+Running The Application</div>
 </div>
 </div>
 
@@ -51,112 +51,80 @@ Configuring the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
- &nbsp;</p>
+<strong>Running the Application :</strong> <strong>bldc_bc_hall_pic32_cm_mc</strong></p>
+<ol class="Element630">
+<li value="1" class="Element600">Open the project in MPLAB X IDE from : <i>&lt;install-directory&gt;\motor_control\apps\bldc_bc_hall_pic32_cm_mc\firmware\mclv2_pic32_cm_mc_pim.X</i></li>
+<li value="2" class="Element600">Clean and Build Project:</li>
+</ol><p class="Element10">
+<img src="bldc_hall_Clean_project.png" border="0" alt="" title="">&nbsp;</p>
 <p class="Element10">
-<strong>Project graph:</strong>&nbsp;</p>
+3. Program the project:&nbsp;</p>
 <p class="Element10">
-&nbsp;</p>
+<img src="bldc_hall_program_project.png" border="0" alt="" title="">&nbsp;</p>
 <p class="Element10">
-To get the PMSM_FOC motor control library working, add the PMSM_FOC component in the project graph.&nbsp;</p>
+<span style="color: #000000">4. Press the switch S2 to start/stop the motor.</span>&nbsp;</p>
 <p class="Element10">
-Connect to the dependent PLIBs (ADC, PWM, QDEC) and X2CScope module.&nbsp;</p>
+<span style="color: #000000">5. Press the switch S3 to toggle the motor direction.</span>&nbsp;</p>
 <p class="Element10">
-&nbsp;</p>
+&nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="19%">
+<div class="Element66">
+LED D2 Status&nbsp;</div></td><td class="Element65" valign="top" width="81%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="19%">
+<div class="Element68">
+OFF&nbsp;</div></td><td class="Element67" valign="top" width="81%">
+<div class="Element68">
+Motor spin direction is &quot;forward&quot;&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="19%">
+<div class="Element68">
+ON&nbsp;</div></td><td class="Element67" valign="top" width="81%">
+<div class="Element68">
+Motor spin direction is &quot;reverse&quot;&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-<strong>Note: ADC and PWM PLIB names are different across different device families.</strong> &nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="project_graph.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-PMSM_FOC library configurations are divided in below sections.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<ul class="Element630">
-<li class="Element600"><strong>Control Algorithm Parameters:</strong></li>
-</ul><p class="Element10">
-Allows to select application mode like open loop or speed loop or torque loop.&nbsp;</p>
-<p class="Element10">
-Position feedback determines the feedback loop implementation like PLL estimator sensorless or Encoder based sensored algorithm.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="control_strategy.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-This allows to configure startup parameters and control loop PI parameters.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="control_parameters.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
+<span style="color: #000000"><strong>NOTE:</strong> Direction toggle command is accepted only when the motor is stationary.</span>&nbsp;</p>
 
-<ul class="Element630">
-<li class="Element600"><strong>PWM Configurations:</strong></li>
-</ul><p class="Element10">
-Select the PWM frequency and PWM channels used to drive Phase U, V and W based on board connections. Selected configurations are passed to the PWM PLIB. PWM PLIB is auto-configured for FOC algorithm.&nbsp;</p>
+<ol class="Element630">
+<li value="6" class="Element600"><span style="color: #000000">Vary the Potentiometer to change the speed of the motor.</span></li>
+</ol><p class="Element10">
+&nbsp;</p>
 <p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="pwm_parameters.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<ul class="Element630">
-<li class="Element600"><strong>ADC Configurations:</strong></li>
-</ul><p class="Element10">
-Select ADC channels used for Phase U current, Phase V Current, DC Bus voltage and potentiometer based on the board connections. Selected configurations are passed to the ADC PLIB. ADC PLIB is auto-configured for FOC algorithm.&nbsp;</p>
+<span style="color: #000000"><strong>Fault Indication and Recovery </span>:</strong>&nbsp;</p>
 <p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="adc_parameters.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<ul class="Element630">
-<li class="Element600"><strong>Encoder Configurations:</strong></li>
-</ul><p class="Element10">
-Select the number of encoder pulses per revolution of the motor. Selected configurations are passed to the QDEC PLIB.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="encoder.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<ul class="Element630">
-<li class="Element600"><strong>Motor Parameters:</strong></li>
-</ul><p class="Element10">
-Allows to configure motor parameters. Microchip direct motors are selectable and pre-configured. User can select custom motor to configure parameters for other motors.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="motor_parameters.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<ul class="Element630">
-<li class="Element600"><strong>Control Board Parameters:</strong></li>
-</ul><p class="Element10">
-Allows to configure control board parameters. Microchip's motor control development boards like dsPICDEM MCLV-2 development board are selectable and pre-configured. User can select custom board to configure parameters for other boards.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="board_parameters.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-
-<ul class="Element630">
-<li class="Element600"><strong>I/O</strong> <strong>Pin Configurations:</strong></li>
-</ul><p class="Element10">
-Configure I/O pins for PWM, ADC, Encoder, UART, input switches and LEDs using the pin manager.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<ul class="Element630">
-<li class="Element600"><strong>Clock Configurations:</strong></li>
-</ul><p class="Element10">
-CPU clock speed is defaulted to maximum recommended clock frequency of the MCU. View or modify the clock speed using clock manager.</p></div>
+<span style="color: #000000">If LED D17 is ON, it indicates a non-recoverable fault caused by over-current. The MCU needs to be reset in order to recover from this fault mode.</span>&nbsp;</p>
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="17%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="83%">
+<div class="Element66">
+Output&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="17%">
+<div class="Element68">
+<span class="Element146">mclv2_pic32_cm_mc_pim.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="83%">
+<div class="Element68">
+</p>
+<ol class="Element630">
+<li value="1" class="Element600">Press the Switch S2 to start the motor.</li>
+<li value="2" class="Element600">Vary Potentiometer to change the speed of the motor.</li>
+<li value="3" class="Element600">Observe waveforms on X2CScope scope view.</li>
+<li value="4" class="Element600">Press the Switch S2 to stop the motor.</li>
+</ol><p class="Element68">
+&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00025.html">PMSM_FOC Module</a> &gt; <a href="00022.html">Configuring the Library</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00015.html">BLDC Applications</a> &gt; <a href="00016.html">BLDC Block Commutation Using Hall Sensors</a> &gt; <a href="00017.html">bldc_bc_hall_pic32_cm_mc</a> &gt; <a href="00022.html">Running The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -164,10 +132,10 @@ CPU clock speed is defaulted to maximum recommended clock frequency of the MCU. 
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PMSM_FOC Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: bldc_hall bldc_bc_hall_pic32_cm_mc Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

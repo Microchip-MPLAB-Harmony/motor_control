@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Control Algorithm</title>
+<title>bldc_bc_hall_sam_c21</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00025.html">PMSM_FOC Module</a> &gt; <a href="00023.html">Control Algorithm</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00015.html">BLDC Applications</a> &gt; <a href="00016.html">BLDC Block Commutation Using Hall Sensors</a> &gt; <a href="00023.html">bldc_bc_hall_sam_c21</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +28,15 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00024.html">Previous</a> | <a href="00025.html">Up</a> | <a href="00022.html">Next</a></div>
+<a href="00016.html">Previous</a> | <a href="00016.html">Up</a> | <a href="00024.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PMSM_FOC Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: bldc_hall bldc_bc_hall_sam_c21 Topic Title: bldc_bc_hall_sam_c21)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Control Algorithm</div>
+bldc_bc_hall_sam_c21</div>
 </div>
 </div>
 
@@ -51,51 +51,54 @@ Control Algorithm</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
- &nbsp;</p>
-<p class="Element10">
-<strong>Field Oriented Control</strong> is the technique used to achieve the decoupled control of torque and flux. This is done by transforming the stator current quantities (phase currents) from stationary reference frame to torque and flux producing currents components in rotating reference frame using mathematical transformations. The Field Oriented Control is done as follows:&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<ol class="Element630">
-<li value="1" class="Element600">Measure the motor phase currents.</li>
-<li value="2" class="Element600">Transform them into the two phase system (a, b) using the Clarke transformation.</li>
-<li value="3" class="Element600">Calculate the rotor position angle.</li>
-<li value="4" class="Element600">Transform stator currents into the d,q-coordinate system using the Park transformation.</li>
-<li value="5" class="Element600">The stator current's torque (i<sub>q</sub>) and flux (i<sub>d</sub>) producing components are controlled separately by the controllers.</li>
-<li value="6" class="Element600">The output stator voltage space vector is transformed back from the d,q-coordinate system into the two phase system fixed with the stator by the Inverse Park transformation.</li>
-<li value="7" class="Element600">Using the space vector modulation, the three-phase output voltage is generated.</li>
-</ol><p class="Element10">
-&nbsp;</p>
-<div class="Element15">
-Software Design:</div>
-<p class="Element10">
-The following figure shows the various state machines of the the motor control software. </p><p class="Element10" style="text-align: center;">
-<img src="Pll_same70_motor_control_flow.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10">
-Control loop is implemented in the ADC result ready interrupt.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="Pll_same70_timing_diagram.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<ol class="Element630">
-<li value="1" class="Element600">PWM period overflow triggers the ADC to start the conversion.</li>
-<li value="2" class="Element600">ADC ISR is invoked when the phase currents are converted by the ADC.</li>
-<li value="3" class="Element600">Control loop remains in the IDLE state.</li>
-<li value="4" class="Element600">When start switch is pressed, control loop execution starts with field alignment, open lop (only for sensorless feedback method) and closed loop.</li>
-<li value="5" class="Element600">Control loop goes back to IDLE when stop switch is pressed.</li>
-</ol></div>
+Brushless Direct Current electric motors, or BLDC motors for short, are electronically commutated motors powered by a DC electric source via an external motor controller. <span style="color: #000000">This document serves as a guidance to build, configure and run Block Commutation algorithm for BLDC motors on Microchip's 32-bit SAMC21 microcontroller devices.</span></p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00024.html">Building The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to build an application using MPLAB X IDE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00027.html">MPLAB Harmony Configurations</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This topic provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00026.html">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00028.html">Running The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to run the application using MPLAB X IDE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00025.html">Control Algorithm</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section briefly introduces to the BLDC block commutation technique, and its implementation in the example project.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00025.html">PMSM_FOC Module</a> &gt; <a href="00023.html">Control Algorithm</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00015.html">BLDC Applications</a> &gt; <a href="00016.html">BLDC Block Commutation Using Hall Sensors</a> &gt; <a href="00023.html">bldc_bc_hall_sam_c21</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -103,10 +106,10 @@ Control loop is implemented in the ADC result ready interrupt.&nbsp;</p>
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PMSM_FOC Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: bldc_hall bldc_bc_hall_sam_c21 Topic Title: bldc_bc_hall_sam_c21)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

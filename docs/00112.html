@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Hardware Setup</title>
+<title>Running The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00108.html">PLL Estimator with PFC</a> &gt; <a href="00109.html">pmsm_pfc_foc_pll_estimator_sam_e70</a> &gt; <a href="00112.html">Hardware Setup</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00032.html">PMSM Applications</a> &gt; <a href="00102.html">Reduced Order Luenberger Observer (ROLO)</a> &gt; <a href="00113.html">pmsm_foc_rolo_fw_mtpa_sam_c21</a> &gt; <a href="00112.html">Running The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +28,15 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00111.html">Previous</a> | <a href="00109.html">Up</a> | <a href="00114.html">Next</a></div>
+<a href="00110.html">Previous</a> | <a href="00113.html">Up</a> | <a href="00121.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_pfc pmsm_pfc_foc_pll_estimator_sam_e70 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo_fw_mtpa APP1 Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Hardware Setup</div>
+Running The Application</div>
 </div>
 </div>
 
@@ -50,93 +50,81 @@ Hardware Setup</div>
 <div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
+<p class="Element10">
+<strong>Running the Application : pmsm_foc_rolo_fw_mtpa_sam_c21 - MCLV2</strong></p>
+<ol class="Element630">
+<li value="1" class="Element600">Open the project in MPLAB X IDE from : <i>&lt;install-directory&gt;\motor_control\apps\pmsm_foc_rolo_fw_mtpa_sam_c21\firmware\mclv2_sam_c21_pim.X</i></li>
+<li value="2" class="Element600">Clean and Build Project:</li>
+</ol><p class="Element10">
+<img src="pmsm_rolo_fw_mtpa_Clean_project.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+3. Program the project:&nbsp;</p>
+<p class="Element10">
+<img src="pmsm_rolo_fw_mtpa_program_project.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">4. Press the switch S2 to start/stop the motor.</span>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">5. Press the switch S3 to toggle motor direction.</span> &nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="18%">
+<div class="Element66">
+LED D2 Status&nbsp;</div></td><td class="Element65" valign="top" width="82%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="18%">
+<div class="Element68">
+OFF&nbsp;</div></td><td class="Element67" valign="top" width="82%">
+<div class="Element68">
+Motor spin direction is &quot;positive&quot;&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="18%">
+<div class="Element68">
+ON&nbsp;</div></td><td class="Element67" valign="top" width="82%">
+<div class="Element68">
+Motor spin direction is &quot;negative&quot;&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<span style="color: #000000"><strong>NOTE:</strong> Direction toggle command is accepted only when the motor is stationary.</span>&nbsp;</p>
 
 <ol class="Element630">
-<li value="1" class="Element600"><strong>Project mchv3_sam_e70_pim.X.</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used</strong>
-<ul class="Element632">
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/dm330023-3');"><img src="indicator_external_link.gif" border="0" alt="" title="">MCHV3 Development Board (High Voltage)</a></li>
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated Embedded Debugger Interface</a></li>
-<li class="Element602"><a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/ATSAME70-100-Pin-Motor-Control-Plug-In%20Module-Information-Sheet-DS50002776A.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">ATSAME70 PIM</a></li>
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/AC300025');"><img src="indicator_external_link.gif" border="0" alt="" title="">Leadshine EL5-M0400-1-24 Motor</a></li>
-</ul></li>
-</ul></li>
+<li value="6" class="Element600"><span style="color: #000000">Vary the Potentiometer to change the speed of the motor.</span></li>
 </ol><p class="Element10">
-&nbsp;</p>
-
-<ul class="Element630">
-<li class="Element600"><strong>Hardware Setup</strong>
-<ol class="Element631">
-<li value="1" class="Element601">Mount the SAME70 144-pin Motor Control PIM on U9 header of the dsPICDEM MCHV-3 Development Board.</li>
-</ol></li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="pfc_same70_pim_mchv3_reduced.png" border="0" alt="" title=""></p><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
+<span style="color: #000000"><strong>Fault Indication and Recovery </span>: pmsm_foc_rolo_fw_mtpa_sam_c21 - MCLV2</strong>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">If LED D17 is ON, it indicates a non-recoverable fault caused by either over-current, phase loss or due to erroneous rotor position estimation. The MCU needs to be reset in order to recover from this fault mode.</span>&nbsp;</p>
+<p class="Element10">
 &nbsp;</p>
-
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="16%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="84%">
+<div class="Element66">
+Output&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+<span class="Element146">mclv2_sam_c21_pim.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+</p>
 <ol class="Element630">
-<li value="2" class="Element600">Connect the three-phase wires of the PMSM motor to M1, M2 and M3.</li>
-</ol><p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="pfc_Motor Connections_MCHV3.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="3" class="Element600">Connect External Op amp configuration Matrix board to header J4.</li>
-</ol><p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="pfc_external_opamp_matrix_board.png" border="0" alt="" title=""></p><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="4" class="Element600">Connect Isolated EDBG card as shown in the following figure. Refer to <a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/Isolated-EDBG-%20Debugger-Card-Information-Sheet-DS50002831A.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated EDBG Card Information Sheet</a> for instructions.</li>
-</ol><p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="pfc_replacing_isolated_edbg.png" border="0" alt="" title=""></p><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="5" class="Element600">Connect the jumpers J11, J12, J13 and J14.</li>
-</ol><p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="pfc_mchv3_jumper_settings.png" border="0" alt="" title=""></p><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="6" class="Element600">Connect the AC mains using J1.</li>
-</ol><p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="pfc_AC mains_MCHV3.png" border="0" alt="" title=""></p><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="7" class="Element600">This application supports communication with the X2C-Scope plug-in to monitor and plot any variables used in the application. The communication between the target and the X2C-Scope plug-in can be established using the RS-232 serial port. Refer to the jumper positions marked on the development board chassis to select between the RS-232 serial port (J8) and the mini-USB port (J6). Refer to <a href="00119.html">Using the X2C-Scope Plug-in</a> for details on how to use the X2C-Scope in this demonstration.</li>
-</ol><p class="Element10">
-&nbsp;</p>
-
-<ul class="Element630">
-<li class="Element600"><strong>Complete Setup</strong></li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="pfc_mchv3_complete_setup.png" border="0" alt="" title=""></p></div>
+<li value="1" class="Element600">Press the Switch S2 to start the motor.</li>
+<li value="2" class="Element600">Vary Potentiometer to change the speed of the motor.</li>
+<li value="3" class="Element600">Observe waveforms on X2CScope scope view.</li>
+<li value="4" class="Element600">Press the Switch S2 to stop the motor.</li>
+</ol><p class="Element68">
+&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00108.html">PLL Estimator with PFC</a> &gt; <a href="00109.html">pmsm_pfc_foc_pll_estimator_sam_e70</a> &gt; <a href="00112.html">Hardware Setup</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00032.html">PMSM Applications</a> &gt; <a href="00102.html">Reduced Order Luenberger Observer (ROLO)</a> &gt; <a href="00113.html">pmsm_foc_rolo_fw_mtpa_sam_c21</a> &gt; <a href="00112.html">Running The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -144,10 +132,10 @@ Hardware Setup</div>
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_pfc pmsm_pfc_foc_pll_estimator_sam_e70 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_rolo_fw_mtpa APP1 Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

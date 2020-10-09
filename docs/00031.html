@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Using the Library</title>
+<title>PIC32CM MC00 Applications</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00025.html">PMSM_FOC Module</a> &gt; <a href="00031.html">Using the Library</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00031.html">PIC32CM MC00 Applications</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +28,15 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00022.html">Previous</a> | <a href="00025.html">Up</a> | <a href="00008.html">Next</a></div>
+<a href="00137.html">Previous</a> | <a href="00014.html">Up</a> | <a href="00000.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PMSM_FOC Using The Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PIC32CM MC00 Topic Title: PIC32CM MC00 Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Using the Library</div>
+PIC32CM MC00 Applications</div>
 </div>
 </div>
 
@@ -51,74 +51,50 @@ Using the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-To use the PMSM_FOC motor control library,&nbsp;</p>
+ &nbsp;</p>
 <p class="Element10">
-&nbsp;</p>
-<ul class="Element630">
-<li class="Element600">Add the PMSM_FOC component in the project graph.</li>
-<li class="Element600">Connect to appropriate instance of ADC PLIB, PWM PLIB.</li>
-<li class="Element600">Connect to X2CScope component. Further, connect X2CScope component to relevant UART PLIB identified for X2CScope communication.</li>
-<li class="Element600">Connect to QDEC peripheral if sensored encoder position feedback is required.</li>
-<li class="Element600">Configure the FOC parameters and generate the code.</li>
-</ul><p class="Element10">
-&nbsp;</p>
+The following Table lists all the Motor Control Algorithm Applications for PIC32CM MC00.&nbsp;</p>
 <p class="Element10">
-<strong>Code Structure:</strong>&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="code_structure.png" border="0" alt="" title=""></p><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="1" class="Element600">Configurations:
-<ul class="Element631">
-<li class="Element601">mc_userparameters.h contains the user configurations.</li>
-<li class="Element601">mc_derivedparameters.h contains the calculated values used in the code.</li>
-<li class="Element601">mc_pmsm_foc_common.h - common data structures and defines</li>
-</ul></li>
-<li value="2" class="Element600">PMSM_FOC:
-<ul class="Element631">
-<li class="Element601">mc_pmsm_foc.c/h - PMSM FOC algorithm interface file</li>
-</ul></li>
-<li value="3" class="Element600">Interrupts:
-<ul class="Element631">
-<li class="Element601">mc_control_loop.c - Control loop is implemented in the ADC result ready ISR.</li>
-<li class="Element601">mc_errorhandler.c - PWM fault ISR to take corrective action on over-current</li>
-</ul></li>
-<li value="4" class="Element600">Control library:
-<ul class="Element631">
-<li class="Element601">mc_lib.c/h - FOC library</li>
-<li class="Element601">mc_picontroller.c/h - PI controller implementation</li>
-<li class="Element601">mc_pwm.c/h - Space Vector modulation (SVM) and updating PWM duty cycles</li>
-</ul></li>
-<li value="5" class="Element600">Control Middleware:
-<ul class="Element631">
-<li class="Element601">mc_speed.c/h - Calculate the reference speed</li>
-<li class="Element601">mc_rotorposition.c/.h - Calculate the position and speed of the rotor</li>
-<li class="Element601">mc_voltagemeasurement.c/h - Get the DC Bus voltage</li>
-<li class="Element601">mc_currentmeasurement.c/h - Get the motor phase currents</li>
-</ul></li>
-<li value="6" class="Element600">HAL:
-<ul class="Element631">
-<li class="Element601">mc_hal.h - Hardware Abstraction Layer to interact with PLIBs</li>
-</ul></li>
-</ol><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Usage:</strong></p>
-<ul class="Element630">
-<li class="Element600">PMSM_FOC is initialized in the SYS_Initialize() function. Function name is PMSM_FOC_Initialize().</li>
-<li class="Element600">Call PMSM_FOC_Tasks() in the while loop in the main.c</li>
-<li class="Element600">Call X2CScope_Communicate() in the while loop in the main.c read, write, and plot global variables in real time</li>
-<li class="Element600">Motor start/stop and direction change is done on the switch event. For <strong>MCLV2 board, </strong>press S2 to start/stop the motor. And press switch S3 to change the direction of the motor when motor is stopped.</li>
-<li class="Element600">Vary the potentiometer to change the speed of the motor in speed loop.</li>
-</ul></div>
+&nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="45%">
+<div class="Element66">
+&nbsp;</div></td><td class="Element65" valign="top" width="28%">
+<div class="Element66">
+MCLV2&nbsp;</div></td><td class="Element65" valign="top" width="28%">
+<div class="Element66">
+MCHV3&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="45%">
+<div class="Element68">
+<a href="00115.html">PMSM FOC using Reduced Order Luenberger Observer (ROLO)</a>&nbsp;</div></td><td class="Element67" valign="top" width="28%">
+<div class="Element68">
+Yes&nbsp;</div></td><td class="Element67" valign="top" width="28%">
+<div class="Element68">
+Yes&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="45%">
+<div class="Element68">
+<a href="00011.html">ACIM VHz Open Loop</a>&nbsp;</div></td><td class="Element67" valign="top" width="28%">
+<div class="Element68">
+NA&nbsp;</div></td><td class="Element67" valign="top" width="28%">
+<div class="Element68">
+Yes&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="45%">
+<div class="Element68">
+<a href="00017.html">BLDC Block Commutation using hall sensors</a>&nbsp;</div></td><td class="Element67" valign="top" width="28%">
+<div class="Element68">
+Yes&nbsp;</div></td><td class="Element67" valign="top" width="28%">
+<div class="Element68">
+NA&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00025.html">PMSM_FOC Module</a> &gt; <a href="00031.html">Using the Library</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00031.html">PIC32CM MC00 Applications</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -126,10 +102,10 @@ To use the PMSM_FOC motor control library,&nbsp;</p>
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PMSM_FOC Using The Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PIC32CM MC00 Topic Title: PIC32CM MC00 Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

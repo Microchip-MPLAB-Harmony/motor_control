@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>PMSM_FOC Module</title>
+<title>Control Algorithm</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00025.html">PMSM_FOC Module</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00015.html">BLDC Applications</a> &gt; <a href="00016.html">BLDC Block Commutation Using Hall Sensors</a> &gt; <a href="00023.html">bldc_bc_hall_sam_c21</a> &gt; <a href="00025.html">Control Algorithm</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +28,15 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00119.html">Previous</a> | <a href="00017.html">Up</a> | <a href="00024.html">Next</a></div>
+<a href="00028.html">Previous</a> | <a href="00023.html">Up</a> | <a href="00017.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PMSM_FOC Module Topic Title: PMSM_FOC Module)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: bldc_hall bldc_bc_hall_sam_c21 Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-PMSM_FOC Module</div>
+Control Algorithm</div>
 </div>
 </div>
 
@@ -51,41 +51,333 @@ PMSM_FOC Module</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section describes the PMSM_FOC motor control library.</p></div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+Brushless Direct Current electric motors, or BLDC motors for short, are electronically commutated motors powered by a DC electric source via an external motor controller. The electronic commutation to rotate the motor is achieved by a three phase inverter. The commutation technique are broadly classified as block Commutation and Sinusoidal commutation.&nbsp;</p>
+<p class="Element10">
+The block commutation has reduced system complexity as compared to the sinusoidal commutation. Hence, the block commutation technique is quite popular for the low cost applications where control precision, reduced efficiency, and higher acoustic noise are permitted.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+The BLDC motor control using block commutation is done as follows:</p>
+<ol class="Element630">
+<li value="1" class="Element600">Read the hall sensor input pattern from three 120 degree spatially oriented hall sensor.</li>
+<li value="2" class="Element600">Use the hall sensor pattern to determine the three phase inverter commutation pattern.</li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+Below diagram shows the high side modulated PWM. </p><p class="Element10" style="text-align: center;">
+<img src="bldc_modulation.jpg" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+The simplified block diagram for BLDC block commutation is shown below:&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Block Diagram:</strong> &nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="bldc_hall_blcks.jpg" border="0" alt="" title="">&nbsp;</p><div class="Element15">
+Software Design:</div>
+<p class="Element10">
+<span style="color: #000000">This section describes the software design of BLDC block commutation application. The first part of this section, numerical scaling for fixed-point implementation is briefly described. The later section, the software implementation of the example project is described.</span>&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Scaling:</strong>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">The example project uses Q14 format to represent the real-time physical quantities as follows:</span>&nbsp;</p>
+<p class="Element10">
+<img src="bldc_hall_q14_scaling.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">The real value range of voltage, current and speed is chosen as independent base quantities for deriving the range of other physical quantities. The independent base quantities are determined by considering the electrical constraints of the MCLV2 development board and the motor used.</span>&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Software Implementation:</strong> </p><p class="Element10" style="text-align: center;">
+<img src="bldc_hall_main_task.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="bldc_hall_ISR_tasks.jpg" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Software Configuration:</div>
+<p class="Element10">
+The motor specific parameters, board specific parameters and application parameter macros have to be updated in the software for optimal control of the BLDC motor. The following section briefly describes motor and application specific parameters used in the project. These parameter macros can be found in userparams.h header file which can be found under logical path: <i>Header Files &gt; config &gt; &lt;config_name&gt; &gt;userparams.h </i>in MPLABX IDE.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="bldc_hall_userparam.png" border="0" alt="" title="">&nbsp;</p>
+<ol class="Element630">
+<li value="1" class="Element600"><strong>Setting motor control PWM frequency:</strong></li>
+</ol><p class="Element10">
+PWM frequency is set by configuring the timer period of the TCC0 in terms of TCC0 clock counts. This frequency needs to be communicated to other sections in the algorithm by defining the &quot;Period Value&quot; (set in MPLAB Harmony Configurator) + 1 as a macro in userparams.h.&nbsp;</p>
+<p class="Element10">
+For example, in order to achieve a PWM frequency of 20 KHz in edge aligned mode with peripheral clock frequency of 48MHz, the period value defined in MHC is 2399. Therefore, the macro defined in userparams.h should be &quot;period value&quot; + 1 = 2400. </p><p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="bldc_hall_pwm_timer_setting.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table1">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element65" valign="top" width="18%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="82%">
+<div class="Element66">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00024.html">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides brief overview of the PMSM_FOC motor control library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00023.html">Control Algorithm</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section talks about the FOC algorithm implementation in the PMSM_FOC component.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00022.html">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-PMSM_FOC library UI configurations are described in this section.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00031.html">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the usage of the PMSM_FOC motor control library.&nbsp;</div></td></tr></table></div></div>
+<td class="Element67" valign="top" width="18%">
+<div class="Element68">
+PWM_PERIOD&nbsp;</div></td><td class="Element67" valign="top" width="82%">
+<div class="Element68">
+PWM Timer period value = &quot;Period value&quot; defined in MHC + 1&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="2" class="Element600"><strong>Setting motor specific parameters:</strong></li>
+</ol><p class="Element10">
+Set the following motor specific parameters in the <span class="Element146">userparams.h</span><i> </i>file. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="35%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="55%">
+<div class="Element66">
+Description&nbsp;</div></td><td class="Element65" valign="top" width="10%">
+<div class="Element66">
+Units&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="35%">
+<div class="Element68">
+MOTOR_POLE_PAIRS&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Number of Pole Pairs&nbsp;</div></td><td class="Element67" valign="top" width="10%">
+<div class="Element68">
+-&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="35%">
+<div class="Element68">
+MAX_MOTOR_SPEED&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Rated speed of the motor&nbsp;</div></td><td class="Element67" valign="top" width="10%">
+<div class="Element68">
+RPM&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="3" class="Element600"><strong>Setting hall pattern and commutation pattern:</strong></li>
+</ol><p class="Element10">
+Below table gives the hall and commutation pattern relation for long hurst and small hurst motors.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="9%">
+<div class="Element66">
+HA&nbsp;</div></td><td class="Element65" valign="top" width="9%">
+<div class="Element66">
+HB&nbsp;</div></td><td class="Element65" valign="top" width="9%">
+<div class="Element66">
+HC&nbsp;</div></td><td class="Element65" valign="top" width="36%">
+<div class="Element66">
+Pattern&nbsp;</div></td><td class="Element65" valign="top" width="12%">
+<div class="Element66">
+Ph U&nbsp;</div></td><td class="Element65" valign="top" width="12%">
+<div class="Element66">
+Ph V&nbsp;</div></td><td class="Element65" valign="top" width="12%">
+<div class="Element66">
+Ph W&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="36%">
+<div class="Element68">
+V+W-&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+H&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+L&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="9%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="36%">
+<div class="Element68">
+U-V+&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+L&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+H&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="9%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="36%">
+<div class="Element68">
+U-W+&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+L&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+H&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="9%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="36%">
+<div class="Element68">
+V-W+&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+L&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+H&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="36%">
+<div class="Element68">
+U+V-&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+H&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+L&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="36%">
+<div class="Element68">
+U+W-&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+H&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+L&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+Hall pattern and commutation patterns are defined in the <strong>mc_app.c</strong> file.&nbsp;</p>
+<p class="Element10">
+HALL_ARRAY[16] array contains the hall pattern for both the directions - first 8 entries are for clockwise direction and next 8 entries are for anti-clockwise direction.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+COMMUTATION_ARRAY[16] array contains commutation pattern corresponding to the hall pattern - first 8 entries are for clockwise direction and next 8 entries are for anti-clockwise direction.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+e.g The entry in the commutation array for V+W- is 0x4075.&nbsp;</p>
+<p class="Element10">
+This is given in terms of the pattern enable register TCC_PATT.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+Pattern value configuration for V+W- is 0x40. This means low side switch of Phase W is continuously ON. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="9%">
+<div class="Element66">
+X&nbsp;</div></td><td class="Element65" valign="top" width="14%">
+<div class="Element66">
+W-&nbsp;</div></td><td class="Element65" valign="top" width="14%">
+<div class="Element66">
+V-&nbsp;</div></td><td class="Element65" valign="top" width="14%">
+<div class="Element66">
+U-&nbsp;</div></td><td class="Element65" valign="top" width="9%">
+<div class="Element66">
+X&nbsp;</div></td><td class="Element65" valign="top" width="14%">
+<div class="Element66">
+W+&nbsp;</div></td><td class="Element65" valign="top" width="14%">
+<div class="Element66">
+V+&nbsp;</div></td><td class="Element65" valign="top" width="14%">
+<div class="Element66">
+U+&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="14%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="14%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="14%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="14%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="14%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="14%">
+<div class="Element68">
+0&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+Pattern enable configuration is 0x75. Pattern output is disabled for Phase V high side switch where PWM will be applied as per speed command. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="9%">
+<div class="Element66">
+X&nbsp;</div></td><td class="Element65" valign="top" width="14%">
+<div class="Element66">
+W-&nbsp;</div></td><td class="Element65" valign="top" width="14%">
+<div class="Element66">
+V-&nbsp;</div></td><td class="Element65" valign="top" width="14%">
+<div class="Element66">
+U-&nbsp;</div></td><td class="Element65" valign="top" width="9%">
+<div class="Element66">
+X&nbsp;</div></td><td class="Element65" valign="top" width="14%">
+<div class="Element66">
+W+&nbsp;</div></td><td class="Element65" valign="top" width="14%">
+<div class="Element66">
+V+&nbsp;</div></td><td class="Element65" valign="top" width="14%">
+<div class="Element66">
+U+&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="14%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="14%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="14%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="9%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="14%">
+<div class="Element68">
+1&nbsp;</div></td><td class="Element67" valign="top" width="14%">
+<div class="Element68">
+0&nbsp;</div></td><td class="Element67" valign="top" width="14%">
+<div class="Element68">
+1&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -93,7 +385,7 @@ This section describes the usage of the PMSM_FOC motor control library.&nbsp;</d
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00025.html">PMSM_FOC Module</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00015.html">BLDC Applications</a> &gt; <a href="00016.html">BLDC Block Commutation Using Hall Sensors</a> &gt; <a href="00023.html">bldc_bc_hall_sam_c21</a> &gt; <a href="00025.html">Control Algorithm</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -101,10 +393,10 @@ This section describes the usage of the PMSM_FOC motor control library.&nbsp;</d
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PMSM_FOC Module Topic Title: PMSM_FOC Module)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: bldc_hall bldc_bc_hall_sam_c21 Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

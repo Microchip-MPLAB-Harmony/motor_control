@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Hardware Setup</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00032.html">PMSM Applications</a> &gt; <a href="00127.html">PLL Estimator with PFC</a> &gt; <a href="00128.html">pmsm_pfc_foc_pll_estimator_sam_e70</a> &gt; <a href="00131.html">Hardware Setup</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+Microchip 32-bit Motor Control</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00130.html">Previous</a> | <a href="00128.html">Up</a> | <a href="00133.html">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_pfc pmsm_pfc_foc_pll_estimator_sam_e70 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Hardware Setup</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+
+<ol class="Element630">
+<li value="1" class="Element600"><strong>Project mchv3_sam_e70_pim.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/dm330023-3');"><img src="indicator_external_link.gif" border="0" alt="" title="">MCHV3 Development Board (High Voltage)</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated Embedded Debugger Interface</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/ATSAME70-100-Pin-Motor-Control-Plug-In%20Module-Information-Sheet-DS50002776A.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">ATSAME70 PIM</a></li>
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/AC300025');"><img src="indicator_external_link.gif" border="0" alt="" title="">Leadshine EL5-M0400-1-24 Motor</a></li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>Hardware Setup</strong>
+<ol class="Element631">
+<li value="1" class="Element601">Mount the SAME70 144-pin Motor Control PIM on U9 header of the dsPICDEM MCHV-3 Development Board.</li>
+</ol></li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="pfc_same70_pim_mchv3_reduced.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="2" class="Element600">Connect the three-phase wires of the PMSM motor to M1, M2 and M3.</li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="pfc_Motor Connections_MCHV3.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="3" class="Element600">Connect External Op amp configuration Matrix board to header J4.</li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="pfc_external_opamp_matrix_board.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="4" class="Element600">Connect Isolated EDBG card as shown in the following figure. Refer to <a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/Isolated-EDBG-%20Debugger-Card-Information-Sheet-DS50002831A.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">Isolated EDBG Card Information Sheet</a> for instructions.</li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="pfc_replacing_isolated_edbg.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="5" class="Element600">Connect the jumpers J11, J12, J13 and J14.</li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="pfc_mchv3_jumper_settings.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="6" class="Element600">Connect the AC mains using J1.</li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="pfc_AC mains_MCHV3.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="7" class="Element600">This application supports communication with the X2C-Scope plug-in to monitor and plot any variables used in the application. The communication between the target and the X2C-Scope plug-in can be established using the RS-232 serial port. Refer to the jumper positions marked on the development board chassis to select between the RS-232 serial port (J8) and the mini-USB port (J6). Refer to <a href="00138.html">Using the X2C-Scope Plug-in</a> for details on how to use the X2C-Scope in this demonstration.</li>
+</ol><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>Complete Setup</strong></li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="pfc_mchv3_complete_setup.png" border="0" alt="" title=""></p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00032.html">PMSM Applications</a> &gt; <a href="00127.html">PLL Estimator with PFC</a> &gt; <a href="00128.html">pmsm_pfc_foc_pll_estimator_sam_e70</a> &gt; <a href="00131.html">Hardware Setup</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="100%">
+<div class="Element3">
+ Microchip 32-bit Motor Control</div>
+</td></tr><tr><td width="100%">
+<div class="Element4">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
+</td></tr><tr><td width="100%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_pfc pmsm_pfc_foc_pll_estimator_sam_e70 Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

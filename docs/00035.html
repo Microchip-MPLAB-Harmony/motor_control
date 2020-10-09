@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>pmsm_foc_encoder_sam_e54</title>
+<title>Configuring the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00032.html">Sensor feedback using Quadrature Encoder</a> &gt; <a href="00035.html">pmsm_foc_encoder_sam_e54</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00038.html">PMSM_FOC Module</a> &gt; <a href="00035.html">Configuring the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +28,15 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00055.html">Previous</a> | <a href="00032.html">Up</a> | <a href="00047.html">Next</a></div>
+<a href="00036.html">Previous</a> | <a href="00038.html">Up</a> | <a href="00044.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder Applications pmsm_foc_encoder_sam_e54 Topic Title: pmsm_foc_encoder_sam_e54)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PMSM_FOC Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-pmsm_foc_encoder_sam_e54</div>
+Configuring the Library</div>
 </div>
 </div>
 
@@ -51,58 +51,112 @@ pmsm_foc_encoder_sam_e54</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The permanent magnet synchronous motors ( PMSM ) is widely used in various industries due to its high power density, smaller size and high efficiency. The Field oriented control is one of the most popular control mechanisms for the PMSM motor for applications which requires high dynamic performance.&nbsp;</p>
+ &nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">This example shows how to configure motor control peripherals ADC, PDEC and TCC for the control operation. The control strategy is the sensored FOC, in which rotor position is determined by the Quadrature Encoder. And speed is calculated from the position.</span>&nbsp;</p>
+<strong>Project graph:</strong>&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">The following sections describe the basics of the sensored FOC motor control algorithm and the steps to build, configure and run the PMSM motor for low voltage PMSM motor drive.</span>&nbsp;</p></div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00047.html">Building The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to build an application using MPLAB X IDE.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00050.html">MPLAB Harmony Configurations</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00048.html">Control Algorithm</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This section describes the control strategy and explains the control loop flow.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00049.html">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00051.html">Running The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to run the application using MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
-</div>
+&nbsp;</p>
+<p class="Element10">
+To get the PMSM_FOC motor control library working, add the PMSM_FOC component in the project graph.&nbsp;</p>
+<p class="Element10">
+Connect to the dependent PLIBs (ADC, PWM, QDEC) and X2CScope module.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>Note: ADC and PWM PLIB names are different across different device families.</strong> &nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="project_graph.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+PMSM_FOC library configurations are divided in below sections.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600"><strong>Control Algorithm Parameters:</strong></li>
+</ul><p class="Element10">
+Allows to select application mode like open loop or speed loop or torque loop.&nbsp;</p>
+<p class="Element10">
+Position feedback determines the feedback loop implementation like PLL estimator sensorless or Encoder based sensored algorithm.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="control_strategy.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+This allows to configure startup parameters and control loop PI parameters.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="control_parameters.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>PWM Configurations:</strong></li>
+</ul><p class="Element10">
+Select the PWM frequency and PWM channels used to drive Phase U, V and W based on board connections. Selected configurations are passed to the PWM PLIB. PWM PLIB is auto-configured for FOC algorithm.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="pwm_parameters.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600"><strong>ADC Configurations:</strong></li>
+</ul><p class="Element10">
+Select ADC channels used for Phase U current, Phase V Current, DC Bus voltage and potentiometer based on the board connections. Selected configurations are passed to the ADC PLIB. ADC PLIB is auto-configured for FOC algorithm.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="adc_parameters.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600"><strong>Encoder Configurations:</strong></li>
+</ul><p class="Element10">
+Select the number of encoder pulses per revolution of the motor. Selected configurations are passed to the QDEC PLIB.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="encoder.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600"><strong>Motor Parameters:</strong></li>
+</ul><p class="Element10">
+Allows to configure motor parameters. Microchip direct motors are selectable and pre-configured. User can select custom motor to configure parameters for other motors.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="motor_parameters.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600"><strong>Control Board Parameters:</strong></li>
+</ul><p class="Element10">
+Allows to configure control board parameters. Microchip's motor control development boards like dsPICDEM MCLV-2 development board are selectable and pre-configured. User can select custom board to configure parameters for other boards.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="board_parameters.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600"><strong>I/O</strong> <strong>Pin Configurations:</strong></li>
+</ul><p class="Element10">
+Configure I/O pins for PWM, ADC, Encoder, UART, input switches and LEDs using the pin manager.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600"><strong>Clock Configurations:</strong></li>
+</ul><p class="Element10">
+CPU clock speed is defaulted to maximum recommended clock frequency of the MCU. View or modify the clock speed using clock manager.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00019.html">PMSM Applications</a> &gt; <a href="00032.html">Sensor feedback using Quadrature Encoder</a> &gt; <a href="00035.html">pmsm_foc_encoder_sam_e54</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00038.html">PMSM_FOC Module</a> &gt; <a href="00035.html">Configuring the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -110,10 +164,10 @@ This section provides information on how to run the application using MPLAB X ID
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: pmsm_foc_encoder Applications pmsm_foc_encoder_sam_e54 Topic Title: pmsm_foc_encoder_sam_e54)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PMSM_FOC Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

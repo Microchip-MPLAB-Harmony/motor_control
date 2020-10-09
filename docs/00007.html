@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>ACIM VHz Open loop</title>
+<title>Control Algorithm</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00000.html">ACIM Applications</a> &gt; <a href="00007.html">ACIM VHz Open loop</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00000.html">ACIM Applications</a> &gt; <a href="00013.html">ACIM VHz Open loop</a> &gt; <a href="00012.html">acim_vhz_sam_c21</a> &gt; <a href="00007.html">Control Algorithm</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +28,15 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00000.html">Previous</a> | <a href="00000.html">Up</a> | <a href="00006.html">Next</a></div>
+<a href="00009.html">Previous</a> | <a href="00012.html">Up</a> | <a href="00008.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: acim_vhz Applications Help Topic Title: ACIM VHz Open loop)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: acim_vhz acim_vhz_sam_c21 Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-ACIM VHz Open loop</div>
+Control Algorithm</div>
 </div>
 </div>
 
@@ -51,26 +51,263 @@ ACIM VHz Open loop</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This Section provides help for the ACIM V/Hz Control application.</p></div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+The project implements a V/Hz control algorithm on SAMC21 32-bit micro-controller to regulate the speed of the high voltage ACIM motor drive. The following section describes briefly the V/Hz control algorithm, software design, software configuration, and implementation details. The following block diagram shows a typical V/Hz control block diagram.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="acim_vhz_block_diagram.png" border="0" alt="" title="">&nbsp;</p><div class="Element15">
+V/Hz control algorithm:</div>
+<p class="Element10">
+The V/Hz control is a scalar control motor control strategy where the applied ratio of applied AC voltage and frequency is kept constant. The V/Hz control is carried out in the following steps-&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+1. Read the commanded speed request.&nbsp;</p>
+<p class="Element10">
+2. Determination of angular displacement per speed loop cycle.&nbsp;</p>
+<p class="Element10">
+3. Determination of AC voltage magnitude based on the angular displacement per speed loop cycle.&nbsp;</p>
+<p class="Element10">
+4. Determination of PWM modulation values for voltage source inverter.&nbsp;</p>
+<p class="Element10">
+5. Application of calculated PWM values to three phases of the ACIM motor.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element15">
+Determination of angular displacement per speed loop cycle:</div>
+<p class="Element10">
+The requested ACIM motor speed is mapped to the angular displacement by using the following relation:&nbsp;</p>
+<p class="Element10">
+<img src="acim_vhz_incremental_angle_eq01.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+For fixed point implementation, the input speed is scaled from ( 0 , N<sub>rated</sub> ) to ( 0 , 2<sup>14</sup> ) units.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<img src="acim_vhz_incremental_angle_eq02.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+From (i) and (ii), we get,&nbsp;</p>
+<p class="Element10">
+<img src="acim_vhz_incremetal_angle_eq03.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+For fixed point implementation, the angle is scaled from ( 0 , 360 deg ) to ( 0 , 2<sup>16</sup> ) units. Thus the final equation becomes:&nbsp;</p>
+<p class="Element10">
+<img src="acim_vhz_incremental_angle_eq04.png" border="0" alt="" title="">&nbsp;</p><div class="Element15">
+Determination of AC voltage magnitude for voltage source inverter:</div>
+<p class="Element10">
+The AC voltage magnitude is determined based on the requested RPM based on following relation:&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<img src="acim_vhz_vf_constant_eq.png" border="0" alt="" title="">&nbsp;</p><div class="Element15">
+Determination of PWM modulation values for voltage source inverter:</div>
+<p class="Element10">
+The calculated voltage magnitude and phase is modulated using SVPWM approach to generate corresponding three phase gate control signals. This PWM modulation approach utilizes third order harmonic injection to increase the inverter DC bus utilization by about 15%. The following diagram shows the typical SVPWM waveform with third order harmonic injection -&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="acim_vhz_svpwm_graph.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Software Design:</div>
+<p class="Element10">
+An interrupt based approach is used for the software implementation. There are three threads: main thread, ADC ISR thread, and a push button ISR thread.&nbsp;</p>
+<p class="Element10">
+The main thread is used to carry out UART based data communication in polling mode.&nbsp;</p>
+<p class="Element10">
+ADC ISR thread is used to carry out the actual V/Hz speed control algorithm. This thread is executed cyclically every PWM period as shown in the following figure: </p><p class="Element10" style="text-align: center;">
+<img src="acim_vhz_dynamic_diagram.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+Push button ISR thread is used to carry out start and stop motor operations. This thread is non-cyclic and is executed once there is an external push button switch event.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+The following figure shows the activity diagram of threads used in the software -&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="acim_vhz_flow_chart_01.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="acim_vhz_flow_chart_02.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Software Configuration:</div>
+<p class="Element10">
+The V/Hz control algorithm can be used to control different ACIM motors. In order to get the correct control of the ACIM motor, the motor specific parameters and application parameters need to be updated in the software. The following section describes how to update both motor and application specific parameters in the the project. These parameter macros can be found in<span class="Element146"> userparams.h</span> header file which can be found under logical path: <i>Header Files &gt; config &gt; &lt;config_name&gt; &gt;userparams.h.</i>&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="acim_vhz_software_config.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>1. Setting motor control PWM frequency:</strong>&nbsp;</p>
+<p class="Element10">
+PWM frequency is set by configuring the timer period of the TCC0 in terms of TCC0 clock counts. The period value +1 set using the MHC needs to be redefined as a macro in <span class="Element146">userparams.h.</span>&nbsp;</p>
+<p class="Element10">
+For example, in order to achieve a PWM frequency of 20 KHz, the period value defined in the MHC is 1199. Therefore, the macro defined in <span class="Element146">userparams.h</span> should be &quot;period value&quot; + 1 = 1200.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="acim_vhz_TC0_configuration.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table1">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element65" valign="top" width="21%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="79%">
+<div class="Element66">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00006.html">acim_vhz_sam_c21</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This motor control application demonstrates V/Hz open loop algorithm for AC Induction Motor (ACIM) using SAMC21 micro-controller.&nbsp;</div></td></tr></table></div></div>
+<td class="Element67" valign="top" width="21%">
+<div class="Element68">
+PWM_HPER_TICKS&nbsp;</div></td><td class="Element67" valign="top" width="79%">
+<div class="Element68">
+PWM Timer period value = &quot;Period value&quot; defined in MHC + 1&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>2. Setting motor specific parameters:</strong>&nbsp;</p>
+<p class="Element10">
+Set the following motor specific parameters in the <span class="Element146">userparams.h</span><i> </i>file. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="26%">
+<div class="Element66">
+Macro&nbsp;</div></td><td class="Element65" valign="top" width="55%">
+<div class="Element66">
+Description&nbsp;</div></td><td class="Element65" valign="top" width="19%">
+<div class="Element66">
+Units&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+MOTOR_VOLTAGE&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Motor Voltage [Volts]&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Volts&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+MAX_MOTOR_SPEED&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Maximum motor speed&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+RPM&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+NUMBER_OF_POLES&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Number of poles&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+-&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+MAX_SPEED_SCALED&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Max speed&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Internal units&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+VF_CONSTANT&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Volts per RPM constant&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Internal units&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+VF_OFFSET&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Voltage offset at starting zero frequency&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Internal units&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+START_SPEED_DEFAULT&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Default startup speed&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+RPM&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+ACC_RAMP&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+acceleration ramp count in internal unit&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Internal units&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+DEC_RAMP&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+deceleration ramp count in internal unit&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Internal units&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+SPEED_FILTER_COEFF&nbsp;</div></td><td class="Element67" valign="top" width="55%">
+<div class="Element68">
+Speed filter coefficient range [1-16]&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+-&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Software Implementation:</div>
+<p class="Element10">
+The SAMC21 microcontroller devices do not have a floating point unit. Therefore, all the physical real variables are mapped to internal units for fixed point data processing in the software. The following table shows the mapping of physical quantities to their corresponding internal units.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="25%">
+<div class="Element66">
+Physical Quantities&nbsp;</div></td><td class="Element65" valign="top" width="24%">
+<div class="Element66">
+Physical Range&nbsp;</div></td><td class="Element65" valign="top" width="51%">
+<div class="Element66">
+Conversion&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+Speed&nbsp;</div></td><td class="Element67" valign="top" width="24%">
+<div class="Element68">
+0<sub> </sub>to N<sub>rated </sub>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
+<div class="Element68">
+Physical Value * 2<sup>14</sup> / N<sub>rated</sub>&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+Angle&nbsp;</div></td><td class="Element67" valign="top" width="24%">
+<div class="Element68">
+0 to 360 deg&nbsp;</div></td><td class="Element67" valign="top" width="51%">
+<div class="Element68">
+Physical Value * 2<sup>16</sup> / 360&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+V/F constant&nbsp;</div></td><td class="Element67" valign="top" width="24%">
+<div class="Element68">
+-&nbsp;</div></td><td class="Element67" valign="top" width="51%">
+<div class="Element68">
+Physical Value * 12&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+Speed Filter coefficient&nbsp;</div></td><td class="Element67" valign="top" width="24%">
+<div class="Element68">
+0-1&nbsp;</div></td><td class="Element67" valign="top" width="51%">
+<div class="Element68">
+Physical Value * 16&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -78,7 +315,7 @@ This motor control application demonstrates V/Hz open loop algorithm for AC Indu
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00008.html">Applications Help</a> &gt; <a href="00000.html">ACIM Applications</a> &gt; <a href="00007.html">ACIM VHz Open loop</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00000.html">ACIM Applications</a> &gt; <a href="00013.html">ACIM VHz Open loop</a> &gt; <a href="00012.html">acim_vhz_sam_c21</a> &gt; <a href="00007.html">Control Algorithm</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -86,10 +323,10 @@ This motor control application demonstrates V/Hz open loop algorithm for AC Indu
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: acim_vhz Applications Help Topic Title: ACIM VHz Open loop)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: acim_vhz acim_vhz_sam_c21 Control Algorithm Topic Title: Control Algorithm)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

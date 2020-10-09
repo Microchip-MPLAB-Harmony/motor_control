@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Introduction</title>
+<title>Building The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta name="save" content="history" />
@@ -20,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00025.html">PMSM_FOC Module</a> &gt; <a href="00024.html">Introduction</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00015.html">BLDC Applications</a> &gt; <a href="00016.html">BLDC Block Commutation Using Hall Sensors</a> &gt; <a href="00023.html">bldc_bc_hall_sam_c21</a> &gt; <a href="00024.html">Building The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +28,15 @@
 Microchip 32-bit Motor Control</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00025.html">Previous</a> | <a href="00025.html">Up</a> | <a href="00023.html">Next</a></div>
+<a href="00023.html">Previous</a> | <a href="00023.html">Up</a> | <a href="00027.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PMSM_FOC Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: bldc_hall bldc_bc_hall_sam_c21 Building The Application Topic Title: Building The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Introduction</div>
+Building The Application</div>
 </div>
 </div>
 
@@ -51,111 +51,32 @@ Introduction</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This library component provides Field Oriented Control (FOC) algorithm for Permanent Magnet Synchronous Motor (PMSM).&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-PMSM_FOC connects to the Peripheral Libraries (PLIBs) from CSP repository and X2CScope from X2C repository.&nbsp;</p>
-<p class="Element10">
-This component needs to be connected to ADC, PWM PLIBs for correct functioning. PLIB name can be different in different devices.&nbsp;</p>
-<p class="Element10">
-If position feedback is quadrature encoder sensor, then it depends upon QDEC peripheral.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-This component has support for following devices. </p><div class="Element63">
+The parent folder for all the MPLAB X projects for this application is given below: </p><div class="Element63">
 <div class="TableDiv">
 <table cellspacing="0" class="Table1">
 <tr>
-<td class="Element65" valign="top" width="55%">
+<td class="Element65" valign="top" width="28%">
 <div class="Element66">
-&nbsp;</div></td><td class="Element65" valign="top" width="25%">
+Application Path&nbsp;</div></td><td class="Element65" valign="top" width="72%">
 <div class="Element66">
-MCLV2&nbsp;</div></td><td class="Element65" valign="top" width="20%">
-<div class="Element66">
-MCHV3&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="55%">
-<div class="Element68">
-SAM E70&nbsp;</div></td><td class="Element67" valign="top" width="25%">
-<div class="Element68">
-Yes&nbsp;</div></td><td class="Element67" valign="top" width="20%">
-<div class="Element68">
-No&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="55%">
-<div class="Element68">
-PIC32MK MCF&nbsp;</div></td><td class="Element67" valign="top" width="25%">
-<div class="Element68">
-Yes&nbsp;</div></td><td class="Element67" valign="top" width="20%">
-<div class="Element68">
-No&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="55%">
-<div class="Element68">
-PIC32MK MCM&nbsp;</div></td><td class="Element67" valign="top" width="25%">
-<div class="Element68">
-Yes&nbsp;</div></td><td class="Element67" valign="top" width="20%">
-<div class="Element68">
-No&nbsp;</div></td></tr></table></div></div>
+motor_control\apps\bldc_bc_hall_sam_c21&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-PMSM_FOC component supports following features. </p><div class="Element63">
+<span style="color: #000000">To build the application, refer the following table and open the appropriate project file in MPLAB X IDE.</span> </p><div class="Element63">
 <div class="TableDiv">
 <table cellspacing="0" class="Table1">
 <tr>
-<td class="Element65" valign="top" width="30%">
+<td class="Element65" valign="top" width="25%">
 <div class="Element66">
-Feature&nbsp;</div></td><td class="Element65" valign="top" width="70%">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
 <div class="Element66">
-Options&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="30%">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
 <div class="Element68">
-Position Feedback&nbsp;</div></td><td class="Element67" valign="top" width="70%">
+mclv2_sam_c21_pim.X&nbsp;</div></td><td class="Element67" valign="top" width="75%">
 <div class="Element68">
-</p>
-<ul class="Element630">
-<li class="Element600">PLL estimator</li>
-<li class="Element600">Quadrature encoder</li>
-</ul><p class="Element68">
-&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="30%">
-<div class="Element68">
-Current measurement&nbsp;</div></td><td class="Element67" valign="top" width="70%">
-<div class="Element68">
-</p>
-<ul class="Element630">
-<li class="Element600">Dual shunt</li>
-</ul><p class="Element68">
-&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="30%">
-<div class="Element68">
-Control loop&nbsp;</div></td><td class="Element67" valign="top" width="70%">
-<div class="Element68">
-</p>
-<ul class="Element630">
-<li class="Element600">Speed mode</li>
-<li class="Element600">Torque mode</li>
-<li class="Element600">Open loop (for PLL estimator)</li>
-</ul><p class="Element68">
-&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="30%">
-<div class="Element68">
-Field Alignment&nbsp;</div></td><td class="Element67" valign="top" width="70%">
-<div class="Element68">
-</p>
-<ul class="Element630">
-<li class="Element600">Q-axis alignment</li>
-<li class="Element600">D-axis alignment</li>
-</ul><p class="Element68">
-&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="30%">
-<div class="Element68">
-Field weakening&nbsp;</div></td><td class="Element67" valign="top" width="70%">
-<div class="Element68">
-</p>
-<ul class="Element630">
-<li class="Element600">Equation based field weakening</li>
-</ul><p class="Element68">
-&nbsp;</div></td></tr></table></div></div>
+MCLV2 Development Board (Low Voltage)&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -163,7 +84,7 @@ Field weakening&nbsp;</div></td><td class="Element67" valign="top" width="70%">
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00017.html">Motor Control Overview</a> &gt; <a href="00025.html">PMSM_FOC Module</a> &gt; <a href="00024.html">Introduction</a></div>
+<a href="00029.html">Motor Control Overview</a> &gt; <a href="00014.html">Applications Help</a> &gt; <a href="00015.html">BLDC Applications</a> &gt; <a href="00016.html">BLDC Block Commutation Using Hall Sensors</a> &gt; <a href="00023.html">bldc_bc_hall_sam_c21</a> &gt; <a href="00024.html">Building The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
@@ -171,10 +92,10 @@ Field weakening&nbsp;</div></td><td class="Element67" valign="top" width="70%">
  Microchip 32-bit Motor Control</div>
 </td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00017.html">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00029.html">Home</a></div>
 </td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: PMSM_FOC Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: bldc_hall bldc_bc_hall_sam_c21 Building The Application Topic Title: Building The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
