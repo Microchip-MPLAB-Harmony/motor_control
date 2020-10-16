@@ -50,9 +50,6 @@ extern uint32_t __svectors;
 int main(void);
 extern void __attribute__((long_call)) __libc_init_array(void);
 
-/* Declaration of Reset handler (may be custom) */
-void __attribute__((optimize("-O1"), long_call)) Reset_Handler(void);
-
 /* Device Vector information is available in interrupt.c file */
 
 __STATIC_INLINE void TCM_Enable(void);
@@ -91,32 +88,56 @@ uint32_t prim;
     }
 }
 #endif /* (__ARM_FP==14) || (__ARM_FP==4) */
+// helper routines to read and write regions of memory in 128 byte chunks
 
-__STATIC_INLINE void FPU_MemToFpu(unsigned int address)
+#define TRANSFER_CHUNK_SIZE 0x80
+
+__STATIC_INLINE void Read_Chunk(uint32_t address)
 {
-    asm volatile (
+    __asm__ volatile (
          "MOV      r8, %[addr]\n"
          "PLD      [r8, #0xC0]\n"
-         "VLDM     r8!,{d0-d15}\n"
+         "VLDM     r8,{d0-d15}\n"
            : : [addr] "l" (address) : "r8"
     );
 }
 
-__STATIC_INLINE void FPU_FpuToMem(unsigned int address)
+__STATIC_INLINE void Write_Chunk(uint32_t address)
 {
-    asm volatile (
+    __asm__ volatile (
          "MOV      r8, %[addr]\n"
-         "VSTM     r8!,{d0-d15}\n"
+         "VSTM     r8,{d0-d15}\n"
            : : [addr] "l" (address) : "r8"
     );
 }
 
-/** Program GPNVM fuse for TCM configuration */
-__STATIC_INLINE void TCM_EccInitialize()
+// initialize the ECC for a single TCM region (defined by addr and size) in 128 byte chunks
+static void  __attribute__((optimize("-O1")))  TCM_EccInitOne(uint32_t addr, uint32_t size) {
+
+    uint32_t pTcm;
+
+    for (pTcm = addr; pTcm < (addr + size); pTcm += TRANSFER_CHUNK_SIZE)
+    {
+        //read ECC OFF
+        TCMECC_REGS->TCMECC_CR = 0x0;
+        __DSB();
+        __ISB();
+        Read_Chunk(pTcm);
+
+        //Write ECC ON
+        TCMECC_REGS->TCMECC_CR = 0x1;
+        __DSB();
+        __ISB();
+        Write_Chunk(pTcm);
+        __DSB();
+        __ISB();
+    }
+}
+
+/* Initialize ECC for TCM memories */
+__STATIC_INLINE void  __attribute__((optimize("-O1"))) TCM_EccInitialize(void)
 {
-    uint64_t i = 0;
-    uint64_t *pItcm = (uint64_t*) ITCM_ADDR;
-    uint64_t *pDtcm = (uint64_t*) DTCM_ADDR;
+
     __DSB();
     __ISB();
 
@@ -128,48 +149,15 @@ __STATIC_INLINE void TCM_EccInitialize()
     __DSB();
     __ISB();
 
-    //enable cache I et data D
+    //enable Icache and Dcache
     SCB_EnableICache();
     SCB_EnableDCache();
 
-    // ITCM initalization loop (to handle ECC properly prior activating RMW/RETEN features)
-    for (i = 0; i < (0x4000); i += 0x10) // ITCM size/copy size in bytes = 0x20000/0x80 = 0x400 ( increment in 64 bits words = 0x80 / 8 = 0x10)
-    {
-        //read ECC OFF
-        TCMECC_REGS->TCMECC_CR = 0x0;
-        __DSB();
-        __ISB();
-        FPU_MemToFpu((unsigned int) (pItcm + i));
-        //Write ECC ON
-        TCMECC_REGS->TCMECC_CR = 0x1;
-        __DSB();
-        __ISB();
-        FPU_FpuToMem((unsigned int) (pItcm + i));
-        __DSB();
-        __ISB();
-    }
-    __DSB();
-    __ISB();
 
-    // DTCM initalization loop (to handle ECC properly prior activating RMW/RETEN features)
-    for (i = 0; i < (0x8000); i += 0x10) // DTCM size/copy size in bytes = 0x40000/0x80 = 0x800 ( increment in 64 bits words : 0x80 / 8 = 0x10)
-    {
-        //read ECC OFF
-        TCMECC_REGS->TCMECC_CR = 0x0;
-        __DSB();
-        __ISB();
-        FPU_MemToFpu((unsigned int) (pDtcm + i));
 
-        //Write ECC ON
-        TCMECC_REGS->TCMECC_CR = 0x1;
-        __DSB();
-        __ISB();
-        FPU_FpuToMem((unsigned int) (pDtcm + i));
-        __DSB();
-        __ISB();
-    }
-    __DSB();
-    __ISB();
+    //  initalize both TCM's (to handle ECC properly prior activating RMW/RETEN features)
+    TCM_EccInitOne(ITCM_ADDR, ITCM_SIZE);
+    TCM_EccInitOne(DTCM_ADDR, DTCM_SIZE);
 
     //disable cache I et data D
     SCB_DisableICache();
@@ -192,6 +180,30 @@ __STATIC_INLINE void TCM_EccInitialize()
     __ISB();
 }
 
+
+__STATIC_INLINE void  __attribute__((optimize("-O1"))) FlexRAM_EccInitialize(void)
+{
+    uint32_t pFlexRam;
+
+    __DSB();
+    __ISB();
+
+    // FlexRAM initialization loop (to handle ECC properly)
+    for (pFlexRam = FLEXRAM_ADDR ; pFlexRam < (FLEXRAM_ADDR + FlexRAM_SIZE) ; pFlexRam += TRANSFER_CHUNK_SIZE)
+    {
+        Read_Chunk(pFlexRam);
+        __DSB();
+        __ISB();
+        Write_Chunk(pFlexRam);
+        __DSB();
+        __ISB();
+    }
+
+
+    __DSB();
+    __ISB();
+}
+
 /** Enable TCM memory */
 __STATIC_INLINE void __attribute__((optimize("-O1"))) TCM_Enable(void)
 {
@@ -203,35 +215,6 @@ __STATIC_INLINE void __attribute__((optimize("-O1"))) TCM_Enable(void)
     __ISB();
 }
 
-
-__STATIC_INLINE void FlexRAM_EccInitialize(void)
-{
-    uint64_t i = 0;
-    uint64_t *pFlexRam = (uint64_t*) FLEXRAM_ADDR;
-
-    //enable cache I et data D
-    SCB_EnableICache();
-    SCB_EnableDCache();
-    __DSB();
-    __ISB();
-
-    // FlexRAM initialization loop (to handle ECC properly)
-    for (i = 0; i < (0x18000); i += 0x10) // FlexRAM size/copy size in bytes = 0xC0000/0x80 = 0x1800 ( increment in 64 bits words : 0x80 / 8 = 0x10)
-    {
-        FPU_MemToFpu((unsigned int) (pFlexRam + i));
-        //Write ECC ON
-        __DSB();
-        __ISB();
-        FPU_FpuToMem((unsigned int) (pFlexRam + i));
-        __DSB();
-        __ISB();
-    }
-    //disable cache I et data D
-    SCB_DisableICache();
-    SCB_DisableDCache();
-    __DSB();
-    __ISB();
-}
 /* Optional application-provided functions */
 extern void __attribute__((weak,long_call)) _on_reset(void);
 extern void __attribute__((weak,long_call)) _on_bootstrap(void);
@@ -245,9 +228,23 @@ extern void __attribute__((weak,long_call)) __xc32_on_bootstrap(void);
  * \brief This is the code that gets called on processor reset.
  * To initialize the device, and call the main() routine.
  */
-void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call)) Reset_Handler(void)
+void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call, noreturn)) Reset_Handler(void)
 {
+#ifdef SCB_VTOR_TBLOFF_Msk
     uint32_t *pSrc;
+#endif
+
+#if defined (__REINIT_STACK_POINTER)
+    /* Initialize SP from linker-defined _stack symbol. */
+    __asm__ volatile ("ldr sp, =_stack" : : : "sp");
+
+#ifdef SCB_VTOR_TBLOFF_Msk
+    /* Buy stack for locals */
+    __asm__ volatile ("sub sp, sp, #8" : : : "sp");
+#endif
+    __asm__ volatile ("add r7, sp, #0" : : : "r7");
+#endif
+
 
     /* Call the optional application-provided _on_reset() function. */
     if (_on_reset)
@@ -264,10 +261,13 @@ void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call))
     FPU_Enable();
 #endif
 
-
     TCM_EccInitialize();
-
     FlexRAM_EccInitialize();
+
+
+    /* Enable TCM   */
+    TCM_Enable();
+
     /* Initialize data after TCM is enabled.
      * Data initialization from the XC32 .dinit template */
     __pic32c_data_initialization();
@@ -303,6 +303,7 @@ void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call))
 
     /* Branch to application's main function */
     main();
+
 #if (defined(__DEBUG) || defined(__DEBUG_D)) && defined(__XC32)
     __builtin_software_breakpoint();
 #endif

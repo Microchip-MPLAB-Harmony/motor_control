@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-02-03T17:22:07Z */
+/* file generated from device description version 2020-07-08T08:12:01Z */
 #ifndef _SAMRH71_SUPC_COMPONENT_H_
 #define _SAMRH71_SUPC_COMPONENT_H_
 
@@ -29,6 +29,9 @@
 /* ************************************************************************** */
 
 /* -------- SUPC_CR : (SUPC Offset: 0x00) ( /W 32) Supply Controller Control Register -------- */
+#define SUPC_CR_ZERO_Pos                      _U_(2)                                               /**< (SUPC_CR) Shall be always write at '0' Position */
+#define SUPC_CR_ZERO_Msk                      (_U_(0x1) << SUPC_CR_ZERO_Pos)                       /**< (SUPC_CR) Shall be always write at '0' Mask */
+#define SUPC_CR_ZERO(value)                   (SUPC_CR_ZERO_Msk & ((value) << SUPC_CR_ZERO_Pos))  
 #define SUPC_CR_TDXTALSEL_Pos                 _U_(3)                                               /**< (SUPC_CR) Timing Domain Crystal Oscillator Select Position */
 #define SUPC_CR_TDXTALSEL_Msk                 (_U_(0x1) << SUPC_CR_TDXTALSEL_Pos)                  /**< (SUPC_CR) Timing Domain Crystal Oscillator Select Mask */
 #define SUPC_CR_TDXTALSEL(value)              (SUPC_CR_TDXTALSEL_Msk & ((value) << SUPC_CR_TDXTALSEL_Pos))
@@ -36,13 +39,6 @@
 #define   SUPC_CR_TDXTALSEL_CRYSTAL_SEL_Val   _U_(0x1)                                             /**< (SUPC_CR) If KEY is correct, XTALSEL switches the slow clock of the timing domain (TD_SLCK) on the 32.768 kHz crystal oscillator output.  */
 #define SUPC_CR_TDXTALSEL_NO_EFFECT           (SUPC_CR_TDXTALSEL_NO_EFFECT_Val << SUPC_CR_TDXTALSEL_Pos) /**< (SUPC_CR) No effect. Position  */
 #define SUPC_CR_TDXTALSEL_CRYSTAL_SEL         (SUPC_CR_TDXTALSEL_CRYSTAL_SEL_Val << SUPC_CR_TDXTALSEL_Pos) /**< (SUPC_CR) If KEY is correct, XTALSEL switches the slow clock of the timing domain (TD_SLCK) on the 32.768 kHz crystal oscillator output. Position  */
-#define SUPC_CR_MDXTALSEL_Pos                 _U_(4)                                               /**< (SUPC_CR) Monitoring Domain Crystal Oscillator Select Position */
-#define SUPC_CR_MDXTALSEL_Msk                 (_U_(0x1) << SUPC_CR_MDXTALSEL_Pos)                  /**< (SUPC_CR) Monitoring Domain Crystal Oscillator Select Mask */
-#define SUPC_CR_MDXTALSEL(value)              (SUPC_CR_MDXTALSEL_Msk & ((value) << SUPC_CR_MDXTALSEL_Pos))
-#define   SUPC_CR_MDXTALSEL_NO_EFFECT_Val     _U_(0x0)                                             /**< (SUPC_CR) No effect.  */
-#define   SUPC_CR_MDXTALSEL_CRYSTAL_SEL_Val   _U_(0x1)                                             /**< (SUPC_CR) If KEY is correct, XTALSEL switches the slow clock of the monitoring domain (MD_SLCK) on the 32.768 kHz crystal oscillator output.  */
-#define SUPC_CR_MDXTALSEL_NO_EFFECT           (SUPC_CR_MDXTALSEL_NO_EFFECT_Val << SUPC_CR_MDXTALSEL_Pos) /**< (SUPC_CR) No effect. Position  */
-#define SUPC_CR_MDXTALSEL_CRYSTAL_SEL         (SUPC_CR_MDXTALSEL_CRYSTAL_SEL_Val << SUPC_CR_MDXTALSEL_Pos) /**< (SUPC_CR) If KEY is correct, XTALSEL switches the slow clock of the monitoring domain (MD_SLCK) on the 32.768 kHz crystal oscillator output. Position  */
 #define SUPC_CR_MDRCSEL_Pos                   _U_(5)                                               /**< (SUPC_CR) Monitoring Domain RC Oscillator Select Position */
 #define SUPC_CR_MDRCSEL_Msk                   (_U_(0x1) << SUPC_CR_MDRCSEL_Pos)                    /**< (SUPC_CR) Monitoring Domain RC Oscillator Select Mask */
 #define SUPC_CR_MDRCSEL(value)                (SUPC_CR_MDRCSEL_Msk & ((value) << SUPC_CR_MDRCSEL_Pos))
@@ -55,7 +51,7 @@
 #define SUPC_CR_KEY(value)                    (SUPC_CR_KEY_Msk & ((value) << SUPC_CR_KEY_Pos))    
 #define   SUPC_CR_KEY_PASSWD_Val              _U_(0xA5)                                            /**< (SUPC_CR) Writing any other value in this field aborts the write operation.  */
 #define SUPC_CR_KEY_PASSWD                    (SUPC_CR_KEY_PASSWD_Val << SUPC_CR_KEY_Pos)          /**< (SUPC_CR) Writing any other value in this field aborts the write operation. Position  */
-#define SUPC_CR_Msk                           _U_(0xFF000038)                                      /**< (SUPC_CR) Register Mask  */
+#define SUPC_CR_Msk                           _U_(0xFF00002C)                                      /**< (SUPC_CR) Register Mask  */
 
 
 /* -------- SUPC_SMMR : (SUPC Offset: 0x04) (R/W 32) Supply Controller Supply Monitor Mode Register -------- */
@@ -117,13 +113,9 @@
 
 
 /* -------- SUPC_PWR : (SUPC Offset: 0x1C) (R/W 32) Supply Controller Power Register -------- */
-#define SUPC_PWR_MONSELS_Pos                  _U_(18)                                              /**< (SUPC_PWR) Monitoring Oscillator Selection Status Position */
-#define SUPC_PWR_MONSELS_Msk                  (_U_(0x1) << SUPC_PWR_MONSELS_Pos)                   /**< (SUPC_PWR) Monitoring Oscillator Selection Status Mask */
-#define SUPC_PWR_MONSELS(value)               (SUPC_PWR_MONSELS_Msk & ((value) << SUPC_PWR_MONSELS_Pos))
-#define   SUPC_PWR_MONSELS_RC_Val             _U_(0x0)                                             /**< (SUPC_PWR) The monitoring domain slow clock, MD_SLCK, is generated by the slow RC oscillator.  */
-#define   SUPC_PWR_MONSELS_CRYST_Val          _U_(0x1)                                             /**< (SUPC_PWR) The monitoring domain slow clock, MD_SLCK, is generated by the 32.768 kHz crystal oscillator.  */
-#define SUPC_PWR_MONSELS_RC                   (SUPC_PWR_MONSELS_RC_Val << SUPC_PWR_MONSELS_Pos)    /**< (SUPC_PWR) The monitoring domain slow clock, MD_SLCK, is generated by the slow RC oscillator. Position  */
-#define SUPC_PWR_MONSELS_CRYST                (SUPC_PWR_MONSELS_CRYST_Val << SUPC_PWR_MONSELS_Pos) /**< (SUPC_PWR) The monitoring domain slow clock, MD_SLCK, is generated by the 32.768 kHz crystal oscillator. Position  */
+#define SUPC_PWR_ZERO_Pos                     _U_(18)                                              /**< (SUPC_PWR) MD_SLCK always generated by the slow RC oscillator Position */
+#define SUPC_PWR_ZERO_Msk                     (_U_(0x1) << SUPC_PWR_ZERO_Pos)                      /**< (SUPC_PWR) MD_SLCK always generated by the slow RC oscillator Mask */
+#define SUPC_PWR_ZERO(value)                  (SUPC_PWR_ZERO_Msk & ((value) << SUPC_PWR_ZERO_Pos))
 #define SUPC_PWR_Msk                          _U_(0x00040000)                                      /**< (SUPC_PWR) Register Mask  */
 
 

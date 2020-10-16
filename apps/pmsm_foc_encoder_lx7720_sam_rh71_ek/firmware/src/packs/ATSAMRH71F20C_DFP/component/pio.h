@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-02-03T17:22:07Z */
+/* file generated from device description version 2020-07-08T08:12:01Z */
 #ifndef _SAMRH71_PIO_COMPONENT_H_
 #define _SAMRH71_PIO_COMPONENT_H_
 

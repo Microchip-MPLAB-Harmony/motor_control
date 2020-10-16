@@ -1926,6 +1926,16 @@
             <User dnOrder="0" value="false"/>
           </Values>
         </Boolean>
+        <Boolean dnOrder="24" id="USART_RING_BUFFER_ENABLE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <Dynamic dnOrder="0" id="flexcom1" value="false"/>
+          </Values>
+        </Boolean>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="FLEXCOM1_I2C">

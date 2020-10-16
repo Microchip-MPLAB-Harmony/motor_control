@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-02-03T17:22:07Z */
+/* file generated from device description version 2020-07-08T08:12:01Z */
 #ifndef _SAMRH71_MATRIX_COMPONENT_H_
 #define _SAMRH71_MATRIX_COMPONENT_H_
 
@@ -2418,118 +2418,6 @@
 #define MATRIX_MRCR_RCB_Pos                   _U_(0)                                               /**< (MATRIX_MRCR Position) Remap Command Bit for Master x5 */
 #define MATRIX_MRCR_RCB_Msk                   (_U_(0xFFFF) << MATRIX_MRCR_RCB_Pos)                 /**< (MATRIX_MRCR Mask) RCB */
 #define MATRIX_MRCR_RCB(value)                (MATRIX_MRCR_RCB_Msk & ((value) << MATRIX_MRCR_RCB_Pos)) 
-
-/* -------- MATRIX_SFR0 : (MATRIX Offset: 0x110) (R/W 32) Special Function Register 0 -------- */
-#define MATRIX_SFR0_SFR_Pos                   _U_(0)                                               /**< (MATRIX_SFR0) Special Function Register Fields Position */
-#define MATRIX_SFR0_SFR_Msk                   (_U_(0xFFFFFFFF) << MATRIX_SFR0_SFR_Pos)             /**< (MATRIX_SFR0) Special Function Register Fields Mask */
-#define MATRIX_SFR0_SFR(value)                (MATRIX_SFR0_SFR_Msk & ((value) << MATRIX_SFR0_SFR_Pos))
-#define MATRIX_SFR0_Msk                       _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR0) Register Mask  */
-
-
-/* -------- MATRIX_SFR1 : (MATRIX Offset: 0x114) (R/W 32) Special Function Register 1 -------- */
-#define MATRIX_SFR1_SFR_Pos                   _U_(0)                                               /**< (MATRIX_SFR1) Special Function Register Fields Position */
-#define MATRIX_SFR1_SFR_Msk                   (_U_(0xFFFFFFFF) << MATRIX_SFR1_SFR_Pos)             /**< (MATRIX_SFR1) Special Function Register Fields Mask */
-#define MATRIX_SFR1_SFR(value)                (MATRIX_SFR1_SFR_Msk & ((value) << MATRIX_SFR1_SFR_Pos))
-#define MATRIX_SFR1_Msk                       _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR1) Register Mask  */
-
-
-/* -------- MATRIX_SFR2 : (MATRIX Offset: 0x118) (R/W 32) Special Function Register 2 -------- */
-#define MATRIX_SFR2_SFR_Pos                   _U_(0)                                               /**< (MATRIX_SFR2) Special Function Register Fields Position */
-#define MATRIX_SFR2_SFR_Msk                   (_U_(0xFFFFFFFF) << MATRIX_SFR2_SFR_Pos)             /**< (MATRIX_SFR2) Special Function Register Fields Mask */
-#define MATRIX_SFR2_SFR(value)                (MATRIX_SFR2_SFR_Msk & ((value) << MATRIX_SFR2_SFR_Pos))
-#define MATRIX_SFR2_Msk                       _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR2) Register Mask  */
-
-
-/* -------- MATRIX_SFR3 : (MATRIX Offset: 0x11C) (R/W 32) Special Function Register 3 -------- */
-#define MATRIX_SFR3_SFR_Pos                   _U_(0)                                               /**< (MATRIX_SFR3) Special Function Register Fields Position */
-#define MATRIX_SFR3_SFR_Msk                   (_U_(0xFFFFFFFF) << MATRIX_SFR3_SFR_Pos)             /**< (MATRIX_SFR3) Special Function Register Fields Mask */
-#define MATRIX_SFR3_SFR(value)                (MATRIX_SFR3_SFR_Msk & ((value) << MATRIX_SFR3_SFR_Pos))
-#define MATRIX_SFR3_Msk                       _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR3) Register Mask  */
-
-
-/* -------- MATRIX_SFR4 : (MATRIX Offset: 0x120) (R/W 32) Special Function Register 4 -------- */
-#define MATRIX_SFR4_SFR_Pos                   _U_(0)                                               /**< (MATRIX_SFR4) Special Function Register Fields Position */
-#define MATRIX_SFR4_SFR_Msk                   (_U_(0xFFFFFFFF) << MATRIX_SFR4_SFR_Pos)             /**< (MATRIX_SFR4) Special Function Register Fields Mask */
-#define MATRIX_SFR4_SFR(value)                (MATRIX_SFR4_SFR_Msk & ((value) << MATRIX_SFR4_SFR_Pos))
-#define MATRIX_SFR4_Msk                       _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR4) Register Mask  */
-
-
-/* -------- MATRIX_SFR5 : (MATRIX Offset: 0x124) (R/W 32) Special Function Register 5 -------- */
-#define MATRIX_SFR5_SFR_Pos                   _U_(0)                                               /**< (MATRIX_SFR5) Special Function Register Fields Position */
-#define MATRIX_SFR5_SFR_Msk                   (_U_(0xFFFFFFFF) << MATRIX_SFR5_SFR_Pos)             /**< (MATRIX_SFR5) Special Function Register Fields Mask */
-#define MATRIX_SFR5_SFR(value)                (MATRIX_SFR5_SFR_Msk & ((value) << MATRIX_SFR5_SFR_Pos))
-#define MATRIX_SFR5_Msk                       _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR5) Register Mask  */
-
-
-/* -------- MATRIX_SFR6 : (MATRIX Offset: 0x128) (R/W 32) Special Function Register 6 -------- */
-#define MATRIX_SFR6_SFR_Pos                   _U_(0)                                               /**< (MATRIX_SFR6) Special Function Register Fields Position */
-#define MATRIX_SFR6_SFR_Msk                   (_U_(0xFFFFFFFF) << MATRIX_SFR6_SFR_Pos)             /**< (MATRIX_SFR6) Special Function Register Fields Mask */
-#define MATRIX_SFR6_SFR(value)                (MATRIX_SFR6_SFR_Msk & ((value) << MATRIX_SFR6_SFR_Pos))
-#define MATRIX_SFR6_Msk                       _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR6) Register Mask  */
-
-
-/* -------- MATRIX_SFR7 : (MATRIX Offset: 0x12C) (R/W 32) Special Function Register 7 -------- */
-#define MATRIX_SFR7_SFR_Pos                   _U_(0)                                               /**< (MATRIX_SFR7) Special Function Register Fields Position */
-#define MATRIX_SFR7_SFR_Msk                   (_U_(0xFFFFFFFF) << MATRIX_SFR7_SFR_Pos)             /**< (MATRIX_SFR7) Special Function Register Fields Mask */
-#define MATRIX_SFR7_SFR(value)                (MATRIX_SFR7_SFR_Msk & ((value) << MATRIX_SFR7_SFR_Pos))
-#define MATRIX_SFR7_Msk                       _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR7) Register Mask  */
-
-
-/* -------- MATRIX_SFR8 : (MATRIX Offset: 0x130) (R/W 32) Special Function Register 8 -------- */
-#define MATRIX_SFR8_SFR_Pos                   _U_(0)                                               /**< (MATRIX_SFR8) Special Function Register Fields Position */
-#define MATRIX_SFR8_SFR_Msk                   (_U_(0xFFFFFFFF) << MATRIX_SFR8_SFR_Pos)             /**< (MATRIX_SFR8) Special Function Register Fields Mask */
-#define MATRIX_SFR8_SFR(value)                (MATRIX_SFR8_SFR_Msk & ((value) << MATRIX_SFR8_SFR_Pos))
-#define MATRIX_SFR8_Msk                       _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR8) Register Mask  */
-
-
-/* -------- MATRIX_SFR9 : (MATRIX Offset: 0x134) (R/W 32) Special Function Register 9 -------- */
-#define MATRIX_SFR9_SFR_Pos                   _U_(0)                                               /**< (MATRIX_SFR9) Special Function Register Fields Position */
-#define MATRIX_SFR9_SFR_Msk                   (_U_(0xFFFFFFFF) << MATRIX_SFR9_SFR_Pos)             /**< (MATRIX_SFR9) Special Function Register Fields Mask */
-#define MATRIX_SFR9_SFR(value)                (MATRIX_SFR9_SFR_Msk & ((value) << MATRIX_SFR9_SFR_Pos))
-#define MATRIX_SFR9_Msk                       _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR9) Register Mask  */
-
-
-/* -------- MATRIX_SFR10 : (MATRIX Offset: 0x138) (R/W 32) Special Function Register 10 -------- */
-#define MATRIX_SFR10_SFR_Pos                  _U_(0)                                               /**< (MATRIX_SFR10) Special Function Register Fields Position */
-#define MATRIX_SFR10_SFR_Msk                  (_U_(0xFFFFFFFF) << MATRIX_SFR10_SFR_Pos)            /**< (MATRIX_SFR10) Special Function Register Fields Mask */
-#define MATRIX_SFR10_SFR(value)               (MATRIX_SFR10_SFR_Msk & ((value) << MATRIX_SFR10_SFR_Pos))
-#define MATRIX_SFR10_Msk                      _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR10) Register Mask  */
-
-
-/* -------- MATRIX_SFR11 : (MATRIX Offset: 0x13C) (R/W 32) Special Function Register 11 -------- */
-#define MATRIX_SFR11_SFR_Pos                  _U_(0)                                               /**< (MATRIX_SFR11) Special Function Register Fields Position */
-#define MATRIX_SFR11_SFR_Msk                  (_U_(0xFFFFFFFF) << MATRIX_SFR11_SFR_Pos)            /**< (MATRIX_SFR11) Special Function Register Fields Mask */
-#define MATRIX_SFR11_SFR(value)               (MATRIX_SFR11_SFR_Msk & ((value) << MATRIX_SFR11_SFR_Pos))
-#define MATRIX_SFR11_Msk                      _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR11) Register Mask  */
-
-
-/* -------- MATRIX_SFR12 : (MATRIX Offset: 0x140) (R/W 32) Special Function Register 12 -------- */
-#define MATRIX_SFR12_SFR_Pos                  _U_(0)                                               /**< (MATRIX_SFR12) Special Function Register Fields Position */
-#define MATRIX_SFR12_SFR_Msk                  (_U_(0xFFFFFFFF) << MATRIX_SFR12_SFR_Pos)            /**< (MATRIX_SFR12) Special Function Register Fields Mask */
-#define MATRIX_SFR12_SFR(value)               (MATRIX_SFR12_SFR_Msk & ((value) << MATRIX_SFR12_SFR_Pos))
-#define MATRIX_SFR12_Msk                      _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR12) Register Mask  */
-
-
-/* -------- MATRIX_SFR13 : (MATRIX Offset: 0x144) (R/W 32) Special Function Register 13 -------- */
-#define MATRIX_SFR13_SFR_Pos                  _U_(0)                                               /**< (MATRIX_SFR13) Special Function Register Fields Position */
-#define MATRIX_SFR13_SFR_Msk                  (_U_(0xFFFFFFFF) << MATRIX_SFR13_SFR_Pos)            /**< (MATRIX_SFR13) Special Function Register Fields Mask */
-#define MATRIX_SFR13_SFR(value)               (MATRIX_SFR13_SFR_Msk & ((value) << MATRIX_SFR13_SFR_Pos))
-#define MATRIX_SFR13_Msk                      _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR13) Register Mask  */
-
-
-/* -------- MATRIX_SFR14 : (MATRIX Offset: 0x148) (R/W 32) Special Function Register 14 -------- */
-#define MATRIX_SFR14_SFR_Pos                  _U_(0)                                               /**< (MATRIX_SFR14) Special Function Register Fields Position */
-#define MATRIX_SFR14_SFR_Msk                  (_U_(0xFFFFFFFF) << MATRIX_SFR14_SFR_Pos)            /**< (MATRIX_SFR14) Special Function Register Fields Mask */
-#define MATRIX_SFR14_SFR(value)               (MATRIX_SFR14_SFR_Msk & ((value) << MATRIX_SFR14_SFR_Pos))
-#define MATRIX_SFR14_Msk                      _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR14) Register Mask  */
-
-
-/* -------- MATRIX_SFR15 : (MATRIX Offset: 0x14C) (R/W 32) Special Function Register 15 -------- */
-#define MATRIX_SFR15_SFR_Pos                  _U_(0)                                               /**< (MATRIX_SFR15) Special Function Register Fields Position */
-#define MATRIX_SFR15_SFR_Msk                  (_U_(0xFFFFFFFF) << MATRIX_SFR15_SFR_Pos)            /**< (MATRIX_SFR15) Special Function Register Fields Mask */
-#define MATRIX_SFR15_SFR(value)               (MATRIX_SFR15_SFR_Msk & ((value) << MATRIX_SFR15_SFR_Pos))
-#define MATRIX_SFR15_Msk                      _U_(0xFFFFFFFF)                                      /**< (MATRIX_SFR15) Register Mask  */
-
 
 /* -------- MATRIX_MEIER : (MATRIX Offset: 0x150) ( /W 32) Master Error Interrupt Enable Register -------- */
 #define MATRIX_MEIER_MERR0_Pos                _U_(0)                                               /**< (MATRIX_MEIER) Master 0 Access Error Position */
@@ -5951,22 +5839,6 @@
 #define MATRIX_PRAS15_REG_OFST         (0xF8)              /**< (MATRIX_PRAS15) Priority Register A for Slave 15 Offset */
 #define MATRIX_PRBS15_REG_OFST         (0xFC)              /**< (MATRIX_PRBS15) Priority Register B for Slave 15 Offset */
 #define MATRIX_MRCR_REG_OFST           (0x100)             /**< (MATRIX_MRCR) Master Remap Control Register Offset */
-#define MATRIX_SFR0_REG_OFST           (0x110)             /**< (MATRIX_SFR0) Special Function Register 0 Offset */
-#define MATRIX_SFR1_REG_OFST           (0x114)             /**< (MATRIX_SFR1) Special Function Register 1 Offset */
-#define MATRIX_SFR2_REG_OFST           (0x118)             /**< (MATRIX_SFR2) Special Function Register 2 Offset */
-#define MATRIX_SFR3_REG_OFST           (0x11C)             /**< (MATRIX_SFR3) Special Function Register 3 Offset */
-#define MATRIX_SFR4_REG_OFST           (0x120)             /**< (MATRIX_SFR4) Special Function Register 4 Offset */
-#define MATRIX_SFR5_REG_OFST           (0x124)             /**< (MATRIX_SFR5) Special Function Register 5 Offset */
-#define MATRIX_SFR6_REG_OFST           (0x128)             /**< (MATRIX_SFR6) Special Function Register 6 Offset */
-#define MATRIX_SFR7_REG_OFST           (0x12C)             /**< (MATRIX_SFR7) Special Function Register 7 Offset */
-#define MATRIX_SFR8_REG_OFST           (0x130)             /**< (MATRIX_SFR8) Special Function Register 8 Offset */
-#define MATRIX_SFR9_REG_OFST           (0x134)             /**< (MATRIX_SFR9) Special Function Register 9 Offset */
-#define MATRIX_SFR10_REG_OFST          (0x138)             /**< (MATRIX_SFR10) Special Function Register 10 Offset */
-#define MATRIX_SFR11_REG_OFST          (0x13C)             /**< (MATRIX_SFR11) Special Function Register 11 Offset */
-#define MATRIX_SFR12_REG_OFST          (0x140)             /**< (MATRIX_SFR12) Special Function Register 12 Offset */
-#define MATRIX_SFR13_REG_OFST          (0x144)             /**< (MATRIX_SFR13) Special Function Register 13 Offset */
-#define MATRIX_SFR14_REG_OFST          (0x148)             /**< (MATRIX_SFR14) Special Function Register 14 Offset */
-#define MATRIX_SFR15_REG_OFST          (0x14C)             /**< (MATRIX_SFR15) Special Function Register 15 Offset */
 #define MATRIX_MEIER_REG_OFST          (0x150)             /**< (MATRIX_MEIER) Master Error Interrupt Enable Register Offset */
 #define MATRIX_MEIDR_REG_OFST          (0x154)             /**< (MATRIX_MEIDR) Master Error Interrupt Disable Register Offset */
 #define MATRIX_MEIMR_REG_OFST          (0x158)             /**< (MATRIX_MEIMR) Master Error Interrupt Mask Register Offset */
@@ -6110,23 +5982,7 @@ typedef struct
   __IO  uint32_t                       MATRIX_PRAS15;      /**< Offset: 0xF8 (R/W  32) Priority Register A for Slave 15 */
   __IO  uint32_t                       MATRIX_PRBS15;      /**< Offset: 0xFC (R/W  32) Priority Register B for Slave 15 */
   __IO  uint32_t                       MATRIX_MRCR;        /**< Offset: 0x100 (R/W  32) Master Remap Control Register */
-  __I   uint8_t                        Reserved1[0x0C];
-  __IO  uint32_t                       MATRIX_SFR0;        /**< Offset: 0x110 (R/W  32) Special Function Register 0 */
-  __IO  uint32_t                       MATRIX_SFR1;        /**< Offset: 0x114 (R/W  32) Special Function Register 1 */
-  __IO  uint32_t                       MATRIX_SFR2;        /**< Offset: 0x118 (R/W  32) Special Function Register 2 */
-  __IO  uint32_t                       MATRIX_SFR3;        /**< Offset: 0x11C (R/W  32) Special Function Register 3 */
-  __IO  uint32_t                       MATRIX_SFR4;        /**< Offset: 0x120 (R/W  32) Special Function Register 4 */
-  __IO  uint32_t                       MATRIX_SFR5;        /**< Offset: 0x124 (R/W  32) Special Function Register 5 */
-  __IO  uint32_t                       MATRIX_SFR6;        /**< Offset: 0x128 (R/W  32) Special Function Register 6 */
-  __IO  uint32_t                       MATRIX_SFR7;        /**< Offset: 0x12C (R/W  32) Special Function Register 7 */
-  __IO  uint32_t                       MATRIX_SFR8;        /**< Offset: 0x130 (R/W  32) Special Function Register 8 */
-  __IO  uint32_t                       MATRIX_SFR9;        /**< Offset: 0x134 (R/W  32) Special Function Register 9 */
-  __IO  uint32_t                       MATRIX_SFR10;       /**< Offset: 0x138 (R/W  32) Special Function Register 10 */
-  __IO  uint32_t                       MATRIX_SFR11;       /**< Offset: 0x13C (R/W  32) Special Function Register 11 */
-  __IO  uint32_t                       MATRIX_SFR12;       /**< Offset: 0x140 (R/W  32) Special Function Register 12 */
-  __IO  uint32_t                       MATRIX_SFR13;       /**< Offset: 0x144 (R/W  32) Special Function Register 13 */
-  __IO  uint32_t                       MATRIX_SFR14;       /**< Offset: 0x148 (R/W  32) Special Function Register 14 */
-  __IO  uint32_t                       MATRIX_SFR15;       /**< Offset: 0x14C (R/W  32) Special Function Register 15 */
+  __I   uint8_t                        Reserved1[0x4C];
   __O   uint32_t                       MATRIX_MEIER;       /**< Offset: 0x150 ( /W  32) Master Error Interrupt Enable Register */
   __O   uint32_t                       MATRIX_MEIDR;       /**< Offset: 0x154 ( /W  32) Master Error Interrupt Disable Register */
   __I   uint32_t                       MATRIX_MEIMR;       /**< Offset: 0x158 (R/   32) Master Error Interrupt Mask Register */

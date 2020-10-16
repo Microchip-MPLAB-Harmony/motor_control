@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-02-03T17:22:07Z */
+/* file generated from device description version 2020-07-08T08:12:01Z */
 #ifndef _SAMRH71_RSTC_COMPONENT_H_
 #define _SAMRH71_RSTC_COMPONENT_H_
 
@@ -50,9 +50,6 @@
 
 
 /* -------- RSTC_SR : (RSTC Offset: 0x04) ( R/ 32) Status Register -------- */
-#define RSTC_SR_URSTS_Pos                     _U_(0)                                               /**< (RSTC_SR) User Reset Status Position */
-#define RSTC_SR_URSTS_Msk                     (_U_(0x1) << RSTC_SR_URSTS_Pos)                      /**< (RSTC_SR) User Reset Status Mask */
-#define RSTC_SR_URSTS(value)                  (RSTC_SR_URSTS_Msk & ((value) << RSTC_SR_URSTS_Pos))
 #define RSTC_SR_RSTTYP_Pos                    _U_(8)                                               /**< (RSTC_SR) Reset Type Position */
 #define RSTC_SR_RSTTYP_Msk                    (_U_(0x7) << RSTC_SR_RSTTYP_Pos)                     /**< (RSTC_SR) Reset Type Mask */
 #define RSTC_SR_RSTTYP(value)                 (RSTC_SR_RSTTYP_Msk & ((value) << RSTC_SR_RSTTYP_Pos))
@@ -74,28 +71,22 @@
 #define RSTC_SR_SRCMP_Pos                     _U_(17)                                              /**< (RSTC_SR) Software Reset Command in Progress Position */
 #define RSTC_SR_SRCMP_Msk                     (_U_(0x1) << RSTC_SR_SRCMP_Pos)                      /**< (RSTC_SR) Software Reset Command in Progress Mask */
 #define RSTC_SR_SRCMP(value)                  (RSTC_SR_SRCMP_Msk & ((value) << RSTC_SR_SRCMP_Pos))
-#define RSTC_SR_Msk                           _U_(0x00030701)                                      /**< (RSTC_SR) Register Mask  */
+#define RSTC_SR_Msk                           _U_(0x00030700)                                      /**< (RSTC_SR) Register Mask  */
 
 
 /* -------- RSTC_MR : (RSTC Offset: 0x08) (R/W 32) Mode Register -------- */
-#define RSTC_MR_URSTEN_Pos                    _U_(0)                                               /**< (RSTC_MR) User Reset Enable Position */
-#define RSTC_MR_URSTEN_Msk                    (_U_(0x1) << RSTC_MR_URSTEN_Pos)                     /**< (RSTC_MR) User Reset Enable Mask */
-#define RSTC_MR_URSTEN(value)                 (RSTC_MR_URSTEN_Msk & ((value) << RSTC_MR_URSTEN_Pos))
 #define RSTC_MR_SCKSW_Pos                     _U_(1)                                               /**< (RSTC_MR) Slow Clock Switching Position */
 #define RSTC_MR_SCKSW_Msk                     (_U_(0x1) << RSTC_MR_SCKSW_Pos)                      /**< (RSTC_MR) Slow Clock Switching Mask */
 #define RSTC_MR_SCKSW(value)                  (RSTC_MR_SCKSW_Msk & ((value) << RSTC_MR_SCKSW_Pos))
 #define RSTC_MR_CPUFEN_Pos                    _U_(3)                                               /**< (RSTC_MR) CPU Fail Enable Position */
 #define RSTC_MR_CPUFEN_Msk                    (_U_(0x1) << RSTC_MR_CPUFEN_Pos)                     /**< (RSTC_MR) CPU Fail Enable Mask */
 #define RSTC_MR_CPUFEN(value)                 (RSTC_MR_CPUFEN_Msk & ((value) << RSTC_MR_CPUFEN_Pos))
-#define RSTC_MR_URSTIEN_Pos                   _U_(4)                                               /**< (RSTC_MR) User Reset Interrupt Enable Position */
-#define RSTC_MR_URSTIEN_Msk                   (_U_(0x1) << RSTC_MR_URSTIEN_Pos)                    /**< (RSTC_MR) User Reset Interrupt Enable Mask */
-#define RSTC_MR_URSTIEN(value)                (RSTC_MR_URSTIEN_Msk & ((value) << RSTC_MR_URSTIEN_Pos))
 #define RSTC_MR_KEY_Pos                       _U_(24)                                              /**< (RSTC_MR) Write Access Password Position */
 #define RSTC_MR_KEY_Msk                       (_U_(0xFF) << RSTC_MR_KEY_Pos)                       /**< (RSTC_MR) Write Access Password Mask */
 #define RSTC_MR_KEY(value)                    (RSTC_MR_KEY_Msk & ((value) << RSTC_MR_KEY_Pos))    
 #define   RSTC_MR_KEY_PASSWD_Val              _U_(0xA5)                                            /**< (RSTC_MR) Writing any other value in this field aborts the write operation.Always reads as 0.  */
 #define RSTC_MR_KEY_PASSWD                    (RSTC_MR_KEY_PASSWD_Val << RSTC_MR_KEY_Pos)          /**< (RSTC_MR) Writing any other value in this field aborts the write operation.Always reads as 0. Position  */
-#define RSTC_MR_Msk                           _U_(0xFF00001B)                                      /**< (RSTC_MR) Register Mask  */
+#define RSTC_MR_Msk                           _U_(0xFF00000A)                                      /**< (RSTC_MR) Register Mask  */
 
 
 /** \brief RSTC register offsets definitions */

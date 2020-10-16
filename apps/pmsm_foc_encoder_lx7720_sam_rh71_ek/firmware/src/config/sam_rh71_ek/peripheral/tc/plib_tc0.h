@@ -142,8 +142,10 @@ void TC0_CH1_TimerCallbackRegister(TC_TIMER_CALLBACK callback, uintptr_t context
  
 
 
+#ifdef __cplusplus // Provide C++ Compatibility
+}
+#endif
+
 #endif //PLIB_TC0_H
 
-/**
- End of File
-*/
+/* End of File */

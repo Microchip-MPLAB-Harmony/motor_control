@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-02-03T17:22:07Z */
+/* file generated from device description version 2020-07-08T08:12:01Z */
 #ifndef _SAMRH71F20C_GPIO_H_
 #define _SAMRH71F20C_GPIO_H_
 
@@ -417,150 +417,150 @@
 #define PIO_PG31                    (_U_(1) << 31)  /**< PIO mask for PG31 */
 
 /* ========== PIO definition for FLEXCOM0 peripheral ========== */
-#define PIN_PC21A_FLEXCOM0_FLEXCOM0_IO0            _L_(85)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO0 on PC21 mux A */
-#define MUX_PC21A_FLEXCOM0_FLEXCOM0_IO0            _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO0 */
-#define PIO_PC21A_FLEXCOM0_FLEXCOM0_IO0            (_U_(1) << 21) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO0 */
-#define PIN_PC22A_FLEXCOM0_FLEXCOM0_IO1            _L_(86)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO1 on PC22 mux A */
-#define MUX_PC22A_FLEXCOM0_FLEXCOM0_IO1            _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO1 */
-#define PIO_PC22A_FLEXCOM0_FLEXCOM0_IO1            (_U_(1) << 22) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO1 */
-#define PIN_PC23A_FLEXCOM0_FLEXCOM0_IO2            _L_(87)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO2 on PC23 mux A */
-#define MUX_PC23A_FLEXCOM0_FLEXCOM0_IO2            _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO2 */
-#define PIO_PC23A_FLEXCOM0_FLEXCOM0_IO2            (_U_(1) << 23) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO2 */
-#define PIN_PC24A_FLEXCOM0_FLEXCOM0_IO3            _L_(88)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO3 on PC24 mux A */
-#define MUX_PC24A_FLEXCOM0_FLEXCOM0_IO3            _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO3 */
-#define PIO_PC24A_FLEXCOM0_FLEXCOM0_IO3            (_U_(1) << 24) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO3 */
-#define PIN_PC25A_FLEXCOM0_FLEXCOM0_IO4            _L_(89)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO4 on PC25 mux A */
-#define MUX_PC25A_FLEXCOM0_FLEXCOM0_IO4            _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO4 */
-#define PIO_PC25A_FLEXCOM0_FLEXCOM0_IO4            (_U_(1) << 25) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO4 */
-#define PIN_PC26A_FLEXCOM0_FLEXCOM0_IO5            _L_(90)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO5 on PC26 mux A */
-#define MUX_PC26A_FLEXCOM0_FLEXCOM0_IO5            _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO5 */
-#define PIO_PC26A_FLEXCOM0_FLEXCOM0_IO5            (_U_(1) << 26) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO5 */
-#define PIN_PC27A_FLEXCOM0_FLEXCOM0_IO6            _L_(91)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO6 on PC27 mux A */
-#define MUX_PC27A_FLEXCOM0_FLEXCOM0_IO6            _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO6 */
-#define PIO_PC27A_FLEXCOM0_FLEXCOM0_IO6            (_U_(1) << 27) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO6 */
-#define PIN_PC28A_FLEXCOM0_FLEXCOM0_IO7            _L_(92)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO7 on PC28 mux A */
-#define MUX_PC28A_FLEXCOM0_FLEXCOM0_IO7            _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO7 */
-#define PIO_PC28A_FLEXCOM0_FLEXCOM0_IO7            (_U_(1) << 28) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO7 */
+#define PIN_PC21A_FLEXCOM0_IO0                     _L_(85)      /**< FLEXCOM0 signal: FLEXCOM0_IO0 on PC21 mux A */
+#define MUX_PC21A_FLEXCOM0_IO0                     _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO0 */
+#define PIO_PC21A_FLEXCOM0_IO0                     (_U_(1) << 21) /**< FLEXCOM0 signal: FLEXCOM0_IO0 */
+#define PIN_PC22A_FLEXCOM0_IO1                     _L_(86)      /**< FLEXCOM0 signal: FLEXCOM0_IO1 on PC22 mux A */
+#define MUX_PC22A_FLEXCOM0_IO1                     _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO1 */
+#define PIO_PC22A_FLEXCOM0_IO1                     (_U_(1) << 22) /**< FLEXCOM0 signal: FLEXCOM0_IO1 */
+#define PIN_PC23A_FLEXCOM0_IO2                     _L_(87)      /**< FLEXCOM0 signal: FLEXCOM0_IO2 on PC23 mux A */
+#define MUX_PC23A_FLEXCOM0_IO2                     _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO2 */
+#define PIO_PC23A_FLEXCOM0_IO2                     (_U_(1) << 23) /**< FLEXCOM0 signal: FLEXCOM0_IO2 */
+#define PIN_PC24A_FLEXCOM0_IO3                     _L_(88)      /**< FLEXCOM0 signal: FLEXCOM0_IO3 on PC24 mux A */
+#define MUX_PC24A_FLEXCOM0_IO3                     _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO3 */
+#define PIO_PC24A_FLEXCOM0_IO3                     (_U_(1) << 24) /**< FLEXCOM0 signal: FLEXCOM0_IO3 */
+#define PIN_PC25A_FLEXCOM0_IO4                     _L_(89)      /**< FLEXCOM0 signal: FLEXCOM0_IO4 on PC25 mux A */
+#define MUX_PC25A_FLEXCOM0_IO4                     _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO4 */
+#define PIO_PC25A_FLEXCOM0_IO4                     (_U_(1) << 25) /**< FLEXCOM0 signal: FLEXCOM0_IO4 */
+#define PIN_PC26A_FLEXCOM0_IO5                     _L_(90)      /**< FLEXCOM0 signal: FLEXCOM0_IO5 on PC26 mux A */
+#define MUX_PC26A_FLEXCOM0_IO5                     _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO5 */
+#define PIO_PC26A_FLEXCOM0_IO5                     (_U_(1) << 26) /**< FLEXCOM0 signal: FLEXCOM0_IO5 */
+#define PIN_PC27A_FLEXCOM0_IO6                     _L_(91)      /**< FLEXCOM0 signal: FLEXCOM0_IO6 on PC27 mux A */
+#define MUX_PC27A_FLEXCOM0_IO6                     _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO6 */
+#define PIO_PC27A_FLEXCOM0_IO6                     (_U_(1) << 27) /**< FLEXCOM0 signal: FLEXCOM0_IO6 */
+#define PIN_PC28A_FLEXCOM0_IO7                     _L_(92)      /**< FLEXCOM0 signal: FLEXCOM0_IO7 on PC28 mux A */
+#define MUX_PC28A_FLEXCOM0_IO7                     _L_(0)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO7 */
+#define PIO_PC28A_FLEXCOM0_IO7                     (_U_(1) << 28) /**< FLEXCOM0 signal: FLEXCOM0_IO7 */
 /* ========== PIO definition for FLEXCOM1 peripheral ========== */
-#define PIN_PF30A_FLEXCOM1_FLEXCOM1_IO0            _L_(190)     /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO0 on PF30 mux A */
-#define MUX_PF30A_FLEXCOM1_FLEXCOM1_IO0            _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_FLEXCOM1_IO0 */
-#define PIO_PF30A_FLEXCOM1_FLEXCOM1_IO0            (_U_(1) << 30) /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO0 */
-#define PIN_PF29A_FLEXCOM1_FLEXCOM1_IO1            _L_(189)     /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO1 on PF29 mux A */
-#define MUX_PF29A_FLEXCOM1_FLEXCOM1_IO1            _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_FLEXCOM1_IO1 */
-#define PIO_PF29A_FLEXCOM1_FLEXCOM1_IO1            (_U_(1) << 29) /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO1 */
-#define PIN_PF28A_FLEXCOM1_FLEXCOM1_IO2            _L_(188)     /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO2 on PF28 mux A */
-#define MUX_PF28A_FLEXCOM1_FLEXCOM1_IO2            _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_FLEXCOM1_IO2 */
-#define PIO_PF28A_FLEXCOM1_FLEXCOM1_IO2            (_U_(1) << 28) /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO2 */
-#define PIN_PF27A_FLEXCOM1_FLEXCOM1_IO3            _L_(187)     /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO3 on PF27 mux A */
-#define MUX_PF27A_FLEXCOM1_FLEXCOM1_IO3            _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_FLEXCOM1_IO3 */
-#define PIO_PF27A_FLEXCOM1_FLEXCOM1_IO3            (_U_(1) << 27) /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO3 */
-#define PIN_PF26A_FLEXCOM1_FLEXCOM1_IO4            _L_(186)     /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO4 on PF26 mux A */
-#define MUX_PF26A_FLEXCOM1_FLEXCOM1_IO4            _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_FLEXCOM1_IO4 */
-#define PIO_PF26A_FLEXCOM1_FLEXCOM1_IO4            (_U_(1) << 26) /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO4 */
+#define PIN_PF30A_FLEXCOM1_IO0                     _L_(190)     /**< FLEXCOM1 signal: FLEXCOM1_IO0 on PF30 mux A */
+#define MUX_PF30A_FLEXCOM1_IO0                     _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_IO0 */
+#define PIO_PF30A_FLEXCOM1_IO0                     (_U_(1) << 30) /**< FLEXCOM1 signal: FLEXCOM1_IO0 */
+#define PIN_PF29A_FLEXCOM1_IO1                     _L_(189)     /**< FLEXCOM1 signal: FLEXCOM1_IO1 on PF29 mux A */
+#define MUX_PF29A_FLEXCOM1_IO1                     _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_IO1 */
+#define PIO_PF29A_FLEXCOM1_IO1                     (_U_(1) << 29) /**< FLEXCOM1 signal: FLEXCOM1_IO1 */
+#define PIN_PF28A_FLEXCOM1_IO2                     _L_(188)     /**< FLEXCOM1 signal: FLEXCOM1_IO2 on PF28 mux A */
+#define MUX_PF28A_FLEXCOM1_IO2                     _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_IO2 */
+#define PIO_PF28A_FLEXCOM1_IO2                     (_U_(1) << 28) /**< FLEXCOM1 signal: FLEXCOM1_IO2 */
+#define PIN_PF27A_FLEXCOM1_IO3                     _L_(187)     /**< FLEXCOM1 signal: FLEXCOM1_IO3 on PF27 mux A */
+#define MUX_PF27A_FLEXCOM1_IO3                     _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_IO3 */
+#define PIO_PF27A_FLEXCOM1_IO3                     (_U_(1) << 27) /**< FLEXCOM1 signal: FLEXCOM1_IO3 */
+#define PIN_PF26A_FLEXCOM1_IO4                     _L_(186)     /**< FLEXCOM1 signal: FLEXCOM1_IO4 on PF26 mux A */
+#define MUX_PF26A_FLEXCOM1_IO4                     _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_IO4 */
+#define PIO_PF26A_FLEXCOM1_IO4                     (_U_(1) << 26) /**< FLEXCOM1 signal: FLEXCOM1_IO4 */
 /* ========== PIO definition for FLEXCOM2 peripheral ========== */
-#define PIN_PA2A_FLEXCOM2_FLEXCOM2_IO0             _L_(2)       /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO0 on PA2 mux A */
-#define MUX_PA2A_FLEXCOM2_FLEXCOM2_IO0             _L_(0)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO0 */
-#define PIO_PA2A_FLEXCOM2_FLEXCOM2_IO0             (_U_(1) << 2) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO0 */
-#define PIN_PA6A_FLEXCOM2_FLEXCOM2_IO1             _L_(6)       /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO1 on PA6 mux A */
-#define MUX_PA6A_FLEXCOM2_FLEXCOM2_IO1             _L_(0)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO1 */
-#define PIO_PA6A_FLEXCOM2_FLEXCOM2_IO1             (_U_(1) << 6) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO1 */
-#define PIN_PA8A_FLEXCOM2_FLEXCOM2_IO2             _L_(8)       /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO2 on PA8 mux A */
-#define MUX_PA8A_FLEXCOM2_FLEXCOM2_IO2             _L_(0)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO2 */
-#define PIO_PA8A_FLEXCOM2_FLEXCOM2_IO2             (_U_(1) << 8) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO2 */
-#define PIN_PA7A_FLEXCOM2_FLEXCOM2_IO3             _L_(7)       /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO3 on PA7 mux A */
-#define MUX_PA7A_FLEXCOM2_FLEXCOM2_IO3             _L_(0)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO3 */
-#define PIO_PA7A_FLEXCOM2_FLEXCOM2_IO3             (_U_(1) << 7) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO3 */
-#define PIN_PA3A_FLEXCOM2_FLEXCOM2_IO4             _L_(3)       /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO4 on PA3 mux A */
-#define MUX_PA3A_FLEXCOM2_FLEXCOM2_IO4             _L_(0)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO4 */
-#define PIO_PA3A_FLEXCOM2_FLEXCOM2_IO4             (_U_(1) << 3) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO4 */
+#define PIN_PA2A_FLEXCOM2_IO0                      _L_(2)       /**< FLEXCOM2 signal: FLEXCOM2_IO0 on PA2 mux A */
+#define MUX_PA2A_FLEXCOM2_IO0                      _L_(0)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO0 */
+#define PIO_PA2A_FLEXCOM2_IO0                      (_U_(1) << 2) /**< FLEXCOM2 signal: FLEXCOM2_IO0 */
+#define PIN_PA6A_FLEXCOM2_IO1                      _L_(6)       /**< FLEXCOM2 signal: FLEXCOM2_IO1 on PA6 mux A */
+#define MUX_PA6A_FLEXCOM2_IO1                      _L_(0)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO1 */
+#define PIO_PA6A_FLEXCOM2_IO1                      (_U_(1) << 6) /**< FLEXCOM2 signal: FLEXCOM2_IO1 */
+#define PIN_PA8A_FLEXCOM2_IO2                      _L_(8)       /**< FLEXCOM2 signal: FLEXCOM2_IO2 on PA8 mux A */
+#define MUX_PA8A_FLEXCOM2_IO2                      _L_(0)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO2 */
+#define PIO_PA8A_FLEXCOM2_IO2                      (_U_(1) << 8) /**< FLEXCOM2 signal: FLEXCOM2_IO2 */
+#define PIN_PA7A_FLEXCOM2_IO3                      _L_(7)       /**< FLEXCOM2 signal: FLEXCOM2_IO3 on PA7 mux A */
+#define MUX_PA7A_FLEXCOM2_IO3                      _L_(0)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO3 */
+#define PIO_PA7A_FLEXCOM2_IO3                      (_U_(1) << 7) /**< FLEXCOM2 signal: FLEXCOM2_IO3 */
+#define PIN_PA3A_FLEXCOM2_IO4                      _L_(3)       /**< FLEXCOM2 signal: FLEXCOM2_IO4 on PA3 mux A */
+#define MUX_PA3A_FLEXCOM2_IO4                      _L_(0)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO4 */
+#define PIO_PA3A_FLEXCOM2_IO4                      (_U_(1) << 3) /**< FLEXCOM2 signal: FLEXCOM2_IO4 */
 /* ========== PIO definition for FLEXCOM3 peripheral ========== */
-#define PIN_PA20A_FLEXCOM3_FLEXCOM3_IO0            _L_(20)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO0 on PA20 mux A */
-#define MUX_PA20A_FLEXCOM3_FLEXCOM3_IO0            _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO0 */
-#define PIO_PA20A_FLEXCOM3_FLEXCOM3_IO0            (_U_(1) << 20) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO0 */
-#define PIN_PA19A_FLEXCOM3_FLEXCOM3_IO1            _L_(19)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO1 on PA19 mux A */
-#define MUX_PA19A_FLEXCOM3_FLEXCOM3_IO1            _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO1 */
-#define PIO_PA19A_FLEXCOM3_FLEXCOM3_IO1            (_U_(1) << 19) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO1 */
-#define PIN_PA23A_FLEXCOM3_FLEXCOM3_IO2            _L_(23)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO2 on PA23 mux A */
-#define MUX_PA23A_FLEXCOM3_FLEXCOM3_IO2            _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO2 */
-#define PIO_PA23A_FLEXCOM3_FLEXCOM3_IO2            (_U_(1) << 23) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO2 */
-#define PIN_PA24A_FLEXCOM3_FLEXCOM3_IO3            _L_(24)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO3 on PA24 mux A */
-#define MUX_PA24A_FLEXCOM3_FLEXCOM3_IO3            _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO3 */
-#define PIO_PA24A_FLEXCOM3_FLEXCOM3_IO3            (_U_(1) << 24) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO3 */
-#define PIN_PA21A_FLEXCOM3_FLEXCOM3_IO4            _L_(21)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO4 on PA21 mux A */
-#define MUX_PA21A_FLEXCOM3_FLEXCOM3_IO4            _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO4 */
-#define PIO_PA21A_FLEXCOM3_FLEXCOM3_IO4            (_U_(1) << 21) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO4 */
-#define PIN_PA22A_FLEXCOM3_FLEXCOM3_IO5            _L_(22)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO5 on PA22 mux A */
-#define MUX_PA22A_FLEXCOM3_FLEXCOM3_IO5            _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO5 */
-#define PIO_PA22A_FLEXCOM3_FLEXCOM3_IO5            (_U_(1) << 22) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO5 */
-#define PIN_PA12A_FLEXCOM3_FLEXCOM3_IO6            _L_(12)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO6 on PA12 mux A */
-#define MUX_PA12A_FLEXCOM3_FLEXCOM3_IO6            _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO6 */
-#define PIO_PA12A_FLEXCOM3_FLEXCOM3_IO6            (_U_(1) << 12) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO6 */
+#define PIN_PA20A_FLEXCOM3_IO0                     _L_(20)      /**< FLEXCOM3 signal: FLEXCOM3_IO0 on PA20 mux A */
+#define MUX_PA20A_FLEXCOM3_IO0                     _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO0 */
+#define PIO_PA20A_FLEXCOM3_IO0                     (_U_(1) << 20) /**< FLEXCOM3 signal: FLEXCOM3_IO0 */
+#define PIN_PA19A_FLEXCOM3_IO1                     _L_(19)      /**< FLEXCOM3 signal: FLEXCOM3_IO1 on PA19 mux A */
+#define MUX_PA19A_FLEXCOM3_IO1                     _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO1 */
+#define PIO_PA19A_FLEXCOM3_IO1                     (_U_(1) << 19) /**< FLEXCOM3 signal: FLEXCOM3_IO1 */
+#define PIN_PA23A_FLEXCOM3_IO2                     _L_(23)      /**< FLEXCOM3 signal: FLEXCOM3_IO2 on PA23 mux A */
+#define MUX_PA23A_FLEXCOM3_IO2                     _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO2 */
+#define PIO_PA23A_FLEXCOM3_IO2                     (_U_(1) << 23) /**< FLEXCOM3 signal: FLEXCOM3_IO2 */
+#define PIN_PA24A_FLEXCOM3_IO3                     _L_(24)      /**< FLEXCOM3 signal: FLEXCOM3_IO3 on PA24 mux A */
+#define MUX_PA24A_FLEXCOM3_IO3                     _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO3 */
+#define PIO_PA24A_FLEXCOM3_IO3                     (_U_(1) << 24) /**< FLEXCOM3 signal: FLEXCOM3_IO3 */
+#define PIN_PA21A_FLEXCOM3_IO4                     _L_(21)      /**< FLEXCOM3 signal: FLEXCOM3_IO4 on PA21 mux A */
+#define MUX_PA21A_FLEXCOM3_IO4                     _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO4 */
+#define PIO_PA21A_FLEXCOM3_IO4                     (_U_(1) << 21) /**< FLEXCOM3 signal: FLEXCOM3_IO4 */
+#define PIN_PA22A_FLEXCOM3_IO5                     _L_(22)      /**< FLEXCOM3 signal: FLEXCOM3_IO5 on PA22 mux A */
+#define MUX_PA22A_FLEXCOM3_IO5                     _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO5 */
+#define PIO_PA22A_FLEXCOM3_IO5                     (_U_(1) << 22) /**< FLEXCOM3 signal: FLEXCOM3_IO5 */
+#define PIN_PA12A_FLEXCOM3_IO6                     _L_(12)      /**< FLEXCOM3 signal: FLEXCOM3_IO6 on PA12 mux A */
+#define MUX_PA12A_FLEXCOM3_IO6                     _L_(0)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO6 */
+#define PIO_PA12A_FLEXCOM3_IO6                     (_U_(1) << 12) /**< FLEXCOM3 signal: FLEXCOM3_IO6 */
 /* ========== PIO definition for FLEXCOM4 peripheral ========== */
-#define PIN_PC0A_FLEXCOM4_FLEXCOM4_IO0             _L_(64)      /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO0 on PC0 mux A */
-#define MUX_PC0A_FLEXCOM4_FLEXCOM4_IO0             _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO0 */
-#define PIO_PC0A_FLEXCOM4_FLEXCOM4_IO0             (_U_(1) << 0) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO0 */
-#define PIN_PC1A_FLEXCOM4_FLEXCOM4_IO1             _L_(65)      /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO1 on PC1 mux A */
-#define MUX_PC1A_FLEXCOM4_FLEXCOM4_IO1             _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO1 */
-#define PIO_PC1A_FLEXCOM4_FLEXCOM4_IO1             (_U_(1) << 1) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO1 */
-#define PIN_PC2A_FLEXCOM4_FLEXCOM4_IO2             _L_(66)      /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO2 on PC2 mux A */
-#define MUX_PC2A_FLEXCOM4_FLEXCOM4_IO2             _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO2 */
-#define PIO_PC2A_FLEXCOM4_FLEXCOM4_IO2             (_U_(1) << 2) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO2 */
-#define PIN_PC3A_FLEXCOM4_FLEXCOM4_IO3             _L_(67)      /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO3 on PC3 mux A */
-#define MUX_PC3A_FLEXCOM4_FLEXCOM4_IO3             _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO3 */
-#define PIO_PC3A_FLEXCOM4_FLEXCOM4_IO3             (_U_(1) << 3) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO3 */
-#define PIN_PC4A_FLEXCOM4_FLEXCOM4_IO4             _L_(68)      /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO4 on PC4 mux A */
-#define MUX_PC4A_FLEXCOM4_FLEXCOM4_IO4             _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO4 */
-#define PIO_PC4A_FLEXCOM4_FLEXCOM4_IO4             (_U_(1) << 4) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO4 */
-#define PIN_PC5A_FLEXCOM4_FLEXCOM4_IO5             _L_(69)      /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO5 on PC5 mux A */
-#define MUX_PC5A_FLEXCOM4_FLEXCOM4_IO5             _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO5 */
-#define PIO_PC5A_FLEXCOM4_FLEXCOM4_IO5             (_U_(1) << 5) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO5 */
-#define PIN_PC6A_FLEXCOM4_FLEXCOM4_IO6             _L_(70)      /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO6 on PC6 mux A */
-#define MUX_PC6A_FLEXCOM4_FLEXCOM4_IO6             _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO6 */
-#define PIO_PC6A_FLEXCOM4_FLEXCOM4_IO6             (_U_(1) << 6) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO6 */
+#define PIN_PC0A_FLEXCOM4_IO0                      _L_(64)      /**< FLEXCOM4 signal: FLEXCOM4_IO0 on PC0 mux A */
+#define MUX_PC0A_FLEXCOM4_IO0                      _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO0 */
+#define PIO_PC0A_FLEXCOM4_IO0                      (_U_(1) << 0) /**< FLEXCOM4 signal: FLEXCOM4_IO0 */
+#define PIN_PC1A_FLEXCOM4_IO1                      _L_(65)      /**< FLEXCOM4 signal: FLEXCOM4_IO1 on PC1 mux A */
+#define MUX_PC1A_FLEXCOM4_IO1                      _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO1 */
+#define PIO_PC1A_FLEXCOM4_IO1                      (_U_(1) << 1) /**< FLEXCOM4 signal: FLEXCOM4_IO1 */
+#define PIN_PC2A_FLEXCOM4_IO2                      _L_(66)      /**< FLEXCOM4 signal: FLEXCOM4_IO2 on PC2 mux A */
+#define MUX_PC2A_FLEXCOM4_IO2                      _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO2 */
+#define PIO_PC2A_FLEXCOM4_IO2                      (_U_(1) << 2) /**< FLEXCOM4 signal: FLEXCOM4_IO2 */
+#define PIN_PC3A_FLEXCOM4_IO3                      _L_(67)      /**< FLEXCOM4 signal: FLEXCOM4_IO3 on PC3 mux A */
+#define MUX_PC3A_FLEXCOM4_IO3                      _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO3 */
+#define PIO_PC3A_FLEXCOM4_IO3                      (_U_(1) << 3) /**< FLEXCOM4 signal: FLEXCOM4_IO3 */
+#define PIN_PC4A_FLEXCOM4_IO4                      _L_(68)      /**< FLEXCOM4 signal: FLEXCOM4_IO4 on PC4 mux A */
+#define MUX_PC4A_FLEXCOM4_IO4                      _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO4 */
+#define PIO_PC4A_FLEXCOM4_IO4                      (_U_(1) << 4) /**< FLEXCOM4 signal: FLEXCOM4_IO4 */
+#define PIN_PC5A_FLEXCOM4_IO5                      _L_(69)      /**< FLEXCOM4 signal: FLEXCOM4_IO5 on PC5 mux A */
+#define MUX_PC5A_FLEXCOM4_IO5                      _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO5 */
+#define PIO_PC5A_FLEXCOM4_IO5                      (_U_(1) << 5) /**< FLEXCOM4 signal: FLEXCOM4_IO5 */
+#define PIN_PC6A_FLEXCOM4_IO6                      _L_(70)      /**< FLEXCOM4 signal: FLEXCOM4_IO6 on PC6 mux A */
+#define MUX_PC6A_FLEXCOM4_IO6                      _L_(0)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO6 */
+#define PIO_PC6A_FLEXCOM4_IO6                      (_U_(1) << 6) /**< FLEXCOM4 signal: FLEXCOM4_IO6 */
 /* ========== PIO definition for FLEXCOM5 peripheral ========== */
-#define PIN_PC9A_FLEXCOM5_FLEXCOM5_IO0             _L_(73)      /**< FLEXCOM5 signal: FLEXCOM5_FLEXCOM5_IO0 on PC9 mux A */
-#define MUX_PC9A_FLEXCOM5_FLEXCOM5_IO0             _L_(0)       /**< FLEXCOM5 signal line function value: FLEXCOM5_FLEXCOM5_IO0 */
-#define PIO_PC9A_FLEXCOM5_FLEXCOM5_IO0             (_U_(1) << 9) /**< FLEXCOM5 signal: FLEXCOM5_FLEXCOM5_IO0 */
-#define PIN_PC10A_FLEXCOM5_FLEXCOM5_IO1            _L_(74)      /**< FLEXCOM5 signal: FLEXCOM5_FLEXCOM5_IO1 on PC10 mux A */
-#define MUX_PC10A_FLEXCOM5_FLEXCOM5_IO1            _L_(0)       /**< FLEXCOM5 signal line function value: FLEXCOM5_FLEXCOM5_IO1 */
-#define PIO_PC10A_FLEXCOM5_FLEXCOM5_IO1            (_U_(1) << 10) /**< FLEXCOM5 signal: FLEXCOM5_FLEXCOM5_IO1 */
-#define PIN_PA9A_FLEXCOM5_FLEXCOM5_IO2             _L_(9)       /**< FLEXCOM5 signal: FLEXCOM5_FLEXCOM5_IO2 on PA9 mux A */
-#define MUX_PA9A_FLEXCOM5_FLEXCOM5_IO2             _L_(0)       /**< FLEXCOM5 signal line function value: FLEXCOM5_FLEXCOM5_IO2 */
-#define PIO_PA9A_FLEXCOM5_FLEXCOM5_IO2             (_U_(1) << 9) /**< FLEXCOM5 signal: FLEXCOM5_FLEXCOM5_IO2 */
-#define PIN_PA10A_FLEXCOM5_FLEXCOM5_IO3            _L_(10)      /**< FLEXCOM5 signal: FLEXCOM5_FLEXCOM5_IO3 on PA10 mux A */
-#define MUX_PA10A_FLEXCOM5_FLEXCOM5_IO3            _L_(0)       /**< FLEXCOM5 signal line function value: FLEXCOM5_FLEXCOM5_IO3 */
-#define PIO_PA10A_FLEXCOM5_FLEXCOM5_IO3            (_U_(1) << 10) /**< FLEXCOM5 signal: FLEXCOM5_FLEXCOM5_IO3 */
-#define PIN_PA11A_FLEXCOM5_FLEXCOM5_IO4            _L_(11)      /**< FLEXCOM5 signal: FLEXCOM5_FLEXCOM5_IO4 on PA11 mux A */
-#define MUX_PA11A_FLEXCOM5_FLEXCOM5_IO4            _L_(0)       /**< FLEXCOM5 signal line function value: FLEXCOM5_FLEXCOM5_IO4 */
-#define PIO_PA11A_FLEXCOM5_FLEXCOM5_IO4            (_U_(1) << 11) /**< FLEXCOM5 signal: FLEXCOM5_FLEXCOM5_IO4 */
+#define PIN_PC9A_FLEXCOM5_IO0                      _L_(73)      /**< FLEXCOM5 signal: FLEXCOM5_IO0 on PC9 mux A */
+#define MUX_PC9A_FLEXCOM5_IO0                      _L_(0)       /**< FLEXCOM5 signal line function value: FLEXCOM5_IO0 */
+#define PIO_PC9A_FLEXCOM5_IO0                      (_U_(1) << 9) /**< FLEXCOM5 signal: FLEXCOM5_IO0 */
+#define PIN_PC10A_FLEXCOM5_IO1                     _L_(74)      /**< FLEXCOM5 signal: FLEXCOM5_IO1 on PC10 mux A */
+#define MUX_PC10A_FLEXCOM5_IO1                     _L_(0)       /**< FLEXCOM5 signal line function value: FLEXCOM5_IO1 */
+#define PIO_PC10A_FLEXCOM5_IO1                     (_U_(1) << 10) /**< FLEXCOM5 signal: FLEXCOM5_IO1 */
+#define PIN_PA9A_FLEXCOM5_IO2                      _L_(9)       /**< FLEXCOM5 signal: FLEXCOM5_IO2 on PA9 mux A */
+#define MUX_PA9A_FLEXCOM5_IO2                      _L_(0)       /**< FLEXCOM5 signal line function value: FLEXCOM5_IO2 */
+#define PIO_PA9A_FLEXCOM5_IO2                      (_U_(1) << 9) /**< FLEXCOM5 signal: FLEXCOM5_IO2 */
+#define PIN_PA10A_FLEXCOM5_IO3                     _L_(10)      /**< FLEXCOM5 signal: FLEXCOM5_IO3 on PA10 mux A */
+#define MUX_PA10A_FLEXCOM5_IO3                     _L_(0)       /**< FLEXCOM5 signal line function value: FLEXCOM5_IO3 */
+#define PIO_PA10A_FLEXCOM5_IO3                     (_U_(1) << 10) /**< FLEXCOM5 signal: FLEXCOM5_IO3 */
+#define PIN_PA11A_FLEXCOM5_IO4                     _L_(11)      /**< FLEXCOM5 signal: FLEXCOM5_IO4 on PA11 mux A */
+#define MUX_PA11A_FLEXCOM5_IO4                     _L_(0)       /**< FLEXCOM5 signal line function value: FLEXCOM5_IO4 */
+#define PIO_PA11A_FLEXCOM5_IO4                     (_U_(1) << 11) /**< FLEXCOM5 signal: FLEXCOM5_IO4 */
 /* ========== PIO definition for FLEXCOM6 peripheral ========== */
-#define PIN_PB6A_FLEXCOM6_FLEXCOM6_IO0             _L_(38)      /**< FLEXCOM6 signal: FLEXCOM6_FLEXCOM6_IO0 on PB6 mux A */
-#define MUX_PB6A_FLEXCOM6_FLEXCOM6_IO0             _L_(0)       /**< FLEXCOM6 signal line function value: FLEXCOM6_FLEXCOM6_IO0 */
-#define PIO_PB6A_FLEXCOM6_FLEXCOM6_IO0             (_U_(1) << 6) /**< FLEXCOM6 signal: FLEXCOM6_FLEXCOM6_IO0 */
-#define PIN_PB7A_FLEXCOM6_FLEXCOM6_IO1             _L_(39)      /**< FLEXCOM6 signal: FLEXCOM6_FLEXCOM6_IO1 on PB7 mux A */
-#define MUX_PB7A_FLEXCOM6_FLEXCOM6_IO1             _L_(0)       /**< FLEXCOM6 signal line function value: FLEXCOM6_FLEXCOM6_IO1 */
-#define PIO_PB7A_FLEXCOM6_FLEXCOM6_IO1             (_U_(1) << 7) /**< FLEXCOM6 signal: FLEXCOM6_FLEXCOM6_IO1 */
+#define PIN_PB6A_FLEXCOM6_IO0                      _L_(38)      /**< FLEXCOM6 signal: FLEXCOM6_IO0 on PB6 mux A */
+#define MUX_PB6A_FLEXCOM6_IO0                      _L_(0)       /**< FLEXCOM6 signal line function value: FLEXCOM6_IO0 */
+#define PIO_PB6A_FLEXCOM6_IO0                      (_U_(1) << 6) /**< FLEXCOM6 signal: FLEXCOM6_IO0 */
+#define PIN_PB7A_FLEXCOM6_IO1                      _L_(39)      /**< FLEXCOM6 signal: FLEXCOM6_IO1 on PB7 mux A */
+#define MUX_PB7A_FLEXCOM6_IO1                      _L_(0)       /**< FLEXCOM6 signal line function value: FLEXCOM6_IO1 */
+#define PIO_PB7A_FLEXCOM6_IO1                      (_U_(1) << 7) /**< FLEXCOM6 signal: FLEXCOM6_IO1 */
 /* ========== PIO definition for FLEXCOM7 peripheral ========== */
-#define PIN_PB4A_FLEXCOM7_FLEXCOM7_IO0             _L_(36)      /**< FLEXCOM7 signal: FLEXCOM7_FLEXCOM7_IO0 on PB4 mux A */
-#define MUX_PB4A_FLEXCOM7_FLEXCOM7_IO0             _L_(0)       /**< FLEXCOM7 signal line function value: FLEXCOM7_FLEXCOM7_IO0 */
-#define PIO_PB4A_FLEXCOM7_FLEXCOM7_IO0             (_U_(1) << 4) /**< FLEXCOM7 signal: FLEXCOM7_FLEXCOM7_IO0 */
-#define PIN_PB5A_FLEXCOM7_FLEXCOM7_IO1             _L_(37)      /**< FLEXCOM7 signal: FLEXCOM7_FLEXCOM7_IO1 on PB5 mux A */
-#define MUX_PB5A_FLEXCOM7_FLEXCOM7_IO1             _L_(0)       /**< FLEXCOM7 signal line function value: FLEXCOM7_FLEXCOM7_IO1 */
-#define PIO_PB5A_FLEXCOM7_FLEXCOM7_IO1             (_U_(1) << 5) /**< FLEXCOM7 signal: FLEXCOM7_FLEXCOM7_IO1 */
+#define PIN_PB4A_FLEXCOM7_IO0                      _L_(36)      /**< FLEXCOM7 signal: FLEXCOM7_IO0 on PB4 mux A */
+#define MUX_PB4A_FLEXCOM7_IO0                      _L_(0)       /**< FLEXCOM7 signal line function value: FLEXCOM7_IO0 */
+#define PIO_PB4A_FLEXCOM7_IO0                      (_U_(1) << 4) /**< FLEXCOM7 signal: FLEXCOM7_IO0 */
+#define PIN_PB5A_FLEXCOM7_IO1                      _L_(37)      /**< FLEXCOM7 signal: FLEXCOM7_IO1 on PB5 mux A */
+#define MUX_PB5A_FLEXCOM7_IO1                      _L_(0)       /**< FLEXCOM7 signal line function value: FLEXCOM7_IO1 */
+#define PIO_PB5A_FLEXCOM7_IO1                      (_U_(1) << 5) /**< FLEXCOM7 signal: FLEXCOM7_IO1 */
 /* ========== PIO definition for FLEXCOM8 peripheral ========== */
-#define PIN_PA27A_FLEXCOM8_FLEXCOM8_IO0            _L_(27)      /**< FLEXCOM8 signal: FLEXCOM8_FLEXCOM8_IO0 on PA27 mux A */
-#define MUX_PA27A_FLEXCOM8_FLEXCOM8_IO0            _L_(0)       /**< FLEXCOM8 signal line function value: FLEXCOM8_FLEXCOM8_IO0 */
-#define PIO_PA27A_FLEXCOM8_FLEXCOM8_IO0            (_U_(1) << 27) /**< FLEXCOM8 signal: FLEXCOM8_FLEXCOM8_IO0 */
-#define PIN_PA28A_FLEXCOM8_FLEXCOM8_IO1            _L_(28)      /**< FLEXCOM8 signal: FLEXCOM8_FLEXCOM8_IO1 on PA28 mux A */
-#define MUX_PA28A_FLEXCOM8_FLEXCOM8_IO1            _L_(0)       /**< FLEXCOM8 signal line function value: FLEXCOM8_FLEXCOM8_IO1 */
-#define PIO_PA28A_FLEXCOM8_FLEXCOM8_IO1            (_U_(1) << 28) /**< FLEXCOM8 signal: FLEXCOM8_FLEXCOM8_IO1 */
+#define PIN_PA27A_FLEXCOM8_IO0                     _L_(27)      /**< FLEXCOM8 signal: FLEXCOM8_IO0 on PA27 mux A */
+#define MUX_PA27A_FLEXCOM8_IO0                     _L_(0)       /**< FLEXCOM8 signal line function value: FLEXCOM8_IO0 */
+#define PIO_PA27A_FLEXCOM8_IO0                     (_U_(1) << 27) /**< FLEXCOM8 signal: FLEXCOM8_IO0 */
+#define PIN_PA28A_FLEXCOM8_IO1                     _L_(28)      /**< FLEXCOM8 signal: FLEXCOM8_IO1 on PA28 mux A */
+#define MUX_PA28A_FLEXCOM8_IO1                     _L_(0)       /**< FLEXCOM8 signal line function value: FLEXCOM8_IO1 */
+#define PIO_PA28A_FLEXCOM8_IO1                     (_U_(1) << 28) /**< FLEXCOM8 signal: FLEXCOM8_IO1 */
 /* ========== PIO definition for FLEXCOM9 peripheral ========== */
-#define PIN_PA25A_FLEXCOM9_FLEXCOM9_IO0            _L_(25)      /**< FLEXCOM9 signal: FLEXCOM9_FLEXCOM9_IO0 on PA25 mux A */
-#define MUX_PA25A_FLEXCOM9_FLEXCOM9_IO0            _L_(0)       /**< FLEXCOM9 signal line function value: FLEXCOM9_FLEXCOM9_IO0 */
-#define PIO_PA25A_FLEXCOM9_FLEXCOM9_IO0            (_U_(1) << 25) /**< FLEXCOM9 signal: FLEXCOM9_FLEXCOM9_IO0 */
-#define PIN_PA26A_FLEXCOM9_FLEXCOM9_IO1            _L_(26)      /**< FLEXCOM9 signal: FLEXCOM9_FLEXCOM9_IO1 on PA26 mux A */
-#define MUX_PA26A_FLEXCOM9_FLEXCOM9_IO1            _L_(0)       /**< FLEXCOM9 signal line function value: FLEXCOM9_FLEXCOM9_IO1 */
-#define PIO_PA26A_FLEXCOM9_FLEXCOM9_IO1            (_U_(1) << 26) /**< FLEXCOM9 signal: FLEXCOM9_FLEXCOM9_IO1 */
+#define PIN_PA25A_FLEXCOM9_IO0                     _L_(25)      /**< FLEXCOM9 signal: FLEXCOM9_IO0 on PA25 mux A */
+#define MUX_PA25A_FLEXCOM9_IO0                     _L_(0)       /**< FLEXCOM9 signal line function value: FLEXCOM9_IO0 */
+#define PIO_PA25A_FLEXCOM9_IO0                     (_U_(1) << 25) /**< FLEXCOM9 signal: FLEXCOM9_IO0 */
+#define PIN_PA26A_FLEXCOM9_IO1                     _L_(26)      /**< FLEXCOM9 signal: FLEXCOM9_IO1 on PA26 mux A */
+#define MUX_PA26A_FLEXCOM9_IO1                     _L_(0)       /**< FLEXCOM9 signal line function value: FLEXCOM9_IO1 */
+#define PIO_PA26A_FLEXCOM9_IO1                     (_U_(1) << 26) /**< FLEXCOM9 signal: FLEXCOM9_IO1 */
 /* ========== PIO definition for GMAC peripheral ========== */
 #define PIN_PC26B_GMAC_GCOL                        _L_(90)      /**< GMAC signal: GMAC_GCOL on PC26 mux B */
 #define MUX_PC26B_GMAC_GCOL                        _L_(1)       /**< GMAC signal line function value: GMAC_GCOL */

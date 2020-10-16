@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-02-03T17:22:07Z */
+/* file generated from device description version 2020-07-08T08:12:01Z */
 #ifndef _SAMRH71_WDT_COMPONENT_H_
 #define _SAMRH71_WDT_COMPONENT_H_
 
@@ -32,12 +32,15 @@
 #define WDT_CR_WDRSTT_Pos                     _U_(0)                                               /**< (WDT_CR) Watchdog Restart Position */
 #define WDT_CR_WDRSTT_Msk                     (_U_(0x1) << WDT_CR_WDRSTT_Pos)                      /**< (WDT_CR) Watchdog Restart Mask */
 #define WDT_CR_WDRSTT(value)                  (WDT_CR_WDRSTT_Msk & ((value) << WDT_CR_WDRSTT_Pos))
+#define WDT_CR_LOCKMR_Pos                     _U_(4)                                               /**< (WDT_CR) Lock Mode Register Write Access Position */
+#define WDT_CR_LOCKMR_Msk                     (_U_(0x1) << WDT_CR_LOCKMR_Pos)                      /**< (WDT_CR) Lock Mode Register Write Access Mask */
+#define WDT_CR_LOCKMR(value)                  (WDT_CR_LOCKMR_Msk & ((value) << WDT_CR_LOCKMR_Pos))
 #define WDT_CR_KEY_Pos                        _U_(24)                                              /**< (WDT_CR) Password Position */
 #define WDT_CR_KEY_Msk                        (_U_(0xFF) << WDT_CR_KEY_Pos)                        /**< (WDT_CR) Password Mask */
 #define WDT_CR_KEY(value)                     (WDT_CR_KEY_Msk & ((value) << WDT_CR_KEY_Pos))      
 #define   WDT_CR_KEY_PASSWD_Val               _U_(0xA5)                                            /**< (WDT_CR) Writing any other value in this field aborts the write operation.  */
 #define WDT_CR_KEY_PASSWD                     (WDT_CR_KEY_PASSWD_Val << WDT_CR_KEY_Pos)            /**< (WDT_CR) Writing any other value in this field aborts the write operation. Position  */
-#define WDT_CR_Msk                            _U_(0xFF000001)                                      /**< (WDT_CR) Register Mask  */
+#define WDT_CR_Msk                            _U_(0xFF000011)                                      /**< (WDT_CR) Register Mask  */
 
 
 /* -------- WDT_MR : (WDT Offset: 0x04) (R/W 32) Mode Register -------- */

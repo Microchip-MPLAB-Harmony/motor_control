@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-02-03T17:22:07Z */
+/* file generated from device description version 2020-07-08T08:12:01Z */
 #ifndef _SAMRH71_FLEXCOM_COMPONENT_H_
 #define _SAMRH71_FLEXCOM_COMPONENT_H_
 
@@ -1605,6 +1605,9 @@
 #define FLEX_TWI_SMR_SADAT_Pos                _U_(4)                                               /**< (FLEX_TWI_SMR) Slave Address Treated as Data Position */
 #define FLEX_TWI_SMR_SADAT_Msk                (_U_(0x1) << FLEX_TWI_SMR_SADAT_Pos)                 /**< (FLEX_TWI_SMR) Slave Address Treated as Data Mask */
 #define FLEX_TWI_SMR_SADAT(value)             (FLEX_TWI_SMR_SADAT_Msk & ((value) << FLEX_TWI_SMR_SADAT_Pos))
+#define FLEX_TWI_SMR_BSEL_Pos                 _U_(5)                                               /**< (FLEX_TWI_SMR) TWI Bus Selection Position */
+#define FLEX_TWI_SMR_BSEL_Msk                 (_U_(0x1) << FLEX_TWI_SMR_BSEL_Pos)                  /**< (FLEX_TWI_SMR) TWI Bus Selection Mask */
+#define FLEX_TWI_SMR_BSEL(value)              (FLEX_TWI_SMR_BSEL_Msk & ((value) << FLEX_TWI_SMR_BSEL_Pos))
 #define FLEX_TWI_SMR_SCLWSDIS_Pos             _U_(6)                                               /**< (FLEX_TWI_SMR) Clock Wait State Disable Position */
 #define FLEX_TWI_SMR_SCLWSDIS_Msk             (_U_(0x1) << FLEX_TWI_SMR_SCLWSDIS_Pos)              /**< (FLEX_TWI_SMR) Clock Wait State Disable Mask */
 #define FLEX_TWI_SMR_SCLWSDIS(value)          (FLEX_TWI_SMR_SCLWSDIS_Msk & ((value) << FLEX_TWI_SMR_SCLWSDIS_Pos))
@@ -1617,7 +1620,7 @@
 #define FLEX_TWI_SMR_SADR_Pos                 _U_(16)                                              /**< (FLEX_TWI_SMR) Slave Address Position */
 #define FLEX_TWI_SMR_SADR_Msk                 (_U_(0x7F) << FLEX_TWI_SMR_SADR_Pos)                 /**< (FLEX_TWI_SMR) Slave Address Mask */
 #define FLEX_TWI_SMR_SADR(value)              (FLEX_TWI_SMR_SADR_Msk & ((value) << FLEX_TWI_SMR_SADR_Pos))
-#define FLEX_TWI_SMR_Msk                      _U_(0x007F7FDD)                                      /**< (FLEX_TWI_SMR) Register Mask  */
+#define FLEX_TWI_SMR_Msk                      _U_(0x007F7FFD)                                      /**< (FLEX_TWI_SMR) Register Mask  */
 
 
 /* -------- FLEX_TWI_IADR : (FLEXCOM Offset: 0x60C) (R/W 32) TWI Internal Address Register -------- */
@@ -1690,6 +1693,9 @@
 #define FLEX_TWI_SR_MCACK_Pos                 _U_(16)                                              /**< (FLEX_TWI_SR) Master Code Acknowledge (cleared on read) Position */
 #define FLEX_TWI_SR_MCACK_Msk                 (_U_(0x1) << FLEX_TWI_SR_MCACK_Pos)                  /**< (FLEX_TWI_SR) Master Code Acknowledge (cleared on read) Mask */
 #define FLEX_TWI_SR_MCACK(value)              (FLEX_TWI_SR_MCACK_Msk & ((value) << FLEX_TWI_SR_MCACK_Pos))
+#define FLEX_TWI_SR_SMBAF_Pos                 _U_(17)                                              /**< (FLEX_TWI_SR) SMBus Alert Flag (cleared on read) Position */
+#define FLEX_TWI_SR_SMBAF_Msk                 (_U_(0x1) << FLEX_TWI_SR_SMBAF_Pos)                  /**< (FLEX_TWI_SR) SMBus Alert Flag (cleared on read) Mask */
+#define FLEX_TWI_SR_SMBAF(value)              (FLEX_TWI_SR_SMBAF_Msk & ((value) << FLEX_TWI_SR_SMBAF_Pos))
 #define FLEX_TWI_SR_TOUT_Pos                  _U_(18)                                              /**< (FLEX_TWI_SR) Timeout Error (cleared on read) Position */
 #define FLEX_TWI_SR_TOUT_Msk                  (_U_(0x1) << FLEX_TWI_SR_TOUT_Pos)                   /**< (FLEX_TWI_SR) Timeout Error (cleared on read) Mask */
 #define FLEX_TWI_SR_TOUT(value)               (FLEX_TWI_SR_TOUT_Msk & ((value) << FLEX_TWI_SR_TOUT_Pos))
@@ -1711,7 +1717,7 @@
 #define FLEX_TWI_SR_SDA_Pos                   _U_(25)                                              /**< (FLEX_TWI_SR) SDA Line Value Position */
 #define FLEX_TWI_SR_SDA_Msk                   (_U_(0x1) << FLEX_TWI_SR_SDA_Pos)                    /**< (FLEX_TWI_SR) SDA Line Value Mask */
 #define FLEX_TWI_SR_SDA(value)                (FLEX_TWI_SR_SDA_Msk & ((value) << FLEX_TWI_SR_SDA_Pos))
-#define FLEX_TWI_SR_Msk                       _U_(0x03BD0FFF)                                      /**< (FLEX_TWI_SR) Register Mask  */
+#define FLEX_TWI_SR_Msk                       _U_(0x03BF0FFF)                                      /**< (FLEX_TWI_SR) Register Mask  */
 
 /* FIFO_ENABLED mode */
 #define FLEX_TWI_SR_FIFO_ENABLED_TXCOMP_Pos   _U_(0)                                               /**< (FLEX_TWI_SR) Transmission Completed (cleared by writing FLEX_TWI_THR) Position */
@@ -1753,6 +1759,9 @@
 #define FLEX_TWI_SR_FIFO_ENABLED_MCACK_Pos    _U_(16)                                              /**< (FLEX_TWI_SR) Master Code Acknowledge (cleared on read) Position */
 #define FLEX_TWI_SR_FIFO_ENABLED_MCACK_Msk    (_U_(0x1) << FLEX_TWI_SR_FIFO_ENABLED_MCACK_Pos)     /**< (FLEX_TWI_SR) Master Code Acknowledge (cleared on read) Mask */
 #define FLEX_TWI_SR_FIFO_ENABLED_MCACK(value) (FLEX_TWI_SR_FIFO_ENABLED_MCACK_Msk & ((value) << FLEX_TWI_SR_FIFO_ENABLED_MCACK_Pos))
+#define FLEX_TWI_SR_FIFO_ENABLED_SMBAF_Pos    _U_(17)                                              /**< (FLEX_TWI_SR) SMBus Alert Flag (cleared on read) Position */
+#define FLEX_TWI_SR_FIFO_ENABLED_SMBAF_Msk    (_U_(0x1) << FLEX_TWI_SR_FIFO_ENABLED_SMBAF_Pos)     /**< (FLEX_TWI_SR) SMBus Alert Flag (cleared on read) Mask */
+#define FLEX_TWI_SR_FIFO_ENABLED_SMBAF(value) (FLEX_TWI_SR_FIFO_ENABLED_SMBAF_Msk & ((value) << FLEX_TWI_SR_FIFO_ENABLED_SMBAF_Pos))
 #define FLEX_TWI_SR_FIFO_ENABLED_TOUT_Pos     _U_(18)                                              /**< (FLEX_TWI_SR) Timeout Error (cleared on read) Position */
 #define FLEX_TWI_SR_FIFO_ENABLED_TOUT_Msk     (_U_(0x1) << FLEX_TWI_SR_FIFO_ENABLED_TOUT_Pos)      /**< (FLEX_TWI_SR) Timeout Error (cleared on read) Mask */
 #define FLEX_TWI_SR_FIFO_ENABLED_TOUT(value)  (FLEX_TWI_SR_FIFO_ENABLED_TOUT_Msk & ((value) << FLEX_TWI_SR_FIFO_ENABLED_TOUT_Pos))
@@ -1774,7 +1783,7 @@
 #define FLEX_TWI_SR_FIFO_ENABLED_SDA_Pos      _U_(25)                                              /**< (FLEX_TWI_SR) SDA Line Value Position */
 #define FLEX_TWI_SR_FIFO_ENABLED_SDA_Msk      (_U_(0x1) << FLEX_TWI_SR_FIFO_ENABLED_SDA_Pos)       /**< (FLEX_TWI_SR) SDA Line Value Mask */
 #define FLEX_TWI_SR_FIFO_ENABLED_SDA(value)   (FLEX_TWI_SR_FIFO_ENABLED_SDA_Msk & ((value) << FLEX_TWI_SR_FIFO_ENABLED_SDA_Pos))
-#define FLEX_TWI_SR_FIFO_ENABLED_Msk          _U_(0x03BD0FFF)                                       /**< (FLEX_TWI_SR_FIFO_ENABLED) Register Mask  */
+#define FLEX_TWI_SR_FIFO_ENABLED_Msk          _U_(0x03BF0FFF)                                       /**< (FLEX_TWI_SR_FIFO_ENABLED) Register Mask  */
 
 
 /* -------- FLEX_TWI_IER : (FLEXCOM Offset: 0x624) ( /W 32) TWI Interrupt Enable Register -------- */
@@ -2058,13 +2067,10 @@
 #define FLEX_TWI_FILTR_PADFEN_Pos             _U_(1)                                               /**< (FLEX_TWI_FILTR) PAD Filter Enable Position */
 #define FLEX_TWI_FILTR_PADFEN_Msk             (_U_(0x1) << FLEX_TWI_FILTR_PADFEN_Pos)              /**< (FLEX_TWI_FILTR) PAD Filter Enable Mask */
 #define FLEX_TWI_FILTR_PADFEN(value)          (FLEX_TWI_FILTR_PADFEN_Msk & ((value) << FLEX_TWI_FILTR_PADFEN_Pos))
-#define FLEX_TWI_FILTR_PADFCFG_Pos            _U_(2)                                               /**< (FLEX_TWI_FILTR) PAD Filter Config Position */
-#define FLEX_TWI_FILTR_PADFCFG_Msk            (_U_(0x1) << FLEX_TWI_FILTR_PADFCFG_Pos)             /**< (FLEX_TWI_FILTR) PAD Filter Config Mask */
-#define FLEX_TWI_FILTR_PADFCFG(value)         (FLEX_TWI_FILTR_PADFCFG_Msk & ((value) << FLEX_TWI_FILTR_PADFCFG_Pos))
 #define FLEX_TWI_FILTR_THRES_Pos              _U_(8)                                               /**< (FLEX_TWI_FILTR) Digital Filter Threshold Position */
 #define FLEX_TWI_FILTR_THRES_Msk              (_U_(0x7) << FLEX_TWI_FILTR_THRES_Pos)               /**< (FLEX_TWI_FILTR) Digital Filter Threshold Mask */
 #define FLEX_TWI_FILTR_THRES(value)           (FLEX_TWI_FILTR_THRES_Msk & ((value) << FLEX_TWI_FILTR_THRES_Pos))
-#define FLEX_TWI_FILTR_Msk                    _U_(0x00000707)                                      /**< (FLEX_TWI_FILTR) Register Mask  */
+#define FLEX_TWI_FILTR_Msk                    _U_(0x00000703)                                      /**< (FLEX_TWI_FILTR) Register Mask  */
 
 
 /* -------- FLEX_TWI_FMR : (FLEXCOM Offset: 0x650) (R/W 32) TWI FIFO Mode Register -------- */
