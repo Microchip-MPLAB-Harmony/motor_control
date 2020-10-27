@@ -73,7 +73,7 @@ mcAnaI_DefaultPararameterDict = { 'MCLV2'  : {
                                                             'POT'           : 0,
                                                             'POT_CH'        : 6,
                                                             'RESOLUTION'    : ["12", "16", "10", "8"],
-                                                            'MAX_CHANNELS'  : 47,
+                                                            'MAX_CHANNELS'  : 24,
                                                             'TRIGGER'       : 0,
                                                        },
                                         'DEFAULT' :     {   'PHASE_U'       : 0,
@@ -125,7 +125,7 @@ mcAnaI_DefaultPararameterDict = { 'MCLV2'  : {
                                                             'POT'           : 0,
                                                             'POT_CH'        : 6,
                                                             'RESOLUTION'    : ["12", "10", "8", "6"],
-                                                            'MAX_CHANNELS'  : 12,
+                                                            'MAX_CHANNELS'  : 24,
                                                             'TRIGGER'       : 0,
                                                           },
                                         'DEFAULT' :     {    'PHASE_U'       : 0,
@@ -188,7 +188,7 @@ def mcAnI_CreateMHCSymbols( mcPmsmFocComponent):
 
     mcAnI_AdcResolution = mcPmsmFocComponent.createComboSymbol("MCPMSMFOC_ADC_RESOLUTION", mcAnI_RootNode, resolution)
     mcAnI_AdcResolution.setLabel("Select ADC Resolution")
-    mcAnI_AdcResolution.setReadOnly(False)
+    mcAnI_AdcResolution.setReadOnly(True)
 
     global mcAnI_AdcMaximumValue    
     mcAnI_AdcMaximumValue = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_ADC_MAX", mcAnI_RootNode)
@@ -303,11 +303,12 @@ def mcAnI_UpdatePeripheralLibrary(symbol, event):
 
 
 def mcAnI_UpdateSymbols( symbol, event ):
+    global mcAnI_MicrocontrollerSeries
     board_key = event["symbol"].getKeyForValue(str(event["value"]))
     if mcAnI_MicrocontrollerSeries not in mcPmsmFocBoardPimParamDict[board_key].keys():
         mcAnI_MicrocontrollerSeries = 'DEFAULT'
     if board_key in mcAnaI_DefaultPararameterDict.keys():    
-            
+    
         # Set ADC board dependency to True 
         mcAnI_Dependency.setValue(True)
            

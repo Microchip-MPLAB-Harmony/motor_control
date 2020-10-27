@@ -67,16 +67,16 @@ mcPmsmFocBoardPimParamDict =  {'MCLV2' :  {
                                           },
                             'MCHV3' :     {
                                             'PIC32MK': {
-                                                        'START_STOP_SWITCH'    : 'RG1',
+                                                        'START_STOP_SWITCH'    : 'RD8',
                                                         'DIRECTION_SWITCH'     : 'RC7',
                                                         'DIRECTION_LED'        : 'RF5',
                                                         'FAULT_LED'            : 'RG15',
                                                        },
                                             'SAME70':  {
-                                                        'START_STOP_SWITCH'    : 'PC3',
+                                                        'START_STOP_SWITCH'    : 'PE2',
                                                         'DIRECTION_SWITCH'     : 'PC1',
                                                         'DIRECTION_LED'        : 'PC23',
-                                                        'FAULT_LED'            : 'PA24',
+                                                        'FAULT_LED'            : 'PC23',
                                                        },
                                             'SAME54':  {
                                                         'START_STOP_SWITCH'    : 'PD08',
@@ -138,6 +138,7 @@ def mcDiI_CreateMHCSymbols( mcPmsmFocComponent ):
         mcDiI_DirectionButton.addKey(pad, str(i), pad)
         i = i+1
     mcDiI_DirectionButton.setSelectedKey(str(mcPmsmFocBoardPimParamDict[mcDiI_DefaultDevelopmentBoard][mcDiI_MicrocontrollerSeries]['DIRECTION_SWITCH']))
+    mcDiI_DirectionButton.setDependencies(mcPmsmFocDirChngHide, ["MCPMSMFOC_BOARD_SEL"])
 
     global mcDiI_DirectionStatusLed
     mcDiI_DirectionStatusLed = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_DIRECTION_LED", mcVsi_RootNode)
@@ -149,6 +150,7 @@ def mcDiI_CreateMHCSymbols( mcPmsmFocComponent ):
         mcDiI_DirectionStatusLed.addKey(pad, str(i), pad)
         i = i+1
     mcDiI_DirectionStatusLed.setSelectedKey(str(mcPmsmFocBoardPimParamDict[mcDiI_DefaultDevelopmentBoard][mcDiI_MicrocontrollerSeries]['DIRECTION_LED']))
+    mcDiI_DirectionStatusLed.setDependencies(mcPmsmFocDirChngHide, ["MCPMSMFOC_BOARD_SEL"])
 
     global mcDiI_FaultStatusLed
     mcDiI_FaultStatusLed = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_FAULT_LED", mcVsi_RootNode)
@@ -171,6 +173,7 @@ def mcDiI_CreateMHCSymbols( mcPmsmFocComponent ):
 
 
 def mcDiI_UpdateSymbols( symbol, event ):
+    global mcDiI_MicrocontrollerSeries
     board_key = event["symbol"].getKeyForValue(str(event["value"]))
     if mcDiI_MicrocontrollerSeries not in mcPmsmFocBoardPimParamDict[board_key].keys():
         mcDiI_MicrocontrollerSeries = 'DEFAULT'    
@@ -181,6 +184,13 @@ def mcDiI_UpdateSymbols( symbol, event ):
         mcDiI_DirectionStatusLed.setSelectedKey((mcPmsmFocBoardPimParamDict[board_key][mcDiI_MicrocontrollerSeries]['DIRECTION_LED']))
         mcDiI_FaultStatusLed.setSelectedKey((mcPmsmFocBoardPimParamDict[board_key][mcDiI_MicrocontrollerSeries]['FAULT_LED']))
 
+def mcPmsmFocDirChngHide(symbol, event):
+    symObj = event["symbol"]
+    board = symObj.getSelectedKey()
+    if board == "MCHV3":
+        symbol.setVisible(False)
+    else:
+        symbol.setVisible(True)
 
 def mcDiII_DigitalInterface( mcPmsmFocComponent ):
     mcDiI_CreateMHCSymbols( mcPmsmFocComponent )

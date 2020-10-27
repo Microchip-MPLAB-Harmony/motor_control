@@ -33,13 +33,21 @@
 #----------------------------------------------------------------------------------#
                                    
 # PI controller Parameters
-mcMotC_DefaultPiPararameterDict =  {    'MCLV2' :   { 'KP' : 0.02,
+mcMotC_CurrentPiPararameterDict =  {    'MCLV2' :   { 'KP' : 0.02,
                                                       'KI' : 0.000099
                                                     },
                                         'MCHV3' :   { 'KP' : 0.02,
                                                       'KI' : 0.000099
                                                     },
                                    }
+
+mcMotC_SpeedPiPararameterDict =  {    'MCLV2' :   { 'KP' : 0.005,
+                                                    'KI' : 0.00002
+                                                  },
+                                      'MCHV3' :   { 'KP' : 0.005,
+                                                    'KI' : 0.00002
+                                                  },
+                                 }                                   
 
 mcMotC_FieldWeakeningParameter =   {    'LONG_HURST' : 
                                                     { 
@@ -186,11 +194,13 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     mcMoC_SpeedKp = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_SPEED_KP", mcMoC_SpeedNode)
     mcMoC_SpeedKp.setLabel("Kp")
     mcMoC_SpeedKp.setDefaultValue(0.005)
+    mcMoC_SpeedKp.setDependencies(mcPmsmFoc_SpeedKp, ["MCPMSMFOC_BOARD_SEL"])
 
     # Symbol for speed controller integral gain  
     mcMoC_SpeedKi = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_SPEED_KI", mcMoC_SpeedNode)
     mcMoC_SpeedKi.setLabel("Ki")
     mcMoC_SpeedKi.setDefaultValue(0.000020)
+    mcMoC_SpeedKi.setDependencies(mcPmsmFoc_SpeedKi, ["MCPMSMFOC_BOARD_SEL"])    
     
     # Symbol for speed controller back calculation gain  
     mcMoC_SpeedKc = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_SPEED_KC", mcMoC_SpeedNode)
@@ -246,6 +256,16 @@ def mcPmsmFocFWMax(symbol, event):
     fw = component.getSymbolValue("MCPMSMFOC_FIELD_WEAKENING")
     symbol.setVisible((fw))
 
+def mcPmsmFoc_SpeedKp(symbol, event):
+    symObj = event["symbol"]
+    board = symObj.getSelectedKey()
+    symbol.setValue(mcMotC_SpeedPiPararameterDict[board]['KP'])
+
+def mcPmsmFoc_SpeedKi(symbol, event):
+    symObj = event["symbol"]
+    board = symObj.getSelectedKey()
+    symbol.setValue(mcMotC_SpeedPiPararameterDict[board]['KI'])
+
 def mcPmsmFocCurrentKpCalc( symbol, event):
     component = symbol.getComponent()
     board = component.getSymbolByID("MCPMSMFOC_BOARD_SEL").getSelectedKey()
@@ -264,8 +284,8 @@ def mcPmsmFocCurrentKpCalc( symbol, event):
     if autoCalc == True:
         kp = (bandwidth * l) / max_volt
     else:
-        if board in mcMotC_DefaultPiPararameterDict.keys():
-            kp = mcMotC_DefaultPiPararameterDict[board]['KP']
+        if board in mcMotC_CurrentPiPararameterDict.keys():
+            kp = mcMotC_CurrentPiPararameterDict[board]['KP']
     symbol.setValue(kp)
 
 
@@ -286,8 +306,8 @@ def mcPmsmFocCurrentKiCalc( symbol, event):
     if autoCalc == True:
         ki = (bandwidth * r * pwm_time) / max_volt
     else:
-        if board in mcMotC_DefaultPiPararameterDict.keys():
-            ki = mcMotC_DefaultPiPararameterDict[board]['KI']
+        if board in mcMotC_CurrentPiPararameterDict.keys():
+            ki = mcMotC_CurrentPiPararameterDict[board]['KI']
     symbol.setValue(ki)
 
 

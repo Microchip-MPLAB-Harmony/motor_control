@@ -93,7 +93,6 @@ void MCCUR_InitializeCurrentMeasurement( void )
 
     /* Initialize state variables */
     gMCCUR_OutputSignals.calibDone = 0U;
-    MCCUR_OffsetCalibration();
 }
 
 /******************************************************************************/

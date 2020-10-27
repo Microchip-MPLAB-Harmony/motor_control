@@ -81,6 +81,11 @@ extern "C" {
 #define ENABLED                          (1U)
 #define DISABLED                         (0U)
 
+/* Control inverter board */
+#define CUSTOM                           (0U)
+#define MCLV2                            (1U)
+#define MCHV3                            (2U)
+
 
 typedef enum
 {

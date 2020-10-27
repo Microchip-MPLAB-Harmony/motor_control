@@ -113,9 +113,9 @@ void PMSM_FOC_SpeedLoopTasks( void );
 
 void PMSM_FOC_ButtonResponse( const tPMSM_FOC_SWITCH_STATE_E  buttonState,  void (*buttonFunction)(void) );
 
-#ifndef MCHV3
+<#if MCPMSMFOC_BOARD_SEL != "MCHV3">
 void PMSM_FOC_DirectionToggle(void);
-#endif
+</#if>
 
 
 

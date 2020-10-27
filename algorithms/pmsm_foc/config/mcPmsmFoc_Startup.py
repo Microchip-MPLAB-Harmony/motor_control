@@ -78,7 +78,7 @@ def mcStC_CreateMHCSymbols( mcPmsmFocComponent):
         
     mcStC_OpenLoopRefCurrent = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_OL_IQ_REF", mcStC_RootNode)
     mcStC_OpenLoopRefCurrent.setLabel("Open Loop Ref Quadrature Current (A)")
-    mcStC_OpenLoopRefCurrent.setDefaultValue(0.2)
+    mcStC_OpenLoopRefCurrent.setDefaultValue(0.4)
 
 def mcPmsmFocEncoderHide(symbol, event):
     symObj = event["symbol"]

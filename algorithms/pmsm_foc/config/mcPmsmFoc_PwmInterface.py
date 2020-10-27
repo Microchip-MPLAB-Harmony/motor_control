@@ -66,11 +66,11 @@ mcPwmI_DefaultPararameterDict = {'MCLV2' : {
                                                 },
                                     },
                          'MCHV3'  : {
-                                    'PIC32MK':  {  'PWM_FREQ' : 10000,
+                                    'PIC32MK':  {  'PWM_FREQ' : 20000,
                                                     'PWM_PH_U' : '1',
                                                     'PWM_PH_V' : '2',
-                                                    'PWM_PH_W' : '4',
-                                                    'PWM_DEAD_TIME': '1',
+                                                    'PWM_PH_W' : '3',
+                                                    'PWM_DEAD_TIME': '2',
                                                     'PWM_FAULT': 'FLT15',
                                                 },
 
@@ -78,7 +78,7 @@ mcPwmI_DefaultPararameterDict = {'MCLV2' : {
                                                     'PWM_PH_U' : '0',
                                                     'PWM_PH_V' : '1',
                                                     'PWM_PH_W' : '2',
-                                                    'PWM_DEAD_TIME': '1',
+                                                    'PWM_DEAD_TIME': '2',
                                                     'PWM_FAULT': 'FAULT_PWM_ID2',
                                                 },
                                     'SAME54':   {   'PWM_FREQ' : 20000,
@@ -225,6 +225,7 @@ def mcPwm_PwmFaultHandler( symbol, event ):
     pass
 
 def mcPwm_UpdateSymbols( symbol, event ):
+    global mcPwm_MicrocontrollerSeries
     board_key = event["symbol"].getKeyForValue(str(event["value"]))
     if mcPwm_MicrocontrollerSeries not in mcPmsmFocBoardPimParamDict[board_key].keys():
         mcPwm_MicrocontrollerSeries = 'DEFAULT'   
@@ -236,7 +237,7 @@ def mcPwm_UpdateSymbols( symbol, event ):
         mcPwm_PwmChannelV.setValue(int(mcPwmI_DefaultPararameterDict[board_key][mcPwm_MicrocontrollerSeries]['PWM_PH_V']      ))
         mcPwm_PwmChannelW.setValue(int(mcPwmI_DefaultPararameterDict[board_key][mcPwm_MicrocontrollerSeries]['PWM_PH_W']      ))
         mcPwm_PwmDeadTime.setValue(int(mcPwmI_DefaultPararameterDict[board_key][mcPwm_MicrocontrollerSeries]['PWM_DEAD_TIME'] ))
-        mcPwm_PwmFault.setSelectedKey(mcPwm_PwmFault.getSelectedKey())
+        mcPwm_PwmFault.setSelectedKey(mcPwmI_DefaultPararameterDict[board_key][mcPwm_MicrocontrollerSeries]['MCPMSMFOC_PWM_FAULT'])
         mcPwm_SomeFlag.setValue(False)
 
 def mcPwm_UpdatePLib( symbol, event):
@@ -246,7 +247,7 @@ def mcPwm_UpdatePLib( symbol, event):
     pwmDict['PWM_PH_V'     ]  =  (component.getSymbolValue("MCPMSMFOC_PWM_PH_V"      ))
     pwmDict['PWM_PH_W'     ]  =  (component.getSymbolValue("MCPMSMFOC_PWM_PH_W"      ))
     pwmDict['PWM_DEAD_TIME']  =  (component.getSymbolValue("MCPMSMFOC_PWM_DEAD_TIME" ))
-    pwmDict['PWM_FAULT'    ]  =  (component.getSymbolValue("MCPMSMFOC_PWM_FAULT"     ))
+    pwmDict['PWM_FAULT'    ]  =  (mcPwm_PwmFault.getSelectedKey())
     
     if (component.getSymbolValue("MCPMSMFOC_PWM_BOARD_DEP") == False):
         Database.sendMessage(mcPwm_Plib.getValue().lower(), "PMSM_FOC_PWM_CONF", pwmDict)
@@ -266,7 +267,7 @@ def mcPwm_onAttachmentConnected(source, target):
     pwmDict['PWM_PH_V'     ]  =  (localComponent.getSymbolValue("MCPMSMFOC_PWM_PH_V"      ))
     pwmDict['PWM_PH_W'     ]  =  (localComponent.getSymbolValue("MCPMSMFOC_PWM_PH_W"      ))
     pwmDict['PWM_DEAD_TIME']  =  (localComponent.getSymbolValue("MCPMSMFOC_PWM_DEAD_TIME" ))
-    pwmDict['PWM_FAULT'    ]  =  (localComponent.getSymbolValue("MCPMSMFOC_PWM_FAULT"     ))
+    pwmDict['PWM_FAULT'    ]  =  (mcPwm_PwmFault.getSelectedKey())
 
    
     if (connectID == "pmsmfoc_PWM"):

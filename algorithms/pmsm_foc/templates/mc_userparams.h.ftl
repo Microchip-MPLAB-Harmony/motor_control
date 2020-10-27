@@ -53,6 +53,7 @@
 /***********************************************************************************************/
 /* Algorithm Configuration parameters                                                          */
 /***********************************************************************************************/
+#define BOARD                            (${MCPMSMFOC_BOARD_SEL})                            
 #define POSITION_FEEDBACK                (${MCPMSMFOC_POSITION_FB})
 
 <#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
@@ -135,16 +136,27 @@
 
 /******* Velocity Control Loop Coefficients **********************************/
 #define     SPEEDCNTR_PTERM            (float)(${MCPMSMFOC_SPEED_KP})
+<#if MCPMSMFOC_BOARD_SEL == "MCHV3">
+#define     SPEEDCNTR_ITERM            (float)(${MCPMSMFOC_SPEED_KI} * 0.01f)
+<#else>
 #define     SPEEDCNTR_ITERM            (float)(${MCPMSMFOC_SPEED_KI})
+</#if>
 #define     SPEEDCNTR_CTERM            (float)(${MCPMSMFOC_SPEED_KC})
 #define     SPEEDCNTR_OUTMAX           (float)(${MCPMSMFOC_SPEED_OUT_MAX})
 
 
 /* First order low pass Filter constants used inside the project             */
+<#if MCPMSMFOC_BOARD_SEL == "MCHV3">
+#define KFILTER_ESDQ                   (float)((float)4000/(float)32767)
+#define KFILTER_BEMF_AMPLITUDE         (float)((float)4000/(float)32767)
+#define KFILTER_VELESTIM               (float)((float)4000/(float)32767)
+#define KFILTER_POT                    (float)((float)250/(float)32767)
+<#else>
 #define KFILTER_ESDQ                   (float)((float)200/(float)32767)
 #define KFILTER_BEMF_AMPLITUDE         (float)((float)100/(float)32767)
 #define KFILTER_VELESTIM               (float)((float)174/(float)32767)
 #define KFILTER_POT                    (float)((float)250/(float)32767)
+</#if>
 
 /***********************************************************************************************/
 /* Driver board configuration Parameters */

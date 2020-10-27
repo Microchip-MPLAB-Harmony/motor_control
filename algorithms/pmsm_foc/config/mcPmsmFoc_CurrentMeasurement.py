@@ -29,7 +29,7 @@ def mcCuM_CreateMHCSymbols( mcPmsmFocComponent):
     mcCuM_AlgorithmSelection.setLabel("Select Current Measurement Method")
     mcCuM_AlgorithmSelection.addKey("DUAL_SHUNT", "0", "Dual Shunt")
     #self.algorithm.addKey("SINGLE_SHUNT", "0", "Single Shunt")
-    mcCuM_AlgorithmSelection.setOutputMode("Value")
+    mcCuM_AlgorithmSelection.setOutputMode("Key")
     mcCuM_AlgorithmSelection.setDisplayMode("Description")
 
 

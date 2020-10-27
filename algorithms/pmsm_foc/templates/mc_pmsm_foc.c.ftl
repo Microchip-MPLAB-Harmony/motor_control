@@ -233,7 +233,7 @@ void PMSM_FOC_MotorStop(void)
 }
 
 
-#ifndef MCHV3
+<#if MCPMSMFOC_BOARD_SEL != "MCHV3">
 /******************************************************************************/
 /* Function name: PMSM_FOC_DirectionToggle                                    */
 /* Function parameters: None                                                  */
@@ -249,7 +249,7 @@ void PMSM_FOC_DirectionToggle(void)
     MCHAL_DIR_LED_TOGGLE();
 
 }
-#endif
+</#if>
 
 /******************************************************************************/
 /* Function name: PMSM_FOC_Tasks                                              */
@@ -330,9 +330,9 @@ void PMSM_FOC_ButtonPolling()
     {
         PMSM_FOC_ButtonResponse((tPMSM_FOC_SWITCH_STATE_E)(!MCHAL_START_STOP_SWITCH_GET()), &PMSM_FOC_MotorStart);
 
-      #ifndef MCHV3
+      <#if MCPMSMFOC_BOARD_SEL != "MCHV3">
         PMSM_FOC_ButtonResponse((tPMSM_FOC_SWITCH_STATE_E)(!MCHAL_DIR_SWITCH_GET()), &PMSM_FOC_DirectionToggle);
-      #endif
+      </#if>
 
     }
     else
