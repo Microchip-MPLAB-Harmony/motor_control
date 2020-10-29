@@ -84,39 +84,23 @@
 
 void CLK_Initialize( void )
 {
-    bool int_flag = false;
-
-    int_flag = (bool)__builtin_disable_interrupts();
-
     /* unlock system for clock configuration */
     SYSKEY = 0x00000000;
     SYSKEY = 0xAA996655;
     SYSKEY = 0x556699AA;
 
-    if (int_flag)
-    {
-        __builtin_mtc0(12, 0,(__builtin_mfc0(12, 0) | 0x0001)); /* enable interrupts */
-    }
-
  
       
 
     /* Peripheral Module Disable Configuration */
-    PMD1 = 0xfffffffe;
+    PMD1 = 0x100370;
     PMD2 = 0x17001f;
     PMD3 = 0xffffffff;
-    PMD4 = 0xfff8ffff;
-    PMD5 = 0xfffffffd;
-    PMD6 = 0xfffff0ff;
-    PMD7 = 0xffffffef;
+    PMD4 = 0xff801ff;
+    PMD5 = 0xf30f3f3d;
+    PMD6 = 0xf0d0000;
+    PMD7 = 0x0;
 
     /* Lock system since done with clock configuration */
-    int_flag = (bool)__builtin_disable_interrupts();
-
     SYSKEY = 0x33333333;
-
-    if (int_flag) /* if interrupts originally were enabled, re-enable them */
-    {
-        __builtin_mtc0(12, 0,(__builtin_mfc0(12, 0) | 0x0001));
-    }
 }

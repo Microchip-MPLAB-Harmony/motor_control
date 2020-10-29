@@ -59,8 +59,10 @@
 
 extern uint32_t _stack;
 
+void Dummy_Handler(void);
+
 /* Brief default interrupt handler for unused IRQs.*/
-void __attribute__((optimize("-O1"),section(".text.Dummy_Handler"),long_call))Dummy_Handler(void)
+void __attribute__((optimize("-O1"),section(".text.Dummy_Handler"),long_call, noreturn))Dummy_Handler(void)
 {
 #if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
     __builtin_software_breakpoint();
@@ -110,7 +112,7 @@ void TC1_CH1_Handler            ( void ) __attribute__((weak, alias("Dummy_Handl
 void TC1_CH2_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void AFEC0_InterruptHandler     ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void DACC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void PWM0_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void PWM0_InterruptHandler      ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void ICM_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void ACC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void USBHS_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -203,7 +205,7 @@ const DeviceVectors exception_table=
     .pfnTC1_CH2_Handler            = ( void * ) TC1_CH2_Handler,
     .pfnAFEC0_Handler              = ( void * ) AFEC0_InterruptHandler,
     .pfnDACC_Handler               = ( void * ) DACC_Handler,
-    .pfnPWM0_Handler               = ( void * ) PWM0_Handler,
+    .pfnPWM0_Handler               = ( void * ) PWM0_InterruptHandler,
     .pfnICM_Handler                = ( void * ) ICM_Handler,
     .pfnACC_Handler                = ( void * ) ACC_Handler,
     .pfnUSBHS_Handler              = ( void * ) USBHS_Handler,

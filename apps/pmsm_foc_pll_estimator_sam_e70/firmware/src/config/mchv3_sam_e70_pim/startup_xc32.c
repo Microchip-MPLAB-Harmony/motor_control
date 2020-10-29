@@ -50,9 +50,6 @@ extern uint32_t __svectors;
 int main(void);
 extern void __attribute__((long_call)) __libc_init_array(void);
 
-/* Declaration of Reset handler (may be custom) */
-void __attribute__((optimize("-O1"), long_call)) Reset_Handler(void);
-
 /* Device Vector information is available in interrupt.c file */
 
 __STATIC_INLINE void TCM_Disable(void);
@@ -92,8 +89,6 @@ uint32_t prim;
     }
 }
 #endif /* (__ARM_FP==14) || (__ARM_FP==4) */
-
-
 #define GPNVM_TCM_SIZE_Pos        7u
 #define GPNVM_TCM_SIZE_Msk        (0x3u << GPNVM_TCM_SIZE_Pos)
 
@@ -164,9 +159,23 @@ extern void __attribute__((weak,long_call)) __xc32_on_bootstrap(void);
  * \brief This is the code that gets called on processor reset.
  * To initialize the device, and call the main() routine.
  */
-void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call)) Reset_Handler(void)
+void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call, noreturn)) Reset_Handler(void)
 {
+#ifdef SCB_VTOR_TBLOFF_Msk
     uint32_t *pSrc;
+#endif
+
+#if defined (__REINIT_STACK_POINTER)
+    /* Initialize SP from linker-defined _stack symbol. */
+    __asm__ volatile ("ldr sp, =_stack" : : : "sp");
+
+#ifdef SCB_VTOR_TBLOFF_Msk
+    /* Buy stack for locals */
+    __asm__ volatile ("sub sp, sp, #8" : : : "sp");
+#endif
+    __asm__ volatile ("add r7, sp, #0" : : : "r7");
+#endif
+
 
     /* Call the optional application-provided _on_reset() function. */
     if (_on_reset)
@@ -183,7 +192,8 @@ void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call))
     FPU_Enable();
 #endif
 
-	TCM_Configure(0);
+
+    TCM_Configure(0);
 
     /* Disable TCM  */
     TCM_Disable();
@@ -223,6 +233,7 @@ void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call))
 
     /* Branch to application's main function */
     main();
+
 #if (defined(__DEBUG) || defined(__DEBUG_D)) && defined(__XC32)
     __builtin_software_breakpoint();
 #endif

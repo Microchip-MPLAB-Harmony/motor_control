@@ -64,12 +64,12 @@ void PWM1_InterruptHandler( void );
 
 
 /* All the handlers are defined here.  Each will call its PLIB-specific function. */
-void __ISR(_ADC_DATA3_VECTOR, ipl3AUTO) ADC_DATA3_Handler (void)
+void __ISR(_ADC_DATA3_VECTOR, ipl1SOFT) ADC_DATA3_Handler (void)
 {
     ADC_DATA3_InterruptHandler();
 }
 
-void __ISR(_PWM1_VECTOR, ipl4AUTO) PWM1_Handler (void)
+void __ISR(_PWM1_VECTOR, ipl1SOFT) PWM1_Handler (void)
 {
     PWM1_InterruptHandler();
 }

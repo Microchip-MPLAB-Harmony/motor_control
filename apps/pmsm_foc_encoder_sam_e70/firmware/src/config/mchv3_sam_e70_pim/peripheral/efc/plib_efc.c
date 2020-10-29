@@ -49,7 +49,7 @@ static uint32_t status = 0;
 
 void EFC_Initialize(void)
 {
-    EFC_REGS->EEFC_FMR = EEFC_FMR_FWS(3) | EEFC_FMR_CLOE_Msk ;
+    EFC_REGS->EEFC_FMR = EEFC_FMR_FWS(6) | EEFC_FMR_CLOE_Msk ;
 }
 bool EFC_Read( uint32_t *data, uint32_t length, uint32_t address )
 {
@@ -79,7 +79,7 @@ bool EFC_PageWrite( uint32_t *data, uint32_t address )
     /*Calculate the Page number to be passed for FARG register*/
     page_number = (address - IFLASH_ADDR) / IFLASH_PAGE_SIZE;
 
-    for (int i = 0; i < IFLASH_PAGE_SIZE; i += 4)
+    for (uint32_t i = 0; i < IFLASH_PAGE_SIZE; i += 4)
     {
     *((uint32_t *)( IFLASH_ADDR + ( page_number * IFLASH_PAGE_SIZE ) + i )) =    *(( data++ ));
     }
@@ -103,7 +103,7 @@ bool EFC_QuadWordWrite( uint32_t *data, uint32_t address )
     /*Calculate the Page number to be passed for FARG register*/
     page_number = (address - IFLASH_ADDR) / IFLASH_PAGE_SIZE;
 
-    for (int i = 0; i < 16; i += 4)
+    for (uint32_t i = 0; i < 16; i += 4)
     {
     *((uint32_t *)(( address ) + i )) =    *((uint32_t *)( data++ ));
     }

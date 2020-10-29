@@ -62,32 +62,72 @@
 // *****************************************************************************
 
 
-/*** Macros for START_STOP_BUTTON pin ***/
-#define START_STOP_BUTTON_Set()               (PIOE_REGS->PIO_SODR = (1<<2))
-#define START_STOP_BUTTON_Clear()             (PIOE_REGS->PIO_CODR = (1<<2))
-#define START_STOP_BUTTON_Toggle()            (PIOE_REGS->PIO_ODSR ^= (1<<2))
-#define START_STOP_BUTTON_Get()               ((PIOE_REGS->PIO_PDSR >> 2) & 0x1)
-#define START_STOP_BUTTON_OutputEnable()      (PIOE_REGS->PIO_OER = (1<<2))
-#define START_STOP_BUTTON_InputEnable()       (PIOE_REGS->PIO_ODR = (1<<2))
-#define START_STOP_BUTTON_PIN                  PIO_PIN_PE2
+/*** Macros for GPIO_PE2 pin ***/
+#define GPIO_PE2_Set()               (PIOE_REGS->PIO_SODR = (1<<2))
+#define GPIO_PE2_Clear()             (PIOE_REGS->PIO_CODR = (1<<2))
+#define GPIO_PE2_Toggle()            (PIOE_REGS->PIO_ODSR ^= (1<<2))
+#define GPIO_PE2_OutputEnable()      (PIOE_REGS->PIO_OER = (1<<2))
+#define GPIO_PE2_InputEnable()       (PIOE_REGS->PIO_ODR = (1<<2))
+#define GPIO_PE2_Get()               ((PIOE_REGS->PIO_PDSR >> 2) & 0x1)
+#define GPIO_PE2_PIN                  PIO_PIN_PE2
 
-/*** Macros for GPIO_PA2 pin ***/
-#define GPIO_PA2_Set()               (PIOA_REGS->PIO_SODR = (1<<2))
-#define GPIO_PA2_Clear()             (PIOA_REGS->PIO_CODR = (1<<2))
-#define GPIO_PA2_Toggle()            (PIOA_REGS->PIO_ODSR ^= (1<<2))
-#define GPIO_PA2_Get()               ((PIOA_REGS->PIO_PDSR >> 2) & 0x1)
-#define GPIO_PA2_OutputEnable()      (PIOA_REGS->PIO_OER = (1<<2))
-#define GPIO_PA2_InputEnable()       (PIOA_REGS->PIO_ODR = (1<<2))
-#define GPIO_PA2_PIN                  PIO_PIN_PA2
+/*** Macros for POT pin ***/
+#define POT_Get()               ((PIOB_REGS->PIO_PDSR >> 0) & 0x1)
+#define POT_PIN                  PIO_PIN_PB0
 
-/*** Macros for LED pin ***/
-#define LED_Set()               (PIOC_REGS->PIO_SODR = (1<<23))
-#define LED_Clear()             (PIOC_REGS->PIO_CODR = (1<<23))
-#define LED_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<23))
-#define LED_Get()               ((PIOC_REGS->PIO_PDSR >> 23) & 0x1)
-#define LED_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<23))
-#define LED_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<23))
-#define LED_PIN                  PIO_PIN_PC23
+/*** Macros for VBUS pin ***/
+#define VBUS_Get()               ((PIOA_REGS->PIO_PDSR >> 18) & 0x1)
+#define VBUS_PIN                  PIO_PIN_PA18
+
+/*** Macros for IV pin ***/
+#define IV_Get()               ((PIOA_REGS->PIO_PDSR >> 17) & 0x1)
+#define IV_PIN                  PIO_PIN_PA17
+
+/*** Macros for IU pin ***/
+#define IU_Get()               ((PIOD_REGS->PIO_PDSR >> 30) & 0x1)
+#define IU_PIN                  PIO_PIN_PD30
+
+/*** Macros for PWMH2 pin ***/
+#define PWMH2_Get()               ((PIOA_REGS->PIO_PDSR >> 13) & 0x1)
+#define PWMH2_PIN                  PIO_PIN_PA13
+
+/*** Macros for PWML1 pin ***/
+#define PWML1_Get()               ((PIOD_REGS->PIO_PDSR >> 25) & 0x1)
+#define PWML1_PIN                  PIO_PIN_PD25
+
+/*** Macros for PWML2 pin ***/
+#define PWML2_Get()               ((PIOD_REGS->PIO_PDSR >> 26) & 0x1)
+#define PWML2_PIN                  PIO_PIN_PD26
+
+/*** Macros for PWML0 pin ***/
+#define PWML0_Get()               ((PIOD_REGS->PIO_PDSR >> 24) & 0x1)
+#define PWML0_PIN                  PIO_PIN_PD24
+
+/*** Macros for GPIO_PA24 pin ***/
+#define GPIO_PA24_Set()               (PIOA_REGS->PIO_SODR = (1<<24))
+#define GPIO_PA24_Clear()             (PIOA_REGS->PIO_CODR = (1<<24))
+#define GPIO_PA24_Toggle()            (PIOA_REGS->PIO_ODSR ^= (1<<24))
+#define GPIO_PA24_OutputEnable()      (PIOA_REGS->PIO_OER = (1<<24))
+#define GPIO_PA24_InputEnable()       (PIOA_REGS->PIO_ODR = (1<<24))
+#define GPIO_PA24_Get()               ((PIOA_REGS->PIO_PDSR >> 24) & 0x1)
+#define GPIO_PA24_PIN                  PIO_PIN_PA24
+
+/*** Macros for PWMH0 pin ***/
+#define PWMH0_Get()               ((PIOA_REGS->PIO_PDSR >> 11) & 0x1)
+#define PWMH0_PIN                  PIO_PIN_PA11
+
+/*** Macros for PWMH1 pin ***/
+#define PWMH1_Get()               ((PIOA_REGS->PIO_PDSR >> 12) & 0x1)
+#define PWMH1_PIN                  PIO_PIN_PA12
+
+/*** Macros for GPIO_PC23 pin ***/
+#define GPIO_PC23_Set()               (PIOC_REGS->PIO_SODR = (1<<23))
+#define GPIO_PC23_Clear()             (PIOC_REGS->PIO_CODR = (1<<23))
+#define GPIO_PC23_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<23))
+#define GPIO_PC23_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<23))
+#define GPIO_PC23_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<23))
+#define GPIO_PC23_Get()               ((PIOC_REGS->PIO_PDSR >> 23) & 0x1)
+#define GPIO_PC23_PIN                  PIO_PIN_PC23
 
 
 // *****************************************************************************

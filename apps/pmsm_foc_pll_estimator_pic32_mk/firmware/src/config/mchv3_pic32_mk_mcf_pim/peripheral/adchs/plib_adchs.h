@@ -74,8 +74,6 @@ extern "C" {
 /*  The following data type definitions are used by the functions in this
     interface and should be considered part it.
 */
-#define PHASE_CURRENT_V (1U)
-#define PHASE_CURRENT_U (3U)
 
 
 // *****************************************************************************
@@ -94,6 +92,7 @@ void ADCHS_ModulesDisable (ADCHS_MODULE_MASK modulesMask);
 
 void ADCHS_GlobalEdgeConversionStart(void);
 void ADCHS_GlobalLevelConversionStart(void);
+void ADCHS_GlobalLevelConversionStop(void);
 void ADCHS_ChannelConversionStart(ADCHS_CHANNEL_NUM channel);
 
 void ADCHS_ChannelResultInterruptEnable (ADCHS_CHANNEL_NUM channel);
@@ -106,6 +105,7 @@ uint16_t ADCHS_ChannelResultGet(ADCHS_CHANNEL_NUM channel);
 
 void ADCHS_CallbackRegister(ADCHS_CHANNEL_NUM channel, ADCHS_CALLBACK callback, uintptr_t context);
 
+bool ADCHS_EOSStatusGet(void);
 
 // *****************************************************************************
 

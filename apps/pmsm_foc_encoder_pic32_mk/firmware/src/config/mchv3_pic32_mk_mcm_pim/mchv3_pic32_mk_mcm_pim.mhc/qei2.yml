@@ -1,0 +1,107 @@
+format_version: v1.0
+type: UniqueComponent
+attributes: {id: qei2}
+children:
+- type: Symbols
+  children:
+  - type: String
+    attributes: {id: ENCODER_POS_GET_API}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: qei2, value: QEI2_PositionGet}
+  - type: String
+    attributes: {id: ENCODER_POS_SET_API}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: qei2, value: QEI2_PositionCountSet}
+  - type: String
+    attributes: {id: ENCODER_SPEED_GET_API}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: qei2, value: QEI2_VelocityGet}
+  - type: String
+    attributes: {id: ENCODER_SPEED_SET_API}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: qei2, value: QEI2_VelocityCountSet}
+  - type: String
+    attributes: {id: ENCODER_START_API}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: qei2, value: QEI2_Start}
+  - type: String
+    attributes: {id: ENCODER_STOP_API}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: qei2, value: QEI2_Stop}
+  - type: Long
+    attributes: {id: QEI2CMPL__CMPL}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: qei2, value: '1'}
+  - type: KeyValueSet
+    attributes: {id: QEI2CON__PIMOD}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: qei2, value: '6'}
+  - type: Long
+    attributes: {id: QEI2ICC__ICCH}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: qei2, value: '2000'}
+  - type: KeyValueSet
+    attributes: {id: QEI2IOC__FLTREN}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: qei2, value: '1'}
+  - type: Hex
+    attributes: {id: QEI_QEICON}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: qei2, value: '6144'}
+  - type: Hex
+    attributes: {id: QEI_QEIIOC}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: qei2, value: '16384'}
+- type: Attachments
+  children:
+  - type: DirectCapability
+    attributes: {id: QEI2_QDEC}
+    children:
+    - type: Attributes
+      children:
+      - type: String
+        attributes: {id: targetComponentID}
+        children:
+        - {type: Value, value: pmsm_foc}
+      - type: String
+        attributes: {id: targetAttachmentID}
+        children:
+        - {type: Value, value: pmsmfoc_QDEC}
+- type: ElementPosition
+  attributes: {x: '155', y: '223', id: qei2}

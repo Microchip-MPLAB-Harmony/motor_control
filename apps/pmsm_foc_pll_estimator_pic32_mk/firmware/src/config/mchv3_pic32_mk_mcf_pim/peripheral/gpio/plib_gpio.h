@@ -61,38 +61,76 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/*** Macros for FAULT_INDICATOR pin ***/
-#define FAULT_INDICATOR_Set()               (LATGSET = (1<<15))
-#define FAULT_INDICATOR_Clear()             (LATGCLR = (1<<15))
-#define FAULT_INDICATOR_Toggle()            (LATGINV= (1<<15))
-#define FAULT_INDICATOR_Get()               ((PORTG >> 15) & 0x1)
-#define FAULT_INDICATOR_OutputEnable()      (TRISGCLR = (1<<15))
-#define FAULT_INDICATOR_InputEnable()       (TRISGSET = (1<<15))
-#define FAULT_INDICATOR_PIN                  GPIO_PIN_RG15
-/*** Macros for Debug pin ***/
-#define Debug_Set()               (LATGSET = (1<<6))
-#define Debug_Clear()             (LATGCLR = (1<<6))
-#define Debug_Toggle()            (LATGINV= (1<<6))
-#define Debug_Get()               ((PORTG >> 6) & 0x1)
-#define Debug_OutputEnable()      (TRISGCLR = (1<<6))
-#define Debug_InputEnable()       (TRISGSET = (1<<6))
-#define Debug_PIN                  GPIO_PIN_RG6
-/*** Macros for DIRECTION_INDICATOR pin ***/
-#define DIRECTION_INDICATOR_Set()               (LATFSET = (1<<5))
-#define DIRECTION_INDICATOR_Clear()             (LATFCLR = (1<<5))
-#define DIRECTION_INDICATOR_Toggle()            (LATFINV= (1<<5))
-#define DIRECTION_INDICATOR_Get()               ((PORTF >> 5) & 0x1)
-#define DIRECTION_INDICATOR_OutputEnable()      (TRISFCLR = (1<<5))
-#define DIRECTION_INDICATOR_InputEnable()       (TRISFSET = (1<<5))
-#define DIRECTION_INDICATOR_PIN                  GPIO_PIN_RF5
-/*** Macros for START_STOP_BUTTON pin ***/
-#define START_STOP_BUTTON_Set()               (LATDSET = (1<<8))
-#define START_STOP_BUTTON_Clear()             (LATDCLR = (1<<8))
-#define START_STOP_BUTTON_Toggle()            (LATDINV= (1<<8))
-#define START_STOP_BUTTON_Get()               ((PORTD >> 8) & 0x1)
-#define START_STOP_BUTTON_OutputEnable()      (TRISDCLR = (1<<8))
-#define START_STOP_BUTTON_InputEnable()       (TRISDSET = (1<<8))
-#define START_STOP_BUTTON_PIN                  GPIO_PIN_RD8
+
+/*** Macros for GPIO_RG15 pin ***/
+#define GPIO_RG15_Set()               (LATGSET = (1<<15))
+#define GPIO_RG15_Clear()             (LATGCLR = (1<<15))
+#define GPIO_RG15_Toggle()            (LATGINV= (1<<15))
+#define GPIO_RG15_OutputEnable()      (TRISGCLR = (1<<15))
+#define GPIO_RG15_InputEnable()       (TRISGSET = (1<<15))
+#define GPIO_RG15_Get()               ((PORTG >> 15) & 0x1)
+#define GPIO_RG15_PIN                  GPIO_PIN_RG15
+
+/*** Macros for PWMH0 pin ***/
+#define PWMH0_Get()               ((PORTB >> 14) & 0x1)
+#define PWMH0_PIN                  GPIO_PIN_RB14
+
+/*** Macros for PWML0 pin ***/
+#define PWML0_Get()               ((PORTB >> 15) & 0x1)
+#define PWML0_PIN                  GPIO_PIN_RB15
+
+/*** Macros for VBUS pin ***/
+#define VBUS_Get()               ((PORTA >> 12) & 0x1)
+#define VBUS_PIN                  GPIO_PIN_RA12
+
+/*** Macros for IV pin ***/
+#define IV_Get()               ((PORTB >> 2) & 0x1)
+#define IV_PIN                  GPIO_PIN_RB2
+
+/*** Macros for IU pin ***/
+#define IU_Get()               ((PORTC >> 2) & 0x1)
+#define IU_PIN                  GPIO_PIN_RC2
+
+/*** Macros for POT pin ***/
+#define POT_Get()               ((PORTE >> 15) & 0x1)
+#define POT_PIN                  GPIO_PIN_RE15
+
+/*** Macros for FAULT pin ***/
+#define FAULT_Get()               ((PORTB >> 4) & 0x1)
+#define FAULT_PIN                  GPIO_PIN_RB4
+
+/*** Macros for GPIO_RD8 pin ***/
+#define GPIO_RD8_Set()               (LATDSET = (1<<8))
+#define GPIO_RD8_Clear()             (LATDCLR = (1<<8))
+#define GPIO_RD8_Toggle()            (LATDINV= (1<<8))
+#define GPIO_RD8_OutputEnable()      (TRISDCLR = (1<<8))
+#define GPIO_RD8_InputEnable()       (TRISDSET = (1<<8))
+#define GPIO_RD8_Get()               ((PORTD >> 8) & 0x1)
+#define GPIO_RD8_PIN                  GPIO_PIN_RD8
+
+/*** Macros for TX pin ***/
+#define TX_Get()               ((PORTB >> 9) & 0x1)
+#define TX_PIN                  GPIO_PIN_RB9
+
+/*** Macros for RX pin ***/
+#define RX_Get()               ((PORTC >> 8) & 0x1)
+#define RX_PIN                  GPIO_PIN_RC8
+
+/*** Macros for PWMH2 pin ***/
+#define PWMH2_Get()               ((PORTB >> 10) & 0x1)
+#define PWMH2_PIN                  GPIO_PIN_RB10
+
+/*** Macros for PWML2 pin ***/
+#define PWML2_Get()               ((PORTB >> 11) & 0x1)
+#define PWML2_PIN                  GPIO_PIN_RB11
+
+/*** Macros for PWMH1 pin ***/
+#define PWMH1_Get()               ((PORTB >> 12) & 0x1)
+#define PWMH1_PIN                  GPIO_PIN_RB12
+
+/*** Macros for PWML1 pin ***/
+#define PWML1_Get()               ((PORTB >> 13) & 0x1)
+#define PWML1_PIN                  GPIO_PIN_RB13
 
 
 // *****************************************************************************
@@ -260,42 +298,42 @@ void GPIO_PortOutputEnable(GPIO_PORT port, uint32_t mask);
 
 static inline void GPIO_PinWrite(GPIO_PIN pin, bool value)
 {
-    GPIO_PortWrite(pin>>4, (uint32_t)(0x1) << (pin & 0xF), (uint32_t)(value) << (pin & 0xF));
+    GPIO_PortWrite((GPIO_PORT)(pin>>4), (uint32_t)(0x1) << (pin & 0xF), (uint32_t)(value) << (pin & 0xF));
 }
 
 static inline bool GPIO_PinRead(GPIO_PIN pin)
 {
-    return (bool)(((GPIO_PortRead(pin>>4)) >> (pin & 0xF)) & 0x1);
+    return (bool)(((GPIO_PortRead((GPIO_PORT)(pin>>4))) >> (pin & 0xF)) & 0x1);
 }
 
 static inline bool GPIO_PinLatchRead(GPIO_PIN pin)
 {
-    return (bool)((GPIO_PortLatchRead(pin>>4) >> (pin & 0xF)) & 0x1);
+    return (bool)((GPIO_PortLatchRead((GPIO_PORT)(pin>>4)) >> (pin & 0xF)) & 0x1);
 }
 
 static inline void GPIO_PinToggle(GPIO_PIN pin)
 {
-    GPIO_PortToggle(pin>>4, 0x1 << (pin & 0xF));
+    GPIO_PortToggle((GPIO_PORT)(pin>>4), 0x1 << (pin & 0xF));
 }
 
 static inline void GPIO_PinSet(GPIO_PIN pin)
 {
-    GPIO_PortSet(pin>>4, 0x1 << (pin & 0xF));
+    GPIO_PortSet((GPIO_PORT)(pin>>4), 0x1 << (pin & 0xF));
 }
 
 static inline void GPIO_PinClear(GPIO_PIN pin)
 {
-    GPIO_PortClear(pin>>4, 0x1 << (pin & 0xF));
+    GPIO_PortClear((GPIO_PORT)(pin>>4), 0x1 << (pin & 0xF));
 }
 
 static inline void GPIO_PinInputEnable(GPIO_PIN pin)
 {
-    GPIO_PortInputEnable(pin>>4, 0x1 << (pin & 0xF));
+    GPIO_PortInputEnable((GPIO_PORT)(pin>>4), 0x1 << (pin & 0xF));
 }
 
 static inline void GPIO_PinOutputEnable(GPIO_PIN pin)
 {
-    GPIO_PortOutputEnable(pin>>4, 0x1 << (pin & 0xF));
+    GPIO_PortOutputEnable((GPIO_PORT)(pin>>4), 0x1 << (pin & 0xF));
 }
 
 

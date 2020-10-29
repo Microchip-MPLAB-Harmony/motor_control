@@ -57,19 +57,18 @@ ADCHS_CALLBACK_OBJECT ADCHS_CallbackObj[53];
 void ADCHS_Initialize()
 {
     ADCCON1bits.ON = 0;
-
     ADC1CFG = DEVADC1;
-    ADC1TIME = 0x3000001;
+    ADC1TIME = 0x3010001;
 
     ADC3CFG = DEVADC3;
-    ADC3TIME = 0x3000001;
+    ADC3TIME = 0x3010001;
 
 
     ADC7CFG = DEVADC7;
 
     ADCCON1 = 0x600000;
-    ADCCON2 = 0x2;
-    ADCCON3 = 0x2000000;
+    ADCCON2 = 0x20001;
+    ADCCON3 = 0x1000000;
 
     ADCTRGMODE = 0x840000;
 
@@ -93,11 +92,11 @@ void ADCHS_Initialize()
     ADCCSS2 = 0x0; 
 
     /* Result interrupt enable */
-    ADCGIRQEN1 = 0x9;
+    ADCGIRQEN1 = 0x8;
     ADCGIRQEN2 = 0x0;
 
     /* Interrupt Enable */
-    IEC3SET = 0x2400;
+    IEC3SET = 0x2000;
     IEC4SET = 0x0;
     /* Turn ON ADC */
     ADCCON1bits.ON = 1;
@@ -192,6 +191,11 @@ void ADCHS_GlobalLevelConversionStart(void)
     ADCCON3bits.GLSWTRG = 1;
 }
 
+void ADCHS_GlobalLevelConversionStop(void)
+{
+    ADCCON3bits.GLSWTRG = 0;
+}
+
 void ADCHS_ChannelConversionStart(ADCHS_CHANNEL_NUM channel)
 {
     ADCCON3bits.ADINSEL = channel;
@@ -227,17 +231,11 @@ void ADCHS_CallbackRegister(ADCHS_CHANNEL_NUM channel, ADCHS_CALLBACK callback, 
     ADCHS_CallbackObj[channel].context = context;
 }
 
-
-void ADC_DATA0_InterruptHandler(void)
+bool ADCHS_EOSStatusGet(void)
 {
-    if (ADCHS_CallbackObj[0].callback_fn != NULL)
-    {
-      ADCHS_CallbackObj[0].callback_fn(ADCHS_CH0, ADCHS_CallbackObj[0].context);
-    }
-
-
-    IFS3CLR = _IFS3_AD1D0IF_MASK;
+    return (bool)(ADCCON2bits.EOSRDY);
 }
+
 void ADC_DATA3_InterruptHandler(void)
 {
     if (ADCHS_CallbackObj[3].callback_fn != NULL)

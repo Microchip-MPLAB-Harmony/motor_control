@@ -57,7 +57,7 @@
 /*** DEVCFG0 ***/
 #pragma config DEBUG =      OFF
 #pragma config JTAGEN =     OFF
-#pragma config ICESEL =     ICS_PGx2
+#pragma config ICESEL =     ICS_PGx1
 #pragma config TRCEN =      OFF
 #pragma config BOOTISA =    MIPS32
 #pragma config FSLEEP =     OFF
@@ -72,7 +72,7 @@
 /*** DEVCFG1 ***/
 #pragma config FNOSC =      SPLL
 #pragma config DMTINTV =    WIN_127_128
-#pragma config FSOSCEN =    ON
+#pragma config FSOSCEN =    OFF
 #pragma config IESO =       ON
 #pragma config POSCMOD =    OFF
 #pragma config OSCIOFNC =   OFF
@@ -167,6 +167,7 @@
 
 void SYS_Initialize ( void* data )
 {
+
     /* Start out with interrupts disabled before configuring any modules */
     __builtin_disable_interrupts();
 
@@ -178,7 +179,7 @@ void SYS_Initialize ( void* data )
 
     /* Configure Wait States and Prefetch */
     CHECONbits.PFMWS = 3;
-    CHECONbits.PREFEN = 0;
+    CHECONbits.PREFEN = 1;
 
 
 
@@ -194,6 +195,9 @@ void SYS_Initialize ( void* data )
 
 
 
+
+    X2CScope_Init();
+    PMSM_FOC_Initialize();
 
 
     EVIC_Initialize();

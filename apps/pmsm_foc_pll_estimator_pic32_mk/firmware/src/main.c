@@ -26,12 +26,6 @@
 #include <stdbool.h>                    // Defines true
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include "definitions.h"                // SYS function prototypes
-#include "mc_app.h"
-#include "mc_picontrol.h"
-#include "mc_errorHandler.h"
-#include "mc_infrastructure.h"
-#include "X2CScope.h"
-#include "X2CScopeCommunication.h"
 
 
 // *****************************************************************************
@@ -42,25 +36,23 @@
 
 int main ( void )
 {
-    /* Start-up Check  */
-    MCERR_StartupCheck();
-    
-    /* System Initialization  */
+    /* Initialize all modules */
     SYS_Initialize ( NULL );
-
-    /* X2C Scope initialization */
-    X2CScope_Init();
-
-    /* Initialize peripheral for motor control */
-    MCINF_InitializeControl();
 
     while ( true )
     {
-        MCINF_Tasks();
+        /* Maintain state machines of all polled MPLAB Harmony modules. */
+        SYS_Tasks ( );
+        
+        /* Motor control tasks */
+        PMSM_FOC_Tasks();
+        
+        /* X2C Communication */
         X2CScope_Communicate();
     }
 
     /* Execution should not come here during normal operation */
+
     return ( EXIT_FAILURE );
 }
 
@@ -68,3 +60,4 @@ int main ( void )
 /*******************************************************************************
  End of File
 */
+

@@ -108,8 +108,10 @@ TC_QUADRATURE_STATUS TC0_QuadratureStatusGet(void);
  
 
 
+#ifdef __cplusplus // Provide C++ Compatibility
+}
+#endif
+
 #endif //PLIB_TC0_H
 
-/**
- End of File
-*/
+/* End of File */

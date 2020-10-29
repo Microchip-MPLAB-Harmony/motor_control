@@ -1,0 +1,14 @@
+configName: mchv3_pic32_mk_mcf_pim
+folderName: ''
+format_version: v1.0
+frameworkPath: ../../..
+processor: PIC32MK1024MCF100
+projectName: ''
+settings:
+  PackageFilter: motor_control;csp;motor_control;x2c;
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  TRUSTZONE: 'false'
+  CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: .\dev_packs\Microchip\PIC32MK-MC_DFP\1.5.115\atdf\PIC32MK1024MCF100.atdf

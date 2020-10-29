@@ -97,7 +97,7 @@ void MCPWM_Initialize (void)
     /*  CLSRC  = 0  */
     IOCON1 = 0x7dc000;
 
-    PDC1 = 0;
+    PDC1 = 1000;
     SDC1 = 500;
     PHASE1 = 0;
 
@@ -113,13 +113,13 @@ void MCPWM_Initialize (void)
     /* leading edge blanking */
     /* LEBCON1 register  */
     /*  CLLEBEN    = false  */
-    /*  FLTLEBEN   = true */
+    /*  FLTLEBEN   = false */
     /*  PLF        = 0  */
-    /*  PLR        = 1  */
+    /*  PLR        = 0  */
     /*  PHF        = 0  */
-    /*  PHR        = 1  */
-    LEBCON1 = 0xa800;
-    LEBDLY1 = 240;
+    /*  PHR        = 0  */
+    LEBCON1 = 0x0;
+    LEBDLY1 = 10;
 
     /* Enable interrupt */
     IEC5SET = _IEC5_PWM1IE_MASK;
@@ -146,16 +146,16 @@ void MCPWM_Initialize (void)
     /*  POLH    = 0*/
     /*  POLL    = 0*/
     /*  FLTDAT  = 0b00 */
-    /*  FLTMOD  = 3 */
-    /*  FLTPOL  = 0  */
-    /*  FLTSRC  = 0  */
+    /*  FLTMOD  = 1 */
+    /*  FLTPOL  = 1  */
+    /*  FLTSRC  = 15  */
     /*  CLDAT  = 0b00 */
     /*  CLMOD  = 0 */
     /*  CLPOL  = 0  */
     /*  CLSRC  = 0  */
-    IOCON2 = 0xc000;
+    IOCON2 = 0x7dc000;
 
-    PDC2 = 0;
+    PDC2 = 1000;
     SDC2 = 500;
     PHASE2 = 0;
 
@@ -164,20 +164,20 @@ void MCPWM_Initialize (void)
     ALTDTR2 = 120;
 
     /* Trigger Generator */
-    TRGCON2 = 0x800;
-    TRIG2 = 2999;
+    TRGCON2 = 0x400;
+    TRIG2 = 2990;
     STRIG2 = 0;
 
     /* leading edge blanking */
     /* LEBCON2 register  */
     /*  CLLEBEN    = false  */
-    /*  FLTLEBEN   = true */
+    /*  FLTLEBEN   = false */
     /*  PLF        = 0  */
-    /*  PLR        = 1  */
+    /*  PLR        = 0  */
     /*  PHF        = 0  */
-    /*  PHR        = 1  */
-    LEBCON2 = 0xa800;
-    LEBDLY2 = 240;
+    /*  PHR        = 0  */
+    LEBCON2 = 0x0;
+    LEBDLY2 = 10;
 
 
     /*********** Channel 3 Configurations **********/
@@ -201,16 +201,16 @@ void MCPWM_Initialize (void)
     /*  POLH    = 0*/
     /*  POLL    = 0*/
     /*  FLTDAT  = 0b00 */
-    /*  FLTMOD  = 3 */
-    /*  FLTPOL  = 0  */
-    /*  FLTSRC  = 0  */
+    /*  FLTMOD  = 1 */
+    /*  FLTPOL  = 1  */
+    /*  FLTSRC  = 15  */
     /*  CLDAT  = 0b00 */
     /*  CLMOD  = 0 */
     /*  CLPOL  = 0  */
     /*  CLSRC  = 0  */
-    IOCON3 = 0xc000;
+    IOCON3 = 0x7dc000;
 
-    PDC3 = 0;
+    PDC3 = 1000;
     SDC3 = 500;
     PHASE3 = 0;
 
@@ -219,20 +219,20 @@ void MCPWM_Initialize (void)
     ALTDTR3 = 120;
 
     /* Trigger Generator */
-    TRGCON3 = 0x800;
-    TRIG3 = 2999;
+    TRGCON3 = 0x400;
+    TRIG3 = 2990;
     STRIG3 = 0;
 
     /* leading edge blanking */
     /* LEBCON3 register  */
     /*  CLLEBEN    = false  */
-    /*  FLTLEBEN   = true */
+    /*  FLTLEBEN   = false */
     /*  PLF        = 0  */
-    /*  PLR        = 1  */
+    /*  PLR        = 0  */
     /*  PHF        = 0  */
-    /*  PHR        = 1  */
-    LEBCON3 = 0xa800;
-    LEBDLY3 = 240;
+    /*  PHR        = 0  */
+    LEBCON3 = 0x0;
+    LEBDLY3 = 10;
 
 
 }

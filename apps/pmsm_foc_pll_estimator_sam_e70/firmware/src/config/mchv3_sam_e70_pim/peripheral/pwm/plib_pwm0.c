@@ -55,6 +55,8 @@
 #include "plib_pwm0.h"
 
 
+/* Object to hold callback function and context */
+PWM_CALLBACK_OBJECT PWM0_CallbackObj;
 
 /* Initialize enabled PWM channels */
 void PWM0_Initialize (void)
@@ -76,8 +78,11 @@ void PWM0_Initialize (void)
     /* PWM duty cycle */
     PWM0_REGS->PWM_CH_NUM[0].PWM_CDTY = 0U;
     /* Dead time */
-    PWM0_REGS->PWM_CH_NUM[0].PWM_DT = (100U << PWM_DT_DTL_Pos) | (100U);
+    PWM0_REGS->PWM_CH_NUM[0].PWM_DT = (300U << PWM_DT_DTL_Pos) | (300U);
          
+    /* Enable counter event */
+    PWM0_REGS->PWM_IER1 = 0x10000;
+    PWM0_CallbackObj.callback_fn = NULL;
      
 
     /************** Channel 1 *************************/
@@ -86,8 +91,11 @@ void PWM0_Initialize (void)
     PWM0_REGS->PWM_CH_NUM[1].PWM_CDTY = 0U;
     PWM0_REGS->PWM_CH_NUM[1].PWM_CMR = PWM_CMR_DTE_Msk;
     /* Dead time */
-    PWM0_REGS->PWM_CH_NUM[1].PWM_DT = (100U << PWM_DT_DTL_Pos) | (100U);
+    PWM0_REGS->PWM_CH_NUM[1].PWM_DT = (300U << PWM_DT_DTL_Pos) | (300U);
          
+    /* Enable counter event */
+    PWM0_REGS->PWM_IER1 = 0x10000;
+    PWM0_CallbackObj.callback_fn = NULL;
      
 
     /************** Channel 2 *************************/
@@ -96,8 +104,11 @@ void PWM0_Initialize (void)
     PWM0_REGS->PWM_CH_NUM[2].PWM_CDTY = 0U;
     PWM0_REGS->PWM_CH_NUM[2].PWM_CMR = PWM_CMR_DTE_Msk;
     /* Dead time */
-    PWM0_REGS->PWM_CH_NUM[2].PWM_DT = (100U << PWM_DT_DTL_Pos) | (100U);
+    PWM0_REGS->PWM_CH_NUM[2].PWM_DT = (300U << PWM_DT_DTL_Pos) | (300U);
          
+    /* Enable counter event */
+    PWM0_REGS->PWM_IER1 = 0x10000;
+    PWM0_CallbackObj.callback_fn = NULL;
      
  
 
@@ -111,7 +122,7 @@ void PWM0_Initialize (void)
 		 | (0 << PWM_FPV1_FPVH2_Pos) | (1 << PWM_FPV1_FPVL2_Pos);
     PWM0_REGS->PWM_FPV2 = 0x0;
     /* Fault mode configuration */
-    PWM0_REGS->PWM_FMR = PWM_FMR_FFIL(0x0) | PWM_FMR_FPOL(0xF8) | PWM_FMR_FMOD(0xFF);
+    PWM0_REGS->PWM_FMR = PWM_FMR_FFIL(0x0) | PWM_FMR_FPOL(0xF8) | PWM_FMR_FMOD(0xFB);
 
     /************* Compare Unit 0 **************************/
     /* Compare unit configurations */
@@ -196,14 +207,24 @@ void PWM0_ChannelOverrideDisable(PWM_CHANNEL_NUM channel)
     PWM0_REGS->PWM_OS |= ((1 << channel) | (1 << (channel + 16)));
 }
 
-
-/* Check the status of counter event */
-bool PWM0_ChannelCounterEventStatusGet (PWM_CHANNEL_NUM channel)
+ /* Register callback function */
+void PWM0_CallbackRegister(PWM_CALLBACK callback, uintptr_t context)
 {
-    bool status;
-    status = (PWM0_REGS->PWM_ISR1 >> channel) & 0x1U;
-    return status;
+    PWM0_CallbackObj.callback_fn = callback;
+    PWM0_CallbackObj.context = context;
 }
+
+/* Interrupt Handler */
+void PWM0_InterruptHandler(void)
+{
+    uint32_t status;
+    status = PWM0_REGS->PWM_ISR1;
+    if (PWM0_CallbackObj.callback_fn != NULL)
+    {
+        PWM0_CallbackObj.callback_fn(status, PWM0_CallbackObj.context);
+    }
+}
+
 
 /**
  End of File

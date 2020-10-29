@@ -6,6 +6,25 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mchv3_sam_e70_pim" projectFiles="true">
+          <logicalFolder name="f3" displayName="motor_control" projectFiles="true">
+            <logicalFolder name="f1" displayName="pmsm_foc" projectFiles="true">
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_rotorposition.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_control_loop.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_currmeasurement.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_derivedparams.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_errorhandler.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_generic_lib.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_hal.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_lib.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_picontrol.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_pmsm_foc.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_pmsm_foc_common.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_pwm.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_speed.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_userparams.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_voltagemeasurement.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="afec" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_e70_pim/peripheral/afec/plib_afec0.h</itemPath>
@@ -36,11 +55,17 @@
               <itemPath>../src/config/mchv3_sam_e70_pim/peripheral/uart/plib_uart0.h</itemPath>
             </logicalFolder>
           </logicalFolder>
+          <logicalFolder name="f2" displayName="X2CCode" projectFiles="true">
+            <logicalFolder name="f1" displayName="X2CScope" projectFiles="true">
+              <itemPath>../src/config/mchv3_sam_e70_pim/X2CCode/X2CScope/inc/X2CScope.h</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/X2CCode/X2CScope/inc/X2CScopeCommunication.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <itemPath>../src/config/mchv3_sam_e70_pim/device.h</itemPath>
           <itemPath>../src/config/mchv3_sam_e70_pim/device_cache.h</itemPath>
           <itemPath>../src/config/mchv3_sam_e70_pim/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/mchv3_sam_e70_pim/definitions.h</itemPath>
         </logicalFolder>
-        <itemPath>../src/config/mchv3_sam_e70_pim/userparams.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME70Q21B_DFP" projectFiles="true">
@@ -85,7 +110,6 @@
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
             <itemPath>../src/packs/ATSAME70Q21B_DFP/pio/same70q21b.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/packs/ATSAME70Q21B_DFP/device.h</itemPath>
           <itemPath>../src/packs/ATSAME70Q21B_DFP/atsame70q21b.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
@@ -101,25 +125,42 @@
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cachel1_armv7.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/X2CScope.h</itemPath>
-      <itemPath>../src/X2CScopeCommunication.h</itemPath>
-      <itemPath>../src/mc_app.h</itemPath>
-      <itemPath>../src/mclib_generic_float.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1" displayName="mchv3_sam_e70_pim" projectFiles="true">
+          <itemPath>../src/config/mchv3_sam_e70_pim/ATSAME70Q21B.ld</itemPath>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="mchv3_sam_e70_pim" projectFiles="true">
+          <logicalFolder name="f4" displayName="motor_control" projectFiles="true">
+            <logicalFolder name="f1" displayName="pmsm_foc" projectFiles="true">
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_rotorposition.c</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_control_loop.c</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_currmeasurement.c</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_errorhandler.c</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_generic_lib.c</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_lib.c</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_picontrol.c</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_pmsm_foc.c</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_pwm.c</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_speed.c</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/motor_control/pmsm_foc/mc_voltagemeasurement.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="afec" projectFiles="true">
               <itemPath>../src/config/mchv3_sam_e70_pim/peripheral/afec/plib_afec0.c</itemPath>
@@ -146,8 +187,14 @@
               <itemPath>../src/config/mchv3_sam_e70_pim/peripheral/uart/plib_uart0.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f3" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/mchv3_sam_e70_pim/stdio/xc32_monitor.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="X2CCode" projectFiles="true">
+            <logicalFolder name="f1" displayName="X2CScope" projectFiles="true">
+              <itemPath>../src/config/mchv3_sam_e70_pim/X2CCode/X2CScope/src/X2CScope.c</itemPath>
+              <itemPath>../src/config/mchv3_sam_e70_pim/X2CCode/X2CScope/src/X2CScopeCommunication.c</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/mchv3_sam_e70_pim/initialization.c</itemPath>
           <itemPath>../src/config/mchv3_sam_e70_pim/interrupts.c</itemPath>
@@ -156,17 +203,30 @@
           <itemPath>../src/config/mchv3_sam_e70_pim/libc_syscalls.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/X2CScope.c</itemPath>
-      <itemPath>../src/X2CScopeCommunication.c</itemPath>
-      <itemPath>../src/mc_app.c</itemPath>
-      <itemPath>../src/mclib_generic_float.c</itemPath>
       <itemPath>../src/main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
+      <logicalFolder name="f1"
+                     displayName="mchv3_sam_e70_pim.mhc"
+                     projectFiles="true">
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\afec0.yml</itemPath>
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\cmsis.yml</itemPath>
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\core.yml</itemPath>
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\dfp.yml</itemPath>
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\efc.yml</itemPath>
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\GraphSettings.yml</itemPath>
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\pmsm_foc.yml</itemPath>
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\project.yml</itemPath>
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\pwm0.yml</itemPath>
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\settings.yml</itemPath>
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\tc0.yml</itemPath>
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\uart0.yml</itemPath>
+        <itemPath>..\src\config\mchv3_sam_e70_pim\mchv3_sam_e70_pim.mhc\X2CScope.yml</itemPath>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/mchv3_sam_e70_pim/harmony.prj</itemPath>
+      <itemPath>../src/config/mchv3_sam_e70_pim/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -186,13 +246,15 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME70_DFP" vendor="Microchip" version="4.2.59"/>
+        <pack name="SAME70_DFP" vendor="Microchip" version="4.4.78"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../src/X2CScopeLib_SAME70_XC32_215.a</linkerLibFileItem>
+            <linkerLibFileItem>../src/config/mchv3_sam_e70_pim/X2CCode/X2CScope/lib/libCORTEXM7_X2CScope.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <archiverTool>
@@ -207,6 +269,7 @@
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
         <makeCustomizationPostStep></makeCustomizationPostStep>
@@ -247,7 +310,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/mchv3_sam_e70_pim;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
+                  value="../src;../src/config/mchv3_sam_e70_pim;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/config/mchv3_sam_e70_pim/X2CCode"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -342,7 +405,8 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories"
+                  value="../src;../src/config/mchv3_sam_e70_pim;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -374,15 +438,19 @@
       </C32Global>
       <EdbgTool>
         <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="arm.use_vtor" value="false"/>
+        <property key="arm.vtor_adr" value="exception_table"/>
         <property key="communication.activationmode" value="nohv"/>
-        <property key="communication.interface" value="jtag"/>
-        <property key="communication.speed" value="${communication.speed.default}"/>
-        <property key="debugoptions.useswbreakpoints" value="true"/>
+        <property key="communication.interface" value="swd"/>
+        <property key="communication.speed" value="2.000"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
         <property key="firmware.path"
                   value="Press to browse for a specific firmware version"/>
         <property key="firmware.toolpack"
                   value="Press to select which tool pack to use"/>
         <property key="firmware.update.action" value="firmware.update.use.latest"/>
+        <property key="freeze.timers" value="false"/>
+        <property key="lastid" value=""/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
         <property key="memories.configurationmemory" value="true"/>
@@ -396,6 +464,7 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="400000-5fffff"/>
+        <property key="memories.rww" value="true"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
@@ -403,10 +472,14 @@
                   value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
-        <property key="programoptions.preserveprogram.ranges" value="0-2045ffff"/>
+        <property key="programoptions.preserveprogram.ranges" value=""/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="script.has_reset" value="true"/>
+        <property key="script.log_level" value="1"/>
+        <property key="script.reset_delay" value="0"/>
+        <property key="script.show_output" value="false"/>
         <property key="toolpack.updateoptions"
                   value="toolpack.updateoptions.uselatestoolpack"/>
         <property key="toolpack.updateoptions.packversion"
@@ -498,6 +571,10 @@
         <property key="periphComp6.gte" value="gt"/>
         <property key="reset.scl" value="false"/>
         <property key="reset.type" value="MCLR"/>
+        <property key="toolpack.updateoptions"
+                  value="toolpack.updateoptions.uselatestoolpack"/>
+        <property key="toolpack.updateoptions.packversion"
+                  value="Press to select which tool pack to use"/>
         <property key="tracecontrol.include.timestamp" value="summarydataenabled"/>
         <property key="tracecontrol.select" value="0"/>
         <property key="tracecontrol.stallontracebufferfull" value="false"/>
@@ -508,9 +585,6 @@
         <property key="uart0io.output" value="window"/>
         <property key="uart0io.outputfile" value=""/>
         <property key="uart0io.uartioenabled" value="false"/>
-        <property key="uart10io.output" value="window"/>
-        <property key="uart10io.outputfile" value=""/>
-        <property key="uart10io.uartioenabled" value="false"/>
         <property key="uart1io.output" value="window"/>
         <property key="uart1io.outputfile" value=""/>
         <property key="uart1io.uartioenabled" value="false"/>
@@ -529,15 +603,48 @@
         <property key="uart6io.output" value="window"/>
         <property key="uart6io.outputfile" value=""/>
         <property key="uart6io.uartioenabled" value="false"/>
-        <property key="uart7io.output" value="window"/>
-        <property key="uart7io.outputfile" value=""/>
-        <property key="uart7io.uartioenabled" value="false"/>
-        <property key="uart8io.output" value="window"/>
-        <property key="uart8io.outputfile" value=""/>
-        <property key="uart8io.uartioenabled" value="false"/>
-        <property key="uart9io.output" value="window"/>
-        <property key="uart9io.outputfile" value=""/>
-        <property key="uart9io.uartioenabled" value="false"/>
+        <property key="usart0io.output" value="window"/>
+        <property key="usart0io.outputfile" value=""/>
+        <property key="usart0io.uartioenabled" value="false"/>
+        <property key="usart1io.output" value="window"/>
+        <property key="usart1io.outputfile" value=""/>
+        <property key="usart1io.uartioenabled" value="false"/>
+        <property key="usart2io.output" value="window"/>
+        <property key="usart2io.outputfile" value=""/>
+        <property key="usart2io.uartioenabled" value="false"/>
+        <property key="usart3io.output" value="window"/>
+        <property key="usart3io.outputfile" value=""/>
+        <property key="usart3io.uartioenabled" value="false"/>
+        <property key="usart4io.output" value="window"/>
+        <property key="usart4io.outputfile" value=""/>
+        <property key="usart4io.uartioenabled" value="false"/>
+        <property key="usartc0io.output" value="window"/>
+        <property key="usartc0io.outputfile" value=""/>
+        <property key="usartc0io.uartioenabled" value="false"/>
+        <property key="usartc1io.output" value="window"/>
+        <property key="usartc1io.outputfile" value=""/>
+        <property key="usartc1io.uartioenabled" value="false"/>
+        <property key="usartd0io.output" value="window"/>
+        <property key="usartd0io.outputfile" value=""/>
+        <property key="usartd0io.uartioenabled" value="false"/>
+        <property key="usartd1io.output" value="window"/>
+        <property key="usartd1io.outputfile" value=""/>
+        <property key="usartd1io.uartioenabled" value="false"/>
+        <property key="usarte0io.output" value="window"/>
+        <property key="usarte0io.outputfile" value=""/>
+        <property key="usarte0io.uartioenabled" value="false"/>
+        <property key="usarte1io.output" value="window"/>
+        <property key="usarte1io.outputfile" value=""/>
+        <property key="usarte1io.uartioenabled" value="false"/>
+        <property key="usarte2io.output" value="window"/>
+        <property key="usarte2io.outputfile" value=""/>
+        <property key="usarte2io.uartioenabled" value="false"/>
+        <property key="usartf0io.output" value="window"/>
+        <property key="usartf0io.outputfile" value=""/>
+        <property key="usartf0io.uartioenabled" value="false"/>
+        <property key="usartf1io.output" value="window"/>
+        <property key="usartf1io.outputfile" value=""/>
+        <property key="usartf1io.uartioenabled" value="false"/>
         <property key="warningmessagebreakoptions.W0001_CORE_BITREV_MODULO_EN"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0002_CORE_SECURE_MEMORYACCESS"
@@ -742,6 +849,12 @@
                   value="report"/>
         <property key="warningmessagebreakoptions.W0245_ADC_BUFREGEN_NOT_ALLOWED"
                   value="report"/>
+        <property key="warningmessagebreakoptions.W0246_ADC_ACCUMULATION_BAD_RESSEL"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0247_ADC_CONVERSION_BAD_RESSEL"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0248_ADC_WR_BEFORE_KEY_SEQ"
+                  value="report"/>
         <property key="warningmessagebreakoptions.W0400_PWM_PWM_FASTER_THAN_FOSC"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0600_WDT_2ND_WDT_MR_WRITE"
@@ -841,6 +954,8 @@
         <property key="warningmessagebreakoptions.W7003_SMT_WIN_SELECTION_NOT_SUPPORT"
                   value="report"/>
         <property key="warningmessagebreakoptions.W8001_OSC_INVALID_CLOCK_SOURCE"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W8002_OSC_RESERVED_FEXTOSC"
                   value="report"/>
         <property key="warningmessagebreakoptions.W9001_TMR_GATE_AND_EXTCLOCK_ENABLED"
                   value="report"/>

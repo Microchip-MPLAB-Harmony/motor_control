@@ -1,0 +1,14 @@
+configName: mchv3_sam_e70_pim
+folderName: ''
+format_version: v1.0
+frameworkPath: ../../..
+processor: ATSAME70Q21B
+projectName: ''
+settings:
+  PackageFilter: motor_control;csp;motor_control;x2c;
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  TRUSTZONE: 'false'
+  CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: .\dev_packs\Microchip\SAME70_DFP\4.3.73\same70b\atdf\ATSAME70Q21B.atdf

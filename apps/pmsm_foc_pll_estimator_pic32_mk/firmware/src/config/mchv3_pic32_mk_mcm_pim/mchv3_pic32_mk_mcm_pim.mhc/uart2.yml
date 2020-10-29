@@ -1,0 +1,88 @@
+format_version: v1.0
+type: UniqueComponent
+attributes: {id: uart2}
+children:
+- type: Symbols
+  children:
+  - type: Integer
+    attributes: {id: BAUD_RATE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: X2CScope, value: '115200'}
+  - type: Integer
+    attributes: {id: BRG_VALUE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: uart2, value: '129'}
+  - type: KeyValueSet
+    attributes: {id: UART_BRGH}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: uart2, value: '0'}
+  - type: Comment
+    attributes: {id: UART_BRGH_MODE_COMMENT}
+    children:
+    - type: Attributes
+      children:
+      - type: String
+        attributes: {id: text}
+        children:
+        - {type: Value, value: '*** High Speed mode 4x baud clock enabled (BRGH =
+            1) ***'}
+  - type: Integer
+    attributes: {id: UART_CLOCK_FREQ}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: uart2, value: '60000000'}
+  - type: Boolean
+    attributes: {id: UART_RING_BUFFER_ENABLE}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: readOnly}
+        children:
+        - {type: Value, value: 'false'}
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: uart2, value: 'false'}
+  - type: Hex
+    attributes: {id: UMODE_VALUE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: uart2, value: '8'}
+  - type: Boolean
+    attributes: {id: USART_INTERRUPT_MODE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: X2CScope, value: 'false'}
+- type: Attachments
+  children:
+  - type: DirectCapability
+    attributes: {id: UART2_UART}
+    children:
+    - type: Attributes
+      children:
+      - type: String
+        attributes: {id: targetComponentID}
+        children:
+        - {type: Value, value: X2CScope}
+      - type: String
+        attributes: {id: targetAttachmentID}
+        children:
+        - {type: Value, value: x2cScopeUartDependency}
+- type: ElementPosition
+  attributes: {x: '15', y: '244', id: uart2}
