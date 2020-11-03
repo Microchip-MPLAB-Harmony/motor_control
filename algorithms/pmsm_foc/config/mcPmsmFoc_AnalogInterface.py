@@ -163,6 +163,7 @@ def mcAnI_CreateMHCSymbols( mcPmsmFocComponent):
     global mcAnI_Adc0Plib
     mcAnI_Adc0Plib = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_ADCPLIB", None)
     mcAnI_Adc0Plib.setVisible(False)
+    mcAnI_Adc0Plib.setDefaultValue("None")
 
     global mcAnI_Adc1Plib
     mcAnI_Adc1Plib = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_ADCPLIB1", None)
@@ -181,7 +182,7 @@ def mcAnI_CreateMHCSymbols( mcPmsmFocComponent):
         maxChannels = 12
     elif ("SAME54" == mcAnI_MicrocontrollerSeries):
         resolution = ["12", "16", "10", "8"]
-        maxChannels = 12
+        maxChannels = 24
     else:
         resolution = ["12", "16", "10", "8"]
         maxChannels = 12       

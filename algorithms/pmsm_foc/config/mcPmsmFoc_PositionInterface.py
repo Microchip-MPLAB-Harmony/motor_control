@@ -108,7 +108,7 @@ def mcPmsmFocEncoderPlibDep(symbol, event ):
     encoderDict['PULSES_PER_REV'] = pulses
     Database.sendMessage(mcPoI_EncoderPLib.getValue().lower(), "PMSM_FOC_ENCODER_CONF", encoderDict)
 
-def mcPosI_OnAttachmentConnected( source, target):
+def mcPosI_OnAttachmentConnected( source, target): 
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
@@ -120,6 +120,11 @@ def mcPosI_OnAttachmentConnected( source, target):
     if (connectID == "pmsmfoc_QDEC"):
         Database.sendMessage(remoteID, "PMSM_FOC_ENCODER_CONF", encoderDict)
         mcPoI_EncoderPLib.setValue(remoteID)
+
+        if mcPmsmFocSeries.getValue() == "SAME54":
+            Database.setSymbolValue("pdec", "PDEC_FILTER", 0)
+
+
             
             
 def mcPosI_OnAttachmentDisconnected( source, target):

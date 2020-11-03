@@ -80,7 +80,7 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-/* PWM */
+/****************************** PWM ***********************************************************/
 #define MCHAL_PWM_PH_U                  ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_PH_U}
 #define MCHAL_PWM_PH_V                  ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_PH_V}
 #define MCHAL_PWM_PH_W                  ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_PH_W}
@@ -102,33 +102,137 @@ extern "C" {
 #define MCHAL_PWMOutputDisable(ch)          ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_OUTPUT_DISABLE_API}(ch)
 #define MCHAL_PWMOutputEnable(ch)           ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_OUTPUT_ENABLE_API}(ch)
 #define MCHAL_PWMCallbackRegister(ch, fn, context)  ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_CALLBACK_API}(fn, context)
+
+<#elseif __PROCESSOR?matches(".*SAME54.*") == true>
+#define MCHAL_PWMStop(mask)                 ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_STOP_API}()
+#define MCHAL_PWMStart(mask)                ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_START_API}()
+#define MCHAL_PWMPrimaryPeriodGet(ch)       ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_GET_PERIOD_API}()
+#define MCHAL_PWMDutySet(ch, duty)          ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_SET_DUTY_API}(ch, duty)
+
+__STATIC_INLINE void MCHAL_DisableInverterPwm( void )
+{
+
+    /*Override all PWM outputs to low*/
+    ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_OUTPUT_DISABLE_API}(
+            (TCC_PATT_PGE0_Msk|TCC_PATT_PGE1_Msk|TCC_PATT_PGE2_Msk
+            |TCC_PATT_PGE4_Msk|TCC_PATT_PGE5_Msk|TCC_PATT_PGE6_Msk),
+            (TCC_PATT_PGE0(0)|TCC_PATT_PGE1(0)|TCC_PATT_PGE2(0)|TCC_PATT_PGE4(0)
+            |TCC_PATT_PGE5(0)|TCC_PATT_PGE6(0)));
+}
+
+__STATIC_INLINE void MCHAL_EnableInverterPwm( void )
+{
+    /*Disable PWM override*/
+    ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_OUTPUT_ENABLE_API}(0x00,0x00);
+}
+
+#define MCHAL_PWMOutputDisable(ch)          MCHAL_DisableInverterPwm()
+#define MCHAL_PWMOutputEnable(ch)           MCHAL_EnableInverterPwm()
+#define MCHAL_PWMCallbackRegister(ch, fn, context)  ${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].PWM_CALLBACK_API}((TCC_CALLBACK)fn, (uintptr_t)context)
 </#if>
 
-/* ADC */
+/**************************************** ADC ***************************************************/
+<#if __PROCESSOR?matches("PIC32M.*") == true>
 #define MCHAL_ADC_PH_U                                   ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CH_PHASE_U}
 #define MCHAL_ADC_PH_V                                   ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CH_PHASE_V}
 #define MCHAL_ADC_PH_W
 #define MCHAL_ADC_VDC                                    ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CH_VDC_BUS}
 #define MCHAL_ADC_POT                                    ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CH_POT}
+<#else>  <#-- For SAM devices, two ADC PLIBs can be used-->
+<#if MCPMSMFOC_PHASEU_MODULE == 0>
+#define MCHAL_ADC_PH_U                                   ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CH_PHASE_U}
+<#else>
+#define MCHAL_ADC_PH_U                                   ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_CH_PHASE_U}
+</#if>
+<#if MCPMSMFOC_PHASEV_MODULE == 0>
+#define MCHAL_ADC_PH_V                                   ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CH_PHASE_V}
+<#else>
+#define MCHAL_ADC_PH_V                                   ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_CH_PHASE_V}
+</#if>
+<#if MCPMSMFOC_DCBUSV_MODULE == 0>
+#define MCHAL_ADC_VDC                                    ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CH_VDC_BUS}
+<#else>
+#define MCHAL_ADC_VDC                                    ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_CH_VDC_BUS}
+</#if>
+<#if MCPMSMFOC_POT_MODULE == 0>
+#define MCHAL_ADC_POT                                    ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CH_POT}
+<#else>
+#define MCHAL_ADC_POT                                    ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_CH_POT}
+</#if>
+
+</#if>
 
 <#if __PROCESSOR?matches("PIC32M.*") == true>
 #define MCHAL_ADC_RESULT_SHIFT                           ${12 - MCPMSMFOC_ADC_RESOLUTION?number}
 #define MCHAL_ADCCallbackRegister(ch, fn, context)       ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CALLBACK_API}(ch, fn, context)
 #define MCHAL_ADCChannelConversionStart(ch)              ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_START_CONV_API}(ch)
-#define MCHAL_ADCChannelResultGet(ch)                    ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}(ch)
+#define MCHAL_ADCPhaseUResultGet(ch)                     ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}(ch)
+#define MCHAL_ADCPhaseVResultGet(ch)                     ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}(ch)
+#define MCHAL_ADCPotResultGet(ch)                        ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}(ch)
+#define MCHAL_ADCVdcResultGet(ch)                        ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}(ch)
 #define MCHAL_ADCChannelResultIsReady(ch)                ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_IS_RESULT_READY_API}(ch)
+#define MCHAL_ADCEnable( )                              
+#define MCHAL_ADCDisable( )                             
 
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
 #define MCHAL_ADC_RESULT_SHIFT                           (0U)
 #define MCHAL_ADCCallbackRegister(ch, fn, context)       ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CALLBACK_API}(fn, context)
 #define MCHAL_ADCChannelConversionStart(ch)              ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_START_CONV_API}()
-#define MCHAL_ADCChannelResultGet(ch)                    ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}(ch)
+#define MCHAL_ADCPhaseUResultGet(ch)                     ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}(ch)
+#define MCHAL_ADCPhaseVResultGet(ch)                     ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}(ch)
+#define MCHAL_ADCPotResultGet(ch)                        ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}(ch)
+#define MCHAL_ADCVdcResultGet(ch)                        ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}(ch)
 #define MCHAL_ADCChannelResultIsReady(ch)                ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_IS_RESULT_READY_API}(ch)
+#define MCHAL_ADCEnable( )                              
+#define MCHAL_ADCDisable( )                             
+
+<#elseif __PROCESSOR?matches(".*SAME54.*") == true>
+#define MCHAL_ADC_RESULT_SHIFT                           (0U)
+<#-- Master ADC module APIs -->
+#define MCHAL_ADCCallbackRegister(ch, fn, context)       ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CALLBACK_API}((ADC_CALLBACK)fn, (uintptr_t)context)
+#define MCHAL_ADCChannelConversionStart(ch)              ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_START_CONV_API}()
+#define MCHAL_ADCEnable( )                               ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_START_API}()                      
+#define MCHAL_ADCDisable( )                              ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_STOP_API}()
+#define MCHAL_ADCInterruptsClear(mask)                   ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_INT_CLEAR_API}(mask)
+#define MCHAL_ADCInterruptsEnable(mask)                  ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_INT_ENABLE_API}(mask)
+#define MCHAL_ADCInterruptsDisable(mask)                  ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_INT_DISABLE_API}(mask)
+
+<#if MCPMSMFOC_PHASEU_MODULE == 0>
+#define MCHAL_ADCPhaseUResultGet(ch)                    ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}()
+#define MCHAL_ADCPhaseUChannelSelect(pos, neg)          ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CHANNEL_SELECT_API}( pos, neg)
+<#else>
+#define MCHAL_ADCPhaseUResultGet(ch)                    ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_GET_RESULT_API}()
+#define MCHAL_ADCPhaseUChannelSelect(pos, neg)          ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_CHANNEL_SELECT_API}( pos, neg)
+</#if>
+<#if MCPMSMFOC_PHASEV_MODULE == 0>
+#define MCHAL_ADCPhaseVResultGet(ch)                    ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}()
+#define MCHAL_ADCPhaseVChannelSelect(pos, neg)          ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CHANNEL_SELECT_API}( pos, neg)
+<#else>
+#define MCHAL_ADCPhaseVResultGet(ch)                    ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_GET_RESULT_API}()
+#define MCHAL_ADCPhaseVChannelSelect(pos, neg)          ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_CHANNEL_SELECT_API}( pos, neg)
+</#if>
+<#if MCPMSMFOC_POT_MODULE == 0>
+#define MCHAL_ADCPotResultGet(ch)                       ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}()
+#define MCHAL_ADCPotChannelSelect(pos, neg)             ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CHANNEL_SELECT_API}( pos, neg)
+<#else>
+#define MCHAL_ADCPotResultGet(ch)                       ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_GET_RESULT_API}()
+#define MCHAL_ADCPotChannelSelect(pos, neg)             ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_CHANNEL_SELECT_API}( pos, neg)
+</#if>
+<#if MCPMSMFOC_DCBUSV_MODULE == 0>
+#define MCHAL_ADCVdcResultGet(ch)                       ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_GET_RESULT_API}()
+#define MCHAL_ADCVdcChannelSelect(pos, neg)             ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_CHANNEL_SELECT_API}( pos, neg)
+<#else>
+#define MCHAL_ADCVdcResultGet(ch)                       ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_GET_RESULT_API}()
+#define MCHAL_ADCVdcChannelSelect(pos, neg)             ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_CHANNEL_SELECT_API}( pos, neg)
+</#if>
+
+#define MCHAL_ADC0ChannelResultIsReady(ch)                ${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].ADC_IS_RESULT_READY_API}()
+#define MCHAL_ADC1ChannelResultIsReady(ch)                ${.vars["${MCPMSMFOC_ADCPLIB1?lower_case}"].ADC_IS_RESULT_READY_API}()
 </#if>
 
 
 <#if MCPMSMFOC_POSITION_FB == "SENSORED_ENCODER">
-/*Encoder*/
+/***************************** Encoder *******************************************************/
 #define MCHAL_EncoderStart()                 ${.vars["${MCPMSMFOC_ENCODERPLIB?lower_case}"].ENCODER_START_API}()
 #define MCHAL_EncoderStop()                  ${.vars["${MCPMSMFOC_ENCODERPLIB?lower_case}"].ENCODER_STOP_API}()
 #define MCHAL_EncoderPositionGet()           ${.vars["${MCPMSMFOC_ENCODERPLIB?lower_case}"].ENCODER_POS_GET_API}()
@@ -143,7 +247,7 @@ extern "C" {
 </#if>
 </#if>
 
-/* Interrupt */
+/************************************ Interrupt *********************************************/
 #define MCHAL_CTRL_IRQ              (${.vars["${MCPMSMFOC_ADCPLIB?lower_case}"].INTERRUPT_ADC_RESULT})
 #define MCHAL_FAULT_IRQ             (${.vars["${MCPMSMFOC_PWMPLIB?lower_case}"].INTR_PWM_FAULT})
 
@@ -158,7 +262,7 @@ extern "C" {
 </#if>
 
 
-/* LED and Switches */
+/******************************* LED and Switches *******************************************/
 
 #define MCHAL_FAULT_LED_SET()       GPIO_${MCPMSMFOC_FAULT_LED}_Set()
 #define MCHAL_FAULT_LED_CLEAR()     GPIO_${MCPMSMFOC_FAULT_LED}_Clear()
@@ -174,6 +278,7 @@ extern "C" {
 
 #define MCHAL_START_STOP_SWITCH_GET()  GPIO_${MCPMSMFOC_START_BUTTON}_Get()
 
+/***************************** X2CScope **************************************************/
 <#if MCPMSMFOC_X2CScope != "None">
 #define MCHAL_X2C_Update()          X2CScope_Update()
 <#else>

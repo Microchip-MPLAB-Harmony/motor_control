@@ -109,8 +109,8 @@ void MCCUR_OffsetCalibration( void )
 
   if (gMCCUR_StateSignals.adcSampleCounter < CURRENTS_OFFSET_SAMPLES)
   {
-      gMCCUR_StateSignals.phaseUOffsetBuffer += (MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_U) >> MCHAL_ADC_RESULT_SHIFT);
-      gMCCUR_StateSignals.phaseVOffsetBuffer += (MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_V) >> MCHAL_ADC_RESULT_SHIFT);
+      gMCCUR_StateSignals.phaseUOffsetBuffer += (MCHAL_ADCPhaseUResultGet(MCHAL_ADC_PH_U) >> MCHAL_ADC_RESULT_SHIFT);
+      gMCCUR_StateSignals.phaseVOffsetBuffer += (MCHAL_ADCPhaseVResultGet(MCHAL_ADC_PH_V) >> MCHAL_ADC_RESULT_SHIFT);
       gMCCUR_StateSignals.adcSampleCounter++;
   }
   else
@@ -146,8 +146,8 @@ void MCCUR_CurrentMeasurement( void )
   #if( DUAL_SHUNT == CURRENT_MEASUREMENT )
 
     /* Get motor currents  */
-    iu = MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_U) >> MCHAL_ADC_RESULT_SHIFT;
-    iv = MCHAL_ADCChannelResultGet(MCHAL_ADC_PH_V) >> MCHAL_ADC_RESULT_SHIFT;
+    iu = MCHAL_ADCPhaseUResultGet(MCHAL_ADC_PH_U) >> MCHAL_ADC_RESULT_SHIFT;
+    iv = MCHAL_ADCPhaseVResultGet(MCHAL_ADC_PH_V) >> MCHAL_ADC_RESULT_SHIFT;
 
     /* Current sensor offset correction */
     gMCCUR_OutputSignals.phaseCurrents.iu = ADC_CURRENT_SCALE * ( gMCCUR_OutputSignals.iuOffset - iu );

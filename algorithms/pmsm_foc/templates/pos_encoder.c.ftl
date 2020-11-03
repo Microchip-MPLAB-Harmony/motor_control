@@ -123,7 +123,7 @@ __STATIC_INLINE void MCRPOS_EncoderCalculations( void )
     gMCRPOS_OutputSignals.angle = gMCRPOS_StateSignals.position * (float)QEI_COUNT_TO_ELECTRICAL_ANGLE;
 }
 
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif __PROCESSOR?matches(".*SAME70.*") == true || __PROCESSOR?matches(".*SAME54.*") == true>
 __STATIC_INLINE void MCRPOS_EncoderCalculations( void )
 {
     float angle;
@@ -247,7 +247,7 @@ tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alig
     {
         gMCRPOS_RotorAlignState.startupLockCount = 0;
         MCHAL_EncoderPositionSet(1);
-<#if __PROCESSOR?matches(".*SAME70.*") == true>
+<#if __PROCESSOR?matches(".*SAME70.*") == true || __PROCESSOR?matches(".*SAME54.*") == true>
         MCHAL_EncoderStart();
 </#if>
         status = MCAPP_SUCCESS;

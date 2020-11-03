@@ -130,6 +130,9 @@ void MCSPE_SpeedCommand( void );
 void  MCSPE_ResetSpeedControl(void);
 
 
+void MCSPE_PotentiometerRead( void );
+
+
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

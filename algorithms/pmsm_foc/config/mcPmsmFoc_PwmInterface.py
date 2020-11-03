@@ -55,7 +55,7 @@ mcPwmI_DefaultPararameterDict = {'MCLV2' : {
                                                     'PWM_PH_V' : '1',
                                                     'PWM_PH_W' : '2',
                                                     'PWM_DEAD_TIME': '1',
-                                                    'PWM_FAULT': 'EIC_CHANNEL_08',
+                                                    'PWM_FAULT': 'EIC_CHANNEL_2',
                                                 },
                                     'DEFAULT':    { 'PWM_FREQ' : 20000,
                                                     'PWM_PH_U' : '0',
@@ -102,6 +102,7 @@ mcPwm_DefaultDevelopmentBoard = 'MCLV2'
 global mcPwm_MicrocontrollerSeries
 mcPwm_MicrocontrollerSeries   =  ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series")
 
+global eicFaultVal
 #----------------------------------------------------------------------------------#
 #                             PWM INTERFACE CLASS                                  # 
 #----------------------------------------------------------------------------------#      
@@ -199,6 +200,7 @@ def mcPwm_CreateMHCSymbols( mcPmsmFocComponent ):
     global mcPwm_Plib
     mcPwm_Plib = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_PWMPLIB", None)
     mcPwm_Plib.setVisible(False)
+    mcPwm_Plib.setDefaultValue("None")
     
     # PWM Board dependency
     global mcPwm_SomeFlag
@@ -241,6 +243,7 @@ def mcPwm_UpdateSymbols( symbol, event ):
         mcPwm_SomeFlag.setValue(False)
 
 def mcPwm_UpdatePLib( symbol, event):
+    global eicFaultVal
     component = symbol.getComponent()
     pwmDict['PWM_FREQ'     ]  =  (component.getSymbolValue("MCPMSMFOC_PWM_FREQ"      ))
     pwmDict['PWM_PH_U'     ]  =  (component.getSymbolValue("MCPMSMFOC_PWM_PH_U"      ))
@@ -251,8 +254,22 @@ def mcPwm_UpdatePLib( symbol, event):
     
     if (component.getSymbolValue("MCPMSMFOC_PWM_BOARD_DEP") == False):
         Database.sendMessage(mcPwm_Plib.getValue().lower(), "PMSM_FOC_PWM_CONF", pwmDict)
-    
+    if (event["id"] == "MCPMSMFOC_PWM_FAULT") and ("EIC" in mcPwm_PwmFault.getSelectedKey()):
+        fault = filter(str.isdigit,str(mcPwm_PwmFault.getSelectedKey()))
+        if fault != eicFaultVal:
+            #Enable EIC channel
+            Database.setSymbolValue("eic", "EIC_CHAN_" + str(fault), True)
+            Database.setSymbolValue("eic", "EIC_EXTINTEO_" + str(fault), True)
+            Database.setSymbolValue("eic", "EIC_DEBOUNCEN_" + str(fault), True)
+            Database.setSymbolValue("eic", "EIC_CONFIG_SENSE_" + str(fault), 2) 
 
+            #Disbale previously selected EIC channel
+            Database.setSymbolValue("eic", "EIC_CHAN_" + str(eicFaultVal), False)
+            Database.setSymbolValue("eic", "EIC_EXTINTEO_" + str(eicFaultVal), False)
+            Database.setSymbolValue("eic", "EIC_DEBOUNCEN_" + str(eicFaultVal), False)
+            Database.setSymbolValue("eic", "EIC_CONFIG_SENSE_" + str(eicFaultVal), 0)     
+
+    
 def mcPwm_onAttachmentConnected(source, target):
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -261,6 +278,7 @@ def mcPwm_onAttachmentConnected(source, target):
     targetID = target["id"]
 
     dict = {}
+    global mcPwm_MicrocontrollerSeries
 
     pwmDict['PWM_FREQ'     ]  =  (localComponent.getSymbolValue("MCPMSMFOC_PWM_FREQ"      ))
     pwmDict['PWM_PH_U'     ]  =  (localComponent.getSymbolValue("MCPMSMFOC_PWM_PH_U"      ))
@@ -279,6 +297,18 @@ def mcPwm_onAttachmentConnected(source, target):
         localComponent.getSymbolByID("MCPMSMFOC_PWM_PH_U").setMax(pwmMaxCh - 1)
         localComponent.getSymbolByID("MCPMSMFOC_PWM_PH_V").setMax(pwmMaxCh - 1)
         localComponent.getSymbolByID("MCPMSMFOC_PWM_PH_W").setMax(pwmMaxCh - 1)
+        
+        #Activate EIC component for PWM fault for SAME54 device
+        if mcPwm_MicrocontrollerSeries == "SAME54":
+            global eicFaultVal
+            faultComponent = ["eic"]
+            Database.activateComponents(faultComponent)
+            eicFaultVal = filter(str.isdigit,str(mcPwm_PwmFault.getSelectedKey()))
+            Database.setSymbolValue("eic", "EIC_CHAN_" + str(eicFaultVal), True)
+            Database.setSymbolValue("eic", "EIC_EXTINTEO_" + str(eicFaultVal), True)
+            Database.setSymbolValue("eic", "EIC_DEBOUNCEN_" + str(eicFaultVal), True)
+            Database.setSymbolValue("eic", "EIC_CONFIG_SENSE_" + str(eicFaultVal), 2)
+
         
 def mcPwm_onAttachmentDisconnected( source, target):
     if ( source["id"] == "pmsmfoc_PWM"):

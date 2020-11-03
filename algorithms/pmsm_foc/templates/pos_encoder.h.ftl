@@ -113,7 +113,18 @@ typedef struct
     uint16_t                        positionLast;
     uint16_t                        positionCount;
     uint16_t                        positionCompensation;
+
+<#elseif __PROCESSOR?matches(".*SAME54.*") == true>
+    uint16_t                        position;
+    int16_t                         velocity;
+    uint16_t                        synCounter;
+    int16_t                         positionForSpeed;
+    int16_t                         positionLastForSpeed;
+    uint16_t                        positionLast;
+    uint16_t                        positionCount;
+    uint16_t                        positionCompensation;
 </#if>
+
 }tMCRPOS_STATE_SIGNAL_S;
 
 typedef struct

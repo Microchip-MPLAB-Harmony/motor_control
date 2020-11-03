@@ -93,6 +93,7 @@ static void PMSM_FOC_StartAdcInterrupt( void )
     /* Enable ADC interrupt for field oriented control */
     MCHAL_ADCCallbackRegister( MCHAL_ADC_PH_U, MCCTRL_CurrentOffsetCalibration, (uintptr_t)NULL );
     MCHAL_IntEnable(MCHAL_CTRL_IRQ);
+    MCHAL_ADCEnable();
 
     /* Enable interrupt for fault detection */
     MCHAL_PWMCallbackRegister(MCHAL_PWM_PH_U, MCERR_FaultControlISR, (uintptr_t)NULL);

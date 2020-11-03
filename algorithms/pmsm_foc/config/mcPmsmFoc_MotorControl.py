@@ -265,6 +265,10 @@ def mcPmsmFoc_SpeedKi(symbol, event):
     symObj = event["symbol"]
     board = symObj.getSelectedKey()
     symbol.setValue(mcMotC_SpeedPiPararameterDict[board]['KI'])
+    if board == "MCHV3":
+        symbol.setLabel("Ki (* 0.01) ")
+    else:
+        symbol.setLabel("Ki")
 
 def mcPmsmFocCurrentKpCalc( symbol, event):
     component = symbol.getComponent()
@@ -273,7 +277,7 @@ def mcPmsmFocCurrentKpCalc( symbol, event):
     lq = component.getSymbolValue("MCPMSMFOC_LQ")
     connection = component.getSymbolByID("MCPMSMFOC_MOTOR_CONNECTION").getSelectedKey()
     if (connection == "STAR"):
-        max_volt = component.getSymbolValue("MCPMSMFOC_DC_BUS_VOLT") / 1.713
+        max_volt = component.getSymbolValue("MCPMSMFOC_DC_BUS_VOLT") / 1.732
     else:
         max_volt = component.getSymbolValue("MCPMSMFOC_DC_BUS_VOLT")
     bandwidth = component.getSymbolValue("MCPMSMFOC_CL_BANDWIDTH")
@@ -295,7 +299,7 @@ def mcPmsmFocCurrentKiCalc( symbol, event):
     r = component.getSymbolValue("MCPMSMFOC_R")
     connection = component.getSymbolByID("MCPMSMFOC_MOTOR_CONNECTION").getSelectedKey()
     if (connection == "STAR"):
-        max_volt = component.getSymbolValue("MCPMSMFOC_DC_BUS_VOLT") / 1.713
+        max_volt = component.getSymbolValue("MCPMSMFOC_DC_BUS_VOLT") / 1.732
     else:
         max_volt = component.getSymbolValue("MCPMSMFOC_DC_BUS_VOLT")
 

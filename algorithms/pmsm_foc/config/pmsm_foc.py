@@ -25,40 +25,40 @@
 import os
 
 global mcPmsmFocInstanceName
+global mcPmsmFocSeries
 
 # Execute file for motor module 
-execfile(Variables.get("__CSP_DIR") + "/../motor_control/algorithms/pmsm_foc/config/mcPmsmFoc_MotorParameter.py"  )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_MotorParameter.py"  )
 
 # Execute file for inverter module 
-execfile(Variables.get("__CSP_DIR") + "/../motor_control/algorithms/pmsm_foc/config/mcPmsmFoc_Inverter.py"  )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_Inverter.py"  )
 
 # Execute file for Analog interface module 
-execfile(Variables.get("__CSP_DIR") + "/../motor_control/algorithms/pmsm_foc/config/mcPmsmFoc_AnalogInterface.py"  )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_AnalogInterface.py"  )
 
 # Execute file for Current Measurement and Diagnosis module
-execfile(Variables.get("__CSP_DIR") + "/../motor_control/algorithms/pmsm_foc/config/mcPmsmFoc_CurrentMeasurement.py"  )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_CurrentMeasurement.py"  )
 
 # Execute file for Digital interface module 
-execfile(Variables.get("__CSP_DIR") + "/../motor_control/algorithms/pmsm_foc/config/mcPmsmFoc_DigitalInterface.py" )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_DigitalInterface.py" )
 
 # Execute file for motor control and diagnosis module 
-execfile(Variables.get("__CSP_DIR") + "/../motor_control/algorithms/pmsm_foc/config/mcPmsmFoc_MotorControl.py"  )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_MotorControl.py"  )
 
 # Execute file for position meaurement and diagnosis module 
-execfile(Variables.get("__CSP_DIR") + "/../motor_control/algorithms/pmsm_foc/config/mcPmsmFoc_PositionMeasurement.py" )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_PositionMeasurement.py" )
 
 # Execute file for position interface  module 
-execfile(Variables.get("__CSP_DIR") + "/../motor_control/algorithms/pmsm_foc/config/mcPmsmFoc_PositionInterface.py"  )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_PositionInterface.py"  )
 
 # Execute file for PWM interface module 
-execfile(Variables.get("__CSP_DIR") + "/../motor_control/algorithms/pmsm_foc/config/mcPmsmFoc_PwmInterface.py" )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_PwmInterface.py" )
 
 # Execute file for start-up module 
-execfile(Variables.get("__CSP_DIR") + "/../motor_control/algorithms/pmsm_foc/config/mcPmsmFoc_Startup.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_Startup.py"   )
 
 # Execute file for data monitoring module 
-execfile(Variables.get("__CSP_DIR") + "/../motor_control/algorithms/pmsm_foc/config/mcPmsmFoc_DataMonitoring.py"   )
-
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_DataMonitoring.py"   )
 
 
 
@@ -105,7 +105,10 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocInstanceName.setVisible(False)
     mcPmsmFocInstanceName.setDefaultValue(mcPmsmFocComponent.getID().upper())
 
-   
+    global mcPmsmFocSeries
+    mcPmsmFocSeries = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_SERIES", None)
+    mcPmsmFocSeries.setVisible(False)
+    mcPmsmFocSeries.setDefaultValue(ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series"))
     #-----------------------------------------------------------------------------------------------------#
     #                                       MOTOR PARAMATERS                                              #
     #-----------------------------------------------------------------------------------------------------#
@@ -280,6 +283,62 @@ def onAttachmentConnected( source, target ):
     # X2C Scope 
     mcDaMI_OnAttachmentConnected( source, target )
 
+    #Configure EVSYS for SAME54
+    if mcPmsmFocSeries.getValue() == "SAME54":
+        mcEvsysDependencySAME54Connected()
+
+
+def mcEvsysDependencySAME54Connected():
+    pwmInstance = mcPwm_Plib.getValue().upper()
+    adcInstance = mcAnI_Adc0Plib.getValue().upper()
+    eic = filter(str.isdigit, str(mcPwm_PwmFault.getValue()))
+    generator0 = generator1 = user0 = user1 = 0
+
+    print(pwmInstance)
+    print(adcInstance)
+
+    if (pwmInstance != "NONE") and (adcInstance != "NONE"):
+        #EVSYS channel 0 = TCC overflow to ADC Start
+        #EVSYS channel 1 = EIC fault pin to TCC event 1 fault
+        Database.setSymbolValue("evsys", "EVSYS_CHANNEL_0", True)
+        Database.setSymbolValue("evsys", "EVSYS_CHANNEL_1", True)
+        Database.setSymbolValue("evsys", "EVSYS_CHANNEL_0_EDGE", 1) 
+        Database.setSymbolValue("evsys", "EVSYS_CHANNEL_1_EDGE", 1)
+        
+        #Find event GENERATOR numbers from ATDF
+        node = ATDF.getNode("/avr-tools-device-file/devices/device/events/generators")
+        generators = []
+        sortedGenerators = []
+    
+        for id in range(0, len(node.getChildren())):
+            generators.append(id)
+            generators[id] = node.getChildren()[id].getAttribute("name")
+
+        sortedGenerators = sorted(generators)
+
+        for id in range(0, len(sortedGenerators)):
+            if str(pwmInstance) + "_OVF" in sortedGenerators[id]:
+                generator0 = int(id)
+            if "EIC_EXTINT_" + str(eic) in sortedGenerators[id]:
+                generator1 = int(id)
+
+        #Find event USER numbers from ATDF
+        node = ATDF.getNode("/avr-tools-device-file/devices/device/events/users")
+        users = []
+
+        for id in range(0, len(node.getChildren())):
+            users.append(id)
+            users[id] = node.getChildren()[id].getAttribute("name")   
+        for id in range(0, len(node.getChildren())):
+            if str(adcInstance) + "_START" in users[id]:
+                user0 = int(id) + 1
+            if str(pwmInstance) + "_EV_1" in users[id]:
+                user1 = int(id) + 1
+
+        Database.setSymbolValue("evsys", "EVSYS_CHANNEL_0_GENERATOR", int(generator0))
+        Database.setSymbolValue("evsys", "EVSYS_CHANNEL_1_GENERATOR", int(generator1))   
+        Database.setSymbolValue("evsys", "EVSYS_USER_" + str(user0), 1)
+        Database.setSymbolValue("evsys", "EVSYS_USER_" + str(user1), 2)
     
     
 def onAttachmentDisconnected( source, target ):
@@ -294,4 +353,4 @@ def onAttachmentDisconnected( source, target ):
 
     # X2C Scope 
     mcDaMI_OnAttachmentDisconnected( source, target )
-
+  

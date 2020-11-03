@@ -649,8 +649,18 @@ void MCCTRL_CurrentLoopTasks( uint32_t status, uintptr_t context )
     /* Current Measurement */
     MCCUR_CurrentMeasurement( );
 
-    /* Voltage measurement */
-    MCVOL_VoltageMeasurement( );
+<#if __PROCESSOR?matches(".*SAME54.*") == true>  
+    /* Diasable ADC ISR */
+    MCHAL_ADCInterruptsClear( ADC_STATUS_MASK );
+    MCHAL_ADCInterruptsDisable( ADC_STATUS_RESRDY );
+
+    /* Select next channels */
+    MCHAL_ADCPotChannelSelect(MCHAL_ADC_POT, ADC_NEGINPUT_GND);
+    MCHAL_ADCVdcChannelSelect(MCHAL_ADC_VDC, ADC_NEGINPUT_GND);
+
+    /* Trigger software ADC conversion */
+    MCHAL_ADCChannelConversionStart(MCHAL_ADC_PH_U); 
+ </#if>
 
     /* Clarke, Park transform */
     MCCTRL_SignalTransformation();
@@ -660,6 +670,21 @@ void MCCTRL_CurrentLoopTasks( uint32_t status, uintptr_t context )
 
     /* Motor control */
     MCCTRL_MotorControl( );
+
+    /* Voltage measurement */
+    MCVOL_VoltageMeasurement( );     
+    /* Read potentiometer value */
+    MCSPE_PotentiometerRead();
+
+<#if __PROCESSOR?matches(".*SAME54.*") == true>  
+ 
+    /* select the next ADC channel for conversion */
+    MCHAL_ADCPhaseUChannelSelect(MCHAL_ADC_PH_U, ADC_NEGINPUT_GND); // Phase U to ADC0
+    MCHAL_ADCPhaseVChannelSelect(MCHAL_ADC_PH_V, ADC_NEGINPUT_GND); // Phase V to ADC1
+        
+    MCHAL_ADCInterruptsClear( ADC_STATUS_MASK );
+    MCHAL_ADCInterruptsEnable( ADC_STATUS_RESRDY ); 
+ </#if>
 
      /* sync count for slow control loop execution */
     MCCTRL_LoopSynchronization();
