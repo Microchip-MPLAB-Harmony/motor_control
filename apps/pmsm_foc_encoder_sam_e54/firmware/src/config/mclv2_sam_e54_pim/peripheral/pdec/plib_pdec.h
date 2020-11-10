@@ -94,7 +94,7 @@ void PDEC_QDECStart( void );
 
 void PDEC_QDECStop( void );
 
-int16_t PDEC_QDECPositionGet( void );
+uint16_t PDEC_QDECPositionGet( void );
 
 uint16_t PDEC_QDECRevolutionsGet( void );
 

@@ -48,6 +48,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "X2CCode/X2CScope/inc/X2CScope.h"
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
 #include "peripheral/sercom/usart/plib_sercom2_usart.h"
 #include "peripheral/evsys/plib_evsys.h"
@@ -59,6 +60,8 @@
 #include "peripheral/cmcc/plib_cmcc.h"
 #include "peripheral/adc/plib_adc1.h"
 #include "peripheral/eic/plib_eic.h"
+#include "motor_control/pmsm_foc/mc_userparams.h"
+#include "motor_control/pmsm_foc/mc_pmsm_foc.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

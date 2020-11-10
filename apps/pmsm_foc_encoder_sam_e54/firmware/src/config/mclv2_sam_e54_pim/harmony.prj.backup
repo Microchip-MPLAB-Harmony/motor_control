@@ -1,0 +1,16 @@
+<Configuration>
+  <Configurator>
+    <Name dnOrder="0" value="mclv2_sam_e54_pim"/>
+    <Harmony dnOrder="1" path="../../.." version="null"/>
+    <Processor dnOrder="2" value="ATSAME54P20A"/>
+    <Settings dnOrder="4">
+      <Setting dnOrder="0" key="FORCE_OPTIMIZATION" value="false"/>
+      <Setting dnOrder="1" key="GENERATE_BACKUP" value="true"/>
+      <Setting dnOrder="2" key="MERGE_STRATEGY" value="USER_ALL"/>
+      <Setting dnOrder="3" key="DFPPath" value=".\dev_packs\Microchip\SAME54_DFP\3.4.70\atdf\ATSAME54P20A.atdf"/>
+      <Setting dnOrder="4" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.7.0"/>
+      <Setting dnOrder="5" key="PackageFilter" value=""/>
+      <Setting dnOrder="6" key="TRUSTZONE" value="false"/>
+    </Settings>
+  </Configurator>
+</Configuration>

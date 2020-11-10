@@ -55,6 +55,8 @@
 #include "plib_tcc0.h"
 
 
+/* Object to hold callback function and context */
+TCC_CALLBACK_OBJECT TCC0_CallbackObj;
 
 /* Initialize TCC module */
 void TCC0_PWMInitialize(void)
@@ -70,29 +72,32 @@ void TCC0_PWMInitialize(void)
     TCC0_REGS->TCC_WEXCTRL = TCC_WEXCTRL_OTMX(0U);
     /* Dead time configurations */
     TCC0_REGS->TCC_WEXCTRL |= TCC_WEXCTRL_DTIEN0_Msk | TCC_WEXCTRL_DTIEN1_Msk | TCC_WEXCTRL_DTIEN2_Msk | TCC_WEXCTRL_DTIEN3_Msk
- 	 	 | TCC_WEXCTRL_DTLS(240U) | TCC_WEXCTRL_DTHS(240U);
+ 	 	 | TCC_WEXCTRL_DTLS(60U) | TCC_WEXCTRL_DTHS(60U);
 
     TCC0_REGS->TCC_WAVE = TCC_WAVE_WAVEGEN_DSBOTTOM;
 
     /* Configure duty cycle values */
-    TCC0_REGS->TCC_CC[0] = 3000U;
-    TCC0_REGS->TCC_CC[1] = 3000U;
-    TCC0_REGS->TCC_CC[2] = 3000U;
+    TCC0_REGS->TCC_CC[0] = 0U;
+    TCC0_REGS->TCC_CC[1] = 0U;
+    TCC0_REGS->TCC_CC[2] = 0U;
     TCC0_REGS->TCC_CC[3] = 0U;
     TCC0_REGS->TCC_CC[4] = 0U;
     TCC0_REGS->TCC_CC[5] = 0U;
-    TCC0_REGS->TCC_PER = 6000U;
+    TCC0_REGS->TCC_PER = 1500U;
 
-    TCC0_REGS->TCC_DRVCTRL = TCC_DRVCTRL_FILTERVAL0(3U)
+    TCC0_REGS->TCC_DRVCTRL = TCC_DRVCTRL_FILTERVAL0(0U)
           | TCC_DRVCTRL_FILTERVAL1(0U)| TCC_DRVCTRL_NRE0_Msk
 		 | TCC_DRVCTRL_NRE1_Msk
 		 | TCC_DRVCTRL_NRE2_Msk
+		 | TCC_DRVCTRL_NRE3_Msk
 		 | TCC_DRVCTRL_NRE4_Msk
 		 | TCC_DRVCTRL_NRE5_Msk
-		 | TCC_DRVCTRL_NRE6_Msk;
+		 | TCC_DRVCTRL_NRE6_Msk
+		 | TCC_DRVCTRL_NRE7_Msk;
+    TCC0_REGS->TCC_INTENSET = TCC_INTENSET_FAULT1_Msk;
 
     TCC0_REGS->TCC_EVCTRL = TCC_EVCTRL_OVFEO_Msk
- 	 	 | TCC_EVCTRL_TCEI0_Msk | TCC_EVCTRL_EVACT0_FAULT;
+ 	 	 | TCC_EVCTRL_TCEI1_Msk | TCC_EVCTRL_EVACT1_FAULT;
     while (TCC0_REGS->TCC_SYNCBUSY)
     {
         /* Wait for sync */
@@ -188,15 +193,30 @@ void TCC0_PWMPeriodInterruptDisable(void)
     TCC0_REGS->TCC_INTENCLR = TCC_INTENCLR_OVF_Msk;
 }
 
-/* Read interrupt flags */
-uint32_t TCC0_PWMInterruptStatusGet(void)
+ /* Register callback function */
+void TCC0_PWMCallbackRegister(TCC_CALLBACK callback, uintptr_t context)
 {
-    uint32_t interrupt_status;
-    interrupt_status = TCC0_REGS->TCC_INTFLAG;
-    /* Clear interrupt flags */
-    TCC0_REGS->TCC_INTFLAG = interrupt_status;
-    return interrupt_status;
+    TCC0_CallbackObj.callback_fn = callback;
+    TCC0_CallbackObj.context = context;
 }
+
+/* Interrupt Handler */
+void TCC0_PWMInterruptHandler(void)
+{
+    uint32_t status;
+    status = TCC0_REGS->TCC_INTFLAG;
+    /* Clear interrupt flags */
+    TCC0_REGS->TCC_INTFLAG = 0xFFFF;
+    if (TCC0_CallbackObj.callback_fn != NULL)
+    {
+        TCC0_CallbackObj.callback_fn(status, TCC0_CallbackObj.context);
+    }
+
+}
+
+
+     
+
 
 
 /**

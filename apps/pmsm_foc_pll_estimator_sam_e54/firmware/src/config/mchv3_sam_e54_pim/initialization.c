@@ -120,6 +120,7 @@
 
 void SYS_Initialize ( void* data )
 {
+
     NVMCTRL_Initialize( );
 
   
@@ -142,6 +143,9 @@ void SYS_Initialize ( void* data )
 
 
 
+
+    X2CScope_Init();
+    PMSM_FOC_Initialize();
 
 
     NVIC_Initialize();

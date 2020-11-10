@@ -96,7 +96,7 @@ void ADC0_Initialize( void )
             | ADC_CALIB_BIASREFBUF(((*(uint64_t*)SW0_ADDR) & ADC0_BIASREFBUF_Msk)>> ADC0_BIASREFBUF_POS );
 
     /* prescaler */
-    ADC0_REGS->ADC_CTRLA = ADC_CTRLA_PRESCALER_DIV4;
+    ADC0_REGS->ADC_CTRLA = ADC_CTRLA_PRESCALER_DIV8;
 
     /* Sampling length */
     ADC0_REGS->ADC_SAMPCTRL = ADC_SAMPCTRL_SAMPLEN(3U);

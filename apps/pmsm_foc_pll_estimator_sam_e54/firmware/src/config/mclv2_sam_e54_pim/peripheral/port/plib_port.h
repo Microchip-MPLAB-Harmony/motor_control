@@ -65,54 +65,41 @@
 // *****************************************************************************
 // *****************************************************************************
 
-  
-/*** Macros for BTN_START_STOP_MCHV3 pin ***/
-#define BTN_START_STOP_MCHV3_Set()               (PORT_REGS->GROUP[3].PORT_OUTSET = 1 << 8)
-#define BTN_START_STOP_MCHV3_Clear()             (PORT_REGS->GROUP[3].PORT_OUTCLR = 1 << 8)
-#define BTN_START_STOP_MCHV3_Toggle()            (PORT_REGS->GROUP[3].PORT_OUTTGL = 1 << 8)
-#define BTN_START_STOP_MCHV3_Get()               (((PORT_REGS->GROUP[3].PORT_IN >> 8)) & 0x01)
-#define BTN_START_STOP_MCHV3_OutputEnable()      (PORT_REGS->GROUP[3].PORT_DIRSET = 1 << 8)
-#define BTN_START_STOP_MCHV3_InputEnable()       (PORT_REGS->GROUP[3].PORT_DIRCLR = 1 << 8)
-#define BTN_START_STOP_MCHV3_PIN                  PORT_PIN_PD08
+/*** Macros for GPIO_PD09 pin ***/
+#define GPIO_PD09_Set()               (PORT_REGS->GROUP[3].PORT_OUTSET = 1 << 9)
+#define GPIO_PD09_Clear()             (PORT_REGS->GROUP[3].PORT_OUTCLR = 1 << 9)
+#define GPIO_PD09_Toggle()            (PORT_REGS->GROUP[3].PORT_OUTTGL = 1 << 9)
+#define GPIO_PD09_OutputEnable()      (PORT_REGS->GROUP[3].PORT_DIRSET = 1 << 9)
+#define GPIO_PD09_InputEnable()       (PORT_REGS->GROUP[3].PORT_DIRCLR = 1 << 9)
+#define GPIO_PD09_Get()               (((PORT_REGS->GROUP[3].PORT_IN >> 9)) & 0x01)
+#define GPIO_PD09_PIN                  PORT_PIN_PD09
 
-/*** Macros for BTN_START_STOP pin ***/
-#define BTN_START_STOP_Set()               (PORT_REGS->GROUP[3].PORT_OUTSET = 1 << 9)
-#define BTN_START_STOP_Clear()             (PORT_REGS->GROUP[3].PORT_OUTCLR = 1 << 9)
-#define BTN_START_STOP_Toggle()            (PORT_REGS->GROUP[3].PORT_OUTTGL = 1 << 9)
-#define BTN_START_STOP_Get()               (((PORT_REGS->GROUP[3].PORT_IN >> 9)) & 0x01)
-#define BTN_START_STOP_OutputEnable()      (PORT_REGS->GROUP[3].PORT_DIRSET = 1 << 9)
-#define BTN_START_STOP_InputEnable()       (PORT_REGS->GROUP[3].PORT_DIRCLR = 1 << 9)
-#define BTN_START_STOP_PIN                  PORT_PIN_PD09
+/*** Macros for GPIO_PD10 pin ***/
+#define GPIO_PD10_Set()               (PORT_REGS->GROUP[3].PORT_OUTSET = 1 << 10)
+#define GPIO_PD10_Clear()             (PORT_REGS->GROUP[3].PORT_OUTCLR = 1 << 10)
+#define GPIO_PD10_Toggle()            (PORT_REGS->GROUP[3].PORT_OUTTGL = 1 << 10)
+#define GPIO_PD10_OutputEnable()      (PORT_REGS->GROUP[3].PORT_DIRSET = 1 << 10)
+#define GPIO_PD10_InputEnable()       (PORT_REGS->GROUP[3].PORT_DIRCLR = 1 << 10)
+#define GPIO_PD10_Get()               (((PORT_REGS->GROUP[3].PORT_IN >> 10)) & 0x01)
+#define GPIO_PD10_PIN                  PORT_PIN_PD10
 
-/*** Macros for BTN_DIR_TGL pin ***/
-#define BTN_DIR_TGL_Set()               (PORT_REGS->GROUP[3].PORT_OUTSET = 1 << 10)
-#define BTN_DIR_TGL_Clear()             (PORT_REGS->GROUP[3].PORT_OUTCLR = 1 << 10)
-#define BTN_DIR_TGL_Toggle()            (PORT_REGS->GROUP[3].PORT_OUTTGL = 1 << 10)
-#define BTN_DIR_TGL_Get()               (((PORT_REGS->GROUP[3].PORT_IN >> 10)) & 0x01)
-#define BTN_DIR_TGL_OutputEnable()      (PORT_REGS->GROUP[3].PORT_DIRSET = 1 << 10)
-#define BTN_DIR_TGL_InputEnable()       (PORT_REGS->GROUP[3].PORT_DIRCLR = 1 << 10)
-#define BTN_DIR_TGL_PIN                  PORT_PIN_PD10
+/*** Macros for GPIO_PB26 pin ***/
+#define GPIO_PB26_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 26)
+#define GPIO_PB26_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 26)
+#define GPIO_PB26_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 26)
+#define GPIO_PB26_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 26)
+#define GPIO_PB26_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 26)
+#define GPIO_PB26_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 26)) & 0x01)
+#define GPIO_PB26_PIN                  PORT_PIN_PB26
 
-/*** Macros for LED2_Direction pin ***/
-#define LED2_Direction_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 26)
-#define LED2_Direction_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 26)
-#define LED2_Direction_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 26)
-#define LED2_Direction_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 26)) & 0x01)
-#define LED2_Direction_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 26)
-#define LED2_Direction_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 26)
-#define LED2_Direction_PIN                  PORT_PIN_PB26
-
-/*** Macros for LED1_OC_FAULT pin ***/
-#define LED1_OC_FAULT_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 27)
-#define LED1_OC_FAULT_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 27)
-#define LED1_OC_FAULT_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 27)
-#define LED1_OC_FAULT_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 27)) & 0x01)
-#define LED1_OC_FAULT_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 27)
-#define LED1_OC_FAULT_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 27)
-#define LED1_OC_FAULT_PIN                  PORT_PIN_PB27
-
-
-
+/*** Macros for GPIO_PB27 pin ***/
+#define GPIO_PB27_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 27)
+#define GPIO_PB27_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 27)
+#define GPIO_PB27_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 27)
+#define GPIO_PB27_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 27)
+#define GPIO_PB27_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 27)
+#define GPIO_PB27_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 27)) & 0x01)
+#define GPIO_PB27_PIN                  PORT_PIN_PB27
 // *****************************************************************************
 /* PORT Group
 
@@ -1069,7 +1056,7 @@ void PORT_GroupToggle(PORT_GROUP group, uint32_t mask);
     void PORT_GroupInputEnable(PORT_GROUP group, uint32_t mask)
 
   Summary:
-    Confgiures the selected IO pins of a group as input.
+    Configures the selected IO pins of a group as input.
 
   Description:
     This function configures the selected IO pins of a group as input. The pins
@@ -1108,7 +1095,7 @@ void PORT_GroupInputEnable(PORT_GROUP group, uint32_t mask);
     void PORT_GroupOutputEnable(PORT_GROUP group, uint32_t mask)
 
   Summary:
-    Confgiures the selected IO pins of a group as output.
+    Configures the selected IO pins of a group as output.
 
   Description:
     This function configures the selected IO pins of a group as output. The pins

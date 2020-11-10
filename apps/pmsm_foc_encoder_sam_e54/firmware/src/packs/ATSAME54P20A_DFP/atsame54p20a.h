@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-03-12T17:27:04Z */
+/* file generated from device description version 2020-06-22T15:30:56Z */
 #ifndef _SAME54P20A_H_
 #define _SAME54P20A_H_
 
@@ -230,7 +230,7 @@ typedef struct _DeviceVectors
 {
   /* Stack pointer */
   void* pvStack;
-  /* Cortex-M handlers */
+  /* CORTEX-M4 handlers */
   void* pfnReset_Handler;                        /* -15 Reset Vector, invoked on Power up and warm reset */
   void* pfnNonMaskableInt_Handler;               /* -14 Non maskable Interrupt, cannot be stopped or preempted */
   void* pfnHardFault_Handler;                    /* -13 Hard Fault, all classes of Fault */
@@ -387,12 +387,6 @@ typedef struct _DeviceVectors
   void* pfnSDHC1_Handler;                        /* 136 SD/MMC Host Controller (SDHC1) */
 } DeviceVectors;
 
-/* Defines for Deprecated Interrupt and Exceptions handler names */
-#define pfnMemManage_Handler      pfnMemoryManagement_Handler     /**< \deprecated  Backward compatibility for ASF*/
-#define pfnDebugMon_Handler       pfnDebugMonitor_Handler         /**< \deprecated  Backward compatibility for ASF*/
-#define pfnNMI_Handler            pfnNonMaskableInt_Handler       /**< \deprecated  Backward compatibility for ASF*/
-#define pfnSVC_Handler            pfnSVCall_Handler               /**< \deprecated  Backward compatibility for ASF*/
-
 #endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
@@ -547,17 +541,9 @@ void QSPI_Handler                  ( void );
 void SDHC0_Handler                 ( void );
 void SDHC1_Handler                 ( void );
 #endif /* DONT_USE_PREDEFINED_PERIPHERALS_HANDLERS */
-/* Defines for Deprecated Interrupt and Exceptions handler names */
-#define MemManage_Handler         MemoryManagement_Handler        /**< \deprecated  Backward compatibility*/
-#define DebugMon_Handler          DebugMonitor_Handler            /**< \deprecated  Backward compatibility*/
-#define NMI_Handler               NonMaskableInt_Handler          /**< \deprecated  Backward compatibility*/
-#define SVC_Handler               SVCall_Handler                  /**< \deprecated  Backward compatibility*/
-
 #endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
 
-/*
- * \brief Configuration of the CORTEX-M4 Processor and Core Peripherals
- */
+/** \brief Configuration of the CORTEX-M4 Processor and Core Peripherals */
 #define __CM4_REV                 0x0001 /**< Cortex-M4 Core Revision                                                   */
 #define __DEBUG_LVL                    3 /**< Debug Level                                                               */
 #define __FPU_PRESENT                  1 /**< FPU present or not                                                        */
@@ -568,7 +554,6 @@ void SDHC1_Handler                 ( void );
 #define __Vendor_SysTickConfig         0 /**< Set to 1 if different SysTick Config is used                              */
 #define __ARCH_ARM                     1
 #define __ARCH_ARM_CORTEX_M            1
-#define __DEVICE_IS_SAM                1
 
 /*
  * \brief CMSIS includes

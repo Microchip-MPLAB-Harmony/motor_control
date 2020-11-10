@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-03-12T17:27:04Z */
+/* file generated from device description version 2020-06-22T15:30:56Z */
 #ifndef _SAME54_PUKCC_COMPONENT_H_
 #define _SAME54_PUKCC_COMPONENT_H_
 

@@ -140,7 +140,7 @@ void TCC0_PWMPeriodInterruptEnable(void);
 
 void TCC0_PWMPeriodInterruptDisable(void);
 
-uint32_t TCC0_PWMInterruptStatusGet(void);
+void TCC0_PWMCallbackRegister(TCC_CALLBACK callback, uintptr_t context);
 
 void TCC0_PWM24bitPeriodSet(uint32_t period);
 

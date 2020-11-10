@@ -127,7 +127,7 @@ void PDEC_QDECStop( void )
 }
 
 /* Read the position */
-int16_t PDEC_QDECPositionGet( void )
+uint16_t PDEC_QDECPositionGet( void )
 {
     PDEC_REGS->PDEC_CTRLBSET = PDEC_CTRLBSET_CMD_READSYNC;
     while(PDEC_REGS->PDEC_SYNCBUSY)
@@ -138,7 +138,7 @@ int16_t PDEC_QDECPositionGet( void )
     {
         /* Wait for CMD to become zero */
     }
-    return (int16_t)PDEC_REGS->PDEC_COUNT;
+    return (uint16_t)PDEC_REGS->PDEC_COUNT;
 }
 
 /* Read the number of revolutions */

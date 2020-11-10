@@ -59,8 +59,10 @@
 
 extern uint32_t _stack;
 
+void Dummy_Handler(void);
+
 /* Brief default interrupt handler for unused IRQs.*/
-void __attribute__((optimize("-O1"),section(".text.Dummy_Handler"),long_call))Dummy_Handler(void)
+void __attribute__((optimize("-O1"),section(".text.Dummy_Handler"),long_call, noreturn))Dummy_Handler(void)
 {
 #if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
     __builtin_software_breakpoint();
@@ -94,7 +96,7 @@ void WDT_Handler                ( void ) __attribute__((weak, alias("Dummy_Handl
 void RTC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EIC_EXTINT_0_Handler       ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EIC_EXTINT_1_Handler       ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void EIC_EXTINT_2_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void EIC_EXTINT_2_Handler       ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EIC_EXTINT_3_Handler       ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EIC_EXTINT_4_Handler       ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EIC_EXTINT_5_Handler       ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -162,7 +164,7 @@ void USB_SOF_HSOF_Handler       ( void ) __attribute__((weak, alias("Dummy_Handl
 void USB_TRCPT0_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void USB_TRCPT1_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void GMAC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void TCC0_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void TCC0_PWMInterruptHandler   ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void TCC0_MC0_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void TCC0_MC1_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void TCC0_MC2_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -198,7 +200,7 @@ void PDEC_MC1_Handler           ( void ) __attribute__((weak, alias("Dummy_Handl
 void ADC0_OTHER_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void ADC0_RESRDY_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void ADC1_OTHER_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void ADC1_RESRDY_Handler        ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void ADC1_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void AC_Handler                 ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void DAC_OTHER_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void DAC_EMPTY_0_Handler        ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -251,7 +253,7 @@ const DeviceVectors exception_table=
     .pfnRTC_Handler                = ( void * ) RTC_Handler,
     .pfnEIC_EXTINT_0_Handler       = ( void * ) EIC_EXTINT_0_Handler,
     .pfnEIC_EXTINT_1_Handler       = ( void * ) EIC_EXTINT_1_Handler,
-    .pfnEIC_EXTINT_2_Handler       = ( void * ) EIC_EXTINT_2_InterruptHandler,
+    .pfnEIC_EXTINT_2_Handler       = ( void * ) EIC_EXTINT_2_Handler,
     .pfnEIC_EXTINT_3_Handler       = ( void * ) EIC_EXTINT_3_Handler,
     .pfnEIC_EXTINT_4_Handler       = ( void * ) EIC_EXTINT_4_Handler,
     .pfnEIC_EXTINT_5_Handler       = ( void * ) EIC_EXTINT_5_Handler,
@@ -319,7 +321,7 @@ const DeviceVectors exception_table=
     .pfnUSB_TRCPT0_Handler         = ( void * ) USB_TRCPT0_Handler,
     .pfnUSB_TRCPT1_Handler         = ( void * ) USB_TRCPT1_Handler,
     .pfnGMAC_Handler               = ( void * ) GMAC_Handler,
-    .pfnTCC0_OTHER_Handler         = ( void * ) TCC0_Handler,
+    .pfnTCC0_OTHER_Handler         = ( void * ) TCC0_PWMInterruptHandler,
     .pfnTCC0_MC0_Handler           = ( void * ) TCC0_MC0_Handler,
     .pfnTCC0_MC1_Handler           = ( void * ) TCC0_MC1_Handler,
     .pfnTCC0_MC2_Handler           = ( void * ) TCC0_MC2_Handler,
@@ -355,7 +357,7 @@ const DeviceVectors exception_table=
     .pfnADC0_OTHER_Handler         = ( void * ) ADC0_OTHER_Handler,
     .pfnADC0_RESRDY_Handler        = ( void * ) ADC0_RESRDY_InterruptHandler,
     .pfnADC1_OTHER_Handler         = ( void * ) ADC1_OTHER_Handler,
-    .pfnADC1_RESRDY_Handler        = ( void * ) ADC1_RESRDY_Handler,
+    .pfnADC1_RESRDY_Handler        = ( void * ) ADC1_Handler,
     .pfnAC_Handler                 = ( void * ) AC_Handler,
     .pfnDAC_OTHER_Handler          = ( void * ) DAC_OTHER_Handler,
     .pfnDAC_EMPTY_0_Handler        = ( void * ) DAC_EMPTY_0_Handler,

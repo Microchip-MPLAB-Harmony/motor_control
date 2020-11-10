@@ -87,7 +87,7 @@ void PDEC_QDECInitialize( void )
                                  | PDEC_CTRLA_ANGULAR(7)
                                  | PDEC_CTRLA_MAXCMP(4); 
     PDEC_REGS->PDEC_PRESC = PDEC_PRESC_PRESC_DIV1;
-    PDEC_REGS->PDEC_FILTER = PDEC_FILTER_FILTER(2);
+    PDEC_REGS->PDEC_FILTER = PDEC_FILTER_FILTER(0);
 
     /* Configure angular and revolution period */
     PDEC_REGS->PDEC_CC[0U] = 1023U | (0U << PDEC_ANGULAR_COUNTER_BITS);
@@ -127,7 +127,7 @@ void PDEC_QDECStop( void )
 }
 
 /* Read the position */
-int16_t PDEC_QDECPositionGet( void )
+uint16_t PDEC_QDECPositionGet( void )
 {
     PDEC_REGS->PDEC_CTRLBSET = PDEC_CTRLBSET_CMD_READSYNC;
     while(PDEC_REGS->PDEC_SYNCBUSY)
@@ -138,7 +138,7 @@ int16_t PDEC_QDECPositionGet( void )
     {
         /* Wait for CMD to become zero */
     }
-    return (int16_t)PDEC_REGS->PDEC_COUNT;
+    return (uint16_t)PDEC_REGS->PDEC_COUNT;
 }
 
 /* Read the number of revolutions */
