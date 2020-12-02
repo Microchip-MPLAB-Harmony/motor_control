@@ -101,7 +101,7 @@ typedef struct
 // *****************************************************************************
 // *****************************************************************************
 
-void PMSM_FOC_Tasks();
+void PMSM_FOC_Tasks(void);
 
 void PMSM_FOC_Initialize(void);
 void PMSM_FOC_ResetParameters(void);

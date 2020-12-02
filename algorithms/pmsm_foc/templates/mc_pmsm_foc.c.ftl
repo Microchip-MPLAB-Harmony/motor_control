@@ -71,6 +71,7 @@ static void PMSM_FOC_ButtonPolling( void );
 
 static tMCCTRL_TASK_STATE_E PMSM_FOC_IsSpeedLoopActive( void );
 static tMCCTRL_TASK_STATE_E PMSM_FOC_IsPositionLoopActive( void );
+void MCINF_PositionLoopTasks( void );
 static void PMSM_FOC_StartAdcInterrupt( void );
 
 /******************************************************************************/
