@@ -159,7 +159,7 @@ def mcPmsmFocIntermFlyingStartVisibility(symbol, event):
         symObj = event["symbol"]
         key = symObj.getSelectedKey()
         if(key == "SENSORED_ENCODER"):
-            symbol.setValue(False) #disable On-The-Fly Startup feature when operating in sensored mode
+            symbol.setValue(False) #disable Flying Start Startup feature when operating in sensored mode
             Log.writeInfoMessage("FlyingStart Disabled")
         else:
             if(component.getSymbolValue("MCPMSMFOC_FLYING_START") == True):
@@ -173,9 +173,9 @@ def mcPmsmFocIntermFlyingStartVisibility(symbol, event):
             symbol.setValue(True) #enable Flying Start if Flying Start boolean input is enabled
             Log.writeInfoMessage("FlyingStart Enabled")
         else:
-            symbol.setValue(False) #disable On-The-Fly Startup if FlyingStart boolean input is disabled
+            symbol.setValue(False) #disable Flying Start Startup if FlyingStart boolean input is disabled
             Log.writeInfoMessage("FlyingStart Disabled")
-    elif (event["id"] == "MCPMSMFOC_OPEN_LOOP"): #disable On-The-Fly Startup feature when open loop mode is enabled
+    elif (event["id"] == "MCPMSMFOC_OPEN_LOOP"): #disable Flying Start Startup feature when open loop mode is enabled
         if event["value"] == True:
             symbol.setValue(False)
         else:
@@ -214,7 +214,7 @@ def mcFlyingStart_CreateMHCSymbols(mcPmsmFocComponent, mcFlyingStartRootNode):
     
     # Symbol to enable/disable current controller auto-parameter calculation
     mcFlyingStart_Autocalculate = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_FLYING_START_CL_AUTOCALCULATE", mcFlyingStart_Enable)
-    mcFlyingStart_Autocalculate.setLabel("Auto Calculate PI Parameters?")
+    mcFlyingStart_Autocalculate.setLabel("Auto Calculate Flying Start PI Parameters?")
     mcFlyingStart_Autocalculate.setVisible(False)
     mcFlyingStart_Autocalculate.setDependencies(mcPmsmFocVisibleOnTrue,["MCPMSMFOC_FLYING_START"])
 
@@ -227,7 +227,7 @@ def mcFlyingStart_CreateMHCSymbols(mcPmsmFocComponent, mcFlyingStartRootNode):
     
     # FlyingStart mode D-axis controller root node 
     mcFlyingStart_IdControlNode = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_FLYING_START_Id_Menu", mcFlyingStart_Enable)
-    mcFlyingStart_IdControlNode.setLabel("On-the-Fly mode Direct current (Id) PI Parameters")
+    mcFlyingStart_IdControlNode.setLabel("Flying Start mode Direct current (Id) PI Parameters")
     mcFlyingStart_IdControlNode.setVisible(False)
     mcFlyingStart_IdControlNode.setDependencies(mcPmsmFocVisibleOnTrue,["MCPMSMFOC_FLYING_START"])
 
@@ -252,7 +252,7 @@ def mcFlyingStart_CreateMHCSymbols(mcPmsmFocComponent, mcFlyingStartRootNode):
 
     # FlyingStart Q-axis controller root node 
     mcFlyingStart_IqControlNode = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_FLYING_START_Iq_Menu", mcFlyingStart_Enable)
-    mcFlyingStart_IqControlNode.setLabel("On-the-Fly mode Quadrature current (Iq) PI Parameters")
+    mcFlyingStart_IqControlNode.setLabel("Flying Start mode Quadrature current (Iq) PI Parameters")
     mcFlyingStart_IqControlNode.setVisible(False)
     mcFlyingStart_IqControlNode.setDependencies(mcPmsmFocVisibleOnTrue,["MCPMSMFOC_FLYING_START"])    
 
@@ -277,14 +277,14 @@ def mcFlyingStart_CreateMHCSymbols(mcPmsmFocComponent, mcFlyingStartRootNode):
     
     # Symbol for FlyingStart Time if FlyingStart Mode is enabled
     mcFlyingStart_Time = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_FLYING_START_TIME",mcFlyingStart_Enable)
-    mcFlyingStart_Time.setLabel("Flying Motor Detect Duration (sec)")
+    mcFlyingStart_Time.setLabel("Flying Start Detect Duration (sec)")
     mcFlyingStart_Time.setDefaultValue(0.4)
     mcFlyingStart_Time.setVisible(False)
     mcFlyingStart_Time.setDependencies(mcPmsmFocVisibleOnTrue,["MCPMSMFOC_FLYING_START"])
     
     # Symbol for Minimum FlyingStart Speed if FlyingStart Mode is enabled
     mcFlyingStart_Speed = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_FLYING_START_SPEED",mcFlyingStart_Enable)
-    mcFlyingStart_Speed.setLabel("Minimum FlyingStart Speed (RPM)")
+    mcFlyingStart_Speed.setLabel("Minimum Flying Start Speed (RPM)")
     mcFlyingStart_Speed.setDefaultValue(500)
     mcFlyingStart_Speed.setVisible(False)
     mcFlyingStart_Speed.setDependencies(mcPmsmFocVisibleOnTrue,["MCPMSMFOC_FLYING_START"])
