@@ -81,6 +81,15 @@ typedef struct
 } tMCLIB_PICONTROLLER_S;
 
 
+/******************************************************************************/
+/*                       INTERFACE VARIABLES                                  */
+/******************************************************************************/
+
+extern tMCLIB_PICONTROLLER_S    gMCLIB_IdPIController;
+extern tMCLIB_PICONTROLLER_S    gMCLIB_IqPIController;
+extern tMCLIB_PICONTROLLER_S    gMCLIB_SpeedPIController;
+
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Interface Routines

@@ -74,7 +74,7 @@ __STATIC_INLINE void MCCTRL_MotorControl(void );
 
 <#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
 __STATIC_INLINE tMCAPP_STATUS_E MCCTRL_OpenLoopControl( const int16_t rotationSign );
-static void MCCTRL_InitilaizeOpenLoopControl( void );
+static void MCCTRL_InitializeOpenLoopControl( void );
 static void MCCTRL_ResetOpenLoopControl( void );
 </#if>
 
@@ -157,14 +157,14 @@ tMCLIB_PICONTROLLER_S gMCLIB_SpeedPIController =
 /*****************************************************************************/
 <#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
 /*****************************************************************************/
-/* Function name: MCCTRL_InitilaizeOpenLoopControl                            */
+/* Function name: MCCTRL_InitializeOpenLoopControl                            */
 /* Function parameters: None                                                 */
 /* Function return: None                                                     */
 /* Description: Initialize open loop parameters and state                    */
 /*****************************************************************************/
-static void MCCTRL_InitilaizeOpenLoopControl( void )
+static void MCCTRL_InitializeOpenLoopControl( void )
 {
-    /* Initilaize open loop parameters */
+    /* Initialize open loop parameters */
     gMCCTRL_OpenLoopParam.maxOpenLoopSpeed  = OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC_IN_LOOPTIME;
     gMCCTRL_OpenLoopParam.openLoopSpeedRate = OPEN_LOOP_RAMPSPEED_INCREASERATE;
     gMCCTRL_OpenLoopParam.openLoopCurrent   = Q_CURRENT_REF_OPENLOOP;
@@ -613,8 +613,8 @@ __STATIC_INLINE void  MCCTRL_LoopSynchronization(void)
 {
     MCCTRL_InitiaizeInfrastructure();
 <#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
-    /* Initilaize open loop control */
-    MCCTRL_InitilaizeOpenLoopControl();
+    /* Initialize open loop control */
+    MCCTRL_InitializeOpenLoopControl();
 </#if>
 #if (ENABLED == FIELD_WEAKENING )
     MCCTRL_InitializeFieldWeakening();

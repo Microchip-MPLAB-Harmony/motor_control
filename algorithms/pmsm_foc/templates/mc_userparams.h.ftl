@@ -72,7 +72,6 @@
 <#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
 #define ANGLE_OFFSET_DEG                 (float)45.0    /* Angle offset while switching to closed loop */
 </#if>
-
 #define CURRENT_MEASUREMENT              (${MCPMSMFOC_CURRENT_MEAS})  /* Current measurement shunts */
 
 <#if MCPMSMFOC_SPEED_REF_INPUT == "Potentiometer Analog Input">
@@ -137,11 +136,7 @@
 
 /******* Velocity Control Loop Coefficients **********************************/
 #define     SPEEDCNTR_PTERM            (float)(${MCPMSMFOC_SPEED_KP})
-<#if MCPMSMFOC_BOARD_SEL == "MCHV3">
 #define     SPEEDCNTR_ITERM            (float)(${MCPMSMFOC_SPEED_KI} * 0.01f)
-<#else>
-#define     SPEEDCNTR_ITERM            (float)(${MCPMSMFOC_SPEED_KI})
-</#if>
 #define     SPEEDCNTR_CTERM            (float)(${MCPMSMFOC_SPEED_KC})
 #define     SPEEDCNTR_OUTMAX           (float)(${MCPMSMFOC_SPEED_OUT_MAX})
 

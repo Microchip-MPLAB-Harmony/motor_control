@@ -94,6 +94,7 @@ def mcMot_CreateMHCSymbols( mcPmsmFocComponent ):
     mcMot_SelectedMotor.addKey("LONG_HURST", "1", "Hurst DMA0204024B101 (with Hall, with Quadrature Encoder) (LV)")
     mcMot_SelectedMotor.addKey("SMALL_HURST", "2", "Hurst DMB0224C10002 (with Hall, without Quadrature Encoder)  (LV)")
     mcMot_SelectedMotor.addKey("LEADSHINE", "3", "Leadshine EL5-M0400-1-24 (with Hall, with Quadrature Encoder)  (HV)")
+    mcMot_SelectedMotor.setDefaultValue(1)    
     mcMot_SelectedMotor.setOutputMode("Key")
     mcMot_SelectedMotor.setDisplayMode("Description")
     mcMot_SelectedMotor.setDefaultValue(1)   # Long hurst

@@ -34,24 +34,30 @@
                                    
 # PI controller Parameters
 mcMotC_CurrentPiPararameterDict =  {    'MCLV2' :   { 'KP' : 0.02,
-                                                      'KI' : 0.000099
+                                                      'KI' : 0.0002
                                                     },
+                                        'Custom' :   { 'KP' : 0.02,
+                                                      'KI' : 0.000099
+                                                    },            
                                         'MCHV3' :   { 'KP' : 0.02,
                                                       'KI' : 0.000099
                                                     },
                                    }
 
-mcMotC_SpeedPiPararameterDict =  {    'MCLV2' :   { 'KP' : 0.005,
+mcMotC_SpeedPiPararameterDict =  {    'MCLV2' :   { 'KP' : 0.002,
                                                     'KI' : 0.00002
                                                   },
+                                      'Custom' :   { 'KP' : 0.005,
+                                                    'KI' : 0.000002
+                                                  },
                                       'MCHV3' :   { 'KP' : 0.005,
-                                                    'KI' : 0.00002
+                                                    'KI' : 0.000002
                                                   },
                                  }                                   
 
 mcMotC_FieldWeakeningParameter =   {    'LONG_HURST' : 
                                                     { 
-                                                      'MAX_FW_CURRENT'    : -2.0,
+                                                      'MAX_FW_CURRENT'    : -2.5,
                                                       'MAX_MOTOR_CURRENT' : 4.0 ,
                                               
                                                     },
@@ -68,6 +74,7 @@ mcMotC_FieldWeakeningParameter =   {    'LONG_HURST' :
                           }
 
 mcMoC_DefaultMotor = 'LONG_HURST'
+mcMOC_DefaultBoard = 'MCLV2'
 
 #----------------------------------------------------------------------------------#
 #                             GLOBAL VARIABLES                                     # 
@@ -111,7 +118,7 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     
     # Symbol to enable/disable current controller auto-parameter calculation
     mcMoC_Autocalculate = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_CL_AUTOCALCULATE", mcMoC_TorqueLoopNode)
-    mcMoC_Autocalculate.setLabel("Auto Calcualte PI Parameters?")
+    mcMoC_Autocalculate.setLabel("Auto Calculate PI Parameters?")
     
     # Symbol for current PI controller band-width for auto gain calculation
     mcMoC_ControlBandwidth = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_CL_BANDWIDTH", mcMoC_Autocalculate)
@@ -127,14 +134,14 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     # Symbol for D axis PI controller proportional gain 
     mcMoC_IdCurrentKp = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_ID_KP", mcMoC_IdControlNode)
     mcMoC_IdCurrentKp.setLabel("Kp")
-    mcMoC_IdCurrentKp.setDefaultValue(0.02)
+    mcMoC_IdCurrentKp.setDefaultValue(mcMotC_CurrentPiPararameterDict[mcMOC_DefaultBoard]['KP'])
     mcMoC_IdCurrentKp.setDependencies(mcPmsmFocCurrentKpCalc, ["MCPMSMFOC_CL_BANDWIDTH", "MCPMSMFOC_CL_AUTOCALCULATE",
         "MCPMSMFOC_LD", "MCPMSMFOC_LQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL"])
 
     # Symbol for D axis PI controller integral gain 
     mcMoC_IdCurrentKi = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_ID_KI", mcMoC_IdControlNode)
     mcMoC_IdCurrentKi.setLabel("Ki")
-    mcMoC_IdCurrentKi.setDefaultValue(0.000099)
+    mcMoC_IdCurrentKi.setDefaultValue(mcMotC_CurrentPiPararameterDict[mcMOC_DefaultBoard]['KI'])
     mcMoC_IdCurrentKi.setDependencies(mcPmsmFocCurrentKiCalc, ["MCPMSMFOC_CL_BANDWIDTH", "MCPMSMFOC_CL_AUTOCALCULATE",
         "MCPMSMFOC_R", "MCPMSMFOC_PWM_FREQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL"])
 
@@ -155,14 +162,14 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     # Symbol for Q axis PI controller proportional gain 
     mcMoC_IqCurrentKp = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_IQ_KP", mcMoC_IqRootNode)
     mcMoC_IqCurrentKp.setLabel("Kp")
-    mcMoC_IqCurrentKp.setDefaultValue(0.02)
+    mcMoC_IqCurrentKp.setDefaultValue(mcMotC_CurrentPiPararameterDict[mcMOC_DefaultBoard]['KP'])
     mcMoC_IqCurrentKp.setDependencies(mcPmsmFocCurrentKpCalc, ["MCPMSMFOC_CL_BANDWIDTH", "MCPMSMFOC_CL_AUTOCALCULATE",
         "MCPMSMFOC_LD", "MCPMSMFOC_LQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL"])
 
     # Symbol for Q axis PI controller integral gain 
     mcMoC_IqCurrentKi = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_IQ_KI", mcMoC_IqRootNode)
     mcMoC_IqCurrentKi.setLabel("Ki")
-    mcMoC_IqCurrentKi.setDefaultValue(0.000099)
+    mcMoC_IqCurrentKi.setDefaultValue(mcMotC_CurrentPiPararameterDict[mcMOC_DefaultBoard]['KI'])
     mcMoC_IqCurrentKi.setDependencies( mcPmsmFocCurrentKiCalc, ["MCPMSMFOC_CL_BANDWIDTH", "MCPMSMFOC_CL_AUTOCALCULATE",
         "MCPMSMFOC_R", "MCPMSMFOC_PWM_FREQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL"])
     
@@ -193,14 +200,14 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     # Symbol for speed controller proportional gain  
     mcMoC_SpeedKp = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_SPEED_KP", mcMoC_SpeedNode)
     mcMoC_SpeedKp.setLabel("Kp")
-    mcMoC_SpeedKp.setDefaultValue(0.005)
+    mcMoC_SpeedKp.setDefaultValue(mcMotC_SpeedPiPararameterDict[mcMOC_DefaultBoard]['KP'])
     mcMoC_SpeedKp.setDependencies(mcPmsmFoc_SpeedKp, ["MCPMSMFOC_BOARD_SEL"])
 
     # Symbol for speed controller integral gain  
     mcMoC_SpeedKi = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_SPEED_KI", mcMoC_SpeedNode)
     mcMoC_SpeedKi.setLabel("Ki")
-    mcMoC_SpeedKi.setDefaultValue(0.000020)
-    mcMoC_SpeedKi.setDependencies(mcPmsmFoc_SpeedKi, ["MCPMSMFOC_BOARD_SEL"])    
+    mcMoC_SpeedKi.setDefaultValue(mcMotC_SpeedPiPararameterDict[mcMOC_DefaultBoard]['KI'])
+    mcMoC_SpeedKi.setDependencies(mcPmsmFoc_SpeedKi, ["MCPMSMFOC_BOARD_SEL"]) 
     
     # Symbol for speed controller back calculation gain  
     mcMoC_SpeedKc = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_SPEED_KC", mcMoC_SpeedNode)
@@ -212,6 +219,10 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     mcMoC_SpeedYmax.setLabel("Max Output (A)")
     mcMoC_SpeedYmax.setDefaultValue(mcMotC_FieldWeakeningParameter[mcMoC_DefaultMotor]['MAX_MOTOR_CURRENT'])
 
+    # Integral gain note
+    mcMoC_SpeedKiNote = mcPmsmFocComponent.createCommentSymbol("MCPMSMFOC_SPEED_KI_NOTE", mcMoC_SpeedNode)
+    mcMoC_SpeedKiNote.setLabel("**** The integral gain is internally divided by 100 to keep it within allowed significant digits ****")
+        
 
 #----------------------------------------------------------------------------------#
 #                             CALLBACKS                                     # 

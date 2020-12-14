@@ -109,10 +109,8 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocSeries = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_SERIES", None)
     mcPmsmFocSeries.setVisible(False)
     mcPmsmFocSeries.setDefaultValue(ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series"))
-    #-----------------------------------------------------------------------------------------------------#
-    #                                       MOTOR PARAMATERS                                              #
-    #-----------------------------------------------------------------------------------------------------#
-    mcMotI_MotorParameters( mcPmsmFocComponent)
+    
+   
   
     #-----------------------------------------------------------------------------------------------------#
     #                                        VSI BLOCK                                                    #
@@ -132,6 +130,11 @@ def instantiateComponent(mcPmsmFocComponent):
     mcVsi_SelectedBoard.setDefaultValue(1)
 
     mcVsiI_VoltageSourceInverter( mcPmsmFocComponent )
+
+#-----------------------------------------------------------------------------------------------------#
+#                                       MOTOR PARAMATERS                                              #
+#-----------------------------------------------------------------------------------------------------#
+    mcMotI_MotorParameters( mcPmsmFocComponent)
 
 
     #-----------------------------------------------------------------------------------------------------#

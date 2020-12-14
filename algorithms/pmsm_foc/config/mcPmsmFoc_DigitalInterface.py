@@ -65,6 +65,32 @@ mcPmsmFocBoardPimParamDict =  {'MCLV2' :  {
                                                         'FAULT_LED'            : 'PB27',
                                                       },
                                           },
+                            'Custom' :  {
+                                           'PIC32MK': {
+                                                        'START_STOP_SWITCH'    : 'RG1',
+                                                        'DIRECTION_SWITCH'     : 'RC7',
+                                                        'DIRECTION_LED'        : 'RF5',
+                                                        'FAULT_LED'            : 'RG15',
+                                                      },
+                                            'SAME70': {
+                                                        'START_STOP_SWITCH'    : 'PC3',
+                                                        'DIRECTION_SWITCH'     : 'PC1',
+                                                        'DIRECTION_LED'        : 'PC23',
+                                                        'FAULT_LED'            : 'PA24',
+                                                      },
+                                            'SAME54': {
+                                                        'START_STOP_SWITCH'    : 'PD09',
+                                                        'DIRECTION_SWITCH'     : 'PD10',
+                                                        'DIRECTION_LED'        : 'PB26',
+                                                        'FAULT_LED'            : 'PB27',
+                                                      },
+                                            'DEFAULT': {
+                                                        'START_STOP_SWITCH'    : 'PD09',
+                                                        'DIRECTION_SWITCH'     : 'PD10',
+                                                        'DIRECTION_LED'        : 'PB26',
+                                                        'FAULT_LED'            : 'PB27',
+                                                      },
+                                          },
                             'MCHV3' :     {
                                             'PIC32MK': {
                                                         'START_STOP_SWITCH'    : 'RD8',

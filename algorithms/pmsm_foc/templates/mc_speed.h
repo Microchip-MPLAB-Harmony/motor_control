@@ -96,6 +96,8 @@ typedef struct
 /*                       INTERFACE VARIABLES                                  */
 /******************************************************************************/
 extern tMCSPE_OUTPUT_SIGNAL_S gMCSPE_OutputSignals;
+extern tMCSPE_STATE_SIGNAL_S  gMCSPE_StateSignals;
+extern tMCSPE_PARAMETERS_S    gMCSPE_Parameters;
 
 
 /******************************************************************************/
