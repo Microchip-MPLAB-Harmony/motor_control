@@ -1,9 +1,0 @@
-{ signal: [
-  {name: 'PWM', wave: 'h..l.h..l.h..l.', node: 'a....b'},
-  {name: 'TC', wave: 'h.l..h.l..h.l..', node: 'c.d'},
-  {name: 'Current SINC3 sample', wave: 'll.l.l.l.l.l.l.l', phase: 0.5, node: '.e.f'}
-   ],
- edge: [
-    'a<-|->b 50µs',  'c<-|->d 20µs',  'e<-|->f 20µs',
-  ],
-}
