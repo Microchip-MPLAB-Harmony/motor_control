@@ -1,6 +1,6 @@
 ---
+parent: Harmony 3 Motor Control
 title: PMSM FOC Component
-nav_order: 1
 has_children: true
 has_toc: false
 ---
@@ -29,11 +29,11 @@ This component depends on ADC PLIB for phase current measurement, DC bus voltage
 
 | Feature     | Options  | 
 |------------| -----------------------------------------------------------|
-| Position Feedback       | <li> PLL Estimator </li> <li> Quadrature Encoder </li>             | 
-| Current Measurement     | <li> Dual shunt </li>     | 
-| Control Loop       | <li> Speed mode </li> <li>Torque mode </li>  <li>Open loop (For sensorless operation) </li>  | 
-| Field Alignment   | <li> Q-axis alignment </li> <li>D-axis alignment </li>|
-| Advanced Features | <li> Equation based field weakening </li> <li> Flying Start </li>| 
+| Position Feedback       | - PLL Estimator <br> - Quadrature Encoder             | 
+| Current Measurement     | - Dual shunt     | 
+| Control Loop       | - Speed mode <br> - Torque mode <br> - Open loop (For sensorless operation)  | 
+| Field Alignment   |  - Q-axis alignment <br> - D-axis alignment |
+| Advanced Features |  - Equation based field weakening <br> - Flying Start | 
 |||
 
 
@@ -43,7 +43,7 @@ This component depends on ADC PLIB for phase current measurement, DC bus voltage
 [Control Algorithm](control_algorithm.md)
 
 
-[Configuring the Library](configurations.md)
+[Configuring the Library](/onfigurations.md)
 
 [Using the Library](using_the_library.md)
 

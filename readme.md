@@ -1,3 +1,10 @@
+﻿---
+title: Harmony 3 Motor Control
+nav_order: 1
+has_children: true
+has_toc: false
+---
+
 # Microchip MPLAB® Harmony 3 Motor Control
 
 MPLAB Harmony 3 is an extension of the MPLAB® ecosystem for creating
@@ -40,14 +47,14 @@ notes and licensing information.
 
 # Motor Control Demo Applications Repositories
 
-| Repository Name | Description | User Guide | 
+| Repository Name | Description | Help Document | 
 | ----------------- | ------------------- | ---------------- |
-| [mc_apps_pic32cm_mc](https://github.com/Microchip-MPLAB-Harmony/mc_apps_pic32cm_mc) | Motor Control Applications for PIC32CM MC family | https://microchip-mplab-harmony.github.io/mc_apps_pic32cm_mc/ |
-| [mc_apps_pic32mk](https://github.com/Microchip-MPLAB-Harmony/mc_apps_pic32mk) | Motor Control Applications for PIC32MK family | https://microchip-mplab-harmony.github.io/mc_apps_pic32mk/
-| [mc_apps_sam_c2x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_c2x) | Motor Control Applications for SAM C2x family | https://microchip-mplab-harmony.github.io/mc_apps_sam_c2x/ |
-| [mc_apps_sam_d5x_e5x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_d5x_e5x) | Motor Control Applications for SAM E5x family | https://microchip-mplab-harmony.github.io/mc_apps_sam_d5x_e5x/ |
-| [mc_apps_sam_e7x_s7x_v7x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_e7x_s7x_v7x) | Motor Control Applications for SAM E7x family | https://microchip-mplab-harmony.github.io/mc_apps_sam_e7x_s7x_v7x/ |
-| [mc_apps_sam_rh71](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_rh71) | Motor Control Applications for SAM RH71 family | https://microchip-mplab-harmony.github.io/mc_apps_sam_rh71/ |
+| [mc_apps_pic32cm_mc](https://github.com/Microchip-MPLAB-Harmony/mc_apps_pic32cm_mc) | Motor Control Applications for PIC32CM MC family | [mc_apps_pic32cm_mc help](https://microchip-mplab-harmony.github.io/mc_apps_pic32cm_mc/) |
+| [mc_apps_pic32mk](https://github.com/Microchip-MPLAB-Harmony/mc_apps_pic32mk) | Motor Control Applications for PIC32MK family | [mc_apps_pic32mk help](https://microchip-mplab-harmony.github.io/mc_apps_pic32mk/) |
+| [mc_apps_sam_c2x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_c2x) | Motor Control Applications for SAM C2x family | [mc_apps_sam_c2x help](https://microchip-mplab-harmony.github.io/mc_apps_sam_c2x/) |
+| [mc_apps_sam_d5x_e5x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_d5x_e5x) | Motor Control Applications for SAM E5x family | [mc_apps_sam_d5x_e5x help](https://microchip-mplab-harmony.github.io/mc_apps_sam_d5x_e5x/) |
+| [mc_apps_sam_e7x_s7x_v7x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_e7x_s7x_v7x) | Motor Control Applications for SAM E7x family | [mc_apps_sam_e7x_s7x_v7x help](https://microchip-mplab-harmony.github.io/mc_apps_sam_e7x_s7x_v7x/) |
+| [mc_apps_sam_rh71](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_rh71) | Motor Control Applications for SAM RH71 family | [mc_apps_sam_rh71 help](https://microchip-mplab-harmony.github.io/mc_apps_sam_rh71/) |
 |||||
 
 ____

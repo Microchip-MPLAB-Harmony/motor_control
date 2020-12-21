@@ -1,6 +1,8 @@
 ---
 parent: PMSM FOC Component
+grand_parent: Harmony 3 Motor Control
 title: Using the Library
+nav_order: 4
 has_children: false
 has_toc: false
 ---
