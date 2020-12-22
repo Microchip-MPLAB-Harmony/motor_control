@@ -1,6 +1,7 @@
 ---
 title: Release notes
 nav_order: 99
+has_children: true
 ---
 
 ![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)

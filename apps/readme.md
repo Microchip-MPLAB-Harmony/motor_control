@@ -1,3 +1,8 @@
+---
+parent: Release notes
+title: Motor Control Application Repositories
+---
+
 Microchip MPLAB Harmony provides several motor control application examples for Microchip's 32-bit device families designed for motor control applications. See the following repositories under [Microchip-MPLAB-Harmony](https://github.com/Microchip-MPLAB-Harmony) Github project for specific applications examples:
 
 | Repository | Product family |
