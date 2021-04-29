@@ -55,14 +55,18 @@ mcPoM_DefaultBoard = 'MCLV2'
 #----------------------------------------------------------------------------------#
 def mcPoM_CreateMHCSymbols( mcPmsmFocComponent ):
 
-    
+    processor = Variables.get("__PROCESSOR") 
+
     global mcPoM_AlgorithmSelection
     mcPoM_AlgorithmSelection = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_POSITION_FB", mcPmsmFocAlgoMenu)
     mcPoM_AlgorithmSelection.setLabel("Select Position Feedback")
-    mcPoM_AlgorithmSelection.addKey("SENSORLESS_PLL", "0", "SENSORLESS - PLL Estimator")
-    mcPoM_AlgorithmSelection.addKey("SENSORED_ENCODER", "1", "SENSOR - Quadrature Encoder")
-    #mcPoM_AlgorithmSelection.addKey("SENSORLESS_ROLO", "1", "SENSORLESS - Luenberger Observer")
-    #mcPoM_AlgorithmSelection.addKey("SENSORLESS_SMO", "2", "SENSORLESS - Sliding Mode Observer")
+    if (("SAMC21" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
+        mcPoM_AlgorithmSelection.addKey("SENSORLESS_ROLO", "0", "SENSORLESS - Luenberger Observer")    
+    else:
+        mcPoM_AlgorithmSelection.addKey("SENSORLESS_PLL", "0", "SENSORLESS - PLL Estimator")
+        mcPoM_AlgorithmSelection.addKey("SENSORED_ENCODER", "1", "SENSOR - Quadrature Encoder")
+        #mcPoM_AlgorithmSelection.addKey("SENSORLESS_ROLO", "1", "SENSORLESS - Luenberger Observer")
+        #mcPoM_AlgorithmSelection.addKey("SENSORLESS_SMO", "2", "SENSORLESS - Sliding Mode Observer")
     mcPoM_AlgorithmSelection.setOutputMode("Key")
     mcPoM_AlgorithmSelection.setDisplayMode("Description")
 

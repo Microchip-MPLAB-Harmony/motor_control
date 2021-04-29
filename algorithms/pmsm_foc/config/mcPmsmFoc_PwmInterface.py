@@ -57,6 +57,20 @@ mcPwmI_DefaultPararameterDict = {'MCLV2' : {
                                                     'PWM_DEAD_TIME': '1',
                                                     'PWM_FAULT': 'EIC_CHANNEL_2',
                                                 },
+                                    'SAMC21':    { 'PWM_FREQ' : 10000,
+                                                    'PWM_PH_U' : '0',
+                                                    'PWM_PH_V' : '1',
+                                                    'PWM_PH_W' : '2',
+                                                    'PWM_DEAD_TIME': '1',
+                                                    'PWM_FAULT': 'EIC_CHANNEL_2',
+                                                },
+                                    'PIC32CMMC00': { 'PWM_FREQ' : 10000,
+                                                    'PWM_PH_U' : '0',
+                                                    'PWM_PH_V' : '1',
+                                                    'PWM_PH_W' : '2',
+                                                    'PWM_DEAD_TIME': '1',
+                                                    'PWM_FAULT': 'EIC_CHANNEL_8',
+                                                },
                                     'DEFAULT':    { 'PWM_FREQ' : 20000,
                                                     'PWM_PH_U' : '0',
                                                     'PWM_PH_V' : '1',
@@ -86,6 +100,20 @@ mcPwmI_DefaultPararameterDict = {'MCLV2' : {
                                                     'PWM_PH_W' : '2',
                                                     'PWM_DEAD_TIME': '1',
                                                     'PWM_FAULT': 'EIC_CHANNEL_2',
+                                                },
+                                    'SAMC21':    { 'PWM_FREQ' : 10000,
+                                                    'PWM_PH_U' : '0',
+                                                    'PWM_PH_V' : '1',
+                                                    'PWM_PH_W' : '2',
+                                                    'PWM_DEAD_TIME': '1',
+                                                    'PWM_FAULT': 'EIC_CHANNEL_2',
+                                                },
+                                    'PIC32CMMC00': { 'PWM_FREQ' : 10000,
+                                                    'PWM_PH_U' : '0',
+                                                    'PWM_PH_V' : '1',
+                                                    'PWM_PH_W' : '2',
+                                                    'PWM_DEAD_TIME': '1',
+                                                    'PWM_FAULT': 'EIC_CHANNEL_8',
                                                 },
                                     'DEFAULT':    { 'PWM_FREQ' : 20000,
                                                     'PWM_PH_U' : '0',
@@ -117,6 +145,20 @@ mcPwmI_DefaultPararameterDict = {'MCLV2' : {
                                                     'PWM_PH_W' : '2',
                                                     'PWM_DEAD_TIME': '2',
                                                     'PWM_FAULT': 'FAULT_PWM_ID2',
+                                                },
+                                    'SAMC21':    { 'PWM_FREQ' : 10000,
+                                                    'PWM_PH_U' : '0',
+                                                    'PWM_PH_V' : '1',
+                                                    'PWM_PH_W' : '2',
+                                                    'PWM_DEAD_TIME': '2',
+                                                    'PWM_FAULT': 'EIC_CHANNEL_2',
+                                                },
+                                    'PIC32CMMC00': { 'PWM_FREQ' : 10000,
+                                                    'PWM_PH_U' : '0',
+                                                    'PWM_PH_V' : '1',
+                                                    'PWM_PH_W' : '2',
+                                                    'PWM_DEAD_TIME': '2',
+                                                    'PWM_FAULT': 'EIC_CHANNEL_8',
                                                 },
                                     'DEFAULT':   {   'PWM_FREQ' : 20000,
                                                     'PWM_PH_U' : '0',
@@ -194,7 +236,7 @@ def mcPwm_CreateMHCSymbols( mcPmsmFocComponent ):
     
     series = ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series")
 
-    if ( 'SAME54' == series ):
+    if ( 'SAME54' == series or 'SAMC21' == series or 'PIC32CMMC00' == series):
         node  = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"EIC\"]/instance@[name=\"EIC\"]/parameters" ) 
         values = node.getChildren() 
 
@@ -330,7 +372,7 @@ def mcPwm_onAttachmentConnected(source, target):
         localComponent.getSymbolByID("MCPMSMFOC_PWM_PH_W").setMax(pwmMaxCh - 1)
         
         #Activate EIC component for PWM fault for SAME54 device
-        if mcPwm_MicrocontrollerSeries == "SAME54":
+        if mcPwm_MicrocontrollerSeries == "SAME54" or mcPwm_MicrocontrollerSeries == "SAMC21" or mcPwm_MicrocontrollerSeries == "PIC32CMMC00":
             faultComponent = ["eic"]
             Database.activateComponents(faultComponent)
             eicFaultVal = filter(str.isdigit,str(mcPwm_PwmFault.getSelectedKey()))

@@ -369,7 +369,7 @@ def onAttachmentConnected( source, target ):
     mcDaMI_OnAttachmentConnected( source, target )
 
     #Configure EVSYS for SAME54
-    if mcPmsmFocSeries.getValue() == "SAME54":
+    if mcPmsmFocSeries.getValue() == "SAME54" or mcPmsmFocSeries.getValue() == "SAMC21" or mcPmsmFocSeries.getValue() == "PIC32CMMC00":
         mcEvsysDependencySAME54Connected()
 
 
@@ -413,9 +413,9 @@ def mcEvsysDependencySAME54Connected():
             users[id] = node.getChildren()[id].getAttribute("name")   
         for id in range(0, len(node.getChildren())):
             if str(adcInstance) + "_START" in users[id]:
-                user0 = int(id) + 1
+                user0 = int(node.getChildren()[id].getAttribute("index"))
             if str(pwmInstance) + "_EV_1" in users[id]:
-                user1 = int(id) + 1
+                user1 = int(node.getChildren()[id].getAttribute("index"))
 
         Database.setSymbolValue("evsys", "EVSYS_CHANNEL_0_GENERATOR", int(generator0))
         Database.setSymbolValue("evsys", "EVSYS_CHANNEL_1_GENERATOR", int(generator1))   
