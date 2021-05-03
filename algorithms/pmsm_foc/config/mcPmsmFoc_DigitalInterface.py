@@ -103,10 +103,10 @@ mcPmsmFocBoardPimParamDict =  {'MCLV2' :  {
                                                         'FAULT_LED'            : 'PB13',
                                                       },
                                             'PIC32CMMC00': {
-                                                        'START_STOP_SWITCH'    : 'PB16',
-                                                        'DIRECTION_SWITCH'     : 'PB31',
-                                                        'DIRECTION_LED'        : 'PB12',
-                                                        'FAULT_LED'            : 'PB13',
+                                                        'START_STOP_SWITCH'    : 'PB22',
+                                                        'DIRECTION_SWITCH'     : 'PB23',
+                                                        'DIRECTION_LED'        : 'PA24',
+                                                        'FAULT_LED'            : 'PA25',
                                                       },
                                             'DEFAULT': {
                                                         'START_STOP_SWITCH'    : 'PD09',
@@ -141,10 +141,10 @@ mcPmsmFocBoardPimParamDict =  {'MCLV2' :  {
                                                         'FAULT_LED'            : 'PB13',
                                                       },
                                             'PIC32CMMC00': {
-                                                        'START_STOP_SWITCH'    : 'PB16',
-                                                        'DIRECTION_SWITCH'     : 'PB31',
-                                                        'DIRECTION_LED'        : 'PB12',
-                                                        'FAULT_LED'            : 'PB13',
+                                                        'START_STOP_SWITCH'    : 'PA11',
+                                                        'DIRECTION_SWITCH'     : 'PB23',
+                                                        'DIRECTION_LED'        : 'PA24',
+                                                        'FAULT_LED'            : 'PA25',
                                                       },
                                             'DEFAULT':  {
                                                         'START_STOP_SWITCH'    : 'PD08',

@@ -64,7 +64,7 @@ mcPwmI_DefaultPararameterDict = {'MCLV2' : {
                                                     'PWM_DEAD_TIME': '1',
                                                     'PWM_FAULT': 'EIC_CHANNEL_2',
                                                 },
-                                    'PIC32CMMC00': { 'PWM_FREQ' : 10000,
+                                    'PIC32CMMC00':   { 'PWM_FREQ' : 10000,
                                                     'PWM_PH_U' : '0',
                                                     'PWM_PH_V' : '1',
                                                     'PWM_PH_W' : '2',
@@ -108,13 +108,13 @@ mcPwmI_DefaultPararameterDict = {'MCLV2' : {
                                                     'PWM_DEAD_TIME': '1',
                                                     'PWM_FAULT': 'EIC_CHANNEL_2',
                                                 },
-                                    'PIC32CMMC00': { 'PWM_FREQ' : 10000,
+                                    'PIC32CMMC00':   { 'PWM_FREQ' : 10000,
                                                     'PWM_PH_U' : '0',
                                                     'PWM_PH_V' : '1',
                                                     'PWM_PH_W' : '2',
                                                     'PWM_DEAD_TIME': '1',
                                                     'PWM_FAULT': 'EIC_CHANNEL_8',
-                                                },
+                                                  },
                                     'DEFAULT':    { 'PWM_FREQ' : 20000,
                                                     'PWM_PH_U' : '0',
                                                     'PWM_PH_V' : '1',
@@ -153,7 +153,7 @@ mcPwmI_DefaultPararameterDict = {'MCLV2' : {
                                                     'PWM_DEAD_TIME': '2',
                                                     'PWM_FAULT': 'EIC_CHANNEL_2',
                                                 },
-                                    'PIC32CMMC00': { 'PWM_FREQ' : 10000,
+                                    'PIC32CMMC00':   { 'PWM_FREQ' : 10000,
                                                     'PWM_PH_U' : '0',
                                                     'PWM_PH_V' : '1',
                                                     'PWM_PH_W' : '2',
@@ -199,7 +199,7 @@ def mcPwm_CreateMHCSymbols( mcPmsmFocComponent ):
     mcPwm_PwmFrequency.setMin(4000)
     mcPwm_PwmFrequency.setMax(100000)
     mcPwm_PwmFrequency.setDefaultValue(int(mcPwmI_DefaultPararameterDict[mcPwm_DefaultDevelopmentBoard][mcPwm_MicrocontrollerSeries]['PWM_FREQ']))
-
+   
     # PWM Phase U Channel 
     global mcPwm_PwmChannelU
     mcPwm_PwmChannelU = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PWM_PH_U", mcPwm_RootNode)
@@ -303,7 +303,7 @@ def mcPwm_UpdateSymbols( symbol, event ):
     board_key = event["symbol"].getKeyForValue(str(event["value"]))
     if mcPwm_MicrocontrollerSeries not in mcPmsmFocBoardPimParamDict[board_key].keys():
         mcPwm_MicrocontrollerSeries = 'DEFAULT'   
-        
+    
     if board_key in mcPwmI_DefaultPararameterDict.keys():
         mcPwm_SomeFlag.setValue(True)
         mcPwm_PwmFrequency.setValue(int(mcPwmI_DefaultPararameterDict[board_key][mcPwm_MicrocontrollerSeries]['PWM_FREQ']      ))

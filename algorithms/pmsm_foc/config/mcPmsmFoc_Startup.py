@@ -49,7 +49,8 @@ def mcStC_CreateMHCSymbols( mcPmsmFocComponent):
     mcStC_RootNode = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_STARTUP", mcPmsmFocCtrlMenu)
     mcStC_RootNode.setLabel("Startup Parameters")
 
-    mcFlyingStart_CreateMHCSymbols(mcPmsmFocComponent,mcStC_RootNode)
+    if((("SAMC21" not in Variables.get("__PROCESSOR")) and ("PIC32CM" not in Variables.get("__PROCESSOR")))):
+        mcFlyingStart_CreateMHCSymbols(mcPmsmFocComponent, mcStC_RootNode)
 
     mcStC_ForceAlignAxis = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_ALIGNMENT", mcStC_RootNode)
     mcStC_ForceAlignAxis.setLabel("Select Alignment Axis")

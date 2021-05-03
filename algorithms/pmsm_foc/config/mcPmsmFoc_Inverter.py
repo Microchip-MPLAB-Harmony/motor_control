@@ -64,6 +64,7 @@ mcVsi_DefaultBoard = 'MCLV2'
 #----------------------------------------------------------------------------------#
 
 def mcVsi_CreateMHCSymbols( mcPmsmFocComponent ):
+   
     # Symbol for DC link voltage 
     global mcVsi_DcLinkVoltageInVolts
     mcVsi_DcLinkVoltageInVolts = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_DC_BUS_VOLT", mcVsi_SelectedBoard)
@@ -162,6 +163,8 @@ def mcVsi_UpdateSymbols( symbol, event):
         mcVsi_IvOpampGain.setValue(float(mcVsi_DefaultPararameterDict[board_key]['OPAMP_GAIN']))
         mcVsi_IvOpampOffset.setValue(float(mcVsi_DefaultPararameterDict[board_key]['OPAMP_OFFSET']))
         mcVsi_IvOpampShuntR.setValue(float(mcVsi_DefaultPararameterDict[board_key]['OPAMP_SHUNT_R']))        
+        mcVsi_CurrentSenseResitor.setValue(float(mcVsi_DefaultPararameterDict[board_key]['SHUNT_RESISTANCE']))
+        mcVsi_CurrentSenseGain.setValue(float(mcVsi_DefaultPararameterDict[board_key]['CURRENT_AMPLIFIER_GAIN']))
 
 def mcPmsmFocVoltDivRatio(symbol, event):
     topR = mcVsi_DcBusTopResistor.getValue()

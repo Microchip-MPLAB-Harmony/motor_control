@@ -124,6 +124,16 @@ def mcPmsmFocCodeGenUpdate(symbol, event):
             component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(False)
             component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
             component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
+
+    if (event["id"] == "MCPMSMFOC_REF_INPUT"):
+        symObj = event["symbol"]
+        key = symObj.getSelectedKey()
+        if(key == "INPUT_FROM_API"):
+            component.getSymbolByID("MCPMSMFOC_RAMP_PROFILER_HEADER").setEnabled(True)    
+            component.getSymbolByID("MCPMSMFOC_RAM_PROFILER_SOURCE").setEnabled(True)            
+        else:
+            component.getSymbolByID("MCPMSMFOC_RAMP_PROFILER_HEADER").setEnabled(False)    
+            component.getSymbolByID("MCPMSMFOC_RAM_PROFILER_SOURCE").setEnabled(False)
             
 
             
@@ -246,92 +256,126 @@ def instantiateComponent(mcPmsmFocComponent):
     #                                            CODE GENERATION                                          #
     #=====================================================================================================#
     configName = Variables.get("__CONFIGURATION_NAME")
+    if(("PIC32CM" in Variables.get("__PROCESSOR")) or ( "SAMC21" in Variables.get("__PROCESSOR"))):
+        templatePath = "/algorithms/pmsm_foc/templates/fixed/"
+        mcPmsmFocSystemDefFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_DEF", None)
+        mcPmsmFocSystemDefFile.setType("STRING")
+        mcPmsmFocSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
+        mcPmsmFocSystemDefFile.setSourcePath(templatePath + "system/definitions.h.ftl")
+        mcPmsmFocSystemDefFile.setMarkup(True)
 
-    mcPmsmFocCodeGen = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_CODE_GEN", None)
-    mcPmsmFocCodeGen.setVisible(False)
-    mcPmsmFocCodeGen.setDependencies(mcPmsmFocCodeGenUpdate, ["MCPMSMFOC_POSITION_FB","MCPMSMFOC_FLYING_START","MCPMSMFOC_FLYING_START_CODE_TYPE"])
+        mcPmsmFocSystemInitFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_INIT", None)
+        mcPmsmFocSystemInitFile.setType("STRING")
+        mcPmsmFocSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
+        mcPmsmFocSystemInitFile.setSourcePath(templatePath + "system/initialization.c.ftl")
+        mcPmsmFocSystemInitFile.setMarkup(True)
+
+        mcPmsmFocRampProfilerHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_RAMP_PROFILER_HEADER", None)
+        mcPmsmFocRampProfilerHeaderFile.setSourcePath(templatePath + "ramp_profiler.h.ftl")
+        mcPmsmFocRampProfilerHeaderFile.setOutputName("mc_ramp_profiler.h")
+        mcPmsmFocRampProfilerHeaderFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocRampProfilerHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+        mcPmsmFocRampProfilerHeaderFile.setType("HEADER")
+        mcPmsmFocRampProfilerHeaderFile.setMarkup(True)
+
+        mcPmsmFocRampProfilerSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_RAMP_PROFILER_SOURCE", None)
+        mcPmsmFocRampProfilerSourceFile.setSourcePath(templatePath + "ramp_profiler.c.ftl")
+        mcPmsmFocRampProfilerSourceFile.setOutputName("mc_ramp_profiler.c")
+        mcPmsmFocRampProfilerSourceFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocRampProfilerSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+        mcPmsmFocRampProfilerSourceFile.setType("HEADER")
+        mcPmsmFocRampProfilerSourceFile.setMarkup(True)
+        
+    else:
+        templatePath = "/algorithms/pmsm_foc/templates/floating/"
     
-    mcPmsmFocSystemDefFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_DEF", None)
-    mcPmsmFocSystemDefFile.setType("STRING")
-    mcPmsmFocSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    mcPmsmFocSystemDefFile.setSourcePath("/algorithms/pmsm_foc/templates/system/definitions.h.ftl")
-    mcPmsmFocSystemDefFile.setMarkup(True)
+        # Included in the if condition to avoid interference
+        mcPmsmFocCodeGen = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_CODE_GEN", None)
+        mcPmsmFocCodeGen.setVisible(False)
+        mcPmsmFocCodeGen.setDependencies(mcPmsmFocCodeGenUpdate, ["MCPMSMFOC_POSITION_FB","MCPMSMFOC_FLYING_START","MCPMSMFOC_FLYING_START_CODE_TYPE"])
+        
+        mcPmsmFocSystemDefFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_DEF", None)
+        mcPmsmFocSystemDefFile.setType("STRING")
+        mcPmsmFocSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
+        mcPmsmFocSystemDefFile.setSourcePath(templatePath + "system/definitions.h.ftl")
+        mcPmsmFocSystemDefFile.setMarkup(True)
 
-    mcPmsmFocSystemInitFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_INIT", None)
-    mcPmsmFocSystemInitFile.setType("STRING")
-    mcPmsmFocSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
-    mcPmsmFocSystemInitFile.setSourcePath("/algorithms/pmsm_foc/templates/system/initialization.c.ftl")
-    mcPmsmFocSystemInitFile.setMarkup(True)
+        mcPmsmFocSystemInitFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_INIT", None)
+        mcPmsmFocSystemInitFile.setType("STRING")
+        mcPmsmFocSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
+        mcPmsmFocSystemInitFile.setSourcePath(templatePath + "system/initialization.c.ftl")
+        mcPmsmFocSystemInitFile.setMarkup(True)
 
-    mcPmsmFocPosPllSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_PLL_SOURCE", None)
-    mcPmsmFocPosPllSourceFile.setSourcePath("/algorithms/pmsm_foc/templates/pos_pll.c.ftl")
-    mcPmsmFocPosPllSourceFile.setOutputName("mc_rotorposition.c")
-    mcPmsmFocPosPllSourceFile.setDestPath("motor_control/pmsm_foc/")
-    mcPmsmFocPosPllSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-    mcPmsmFocPosPllSourceFile.setType("SOURCE")
-    mcPmsmFocPosPllSourceFile.setMarkup(True)
+        mcPmsmFocPosPllSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_PLL_SOURCE", None)
+        mcPmsmFocPosPllSourceFile.setSourcePath(templatePath + "pos_pll.c.ftl")
+        mcPmsmFocPosPllSourceFile.setOutputName("mc_rotorposition.c")
+        mcPmsmFocPosPllSourceFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocPosPllSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+        mcPmsmFocPosPllSourceFile.setType("SOURCE")
+        mcPmsmFocPosPllSourceFile.setMarkup(True)
 
-    mcPmsmFocPosPllHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_PLL_HEADER", None)
-    mcPmsmFocPosPllHeaderFile.setSourcePath("/algorithms/pmsm_foc/templates/pos_pll.h.ftl")
-    mcPmsmFocPosPllHeaderFile.setOutputName("mc_rotorposition.h")
-    mcPmsmFocPosPllHeaderFile.setDestPath("motor_control/pmsm_foc/")
-    mcPmsmFocPosPllHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-    mcPmsmFocPosPllHeaderFile.setType("HEADER")
-    mcPmsmFocPosPllHeaderFile.setMarkup(True)
+        mcPmsmFocPosPllHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_PLL_HEADER", None)
+        mcPmsmFocPosPllHeaderFile.setSourcePath(templatePath + "pos_pll.h.ftl")
+        mcPmsmFocPosPllHeaderFile.setOutputName("mc_rotorposition.h")
+        mcPmsmFocPosPllHeaderFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocPosPllHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+        mcPmsmFocPosPllHeaderFile.setType("HEADER")
+        mcPmsmFocPosPllHeaderFile.setMarkup(True)
 
-    mcPmsmFocPosEncSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ENCODER_SOURCE", None)
-    mcPmsmFocPosEncSourceFile.setSourcePath("/algorithms/pmsm_foc/templates/pos_encoder.c.ftl")
-    mcPmsmFocPosEncSourceFile.setOutputName("mc_rotorposition.c")
-    mcPmsmFocPosEncSourceFile.setDestPath("motor_control/pmsm_foc/")
-    mcPmsmFocPosEncSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-    mcPmsmFocPosEncSourceFile.setType("SOURCE")
-    mcPmsmFocPosEncSourceFile.setMarkup(True)
+        mcPmsmFocPosEncSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ENCODER_SOURCE", None)
+        mcPmsmFocPosEncSourceFile.setSourcePath(templatePath + "pos_encoder.c.ftl")
+        mcPmsmFocPosEncSourceFile.setOutputName("mc_rotorposition.c")
+        mcPmsmFocPosEncSourceFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocPosEncSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+        mcPmsmFocPosEncSourceFile.setType("SOURCE")
+        mcPmsmFocPosEncSourceFile.setMarkup(True)
 
-    mcPmsmFocPosEncHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ENCODER_HEADER", None)
-    mcPmsmFocPosEncHeaderFile.setSourcePath("/algorithms/pmsm_foc/templates/pos_encoder.h.ftl")
-    mcPmsmFocPosEncHeaderFile.setOutputName("mc_rotorposition.h")
-    mcPmsmFocPosEncHeaderFile.setDestPath("motor_control/pmsm_foc/")
-    mcPmsmFocPosEncHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-    mcPmsmFocPosEncHeaderFile.setType("HEADER")
-    mcPmsmFocPosEncHeaderFile.setMarkup(True)
+        mcPmsmFocPosEncHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ENCODER_HEADER", None)
+        mcPmsmFocPosEncHeaderFile.setSourcePath(templatePath + "pos_encoder.h.ftl")
+        mcPmsmFocPosEncHeaderFile.setOutputName("mc_rotorposition.h")
+        mcPmsmFocPosEncHeaderFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocPosEncHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+        mcPmsmFocPosEncHeaderFile.setType("HEADER")
+        mcPmsmFocPosEncHeaderFile.setMarkup(True)
 
-    mcPmsmFocPosFlyingStartHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_FLYING_START_HEADER", None)
-    mcPmsmFocPosFlyingStartHeaderFile.setSourcePath("/algorithms/pmsm_foc/templates/flyingstart.h")
-    mcPmsmFocPosFlyingStartHeaderFile.setOutputName("mc_flyingstart.h")
-    mcPmsmFocPosFlyingStartHeaderFile.setDestPath("motor_control/pmsm_foc/")
-    mcPmsmFocPosFlyingStartHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-    mcPmsmFocPosFlyingStartHeaderFile.setType("HEADER")
-    mcPmsmFocPosFlyingStartHeaderFile.setMarkup(True)
-    mcPmsmFocPosFlyingStartHeaderFile.setEnabled(False)
-  
 
-    mcPmsmFocPosFlyingStartSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_FLYING_START_SOURCE", None)
-    mcPmsmFocPosFlyingStartSourceFile.setSourcePath("../mc_src_flying_start/src/mc_flyingstart.c")
-    mcPmsmFocPosFlyingStartSourceFile.setOutputName("mc_flyingstart.c")
-    mcPmsmFocPosFlyingStartSourceFile.setDestPath("motor_control/pmsm_foc/")
-    mcPmsmFocPosFlyingStartSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-    mcPmsmFocPosFlyingStartSourceFile.setType("SOURCE")
-    mcPmsmFocPosFlyingStartSourceFile.setMarkup(True)
-    mcPmsmFocPosFlyingStartSourceFile.setEnabled(False)
+        mcPmsmFocPosFlyingStartHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_FLYING_START_HEADER", None)
+        mcPmsmFocPosFlyingStartHeaderFile.setSourcePath(templatePath + "flyingstart.h")
+        mcPmsmFocPosFlyingStartHeaderFile.setOutputName("mc_flyingstart.h")
+        mcPmsmFocPosFlyingStartHeaderFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocPosFlyingStartHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+        mcPmsmFocPosFlyingStartHeaderFile.setType("HEADER")
+        mcPmsmFocPosFlyingStartHeaderFile.setMarkup(True)
+        mcPmsmFocPosFlyingStartHeaderFile.setEnabled(False)
     
-    mcPmsmFocPosFlyingStartLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_FLYING_START_LIB", None)
-    if(("SAMD5" in Variables.get("__PROCESSOR")) or ("SAME5" in Variables.get("__PROCESSOR"))):
-        mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_D5x_E5x_MC_FLYINGSTART.X.a")
-    elif(("SAME7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR"))):
-        mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_E7x_S7x_V7x_MC_FLYINGSTART.X.a")
-    elif("PIC32MK" in Variables.get("__PROCESSOR")):
-        mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_PIC32MK_MC_FLYINGSTART.X.a")
-    mcPmsmFocPosFlyingStartLibraryFile.setOutputName("lib_mc_flyingstart.a")
-    mcPmsmFocPosFlyingStartLibraryFile.setDestPath("motor_control/pmsm_foc/")
-    mcPmsmFocPosFlyingStartLibraryFile.setEnabled(False)
+
+        mcPmsmFocPosFlyingStartSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_FLYING_START_SOURCE", None)
+        mcPmsmFocPosFlyingStartSourceFile.setSourcePath("../mc_src_flying_start/src/mc_flyingstart.c")
+        mcPmsmFocPosFlyingStartSourceFile.setOutputName("mc_flyingstart.c")
+        mcPmsmFocPosFlyingStartSourceFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocPosFlyingStartSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+        mcPmsmFocPosFlyingStartSourceFile.setType("SOURCE")
+        mcPmsmFocPosFlyingStartSourceFile.setMarkup(True)
+        mcPmsmFocPosFlyingStartSourceFile.setEnabled(False)
+        
+        mcPmsmFocPosFlyingStartLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_FLYING_START_LIB", None)
+        if(("SAMD5" in Variables.get("__PROCESSOR")) or ("SAME5" in Variables.get("__PROCESSOR"))):
+            mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_D5x_E5x_MC_FLYINGSTART.X.a")
+        elif(("SAME7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR"))):
+            mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_E7x_S7x_V7x_MC_FLYINGSTART.X.a")
+        elif("PIC32MK" in Variables.get("__PROCESSOR")):
+            mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_PIC32MK_MC_FLYINGSTART.X.a")
+        mcPmsmFocPosFlyingStartLibraryFile.setOutputName("lib_mc_flyingstart.a")
+        mcPmsmFocPosFlyingStartLibraryFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocPosFlyingStartLibraryFile.setEnabled(False)
    
    
 
-    for root, dirs, files in os.walk(Module.getPath()+"/algorithms/pmsm_foc/templates/"):
+    for root, dirs, files in os.walk(Module.getPath()+ templatePath ):
         for filename in files:
             if (".c" in filename and "mc_" in filename):
                 mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
-                mcPmsmFocSourceFile.setSourcePath("/algorithms/pmsm_foc/templates/" + filename)
+                mcPmsmFocSourceFile.setSourcePath(templatePath + filename)
                 if (filename.endswith(".ftl")):
                     filename = filename[:-4]
                 mcPmsmFocSourceFile.setOutputName(filename)
@@ -342,7 +386,7 @@ def instantiateComponent(mcPmsmFocComponent):
 
             if (".h" in filename and "mc_" in filename):
                 mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
-                mcPmsmFocHeaderFile.setSourcePath("/algorithms/pmsm_foc/templates/" + filename)
+                mcPmsmFocHeaderFile.setSourcePath( templatePath + filename)
                 if (filename.endswith(".ftl")):
                     filename = filename[:-4]
                 mcPmsmFocHeaderFile.setOutputName(filename)
@@ -371,6 +415,11 @@ def onAttachmentConnected( source, target ):
     #Configure EVSYS for SAME54
     if mcPmsmFocSeries.getValue() == "SAME54" or mcPmsmFocSeries.getValue() == "SAMC21" or mcPmsmFocSeries.getValue() == "PIC32CMMC00":
         mcEvsysDependencySAME54Connected()
+
+    # Instantiate DIVAS for SAMC21 and PIC32CM
+    if mcPmsmFocSeries.getValue() == "SAMC21" or mcPmsmFocSeries.getValue() == "PIC32CMMC00":
+        divasComponent = ["divas"]
+        Database.activateComponents(divasComponent)
 
 
 def mcEvsysDependencySAME54Connected():

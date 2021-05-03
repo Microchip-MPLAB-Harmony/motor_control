@@ -87,8 +87,8 @@ mcAnaI_DefaultPararameterDict = { 'MCLV2'  : {
                                                             'RESOLUTION'    : ["12", "16", "10", "8"],
                                                             'MAX_CHANNELS'  : 24,
                                                             'TRIGGER'       : 0,
-                                                       },  
-                                        'PIC32CMMC00' :{    'PHASE_U'       : 0,
+                                                       }, 
+                                        'PIC32CMMC00' : {   'PHASE_U'       : 0,
                                                             'PHASE_U_CH'    : 2,
                                                             'PHASE_V'       : 1,
                                                             'PHASE_V_CH'    : 5,
@@ -99,7 +99,7 @@ mcAnaI_DefaultPararameterDict = { 'MCLV2'  : {
                                                             'RESOLUTION'    : ["12", "16", "10", "8"],
                                                             'MAX_CHANNELS'  : 24,
                                                             'TRIGGER'       : 0,
-                                                       },                                                     
+                                                       },
                                         'DEFAULT' :     {   'PHASE_U'       : 0,
                                                             'PHASE_U_CH'    : 0,
                                                             'PHASE_V'       : 1,
@@ -162,8 +162,8 @@ mcAnaI_DefaultPararameterDict = { 'MCLV2'  : {
                                                             'RESOLUTION'    : ["12", "16", "10", "8"],
                                                             'MAX_CHANNELS'  : 24,
                                                             'TRIGGER'       : 0,
-                                                       },  
-                                        'PIC32CMMC00' :{    'PHASE_U'       : 0,
+                                                       }, 
+                                        'PIC32CMMC00' :     {    'PHASE_U'       : 0,
                                                             'PHASE_U_CH'    : 2,
                                                             'PHASE_V'       : 1,
                                                             'PHASE_V_CH'    : 5,
@@ -174,7 +174,7 @@ mcAnaI_DefaultPararameterDict = { 'MCLV2'  : {
                                                             'RESOLUTION'    : ["12", "16", "10", "8"],
                                                             'MAX_CHANNELS'  : 24,
                                                             'TRIGGER'       : 0,
-                                                       },                                                       
+                                                       },
                                         'DEFAULT' :     {   'PHASE_U'       : 0,
                                                             'PHASE_U_CH'    : 0,
                                                             'PHASE_V'       : 1,
@@ -227,7 +227,7 @@ mcAnaI_DefaultPararameterDict = { 'MCLV2'  : {
                                                             'MAX_CHANNELS'  : 24,
                                                             'TRIGGER'       : 0,
                                                           },
-                                        'SAMC21' :     {    'PHASE_U'       : 0,
+                                           'SAMC21' :     {    'PHASE_U'       : 0,
                                                             'PHASE_U_CH'    : 2,
                                                             'PHASE_V'       : 1,
                                                             'PHASE_V_CH'    : 5,
@@ -238,8 +238,8 @@ mcAnaI_DefaultPararameterDict = { 'MCLV2'  : {
                                                             'RESOLUTION'    : ["12", "16", "10", "8"],
                                                             'MAX_CHANNELS'  : 24,
                                                             'TRIGGER'       : 0,
-                                                       },  
-                                        'PIC32CMMC00' :{    'PHASE_U'       : 0,
+                                                       }, 
+                                        'PIC32CMMC00' :     {    'PHASE_U'       : 0,
                                                             'PHASE_U_CH'    : 2,
                                                             'PHASE_V'       : 1,
                                                             'PHASE_V_CH'    : 5,
@@ -308,7 +308,7 @@ def mcAnI_CreateMHCSymbols( mcPmsmFocComponent):
         maxChannels = 24
     else:
         resolution = ["12", "16", "10", "8"]
-        maxChannels = 12       
+        maxChannels = 12  
 
     mcAnI_AdcResolution = mcPmsmFocComponent.createComboSymbol("MCPMSMFOC_ADC_RESOLUTION", mcAnI_RootNode, resolution)
     mcAnI_AdcResolution.setLabel("Select ADC Resolution")
@@ -335,7 +335,7 @@ def mcAnI_CreateMHCSymbols( mcPmsmFocComponent):
     mcAnI_AdcChannelForIu = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEU_CH", mcAnI_AdcNameForIu)
     mcAnI_AdcChannelForIu.setLabel("Phase U Channel Number")
     mcAnI_AdcChannelForIu.setDefaultValue(int(mcAnaI_DefaultPararameterDict[mcAnI_DefaultDevelopmentBoard][mcAnI_MicrocontrollerSeries]['PHASE_U_CH']))
-    mcAnI_AdcChannelForIu.setMin(-1)
+    mcAnI_AdcChannelForIu.setMin(0)
     mcAnI_AdcChannelForIu.setMax(maxChannels - 1)
 
     mcAnI_AdcNameForIv = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_PHASEV_NAME", mcAnI_RootNode)
@@ -354,7 +354,7 @@ def mcAnI_CreateMHCSymbols( mcPmsmFocComponent):
     mcAnI_AdcChannelForIv = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEV_CH", mcAnI_AdcNameForIv)
     mcAnI_AdcChannelForIv.setLabel("Phase V Channel Number")
     mcAnI_AdcChannelForIv.setDefaultValue(int(mcAnaI_DefaultPararameterDict[mcAnI_DefaultDevelopmentBoard][mcAnI_MicrocontrollerSeries]['PHASE_V_CH']))
-    mcAnI_AdcChannelForIv.setMin(-1)
+    mcAnI_AdcChannelForIv.setMin(0)
     mcAnI_AdcChannelForIv.setMax(maxChannels - 1)
 
     mcAnI_AdcNameForPot = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_POT_NAME", mcAnI_RootNode)
@@ -373,7 +373,7 @@ def mcAnI_CreateMHCSymbols( mcPmsmFocComponent):
     mcAnI_AdcChannelForPot = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_POT_CH",mcAnI_AdcNameForPot)
     mcAnI_AdcChannelForPot.setLabel("Potentiometer channel number")
     mcAnI_AdcChannelForPot.setDefaultValue(int(mcAnaI_DefaultPararameterDict[mcAnI_DefaultDevelopmentBoard][mcAnI_MicrocontrollerSeries]['POT_CH']))
-    mcAnI_AdcChannelForPot.setMin(-1)
+    mcAnI_AdcChannelForPot.setMin(0)
     mcAnI_AdcChannelForPot.setMax(maxChannels - 1)
 
     mcAnI_AdcNameForVdc = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_VDC_NAME", mcAnI_RootNode)

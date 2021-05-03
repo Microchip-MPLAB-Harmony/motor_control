@@ -33,48 +33,82 @@
 #----------------------------------------------------------------------------------#
                                    
 # PI controller Parameters
-mcMotC_CurrentPiPararameterDict =  {    'MCLV2' :   { 'KP' : 0.02,
-                                                      'KI' : 0.0002
+mcMotC_CurrentPiPararameterDictFixed =  {    'MCLV2' :   { 'KP' : 0.71,
+                                                      'KI' : 917
                                                     },
+                                        'Custom' :   { 'KP' : 0.71,
+                                                       'KI' : 917
+                                                    },            
+                                        'MCHV3' :   { 'KP' : 6.1,
+                                                      'KI' : 469
+                                                    },
+                                   }
+mcMotC_CurrentPiPararameterDictFloating =  {    'MCLV2' :   { 'KP' : 0.02,
+                                                      'KI' : 0.0002
+                                           },
                                         'Custom' :   { 'KP' : 0.02,
-                                                      'KI' : 0.000099
+                                                       'KI' : 0.000099
                                                     },            
                                         'MCHV3' :   { 'KP' : 0.02,
                                                       'KI' : 0.000099
                                                     },
                                    }
 
-mcMotC_SpeedPiPararameterDict =  {    'MCLV2' :   { 'KP' : 0.002,
+mcMotC_SpeedPiPararameterDictFixed =  {    'MCLV2' :   { 'KP' : 0.001,
+                                                    'KI' : 0.03,
+                                                   
+                                                  },
+                                      'Custom' :   { 'KP' : 0.001,
+                                                     'KI' : 0.03,
+                                                   
+                                                  },
+                                      'MCHV3' :   { 'KP' : 0.001,
+                                                    'KI' : 0.03,
+                                                  },
+                                 }  
+
+mcMotC_SpeedPiPararameterDictFloating =  {    'MCLV2' :   { 'KP' : 0.002,
                                                     'KI' : 0.00002
-                                                  },
+                                                   },
                                       'Custom' :   { 'KP' : 0.005,
-                                                    'KI' : 0.000002
-                                                  },
+                                                     'KI' : 0.000002
+                                                   },
                                       'MCHV3' :   { 'KP' : 0.005,
                                                     'KI' : 0.000002
                                                   },
-                                 }                                   
+                                 }                                  
 
 mcMotC_FieldWeakeningParameter =   {    'LONG_HURST' : 
                                                     { 
                                                       'MAX_FW_CURRENT'    : -2.5,
-                                                      'MAX_MOTOR_CURRENT' : 4.0 ,
+                                                      'MAX_MOTOR_CURRENT' : 4.0
                                               
                                                     },
                                         'SMALL_HURST' : 
                                                     { 
                                                       'MAX_FW_CURRENT'    : -2.0,
-                                                      'MAX_MOTOR_CURRENT' : 4.0 ,
+                                                      'MAX_MOTOR_CURRENT' : 4.0
                                                    },
                                        'LEADSHINE' :
                                                    { 
                                                       'MAX_FW_CURRENT'    : -2.0,
-                                                      'MAX_MOTOR_CURRENT' : 4.0 ,
+                                                      'MAX_MOTOR_CURRENT' : 4.0
                                                    },
                           }
 
 mcMoC_DefaultMotor = 'LONG_HURST'
 mcMOC_DefaultBoard = 'MCLV2'
+
+global mcMoC_MicrocontrollerSeries
+mcMoC_MicrocontrollerSeries   =  ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series")
+
+#Select PI Controller parameter table 
+if(('PIC32CMMC00' == mcMoC_MicrocontrollerSeries) or ( 'SAMC21' == mcMoC_MicrocontrollerSeries)):
+    mcMotC_CurrentPiPararameterDict = mcMotC_CurrentPiPararameterDictFixed
+    mcMotC_SpeedPiPararameterDict = mcMotC_SpeedPiPararameterDictFixed
+else:
+    mcMotC_CurrentPiPararameterDict = mcMotC_CurrentPiPararameterDictFloating
+    mcMotC_SpeedPiPararameterDict = mcMotC_SpeedPiPararameterDictFloating
 
 #----------------------------------------------------------------------------------#
 #                             GLOBAL VARIABLES                                     # 
@@ -95,8 +129,8 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     mcMoC_Ramp = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_RAMP", mcPmsmFocAlgoMenu)
     mcMoC_Ramp.setLabel("Select Ramp Profile")
     mcMoC_Ramp.addKey("STEP", "0", "STEP")
-    mcMoC_Ramp.addKey("LINEAR", "1", "LINEAR")
-    mcMoC_Ramp.addKey("S-CUREVE", "2", "S-CURVE")
+    # mcMoC_Ramp.addKey("LINEAR", "1", "LINEAR")
+    # mcMoC_Ramp.addKey("S-CUREVE", "2", "S-CURVE")
     mcMoC_Ramp.setOutputMode("Key")
     mcMoC_Ramp.setDisplayMode("Description")
 
@@ -154,37 +188,51 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     mcMoC_RefSpeed.setLabel("Ref. Speed (RPM)")
     mcMoC_RefSpeed.setDefaultValue(1000)
     mcMoC_RefSpeed.setMin(0)
+    mcMoC_RefSpeed.setVisible(False)
     mcMoC_RefSpeed.setMax(mcMot_MaximumSpeedInRpm.getValue())
     mcMoC_RefSpeed.setDependencies(mcPmsmFocSpeed, ["MCPMSMFOC_CONTROL", "MCPMSMFOC_REF_INPUT"])
     
-    # Symbol to enable/ disable filed wekening mode 
-    mcMoC_FieldWeakeningEnable = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_FIELD_WEAKENING", mcPmsmFocAlgoMenu)
-    mcMoC_FieldWeakeningEnable.setLabel("Enable Field Weakening?")
-    mcMoC_FieldWeakeningEnable.setDependencies(mcPmsmFocControl, ["MCPMSMFOC_CONTROL"])
+    if(('PIC32CMMC00' != mcMoC_MicrocontrollerSeries ) and ( 'SAMC21' != mcMoC_MicrocontrollerSeries )):
+        # Symbol to enable/ disable filed wekening mode 
+        mcMoC_FieldWeakeningEnable = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_FIELD_WEAKENING", mcPmsmFocAlgoMenu)
+        mcMoC_FieldWeakeningEnable.setLabel("Enable Field Weakening?")
+        mcMoC_FieldWeakeningEnable.setDependencies(mcPmsmFocControl, ["MCPMSMFOC_CONTROL"])
 
-    # Symbol for maximum negative  field weakening current
-    mcMoC_FieldWeakeningCurrent = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_MAX_FW_CURRENT", mcMoC_FieldWeakeningEnable)
-    mcMoC_FieldWeakeningCurrent.setLabel("Motor Max Field Weakning Negative Current (A)")
-    mcMoC_FieldWeakeningCurrent.setVisible(False)
-    mcMoC_FieldWeakeningCurrent.setMin(-4.0)
-    mcMoC_FieldWeakeningCurrent.setMax(0.0)      
-    mcMoC_FieldWeakeningCurrent.setDefaultValue(float(mcMotC_FieldWeakeningParameter[mcMoC_DefaultMotor]['MAX_FW_CURRENT']))
-    mcMoC_FieldWeakeningCurrent.setDependencies(mcPmsmFocFWMax, ["MCPMSMFOC_MAX_MOTOR_CURRENT", "MCPMSMFOC_FIELD_WEAKENING"])
+        # Symbol for maximum negative  field weakening current
+        mcMoC_FieldWeakeningCurrent = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_MAX_FW_CURRENT", mcMoC_FieldWeakeningEnable)
+        mcMoC_FieldWeakeningCurrent.setLabel("Motor Max Field Weakning Negative Current (A)")
+        mcMoC_FieldWeakeningCurrent.setVisible(False)
+        mcMoC_FieldWeakeningCurrent.setMin(-4.0)
+        mcMoC_FieldWeakeningCurrent.setMax(0.0)      
+        mcMoC_FieldWeakeningCurrent.setDefaultValue(float(mcMotC_FieldWeakeningParameter[mcMoC_DefaultMotor]['MAX_FW_CURRENT']))
+        mcMoC_FieldWeakeningCurrent.setDependencies(mcPmsmFocFWMax, ["MCPMSMFOC_MAX_MOTOR_CURRENT", "MCPMSMFOC_FIELD_WEAKENING"])
     
     # Current control loop root node  
     mcMoC_TorqueLoopNode = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_CURRENT_LOOP", mcPmsmFocCtrlMenu)
     mcMoC_TorqueLoopNode.setLabel("Current Loop")
-    
-    # Symbol to enable/disable current controller auto-parameter calculation
-    mcMoC_Autocalculate = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_CL_AUTOCALCULATE", mcMoC_TorqueLoopNode)
-    mcMoC_Autocalculate.setLabel("Auto Calculate PI Parameters?")
-    
-    # Symbol for current PI controller band-width for auto gain calculation
-    mcMoC_ControlBandwidth = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_CL_BANDWIDTH", mcMoC_Autocalculate)
-    mcMoC_ControlBandwidth.setLabel("Current Loop Bandwidth (rad/s)")
-    mcMoC_ControlBandwidth.setValue(2000)
-    mcMoC_ControlBandwidth.setVisible(False)
-    mcMoC_ControlBandwidth.setDependencies(mcPmsmFocVisibleOnTrue , ["MCPMSMFOC_CL_AUTOCALCULATE"])
+
+    if(('PIC32CMMC00' != mcMoC_MicrocontrollerSeries ) and ( 'SAMC21' != mcMoC_MicrocontrollerSeries )):
+        # Symbol to enable/disable current controller auto-parameter calculation
+        mcMoC_Autocalculate = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_CL_AUTOCALCULATE", mcMoC_TorqueLoopNode)
+        mcMoC_Autocalculate.setLabel("Auto Calculate PI Parameters?")
+        
+        # Symbol for current PI controller band-width for auto gain calculation
+        mcMoC_ControlBandwidth = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_CL_BANDWIDTH", mcMoC_Autocalculate)
+        mcMoC_ControlBandwidth.setLabel("Current Loop Bandwidth (rad/s)")
+        mcMoC_ControlBandwidth.setValue(2000)
+        mcMoC_ControlBandwidth.setVisible(False)
+        mcMoC_ControlBandwidth.setDependencies(mcPmsmFocVisibleOnTrue , ["MCPMSMFOC_CL_AUTOCALCULATE"])
+
+    # Current Control anti-windup 
+    mcMoc_AntiwindupAlgorithm = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_ANTIWINDUP", mcMoC_TorqueLoopNode)
+    mcMoc_AntiwindupAlgorithm.setLabel("Select anti-windup technique")
+    if(('PIC32CMMC00' != mcMoC_MicrocontrollerSeries ) and ( 'SAMC21' != mcMoC_MicrocontrollerSeries )):
+        mcMoc_AntiwindupAlgorithm.addKey("BACK_CALCULATION", "0", "Back Calculation")
+    else:
+        mcMoc_AntiwindupAlgorithm.addKey("INTEGRAL_CLAMP", "1", "Integral Clamp")
+   
+    mcMoc_AntiwindupAlgorithm.setOutputMode("Key")
+    mcMoc_AntiwindupAlgorithm.setDisplayMode("Description")
 
     # D-axis controller root node 
     mcMoC_IdControlNode = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_Id_Menu", mcMoC_TorqueLoopNode)
@@ -205,10 +253,11 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
         "MCPMSMFOC_R", "MCPMSMFOC_PWM_FREQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL"])
 
     # Symbol for D axis PI controller back calculation gain 
-    mcMoC_IdCurrentKc = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_ID_KC", mcMoC_IdControlNode)
-    mcMoC_IdCurrentKc.setLabel("Kc")
-    mcMoC_IdCurrentKc.setDefaultValue(0.5)
-    
+    if( "BACK_CALCULATION" == mcMoc_AntiwindupAlgorithm.getSelectedKey()):
+        mcMoC_IdCurrentKc = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_ID_KC", mcMoC_IdControlNode)
+        mcMoC_IdCurrentKc.setLabel("Kc")
+        mcMoC_IdCurrentKc.setDefaultValue(0.5)
+      
     # Symbol for D axis PI controller maximum output
     mcMoC_IdCurrentYmax = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_ID_OUT_MAX", mcMoC_IdControlNode)
     mcMoC_IdCurrentYmax.setLabel("Max Output")
@@ -233,10 +282,11 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
         "MCPMSMFOC_R", "MCPMSMFOC_PWM_FREQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL"])
     
     # Symbol for Q axis PI controller back calculation gain 
-    mcMoC_IqCurrentKc = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_IQ_KC", mcMoC_IqRootNode)
-    mcMoC_IqCurrentKc.setLabel("Kc")
-    mcMoC_IqCurrentKc.setDefaultValue(0.5)
-    
+    if( "BACK_CALCULATION" == mcMoc_AntiwindupAlgorithm.getSelectedKey()):
+        mcMoC_IqCurrentKc = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_IQ_KC", mcMoC_IqRootNode)
+        mcMoC_IqCurrentKc.setLabel("Kc")
+        mcMoC_IqCurrentKc.setDefaultValue(0.5)
+        
     # Symbol for Q axis PI controller maximum output  
     mcMoC_IqCurrentYmax = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_IQ_OUT_MAX", mcMoC_IqRootNode)
     mcMoC_IqCurrentYmax.setLabel("Max Output")
@@ -247,6 +297,16 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     mcMoC_SpeedRootNode.setLabel("Speed Loop")
 
  
+    # Current Control anti-windup 
+    mcMoc_AntiwindupAlgorithm_ = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_ANTIWINDUP_", mcMoC_SpeedRootNode)
+    mcMoc_AntiwindupAlgorithm_.setLabel("Select anti-windup technique")
+    if(('PIC32CMMC00' != mcMoC_MicrocontrollerSeries ) and ( 'SAMC21' != mcMoC_MicrocontrollerSeries )):
+        mcMoc_AntiwindupAlgorithm_.addKey("BACK_CALCULATION", "0", "Back Calculation")
+    else:
+        mcMoc_AntiwindupAlgorithm_.addKey("INTEGRAL_CLAMP", "1", "Integral Clamp")
+   
+    mcMoc_AntiwindupAlgorithm_.setOutputMode("Key")
+    mcMoc_AntiwindupAlgorithm_.setDisplayMode("Description")
     # Symbol for speed control root node 
     mcMoC_SpeedNode = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_Speed_Menu", mcMoC_SpeedRootNode)
     mcMoC_SpeedNode.setLabel("Speed PI Parameters")
@@ -263,20 +323,16 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     mcMoC_SpeedKi.setDefaultValue(mcMotC_SpeedPiPararameterDict[mcMOC_DefaultBoard]['KI'])
     mcMoC_SpeedKi.setDependencies(mcPmsmFoc_SpeedKi, ["MCPMSMFOC_BOARD_SEL"]) 
     
-    # Symbol for speed controller back calculation gain  
-    mcMoC_SpeedKc = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_SPEED_KC", mcMoC_SpeedNode)
-    mcMoC_SpeedKc.setLabel("Kc")
-    mcMoC_SpeedKc.setDefaultValue(0.5)
-    
+    if( "BACK_CALCULATION" == mcMoc_AntiwindupAlgorithm.getSelectedKey()):
+        # Symbol for speed controller back calculation gain  
+        mcMoC_SpeedKc = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_SPEED_KC", mcMoC_SpeedNode)
+        mcMoC_SpeedKc.setLabel("Kc")
+        mcMoC_SpeedKc.setDefaultValue(0.5)
+
     # Symbol for speed controller maximum output 
     mcMoC_SpeedYmax = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_SPEED_OUT_MAX", mcMoC_SpeedNode)
     mcMoC_SpeedYmax.setLabel("Max Output (A)")
     mcMoC_SpeedYmax.setDefaultValue(mcMotC_FieldWeakeningParameter[mcMoC_DefaultMotor]['MAX_MOTOR_CURRENT'])
-
-    # Integral gain note
-    mcMoC_SpeedKiNote = mcPmsmFocComponent.createCommentSymbol("MCPMSMFOC_SPEED_KI_NOTE", mcMoC_SpeedNode)
-    mcMoC_SpeedKiNote.setLabel("**** The integral gain is internally divided by 100 to keep it within allowed significant digits ****")
-        
 
 #----------------------------------------------------------------------------------#
 #                             CALLBACKS                                     # 

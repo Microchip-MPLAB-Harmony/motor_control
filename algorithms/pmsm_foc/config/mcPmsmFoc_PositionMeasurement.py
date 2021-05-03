@@ -74,6 +74,8 @@ def mcPoM_CreateMHCSymbols( mcPmsmFocComponent ):
     mcPoM_PLL = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_PLL", None)
     mcPoM_PLL.setLabel("PLL Configurations")
     mcPoM_PLL.setDependencies(mcPmsmFocPLLVisible, ["MCPMSMFOC_POSITION_FB"])
+    if (("SAMC21" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
+        mcPoM_PLL.setVisible(False)
 
     global mcPoM_PLLEqFilter
     mcPoM_PLLEqFilter = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_PLL_EQ_FILTER", mcPoM_PLL)
