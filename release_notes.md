@@ -9,6 +9,21 @@ has_children: true
 
 # Microchip MPLAB Harmony 3 Release Notes
 
+## Motor Control Release v3.6.1
+
+### Bug Fixes
+* Fixed issues to support XC32 compiler v3.00
+
+### Known Issues
+- Same as v3.6.0
+
+### Development Tools
+* [MPLAB X IDE v5.45](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB XC32 C/C++ Compiler v3.00](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.6.2.
+  * X2CScope v1.3.0.
+
 ## Motor Control Release v3.6.0
 
 * PMSM_FOC Component
