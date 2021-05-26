@@ -269,7 +269,7 @@ def mcPwm_UpdateSymbols( symbol, event ):
         mcPwm_PwmChannelV.setValue(int(mcPwmI_DefaultPararameterDict[board_key][mcPwm_MicrocontrollerSeries]['PWM_PH_V']      ))
         mcPwm_PwmChannelW.setValue(int(mcPwmI_DefaultPararameterDict[board_key][mcPwm_MicrocontrollerSeries]['PWM_PH_W']      ))
         mcPwm_PwmDeadTime.setValue(int(mcPwmI_DefaultPararameterDict[board_key][mcPwm_MicrocontrollerSeries]['PWM_DEAD_TIME'] ))
-        mcPwm_PwmFault.setSelectedKey(mcPwmI_DefaultPararameterDict[board_key][mcPwm_MicrocontrollerSeries]['MCPMSMFOC_PWM_FAULT'])
+        mcPwm_PwmFault.setSelectedKey(mcPwmI_DefaultPararameterDict[board_key][mcPwm_MicrocontrollerSeries]['PWM_FAULT'])
         mcPwm_SomeFlag.setValue(False)
 
 def mcPwm_UpdatePLib( symbol, event):
@@ -309,6 +309,7 @@ def mcPwm_onAttachmentConnected(source, target):
 
     dict = {}
     global mcPwm_MicrocontrollerSeries
+    global eicFaultVal
 
     pwmDict['PWM_FREQ'     ]  =  (localComponent.getSymbolValue("MCPMSMFOC_PWM_FREQ"      ))
     pwmDict['PWM_PH_U'     ]  =  (localComponent.getSymbolValue("MCPMSMFOC_PWM_PH_U"      ))
@@ -330,7 +331,6 @@ def mcPwm_onAttachmentConnected(source, target):
         
         #Activate EIC component for PWM fault for SAME54 device
         if mcPwm_MicrocontrollerSeries == "SAME54":
-            global eicFaultVal
             faultComponent = ["eic"]
             Database.activateComponents(faultComponent)
             eicFaultVal = filter(str.isdigit,str(mcPwm_PwmFault.getSelectedKey()))

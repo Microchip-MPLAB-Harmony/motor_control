@@ -131,6 +131,7 @@ typedef struct
 {
     float                            angle;
     float                            speed;
+    float                            mechSpeedRPM;    
     float                            acceleration;
 }tMCRPOS_OUTPUT_SIGNAL_S;
 

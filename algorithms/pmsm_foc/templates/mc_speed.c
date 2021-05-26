@@ -53,7 +53,7 @@
 #include "mc_pmsm_foc_common.h"
 #include "mc_hal.h"
 
-
+#if (CONTROL_LOOP == SPEED_LOOP)
 /******************************************************************************/
 /* Local Function Prototype                                                   */
 /******************************************************************************/
@@ -63,7 +63,7 @@
 /******************************************************************************/
 
 tMCSPE_STATE_SIGNAL_S   gMCSPE_StateSignals;
-<#if MCPMSMFOC_SPEED_REF_INPUT != "Potentiometer Analog Input">
+<#if MCPMSMFOC_REF_INPUT != "Potentiometer Analog Input">
 tMCSPE_INPUT_SIGNAL_S   gMCSPE_InputSignals = {SPEED_REF_RAD_PER_SEC_ELEC};
 </#if>
 tMCSPE_PARAMETERS_S     gMCSPE_Parameters = {
@@ -107,7 +107,7 @@ void  MCSPE_InitializeSpeedControl(void)
 
     /* Initialize speed command function states */
     gMCSPE_StateSignals.potFiltered =  0.0f;
-<#if MCPMSMFOC_SPEED_REF_INPUT != "Potentiometer Analog Input">
+<#if MCPMSMFOC_REF_INPUT != "Potentiometer Analog Input">
     gMCSPE_InputSignals.speedRef = SPEED_REF_RAD_PER_SEC_ELEC;
 </#if>
 
@@ -122,7 +122,7 @@ void  MCSPE_InitializeSpeedControl(void)
 /*****************************************************************************/
 void MCSPE_SpeedCommand( void )
 {
-<#if MCPMSMFOC_SPEED_REF_INPUT == "Potentiometer Analog Input">
+<#if MCPMSMFOC_REF_INPUT == "Potentiometer Analog Input">
 
     
     gMCSPE_StateSignals.potFiltered =   gMCSPE_StateSignals.potFiltered
@@ -144,7 +144,7 @@ void MCSPE_SpeedCommand( void )
 </#if>
 }
 
-<#if MCPMSMFOC_SPEED_REF_INPUT == "Potentiometer Analog Input">
+<#if MCPMSMFOC_REF_INPUT == "Potentiometer Analog Input">
 void MCSPE_PotentiometerRead( void )
 {
     gMCSPE_OutputSignals.potReading = (float)(MCHAL_ADCPotResultGet(MCHAL_ADC_POT) >> MCHAL_ADC_RESULT_SHIFT);
@@ -164,3 +164,4 @@ void  MCSPE_ResetSpeedControl(void)
     /* Reset speed command function states */
     gMCSPE_StateSignals.potFiltered =  0.0f;
 }
+#endif

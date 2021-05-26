@@ -62,6 +62,7 @@ Derived Parameters interface file
 #define     ONE_BY_SQRT3                           (float)(0.5773502691)
 #define     TWO_BY_SQRT3                           (float)(1.1547005384)
 
+#define    ELE_TO_MECH_RPM_SPEED                   (float)(9.5493/NUM_POLE_PAIRS)
 /***********************************************************************************************/
 /* Derived Parameters - Don't Change                                                                                 */
 /***********************************************************************************************/
@@ -75,8 +76,9 @@ Derived Parameters interface file
 
 #define MAX_STATOR_VOLT_SQUARE                           (float)(0.98 * 0.98)
 #define POT_ADC_COUNT_FW_SPEED_RATIO                     (float)(MAX_SPEED_RAD_PER_SEC_ELEC/MAX_ADC_COUNT)
+#define POT_ADC_COUNT_FW_TORQUE_RATIO                    (float)(Q_CURRENT_MAX_TORQUE/MAX_ADC_COUNT)
 
-<#if MCPMSMFOC_SPEED_REF_INPUT != "Potentiometer Analog Input">
+<#if MCPMSMFOC_REF_INPUT != "Potentiometer Analog Input">
 #define SPEED_REF_RAD_PER_SEC_ELEC                       (float)(((SPEED_REF_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)
 </#if>
 
@@ -102,13 +104,13 @@ Derived Parameters interface file
 #define SPEED_RAMP_INC_SLOW_LOOP                          (float)(RAMP_RAD_PER_SEC_ELEC*SLOW_LOOP_TIME_SEC)
 
 #define SINGLE_ELEC_ROT_RADS_PER_SEC                      ((float)((float)(2.0) * (float)M_PI))
-<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
+
 /*_____________________________ Open loop end speed conversions__________________________________________ */
 #define END_SPEED_RADS_PER_SEC_MECH                       (float)(OPEN_LOOP_END_SPEED_RPS * SINGLE_ELEC_ROT_RADS_PER_SEC)
 #define OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC             (float)(END_SPEED_RADS_PER_SEC_MECH * NUM_POLE_PAIRS)
 #define OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC_IN_LOOPTIME (float)(OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC * FAST_LOOP_TIME_SEC)
 #define OPEN_LOOP_RAMPSPEED_INCREASERATE                  (float)(OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC_IN_LOOPTIME/(OPEN_LOOP_RAMP_TIME_IN_SEC/FAST_LOOP_TIME_SEC))
-</#if>
+
 
 /*________________________________ BEMF constant___________________________________________________ */
 <#if MCPMSMFOC_MOTOR_CONNECTION == "STAR">

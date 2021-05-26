@@ -60,6 +60,7 @@ extern "C" {
 
 // DOM-IGNORE-END
 
+#if (CONTROL_LOOP == SPEED_LOOP)
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Types
@@ -134,7 +135,7 @@ void  MCSPE_ResetSpeedControl(void);
 
 void MCSPE_PotentiometerRead( void );
 
-
+#endif
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

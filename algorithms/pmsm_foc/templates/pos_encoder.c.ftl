@@ -158,6 +158,7 @@ __STATIC_INLINE void MCRPOS_EncoderCalculations( void )
 
     /* Write speed and position output */
     gMCRPOS_OutputSignals.speed = (float)( gMCRPOS_StateSignals.velocity * QEI_VELOCITY_COUNT_TO_RAD_PER_SEC );
+    gMCRPOS_OutputSignals.mechSpeedRPM = (float)(gMCRPOS_OutputSignals.speed * ELE_TO_MECH_RPM_SPEED);    
     angle = gMCRPOS_StateSignals.positionCount * (float)QEI_COUNT_TO_ELECTRICAL_ANGLE;
     /* Limit rotor angle range to 0 to 2*M_PI for lookup table */
     if(angle > (2*M_PI))
@@ -214,10 +215,10 @@ tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alig
 {
     tMCAPP_STATUS_E status = MCAPP_IN_PROGRESS ;
 
-  #if( FORCED_ALIGNMENT == ALIGNMENT_METHOD)
+  #if( ALIGNMENT_METHOD == Q_AXIS || ALIGNMENT_METHOD == D_AXIS)
     if ( gMCRPOS_RotorAlignState.startupLockCount < ( 0.5* gMCRPOS_RotorAlignParam.lockTimeCount))
     {
-      #if(ENABLED == Q_AXIS_ALIGNMENT )
+      #if(ALIGNMENT_METHOD == Q_AXIS )
         alignOutput->idRef =  0.0f;
         alignOutput->iqRef =  gMCRPOS_RotorAlignParam.lockCurrent;
         alignOutput->angle = (M_PI);
@@ -231,7 +232,7 @@ tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alig
     }
     else if ( gMCRPOS_RotorAlignState.startupLockCount < gMCRPOS_RotorAlignParam.lockTimeCount)
     {
-      #if(ENABLED == Q_AXIS_ALIGNMENT )
+      #if(ALIGNMENT_METHOD == Q_AXIS )
         alignOutput->idRef =  0.0f;
         alignOutput->iqRef =  gMCRPOS_RotorAlignParam.lockCurrent;
         alignOutput->angle = (3*M_PI_2);

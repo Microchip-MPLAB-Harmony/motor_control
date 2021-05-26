@@ -33,7 +33,18 @@
 #                               GLOBAL VARIABLES                                   # 
 #----------------------------------------------------------------------------------#
 
+#Board parameters
+mcPoM_DefaultPararameterDict = {'MCLV2' :  { 'PLL_ED_FILTER'          : 0.0183,
+                                             'PLL_EQ_FILTER'          : 0.0183,
+                                             'PLL_SPEED_FILTER'       : 0.0053,
+                                           },
+                                'MCHV3' :  { 'PLL_ED_FILTER'          : 0.122,
+                                             'PLL_EQ_FILTER'          : 0.122,
+                                             'PLL_SPEED_FILTER'       : 0.122,                                         
+                                           }
+                          }
 
+mcPoM_DefaultBoard = 'MCLV2'
 #----------------------------------------------------------------------------------#
 #                               SUPPORTED BOARDS                                   # 
 #----------------------------------------------------------------------------------#
@@ -54,6 +65,53 @@ def mcPoM_CreateMHCSymbols( mcPmsmFocComponent ):
     #mcPoM_AlgorithmSelection.addKey("SENSORLESS_SMO", "2", "SENSORLESS - Sliding Mode Observer")
     mcPoM_AlgorithmSelection.setOutputMode("Key")
     mcPoM_AlgorithmSelection.setDisplayMode("Description")
+
+    # PLL Paramaeters
+    mcPoM_PLL = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_PLL", None)
+    mcPoM_PLL.setLabel("PLL Configurations")
+    mcPoM_PLL.setDependencies(mcPmsmFocPLLVisible, ["MCPMSMFOC_POSITION_FB"])
+
+    global mcPoM_PLLEqFilter
+    mcPoM_PLLEqFilter = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_PLL_EQ_FILTER", mcPoM_PLL)
+    mcPoM_PLLEqFilter.setLabel("Eq Filter")
+    mcPoM_PLLEqFilter.setMin(0)
+    mcPoM_PLLEqFilter.setMax(1)
+    mcPoM_PLLEqFilter.setDefaultValue(mcPoM_DefaultPararameterDict[mcPoM_DefaultBoard]['PLL_EQ_FILTER'])
+
+    global mcPoM_PLLEdFilter
+    mcPoM_PLLEdFilter = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_PLL_ED_FILTER", mcPoM_PLL)
+    mcPoM_PLLEdFilter.setLabel("Ed Filter")
+    mcPoM_PLLEdFilter.setMin(0)
+    mcPoM_PLLEdFilter.setMax(1)    
+    mcPoM_PLLEdFilter.setDefaultValue(mcPoM_DefaultPararameterDict[mcPoM_DefaultBoard]['PLL_ED_FILTER'])
+
+    global mcPoM_PLLSpeedFilter
+    mcPoM_PLLSpeedFilter = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_PLL_SPEED_FILTER", mcPoM_PLL)
+    mcPoM_PLLSpeedFilter.setLabel("Speed Filter")
+    mcPoM_PLLSpeedFilter.setMin(0)
+    mcPoM_PLLSpeedFilter.setMax(1)    
+    mcPoM_PLLSpeedFilter.setDefaultValue(mcPoM_DefaultPararameterDict[mcPoM_DefaultBoard]['PLL_SPEED_FILTER'])
+
+    # Initialize callback function to update board parameters 
+    mcPoM_BoardDependency = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_POSITION_MENU", None )
+    mcPoM_BoardDependency.setVisible(False)
+    mcPoM_BoardDependency.setDependencies(mcPom_UpdateSymbols, ["MCPMSMFOC_BOARD_SEL"])
+            
+# Callback Functions 
+def mcPom_UpdateSymbols( symbol, event):
+    board_key = event["symbol"].getKeyForValue(str(event["value"]))
+    if board_key in mcVsi_DefaultPararameterDict.keys():
+        mcPoM_PLLEqFilter.setValue(float(mcPoM_DefaultPararameterDict[board_key]['PLL_EQ_FILTER']))
+        mcPoM_PLLEdFilter.setValue(float(mcPoM_DefaultPararameterDict[board_key]['PLL_ED_FILTER']))
+        mcPoM_PLLSpeedFilter.setValue(float(mcPoM_DefaultPararameterDict[board_key]['PLL_SPEED_FILTER']))
+
+
+def mcPmsmFocPLLVisible(symbol, event):
+    symObj = event["symbol"]
+    if symObj.getSelectedKey() == "SENSORLESS_PLL":
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
 
 
 def mcPoMI_PositionMeasurement( mcPmsmFocComponent ):

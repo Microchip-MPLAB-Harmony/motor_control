@@ -57,12 +57,10 @@
 #define BOARD                            (${MCPMSMFOC_BOARD_SEL})                            
 #define POSITION_FEEDBACK                (${MCPMSMFOC_POSITION_FB})
 
-<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
-#define OPEN_LOOP_FUNCTIONING            (${MCPMSMFOC_OPEN_LOOP?then('ENABLED','DISABLED')})  /* If enabled - Keep running in open loop */
-</#if>
-#define TORQUE_MODE                      (${MCPMSMFOC_TORQUE_MODE?then('ENABLED','DISABLED')})  /* If enabled - torque control */
+#define CONTROL_LOOP                     (${MCPMSMFOC_CONTROL})
+
 #define FIELD_WEAKENING                  (${MCPMSMFOC_FIELD_WEAKENING?then('ENABLED','DISABLED')})  /* If enabled - Field weakening */
-#define ALIGNMENT_METHOD                 (${MCPMSMFOC_ALIGNMENT_METHOD})  /* alignment method  */
+#define ALIGNMENT_METHOD                 (${MCPMSMFOC_ALIGNMENT})  /* alignment method  */
 
 <#if MCPMSMFOC_INTERM_FLYING_START>
 #define FLYING_START_TIME_SEC              (float)(${MCPMSMFOC_FLYING_START_TIME})
@@ -75,22 +73,25 @@
 </#if>
 </#if>
 
-<#if MCPMSMFOC_ALIGNMENT == "0">
-#define Q_AXIS_ALIGNMENT                 (ENABLED)
-<#else>
-#define D_AXIS_ALIGNMENT                 (ENABLED)
-</#if>
 <#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
 #define ANGLE_OFFSET_DEG                 (float)45.0    /* Angle offset while switching to closed loop */
 </#if>
 #define CURRENT_MEASUREMENT              (${MCPMSMFOC_CURRENT_MEAS})  /* Current measurement shunts */
 
-<#if MCPMSMFOC_SPEED_REF_INPUT == "Potentiometer Analog Input">
+<#if MCPMSMFOC_REF_INPUT == "Potentiometer Analog Input">
 #define POTENTIOMETER_INPUT_ENABLED       ENABLED
 <#else>
 #define POTENTIOMETER_INPUT_ENABLED       DISABLED
-#define SPEED_REF_RPM                     (float)${MCPMSMFOC_SPEED_REF}
 </#if>
+
+<#if MCPMSMFOC_CONTROL == "SPEED_LOOP">
+#define SPEED_REF_RPM                     (float)${MCPMSMFOC_END_SPEED}   /* Speed Ref */
+<#elseif MCPMSMFOC_CONTROL == "TORQUE_LOOP">
+#define Q_CURRENT_REF_TORQUE              (${MCPMSMFOC_END_TORQUE})   /* Iq ref for torque mode */
+#define Q_CURRENT_MIN_TORQUE              (${MCPMSMFOC_MIN_TORQUE})   /* Min Iq current */
+#define Q_CURRENT_MAX_TORQUE              (${MCPMSMFOC_MAX_TORQUE})   /* Max Iq mapped to Potentiometer max */
+</#if>
+
 /***********************************************************************************************/
 /* Motor Configuration Parameters */
 /***********************************************************************************************/
@@ -112,14 +113,12 @@
 
 /* Motor Start-up configuration parameters */
 #define LOCK_TIME_IN_SEC                (${MCPMSMFOC_LOCK_TIME})   /* Startup - Rotor alignment time */
-<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
+
 #define OPEN_LOOP_END_SPEED_RPM         (${MCPMSMFOC_OL_END_SPEED}) /* Startup - Control loop switches to close loop at this speed */
 #define OPEN_LOOP_RAMP_TIME_IN_SEC      (${MCPMSMFOC_OL_RAMP_TIME})   /* Startup - Time to reach OPEN_LOOP_END_SPEED_RPM in seconds */
-</#if>
+
 #define Q_CURRENT_REF_OPENLOOP          (${MCPMSMFOC_OL_IQ_REF}) /* Startup - Motor start to ramp up in current control mode */
-#if (TORQUE_MODE == ENABLED)
-#define Q_CURRENT_REF_TORQUE            (${MCPMSMFOC_END_TORQUE})   /* Iq ref for torque mode */
-#endif
+
 
 /* Current ramp parameters for open loop to close loop transition  */
 #define Q_CURRENT_OPENLOOP_STEP                    ((float)0.001)
@@ -154,14 +153,14 @@
 
 /* First order low pass Filter constants used inside the project             */
 <#if MCPMSMFOC_BOARD_SEL == "MCHV3">
-#define KFILTER_ESDQ                   (float)((float)4000/(float)32767)
+#define KFILTER_ESDQ                   (float)((float)${MCPMSMFOC_PLL_EQ_FILTER})
 #define KFILTER_BEMF_AMPLITUDE         (float)((float)4000/(float)32767)
-#define KFILTER_VELESTIM               (float)((float)4000/(float)32767)
+#define KFILTER_VELESTIM               (float)((float)${MCPMSMFOC_PLL_SPEED_FILTER})
 #define KFILTER_POT                    (float)((float)250/(float)32767)
 <#else>
-#define KFILTER_ESDQ                   (float)((float)600/(float)32767)
+#define KFILTER_ESDQ                   (float)((float)${MCPMSMFOC_PLL_EQ_FILTER})
 #define KFILTER_BEMF_AMPLITUDE         (float)((float)100/(float)32767)
-#define KFILTER_VELESTIM               (float)((float)174/(float)32767)
+#define KFILTER_VELESTIM               (float)((float)${MCPMSMFOC_PLL_SPEED_FILTER})
 #define KFILTER_POT                    (float)((float)250/(float)32767)
 </#if>
 

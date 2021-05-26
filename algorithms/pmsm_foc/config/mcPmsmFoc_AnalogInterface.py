@@ -247,58 +247,77 @@ def mcAnI_CreateMHCSymbols( mcPmsmFocComponent):
     mcAnI_AdcMaximumValue.setVisible(False)
     mcAnI_AdcMaximumValue.setValue(4095)
     
+    mcAnI_AdcNameForIu = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_PHASEU_NAME", mcAnI_RootNode)
+    mcAnI_AdcNameForIu.setLabel("Phase U Current Name")
+    mcAnI_AdcNameForIu.setReadOnly(True)
+    mcAnI_AdcNameForIu.setDefaultValue("CURRENT_U")
+
     global mcAnI_AdcUnitForIu
-    mcAnI_AdcUnitForIu = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEU_MODULE", mcAnI_RootNode)
+    mcAnI_AdcUnitForIu = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEU_MODULE", mcAnI_AdcNameForIu)
     mcAnI_AdcUnitForIu.setLabel("Phase U ADC Module")
     mcAnI_AdcUnitForIu.setMin(0)
     mcAnI_AdcUnitForIu.setMax(7)
     mcAnI_AdcUnitForIu.setDefaultValue(int(mcAnaI_DefaultPararameterDict[mcAnI_DefaultDevelopmentBoard][mcAnI_MicrocontrollerSeries]['PHASE_U']))
 
-
     global mcAnI_AdcChannelForIu 
-    mcAnI_AdcChannelForIu = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEU_CH", mcAnI_AdcUnitForIu)
+    mcAnI_AdcChannelForIu = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEU_CH", mcAnI_AdcNameForIu)
     mcAnI_AdcChannelForIu.setLabel("Phase U Channel Number")
     mcAnI_AdcChannelForIu.setDefaultValue(int(mcAnaI_DefaultPararameterDict[mcAnI_DefaultDevelopmentBoard][mcAnI_MicrocontrollerSeries]['PHASE_U_CH']))
     mcAnI_AdcChannelForIu.setMin(-1)
     mcAnI_AdcChannelForIu.setMax(maxChannels - 1)
 
+    mcAnI_AdcNameForIv = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_PHASEV_NAME", mcAnI_RootNode)
+    mcAnI_AdcNameForIv.setLabel("Phase V Current Name")
+    mcAnI_AdcNameForIv.setReadOnly(True)
+    mcAnI_AdcNameForIv.setDefaultValue("CURRENT_V")
+
     global mcAnI_AdcUnitForIv
-    mcAnI_AdcUnitForIv = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEV_MODULE", mcAnI_RootNode)
+    mcAnI_AdcUnitForIv = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEV_MODULE", mcAnI_AdcNameForIv)
     mcAnI_AdcUnitForIv.setLabel("Phase V ADC Module")
     mcAnI_AdcUnitForIv.setMin(0)
     mcAnI_AdcUnitForIv.setMax(7)
     mcAnI_AdcUnitForIv.setDefaultValue(int(mcAnaI_DefaultPararameterDict[mcAnI_DefaultDevelopmentBoard][mcAnI_MicrocontrollerSeries]['PHASE_V']))
 
     global mcAnI_AdcChannelForIv
-    mcAnI_AdcChannelForIv = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEV_CH", mcAnI_AdcUnitForIv)
+    mcAnI_AdcChannelForIv = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_PHASEV_CH", mcAnI_AdcNameForIv)
     mcAnI_AdcChannelForIv.setLabel("Phase V Channel Number")
     mcAnI_AdcChannelForIv.setDefaultValue(int(mcAnaI_DefaultPararameterDict[mcAnI_DefaultDevelopmentBoard][mcAnI_MicrocontrollerSeries]['PHASE_V_CH']))
     mcAnI_AdcChannelForIv.setMin(-1)
     mcAnI_AdcChannelForIv.setMax(maxChannels - 1)
 
+    mcAnI_AdcNameForPot = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_POT_NAME", mcAnI_RootNode)
+    mcAnI_AdcNameForPot.setLabel("Potentiometer Name")
+    mcAnI_AdcNameForPot.setReadOnly(True)
+    mcAnI_AdcNameForPot.setDefaultValue("POTENTIOMETER")
+
     global mcAnI_AdcUnitForPot
-    mcAnI_AdcUnitForPot = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_POT_MODULE", mcAnI_RootNode)
+    mcAnI_AdcUnitForPot = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_POT_MODULE", mcAnI_AdcNameForPot)
     mcAnI_AdcUnitForPot.setLabel("Potentiometer ADC Module")
     mcAnI_AdcUnitForPot.setMin(0)
     mcAnI_AdcUnitForPot.setMax(7)
     mcAnI_AdcUnitForPot.setDefaultValue(int(mcAnaI_DefaultPararameterDict[mcAnI_DefaultDevelopmentBoard][mcAnI_MicrocontrollerSeries]['POT']))
 
     global mcAnI_AdcChannelForPot
-    mcAnI_AdcChannelForPot = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_POT_CH",mcAnI_AdcUnitForPot)
+    mcAnI_AdcChannelForPot = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_POT_CH",mcAnI_AdcNameForPot)
     mcAnI_AdcChannelForPot.setLabel("Potentiometer channel number")
     mcAnI_AdcChannelForPot.setDefaultValue(int(mcAnaI_DefaultPararameterDict[mcAnI_DefaultDevelopmentBoard][mcAnI_MicrocontrollerSeries]['POT_CH']))
     mcAnI_AdcChannelForPot.setMin(-1)
     mcAnI_AdcChannelForPot.setMax(maxChannels - 1)
 
+    mcAnI_AdcNameForVdc = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_VDC_NAME", mcAnI_RootNode)
+    mcAnI_AdcNameForVdc.setLabel("DC Bus Voltage Name")
+    mcAnI_AdcNameForVdc.setReadOnly(True)
+    mcAnI_AdcNameForVdc.setDefaultValue("VOLTAGE_DCBUS")
+
     global mcAnI_AdcUnitForVdc
-    mcAnI_AdcUnitForVdc = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_DCBUSV_MODULE", mcAnI_RootNode)
+    mcAnI_AdcUnitForVdc = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_DCBUSV_MODULE", mcAnI_AdcNameForVdc)
     mcAnI_AdcUnitForVdc.setLabel("DC Bus Voltage ADC Module")
     mcAnI_AdcUnitForVdc.setMin(0)
     mcAnI_AdcUnitForVdc.setMax(7)
     mcAnI_AdcUnitForVdc.setDefaultValue(int(mcAnaI_DefaultPararameterDict[mcAnI_DefaultDevelopmentBoard][mcAnI_MicrocontrollerSeries]['VDC']))
 
     global mcAnI_AdcChannelForVdc
-    mcAnI_AdcChannelForVdc = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_DCBUSV_CH", mcAnI_AdcUnitForVdc)
+    mcAnI_AdcChannelForVdc = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_DCBUSV_CH", mcAnI_AdcNameForVdc)
     mcAnI_AdcChannelForVdc.setLabel("DC Bus Voltage channel number")
     mcAnI_AdcChannelForVdc.setDefaultValue(int(mcAnaI_DefaultPararameterDict[mcAnI_DefaultDevelopmentBoard][mcAnI_MicrocontrollerSeries]['VDC_CH']))
     mcAnI_AdcChannelForVdc.setMin(-1)

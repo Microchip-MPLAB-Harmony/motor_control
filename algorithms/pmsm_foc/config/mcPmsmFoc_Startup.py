@@ -51,22 +51,13 @@ def mcStC_CreateMHCSymbols( mcPmsmFocComponent):
 
     mcFlyingStart_CreateMHCSymbols(mcPmsmFocComponent,mcStC_RootNode)
 
-    mcStC_AlignAlgorithm = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_ALIGNMENT_METHOD", mcStC_RootNode)
-    mcStC_AlignAlgorithm.setLabel("Select Startup Alignment Method")
-    mcStC_AlignAlgorithm.addKey("NO_ALIGNMENT", "0", "No Alignment")
-    mcStC_AlignAlgorithm.addKey("FORCED_ALIGNMENT", "1", "Forced Alignment")
-    #mcStC_AlignAlgorithm.addKey("IPD", "2", "Initial Position Detection")
-    mcStC_AlignAlgorithm.setDefaultValue(1)
-    mcStC_AlignAlgorithm.setOutputMode("Key")
-    mcStC_AlignAlgorithm.setDisplayMode("Description")
-
     mcStC_ForceAlignAxis = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_ALIGNMENT", mcStC_RootNode)
     mcStC_ForceAlignAxis.setLabel("Select Alignment Axis")
     mcStC_ForceAlignAxis.addKey("Q_AXIS", "0", "Q Axis")
     mcStC_ForceAlignAxis.addKey("D_AXIS", "1", "D Axis")
-    mcStC_ForceAlignAxis.setOutputMode("Value")
+    #mcStC_ForceAlignAxis.addKey("IPD", "2", "Initial Position Detection")
+    mcStC_ForceAlignAxis.setOutputMode("Key")
     mcStC_ForceAlignAxis.setDisplayMode("Description")
-    mcStC_ForceAlignAxis.setDependencies(mcPmsmFocEncoderHide, ["MCPMSMFOC_POSITION_FB"])
 
     mcStC_AlignmentTime = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_LOCK_TIME", mcStC_RootNode)
     mcStC_AlignmentTime.setLabel("Alignment Lock Time (sec)")
@@ -75,12 +66,12 @@ def mcStC_CreateMHCSymbols( mcPmsmFocComponent):
     mcStC_OpenLoopRampTime = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_OL_RAMP_TIME", mcStC_RootNode)
     mcStC_OpenLoopRampTime.setLabel("Open Loop Ramp Time (sec)")
     mcStC_OpenLoopRampTime.setDefaultValue(5)
-    mcStC_OpenLoopRampTime.setDependencies(mcPmsmFocEncoderHide, ["MCPMSMFOC_POSITION_FB"])
+    #mcStC_OpenLoopRampTime.setDependencies(mcPmsmFocEncoderHide, ["MCPMSMFOC_POSITION_FB"])
 
     mcStC_OpenLoopEndSpeed = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_OL_END_SPEED", mcStC_RootNode)
     mcStC_OpenLoopEndSpeed.setLabel("Open Loop End Speed (RPM)")
     mcStC_OpenLoopEndSpeed.setDefaultValue(500)
-    mcStC_OpenLoopEndSpeed.setDependencies(mcPmsmFocEncoderHide, ["MCPMSMFOC_POSITION_FB"])
+    #mcStC_OpenLoopEndSpeed.setDependencies(mcPmsmFocEncoderHide, ["MCPMSMFOC_POSITION_FB"])
         
     mcStC_OpenLoopRefCurrent = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_OL_IQ_REF", mcStC_RootNode)
     mcStC_OpenLoopRefCurrent.setLabel("Open Loop Ref Quadrature Current (A)")

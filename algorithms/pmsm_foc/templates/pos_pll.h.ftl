@@ -147,6 +147,7 @@ typedef struct
 {
     float                            angle;
     float                            speed;
+    float                            mechSpeedRPM;    
     float                            acceleration;
   #if(ENABLED == FIELD_WEAKENING )
     float                            esfilt;

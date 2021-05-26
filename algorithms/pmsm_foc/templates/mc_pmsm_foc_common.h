@@ -69,7 +69,8 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 /* Alignment methods */
-#define FORCED_ALIGNMENT                (0U)
+#define Q_AXIS                          (0U)
+#define D_AXIS                          (1U)
 
 /* Position feedback methods */
 #define SENSORLESS_PLL                  (0U)
@@ -86,6 +87,10 @@ extern "C" {
 #define MCLV2                            (1U)
 #define MCHV3                            (2U)
 
+/* Control Loop */
+#define OPEN_LOOP                        (0U)
+#define SPEED_LOOP                       (1U)
+#define TORQUE_LOOP                      (2U)
 
 typedef enum
 {
@@ -135,6 +140,8 @@ typedef struct
     float             velRef;                                    /*   Reference velocity from Ramp           */
     float             idRef;                                     /*   Vd flux reference value                */
     float             iqRef;                                     /*   Vq torque reference value              */
+    float             iqPotInput;                                /* Ref Iq value from potentiometer */
+    float             iqUserInput;                               /* Ref Iq value from user input */
     int16_t           rotationSign;                              /*   Motor direction switch                 */
     bool              firstStart;                                /*  Start after reset                     */
     tMCAPP_CONTROL_STATE_E mcState;                             /*   Controller state                      */

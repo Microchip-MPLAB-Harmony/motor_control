@@ -151,10 +151,12 @@ void PMSM_FOC_Initialize( void )
     /* Disable interrupt, and clear pending interrupts */
     MCHAL_IntDisable( MCHAL_CTRL_IRQ);
     MCHAL_IntClear( MCHAL_CTRL_IRQ);
-
+#if (CONTROL_LOOP == SPEED_LOOP)
     /* Initialize speed command function */
     MCSPE_InitializeSpeedControl();
-
+#elif (CONTROL_LOOP == TORQUE_LOOP && POTENTIOMETER_INPUT_ENABLED == DISABLED)
+    gMCCTRL_CtrlParam.iqUserInput = Q_CURRENT_REF_TORQUE;
+#endif
     /* Initialize current measurement module */
     MCCUR_InitializeCurrentMeasurement();
 
@@ -197,8 +199,12 @@ void PMSM_FOC_MotorStart(void)
     else
     {
         gMCCTRL_CtrlParam.mcStateLast = gMCCTRL_CtrlParam.mcState;
+        #if (CONTROL_LOOP == OPEN_LOOP)
+        gMCCTRL_CtrlParam.mcState = MCAPP_FIELD_ALIGNMENT;
+        #else
         /* Do not align the rotor for consecutive starts */
         gMCCTRL_CtrlParam.mcState = MCAPP_CLOSED_LOOP;
+        #endif
     }
 <#else>
     gMCCTRL_CtrlParam.mcStateLast = gMCCTRL_CtrlParam.mcState;
@@ -232,10 +238,10 @@ void PMSM_FOC_MotorStop(void)
     gMCCTRL_CtrlParam.mcStateLast = gMCCTRL_CtrlParam.mcState;
     /* Switch the motor control state to MCAPP_IDLE */
     gMCCTRL_CtrlParam.mcState = MCAPP_IDLE;
-
+#if (CONTROL_LOOP == SPEED_LOOP)
     /* Reset global variables for next run */
     MCSPE_ResetSpeedControl();
-
+#endif
     /* Motor Controller parameter initialization */
     MCCTRL_ResetMotorControl();
 }
@@ -267,19 +273,23 @@ void PMSM_FOC_DirectionToggle(void)
 /******************************************************************************/
 void PMSM_FOC_Tasks()
 {
-    /* Position Loop control tasks */
+    /* Speed Loop control tasks */
     if( MCCTRL_LOOP_ACTIVE == PMSM_FOC_IsSpeedLoopActive())
     {
         PMSM_FOC_ButtonPolling();
+#if (CONTROL_LOOP == SPEED_LOOP)        
        /* Speed Loop Control tasks  */
         PMSM_FOC_SpeedLoopTasks();
+#endif
+        /* Reset Speed Loop counter */
+        gMCCTRL_TaskStateSignals.speedLoopActive = MCCTRL_LOOP_INACTIVE;
     }
 
  }
 
 
 
-
+#if (CONTROL_LOOP == SPEED_LOOP)
 /******************************************************************************/
 /* Function name: MCAPP_SpeedLoopTasks                                        */
 /* Function parameters: None                                                  */
@@ -299,12 +309,9 @@ void PMSM_FOC_SpeedLoopTasks()
         {
             gMCSPE_OutputSignals.commandSpeed = gMCCTRL_CtrlParam.velRef;
         }
-
-        /* Reset Speed Loop counter */
-        gMCCTRL_TaskStateSignals.speedLoopActive = MCCTRL_LOOP_INACTIVE;
     }
  }
-
+#endif
 
 
 

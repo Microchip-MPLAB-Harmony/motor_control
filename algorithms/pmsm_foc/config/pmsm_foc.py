@@ -379,9 +379,6 @@ def mcEvsysDependencySAME54Connected():
     eic = filter(str.isdigit, str(mcPwm_PwmFault.getValue()))
     generator0 = generator1 = user0 = user1 = 0
 
-    print(pwmInstance)
-    print(adcInstance)
-
     if (pwmInstance != "NONE") and (adcInstance != "NONE"):
         #EVSYS channel 0 = TCC overflow to ADC Start
         #EVSYS channel 1 = EIC fault pin to TCC event 1 fault

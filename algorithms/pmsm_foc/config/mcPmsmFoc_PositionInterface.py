@@ -56,23 +56,27 @@ mcPosI_DefaultPararameterDict = {
 #----------------------------------------------------------------------------------#
       
 def mcPoI_CreateMHCSymbols( mcPmsmFocComponent ):
-    mcPoI_RootNode = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_ENCODER", mcPoM_AlgorithmSelection)
+    mcPoI_RootNode = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_ENCODER", None)
     mcPoI_RootNode.setLabel("Encoder Configurations")
-    mcPoI_RootNode.setVisible(False)
-    mcPoI_RootNode.setDependencies( mcPmsmFocEncoderVisible, ["MCPMSMFOC_POSITION_FB"])
+    mcPoI_RootNode.setVisible(True)
     
-    #ToDo: Place in appropriate file
     global mcPoI_PulsedPerRevolution
     mcPoI_PulsedPerRevolution = mcPmsmFocComponent.createIntegerSymbol("MCPMSMFOC_QE_PULSES_PER_REV", mcPoI_RootNode)
     mcPoI_PulsedPerRevolution.setLabel("Encoder Pulses Per Revolution")
-    mcPoI_PulsedPerRevolution.setVisible(True)
+    mcPoI_PulsedPerRevolution.setVisible(False)
     mcPoI_PulsedPerRevolution.setMin(0)
     mcPoI_PulsedPerRevolution.setDefaultValue(int(mcPosI_DefaultPararameterDict['LONG_HURST']['QE_PULSES_PER_REV']))
+    mcPoI_PulsedPerRevolution.setDependencies( mcPmsmFocEncoderVisible, ["MCPMSMFOC_POSITION_FB"])
 
     # Encoder PLIB
     global mcPoI_EncoderPLib
     mcPoI_EncoderPLib = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_ENCODERPLIB", None)
     mcPoI_EncoderPLib.setVisible(False)
+
+    mcPoI_EncoderComment = mcPmsmFocComponent.createCommentSymbol("MCPMSMFOC_ENCODER_COMMENT", mcPoI_RootNode)
+    mcPoI_EncoderComment.setLabel("Sensorless position feedback is selected. Position Interface configurations are not required. ")
+    mcPoI_EncoderComment.setVisible(True)
+    mcPoI_EncoderComment.setDependencies(mcPmsmFocSensorlessVisible, ["MCPMSMFOC_POSITION_FB"])
 
     # Initilaize callback functions for board dependency
     mcPoI_BoardDependency = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_ENCODER_BOARD_DEP", None)
@@ -100,6 +104,14 @@ def mcPmsmFocEncoderVisible( symbol, event):
         symbol.setVisible(True)
         component.setDependencyEnabled("pmsmfoc_QDEC", False)
         symbol.setVisible(False)
+
+def mcPmsmFocSensorlessVisible(symbol, event):
+    symObj = event["symbol"]
+    key = symObj.getSelectedKey()
+    if(key != "SENSORED_ENCODER"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)        
 
 #Send message to Encoder PLIB when encoder configurations are changed
 def mcPmsmFocEncoderPlibDep(symbol, event ):

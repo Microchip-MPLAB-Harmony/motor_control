@@ -80,28 +80,87 @@ mcMOC_DefaultBoard = 'MCLV2'
 #                             GLOBAL VARIABLES                                     # 
 #----------------------------------------------------------------------------------#
 def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
+
+    global mcMoC_Control
+    mcMoC_Control = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_CONTROL", mcPmsmFocAlgoMenu)
+    mcMoC_Control.setLabel("Select Control")
+    mcMoC_Control.addKey("OPEN_LOOP", "0", "Open Loop Control")
+    mcMoC_Control.addKey("SPEED_LOOP", "1", "Speed Loop Control")
+    mcMoC_Control.addKey("TORQUE_LOOP", "2", "Torque Loop Control")
+    #mcMoC_Control.addKey("POSITION_LOOP", "3", "Position Loop Control")
+    mcMoC_Control.setOutputMode("Key")
+    mcMoC_Control.setDisplayMode("Description")
+    mcMoC_Control.setDefaultValue(1)
             
-    # Symbol for open loop mode enable/ disable 
-    mcMoC_OpenLoopEnable = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_OPEN_LOOP", mcPmsmFocAlgoMenu)
-    mcMoC_OpenLoopEnable.setLabel("Run in Open Loop?")
-    mcMoC_OpenLoopEnable.setDependencies(mcPmsmFocOpenloop, ["MCPMSMFOC_POSITION_FB", "MCPMSMFOC_TORQUE_MODE", "MCPMSMFOC_FIELD_WEAKENING"])
-    
-    # Symbol for torque mode enable/disable
-    mcMoC_TorqueModeEnable = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_TORQUE_MODE", mcPmsmFocAlgoMenu)
-    mcMoC_TorqueModeEnable.setLabel("Run in Torque Control?")
-    mcMoC_TorqueModeEnable.setDependencies(mcPmsmFocControl, ["MCPMSMFOC_OPEN_LOOP", "MCPMSMFOC_FIELD_WEAKENING"])
-    
+    mcMoC_Ramp = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_RAMP", mcPmsmFocAlgoMenu)
+    mcMoC_Ramp.setLabel("Select Ramp Profile")
+    mcMoC_Ramp.addKey("STEP", "0", "STEP")
+    mcMoC_Ramp.addKey("LINEAR", "1", "LINEAR")
+    mcMoC_Ramp.addKey("S-CUREVE", "2", "S-CURVE")
+    mcMoC_Ramp.setOutputMode("Key")
+    mcMoC_Ramp.setDisplayMode("Description")
+
+    mcMoC_RampTime = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_RAMP_TIME", mcMoC_Ramp)
+    mcMoC_RampTime.setLabel("Ramp Time (s)")
+    mcMoC_RampTime.setDefaultValue(1)
+    mcMoC_RampTime.setVisible(False)
+    mcMoC_RampTime.setDependencies(mcPmsmFocRamp, ["MCPMSMFOC_RAMP"])
+
+    mcMoC_RampVelocity = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_RAMP_VELOCITY", mcMoC_Ramp)
+    mcMoC_RampVelocity.setLabel("Max Ramp Velocity")
+    mcMoC_RampVelocity.setDefaultValue(200)
+    mcMoC_RampVelocity.setVisible(False)
+    mcMoC_RampVelocity.setDependencies(mcPmsmFocRamp, ["MCPMSMFOC_RAMP"])
+
+    global mcMoC_RampAcceleration
+    mcMoC_RampAcceleration = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_RAMP_ACCELERATION", mcMoC_Ramp)
+    mcMoC_RampAcceleration.setLabel("Max Ramp Acceleration")
+    mcMoC_RampAcceleration.setDefaultValue(10)
+    mcMoC_RampAcceleration.setVisible(False)
+    mcMoC_RampAcceleration.setDependencies(mcPmsmFocRamp, ["MCPMSMFOC_RAMP"])
+
+    # Symbol for reference input
+    global mcMoC_RefInput
+    RefIp = ["Potentiometer Analog Input", "UI Input"]
+    mcMoC_RefInput = mcPmsmFocComponent.createComboSymbol("MCPMSMFOC_REF_INPUT", mcMoC_Ramp, RefIp)
+    mcMoC_RefInput.setLabel("Select reference input")
+    mcMoC_RefInput.setReadOnly(False)
+
+    mcMoC_RefTorque = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_END_TORQUE", mcMoC_Ramp)
+    mcMoC_RefTorque.setLabel("Ref. Quadrature Current (A)")
+    mcMoC_RefTorque.setDefaultValue(0.2)
+    mcMoC_RefTorque.setVisible(False)
+    mcMoC_RefTorque.setDependencies(mcPmsmFocTorque, ["MCPMSMFOC_CONTROL", "MCPMSMFOC_REF_INPUT"])
+
+    # Symbol for minimum allowed torque if torque mode is enabled 
+    mcMoC_MinTorque = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_MIN_TORQUE", mcMoC_Ramp)
+    mcMoC_MinTorque.setLabel("Minimum Quadrature Current (A)")
+    mcMoC_MinTorque.setDefaultValue(0.15)
+    mcMoC_MinTorque.setVisible(False)
+    mcMoC_MinTorque.setMin(0)
+    mcMoC_MinTorque.setMax(mcMot_MaximumCurrentInAmps.getValue())
+    mcMoC_MinTorque.setDependencies(mcPmsmFocTorquePot, ["MCPMSMFOC_CONTROL", "MCPMSMFOC_REF_INPUT"])
+
     # Symbol for maximum allowed torque if torque mode is enabled 
-    mcMoC_MaximumTorque = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_END_TORQUE", mcMoC_TorqueModeEnable)
-    mcMoC_MaximumTorque.setLabel("Ref. Quadrature Current (A)")
-    mcMoC_MaximumTorque.setDefaultValue(0.2)
-    mcMoC_MaximumTorque.setVisible(False)
-    mcMoC_MaximumTorque.setDependencies(mcPmsmFocVisibleOnTrue, ["MCPMSMFOC_TORQUE_MODE"])
+    mcMoC_MaxTorque = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_MAX_TORQUE", mcMoC_Ramp)
+    mcMoC_MaxTorque.setLabel("Maximum Quadrature Current (A)")
+    mcMoC_MaxTorque.setDefaultValue(0.3)
+    mcMoC_MaxTorque.setVisible(False)
+    mcMoC_MaxTorque.setMin(0)
+    mcMoC_MaxTorque.setMax(mcMot_MaximumCurrentInAmps.getValue())
+    mcMoC_MaxTorque.setDependencies(mcPmsmFocTorquePot, ["MCPMSMFOC_CONTROL", "MCPMSMFOC_REF_INPUT"])
+
+    mcMoC_RefSpeed = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_END_SPEED", mcMoC_Ramp)
+    mcMoC_RefSpeed.setLabel("Ref. Speed (RPM)")
+    mcMoC_RefSpeed.setDefaultValue(1000)
+    mcMoC_RefSpeed.setMin(0)
+    mcMoC_RefSpeed.setMax(mcMot_MaximumSpeedInRpm.getValue())
+    mcMoC_RefSpeed.setDependencies(mcPmsmFocSpeed, ["MCPMSMFOC_CONTROL", "MCPMSMFOC_REF_INPUT"])
     
     # Symbol to enable/ disable filed wekening mode 
     mcMoC_FieldWeakeningEnable = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_FIELD_WEAKENING", mcPmsmFocAlgoMenu)
     mcMoC_FieldWeakeningEnable.setLabel("Enable Field Weakening?")
-    mcMoC_FieldWeakeningEnable.setDependencies(mcPmsmFocControl, ["MCPMSMFOC_OPEN_LOOP", "MCPMSMFOC_TORQUE_MODE"])
+    mcMoC_FieldWeakeningEnable.setDependencies(mcPmsmFocControl, ["MCPMSMFOC_CONTROL"])
 
     # Symbol for maximum negative  field weakening current
     mcMoC_FieldWeakeningCurrent = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_MAX_FW_CURRENT", mcMoC_FieldWeakeningEnable)
@@ -187,12 +246,7 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     mcMoC_SpeedRootNode = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_SPEED", mcPmsmFocCtrlMenu)
     mcMoC_SpeedRootNode.setLabel("Speed Loop")
 
-    # Symbol for speed reference input
-    speedRefIp = ["Potentiometer Analog Input", "UI Input"]
-    smcMoC_SpeedInput = mcPmsmFocComponent.createComboSymbol("MCPMSMFOC_SPEED_REF_INPUT", mcMoC_SpeedRootNode, speedRefIp)
-    smcMoC_SpeedInput.setLabel("Select Speed reference input")
-    smcMoC_SpeedInput.setReadOnly(True)
-    
+ 
     # Symbol for speed control root node 
     mcMoC_SpeedNode = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_Speed_Menu", mcMoC_SpeedRootNode)
     mcMoC_SpeedNode.setLabel("Speed PI Parameters")
@@ -229,6 +283,41 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
 #----------------------------------------------------------------------------------#
 
 # Callback Functions 
+def mcPmsmFocRamp(symbol, event):
+    symObj = event["symbol"]
+    ramp = symObj.getSelectedKey()
+    if ramp == "STEP":
+        symbol.setVisible(False)
+    elif ramp == "LINEAR":
+        symbol.setVisible(True)
+        mcMoC_RampAcceleration.setVisible(False)
+    else:
+        symbol.setVisible(True)
+
+def mcPmsmFocTorque(symbol, event):    
+    control = mcMoC_Control.getSelectedKey()
+    input = mcMoC_RefInput.getValue()
+    if(control == "TORQUE_LOOP" and input == "UI Input"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
+def mcPmsmFocTorquePot(symbol, event):    
+    control = mcMoC_Control.getSelectedKey()
+    input = mcMoC_RefInput.getValue()
+    if(control == "TORQUE_LOOP" and input == "Potentiometer Analog Input"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)        
+
+def mcPmsmFocSpeed(symbol, event):      
+    control = mcMoC_Control.getSelectedKey()
+    input = mcMoC_RefInput.getValue()    
+    if(control == "SPEED_LOOP" and input == "UI Input"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
 def mcPmsmFocPIValueChange( symbol, event):
     if(event["value"] == 1): #encoder
         symbol.setValue(0.000005)
@@ -255,10 +344,10 @@ def mcPmsmFocOpenloop(symbol, event):
                 symbol.setVisible(True)        
 
 def mcPmsmFocControl(symbol, event):
-    if event["value"] == True:
-        symbol.setVisible(False)
-    else:
+    if event["value"] == 1:
         symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
 
 def mcPmsmFocFWMax(symbol, event):
     component = symbol.getComponent()
