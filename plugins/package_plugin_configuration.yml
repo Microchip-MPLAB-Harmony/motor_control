@@ -1,0 +1,11 @@
+packagePluginConfiguration:
+- name: Motor Control Plant Manager
+  pluginID: MOTOR_CONTROL_PLANT_CONFIGURATOR
+  binaryFilePath: ..\harmony-services\plugins\generic_plugin_manager.jar
+  typeOfPlugin: JAVA
+  loadingType: IMMEDIATE
+  isHeadless: false
+  initArgs:
+    pluginClass: com.microchip.mh3.plugin.generic_package_plugin_manager.GenericPackagePlugin
+    main_html_path: motor_control/plugin/mc_plant/build/index.html
+

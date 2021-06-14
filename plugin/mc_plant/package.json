@@ -1,0 +1,75 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": ".",
+  "headers": {
+    "Access-Control-Allow-Origin": "*"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@svgdotjs/svg.js": "^3.0.16",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/classnames": "^2.2.10",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-transition-group": "^4.2.4",
+    "axios": "^0.21.1",
+    "dependencies": "^0.0.1",
+    "inkscape": "^3.1.1",
+    "primeflex": "^2.0.0",
+    "primeicons": "^4.1.0",
+    "primereact": "^6.3.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-draggable": "^4.4.3",
+    "react-native-svg": "^12.1.1",
+    "react-scripts": "4.0.3",
+    "react-svg": "^13.0.2",
+    "react-svg-pan-zoom": "^3.10.0",
+    "react-svg-pan-zoom-loader": "^1.4.1",
+    "react-transition-group": "^4.4.1",
+    "sass-loader": "^11.1.1",
+    "svg-pan-zoom": "^3.6.1",
+    "svgo": "^2.3.0",
+    "typescript": "^4.2.4",
+    "use-force-update": "^1.0.7",
+    "web-vitals": "^1.0.1",
+    "node-sass": "^4.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/react-native": "^0.64.4",
+    "@types/react-svg-pan-zoom": "^3.3.1",
+    "@types/react-svg-pan-zoom-loader": "^1.4.0",
+    "@types/react-test-renderer": "^17.0.1",
+    "react-native-svg-transformer": "^0.14.3",
+    "svgo-loader": "^3.0.0"
+  }
+}

@@ -1,0 +1,16 @@
+.tabbed-pane .tabview-custom i, .tabbed-pane .tabview-custom span {
+    vertical-align: middle;
+}
+
+.tabbed-pane .tabview-custom span {
+    margin: 0 .1rem;
+}
+
+.tabbed-pane .p-button {
+    margin-right: .1rem;
+}
+
+.tabbed-pane  {
+    height:100%;
+}
+  

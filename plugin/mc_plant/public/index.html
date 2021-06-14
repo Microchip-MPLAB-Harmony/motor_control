@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script type="text/javascript">
+//       var svgdoc = null;
+//       var svgwin = null;
+//       var colorsArray = null;
+//       var controllersArray = null;
+//       var helloComponent ;
+//       function init()
+//       {
+//           //   http://www.w3.org/TR/DOM-Level-2-HTML/html.html#ID-9893177
+//           //   http://w3.org/TR/SVG11/struct.html#InterfaceGetSVGDocument
+//           var object = document.getElementById('root');
+//           alert(object);
+//           if (object && object.contentDocument)
+//           svgdoc = object.contentDocument;
+//           else try {
+//               svgdoc = object.getSVGDocument();
+//           }
+//           catch(exception) {
+//               alert('Neither the HTMLObjectElement nor the GetSVGDocument interface are implemented');
+//           }
+//           svgdoc = document.getElementById("motor");
+//           //   http://www.w3.org/TR/DOM-Level-2-Views/views.html#Views-DocumentView
+//           if (svgdoc && svgdoc.defaultView)
+//           svgwin = svgdoc.defaultView;
+//           else if (object.window)
+//           svgwin = object.window;
+//           else try {
+//               svgwin = object.getWindow();
+//           }
+//           catch(exception) {
+//               alert('The DocumentView interface is not supported\r\n' +
+//               'Non-W3C methods of obtaining "window" also failed');
+//           }
+//           alert('SVG Doc Access found: ' + svgdoc);
+//           alert('SVG Window Access found: ' + svgwin);
+
+
+//           var hardWareColor = ["rgb(255, 153, 153)" , "#f99"];
+//           var controlColor = ["rgb(0, 80, 239)", "#0050ef"];
+//           var peripheralColor = ["rgb(255, 219, 115)", "#ffdb73"];
+//           var mcuColor = ["rgb(168, 232, 166)", "#a8e8a6"];
+
+//           colorsArray = new Array(8);
+//           colorsArray[0] = hardWareColor[0];
+//           colorsArray[1] = hardWareColor[1];
+
+//           colorsArray[2] = controlColor[0];
+//           colorsArray[3] = controlColor[1];
+
+//           colorsArray[4] = peripheralColor[0];
+//           colorsArray[5] = peripheralColor[1];
+
+//           colorsArray[6] = mcuColor[0];
+//           colorsArray[7] = mcuColor[1];
+
+//           controllersArray = ["Hardware_Box", "Hardware_Text", "Control_Box", "Control_Text", "Peripheral_Box", "Peripheral_Text", "MCU_Config_Box", "MCU_Config_Text"];
+
+
+//           svgdoc.getElementById("Hardware_Motor_Control_Box").addEventListener("click", sendClickAction, false);
+//   svgdoc.getElementById("Hardware_Motor_Control_Box").myPath = "motor_parameters";
+//           svgdoc.getElementById("Motor_Control_Text").addEventListener("click", sendClickAction, false);
+
+//           svgdoc.getElementById("Summary_Box").addEventListener("click", sendClickAction, false);
+//           svgdoc.getElementById("Summary_Text").addEventListener("click", sendClickAction, false);
+
+//           svgdoc.getElementById(controllersArray[0]).addEventListener("click", sendClickAction, false);
+//           svgdoc.getElementById(controllersArray[0]).myParm = hardWareColor;
+//           svgdoc.getElementById(controllersArray[1]).addEventListener("click", sendClickAction, false);
+//           svgdoc.getElementById(controllersArray[1]).myParm = hardWareColor;
+
+//           svgdoc.getElementById(controllersArray[2]).addEventListener("click", sendClickAction, false);
+//           svgdoc.getElementById(controllersArray[2]).myParm = controlColor;
+//           svgdoc.getElementById(controllersArray[3]).addEventListener("click", sendClickAction, false);
+//           svgdoc.getElementById(controllersArray[3]).myParm = controlColor;
+
+//           svgdoc.getElementById(controllersArray[4]).addEventListener("click", sendClickAction, false);
+//           svgdoc.getElementById(controllersArray[4]).myParm = peripheralColor;
+//           svgdoc.getElementById(controllersArray[5]).addEventListener("click", sendClickAction, false);
+//           svgdoc.getElementById(controllersArray[5]).myParm = peripheralColor;
+
+//           svgdoc.getElementById(controllersArray[6]).addEventListener("click", sendClickAction, false);
+//           svgdoc.getElementById(controllersArray[6]).myParm = mcuColor;
+//           svgdoc.getElementById(controllersArray[7]).addEventListener("click", sendClickAction, false);
+//           svgdoc.getElementById(controllersArray[7]).myParm = mcuColor;
+
+//           storeComponentColors();
+//       }
+
+//       function storeComponentColors(){
+//           var myNodelist = svgdoc.querySelectorAll("*");
+//           var i;
+//           for (i = 0; i < myNodelist.length; i++) {
+//               if(myNodelist[i].style){
+//                   myNodelist[i].myParm2 =  myNodelist[i].style.fill;
+//                   }else if(myNodelist[i].getAttribute("style") || myNodelist[i].getAttribute("fill")){
+//                   myNodelist[i].myParm2 = myNodelist[i].getAttribute("fill");
+//               }
+//           }
+//       }
+
+//       function sendClickAction(evt)
+//       {
+//           resetColors();
+//           var target = evt.target;
+//           if(target.correspondingUseElement)
+//           target = target.correspondingUseElement;
+//   if(target.myPath){
+//     alert("POPUP_"+target.myPath);
+//     document.getElementById("Hai").contentWindow.Headline();
+//     // app.modifyMap(arg1, arg2) //or anything else
+//     // return;
+//   }
+//           //alert("You clicked '" + target.id + "' which is a " + target.myParm + " element");
+
+//           var myNodelist = svgdoc.querySelectorAll("*");
+//           var i;
+//           for (i = 0; i < myNodelist.length; i++) {
+//               if(myNodelist[i].style){
+//                   if((!(target.myParm.indexOf(myNodelist[i].style.fill) > -1)) && (!(controllersArray.indexOf(myNodelist  [i].id) > -1)) && colorsArray.indexOf(myNodelist[i].style.fill) > -1){
+//                       myNodelist[i].style.fill= "#dddddd";
+//                   }
+//               }
+//               if(myNodelist[i].getAttribute("style") || myNodelist[i].getAttribute("fill")){
+//                   if((!(target.myParm.indexOf(myNodelist[i].getAttribute("fill")) > -1)) &&(!(controllersArray.indexOf(   myNodelist[i].id) > -1)) && colorsArray.indexOf(myNodelist[i].   getAttribute("fill")) > -1){
+//                       myNodelist[i].style.fill = "#dddddd";
+//                   }
+//               }
+//           }
+//       }
+
+//       function resetColors(){
+//           var myNodelist = svgdoc.querySelectorAll("*");
+//           var i;
+//           for (i = 0; i < myNodelist.length; i++) {
+//               if(myNodelist[i].style){
+//                   myNodelist[i].style.fill= myNodelist[i].myParm2;
+//               }
+//           }
+//       }
+
+      // -->
+  </script>
+  <title>React App</title>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <div id="popup"></div>
+  <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "./static/css/main.56fa9a5c.chunk.css",
+    "main.js": "./static/js/main.1688c1f1.chunk.js",
+    "main.js.map": "./static/js/main.1688c1f1.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.eba4f855.js",
+    "runtime-main.js.map": "./static/js/runtime-main.eba4f855.js.map",
+    "static/css/2.e4be9ebd.chunk.css": "./static/css/2.e4be9ebd.chunk.css",
+    "static/js/2.0430aebe.chunk.js": "./static/js/2.0430aebe.chunk.js",
+    "static/js/2.0430aebe.chunk.js.map": "./static/js/2.0430aebe.chunk.js.map",
+    "static/js/3.145338cf.chunk.js": "./static/js/3.145338cf.chunk.js",
+    "static/js/3.145338cf.chunk.js.map": "./static/js/3.145338cf.chunk.js.map",
+    "index.html": "./index.html",
+    "static/css/2.e4be9ebd.chunk.css.map": "./static/css/2.e4be9ebd.chunk.css.map",
+    "static/css/main.56fa9a5c.chunk.css.map": "./static/css/main.56fa9a5c.chunk.css.map",
+    "static/js/2.0430aebe.chunk.js.LICENSE.txt": "./static/js/2.0430aebe.chunk.js.LICENSE.txt",
+    "static/media/Motor_Parameters.9bb2bcd9.png": "./static/media/Motor_Parameters.9bb2bcd9.png",
+    "static/media/Quadrature_axis_forced_updated.e3a7d4a6.svg": "./static/media/Quadrature_axis_forced_updated.e3a7d4a6.svg",
+    "static/media/dummy.42533863.svg": "./static/media/dummy.42533863.svg",
+    "static/media/motor_control_diagram_new2.fb832524.svg": "./static/media/motor_control_diagram_new2.fb832524.svg",
+    "static/media/pi_parameters.22efc4d5.svg": "./static/media/pi_parameters.22efc4d5.svg",
+    "static/media/primeicons.css": "./static/media/primeicons.e61f3495.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.eba4f855.js",
+    "static/css/2.e4be9ebd.chunk.css",
+    "static/js/2.0430aebe.chunk.js",
+    "static/css/main.56fa9a5c.chunk.css",
+    "static/js/main.1688c1f1.chunk.js"
+  ]
+}

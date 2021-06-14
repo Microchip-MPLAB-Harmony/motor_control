@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="347px" height="142px" viewBox="-0.5 -0.5 347 142">
+  <defs>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="mx-gradient-ffffff-1-0050ef-1-s-0">
+      <stop offset="0%" style="stop-color:#0050ef"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="mx-gradient-ffffff-1-ffffff-1-s-0">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M 121.3 53.13 L 274.42 53.13" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 180.25 90.24 L 204.51 90.24" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 209.76 90.24 L 202.76 93.74 L 204.51 90.24 L 202.76 86.74 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <path d="M 180.25 125.66 L 204.51 125.66" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 209.76 125.66 L 202.76 129.16 L 204.51 125.66 L 202.76 122.16 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <path d="M 119 90.24 L 143.26 90.24" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 148.51 90.24 L 141.51 93.74 L 143.26 90.24 L 141.51 86.74 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <path d="M 119 125.66 L 143.26 125.66" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 148.51 125.66 L 141.51 129.16 L 143.26 125.66 L 141.51 122.16 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <ellipse cx="46.77" cy="85.9" rx="9.153002913336051" ry="9.153002913336051" fill="#f5f5f5" stroke="#666666" pointer-events="all"/>
+    <path d="M 40.3 92.37 L 53.25 79.43" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 53.25 92.37 L 40.3 79.43" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <rect x="36.31" y="80.55" width="9.81" height="6.33" fill="none" stroke="none" pointer-events="all"/>
+    <g transform="translate(-0.5 -0.5)">
+        <text x="42" y="91" fill="#000000" font-family="Arial" font-size="12px" text-anchor="middle">+</text>
+    </g>
+    <g transform="translate(-0.5 -0.5)">
+        <text x="47" y="94" fill="#000000" font-family="Arial" font-size="12px" text-anchor="middle">-</text>
+    </g>
+    <rect x="88.38" y="75.72" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc" pointer-events="all"/>
+    <rect x="88.38" y="112.26" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc" pointer-events="all"/>
+    <rect x="88.38" y="39.18" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc" pointer-events="all"/>
+    <rect x="88.38" y="0" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc" pointer-events="all"/>
+    <rect x="149.33" y="75.72" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc" pointer-events="all"/>
+    <rect x="149.33" y="112.26" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc" pointer-events="all"/>
+    <rect x="210.14" y="77.04" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc" pointer-events="all"/>
+    <rect x="210.14" y="113.58" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc" pointer-events="all"/>
+    <rect x="157.77" y="80.88" width="18.94" height="16.67" fill="none" stroke="none" pointer-events="all"/>
+    <g transform="translate(-0.5 -0.5)">
+        <text x="167" y="93" fill="#000000" font-family="Arial" font-size="12px" text-anchor="middle">∫</text>
+    </g>
+    <rect x="161.24" y="120.63" width="11.98" height="5.88" fill="none" stroke="none" pointer-events="all"/>
+    <g transform="translate(-0.5 -0.5)">
+        <text x="167" y="127" fill="#000000" font-family="Arial" font-size="12px" text-anchor="middle">d/dt</text>
+    </g>
+    <rect x="100.36" y="84.53" width="16.12" height="8.8" fill="none" stroke="none" pointer-events="all"/>
+    <g transform="translate(-0.5 -0.5)">
+        <text x="108" y="93" fill="#000000" font-family="Arial" font-size="12px" text-anchor="middle">Ki</text>
+    </g>
+    <rect x="100.36" y="121.07" width="11.98" height="8.81" fill="none" stroke="none" pointer-events="all"/>
+    <g transform="translate(-0.5 -0.5)">
+        <text x="106" y="129" fill="#000000" font-family="Arial" font-size="12px" text-anchor="middle">Kd</text>
+    </g>
+    <rect x="100.36" y="46.67" width="16.12" height="8.8" fill="none" stroke="none" pointer-events="all"/>
+    <g transform="translate(-0.5 -0.5)">
+        <text x="108" y="55" fill="#000000" font-family="Arial" font-size="12px" text-anchor="middle">Kp</text>
+    </g>
+    <rect x="100.36" y="8.81" width="11.98" height="8.81" fill="none" stroke="none" pointer-events="all"/>
+    <g transform="translate(-0.5 -0.5)">
+        <text x="106" y="17" fill="#000000" font-family="Arial" font-size="12px" text-anchor="middle">Kv</text>
+    </g>
+    <rect x="222.13" y="121.95" width="11.98" height="8.81" fill="none" stroke="none" pointer-events="all"/>
+    <g transform="translate(-0.5 -0.5)">
+        <text x="228" y="130" fill="#000000" font-family="Arial" font-size="12px" text-anchor="middle">PT1</text>
+    </g>
+    <path d="M 227.22 97.52 L 227.22 83.15" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 227.22 83.05 L 234.88 83.15" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 219.57 97.45 L 227.22 97.55" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 62.08 88.83 L 62.27 62.29 Q 62.35 52.29 72.18 52.33 L 82.01 52.37" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 87.26 52.39 L 80.25 55.86 L 82.01 52.37 L 80.27 48.86 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <path d="M 7 88.19 L 31.26 88.19" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 36.51 88.19 L 29.51 91.69 L 31.26 88.19 L 29.51 84.69 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <path d="M 57.75 88.31 L 82.01 88.31" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 87.26 88.31 L 80.26 91.81 L 82.01 88.31 L 80.26 84.81 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <path d="M 62.35 89.4 L 62.35 115.66 Q 62.35 125.66 72.18 125.59 L 82.01 125.52" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 87.26 125.48 L 80.29 129.03 L 82.01 125.52 L 80.23 122.03 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <path d="M 19.47 88.28 L 19.47 23.49 Q 19.47 13.49 29.47 13.45 L 82.01 13.23" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 87.26 13.21 L 80.27 16.74 L 82.01 13.23 L 80.25 9.74 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <ellipse cx="274.42" cy="90.24" rx="7.656177248937112" ry="8.433734939759036" fill="url(#mx-gradient-ffffff-1-ffffff-1-s-0)" stroke="#000000" pointer-events="all"/>
+    <path d="M 276.57 93.61 L 272.28 93.61 L 275.34 90.24 L 272.28 86.87 L 276.57 86.87" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <path d="M 124.33 13.21 L 264.42 13.47 Q 274.42 13.49 274.42 23.49 L 274.42 75.44" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 274.42 80.69 L 270.92 73.69 L 274.42 75.44 L 277.92 73.69 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <path d="M 246.09 90.25 L 260.4 90.24" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 265.65 90.24 L 258.65 93.75 L 260.4 90.24 L 258.65 86.75 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <path d="M 246.09 126.79 L 264.42 126.61 Q 274.42 126.51 274.42 116.51 L 274.42 105.04" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 274.42 99.79 L 277.92 106.79 L 274.42 105.04 L 270.92 106.79 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <path d="M 282.08 90 L 331.63 90.12" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 336.88 90.13 L 329.87 93.62 L 331.63 90.12 L 329.89 86.62 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <path d="M 47.21 132.41 L 47.21 105.04" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 47.21 99.79 L 50.71 106.79 L 47.21 105.04 L 43.71 106.79 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    <rect x="289.28" y="76.71" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc" pointer-events="all"/>
+    <path d="M 306.36 97.19 L 306.36 82.81" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 306.36 82.71 L 314.02 82.81" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 298.71 97.11 L 306.36 97.22" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+  </g>
+</svg>
