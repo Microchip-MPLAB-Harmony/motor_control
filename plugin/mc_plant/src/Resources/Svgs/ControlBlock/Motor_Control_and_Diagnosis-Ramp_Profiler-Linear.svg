@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" width="245px" height="240px" viewBox="-0.5 -0.5 245 240">
+  <defs/>
+  <g id="y-axis">
+    <path d="M 7 196 L 7 14" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 7 8.12 L 10.5 15.12 L 7 14 L 3.5 15.12 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+  </g>
+  <g id="x-axis">
+    <path d="M 7 196 L 230 196" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 234.88 196 L 227.88 199.5 L 229.63 196 L 227.88 192.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <text x="210" y="215" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Time</text>
+  </g>
+  <g id="text-initial">
+    <text x="52" y="139" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Initial</text>
+  </g>
+  <g id="text-final">
+    <text x="197" y="36" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Final</text>
+  </g>
+  <g id="ramp-time">
+    <path d="M 89.24 157.28 L 153.76 157.03" fill="none" stroke="#330000" stroke-width="2" stroke-miterlimit="10"/>
+    <path d="M 83.24 157.3 L 91.22 153.27 L 89.24 157.28 L 91.25 161.27 Z" fill="#330000" stroke="#330000" stroke-width="2" stroke-miterlimit="10"/>
+    <path d="M 159.76 157.01 L 151.78 161.04 L 153.76 157.03 L 151.75 153.04 Z" fill="#330000" stroke="#330000" stroke-width="2" stroke-miterlimit="10"/>
+    <text x="122" y="177" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Ramp Time</text>
+    <g id="ramp-start">
+      <path d="M 82 40 v 170" fill="none" stroke="#cccccc" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="6 6"/>
+    </g>
+    <g id="ramp-end">
+      <path d="M 162 40 v 170" fill="none" stroke="#cccccc" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="6 6"/>
+    </g>
+  </g>
+  <g id="ramp">
+    <path d="M 13 147 h 70 L 162 49 h 60" fill="none" stroke="#cc0000" stroke-width="2" stroke-miterlimit="10"/>
+  </g>
+</svg>
