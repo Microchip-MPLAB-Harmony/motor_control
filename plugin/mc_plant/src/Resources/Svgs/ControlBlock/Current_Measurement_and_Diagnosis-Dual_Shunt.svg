@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="611" height="312" viewBox="-0.5 -0.5 611 312" >
+  <defs>
+    <linearGradient x1="0%" y1="0%" x2="100%" y2="0%" id="mx-gradient-0050ef-1-ffffff-1-e-0">
+      <stop offset="0%" style="stop-color:#0050ef"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-box">
+      <stop offset="0%" style="stop-color:#0050ef"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <g id="background" pointer-events="none">
+      <path d="M 65 195 h 163" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 233.4 195.16 L 226.39 198.63 L 228.15 195.14 L 226.42 191.63 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 250 195 h 27" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 282.12 195.56 L 275.1 199.02 L 276.87 195.53 L 275.14 192.02 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 65 32 h 163" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 233.18 31.72 L 226.19 35.23 L 227.93 31.73 L 226.18 28.23 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 250 31 h 26" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 281.67 31.9 L 274.64 35.33 L 276.42 31.85 L 274.71 28.33 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 87.64 32.03 L 87.64 85.76 Q 87.64 95.76 95.07 95.76 L 102.51 95.76" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 107.76 95.76 L 100.76 99.26 L 102.51 95.76 L 100.76 92.26 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 88 195 L 87.69 136.83 Q 87.64 126.83 95.07 126.83 L 102.51 126.83" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 107.76 126.83 L 100.76 130.33 L 102.51 126.83 L 100.76 123.33 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 218 95 L 232 95 Q 242 95 242.02 85 L 242.12 45.92" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 242.13 40.67 L 245.61 47.68 L 242.12 45.92 L 238.61 47.66 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 217.9 129.77 L 231.91 129.98 Q 241.91 130.12 241.95 140.12 L 242.11 181.18" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 242.13 186.43 L 238.6 179.44 L 242.11 181.18 L 245.6 179.42 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 337 164 L 337.2 124.71" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 337.23 119.46 L 340.69 126.48 L 337.2 124.71 L 333.69 126.45 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 337 70 L 337.19 96.76" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 337.23 102.01 L 333.68 95.03 L 337.19 96.76 L 340.68 94.98 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 394 196 h 158" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 557.04 196 L 550.04 199.77 L 551.79 196 L 550.05 192.77 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 394 36 h 160" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 560.26 35.88 L 553.25 39.37 L 555.01 35.87 L 553.26 32.37 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 345 111 h 208" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 558.88 111 L 551.88 114.5 L 553.63 111 L 551.88 107.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 413.64 35.89 L 413.64 244.64 Q 413.64 254.64 417.39 254.6 L 421.13 254.57" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 426.38 254.52 L 419.41 258.09 L 421.13 254.57 L 419.34 251.09 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 399.33 196.12 L 399.75 281.36 Q 399.79 291.36 409.79 291.45 L 422.05 291.57" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 427.3 291.63 L 420.27 295.06 L 422.05 291.57 L 420.33 288.06 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 518.9 276.06 L 558.7 276.06" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 563.95 276.06 L 556.95 279.56 L 558.7 276.06 L 556.95 272.56 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <g id="text-iuoffset">
+        <text x="213" y="64" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">IuOffset</text>
+      </g>
+      <g id="text-ivoffset">
+        <text x="214" y="166" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">IvOffset</text>
+      </g>
+      <g id="text-iu">
+        <text x="580" y="40" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Iu</text>
+      </g>
+      <g id="text-iv">
+        <text x="580" y="114" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Iv</text>
+      </g>
+      <g id="text-iw">
+        <text x="580" y="198" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Iw</text>
+      </g>
+      <g id="text-status">
+        <text x="591" y="279" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Status</text>
+      </g>
+      <g id="symbol-1">
+        <ellipse cx="337.23" cy="110.73" rx="8" ry="8" fill="#ffffff" stroke="#000000" pointer-events="none"/>
+        <path d="M 331.85 116.12 L 342.62 105.35" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <path d="M 331.85 105.35 L 342.62 116.12" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <text x="333" y="114" fill="#000000" font-family="Verdana" font-size="9px" text-anchor="middle">+</text>
+        <text x="337" y="119" fill="#000000" font-family="Verdana" font-size="11px" text-anchor="middle">-</text>
+      </g>
+      <g id="symbol-2">
+        <ellipse cx="242" cy="195" rx="8" ry="8" fill="#ffffff" stroke="#000000"/>
+        <path d="M 236 201 L 248 189" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <path d="M 236 189 L 248 201" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <text x="234" y="198" fill="#000000" font-family="Verdana" font-size="9px">+</text>
+        <text x="240" y="203" fill="#000000" font-family="Verdana" font-size="11px">-</text>
+      </g>
+      <g id="symbol-3">
+        <ellipse cx="242" cy="32" rx="8" ry="8" fill="#ffffff" stroke="#000000"/>
+        <path d="M 236 38 L 248 26" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <path d="M 236 26 L 248 38" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <text x="234" y="35" fill="#000000" font-family="Verdana" font-size="9px">+</text>
+        <text x="240" y="40" fill="#000000" font-family="Verdana" font-size="11px">-</text>
+      </g>
+    </g>
+    <g id="boxes" pointer-events="all">
+      <g id="box-iusens">
+        <path d="M 14.94 -0.34 L 49.7 -0.34 L 49.7 51.01 L 32.32 64.29 L 14.94 51.01 Z" fill="url(#mx-gradient-0050ef-1-ffffff-1-e-0)" stroke="#001dbc" stroke-miterlimit="10" transform="rotate(270,32.32,31.98)"/>
+        <text x="28" y="36" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">IuSens</text>
+      </g>
+      <g id="box-ivsens">
+        <path d="M 14.94 162.09 L 49.7 162.09 L 49.7 213.44 L 32.32 226.72 L 14.94 213.44 Z" fill="url(#mx-gradient-0050ef-1-ffffff-1-e-0)" stroke="#001dbc" stroke-miterlimit="10" transform="rotate(270,32.32,194.41)"/>
+        <text x="28" y="198" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">IvSens</text>
+      </g>
+      <g id="box-diagnosis" pointer-events="all">
+        <rect x="428.42" y="240.5" width="110.8" height="69.52" fill="url(#gradient-box)" stroke="#001dbc"/>
+        <text x="484" y="279" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Diagnosis</text>
+      </g>
+      <g id="box-current-scaling-top" pointer-events="all">
+        <rect x="283.46" y="163.38" width="110.8" height="69.52" fill="url(#gradient-box)" stroke="#001dbc"/>
+        <text x="339" y="202" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Current Scaling</text>
+      </g>
+      <g id="box-offset-correction">
+        <rect x="109.87" y="77.63" width="108.03" height="69.52" fill="url(#gradient-box)" stroke="#001dbc" stroke-width="1"/>
+        <text x="164" y="116" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Offset Correction</text>
+      </g>
+      <g id="box-current-scaling-bottom">
+        <rect x="283.46" y="0" width="110.8" height="69.52" fill="url(#gradient-box)" stroke="#001dbc"/>
+        <text x="339" y="38" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Current Scaling</text>
+      </g>
+    </g>
+  </g>
+</svg>
