@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="336px" height="172px" viewBox="-0.5 -0.5 336 172">
+  <defs>
+    <linearGradient id="gradient_box" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#0050ef"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+  </defs>
+  <g id="background" pointer-events="none">
+    <path d="M 116.26 52.77 L 262.64 52.77" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 172.62 89.63 L 195.53 89.63" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 200.78 89.63 L 193.78 93.13 L 195.53 89.63 L 193.78 86.13 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 172.62 124.81 L 195.53 124.81" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 200.78 124.81 L 193.78 128.31 L 195.53 124.81 L 193.78 121.31 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 114.07 89.63 L 136.98 89.63" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 142.23 89.63 L 135.23 93.13 L 136.98 89.63 L 135.23 86.13 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 114.07 124.81 L 136.98 124.81" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 142.23 124.81 L 135.23 128.31 L 136.98 124.81 L 135.23 121.31 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 59.65 88.23 L 59.84 61.93 Q 59.91 51.93 69.17 51.97 L 78.42 52.01" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 83.67 52.03 L 76.66 55.5 L 78.42 52.01 L 76.69 48.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 7 87.39 L 29.91 87.39" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 35.16 87.39 L 28.16 90.89 L 29.91 87.39 L 28.16 83.89 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 55.52 87.71 L 78.42 87.71" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 83.67 87.71 L 76.67 91.21 L 78.42 87.71 L 76.67 84.21 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 59.91 88.79 L 59.91 114.81 Q 59.91 124.81 69.17 124.74 L 78.42 124.66" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 83.67 124.62 L 76.7 128.18 L 78.42 124.66 L 76.65 121.18 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 18.92 87.67 L 18.92 23.4 Q 18.92 13.4 28.92 13.36 L 78.42 13.14" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 83.67 13.12 L 76.69 16.65 L 78.42 13.14 L 76.66 9.65 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 119.16 13.12 L 252.64 13.38 Q 262.64 13.4 262.64 23.4 L 262.64 74.88" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 262.64 80.13 L 259.14 73.13 L 262.64 74.88 L 266.14 73.13 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 235.56 89.64 L 248.95 89.63" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 254.2 89.63 L 247.21 93.13 L 248.95 89.63 L 247.2 86.13 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 221.03 125.01 L 252.64 125.49 Q 262.64 125.64 262.64 115.64 L 262.64 104.37" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 262.64 99.12 L 266.14 106.12 L 262.64 104.37 L 259.14 106.12 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 269.96 89.63 L 320.63 89.53" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 325.88 89.52 L 318.89 93.04 L 320.63 89.53 L 318.88 86.04 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 45.44 129.51 L 45.44 102.37" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 45.44 97.12 L 48.94 104.12 L 45.44 102.37 L 41.94 104.12 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 273.26 89.52 L 273.26 117.62 Q 273.26 127.62 276.3 127.54 L 279.34 127.45" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 284.59 127.31 L 277.68 131 L 279.34 127.45 L 277.49 124 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 316.25 89.67 L 316.25 117.76 Q 316.25 127.76 313.98 127.75 L 311.7 127.74" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 306.45 127.71 L 313.47 124.25 L 311.7 127.74 L 313.44 131.24 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 297.67 137.55 L 297.55 148.09 Q 297.44 158.09 287.45 157.94 L 274.9 157.76" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 269.65 157.68 L 276.7 154.28 L 274.9 157.76 L 276.6 161.28 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 235.34 158.98 L 222.36 159.02 Q 212.36 159.04 212.4 149.27 L 212.44 139.49" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 212.46 134.24 L 215.93 141.26 L 212.44 139.49 L 208.93 141.23 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+
+    <g id="sum">
+        <ellipse cx="262.64" cy="89.63" rx="7.318876981620688" ry="8.376217979773767" fill="#ffffff" stroke="#000000"/>
+        <path d="M 264.69 92.98 L 260.59 92.98 L 263.52 89.63 L 260.59 86.28 L 264.69 86.28" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    </g>
+
+    <g id="symbol-1">
+      <ellipse cx="45.65" cy="85.6" rx="9.375" ry="9.375" fill="#f5f5f5" stroke="#666666"/>
+      <path d="M 39.02 92.23 L 52.28 78.97" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 52.28 92.23 L 39.02 78.97" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="40" y="88" fill="#000000" font-family="Verdana" font-size="10px" text-anchor="middle">+</text>
+      <text x="46" y="95" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">-</text>
+    </g>
+    <g id="symbol-2">
+      <ellipse cx="212" cy="123" rx="9.375" ry="9.375" fill="#f5f5f5" stroke="#666666"/>
+      <path d="M 205.19 129.91 L 218.45 116.65" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 218.45 129.91 L 205.19 116.65" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="206" y="126" fill="#000000" font-family="Verdana" font-size="10px" text-anchor="middle">+</text>
+      <text x="212" y="132" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">-</text>
+    </g>
+    <g id="symbol-3">
+      <ellipse cx="296" cy="127" rx="9.375" ry="9.375" fill="#f5f5f5" stroke="#666666"/>
+      <path d="M 289.45 133.73 L 302.7 120.47" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 302.7 133.73 L 289.45 120.47" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="290" y="130" fill="#000000" font-family="Verdana" font-size="10px" text-anchor="middle">+</text>
+      <text x="296" y="136" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">-</text>
+    </g>
+  </g>
+  <g id="boxes" pointer-events="none">
+    <g id="box-kc">
+      <rect x="234.75" y="143.77" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
+      <text x="252" y="161" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Kc</text>
+    </g>
+    <g id="box-ddt">
+      <rect x="143" y="75.21" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
+      <text x="160" y="92" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">d/dt</text>
+    </g>
+    <g id="box-kd">
+      <rect x="84.79" y="75.21" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
+      <text x="102" y="93" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Kd</text>
+    </g>
+    <g id="box-ki">
+      <rect x="84.79" y="111.5" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
+      <text x="102" y="128" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Ki</text>
+    </g>
+    <g id="box-kp">
+      <rect x="84.79" y="38.92" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
+      <text x="102" y="56" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Kp</text>
+    </g>
+    <g id="box-kv">
+      <rect x="84.79" y="0" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
+      <text x="102" y="17" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Kv</text>
+    </g>
+    <g id="box-pt1">
+      <rect x="201.19" y="76.52" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
+      <text x="218" y="93" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PT1</text>
+    </g>
+    <g id="box-integral">
+      <rect x="143" y="111.5" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
+      <text x="160" y="128" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">∫</text>
+    </g>
+    <g id="box-clamp">
+      <rect x="276.85" y="76.19" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
+      <path d="M 286 96 h 7 v -14 h7" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    </g>
+  </g>
+</svg>

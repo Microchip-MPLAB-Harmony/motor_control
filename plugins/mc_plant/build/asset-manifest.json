@@ -1,0 +1,40 @@
+{
+  "files": {
+    "main.css": "./static/css/main.9a193010.chunk.css",
+    "main.js": "./static/js/main.ec33c0f0.chunk.js",
+    "main.js.map": "./static/js/main.ec33c0f0.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.a3ec9c8b.js",
+    "runtime-main.js.map": "./static/js/runtime-main.a3ec9c8b.js.map",
+    "static/css/2.e4be9ebd.chunk.css": "./static/css/2.e4be9ebd.chunk.css",
+    "static/js/2.263caaa9.chunk.js": "./static/js/2.263caaa9.chunk.js",
+    "static/js/2.263caaa9.chunk.js.map": "./static/js/2.263caaa9.chunk.js.map",
+    "static/js/3.38b91235.chunk.js": "./static/js/3.38b91235.chunk.js",
+    "static/js/3.38b91235.chunk.js.map": "./static/js/3.38b91235.chunk.js.map",
+    "index.html": "./index.html",
+    "static/css/2.e4be9ebd.chunk.css.map": "./static/css/2.e4be9ebd.chunk.css.map",
+    "static/css/main.9a193010.chunk.css.map": "./static/css/main.9a193010.chunk.css.map",
+    "static/js/2.263caaa9.chunk.js.LICENSE.txt": "./static/js/2.263caaa9.chunk.js.LICENSE.txt",
+    "static/media/Current_Measurement_and_Diagnosis-Dual_Shunt.4e42634f.svg": "./static/media/Current_Measurement_and_Diagnosis-Dual_Shunt.4e42634f.svg",
+    "static/media/Motor_Control_and_Diagnosis-PI_parameters-Back_Calculation.74b8c77a.svg": "./static/media/Motor_Control_and_Diagnosis-PI_parameters-Back_Calculation.74b8c77a.svg",
+    "static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-Linear.05b469ac.svg": "./static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-Linear.05b469ac.svg",
+    "static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-SCurve.2d7997fa.svg": "./static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-SCurve.2d7997fa.svg",
+    "static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-Step.633ee22e.svg": "./static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-Step.633ee22e.svg",
+    "static/media/Motor_Control_and_Diagnosis-main_diagram.77feda66.svg": "./static/media/Motor_Control_and_Diagnosis-main_diagram.77feda66.svg",
+    "static/media/Motor_Parameters.9bb2bcd9.png": "./static/media/Motor_Parameters.9bb2bcd9.png",
+    "static/media/Output_Stage_and_Diagnosis.44efa697.svg": "./static/media/Output_Stage_and_Diagnosis.44efa697.svg",
+    "static/media/Startup_Configuration-Initial_Field_Detection-Direct_Axis_Forced.10196051.svg": "./static/media/Startup_Configuration-Initial_Field_Detection-Direct_Axis_Forced.10196051.svg",
+    "static/media/Startup_Configuration-Initial_Field_Detection-Initial_Position_Detection.651e2ddd.svg": "./static/media/Startup_Configuration-Initial_Field_Detection-Initial_Position_Detection.651e2ddd.svg",
+    "static/media/Startup_Configuration-Initial_Field_Detection-Quadrature_Axis_Forced.33d26a29.svg": "./static/media/Startup_Configuration-Initial_Field_Detection-Quadrature_Axis_Forced.33d26a29.svg",
+    "static/media/Startup_Configuration-Open_Loop_Startup.7b7ef735.svg": "./static/media/Startup_Configuration-Open_Loop_Startup.7b7ef735.svg",
+    "static/media/Voltage_Measurement_and_Diagnosis-main_diagram.ada4b204.svg": "./static/media/Voltage_Measurement_and_Diagnosis-main_diagram.ada4b204.svg",
+    "static/media/mc_plant_view.4137242a.svg": "./static/media/mc_plant_view.4137242a.svg",
+    "static/media/primeicons.css": "./static/media/primeicons.e61f3495.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a3ec9c8b.js",
+    "static/css/2.e4be9ebd.chunk.css",
+    "static/js/2.263caaa9.chunk.js",
+    "static/css/main.9a193010.chunk.css",
+    "static/js/main.ec33c0f0.chunk.js"
+  ]
+}

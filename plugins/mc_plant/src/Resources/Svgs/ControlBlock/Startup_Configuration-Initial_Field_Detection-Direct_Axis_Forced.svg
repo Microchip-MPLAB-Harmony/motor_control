@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="610px" height="348px" viewBox="-0.5 -0.5 610 348">
+  <defs>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-field-align">
+      <stop offset="0%" style="stop-color:#dae8fc"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-acceleration">
+      <stop offset="0%" style="stop-color:#ffe6cc"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-hold">
+      <stop offset="0%" style="stop-color:#e1d5e7"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-closeloop">
+      <stop offset="0%" style="stop-color:#f5f5f5"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <g id="box-field-align" pointer-events="all">
+      <rect x="147" y="20" width="106" height="188" fill="url(#gradient-field-align)" stroke="none"/>
+      <text x="197" y="34" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Field
+        <tspan x="197" y="47">Alignment</tspan>
+      </text>
+    </g>
+    <g id="box-acceleration" pointer-events="all">
+      <rect x="252" y="20" width="120" height="188" fill="url(#gradient-acceleration)" stroke="none"/>
+      <text x="313" y="34" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Acceleration</text>
+    </g>
+    <g id="box-hold" pointer-events="all">
+      <rect x="372" y="20" width="57" height="188" fill="url(#gradient-hold)" stroke="none"/>
+      <text x="396" y="35" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Hold</text>
+    </g>
+    <g id="box-closeloop" pointer-events="all">
+      <rect x="428" y="20" width="119" height="188" fill="url(#gradient-closeloop)" stroke="none"/>
+      <text x="476" y="35" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Close
+        <tspan x="476" y="47">Loop</tspan>
+      </text>
+    </g>
+    <g id="curve" pointer-events="none">
+      <path d="M 147 209 L 197 70 Q 200 61 210 61 L 369 61 Q 379 61 382 70 L 429 209" fill="none" stroke="#990000" stroke-miterlimit="10"/>
+    </g>
+    <g id="axis" pointer-events="none">
+      <path d="M 120 209.08 L 120 13.37" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 120 8.12 L 123.5 15.12 L 120 13.37 L 116.5 15.12 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 120 209.08 L 593.63 209.08" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 598.88 209.08 L 591.88 212.58 L 593.63 209.08 L 591.88 205.58 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="575" y="228" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">time</text>
+    </g>
+    <g id="legend-bottom" pointer-events="none">
+      <path d="M 153.03 230.64 L 246.97 230.64" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 147.78 230.64 L 154.78 227.14 L 153.03 230.64 L 154.78 234.14 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 252.22 230.64 L 245.22 234.14 L 246.97 230.64 L 245.22 227.14 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="200" y="257" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Alignment Time</text>
+      <path d="M 255.7 230.64 L 366.97 230.64" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 250.45 230.64 L 257.45 227.14 L 255.7 230.64 L 257.45 234.14 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 372.22 230.64 L 365.22 234.14 L 366.97 230.64 L 365.22 227.14 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="313" y="257" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Acceleration
+        <tspan x="313" y="270">Time</tspan>
+      </text>
+      <path d="M 379.7 230.64 L 420.3 230.64" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 374.45 230.64 L 381.45 227.14 L 379.7 230.64 L 381.45 234.14 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 425.55 230.64 L 418.55 234.14 L 420.3 230.64 L 418.55 227.14 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="398" y="257" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Hold
+        <tspan x="398" y="270">Time</tspan>
+      </text>
+      <path d="M 146.4 237.38 L 146.4 223.9" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 251.73 237.38 L 251.73 223.9" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 373.07 237.38 L 373.07 223.9" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 427.73 237.38 L 427.73 223.9" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    </g>
+    <g id="title" pointer-events="none">
+      <text x="313" y="337" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Current Profile</text>
+    </g>
+    <g id="y-axis-legend" pointer-events="none">
+      <text x="190" y="128" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle" transform="rotate(270 100,118)">Current</text>
+    </g>
+    <g id="legend-left">
+      <text x="65" y="62" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Alignment
+        <tspan x="65" y="75">Current</tspan>
+      </text>
+    </g>
+    <g id="dashed-line">
+      <path d="M 99 61 h 110" fill="none" stroke="#cccccc" stroke-miterlimit="10" stroke-dasharray="3 3" pointer-events="none"/>
+    </g>
+  </g>
+</svg>

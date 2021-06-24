@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="771px" height="541px" viewBox="-0.5 -0.5 771 541">
+  <defs>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-speedloop">
+      <stop offset="0%" style="stop-color:#e1d5e7"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-positionloop">
+      <stop offset="0%" style="stop-color:#ffe6cc"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-foc">
+      <stop offset="0%" style="stop-color:#dae8fc"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-box">
+      <stop offset="0%" style="stop-color:#0050ef"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <g id="background" pointer-events="none">
+        <g id="box-positionloop">
+          <rect x="0" y="0" width="180" height="540" fill="url(#gradient-positionloop)" stroke="none"/>
+          <text x="104" y="514" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Position Loop</text>
+        </g>
+        <g id="box-speedloop">
+          <rect x="180" y="0" width="127" height="540" fill="url(#gradient-speedloop)" stroke="none"/>
+          <text x="242" y="514" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Speed Loop</text>
+        </g>
+        <g id="box-foc">
+          <rect x="303" y="0" width="467" height="540" fill="url(#gradient-foc)" stroke="none"/>
+          <text x="510" y="512" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Field Oriented Control</text>
+        </g>
+    </g>
+    <g id="lines" pointer-events="none">
+      <path d="M 403 151 L 447 151" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 451.91 150.67 L 444.96 154.28 L 446.66 150.75 L 444.86 147.28 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 656.96 205.21 L 691.55 205.21" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 696.8 205.21 L 689.8 208.71 L 691.55 205.21 L 689.8 201.71 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 655.32 165.07 L 689.91 165.07" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 695.16 165.07 L 688.16 168.57 L 689.91 165.07 L 688.16 161.57 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 657.78 244.98 L 692.37 244.98" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 697.62 244.98 L 690.62 248.48 L 692.37 244.98 L 690.62 241.48 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 577.87 170.13 L 599.48 170.13" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 604.73 170.13 L 597.73 173.63 L 599.48 170.13 L 597.73 166.63 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 577.87 244.76 L 599.48 244.76" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 604.73 244.76 L 597.73 248.26 L 599.48 244.76 L 597.73 241.26 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 425.14 341.56 L 455.24 341.56" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 400 365 L 463 365" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 432.59 262.14 L 444.98 262.24" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 450.23 262.28 L 443.21 265.73 L 444.98 262.24 L 443.26 258.73 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 228.35 148.87 L 238.72 148.89" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 243.97 148.9 L 236.97 152.39 L 238.72 148.89 L 236.98 145.39 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 528.9 343.81 L 514.29 343.81" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 509.04 343.81 L 516.04 340.31 L 514.29 343.81 L 516.04 347.31 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 528.9 374.65 L 514.29 374.65" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 509.04 374.65 L 516.04 371.15 L 514.29 374.65 L 516.04 378.15 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 102.73 151 L 122.7 151 L 127.62 149.94" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 122.49 151.04 L 128.6 146.15 L 127.62 149.94 L 130.07 152.99 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 363 263 L 407 263" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 412.37 264.08 L 405.38 267.61 L 407.12 264.1 L 405.35 260.61 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" transform="translate(0 -1)"/>
+      <path d="M 500.87 150.81 L 522.53 150.8" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 527.78 150.8 L 520.78 154.3 L 522.53 150.8 L 520.78 147.3 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 500.87 261.45 L 522.63 261.41" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 527.88 261.4 L 520.89 264.91 L 522.63 261.41 L 520.88 257.91 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 169.43 152.9 L 200.88 152.61" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 206.13 152.56 L 199.16 156.13 L 200.88 152.61 L 199.09 149.13 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 400 167 v 199" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 400.48 162.07 L 403.99 169.07 L 400.48 167.32 L 396.99 169.07 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 425.14 341.56 L 425.35 280.41" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 425.37 275.16 L 428.85 282.17 L 425.35 280.41 L 421.85 282.14 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 65.53 152.78 L 77.26 152.67" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 82.51 152.62 L 75.54 156.18 L 77.26 152.67 L 75.48 149.18 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 65.53 152.78 L 65.53 87.8" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 73.54 61.46 L 169.39 61.46 Q 179.39 61.46 179.39 71.46 L 179.39 152.78" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 130.11 61.46 L 298.82 61.46 Q 308.82 61.46 308.82 71.46 L 308.82 152.78" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 95.02 411.8 L 95.02 171.44" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 95.02 166.19 L 98.52 173.19 L 95.02 171.44 L 91.52 173.19 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 217.89 411.8 L 217.87 169.69" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 217.87 164.44 L 221.37 171.43 L 217.87 169.69 L 214.37 171.44 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="326" y="102" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">iqref</text>
+      <text x="380" y="257" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">idref</text>
+      <text x="443" y="314" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">idact</text>
+      <text x="418" y="209" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">iqact</text>
+      <text x="197" y="105" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Nref</text>
+      <text x="34" y="119" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">ThetaRef</text>
+      <text x="197" y="203" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Nact</text>
+      <text x="61" y="203" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">ThetaAct</text>
+      <path d="M 283.92 152.63 L 384.04 152.63" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 389.29 152.63 L 382.29 156.13 L 384.04 152.63 L 382.29 149.13 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 361.69 404.78 L 466.74 404.78 Q 476.74 404.78 477.67 400.54 L 478.59 396.3" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 479.7 391.17 L 481.64 398.75 L 478.59 396.3 L 474.8 397.26 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 361.69 404.78 L 624.84 404.78 Q 634.84 404.78 635.1 394.78 L 638.11 277.68" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 638.25 272.43 L 641.57 279.52 L 638.11 277.68 L 634.57 279.34 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 630.37 374.93 L 591.24 374.93" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 585.99 374.93 L 592.99 371.43 L 591.24 374.93 L 592.99 378.43 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 630.37 357.37 L 591.24 357.37" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 585.99 357.37 L 592.99 353.87 L 591.24 357.37 L 592.99 360.87 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 629.55 340.68 L 590.42 340.68" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 585.17 340.68 L 592.17 337.18 L 590.42 340.68 L 592.17 344.18 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="726" y="167" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PWM U</text>
+      <text x="726" y="209" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PWM V</text>
+      <text x="727" y="248" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PWM W</text>
+      <path d="M 326.84 460.98 L 327.11 438.37" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 327.17 433.12 L 330.59 440.16 L 327.11 438.37 L 323.59 440.08 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 353.87 460.98 L 354.14 437.49" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 354.2 432.24 L 357.62 439.28 L 354.14 437.49 L 350.62 439.2 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="320" y="480" fill="#000000" font-family="Verdana" font-size="10px" text-anchor="middle">Open
+        <tspan x="320" y="495">Loop</tspan>
+        <tspan x="320" y="510">Angle</tspan>
+      </text>
+      <text x="369" y="480" fill="#000000" font-family="Verdana" font-size="10px" text-anchor="middle">Close
+        <tspan x="369" y="495">Loop</tspan>
+        <tspan x="369" y="510">Angle</tspan>
+      </text>
+      <g id="symbol-1" pointer-events="none">
+        <ellipse cx="217.21" cy="148.28" rx="9.55028467088105" ry="9.55028467088105" fill="#f5f5f5" stroke="#666666"/>
+        <path d="M 210.46 155.04 L 223.96 141.53" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <path d="M 223.96 155.04 L 210.46 141.53" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <text x="212" y="151" fill="#000000" font-family="Verdana" font-size="10px" text-anchor="middle">+</text>
+        <text x="218" y="156" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">-</text>
+      </g>
+      <g id="symbol-2" pointer-events="none">
+        <ellipse cx="424.44" cy="260.67" rx="9.550284670881048" ry="9.550284670881048" fill="#f5f5f5" stroke="#666666"/>
+        <path d="M 417.68 267.43 L 431.19 253.92" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <path d="M 431.19 267.43 L 417.68 253.92" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <text x="419" y="264" fill="#000000" font-family="Verdana" font-size="10px" text-anchor="middle">+</text>
+        <text x="425" y="271" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">-</text>
+      </g>
+      <g id="symbol-3" pointer-events="none" transform="translate(0 2)">
+        <ellipse cx="399.95" cy="149.16" rx="9.550284670881048" ry="9.550284670881048" fill="#f5f5f5" stroke="#666666"/>
+        <path d="M 393.2 155.91 L 406.71 142.41" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <path d="M 406.71 155.91 L 393.2 142.41" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+            <text x="394" y="152" fill="#000000" font-family="Verdana" font-size="10px" text-anchor="middle">+</text>
+            <text x="400" y="157" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">-</text>
+      </g>
+      <g id="symbol-4" pointer-events="none">
+        <ellipse cx="93.18" cy="150.92" rx="9.550284670881048" ry="9.550284670881048" fill="#f5f5f5" stroke="#666666"/>
+        <path d="M 86.42 157.67 L 99.93 144.16" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <path d="M 99.93 157.67 L 86.42 144.16" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+        <text x="88" y="153" fill="#000000" font-family="Verdana" font-size="10px" text-anchor="middle">+</text>
+        <text x="94" y="159" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">-</text>
+      </g>
+    </g>
+    <g id="box-pwm-modulator" pointer-events="all" harmony-tooltip="Configure PWM Modulator">
+      <rect x="606.55" y="139.61" width="63.45" height="131.7" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <text x="637" y="203" fill="#000000" font-family="Verdana" font-size="11px" text-anchor="middle">PWM
+        <tspan x="637" y="220">Modulator</tspan>
+      </text>
+    </g>
+    <g id="box-decouple-network" pointer-events="all" harmony-tooltip="Configure Decoupling_Network">
+      <rect x="528.9" y="139.61" width="61.1" height="131.7" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <text x="560" y="203" fill="#000000" font-family="Verdana" font-size="11px" text-anchor="middle">Decouple
+        <tspan x="559" y="220">Network</tspan>
+      </text>
+    </g>
+    <g id="box-dq-ab" pointer-events="all" harmony-tooltip="">
+      <rect x="451.96" y="328.39" width="55.96" height="61.68" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <path d="M 507.92 328.39 L 451.96 390.07" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="468" y="345" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">DQ</text>
+      <text x="490" y="376" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">AB</text>
+    </g>
+    <g id="box-ab-uvw" pointer-events="all" harmony-tooltip="">
+      <rect x="528.9" y="328.39" width="55.96" height="61.68" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <path d="M 577.87 328.39 L 528.9 381.07" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="545" y="345" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">AB</text>
+      <text x="564" y="376" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">UVW</text>
+    </g>
+    <g id="box-ramp-profiler" pointer-events="all" harmony-tooltip="Configure Ramp Profiler">
+      <rect x="41.78" y="39.51" width="56.52" height="52.68" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <text x="68" y="63" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Ramp
+        <tspan x="68" y="80">Profiler</tspan>
+      </text>
+    </g>
+    <g id="box-parkangle" pointer-events="all" harmony-tooltip="Configure Park Angle">
+      <rect x="312.72" y="378.44" width="48.96" height="52.68" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <text x="339" y="400" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Park
+        <tspan x="339" y="420">Angle</tspan>
+      </text>
+    </g>
+    <g id="box-fw-mtpa" pointer-events="all" harmony-tooltip="Configure Field Weakening and Max Torque Per Ampere">
+      <rect x="310" y="233.23" width="53.69" height="60.85" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <text x="337" y="255" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">FW
+        <tspan x="337" y="270">and</tspan>
+        <tspan x="337" y="285">MTPA</tspan>
+      </text>
+    </g>
+    <g id="box-pl-pid" pointer-events="all" harmony-tooltip="Configure Position PID Controller ">
+      <rect x="121.4" y="123.44" width="53.96" height="55.68" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <path d="M 121.4 160.58 L 175.36 137.36" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="146" y="172" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PID</text>
+    </g>
+    <g id="box-sl-pid" pointer-events="all" harmony-tooltip="Configure Speed PID Controller">
+      <rect x="244.61" y="120.44" width="55.96" height="57.68" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <path d="M 244.61 158.91 L 300.57 134.86" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="273" y="170" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PID</text>
+    </g>
+    <g id="box-foc-pid-quadrature" pointer-events="all" harmony-tooltip="Configure Quadrature axis current PID Controller">
+      <rect x="451.96" y="122.68" width="53.96" height="54.68" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <path d="M 451.96 159.16 L 505.92 136.35" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="476" y="170" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PID</text>
+    </g>
+    <g id="box-foc-pid-direct" pointer-events="all" harmony-tooltip="Configure Direct axis current PID controller">
+      <rect x="451.96" y="234.83" width="53.96" height="54.68" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <path d="M 451.96 271.3 L 505.92 248.5" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <text x="476" y="282" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PID</text>
+    </g>
+  </g>
+</svg>

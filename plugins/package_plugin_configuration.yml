@@ -7,5 +7,5 @@ packagePluginConfiguration:
   isHeadless: false
   initArgs:
     pluginClass: com.microchip.mh3.plugin.generic_package_plugin_manager.GenericPackagePlugin
-    main_html_path: motor_control/plugin/mc_plant/build/index.html
+    main_html_path: motor_control/plugins/mc_plant/build/index.html
 

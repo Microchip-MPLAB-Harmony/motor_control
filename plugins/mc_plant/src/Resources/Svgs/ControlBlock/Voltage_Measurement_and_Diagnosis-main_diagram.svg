@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="471px" height="251px" viewBox="-0.5 -0.5 471 251">
+  <defs>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-box">
+      <stop offset="0%" style="stop-color:#0050ef"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="0%" x2="100%" y2="0%" id="gradient-box-vsens">
+      <stop offset="0%" style="stop-color:#0050ef"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <g id="lines" pointer-events="none">
+      <path d="M 325.48 145.93 L 325.9 231.17 Q 325.94 241.17 335.94 241.26 L 348.2 241.38" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 353.45 241.44 L 346.42 244.87 L 348.2 241.38 L 346.48 237.87 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 241 32 h 170" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 416 31 L 409 34 L 411 31 L 409 27 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" transform="translate(0 1)"/>
+      <path d="M 275.2 32 L 275.02 101.81 Q 275 111.81 282.43 111.81 L 289.87 111.81" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 295.12 111.81 L 288.12 115.31 L 289.87 111.81 L 288.12 108.31 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 60 35 h 70" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 130 35 L 123 39 L 125 35 L 123 32 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" transform="translate(-1 0)"/>
+      <path d="M 400 112 h 20" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 424.88 111.69 L 417.87 115.17 L 419.63 111.68 L 417.89 108.17 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 254.2 32 L 254.2 200.81 Q 254.2 210.81 264.2 210.85 L 291.87 210.97" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 297.12 210.99 L 290.1 214.46 L 291.87 210.97 L 290.13 207.46 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 400 212 h 20" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 428.88 212.32 L 421.87 215.8 L 423.63 212.31 L 421.89 208.8 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" transform="translate(-3 0)"/>
+      <text x="436" y="34" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">V</text>
+      <text x="441" y="114" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Vfilt</text>
+      <text x="451" y="215" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Status</text>
+    </g>
+    <g id="box-voltagescaling" pointer-events="all">
+      <rect x="130" y="0" width="111" height="70" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <text x="186" y="38" fill="000000" font-family="Verdana" font-size="12px" text-anchor="middle">Voltage Scaling</text>
+    </g>
+    <g id="box-vsens" pointer-events="all">
+      <path d="M 15.14 2.87 L 49.9 2.87 L 49.9 54.22 L 32.52 67.5 L 15.14 54.22 Z" fill="url(#gradient-box-vsens)" stroke="#001dbc" stroke-miterlimit="10" transform="rotate(270,32.52,35.19)"/>
+      <text x="30" y="39" fill="000000" font-family="Verdana" font-size="12px" text-anchor="middle">VSens</text>
+    </g>
+    <g id="box-processing" pointer-events="all">
+      <rect x="297" y="78" width="108" height="70" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <text x="352" y="116" fill="000000" font-family="Verdana" font-size="12px" text-anchor="middle">Processing</text>
+    </g>
+    <g id="box-diagnosis" pointer-events="all">
+      <rect x="298" y="176" width="108" height="70" fill="url(#gradient-box)" stroke="#001dbc"/>
+      <text x="352" y="215" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Diagnosis</text>
+    </g>
+  </g>
+</svg>

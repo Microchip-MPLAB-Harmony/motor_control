@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="270px" height="82px" viewBox="-0.5 -0.5 270 82">
+  <defs/>
+  <g pointer-events="none">
+    <g id="axis" pointer-events="none">
+      <path d="M 79.73 80 L 80.57 5" fill="none" stroke="#b3b3b3" stroke-miterlimit="10" stroke-dasharray="3 3"/>
+      <path d="M 81.03 65.39 L 247.18 65.39" fill="none" stroke="#b3b3b3" stroke-miterlimit="10" stroke-dasharray="3 3"/>
+    </g>
+    <g id="texts">
+      <text x="44" y="15" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Control</text>
+      <text x="40" y="54" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PWM Timer</text>
+    </g>
+    <g id="line">
+      <polyline points="81,58 85,64 123,17 159,64 196,17 233,64 238,58" fill="none" stroke="#c73500" stroke-width="2" stroke-miterlimit="10"/>
+    </g>
+    <g id="arrows">
+      <path d="M 159.39 64.39 L 159.73 21.03 Q 159.81 11.03 165.13 11.03 L 170.44 11.03" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 175.69 11.03 L 168.69 14.53 L 170.44 11.03 L 168.69 7.53 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+
+      <path d="M 232.76 64.36 L 233.1 21 Q 233.18 11 238.5 11 L 243.81 11" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 249.06 11 L 242.06 14.5 L 243.81 11 L 242.06 7.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+
+      <path d="M 85.49 64.36 L 85.83 21 Q 85.91 11 91.23 11 L 96.54 11" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <path d="M 101.79 11 L 94.79 14.5 L 96.54 11 L 94.79 7.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    </g>
+    <g id="FOC1">
+      <rect x="102.91" y="6" width="18.09" height="10" fill="#0050ef" stroke="none"/>
+      <text x="112" y="14" fill="#FFFFFF" font-family="Helvetica" font-size="7px" text-anchor="middle">FOC</text>
+    </g>
+    <g id="FOC2">
+      <rect x="177" y="6" width="18.09" height="10" fill="#0050ef" stroke="none"/>
+      <text x="186" y="14" fill="#FFFFFF" font-family="Helvetica" font-size="7px" text-anchor="middle">FOC</text>
+    </g>
+    <g id="FOC3">
+      <rect x="250" y="6" width="18.09" height="10" fill="#0050ef" stroke="none"/>
+      <text x="259" y="14" fill="#FFFFFF" font-family="Helvetica" font-size="7px" text-anchor="middle">FOC</text>
+    </g>
+  </g>
+</svg>
