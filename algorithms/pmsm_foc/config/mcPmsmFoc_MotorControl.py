@@ -243,14 +243,14 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     mcMoC_IdCurrentKp.setLabel("Kp")
     mcMoC_IdCurrentKp.setDefaultValue(mcMotC_CurrentPiPararameterDict[mcMOC_DefaultBoard]['KP'])
     mcMoC_IdCurrentKp.setDependencies(mcPmsmFocCurrentKpCalc, ["MCPMSMFOC_CL_BANDWIDTH", "MCPMSMFOC_CL_AUTOCALCULATE",
-        "MCPMSMFOC_LD", "MCPMSMFOC_LQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL"])
+        "MCPMSMFOC_LD", "MCPMSMFOC_LQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL", "MCPMSMFOC_MOTOR_CONNECTION"])
 
     # Symbol for D axis PI controller integral gain 
     mcMoC_IdCurrentKi = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_ID_KI", mcMoC_IdControlNode)
     mcMoC_IdCurrentKi.setLabel("Ki")
     mcMoC_IdCurrentKi.setDefaultValue(mcMotC_CurrentPiPararameterDict[mcMOC_DefaultBoard]['KI'])
     mcMoC_IdCurrentKi.setDependencies(mcPmsmFocCurrentKiCalc, ["MCPMSMFOC_CL_BANDWIDTH", "MCPMSMFOC_CL_AUTOCALCULATE",
-        "MCPMSMFOC_R", "MCPMSMFOC_PWM_FREQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL"])
+        "MCPMSMFOC_R", "MCPMSMFOC_PWM_FREQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL", "MCPMSMFOC_MOTOR_CONNECTION"])
 
     # Symbol for D axis PI controller back calculation gain 
     if( "BACK_CALCULATION" == mcMoc_AntiwindupAlgorithm.getSelectedKey()):
@@ -272,14 +272,14 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     mcMoC_IqCurrentKp.setLabel("Kp")
     mcMoC_IqCurrentKp.setDefaultValue(mcMotC_CurrentPiPararameterDict[mcMOC_DefaultBoard]['KP'])
     mcMoC_IqCurrentKp.setDependencies(mcPmsmFocCurrentKpCalc, ["MCPMSMFOC_CL_BANDWIDTH", "MCPMSMFOC_CL_AUTOCALCULATE",
-        "MCPMSMFOC_LD", "MCPMSMFOC_LQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL"])
+        "MCPMSMFOC_LD", "MCPMSMFOC_LQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL", "MCPMSMFOC_MOTOR_CONNECTION"])
 
     # Symbol for Q axis PI controller integral gain 
     mcMoC_IqCurrentKi = mcPmsmFocComponent.createFloatSymbol("MCPMSMFOC_IQ_KI", mcMoC_IqRootNode)
     mcMoC_IqCurrentKi.setLabel("Ki")
     mcMoC_IqCurrentKi.setDefaultValue(mcMotC_CurrentPiPararameterDict[mcMOC_DefaultBoard]['KI'])
     mcMoC_IqCurrentKi.setDependencies( mcPmsmFocCurrentKiCalc, ["MCPMSMFOC_CL_BANDWIDTH", "MCPMSMFOC_CL_AUTOCALCULATE",
-        "MCPMSMFOC_R", "MCPMSMFOC_PWM_FREQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL"])
+        "MCPMSMFOC_R", "MCPMSMFOC_PWM_FREQ", "MCPMSMFOC_DC_BUS_VOLT", "MCPMSMFOC_BOARD_SEL", "MCPMSMFOC_MOTOR_CONNECTION"])
     
     # Symbol for Q axis PI controller back calculation gain 
     if( "BACK_CALCULATION" == mcMoc_AntiwindupAlgorithm.getSelectedKey()):
