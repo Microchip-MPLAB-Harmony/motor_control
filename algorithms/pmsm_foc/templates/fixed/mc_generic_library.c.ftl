@@ -905,66 +905,6 @@ int16_t __ramfunc__ mcLib_PiControllerRun( tmcLib_PiController_s * const piState
 int16_t mcLib_PiControllerRun( tmcLib_PiController_s * const piState)
 #endif
 {
-#if 1
-    int32_t error;
-    int32_t Yp;
-    int32_t Yi;
-    int32_t Yo;
-    
-    /* Tracking Error */
-    error = piState->reference - piState->feedback;
-    
-    /* Proportional gain */
-    Yp = ((int32_t) error * (int32_t) piState->Kp);
-    
-    /* Calculate controller output */
-    Yo = ( piState->Yi + Yp ) >> piState->KpSh;
-    
-    if( Yo > piState->Ymax )
-    {
-        piState->Yout = piState->Ymax;
-    }
-    else if( Yo < piState->Ymin )
-    {
-        piState->Yout = piState->Ymin;
-    } 
-    else
-    {
-        piState->Yout = Yo;
-    }
-    
-    /* Anti-windup */   
-    Yi = (int32_t) ((int32_t) error * (int32_t) piState->Ki ) >> piState->KiSh;
-    if( piState->Yi > ( piState->Ymax << piState->KpSh) )
-    {
-        if( ( Yp ^ piState->Yi ) & 0x1000000 )
-        {
-           piState->Yi += Yi; 
-        }
-        else
-        {
-           piState->Yi = piState->Ymax;
-        }
-    }
-    else if( piState->Yi < ( piState->Ymin << piState->KpSh))
-    {
-        if( ( Yp ^ piState->Yi ) & 0x1000000 )
-        {
-           piState->Yi += Yi; 
-        }
-        else
-        {
-           piState->Yi = piState->Ymin;
-        }
-    }
-    else
-    {
-         piState->Yi += Yi; 
-    }
-    asm("nop");
-    /* Controller output */
-    return piState->Yout;
-#else
     int32_t s32i;
     int32_t s32p;
     int32_t s32t;
@@ -1080,10 +1020,8 @@ int16_t mcLib_PiControllerRun( tmcLib_PiController_s * const piState)
         /* no action */
         }
     }
-    asm("nop");
-    return(s16t);
 
-#endif
+    return(s16t);
 
 }
 

@@ -96,7 +96,7 @@
             /* Anti-windup back calculation gain */\
             SPEED_YMAX \
         },        \
-        1.0f,   \
+        0.0005f,   \
         MINIMUM_SPEED_IN_RPM,   \
         MAXIMUM_SPEED_FROM_POT_IN_RPM,  \
         TORQUE_MODE_MAXIMUM_CURRENT \

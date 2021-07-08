@@ -52,7 +52,6 @@
 #include "mc_start_up.h"
 #include "mc_generic_library.h"
 #include "mc_error_handler.h"
-#include "mc_flux_control.h"
 #include "mc_current_control.h"
 #include "mc_speed_control.h"
 #include "mc_userparams.h"
