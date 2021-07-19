@@ -54,11 +54,9 @@
 *******************************************************************************/
 /**
  */
-#if ( ENABLE == FLUX_WEAKENING )
-#define MAXIMUM_SPEED_FROM_POT_IN_RPM   MAXIMUM_SPEED_IN_RPM  
-#else
+
 #define MAXIMUM_SPEED_FROM_POT_IN_RPM  RATED_SPEED_IN_RPM
-#endif
+
 
 /**
  *  Potentiometer first order filter parameter ( 0.0 -  1.0 )

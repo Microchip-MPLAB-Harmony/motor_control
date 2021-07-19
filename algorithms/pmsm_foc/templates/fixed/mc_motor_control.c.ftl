@@ -154,9 +154,6 @@ void mcMocI_MotorControlTasksRun( void )
             case mcState_Foc:
             {  
                 mcMocI_SpaceVectorPosition_gdu16 = mcRpoI_ElectricalRotorPosition_gdu16;
-            #if( ENABLE == FLUX_WEAKENING )
-                mcFlxI_FluxControlRun(0u);
-            #endif
                 mcSpeI_SpeedRegulationRun( 0u );
             }
             break;

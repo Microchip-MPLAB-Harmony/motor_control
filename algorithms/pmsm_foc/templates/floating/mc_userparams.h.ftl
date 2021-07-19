@@ -58,8 +58,11 @@
 #define POSITION_FEEDBACK                (${MCPMSMFOC_POSITION_FB})
 
 #define CONTROL_LOOP                     (${MCPMSMFOC_CONTROL})
-
+<#if MCPMSMFOC_CONTROL == "SPEED_LOOP">
 #define FIELD_WEAKENING                  (${MCPMSMFOC_FIELD_WEAKENING?then('ENABLED','DISABLED')})  /* If enabled - Field weakening */
+<#else>
+#define FIELD_WEAKENING                   (DISABLED)
+</#if>
 #define ALIGNMENT_METHOD                 (${MCPMSMFOC_ALIGNMENT})  /* alignment method  */
 
 <#if MCPMSMFOC_INTERM_FLYING_START>

@@ -189,8 +189,8 @@ def mcMoC_CreateMHCSymbols( mcPmsmFocComponent ):
     mcMoC_RefSpeed.setDefaultValue(1000)
     mcMoC_RefSpeed.setMin(0)
     mcMoC_RefSpeed.setVisible(False)
-    mcMoC_RefSpeed.setMax(mcMot_MaximumSpeedInRpm.getValue())
-    mcMoC_RefSpeed.setDependencies(mcPmsmFocSpeed, ["MCPMSMFOC_CONTROL", "MCPMSMFOC_REF_INPUT"])
+    mcMoC_RefSpeed.setMax(mcMot_RatedSpeedInRpm.getValue())
+    mcMoC_RefSpeed.setDependencies(mcPmsmFocSpeed, ["MCPMSMFOC_CONTROL", "MCPMSMFOC_REF_INPUT", "MCPMSMFOC_FIELD_WEAKENING"])
     
     if(('PIC32CMMC00' != mcMoC_MicrocontrollerSeries ) and ( 'SAMC21' != mcMoC_MicrocontrollerSeries )):
         # Symbol to enable/ disable filed wekening mode 
@@ -366,13 +366,19 @@ def mcPmsmFocTorquePot(symbol, event):
     else:
         symbol.setVisible(False)        
 
-def mcPmsmFocSpeed(symbol, event):      
+def mcPmsmFocSpeed(symbol, event):    
+    component = symbol.getComponent()  
     control = mcMoC_Control.getSelectedKey()
-    input = mcMoC_RefInput.getValue()    
+    input = mcMoC_RefInput.getValue()
+    fw = component.getSymbolValue("MCPMSMFOC_FIELD_WEAKENING")
     if(control == "SPEED_LOOP" and input == "UI Input"):
         symbol.setVisible(True)
     else:
         symbol.setVisible(False)
+    if fw == True:
+        symbol.setMax(mcMot_MaximumSpeedInRpm.getValue())
+    else:
+        symbol.setMax(mcMot_RatedSpeedInRpm.getValue())
 
 def mcPmsmFocPIValueChange( symbol, event):
     if(event["value"] == 1): #encoder
