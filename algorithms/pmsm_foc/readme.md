@@ -21,17 +21,19 @@ This component depends on ADC PLIB for phase current measurement, DC bus voltage
 |------------| ---------------| -----------------------------------------------------------|
 | SAME70       | Yes              | Yes |
 | SAME54        | Yes      | Yes |
+| SAMC21   | Yes | Yes |
 | PIC32MK MCF       | Yes  | Yes |
 | PIC32MK MCM   | Yes | Yes |
+| PIC32CM MC  | Yes | Yes |
 ||||
 
 ## Supported Features
 
 | Feature     | Options  | 
 |------------| -----------------------------------------------------------|
-| Position Feedback       | - PLL Estimator <br> - Quadrature Encoder             | 
+| Position Feedback       | - PLL Estimator <br> - Reduced Order      Luenberger Observer <br> - Quadrature Encoder             | 
 | Current Measurement     | - Dual shunt     | 
-| Control Loop       | - Speed mode <br> - Torque mode <br> - Open loop (For sensorless operation)  | 
+| Control Loop       | - Speed mode <br> - Torque mode <br> - Open loop  | 
 | Field Alignment   |  - Q-axis alignment <br> - D-axis alignment |
 | Advanced Features |  - Equation based field weakening <br> - Flying Start | 
 |||
@@ -43,7 +45,7 @@ This component depends on ADC PLIB for phase current measurement, DC bus voltage
 [Control Algorithm](control_algorithm.md)
 
 
-[Configuring the Library](/onfigurations.md)
+[Configuring the Library](configurations.md)
 
 [Using the Library](using_the_library.md)
 

@@ -26,7 +26,13 @@ Field Oriented Control is the technique used to achieve the decoupled control of
 The working principle of the PLL estimator can be found in [Application Note AN2520](http://ww1.microchip.com/downloads/en/AppNotes/Sensorless-FOC-For-PMSM-using-PLL-Estimator-FW-AN-DS00002520C.pdf). Its operating principle
 is based on the fact that the d-component of the Back Electromotive Force (BEMF) must be equal to zero at a steady state functioning mode.
 
-The main disadvantage of PLL estimator is its inability to estimate the rotor angle at lower rotor speeds because of very low value of back EMF. Therefore, the FOC algorithm also integrates the ramp-up profile for motor start. The reference speed is incremented linearly using a open loop phase voltage control until the required minimum reference speed for the PLL estimator is reached. 
+The main disadvantage of PLL estimator is its inability to estimate the rotor angle at lower rotor speeds because of very low value of back EMF. Therefore, the FOC algorithm also integrates the ramp-up profile for motor start. The reference speed is incremented linearly using an open loop phase voltage control until the required minimum reference speed for the PLL estimator is reached.
+
+**Reduced Order Luenberger Observer**
+
+The working principle of the Reduced Order Luenberger Observer can be found in [Application Note AN2590](https://www.microchip.com/wwwAppNotes/AppNotes.aspx?appnote=en603273).
+
+Like any other back EMF based sensorless technique, the main disadvantage of Reduced Order Luenberger Observer is its inability to estimate the rotor angle at lower rotor speeds because of very low value of back EMF. Therefore, the FOC algorithm also integrates the ramp-up profile for motor start. The reference speed is incremented linearly using an open loop phase voltage control until the required minimum reference speed for the observer is reached.
 
 **Quadrature Encoder**
 

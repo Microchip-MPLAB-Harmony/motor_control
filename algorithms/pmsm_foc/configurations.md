@@ -49,6 +49,8 @@ Select the PWM frequency and PWM channels used to drive Phase U, V and W based o
 
 ![pwm](images/pwm_parameters.png)
 
+*Note: Flying start is not supported in SAMC21 and PIC32MK CM MC project. 
+
 ### ADC Configurations
 
 Select ADC channels used for Phase U current, Phase V Current, DC Bus voltage and potentiometer based on the board connections. Selected configurations are passed to the ADC PLIB. ADC PLIB is auto-configured for FOC algorithm. 
