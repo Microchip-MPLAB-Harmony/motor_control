@@ -55,7 +55,7 @@ Headers inclusions
 #define RPM_TO_INTERNAL_UNITS (float)( K_SPEED * RPM_TO_RAD_PER_SEC )
 #define POT_TO_RAD_PER_SEC (float)( RATED_SPEED / 4096.0f )
 #define POT_TO_SPEED_INTERNAL_UNITS (float)( K_SPEED * POT_TO_RAD_PER_SEC )
-
+#define RPM_TO_RAMP_RATE_LIMIT ( float )( RPM_TO_INTERNAL_UNITS * CURRENT_CONTROL_SAMPLING_TIME )
 /*******************************************************************************
  Private data-types 
  *******************************************************************************/
@@ -63,7 +63,7 @@ typedef struct _tmcSpe_Parameters_s
 {
     int16_t adcCountToSpeedVal;
     uint16_t adcCountToSpeedSh;
-    int16_t refSpeedFiltParam;
+    int16_t refSpeedRampLimit;
     int16_t minReferenceSpeed;
     int16_t maxReferenceSpeed;
 #if( CONTROL_LOOP == TORQUE_LOOP )
@@ -76,6 +76,7 @@ typedef struct _tmcSpe_Parameters_s
 typedef struct _tmcSpe_StateVariables_s
 {
     int16_t absReferenceSpeed;
+    int32_t scaledReferenceSpeed;
 }tmcSpe_StateVariables_s;
 
 
@@ -107,14 +108,32 @@ tmcSpe_RampProfiler_s mcSpeI_ReferenceSpeedProfile_gas[1u] =
 /*******************************************************************************
  * Local Functions  
 *******************************************************************************/
-void mcSpe_EulerFilter( int16_t input, int16_t * output, int16_t filtParam  )
+void mcSpe_SpeedRampLimiter( int16_t input, tmcSpe_StateVariables_s * state, int16_t rampRate  )
 {
-    int32_t s32a;
- 
-    s32a = (int32_t)((int32_t)( input - *output ) * (int32_t)filtParam);
-    s32a >>= SH_BASE_VALUE;
-   *output += s32a;    
+    int32_t scaledInput;
+    int32_t scaledReference;
+  
+    scaledInput = (int32_t)( input * BASE_VALUE );
+    scaledReference = state->scaledReferenceSpeed;
+    
+    if( ( scaledReference + rampRate ) < scaledInput )
+    {
+        scaledReference += rampRate;
+    }
+    else if( ( scaledReference - rampRate ) > scaledInput )
+    {
+        scaledReference -= rampRate;
+    }
+    else 
+    {
+        scaledReference = scaledInput;
+    }
+    
+    /* Set the reference value */
+    state->scaledReferenceSpeed = scaledReference; 
+    state->absReferenceSpeed = scaledReference >> SH_BASE_VALUE;
 }
+
 
 /*******************************************************************************
 Interface Functions
@@ -192,7 +211,13 @@ void mcSpeI_SpeedRegulationInit( const tmcSpe_ConfigParameters_s * const spePara
         pParam->adcCountToSpeedSh++;
     }
     pParam->adcCountToSpeedVal = f32a;
-    pParam->refSpeedFiltParam = speParam->userParam.speedFilterParam * BASE_VALUE;
+    
+    /* Ramp rate limit calculation */
+    f32a = speParam->userParam.rpmPerSecondLimit;
+    f32a *= RPM_TO_RAMP_RATE_LIMIT; 
+    f32a *= BASE_VALUE;
+     
+    pParam->refSpeedRampLimit = (int32_t)( f32a + 0.5f );
     
 #if(( CONTROL_LOOP == TORQUE_LOOP ) && ( ENABLE == POTENTIOMETER_INPUT_ENABLED ))
     f32a = K_CURRENT * speParam->userParam.maxTorqueCurrent + 0.5f;
@@ -282,8 +307,7 @@ void mcSpeI_SpeedRegulationRun( const tmcSpe_InstanceId_e Id )
      s32a *=    mcSpe_Parameters_mas[Id].adcCountToSpeedVal;
      s32a >>=   mcSpe_Parameters_mas[Id].adcCountToSpeedSh;
            
-     mcSpe_EulerFilter( (int16_t)s32a, &mcSpe_StateVariables_mas[Id].absReferenceSpeed, 
-                                mcSpe_Parameters_mas[Id].refSpeedFiltParam );
+     mcSpe_SpeedRampLimiter( (int16_t)s32a, &mcSpe_StateVariables_mas[Id], mcSpe_Parameters_mas[Id].refSpeedRampLimit );
         
      if( mcSpe_Parameters_mas[Id].minReferenceSpeed > mcSpe_StateVariables_mas[Id].absReferenceSpeed )
      {
@@ -335,6 +359,8 @@ void mcSpeI_SpeedRegulationReset( const tmcSpe_InstanceId_e Id )
 {
     /* Reset state variables */
     mcLib_PiControllerReset( &mcSpe_SpeedController_mas[Id]);
+    mcSpe_StateVariables_mas[Id].absReferenceSpeed = 0;
+    mcSpe_StateVariables_mas[Id].scaledReferenceSpeed = 0;
            
     /* Reset output ports */
     *mcSpe_OutputPorts_mas[Id].iqref = 0.0f;
