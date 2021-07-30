@@ -44,7 +44,6 @@
 Headers inclusions
 *******************************************************************************/
 #include "definitions.h"
-#include "stdio.h"
 #include "mc_generic_library.h"
 #include "mc_error_handler.h"
 #include "mc_motor_control.h"
@@ -77,10 +76,7 @@ void mcErr_AssertionFailedReaction( const char * message )
 { 
     /* Log software plausibility error Id and message */
     mcErrI_ErrorLogged_gde =     SOFTWARE_PLAUSIBILITY_FAILURE;
-    
-    /* Store passed message */
-    printf("%s", message);
-    
+        
     /* Error Reaction */
     mcErr_ErrorReaction();
 }
