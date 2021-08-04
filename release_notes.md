@@ -9,6 +9,39 @@ has_children: true
 
 # Microchip MPLAB Harmony 3 Release Notes
 
+## Motor Control Release v3.7.0
+
+### New Features
+* SAMC2x and PIC32CM MC device support - Added Reduced Order Leuemberger Observer on SAMC21 and PIC32CM MC devices in PMSM_FOC component. 
+* Added open loop support in encoder based FOC
+* Supported user input for speed reference and current reference
+
+### Known Issues
+* In pmsm_foc_encoder_pic32_mk projects, overcurrent fault occurs at higher speeds in reverse direction with field weakening mode enabled.
+
+* Isolated EDBG Card 
+
+  * If programming failure occurs with message "java.lang.RuntimeException:RDDI_DAP_OPERATION_FAILED", then reset the Isolated EDBG Card's configuration by Go to File -> Project Properties -> EDBG -> Reset 
+
+  * Programming or debugging PIC32CM, SAM C/D2x or SAM D/E5x MCU, using Isolated EDBG Card (board revision #02-10824-R1) on dsPICDEM™ MCHV-3 High Voltage Development Board may inhibit MCU from executing instructions if the MCU is reset by pressing on board 'Reset' switch or power cycling the board. Refer to the [Isolated EDBG Debugger Product Change Notice](https://www.microchip.com/DevelopmentTools/ProductDetails/AC320202) for details of hardware modification needed to resolve this issue.
+
+* pmsm_foc_encoder_<device_family> applications running on dsPICDEM MCHV-3 requires increasing bandwidth of the quadrature encoder signal filter to maintain signal integrity of quadrature sensor signals at higher motor speeds. Without these modifications, motor operation may fail at higher speeds.
+  * Reduce the capacitance value of C25, C26 and C27 from 100pF to 10pF 50V NPO 0805
+
+### Required MPLAB Harmony v3 Modules
+* csp v3.9.1
+* x2c v1.1.4
+* dev_packs v3.9.0
+* mhc v3.8.0
+
+### Development Tools
+* [MPLAB X IDE v5.50](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB XC32 C/C++ Compiler v3.01](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.6.4.
+  * X2CScope v1.3.0.
+
+
 ## Motor Control Release v3.6.1
 
 ### Bug Fixes

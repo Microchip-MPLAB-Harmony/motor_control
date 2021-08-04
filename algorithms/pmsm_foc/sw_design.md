@@ -1,6 +1,6 @@
 ﻿---
 parent: PMSM FOC Component
-grand_parent: Harmony 3 Motor Control
+grand_parent: Microchip MPLAB® Harmony 3 Motor Control
 title: Software Design
 nav_order: 1
 has_children: false
@@ -85,7 +85,7 @@ HAL:
 -   mc_hal.h - Hardware Abstraction Layer to interact with PLIBs 
 
 
-### 2. SAMC21 and PIC32MK CM MC
+### 2. SAMC21 and PIC32CM MC
 -   PMSM FOC Control loop is implemented in the ADC result ready interrupt. Refer to the flow chart given below. 
 -   ADC channel conversion is triggered by the PWM overflow/zero match event. This trigger point could vary based on the current measurement techniques and MCU PWM IP implementation.
 -   For bandwidth constraints, the FOC is executed every alternate PWM cycle

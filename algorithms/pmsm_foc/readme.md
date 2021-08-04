@@ -1,5 +1,5 @@
 ---
-parent: Harmony 3 Motor Control
+parent: Microchip MPLAB® Harmony 3 Motor Control
 title: PMSM FOC Component
 has_children: true
 has_toc: false
@@ -25,18 +25,11 @@ This component depends on ADC PLIB for phase current measurement, DC bus voltage
 | PIC32MK MCF       | Yes  | Yes |
 | PIC32MK MCM   | Yes | Yes |
 | PIC32CM MC  | Yes | Yes |
-||||
+
 
 ## Supported Features
 
-| Feature     | Options  | 
-|------------| -----------------------------------------------------------|
-| Position Feedback       | - PLL Estimator <br> - Reduced Order      Luenberger Observer <br> - Quadrature Encoder             | 
-| Current Measurement     | - Dual shunt     | 
-| Control Loop       | - Speed mode <br> - Torque mode <br> - Open loop  | 
-| Field Alignment   |  - Q-axis alignment <br> - D-axis alignment |
-| Advanced Features |  - Equation based field weakening <br> - Flying Start | 
-|||
+![supported_features](images/supported_features.jpg)
 
 
 [Software Design](sw_design.md)

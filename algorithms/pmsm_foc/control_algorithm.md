@@ -1,6 +1,6 @@
 ---
 parent: PMSM FOC Component
-grand_parent: Harmony 3 Motor Control
+grand_parent: Microchip MPLAB® Harmony 3 Motor Control
 title: Control Algorithm
 nav_order: 2
 has_children: false

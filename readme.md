@@ -1,5 +1,5 @@
 ﻿---
-title: Harmony 3 Motor Control
+title: Microchip MPLAB® Harmony 3 Motor Control
 nav_order: 1
 has_children: true
 has_toc: false
