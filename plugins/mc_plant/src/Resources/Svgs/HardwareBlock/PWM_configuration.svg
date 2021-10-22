@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="277px" height="173px" viewBox="-0.5 -0.5 277 173">
+  <defs/>
+  <g pointer-events="none">
+    <g id="dotted_lines">
+      <path d="M 53 27 L 275 27" fill="none" stroke="#b3b3b3" stroke-dasharray="3 3"/>
+      <path d="M 53 40 L 275 40" fill="none" stroke="#b3b3b3" stroke-dasharray="3 3"/>
+      <path d="M 53 16 v 156" fill="none" stroke="#b3b3b3" stroke-dasharray="3 3"/>
+      <path d="M 91 95 v 80" fill="none" stroke="#cccccc" stroke-dasharray="3 3"/>
+      <path d="M 98 42 v 128" fill="none" stroke="#cccccc" stroke-dasharray="3 3"/>
+      <path d="M 122 42 v 128" fill="none" stroke="#cccccc" stroke-dasharray="3 3"/>
+      <path d="M 195 42 v 128" fill="none" stroke="#cccccc" stroke-dasharray="3 3"/>
+      <path d="M 220 42 v 128" fill="none" stroke="#cccccc" stroke-dasharray="3 3"/>
+    </g>
+    <g id="labels">
+      <text x="51" y="29" fill="black" font-family="Helvetica" font-size="12px" text-anchor="end">Period</text>
+      <text x="51" y="43" fill="black" font-family="Helvetica" font-size="12px" text-anchor="end">Compare</text>
+      <text x="51" y="124" fill="black" font-family="Helvetica" font-size="12px" text-anchor="end">PWMxH</text>
+      <text x="51" y="145" fill="black" font-family="Helvetica" font-size="12px" text-anchor="end">PWMxL</text>
+      <text x="86" y="11" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">Period</text>
+      <text x="177" y="11" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">Compare</text>
+      <text x="136" y="88" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">Dead-time</text>
+      <text x="46" y="79" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">0</text>
+    </g>
+    <g id="red_line">
+      <polyline points="54,69 60,75 109,28 158,75 208,28 256,75 263,69" style="fill:none;stroke:#c73500;stroke-width:2"/>
+    </g>
+    <g id="green_line1">
+      <polyline points="54,122 98,122 98,105 122,105 122,122 195,122 195,105 220,105 220,122 263,122" style="fill:none;stroke:#336600;stroke-width:1"/>
+    </g>
+    <g id="green_line2">
+      <polyline points="54,141 91,141 91,158 127,158 127,141 190,141 190,158 225,158 225,141 263,141" style="fill:none;stroke:#336600;stroke-width:1"/>
+    </g>
+
+    <g id="arrow_period">
+      <path d="M 60 17 v 6" fill="none" stroke="black"/>
+      <path d="M 66 20 h 37" fill="none" stroke="black"/>
+      <path d="M 61 20 L 68 17 L 66 20 L 68 24 Z" fill="black" stroke="black"/>
+      <path d="M 108 20 L 101 24 L 103 20 L 101 17 Z" fill="black" stroke="black"/>
+      <path d="M 109 17 v 6" fill="none" stroke="black"/>
+    </g>
+    <g id="arrows_deadtime">
+      <path d="M 91 95 v 6" fill="none" stroke="black"/>
+      <path d="M 98 95 v 6" fill="none" stroke="black"/>
+      <path d="M 79 98 L 85 98" fill="none" stroke="black"/>
+      <path d="M 90 98 L 83 102 L 85 98 L 83 95 Z" fill="black" stroke="black"/>
+      <path d="M 103 98 h 6" fill="none" stroke="black"/>
+      <path d="M 99 98 L 105 95 L 103 98 L 105 101 Z" fill="black" stroke="black"/>
+      <path d="M 103.18 84.92 L 98.88 84.92 Q 94.58 84.92 94.58 87.47 L 94.58 90.02" fill="none" stroke="black"/>
+      <path d="M 94.58 95.27 L 91.08 88.27 L 94.58 90.02 L 98.08 88.27 Z" fill="black" stroke="black"/>
+    </g>
+    
+    <g id="arrows_compare">
+      <path d="M 165 21 L 189 21" fill="none" stroke="black"/>
+      <path d="M 159.62 20.75 L 166.65 17.31 L 164.87 20.8 L 166.59 24.31 Z" fill="black" stroke="black"/>
+      <path d="M 194.27 21.03 L 187.24 24.47 L 189.02 20.99 L 187.3 17.47 Z" fill="black" stroke="black"/>
+      <path d="M 158.5 17.46 L 158.5 23.91" fill="none" stroke="black"/>
+      <path d="M 195.39 18.05 L 195.39 24.5" fill="none" stroke="black"/>
+    </g>
+    
+  </g>
+</svg>
