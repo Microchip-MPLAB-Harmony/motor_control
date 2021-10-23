@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="70px" height="50px" viewBox="-0.5 -0.5 70 50">
+  <defs/>
+  <g id="af_selectitem2" pointer-events="all">
+    <path d="M 7.06 15.55 L 16.24 15.55" fill="none" stroke="black"/>
+    <path d="M 21.49 15.55 L 14.49 19.05 L 16.24 15.55 L 14.49 12.05 Z" fill="black" stroke="black"/>
+    <path d="M 44.78 25.37 L 55.13 25.37" fill="none" stroke="black"/>
+    <path d="M 60.38 25.37 L 53.38 28.87 L 55.13 25.37 L 53.38 21.87 Z" fill="black" stroke="black"/>
+    <path d="M 22.61 10.82 L 45.94 25.37 L 22.61 39.91 Z" fill="#007fff" stroke="#001dbc"/>
+    <path d="M 7.06 36.27 L 16.24 36.27" fill="none" stroke="black"/>
+    <path d="M 21.49 36.27 L 14.49 39.77 L 16.24 36.27 L 14.49 32.77 Z" fill="black" stroke="black"/>
+    <path d="M -1.48 8.61 L 1.65 8.61 L 2.35 6.38 L 3.74 10.83 L 5.13 6.38 L 6.52 10.83 L 7.92 6.38 L 9.31 10.83 L 10.7 6.38 L 12.09 10.83 L 12.79 8.61 L 15.92 8.61" fill="none" stroke="black" transform="rotate(90,7.22,8.61)"/>
+    <path d="M -1.48 26 L 1.65 26 L 2.35 23.77 L 3.74 28.22 L 5.13 23.77 L 6.52 28.22 L 7.92 23.77 L 9.31 28.22 L 10.7 23.77 L 12.09 28.22 L 12.79 26 L 15.92 26" fill="none" stroke="black" transform="rotate(90,7.22,26)"/>
+    <path d="M 2.22 44.77 L 7.22 48.24 L 12.22 44.77 Z" fill="#808080" stroke="black"/>
+    <path d="M 7.22 43.03 L 7.22 44.77" fill="none" stroke="black"/>
+    <path d="M 7.22 43.03 L 7.22 34.69" fill="none" stroke="black"/>
+    <ellipse cx="43" cy="40" rx="8" ry="8" fill="#00dd00" stroke="none"/>
+    <path d="M 43 35 v 10 M 38 40 h 10" style="fill:none;stroke:white;stroke-width:2"/>
+  </g>
+</svg>

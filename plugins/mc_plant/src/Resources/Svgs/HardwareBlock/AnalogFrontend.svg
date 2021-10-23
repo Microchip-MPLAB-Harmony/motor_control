@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1000px" height="700px" viewBox="0 0 1000 700">
+  <defs>
+    <g id="af_item1" pointer-events="all">
+      <g id="background_af_item1">
+        <path d="M 40 13 L 73.63 13" fill="none" stroke="black" pointer-events="stroke"/>
+        <path d="M 78.88 13 L 71.88 16.5 L 73.63 13 L 71.88 9.5 Z" fill="black" stroke="black"/>
+        <path d="M 15 -12 L 35 -12 L 35 29.78 L 25 38 L 15 29.78 Z" fill="#e6e6e6" stroke="black" transform="rotate(270,25,13)"/>
+        <path d="M 137 40 L 173.63 40" fill="none" stroke="black" pointer-events="stroke"/>
+        <path d="M 178.88 40 L 171.88 43.5 L 173.63 40 L 171.88 36.5 Z" fill="black" stroke="black"/>
+        <path d="M 80 0 L 140 40 L 80 80 Z" fill="#007fff" stroke="#001dbc"/>
+        <rect x="4" y="2" width="40" height="20" fill="none" stroke="none"/>
+      <rect x="186" y="30" width="40" height="20" fill="none" stroke="none"/>
+      <path d="M 56 119 L 56 70" fill="none" stroke="black"/>
+      <ellipse cx="56" cy="100" rx="10" ry="10" fill="white" stroke="black"/>
+      <g fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">
+        <text x="55.5" y="99.5">+</text>
+      </g>
+      <g fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">
+        <text x="55.5" y="107">-</text>
+      </g>
+      <path d="M 51 122.33 L 56 129 L 61 122.33 Z" fill="#b3b3b3" stroke="black"/>
+      <path d="M 56 119 L 56 122.33" fill="none" stroke="black"/>
+      <path d="M 40 70 L 73.63 70" fill="none" stroke="black"/>
+      <path d="M 78.88 70 L 71.88 73.5 L 73.63 70 L 71.88 66.5 Z" fill="black" stroke="black"/>
+      <path d="M 15 45 L 35 45 L 35 86.78 L 25 95 L 15 86.78 Z" fill="#e6e6e6" stroke="black" transform="rotate(270,25,70)"/>
+      </g>
+      
+      <g id="labels_af_item1">
+        <text id="label_input1_af_item1" x="23.5" y="16.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">Iv (+)</text>
+        <text id="label_input2_af_item1" x="23.5" y="73.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">Iv (-)</text>
+        <text id="label_output_af_item1" x="205.5" y="44.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">IvSens</text>
+        <text id="label_offset_af_item1" x="94" y="104.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">Voffset</text>
+      </g>
+    </g>
+    <g id="af_item2">
+      <g id="background_af_item2">
+        <path d="M 75 63 L 108.63 63" fill="none" stroke="black" pointer-events="stroke"/>
+        <path d="M 113.88 63 L 106.88 66.5 L 108.63 63 L 106.88 59.5 Z" fill="black" stroke="black"/>
+        <path d="M 172 90 L 208.63 90" fill="none" stroke="black" pointer-events="stroke"/>
+        <path d="M 213.88 90 L 206.88 93.5 L 208.63 90 L 206.88 86.5 Z" fill="black" stroke="black"/>
+        <path d="M 115 50 L 175 90 L 115 130 Z" fill="#007fff" stroke="#001dbc"/>
+        <rect x="223" y="80" width="60" height="20" fill="none" stroke="none"/>
+        <path d="M 75 120 L 108.63 120" fill="none" stroke="black" pointer-events="stroke"/>
+        <path d="M 113.88 120 L 106.88 123.5 L 108.63 120 L 106.88 116.5 Z" fill="black" stroke="black"/>
+        <path d="M 49.16 36.09 L 58.55 36.09 L 60.64 31.09 L 64.82 41.09 L 68.99 31.09 L 73.16 41.09 L 77.34 31.09 L 81.51 41.09 L 85.68 31.09 L 89.86 41.09 L 91.95 36.09 L 101.34 36.09" fill="none" stroke="black" transform="rotate(90,75.25,36.09)"/>
+        <path d="M 49.16 88.26 L 58.55 88.26 L 60.64 83.26 L 64.82 93.26 L 68.99 83.26 L 73.16 93.26 L 77.34 83.26 L 81.51 93.26 L 85.68 83.26 L 89.86 93.26 L 91.95 88.26 L 101.34 88.26" fill="none" stroke="black" transform="rotate(90,75.25,88.26)"/>
+        <path d="M 64 144.57 L 75.25 155 L 86.5 144.57 Z" fill="#e6e6e6" stroke="black"/>
+        <path d="M 75.25 139.35 L 75.25 144.57" fill="none" stroke="black"/>
+        <path d="M 75.25 139.35 L 75.25 114.35" fill="none" stroke="black"/>
+        <path d="M 15 10.58 L 75 10.58" fill="none" stroke="black"/>
+        <path d="M 15 -14 L 35 -14 L 35 27.78 L 25 36 L 15 27.78 Z" fill="#e6e6e6" stroke="black" transform="rotate(270,25,11)"/>
+      </g>
+      
+      <g id="labels_af_item2">
+        <text id="label_input1_af_item2" x="23.5" y="14.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">Vbus</text>
+        <text id="label_rtop_af_item2" x="67" y="40" fill="black" font-family="Helvetica" text-anchor="end" font-size="12px">
+          R
+          <tspan dx="-2" dy="3">TOP</tspan>
+        </text>
+        <text id="label_rbottom_af_item2" x="67" y="94" fill="black" font-family="Helvetica" text-anchor="end" font-size="12px">
+          R
+          <tspan dx="-2" dy="3">BOTTOM</tspan>
+        </text>
+        <text id="label_output_af_item2" x="224" y="94" fill="black" font-family="Helvetica" font-size="12px" text-anchor="start">VdcSens</text>
+      </g>
+    </g>
+  
+  </defs>
+  <g id="playground">
+    <rect x="0" y="0" width="1000" height="700" fill="cyan" stroke="none" pointer-events="none"/>
+    <use href="#af_item1" x="10" y="40"/>
+    <use href="#af_item2" x="300" y="10"/>
+  </g>
+</svg>
