@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="213px" height="131px" viewBox="-0.5 -0.5 213 131">
+  <defs/>
+  <g id="ai_item1" pointer-events="all">
+    <g id="background_ai_item1">
+      <path d="M 10 20 L 43.63 20" fill="none" stroke="black"/>
+      <path d="M 48.88 20 L 41.88 23.5 L 43.63 20 L 41.88 16.5 Z" fill="black" stroke="black"/>
+      <path d="M 10 80 L 43.63 80" fill="none" stroke="black"/>
+      <path d="M 48.88 80 L 41.88 83.5 L 43.63 80 L 41.88 76.5 Z" fill="black" stroke="black"/>
+      <path d="M 42 30 L 98 30 L 120 47.6 L 120 70 L 20 70 L 20 47.6 Z" fill="#007fff" stroke="#001dbc" transform="rotate(90,70,50)"/>
+      <path d="M 90 21.76 L 123.63 21.96" fill="none" stroke="black"/>
+      <path d="M 128.88 21.99 L 121.86 25.45 L 123.63 21.96 L 121.9 18.45 Z" fill="black" stroke="black"/>
+      <path d="M 90 77.76 L 123.63 77.12" fill="none" stroke="black"/>
+      <path d="M 128.88 77.02 L 121.95 80.65 L 123.63 77.12 L 121.82 73.65 Z" fill="black" stroke="black"/>
+      <rect x="0" y="15" width="10" height="10" fill="white" stroke="black"/>
+      <path d="M 0 25 L 10 15" fill="none" stroke="black"/>
+      <path d="M 0 15 L 10 25" fill="none" stroke="black"/>
+      <rect x="0" y="75" width="10" height="10" fill="white" stroke="black"/>
+      <path d="M 0 85 L 10 75" fill="none" stroke="black"/>
+      <path d="M 0 75 L 10 85" fill="none" stroke="black"/>
+    </g>
+    
+    <g id="labels_ai_item1">
+      <text id="label_input1_ai_item1" x="140" y="24.5" fill="black" font-family="Helvetica" text-anchor="start" font-size="12px">IuSens</text>
+      <text id="label_input2_ai_item1" x="140" y="79.5" fill="black" font-family="Helvetica" text-anchor="start" font-size="12px">IvSens</text>
+      <text id="label_group_ai_item1" x="69.5" y="124.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">Group 01</text>
+    </g>
+  </g>
+</svg>
