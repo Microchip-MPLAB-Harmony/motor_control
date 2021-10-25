@@ -1,8 +1,8 @@
 import { Checkbox } from "primereact/checkbox";
 import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
-import { useState } from "react";
-import useForceUpdate from "use-force-update";
+// import { useState } from "react";
+// import useForceUpdate from "use-force-update";
 
 
 import { GetSymbolArray, GetySymbolValue, GetSymbolLabelName, GetSymbolMinValue, GetSymbolMaxValue, GetSymbolType, GetSymbolVisibleStatus, UpdateSymbolValue } from './SymbolAccess';
@@ -121,6 +121,7 @@ export function GetInputNumber(props: {componentId: any; symbolId: any;  symbolV
             id={props.symbolId}
             style={{ width: '8rem', height: '1.4rem' }}
             value={props.symbolValue}
+            maxFractionDigits = {8}
             showButtons
             min={props.minValue}
             max={props.maxValue}
