@@ -6,7 +6,7 @@
     Microchip Technology Inc.
 
   File Name:
-    mc_rotorposition.c
+    mc_rotor_position.c
 
   Summary:
     This file contains functions to get the rotor position of a motor
@@ -17,7 +17,7 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -45,257 +45,434 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#include "definitions.h"                // SYS function prototypes
-#include "device.h"
-#include "mc_derivedparams.h"
-#include "mc_rotorposition.h"
-#include "mc_hal.h"
-#include "math.h"
-#include "assert.h"
+#include "mc_rotor_position.h"
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Data Types
-// *****************************************************************************
-// *****************************************************************************
+<#if __PROCESSOR?matches(".*PIC32MK.*") == true>
 
-/******************************************************************************/
-/* Local Function Prototype                                                   */
-/******************************************************************************/
+/*******************************************************************************
+ Constants
+ *******************************************************************************/
+#define CONSTANT_Pi                                        (float)3.14159265358979323846
+#define CONSTANT_QdecPulsesPerElecRev         (uint16_t)( ( CONFIG_EncoderPulsesPerMechRev * 4 ) /CONFIG_RpoNumberOfPolePairs)
+#define CONSTANT_QdecPulsesToMechAngle     (float)(2.0f*CONSTANT_Pi/CONFIG_EncoderPulsesPerMechRev )
+#define CONSTANT_QdecPulsesToElecAngle       (float)(2.0f*CONSTANT_Pi/CONSTANT_QdecPulsesPerElecRev )
+#define CONSTANT_QdecVelocitySampleFreq     (float)((float)PWM_FREQUENCY / (float)CONFIG_VelcoityCalculationPrescale)
+#define CONSTANT_QdecPulsesToElecSpeed      (float)(((float) 2.0f * CONSTANT_Pi * CONSTANT_QdecVelocitySampleFreq  )/((float)CONSTANT_QdecPulsesPerElecRev ))
 
-__STATIC_INLINE void MCRPOS_InitializeEncoder( void );
-__STATIC_INLINE void MCRPOS_EncoderCalculations( void );
-
-/******************************************************************************/
-/*                   Global Variables                                         */
-/******************************************************************************/
-tMCRPOS_STATE_SIGNAL_S            gMCRPOS_StateSignals = { 0.0f };
-tMCRPOS_OUTPUT_SIGNAL_S           gMCRPOS_OutputSignals = { 0.0f };
-tMCRPOS_ROTOR_ALIGN_STATE_S       gMCRPOS_RotorAlignState = { MCRPOS_FORCE_ALIGN, 0U,  0U };
-tMCRPOS_ROTOR_ALIGN_OUTPUT_S      gMCRPOS_RotorAlignOutput = {0U,  0U };
-tMCRPOS_ROTOR_ALIGN_PARAM_S       gMCRPOS_RotorAlignParam  = {
-                                                                  Q_CURRENT_REF_OPENLOOP,
-                                                                  LOCK_COUNT_FOR_LOCK_TIME
-                                                             };
-
-/******************************************************************************/
-/*                          LOCAL FUNCTIONS                                   */
-/******************************************************************************/
-
-/******************************************************************************/
-/* Function name: MCRPOS_InitializeEncoder                                    */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Initilaize Encoder                                                         */
-/******************************************************************************/
-__STATIC_INLINE void MCRPOS_InitializeEncoder( void )
+/*******************************************************************************
+ Private data-types 
+ *******************************************************************************/
+typedef struct _tmcRpo_Parameters_s
 {
-<#if __PROCESSOR?matches("PIC32M.*") == true>
-    /* Start QEI Interface */
-    MCHAL_EncoderStart();
-</#if>
+    uint16_t encoderPulsesPerElecRev;
+    uint16_t velocityCountPrescaler;
+    float encCountToElecVelocity;
+    float encCountToElecAngle;    
+    float encCountToMechAngle;  
+}tmcRpo_Parameters_s;
+
+typedef struct _tmcRpo_StateVariables_s
+{
+    int32_t synCounter;
+    int32_t elecAngleCount;
+    int32_t mechAngleCount;
+    int32_t elecVelocityCount;
+}tmcRpo_StateVariables_s;
+
+/*******************************************************************************
+ Private variables  
+ *******************************************************************************/
+static tmcRpo_OutputPorts_s mcRpo_OutputPorts_mas[ROTOR_POSITION_INSTANCES];
+static tmcRpo_StateVariables_s mcRpo_StateVariables_mas[ROTOR_POSITION_INSTANCES];
+static tmcRpo_Parameters_s mcRpo_Parameters_mas[ROTOR_POSITION_INSTANCES];
+
+/*******************************************************************************
+ Interface variables  
+ *******************************************************************************/
+tmcRpo_ConfigParameters_s  mcRpoI_ConfigParameters_gas[ROTOR_POSITION_INSTANCES] = 
+{
+   ROTOR_POSITION_MODULE_A_CONFIG,
+#if( 2u == ROTOR_POSITION_INSTANCES )
+   ROTOR_POSITION_MODULE_B_CONFIG
+#endif
+};
+
+/*******************************************************************************
+ Private Functions 
+ *******************************************************************************/
+static tStd_ReturnType_e mcRpo_AssertionFailedReaction( const char * message )
+{
+    /* ToDo: Decide appropriate reaction function */
+     return returnType_Failed;
 }
 
-<#if __PROCESSOR?matches("PIC32M.*") == true>
-/******************************************************************************/
-/* Function name: MCRPOS_EncoderCalculations                                  */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Encoder Calculations to get angle and speed                                */
-/******************************************************************************/
-__STATIC_INLINE void MCRPOS_EncoderCalculations( void )
+static inline void mcRpo_EulerFilter( float new, float * old, float filterParam )
 {
-    gMCRPOS_StateSignals.synCounter++;
-    /* Calculate position */
-    gMCRPOS_StateSignals.position = (int32_t)MCHAL_EncoderPositionGet();
+    *old += ( new - ( *old ) ) * filterParam;
+ }
+
+#define ASSERT( expression, message ) { if(!expression)mcRpo_AssertionFailedReaction(message);}
+
+/*******************************************************************************
+ Interface Functions 
+ *******************************************************************************/
+
+/*! \brief Rotor position calculation initialization function 
+ * 
+ * Details.
+ *  Rotor position calculation initialization function 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+tStd_ReturnType_e mcRpoI_RotorPositionCalculationInit( const tmcRpo_ConfigParameters_s * const encParam )
+{
+     tmcRpo_Parameters_s * pParam;
+    
+    /* Check if the configuration parameters data has valid address */
+    ASSERT(( NULL != encParam ), "Configuration parameters points to NULL address ");
+    
+    /* Initialize output ports */
+    ASSERT((      ( NULL != encParam->outPort.elecAngle ) && ( NULL != encParam->outPort.mechAngle) 
+                    && ( NULL != encParam->outPort.elecVelocity )  &&  ( NULL != encParam->outPort.accel ) ), 
+                          "Output ports are not assigned properly" );
+        
+    mcRpo_OutputPorts_mas[encParam->Id] = encParam->outPort;
+    
+    /* Update and calculate independent and dependent parameters respectively */
+    pParam = &mcRpo_Parameters_mas[encParam->Id];
+    pParam->encoderPulsesPerElecRev = CONSTANT_QdecPulsesPerElecRev;
+    pParam->velocityCountPrescaler =  CONFIG_VelcoityCalculationPrescale;
+    pParam->encCountToElecVelocity = CONSTANT_QdecPulsesToElecSpeed ;
+    pParam->encCountToMechAngle = CONSTANT_QdecPulsesToMechAngle ;
+    pParam->encCountToElecAngle = CONSTANT_QdecPulsesToElecAngle ;
+
+    return returnType_Passed;
+}
+
+
+
+/*! \brief Rotor position calculation execution  function 
+ * 
+ * Details.
+ *  Rotor position calculation execution function 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcRpoI_RotorPositionCalculationRun( const tmcRpo_InstanceId_e Id )
+{ 
+    mcRpo_StateVariables_mas[Id].synCounter++;
+    
+    /* Calculate mechanical position */
+    mcRpo_StateVariables_mas[Id].mechAngleCount = (int32_t)mcHalI_EncoderPositionGet( Id );
+   *mcRpo_OutputPorts_mas[Id].mechAngle = mcRpo_StateVariables_mas[Id].mechAngleCount *  mcRpo_Parameters_mas[Id].encCountToMechAngle;
+    mcLib_WrapAngleTo2Pi( mcRpo_OutputPorts_mas[Id].mechAngle  );
+    
+    /* Calculate electrical position */
+    mcRpo_StateVariables_mas[Id].elecAngleCount = (int32_t)mcHalI_EncoderPositionGet( Id ) % CONSTANT_QdecPulsesPerElecRev;
+   *mcRpo_OutputPorts_mas[Id].elecAngle = mcRpo_StateVariables_mas[Id].elecAngleCount *  mcRpo_Parameters_mas[Id].encCountToElecAngle;
+    mcLib_WrapAngleTo2Pi( mcRpo_OutputPorts_mas[Id].elecAngle  );
 
     /* Calculate velocity */
-    if( gMCRPOS_StateSignals.synCounter > QEI_VELOCITY_COUNT_PRESCALER )
+    if( mcRpo_StateVariables_mas[Id].synCounter > mcRpo_Parameters_mas[Id].velocityCountPrescaler  )
     {
-        gMCRPOS_StateSignals.synCounter = 0;
-        gMCRPOS_StateSignals.velocity = (int32_t)MCHAL_EncoderSpeedGet();
+        mcRpo_StateVariables_mas[Id].synCounter = 0;
+        mcRpo_StateVariables_mas[Id].elecVelocityCount = (int32_t)mcHalI_EncoderVelocityGet( Id );
     }
-
-    /* Write speed and position output */
-    gMCRPOS_OutputSignals.speed = (float)( gMCRPOS_StateSignals.velocity * QEI_VELOCITY_COUNT_TO_RAD_PER_SEC );
-    gMCRPOS_OutputSignals.angle = gMCRPOS_StateSignals.position * (float)QEI_COUNT_TO_ELECTRICAL_ANGLE;
+    *mcRpo_OutputPorts_mas[Id].elecVelocity = mcRpo_StateVariables_mas[Id].elecVelocityCount *  mcRpo_Parameters_mas[Id].encCountToElecVelocity;
+   
 }
 
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true || __PROCESSOR?matches(".*SAME54.*") == true>
-__STATIC_INLINE void MCRPOS_EncoderCalculations( void )
-{
-    float angle;
-    gMCRPOS_StateSignals.synCounter++;
-    /* Calculate position */
-    gMCRPOS_StateSignals.position = (uint16_t)MCHAL_EncoderPositionGet();
 
-    if((gMCRPOS_StateSignals.position > QDEC_UPPER_THRESHOLD) && (gMCRPOS_StateSignals.positionLast < QDEC_LOWER_THRESHOLD))
+/*! \brief Rotor position calculation trigger 
+ * 
+ * Details.
+ *  Rotor position calculation trigger 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcRpoI_RotorPositionCalculationStart( const tmcRpo_InstanceId_e Id )
+{
+    /* Start the encoder */
+    mcHalI_EncoderStart( Id );
+    
+    /* Reset state variables */
+    mcRpoI_RotorPositionCalculationReset( Id );
+    
+} 
+
+/*! \brief Rotor position calculation reset function 
+ * 
+ * Details.
+ *  Rotor position calculation reset function 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcRpoI_RotorPositionCalculationReset( const tmcRpo_InstanceId_e Id )
+{
+    /* Reset state variables */
+    mcRpo_StateVariables_mas[Id].synCounter = 0u;
+    
+    /* Reset output ports */
+    *mcRpo_OutputPorts_mas[Id].elecAngle = 0.0f;
+    *mcRpo_OutputPorts_mas[Id].mechAngle = 0.0f;
+    *mcRpo_OutputPorts_mas[Id].elecVelocity = 0.0f;
+    *mcRpo_OutputPorts_mas[Id].accel = 0.0f;
+        
+}
+
+<#else>
+
+/*******************************************************************************
+ Constants
+ *******************************************************************************/
+#define CONSTANT_Pi                                        (float)3.14159265358979323846
+#define CONSTANT_2Pi                                      (float)(2.0f * CONSTANT_Pi )
+#define CONSTANT_QdecResetCount                 (uint32_t)( 65536u )
+#define CONSTANT_QdecUpperThreshold          (uint32_t)( 49151u )
+#define CONSTANT_QdecLowerThreshold          (uint32_t)( 16384u )
+#define CONSTANT_QdecPulsesPerElecRev         (uint16_t)( CONFIG_EncoderPulsesPerMechRev  /CONFIG_RpoNumberOfPolePairs)
+#define CONSTANT_QdecOverflowCount            (uint16_t)( CONSTANT_QdecResetCount % CONFIG_EncoderPulsesPerMechRev)
+#define CONSTANT_QdecUnderflowCount          (uint16_t)( CONFIG_EncoderPulsesPerMechRev - CONSTANT_QdecOverflowCount)
+#define CONSTANT_QdecPulsesToElecAngle       (float)(2.0f * CONSTANT_Pi/CONSTANT_QdecPulsesPerElecRev )
+#define CONSTANT_QdecPulsesToMechAngle     (float)(2.0f * CONSTANT_Pi/CONFIG_EncoderPulsesPerMechRev )
+#define CONSTANT_QdecVelocitySampleFreq     (float)((float)PWM_FREQUENCY / (float)CONFIG_VelcoityCalculationPrescale)
+#define CONSTANT_QdecPulsesToElecSpeed      (float)(((float) 2.0f * CONSTANT_Pi * CONSTANT_QdecVelocitySampleFreq  )/((float)CONSTANT_QdecPulsesPerElecRev ))
+
+/*******************************************************************************
+ Private data-types 
+ *******************************************************************************/
+typedef struct _tmcRpo_Parameters_s
+{
+    uint16_t encPulsesPerElecRev;
+    uint16_t velocityCountPrescaler;
+    uint16_t encOverflow;
+    uint16_t encUnderflow;
+    uint16_t encUpperThreshold;
+    uint16_t encLowerThreshold;
+    float encPulsesToElecVelocity;
+    float encPulsesToMechAngle;
+}tmcRpo_Parameters_s;
+
+typedef struct _tmcRpo_StateVariables_s
+{
+    uint16_t synCounter;
+    uint16_t encCount;
+    uint16_t encCountForPositionLast;
+    uint16_t encCountForPosition;
+    uint16_t positionCompensation;
+    int16_t encCountForVelocity;
+    int16_t encCountForVelocityLast;
+}tmcRpo_StateVariables_s;
+
+/*******************************************************************************
+ Private variables  
+ *******************************************************************************/
+static tmcRpo_OutputPorts_s mcRpo_OutputPorts_mas[ROTOR_POSITION_INSTANCES];
+static tmcRpo_StateVariables_s mcRpo_StateVariables_mas[ROTOR_POSITION_INSTANCES];
+static tmcRpo_Parameters_s mcRpo_Parameters_mas[ROTOR_POSITION_INSTANCES];
+
+/*******************************************************************************
+ Interface variables  
+ *******************************************************************************/
+tmcRpo_ConfigParameters_s  mcRpoI_ConfigParameters_gas[ROTOR_POSITION_INSTANCES] = 
+{
+   ROTOR_POSITION_MODULE_A_CONFIG,
+#if( 2u == ROTOR_POSITION_INSTANCES )
+   ROTOR_POSITION_MODULE_B_CONFIG
+#endif
+};
+
+/*******************************************************************************
+ Private Functions 
+ *******************************************************************************/
+static tStd_ReturnType_e mcRpo_AssertionFailedReaction( const char * message )
+{
+    /* ToDo: Decide appropriate reaction function */
+     return returnType_Failed;
+}
+
+static inline void mcRpo_EulerFilter( float new, float * old, float filterParam )
+{
+    *old += ( new - ( *old ) ) * filterParam;
+ }
+
+static void mcRpo_WrapAngleFrom0To2Pi( float *angle )
+{
+    float rotationNumber;
+    
+    rotationNumber = ( *angle )/CONSTANT_2Pi;
+    if( *angle > 0.0f )
     {
-        gMCRPOS_StateSignals.positionCompensation += QDEC_UNDERFLOW;
+        *angle = ( rotationNumber - (int16_t)rotationNumber ) * CONSTANT_2Pi;
     }
-    else if((gMCRPOS_StateSignals.positionLast > QDEC_UPPER_THRESHOLD) && (gMCRPOS_StateSignals.position < QDEC_LOWER_THRESHOLD))
+    else 
     {
-        gMCRPOS_StateSignals.positionCompensation += QDEC_OVERFLOW;
+        *angle = -( rotationNumber - (int16_t)rotationNumber ) * CONSTANT_2Pi;
+    }
+}
+
+#define ASSERT( expression, message ) { if(!expression)mcRpo_AssertionFailedReaction(message);}
+
+/*******************************************************************************
+ Interface Functions 
+ *******************************************************************************/
+
+/*! \brief Rotor position calculation initialization function 
+ * 
+ * Details.
+ *  Rotor position calculation initialization function 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+tStd_ReturnType_e mcRpoI_RotorPositionCalculationInit( const tmcRpo_ConfigParameters_s * const encParam )
+{
+    tmcRpo_Parameters_s * pParam;
+    
+    /* Check if the configuration parameters data has valid address */
+    ASSERT(( NULL != encParam ), "Configuration parameters points to NULL address ");
+    
+    /* Initialize output ports */
+    ASSERT((      ( NULL != encParam->outPort.elecAngle ) && (NULL != encParam->outPort.mechAngle) 
+                     && ( NULL != encParam->outPort.elecVelocity ) && ( NULL != encParam->outPort.accel ) ),
+                         "Output ports are not assigned properly");
+        
+    mcRpo_OutputPorts_mas[encParam->Id] = encParam->outPort;
+    
+    /* Update and calculate independent and dependent parameters respectively */
+    pParam = &mcRpo_Parameters_mas[encParam->Id];
+    pParam->encPulsesPerElecRev =  CONSTANT_QdecPulsesPerElecRev;
+    pParam->velocityCountPrescaler = encParam->userParam.velocityCountPrescaler ;
+    pParam->encPulsesToElecVelocity =  CONSTANT_QdecPulsesToElecSpeed;
+    pParam->encPulsesToMechAngle = CONSTANT_QdecPulsesToMechAngle ;
+    pParam->encUpperThreshold = CONSTANT_QdecUpperThreshold;
+    pParam->encLowerThreshold = CONSTANT_QdecLowerThreshold ;
+    pParam->encUnderflow = CONSTANT_QdecUnderflowCount;
+    pParam->encOverflow = CONSTANT_QdecOverflowCount;
+    return returnType_Passed;
+}
+
+
+
+/*! \brief Rotor position calculation execution  function 
+ * 
+ * Details.
+ *  Rotor position calculation execution function 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcRpoI_RotorPositionCalculationRun( const tmcRpo_InstanceId_e Id )
+{
+       mcRpo_StateVariables_mas[Id].synCounter++;
+    
+     /* Calculate position */
+     mcRpo_StateVariables_mas[Id].encCount = (uint16_t)mcHalI_EncoderPositionGet( Id );
+    
+    if(       ( mcRpo_StateVariables_mas[Id].encCount > mcRpo_Parameters_mas[Id].encUpperThreshold ) 
+          && ( mcRpo_StateVariables_mas[Id].encCountForPositionLast < mcRpo_Parameters_mas[Id].encLowerThreshold))
+    {
+         mcRpo_StateVariables_mas[Id].positionCompensation += mcRpo_Parameters_mas[Id].encUnderflow;
+    }
+    else if(( mcRpo_StateVariables_mas[Id].encCountForPositionLast > mcRpo_Parameters_mas[Id].encUpperThreshold) 
+          && ( mcRpo_StateVariables_mas[Id].encCount < mcRpo_Parameters_mas[Id].encLowerThreshold))
+    {
+         mcRpo_StateVariables_mas[Id].positionCompensation += mcRpo_Parameters_mas[Id].encOverflow;
     }
     else
     {
+        /* Do nothing */
     }
 
-    gMCRPOS_StateSignals.positionCompensation = gMCRPOS_StateSignals.positionCompensation % ENCODER_PULSES_PER_EREV;
-    gMCRPOS_StateSignals.positionCount = (gMCRPOS_StateSignals.position + gMCRPOS_StateSignals.positionCompensation) % ENCODER_PULSES_PER_EREV;
-    gMCRPOS_StateSignals.positionLast = gMCRPOS_StateSignals.position;
+    mcRpo_StateVariables_mas[Id].positionCompensation %=  mcRpo_Parameters_mas[Id].encPulsesPerElecRev;
+    mcRpo_StateVariables_mas[Id].encCountForPosition  =  ( mcRpo_StateVariables_mas[Id].encCount + mcRpo_StateVariables_mas[Id].positionCompensation) % CONFIG_EncoderPulsesPerMechRev;
+    mcRpo_StateVariables_mas[Id].encCountForPositionLast =  mcRpo_StateVariables_mas[Id].encCount;
 
     /* Calculate velocity */
-    if( gMCRPOS_StateSignals.synCounter > QEI_VELOCITY_COUNT_PRESCALER )
+    if( mcRpo_StateVariables_mas[Id].synCounter > mcRpo_Parameters_mas[Id].velocityCountPrescaler )
     {
-        gMCRPOS_StateSignals.synCounter = 0;
-        gMCRPOS_StateSignals.positionForSpeed = (int16_t)MCHAL_EncoderPositionGet();
-        gMCRPOS_StateSignals.velocity = (gMCRPOS_StateSignals.positionForSpeed - gMCRPOS_StateSignals.positionLastForSpeed);
-        gMCRPOS_StateSignals.positionLastForSpeed = (int16_t)gMCRPOS_StateSignals.positionForSpeed;
+         mcRpo_StateVariables_mas[Id].synCounter = 0u;
+         mcRpo_StateVariables_mas[Id].encCountForVelocity = ( int16_t )mcRpo_StateVariables_mas[Id].encCount 
+                                                                                           -  ( int16_t )mcRpo_StateVariables_mas[Id].encCountForVelocityLast;
+         mcRpo_StateVariables_mas[Id].encCountForVelocityLast = (int16_t)mcRpo_StateVariables_mas[Id].encCount;
     }
-
+   
     /* Write speed and position output */
-    gMCRPOS_OutputSignals.speed = (float)( gMCRPOS_StateSignals.velocity * QEI_VELOCITY_COUNT_TO_RAD_PER_SEC );
-    gMCRPOS_OutputSignals.mechSpeedRPM = (float)(gMCRPOS_OutputSignals.speed * ELE_TO_MECH_RPM_SPEED);    
-    angle = gMCRPOS_StateSignals.positionCount * (float)QEI_COUNT_TO_ELECTRICAL_ANGLE;
+    *mcRpo_OutputPorts_mas[Id].elecVelocity = (float)mcRpo_StateVariables_mas[Id].encCountForVelocity 
+                                                                       * mcRpo_Parameters_mas[Id].encPulsesToElecVelocity;
+    
+    *mcRpo_OutputPorts_mas[Id].mechAngle = (float)mcRpo_StateVariables_mas[Id].encCountForPosition 
+                                                                     * mcRpo_Parameters_mas[Id].encPulsesToMechAngle;
+    
+    *mcRpo_OutputPorts_mas[Id].elecAngle  =  ( *mcRpo_OutputPorts_mas[Id].mechAngle ) * CONFIG_RpoNumberOfPolePairs;
+   
     /* Limit rotor angle range to 0 to 2*M_PI for lookup table */
-    if(angle > (2*M_PI))
-    {
-        gMCRPOS_OutputSignals.angle = angle - (2*M_PI);
-    }
-    else if(angle < 0)
-    {
-        gMCRPOS_OutputSignals.angle = 2*M_PI + angle;
-    }
-    else
-    {
-        gMCRPOS_OutputSignals.angle = angle;
-    }
-
+    mcRpo_WrapAngleFrom0To2Pi( mcRpo_OutputPorts_mas[Id].elecAngle  );
+ 
 }
+
+
+/*! \brief Rotor position calculation trigger 
+ * 
+ * Details.
+ *  Rotor position calculation trigger 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcRpoI_RotorPositionCalculationStart( const tmcRpo_InstanceId_e Id )
+{
+    /* Start the encoder */
+    mcHalI_EncoderStart( Id );
+    
+    /* Reset state variables */
+    mcRpoI_RotorPositionCalculationReset( Id );
+    
+} 
+
+/*! \brief Rotor position calculation reset function 
+ * 
+ * Details.
+ *  Rotor position calculation reset function 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcRpoI_RotorPositionCalculationReset( const tmcRpo_InstanceId_e Id )
+{
+    /* Reset state variables */
+    mcRpo_StateVariables_mas[Id].positionCompensation = 0u;
+    mcRpo_StateVariables_mas[Id].encCountForPosition = 0u;
+    mcRpo_StateVariables_mas[Id].encCountForPositionLast = 0u;
+    mcRpo_StateVariables_mas[Id].encCountForVelocityLast = 0u;
+    mcRpo_StateVariables_mas[Id].synCounter = 0u;
+    
+    /* Reset output ports */
+    *mcRpo_OutputPorts_mas[Id].mechAngle = 0.0f;
+    *mcRpo_OutputPorts_mas[Id].elecAngle = 0.0f;
+    *mcRpo_OutputPorts_mas[Id].elecVelocity = 0.0f;
+    *mcRpo_OutputPorts_mas[Id].accel = 0.0f;
+        
+}
+
 </#if>
-
-
-/******************************************************************************/
-/*                      INTERFACE FUNCTIONS                                   */
-/******************************************************************************/
-
-/******************************************************************************/
-/* Function name: MCRPOS_InitialRotorPositonDetection                         */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
-/* Description: Initial rotor position alignment                              */
-/******************************************************************************/
-tMCAPP_STATUS_E MCRPOS_InitialRotorPositonDetection( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput )
-{
-    tMCAPP_STATUS_E status = MCAPP_IN_PROGRESS ;
-    switch( gMCRPOS_RotorAlignState.rotorAlignState )
-    {
-        case MCRPOS_FORCE_ALIGN:
-        {
-            status = MCRPOS_FieldAlignment( alignOutput );
-            if( MCAPP_SUCCESS  ==  status )
-            {
-                MCRPOS_ResetPositionSensing(MCRPOS_FORCE_ALIGN);
-            }
-        }
-        break;
-        default:
-        {
-            /* Should never come here */
-        }
-    }
-    gMCRPOS_RotorAlignState.status = gMCRPOS_RotorAlignState.rotorAlignState;
-    return status;
-}
-
-tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput )
-{
-    tMCAPP_STATUS_E status = MCAPP_IN_PROGRESS ;
-
-  #if( ALIGNMENT_METHOD == Q_AXIS || ALIGNMENT_METHOD == D_AXIS)
-    if ( gMCRPOS_RotorAlignState.startupLockCount < ( 0.5* gMCRPOS_RotorAlignParam.lockTimeCount))
-    {
-      #if(ALIGNMENT_METHOD == Q_AXIS )
-        alignOutput->idRef =  0.0f;
-        alignOutput->iqRef =  gMCRPOS_RotorAlignParam.lockCurrent;
-        alignOutput->angle = (M_PI);
-        gMCRPOS_RotorAlignState.startupLockCount++;
-      #else
-        alignOutput->idRef =  gMCRPOS_RotorAlignParam.lockCurrent;
-        alignOutput->iqRef =  0.0f;
-        alignOutput->angle =  (0.5f * M_PI_2);
-        gMCRPOS_RotorAlignState.startupLockCount++;
-      #endif
-    }
-    else if ( gMCRPOS_RotorAlignState.startupLockCount < gMCRPOS_RotorAlignParam.lockTimeCount)
-    {
-      #if(ALIGNMENT_METHOD == Q_AXIS )
-        alignOutput->idRef =  0.0f;
-        alignOutput->iqRef =  gMCRPOS_RotorAlignParam.lockCurrent;
-        alignOutput->angle = (3*M_PI_2);
-        gMCRPOS_RotorAlignState.startupLockCount++;
-      #else
-        alignOutput->idRef =  gMCRPOS_RotorAlignParam.lockCurrent;
-        alignOutput->iqRef =  0.0f;
-        alignOutput->angle =  0.0f;
-        gMCRPOS_RotorAlignState.startupLockCount++;
-      #endif
-    }
-    else
-    {
-        gMCRPOS_RotorAlignState.startupLockCount = 0;
-        MCHAL_EncoderPositionSet(1);
-<#if __PROCESSOR?matches(".*SAME70.*") == true || __PROCESSOR?matches(".*SAME54.*") == true>
-        MCHAL_EncoderStart();
-</#if>
-        status = MCAPP_SUCCESS;
-    }
-  #else
-    assert(0, SELECT A ROTOR ALIGNMENT ALGORITHM );
-  #endif
-
-    return status;
-}
-
-/******************************************************************************/
-/* Function name: MCRPOS_InitializeRotorPositionSensing                       */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* initializes parameters and state variables for rotor position sensing      */
-/******************************************************************************/
-void MCRPOS_InitializeRotorPositionSensing( void )
-{
-    MCRPOS_InitializeEncoder();
-}
-
-/******************************************************************************/
-/* Function name: MCRPOS_PositionMeasurement                                  */
-/* Function parameters: none                                                  */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Determines the rotor position                                              */
-/******************************************************************************/
-void MCRPOS_PositionMeasurement(  )
-{
-    MCRPOS_EncoderCalculations( );
-}
-
-/******************************************************************************/
-/* Function name: MCRPOS_ResetPositionSensing                                 */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* reset state variables for rotor position sensing                           */
-/******************************************************************************/
-void MCRPOS_ResetPositionSensing( tMCRPOS_ALIGN_STATE_E state )
-{
-    gMCRPOS_RotorAlignState.rotorAlignState = state;
-    gMCRPOS_StateSignals.position = 0;
-    gMCRPOS_StateSignals.velocity = 0;
-    gMCRPOS_StateSignals.synCounter = 0;
-    gMCRPOS_RotorAlignState.startupLockCount = 0;
-}

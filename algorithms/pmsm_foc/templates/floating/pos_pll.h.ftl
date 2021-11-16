@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    mc_rotorposition.h
+    mc_rotor_position.h
 
   Summary:
     Header file for rotor position
@@ -16,7 +16,7 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -39,147 +39,228 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef MCRPOS_H    // Guards against multiple inclusion
-#define MCRPOS_H
+#ifndef MCRPO_H    // Guards against multiple inclusion
+#define MCRPO_H
 
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Included Files
-// *****************************************************************************
-// *****************************************************************************
-
-/*  This section lists the other files that are included in this file.
-*/
-
+/*******************************************************************************
+ Interface Functions 
+ *******************************************************************************/
 #include <stddef.h>
-#include "mc_pmsm_foc_common.h"
+#include "mc_interface_handling.h"
+#include "mc_userparams.h"
+
+/*******************************************************************************
+ Constants
+ *******************************************************************************/
+/*
+ * Number of rotor position module instances 
+ */
+#define ROTOR_POSITION_INSTANCES 1u  
+
+/*
+ * Motor per phase resistance 
+ */
+ #define CONFIG_PllMotorPerPhaseResistanceInOhm  (float)MOTOR_PER_PHASE_RESISTANCE_IN_OHM
+/*
+ * Number of rotor position module instances 
+ */
+#define  CONFIG_PllMotorPerPhaseInductanceInHenry  (float)QUADRATURE_AXIS_INDUCTANCE_IN_HENRY
+/*
+ * Number of rotor position module instances 
+ */
+#define CONFIG_PllMotorBemfConstInVrmsPerKrpm  MOTOR_BEMF_CONST_VOLTS_PER_KRPM_MECH
+
+/*
+ * Fast loop time in seconds 
+ */
+#define CONFIG_PllAlgorithmCycleTimeInSec   (float)(1/(float)PWM_FREQUENCY) 
+ 
+
+/*
+ * Open loop end speed in RPM
+ */
+#define CONFIG_SpeedThresholdForCloseLoopInRpm       (float)(500.0f)
 
 
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
+/*
+ * Q-axis back EMF filter parameter 
+ */
+#define CONFIG_PllEdFilterParameter      (float)(0.0183)
 
-extern "C" {
-
-#endif
-
-// DOM-IGNORE-END
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Data Types
-// *****************************************************************************
-// *****************************************************************************
-/*___________________________________PLL PARAMETERS  _____________________________________________________ */
-#define     ANGLE_OFFSET_MIN                        ((float)(M_PI_2)/(float)(32767))
-#define     DECIMATE_RATED_SPEED                     (float)((RATED_SPEED_RPM *((float)M_PI/30)) * NUM_POLE_PAIRS/10)
+/*
+ * D-axis back EMF filter parameter 
+ */
+#define CONFIG_PllEqFilterParameter  (float)(0.0183)
 
 
+/*
+ * Open loop end speed in RPM
+ */
+#define CONFIG_PllSpeedFilterParameter        (float)(0.0053)
 
-typedef enum
+/*******************************************************************************
+ Default module parameters 
+ *******************************************************************************/
+#define ROTOR_POSITION_MODULE_A_CONFIG { \
+        /* Instance Id */ \
+        0u, \
+        /* Input ports */ \
+        { \
+            &mcMocI_FeedbackAlphaBetaCurrent_gas[0u].alpha, \
+            &mcMocI_FeedbackAlphaBetaCurrent_gas[0u].beta, \
+            &mcMocI_AlphaBetaVoltage_gas[0u].alpha, \
+            &mcMocI_AlphaBetaVoltage_gas[0u].beta, \
+            &mcVolI_UacPeakVoltage_gaf32[0u]  \
+        }, \
+        /* Output ports */ \
+        { \
+            &mcRpoI_ElectricalRotorPosition_gaf32[0u], \
+            &mcRpoI_ElectricalRotorSpeed_gaf32[0u], \
+            &mcRpoI_ElectricalRotorAccel_gaf32[0u] \
+        }, \
+        /* User Parameters */ \
+        { \
+            CONFIG_PllMotorPerPhaseResistanceInOhm, \
+            CONFIG_PllMotorPerPhaseInductanceInHenry, \
+            CONFIG_PllMotorBemfConstInVrmsPerKrpm, \
+            CONFIG_SpeedThresholdForCloseLoopInRpm, \
+            CONFIG_PllAlgorithmCycleTimeInSec, \
+            CONFIG_PllEqFilterParameter, \
+            CONFIG_PllSpeedFilterParameter \
+        } \
+    }
+
+#define ROTOR_POSITION_MODULE_B_CONFIG { \
+        /* Instance Id */ \
+        1u, \
+        /* Input ports */ \
+        { \
+            &mcMocI_FeedbackAlphaBetaCurrent_gas[1u].alpha, \
+            &mcMocI_FeedbackAlphaBetaCurrent_gas[1u].beta, \
+            &mcMocI_AlphaBetaVoltage_gas[1u].alpha, \
+            &mcMocI_AlphaBetaVoltage_gas[1u].beta, \
+            &mcVolI_UacPeakVoltage_gaf32[1u]  \
+        }, \
+        /* Output ports */ \
+        { \
+            &mcRpoI_ElectricalRotorPosition_gaf32[1u], \
+            &mcRpoI_ElectricalRotorSpeed_gaf32[1u], \
+            &mcRpoI_ElectricalRotorAccel_gaf32[1u] \
+        }, \
+        /* User Parameters */ \
+        { \
+            CONFIG_PllMotorPerPhaseResistanceInOhm, \
+            CONFIG_PllMotorPerPhaseInductanceInHenry, \
+            CONFIG_PllMotorBemfConstInVrmsPerKrpm, \
+            CONFIG_SpeedThresholdForCloseLoopInRpm, \
+            CONFIG_PllAlgorithmCycleTimeInSec, \
+            CONFIG_PllEqFilterParameter, \
+            CONFIG_PllSpeedFilterParameter \
+        } \
+    }
+
+/*******************************************************************************
+ User defined data types  
+ *******************************************************************************/
+
+typedef enum _tmcRpo_InstanceId_e
 {
-    MCRPOS_FORCE_ALIGN
-}tMCRPOS_ALIGN_STATE_E;
+    rpoModuleInstance_01,
+    rpoModuleInstance_02,
+    rpoModuleInstance_max 
+}tmcRpo_InstanceId_e;
 
-typedef struct
+
+typedef struct _tmcRpo_InputPorts_s 
 {
-    tMCRPOS_ALIGN_STATE_E           rotorAlignState;
-    uint32_t                        startupLockCount;
-    uint8_t                         status;
-}tMCRPOS_ROTOR_ALIGN_STATE_S;
+    volatile float * ialpha;
+    volatile float * ibeta;
+    volatile float * ualpha;
+    volatile float * ubeta;
+    volatile float * umax;
+}tmcRpo_InputPorts_s;
 
-typedef struct
+typedef struct _tmcRpo_OutputPorts_s
 {
-    float                           lockCurrent;
-    uint32_t                        lockTimeCount;
-}tMCRPOS_ROTOR_ALIGN_PARAM_S;
+    float  * theta;
+    float  * Wre;
+    float  * accel;
+}tmcRpo_OutputPorts_s;
 
-typedef struct
+typedef struct _tmcRpo_UserParameters_s
 {
-    float                           idRef;
-    float                           iqRef;
-    float                           angle;
-}tMCRPOS_ROTOR_ALIGN_OUTPUT_S;
+    float  Rs;
+    float  Ls;
+    float  Ke;
+    float Wrmin;
+    float Ts;
+    float EdqFilterBandwidth;
+    float WrFilterBandwidth;
+}tmcRpo_UserParameters_s;
 
-/*--------------------------------------------------------------------------*/
-typedef struct
+typedef struct _tmcRpo_ConfigParameters_s
 {
-    float                           ialpha;
-    float                           ibeta;
-    float                           ualpha;
-    float                           ubeta;
-    float                           umax;
-}tMCRPOS_INPUT_SIGNAL_S;
-
-typedef struct
-{
-    float                           lsDt;
-    float                           rs;
-    float                           invKFi;
-    float                           kFilterEsdq;
-    float                           kFilterBEMFAmp;
-    float                           velEstimFilterK;
-    float                           deltaT;
-    float                           decimateRotorSpeed;
-}tMCRPOS_PARAMETERS_S;
-
-typedef struct
-{
-    float                            filterInitialized;
-    float                            omegaMr;
-    float                            rhoOffset;
-    float                            bemfFilt;
-    float                            velEstim;
-    float                            ialphaLast;
-    float                            ibetaLast;
-    float                            ualphaLast;
-    float                            ubetaLast;
-    float                            esa;
-    float                            esb;
-    float                            esd;
-    float                            esq;
-    float                            esdf;
-    float                            esqf;
-    float                            rho;
-}tMCRPOS_STATE_SIGNAL_S;
-
-typedef struct
-{
-    float                            angle;
-    float                            speed;
-    float                            mechSpeedRPM;    
-    float                            acceleration;
-  #if(ENABLED == FIELD_WEAKENING )
-    float                            esfilt;
-  #endif
-}tMCRPOS_OUTPUT_SIGNALS_S;
+    /* Instance identifier */
+    uint8_t Id;
+    
+    /* Input ports */
+    tmcRpo_InputPorts_s inPort;
+    
+    /* Output ports */
+    tmcRpo_OutputPorts_s outPort;
+    
+    /* User Parameters */
+    tmcRpo_UserParameters_s userParam;
+    
+}tmcRpo_ConfigParameters_s;
 
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
-// *****************************************************************************
-// *****************************************************************************
-extern tMCRPOS_STATE_SIGNAL_S         gMCRPOS_StateSignals;
-extern tMCRPOS_OUTPUT_SIGNALS_S       gMCRPOS_OutputSignals;
-extern tMCRPOS_ROTOR_ALIGN_OUTPUT_S  gMCRPOS_RotorAlignOutput;
+/*******************************************************************************
+ Interface variables  
+ *******************************************************************************/
+extern tmcRpo_ConfigParameters_s  mcRpoI_ConfigParameters_gas[ROTOR_POSITION_INSTANCES];
 
-void MCRPOS_InitializeRotorPositionSensing(void);
-tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput );
-tMCAPP_STATUS_E MCRPOS_InitialRotorPositonDetection(tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput );
-void MCRPOS_OffsetCalibration(const int16_t direction );
-void MCRPOS_PositionMeasurement( void );
-void MCRPOS_ResetPositionSensing( tMCRPOS_ALIGN_STATE_E state );
+/*******************************************************************************
+ Interface Functions 
+ *******************************************************************************/
 
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
+/*! \brief Rotor position calculation initialization function 
+ * 
+ * Details.
+ *  Rotor position calculation initialization function 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+tStd_ReturnType_e mcRpoI_RotorPositionCalculationInit( const tmcRpo_ConfigParameters_s * const rpoParam );
 
-}
+/*! \brief Rotor position calculation execution  function 
+ * 
+ * Details.
+ *  Rotor position calculation execution function 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcRpoI_RotorPositionCalculationRun( const tmcRpo_InstanceId_e Id );
 
-#endif
-// DOM-IGNORE-END
+/*! \brief Rotor position calculation reset function 
+ * 
+ * Details.
+ *  Rotor position calculation reset function 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcRpoI_RotorPositionCalculationReset( const tmcRpo_InstanceId_e Id );
 
-#endif //MCRPOS_H
+#endif //MCRPO_H
 
 /**
  End of File

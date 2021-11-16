@@ -24,120 +24,40 @@
 
 import os
 
-global mcPmsmFocInstanceName
-global mcPmsmFocSeries
+MCU =  ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series")
 
-# Execute file for motor module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_MotorParameter.py"  )
+# General Purpose function classes
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/general_functions.py"   )
 
-# Execute file for inverter module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_Inverter.py"  )
+# Hardware block Classes
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/voltage_source.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/analog_frontend.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/motor_parameters.py"   )
 
-# Execute file for Analog interface module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_AnalogInterface.py"  )
+# Peripherals block classes
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/pwm_interface.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/digital_interface.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/analog_interface.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/position_interface.py"   )
 
-# Execute file for Current Measurement and Diagnosis module
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_CurrentMeasurement.py"  )
+# Software module classes 
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/startup_Configurator.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/motor_control_and_diagnosis.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/position_calculation_and_diagnosis.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/output_stage_and_diagnosis.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/current_measurement_and_diagnosis.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/voltage_measurement_and_diagnosis.py"   )
 
-# Execute file for Digital interface module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_DigitalInterface.py" )
+# Datamonitoring class
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/data_monitoring.py"   )
 
-# Execute file for motor control and diagnosis module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_MotorControl.py"  )
-
-# Execute file for position meaurement and diagnosis module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_PositionMeasurement.py" )
-
-# Execute file for position interface  module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_PositionInterface.py"  )
-
-# Execute file for PWM interface module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_PwmInterface.py" )
-
-# Execute file for start-up module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_Startup.py"   )
-
-# Execute file for data monitoring module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_DataMonitoring.py"   )
-
-# Execute file for Flying Start module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_FlyingStart.py"   )
+# Code generation
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/code_generation.py"   )
 
 
 #=========================================================================================================#
 #                                       CALLBACK FUCNTIONS                                                #
 #=========================================================================================================#
-
-def mcPmsmFocCodeGenUpdate(symbol, event):
-    component = symbol.getComponent()
-    if (event["id"] == "MCPMSMFOC_POSITION_FB"):
-        symObj = event["symbol"]
-        key = symObj.getSelectedKey()
-        if(key == "SENSORED_ENCODER"):
-            component.getSymbolByID("MCPMSMFOC_POS_ENCODER_HEADER").setEnabled(True)    
-            component.getSymbolByID("MCPMSMFOC_POS_ENCODER_SOURCE").setEnabled(True)            
-        else:
-            component.getSymbolByID("MCPMSMFOC_POS_ENCODER_HEADER").setEnabled(False)    
-            component.getSymbolByID("MCPMSMFOC_POS_ENCODER_SOURCE").setEnabled(False)
-        if(key == "SENSORLESS_PLL"):
-            component.getSymbolByID("MCPMSMFOC_POS_PLL_HEADER").setEnabled(True)
-            component.getSymbolByID("MCPMSMFOC_POS_PLL_SOURCE").setEnabled(True)
-        else:
-            component.getSymbolByID("MCPMSMFOC_POS_PLL_HEADER").setEnabled(False)
-            component.getSymbolByID("MCPMSMFOC_POS_PLL_SOURCE").setEnabled(False)
-    elif (event["id"] == "MCPMSMFOC_FLYING_START_CODE_TYPE"):
-        if event["value"] == 1:
-            if(component.getSymbolByID("MCPMSMFOC_FLYING_START").getValue() == True):
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(True)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(True)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
-                
-            else:
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(False)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)                
-                
-        else:
-            if(component.getSymbolByID("MCPMSMFOC_FLYING_START").getValue() == True):
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(True)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(True)
-                
-            else:
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(False)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
-                
-    elif (event["id"] == "MCPMSMFOC_FLYING_START"):
-        if event["value"] == True:
-            if(component.getSymbolByID("MCPMSMFOC_FLYING_START_CODE_TYPE").getValue() == 1):
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(True)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(True)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
-                
-            else:
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(True)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(True)
-                
-        else:
-            component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(False)
-            component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
-            component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
-
-    if (event["id"] == "MCPMSMFOC_REF_INPUT"):
-        symObj = event["symbol"]
-        key = symObj.getSelectedKey()
-        if(key == "INPUT_FROM_API"):
-            component.getSymbolByID("MCPMSMFOC_RAMP_PROFILER_HEADER").setEnabled(True)    
-            component.getSymbolByID("MCPMSMFOC_RAM_PROFILER_SOURCE").setEnabled(True)            
-        else:
-            component.getSymbolByID("MCPMSMFOC_RAMP_PROFILER_HEADER").setEnabled(False)    
-            component.getSymbolByID("MCPMSMFOC_RAM_PROFILER_SOURCE").setEnabled(False)
-            
-
-            
-
 
 def mcPmsmFocSpeedRefVisible(symbol, event):
     component = symbol.getComponent()
@@ -153,6 +73,11 @@ def mcPmsmFocSpeedRefVisible(symbol, event):
 #=========================================================================================================#
 #                                       PMSM FOC COMPONENT                                                #
 #=========================================================================================================#
+"""
+Description:
+This function instantiates the PMSM FOC Component
+
+"""
 def instantiateComponent(mcPmsmFocComponent): 
     
     Log.writeInfoMessage("Running PMSM FOC")
@@ -160,328 +85,172 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocInstanceName = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_INSTANCE_NAME", None)
     mcPmsmFocInstanceName.setVisible(False)
     mcPmsmFocInstanceName.setDefaultValue(mcPmsmFocComponent.getID().upper())
-
-    global mcPmsmFocSeries
-    mcPmsmFocSeries = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_SERIES", None)
-    mcPmsmFocSeries.setVisible(False)
-    mcPmsmFocSeries.setDefaultValue(ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series"))
  
-    global mcPmsmFocArch
-    mcPmsmFocArch = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_ARCH", None)
-    mcPmsmFocArch.setVisible(False)
-    mcPmsmFocArch.setDefaultValue(ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("architecture")) 
-   
-  
     #-----------------------------------------------------------------------------------------------------#
-    #                                        VSI BLOCK                                                    #
+    #                                 BOARD SELECTION                                                     #
     #-----------------------------------------------------------------------------------------------------#    
-    # Root node 
-    global mcVsi_RootNode
-    mcVsi_RootNode = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_BOARD_CONF", None)
-    mcVsi_RootNode.setLabel("Board Parameters")
-
-    # Symbol for development board selection 
-    global mcVsi_SelectedBoard
-    mcVsi_SelectedBoard = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_BOARD_SEL", mcVsi_RootNode)
-    mcVsi_SelectedBoard.setLabel("Select Board")
-    mcVsi_SelectedBoard.addKey("Custom", "0", "Custom Board")
-    mcVsi_SelectedBoard.addKey("MCLV2", "1", "MCLV2 - Low Voltage Board")
-    mcVsi_SelectedBoard.addKey("MCHV3", "2", "MCHV3 - High Voltage Board")
-    mcVsi_SelectedBoard.setDefaultValue(1)
-
-    mcVsiI_VoltageSourceInverter( mcPmsmFocComponent )
-
-#-----------------------------------------------------------------------------------------------------#
-#                                       MOTOR PARAMATERS                                              #
-#-----------------------------------------------------------------------------------------------------#
-    mcMotI_MotorParameters( mcPmsmFocComponent)
+    sym_BOARD_NODE = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_BOARD_CONF", None)
+    sym_BOARD_NODE.setLabel("Board Configuration")
+    sym_BOARD_NODE.setVisible(True)
 
 
-    #-----------------------------------------------------------------------------------------------------#
-    #                                       PWM INTERFACE                                                 #
-    # ----------------------------------------------------------------------------------------------------# 
-    mcPwmI_PwmInterface(mcPmsmFocComponent )
+    global sym_SELECTED_BOARD
+    sym_SELECTED_BOARD = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_BOARD_SEL", sym_BOARD_NODE )
+    sym_SELECTED_BOARD.setLabel("Development board")
+    sym_SELECTED_BOARD.addKey("MCLV2", "0", "dsPICDEM MCLV-2")
+    sym_SELECTED_BOARD.addKey("MCHV3", "1", "dsPICDEM MCHV-3")
+    sym_SELECTED_BOARD.addKey("CUSTOM", "2", "Custom")
+    sym_SELECTED_BOARD.setOutputMode("Key")
+    sym_SELECTED_BOARD.setDisplayMode("Description")
+    sym_SELECTED_BOARD.setDefaultValue(2)
 
-    #-----------------------------------------------------------------------------------------------------#
-    #                                      ANALOG INTERFACE                                               #
-    # ----------------------------------------------------------------------------------------------------# 
-    mcAnII_AnalogInterface( mcPmsmFocComponent)
-
-    #-----------------------------------------------------------------------------------------------------#
-    #                                       DIGITAL INTERFACE                                       #
-    #-----------------------------------------------------------------------------------------------------#
-    mcDiII_DigitalInterface( mcPmsmFocComponent )
-        
-    #-----------------------------------------------------------------------------------------------------#
-    #                                ROTOR POSITION MEASUREMENT & DIAGNOSIS                               #
-    #-----------------------------------------------------------------------------------------------------#
-    global mcPmsmFocAlgoMenu
-    mcPmsmFocAlgoMenu = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_ALGO_CONF", None)
-    mcPmsmFocAlgoMenu.setLabel("Control Strategy")
-
-    mcPoMI_PositionMeasurement( mcPmsmFocComponent)
-
-    #-----------------------------------------------------------------------------------------------------#
-    #                                      POSITION INTERFACE                                             #
-    # ----------------------------------------------------------------------------------------------------# 
-    mcPoII_PositionInterface(mcPmsmFocComponent)
+    information = Database.sendMessage("bsp", "MCBSP_READ_BOARD_DATA", {})
+    if None != information:
+        if "dsPICDEM MCLV-2" == information["NAME"]:
+            sym_SELECTED_BOARD.setSelectedKey("MCLV2")
+        elif "dsPICDEM MCHV-3" == information["NAME"]:
+            sym_SELECTED_BOARD.setSelectedKey("MCHV3")
+        else:
+            sym_SELECTED_BOARD.setSelectedKey("CUSTOM")
+     
 
 
-    #-----------------------------------------------------------------------------------------------------#
-    #                                    CURRENT MEASUREMENT & DIAGNOSIS                                  #
-    #-----------------------------------------------------------------------------------------------------#
-    mcCuMI_CurrentMeasurement( mcPmsmFocComponent )
-  
-    #-----------------------------------------------------------------------------------------------------#
-    #                                       MOTOR CONTROL & DIAGNOSIS                                     #
-    #-----------------------------------------------------------------------------------------------------#
-    global mcPmsmFocCtrlMenu
-    mcPmsmFocCtrlMenu = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_CTRL_CONF", None)
-    mcPmsmFocCtrlMenu.setLabel("Control Parameters")
-    
-    mcMoCI_MotorControl( mcPmsmFocComponent )
    
+    #-----------------------------------------------------------------------------------------------------#
+    #                                 Hardware blocks                                                     #
+    #-----------------------------------------------------------------------------------------------------# 
+    global voltage_Source
+    voltage_Source = mcSrcI_VoltageSourceClass("Algorithm", mcPmsmFocComponent)
+    voltage_Source()
+
+
+    global analog_Frontend
+    analog_Frontend = mcAnf_AnalogFrontEndClass("Algorithm", mcPmsmFocComponent)
+    analog_Frontend()
+
+    motor_Parameter = mcMotI_MotorParametersClass("Algorithm", mcPmsmFocComponent)
+    motor_Parameter()
+
+    global digital_Interface
+    digital_Interface = mcFocI_DigitalInterfaceClass("Algorithm", mcPmsmFocComponent)
+    digital_Interface()
+
+    global analog_Interface
+    analog_Interface = mcAniI_AnalogInterfaceClass("Algorithm", mcPmsmFocComponent)
+    analog_Interface()
+
+    global position_Interface
+    position_Interface = mcFocI_PositionInterfaceClass("Algorithm", mcPmsmFocComponent)
+    position_Interface()
+
+    global pwm_Interface
+    pwm_Interface = mcPwmI_PwmInterfaceClass("Algorithm", mcPmsmFocComponent)
+    pwm_Interface()
+
+    global data_Monitoring
+    data_Monitoring = mcFocI_DataMonitoringClass("Algorithm", mcPmsmFocComponent)
+    data_Monitoring()
 
     #-----------------------------------------------------------------------------------------------------#
-    #                                         STARTUP CONFIGURATOR                                        #
-    #-----------------------------------------------------------------------------------------------------#
-    mcStCI_StartupConfigurator( mcPmsmFocComponent )
+    #                                 Control blocks                                                      #
+    #-----------------------------------------------------------------------------------------------------# 
+    startup_Configurator = mcSupI_StartupConfigurator("Algorithm", mcPmsmFocComponent)
+    startup_Configurator()
+
+    motor_Control = mcMocI_MotorControlAndDiagnosis("Algorithm", mcPmsmFocComponent)
+    motor_Control.createSymbols()
+
+    position_Calculation = mcRpoI_PositionCalculationAndDiagnosis("Algorithm", mcPmsmFocComponent)
+    position_Calculation.createSymbols()
+
+    output_Stage = mcOstI_OutputStageAndDiagnosis("Algorithm", mcPmsmFocComponent)
+    output_Stage()
+
+    current_Measurement = mcCurI_CurrentMeasurementAndDiagnosis("Algorithm", mcPmsmFocComponent)
+    current_Measurement()
+
+    voltage_Measurement = mcVolI_VoltageMeasurementAndDiagnosis("Algorithm", mcPmsmFocComponent)
+    voltage_Measurement()
 
     #-----------------------------------------------------------------------------------------------------#
-    #                                          DATA MONITORING                                            #
-    #-----------------------------------------------------------------------------------------------------#
-    mcDaMI_DataMonitoring( mcPmsmFocComponent )
-    
-    #=====================================================================================================#
-    #                                            CODE GENERATION                                          #
-    #=====================================================================================================#
-    configName = Variables.get("__CONFIGURATION_NAME")
-    if(("PIC32CM" in Variables.get("__PROCESSOR")) or ( "SAMC21" in Variables.get("__PROCESSOR"))):
-        templatePath = "/algorithms/pmsm_foc/templates/fixed/"
-        mcPmsmFocSystemDefFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_DEF", None)
-        mcPmsmFocSystemDefFile.setType("STRING")
-        mcPmsmFocSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-        mcPmsmFocSystemDefFile.setSourcePath(templatePath + "system/definitions.h.ftl")
-        mcPmsmFocSystemDefFile.setMarkup(True)
-
-        mcPmsmFocSystemInitFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_INIT", None)
-        mcPmsmFocSystemInitFile.setType("STRING")
-        mcPmsmFocSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
-        mcPmsmFocSystemInitFile.setSourcePath(templatePath + "system/initialization.c.ftl")
-        mcPmsmFocSystemInitFile.setMarkup(True)
-
-        mcPmsmFocRampProfilerHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_RAMP_PROFILER_HEADER", None)
-        mcPmsmFocRampProfilerHeaderFile.setSourcePath(templatePath + "ramp_profiler.h.ftl")
-        mcPmsmFocRampProfilerHeaderFile.setOutputName("mc_ramp_profiler.h")
-        mcPmsmFocRampProfilerHeaderFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocRampProfilerHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocRampProfilerHeaderFile.setType("HEADER")
-        mcPmsmFocRampProfilerHeaderFile.setMarkup(True)
-
-        mcPmsmFocRampProfilerSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_RAMP_PROFILER_SOURCE", None)
-        mcPmsmFocRampProfilerSourceFile.setSourcePath(templatePath + "ramp_profiler.c.ftl")
-        mcPmsmFocRampProfilerSourceFile.setOutputName("mc_ramp_profiler.c")
-        mcPmsmFocRampProfilerSourceFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocRampProfilerSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocRampProfilerSourceFile.setType("HEADER")
-        mcPmsmFocRampProfilerSourceFile.setMarkup(True)
-        
-    else:
-        templatePath = "/algorithms/pmsm_foc/templates/floating/"
-    
-        # Included in the if condition to avoid interference
-        mcPmsmFocCodeGen = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_CODE_GEN", None)
-        mcPmsmFocCodeGen.setVisible(False)
-        mcPmsmFocCodeGen.setDependencies(mcPmsmFocCodeGenUpdate, ["MCPMSMFOC_POSITION_FB","MCPMSMFOC_FLYING_START","MCPMSMFOC_FLYING_START_CODE_TYPE"])
-        
-        mcPmsmFocSystemDefFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_DEF", None)
-        mcPmsmFocSystemDefFile.setType("STRING")
-        mcPmsmFocSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-        mcPmsmFocSystemDefFile.setSourcePath(templatePath + "system/definitions.h.ftl")
-        mcPmsmFocSystemDefFile.setMarkup(True)
-
-        mcPmsmFocSystemInitFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_INIT", None)
-        mcPmsmFocSystemInitFile.setType("STRING")
-        mcPmsmFocSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
-        mcPmsmFocSystemInitFile.setSourcePath(templatePath + "system/initialization.c.ftl")
-        mcPmsmFocSystemInitFile.setMarkup(True)
-
-        mcPmsmFocPosPllSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_PLL_SOURCE", None)
-        mcPmsmFocPosPllSourceFile.setSourcePath(templatePath + "pos_pll.c.ftl")
-        mcPmsmFocPosPllSourceFile.setOutputName("mc_rotorposition.c")
-        mcPmsmFocPosPllSourceFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosPllSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosPllSourceFile.setType("SOURCE")
-        mcPmsmFocPosPllSourceFile.setMarkup(True)
-
-        mcPmsmFocPosPllHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_PLL_HEADER", None)
-        mcPmsmFocPosPllHeaderFile.setSourcePath(templatePath + "pos_pll.h.ftl")
-        mcPmsmFocPosPllHeaderFile.setOutputName("mc_rotorposition.h")
-        mcPmsmFocPosPllHeaderFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosPllHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosPllHeaderFile.setType("HEADER")
-        mcPmsmFocPosPllHeaderFile.setMarkup(True)
-
-        mcPmsmFocPosEncSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ENCODER_SOURCE", None)
-        mcPmsmFocPosEncSourceFile.setSourcePath(templatePath + "pos_encoder.c.ftl")
-        mcPmsmFocPosEncSourceFile.setOutputName("mc_rotorposition.c")
-        mcPmsmFocPosEncSourceFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosEncSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosEncSourceFile.setType("SOURCE")
-        mcPmsmFocPosEncSourceFile.setMarkup(True)
-
-        mcPmsmFocPosEncHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ENCODER_HEADER", None)
-        mcPmsmFocPosEncHeaderFile.setSourcePath(templatePath + "pos_encoder.h.ftl")
-        mcPmsmFocPosEncHeaderFile.setOutputName("mc_rotorposition.h")
-        mcPmsmFocPosEncHeaderFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosEncHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosEncHeaderFile.setType("HEADER")
-        mcPmsmFocPosEncHeaderFile.setMarkup(True)
-
-
-        mcPmsmFocPosFlyingStartHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_FLYING_START_HEADER", None)
-        mcPmsmFocPosFlyingStartHeaderFile.setSourcePath(templatePath + "flyingstart.h")
-        mcPmsmFocPosFlyingStartHeaderFile.setOutputName("mc_flyingstart.h")
-        mcPmsmFocPosFlyingStartHeaderFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosFlyingStartHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosFlyingStartHeaderFile.setType("HEADER")
-        mcPmsmFocPosFlyingStartHeaderFile.setMarkup(True)
-        mcPmsmFocPosFlyingStartHeaderFile.setEnabled(False)
-    
-
-        mcPmsmFocPosFlyingStartSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_FLYING_START_SOURCE", None)
-        mcPmsmFocPosFlyingStartSourceFile.setSourcePath("../mc_src_flying_start/src/mc_flyingstart.c")
-        mcPmsmFocPosFlyingStartSourceFile.setOutputName("mc_flyingstart.c")
-        mcPmsmFocPosFlyingStartSourceFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosFlyingStartSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosFlyingStartSourceFile.setType("SOURCE")
-        mcPmsmFocPosFlyingStartSourceFile.setMarkup(True)
-        mcPmsmFocPosFlyingStartSourceFile.setEnabled(False)
-        
-        mcPmsmFocPosFlyingStartLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_FLYING_START_LIB", None)
-        if(("SAMD5" in Variables.get("__PROCESSOR")) or ("SAME5" in Variables.get("__PROCESSOR"))):
-            mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_D5x_E5x_MC_FLYINGSTART.X.a")
-        elif(("SAME7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR"))):
-            mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_E7x_S7x_V7x_MC_FLYINGSTART.X.a")
-        elif("PIC32MK" in Variables.get("__PROCESSOR")):
-            mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_PIC32MK_MC_FLYINGSTART.X.a")
-        mcPmsmFocPosFlyingStartLibraryFile.setOutputName("lib_mc_flyingstart.a")
-        mcPmsmFocPosFlyingStartLibraryFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosFlyingStartLibraryFile.setEnabled(False)
-   
-   
-
-    for root, dirs, files in os.walk(Module.getPath()+ templatePath ):
-        for filename in files:
-            if (".c" in filename and "mc_" in filename):
-                mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
-                mcPmsmFocSourceFile.setSourcePath(templatePath + filename)
-                if (filename.endswith(".ftl")):
-                    filename = filename[:-4]
-                mcPmsmFocSourceFile.setOutputName(filename)
-                mcPmsmFocSourceFile.setDestPath("motor_control/pmsm_foc/")
-                mcPmsmFocSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-                mcPmsmFocSourceFile.setType("SOURCE")
-                mcPmsmFocSourceFile.setMarkup(True)
-
-            if (".h" in filename and "mc_" in filename):
-                mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
-                mcPmsmFocHeaderFile.setSourcePath( templatePath + filename)
-                if (filename.endswith(".ftl")):
-                    filename = filename[:-4]
-                mcPmsmFocHeaderFile.setOutputName(filename)
-                mcPmsmFocHeaderFile.setDestPath("motor_control/pmsm_foc/")
-                mcPmsmFocHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-                mcPmsmFocHeaderFile.setType("HEADER")
-                mcPmsmFocHeaderFile.setMarkup(True)
+    #                                 Code generation                                                      #
+    #-----------------------------------------------------------------------------------------------------# 
+    mcGen_GenerateCode(mcPmsmFocComponent)
 
 
 #=========================================================================================================#
-#                                         DEPENDENCY                                                      #
-#=========================================================================================================#
+#                                         CALLBACK FUNCTIONS                                              #
+#=========================================================================================================# 
+ 
+"""
+Description:
+This function performs tasks when the corresponding modules are connected 
+
+"""
 def onAttachmentConnected( source, target ):
     # ADC Peripheral 
-    mcAnII_OnAttachmentConnected( source, target )
+    analog_Interface.onAttachmentConnected( source, target )
 
     # PWM Peripheral
-    mcPwm_onAttachmentConnected( source, target )
+    pwm_Interface.onAttachmentConnected( source, target )
 
     # QEI Peripheral
-    mcPosI_OnAttachmentConnected( source, target )
+    position_Interface.onAttachmentConnected( source, target )
 
     # X2C Scope 
-    mcDaMI_OnAttachmentConnected( source, target )
+    data_Monitoring.onAttachmentConnected( source, target )
 
-    #Configure EVSYS for SAME54
-    if mcPmsmFocSeries.getValue() == "SAME54" or mcPmsmFocSeries.getValue() == "SAMC21" or mcPmsmFocSeries.getValue() == "PIC32CMMC00":
-        mcEvsysDependencySAME54Connected()
-
-    # Instantiate DIVAS for SAMC21 and PIC32CM
-    if mcPmsmFocSeries.getValue() == "SAMC21" or mcPmsmFocSeries.getValue() == "PIC32CMMC00":
-        divasComponent = ["divas"]
-        Database.activateComponents(divasComponent)
-
-
-def mcEvsysDependencySAME54Connected():
-    pwmInstance = mcPwm_Plib.getValue().upper()
-    adcInstance = mcAnI_Adc0Plib.getValue().upper()
-    eic = filter(str.isdigit, str(mcPwm_PwmFault.getValue()))
-    generator0 = generator1 = user0 = user1 = 0
-
-    if (pwmInstance != "NONE") and (adcInstance != "NONE"):
-        #EVSYS channel 0 = TCC overflow to ADC Start
-        #EVSYS channel 1 = EIC fault pin to TCC event 1 fault
-        Database.setSymbolValue("evsys", "EVSYS_CHANNEL_0", True)
-        Database.setSymbolValue("evsys", "EVSYS_CHANNEL_1", True)
-        Database.setSymbolValue("evsys", "EVSYS_CHANNEL_0_EDGE", 1) 
-        Database.setSymbolValue("evsys", "EVSYS_CHANNEL_1_EDGE", 1)
-        
-        #Find event GENERATOR numbers from ATDF
-        node = ATDF.getNode("/avr-tools-device-file/devices/device/events/generators")
-        generators = []
-        sortedGenerators = []
     
-        for id in range(0, len(node.getChildren())):
-            generators.append(id)
-            generators[id] = node.getChildren()[id].getAttribute("name")
+"""
+Description:
+This function performs tasks when the corresponding modules are disconnected 
 
-        sortedGenerators = sorted(generators)
-
-        for id in range(0, len(sortedGenerators)):
-            if str(pwmInstance) + "_OVF" in sortedGenerators[id]:
-                generator0 = int(id)
-            if "EIC_EXTINT_" + str(eic) in sortedGenerators[id]:
-                generator1 = int(id)
-
-        #Find event USER numbers from ATDF
-        node = ATDF.getNode("/avr-tools-device-file/devices/device/events/users")
-        users = []
-
-        for id in range(0, len(node.getChildren())):
-            users.append(id)
-            users[id] = node.getChildren()[id].getAttribute("name")   
-        for id in range(0, len(node.getChildren())):
-            if str(adcInstance) + "_START" in users[id]:
-                user0 = int(node.getChildren()[id].getAttribute("index"))
-            if str(pwmInstance) + "_EV_1" in users[id]:
-                user1 = int(node.getChildren()[id].getAttribute("index"))
-
-        Database.setSymbolValue("evsys", "EVSYS_CHANNEL_0_GENERATOR", int(generator0))
-        Database.setSymbolValue("evsys", "EVSYS_CHANNEL_1_GENERATOR", int(generator1))   
-        Database.setSymbolValue("evsys", "EVSYS_USER_" + str(user0), 1)
-        Database.setSymbolValue("evsys", "EVSYS_USER_" + str(user1), 2)
-    
-    
+"""
 def onAttachmentDisconnected( source, target ):
     # ADC Peripheral
-    mcAnII_OnAttachmentDisconnected( source, target )
+    analog_Interface.onAttachmentDisconnected( source, target )
 
     # PWM Peripheral 
-    mcPwm_onAttachmentDisconnected( source, target )
+    pwm_Interface.onAttachmentDisconnected( source, target )
 
     # QEI Peripheral
-    mcPosI_OnAttachmentDisconnected( source, target )
+    position_Interface.onAttachmentDisconnected( source, target )
 
     # X2C Scope 
-    mcDaMI_OnAttachmentDisconnected( source, target )
+    data_Monitoring.onAttachmentDisconnected( source, target )
+
+#=========================================================================================================#
+#                                         MESSAGE HANDLING                                                #
+#=========================================================================================================#
+def handleMessage( ID, message):
+
+    if "MCBSP_SEND_BOARD_DATA" == ID:
+        if "dsPICDEM MCLV-2" == message["NAME"]:
+            sym_SELECTED_BOARD.setSelectedKey("MCLV2")
+        elif "dsPICDEM MCHV-3" == message["NAME"]:
+            sym_SELECTED_BOARD.setSelectedKey("MCHV3")
+        else:
+            sym_SELECTED_BOARD.setSelectedKey("CUSTOM")
+    
+    # Voltage source
+    voltage_Source.handleMessage( ID, message )
+    
+    # Analog front end
+    analog_Frontend.handleMessage( ID, message )
+
+    # ADC Peripheral
+    analog_Interface.handleMessage( ID, message )
+
+    # ADC Peripheral
+    digital_Interface.handleMessage( ID, message )
+
+    # PWM Peripheral 
+    pwm_Interface.handleMessage( ID, message )
+
+    # QEI Peripheral
+    position_Interface.handleMessage( ID, message )
+
+    # X2C Scope 
+    data_Monitoring.handleMessage( ID, message )
+    
   

@@ -1,20 +1,17 @@
 /*******************************************************************************
-  PMSM_FOC App interface file
+ Function coordinator 
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    mc_pmsm_foc.c
+    mc_function_coordinator.h
 
   Summary:
-    This file contains functions to initialize the motor control
-    peripherals and interface functions to control the motor.
+   Function Coordinator header file 
 
   Description:
-  This file contains functions to initialize the motor control
-  peripherals and interface functions to control the motor.
-
+  Function Coordinator header file 
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -42,21 +39,31 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-/*******************************************************************************
- File inclusions
- *******************************************************************************/
-#include "mc_error_handler.h"
-#include "mc_pmsm_foc.h"
-#include "mc_function_coordinator.h"
+#ifndef MCFCO_H    // Guards against multiple inclusion
+#define MCFCO_H
 
 /*******************************************************************************
- Private variables 
+ Header files inclusions
  *******************************************************************************/
+
+#include <stddef.h>
+#include "mc_current_calculation.h"
+#include "mc_motor_control.h"
+#include "mc_error_handler.h"
+#include "mc_hardware_abstraction.h"
+
+/*******************************************************************************
+ Private data-types
+ *******************************************************************************/
+
+/*******************************************************************************
+ * Interface variables 
+ *******************************************************************************/
+
 
 /*******************************************************************************
  Interface Functions 
  *******************************************************************************/
-
 /*! \brief Application initialization 
  * 
  * Details.
@@ -67,113 +74,111 @@
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_Initialize( void )
-{   
-    mcFcoI_ApplicationInit();
-}
+void mcFcoI_ApplicationInit( void );
 
-/*! \brief Motor start function 
+
+/*! \brief Interrupt tasks execution 
  * 
  * Details.
- * Motor start function  
+ *  Interrupt tasks execution 
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_MotorStart(void)
-{
-    mcMocI_M1Start();
-}
+void mcFcoI_MotorAInterruptTasksRun( uint32_t status, uintptr_t context );
 
-/*! \brief Motor stop function 
+/*! \brief Interrupt tasks execution 
  * 
  * Details.
- * Motor stop function  
+ *  Interrupt tasks execution 
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_MotorStop(void)
-{
-    mcMocI_M1Stop();
-}
+void mcFcoI_MotorBInterruptTasksRun( uint32_t status, uintptr_t context );
 
-/*! \brief Motor direction toggle 
+
+/*! \brief Motor control thread tasks  
  * 
  * Details.
- * Motor direction toggle
+ * Motor control thread tasks
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_DirectionToggle(void)
-{
-    mcMocI_M1DirectionToggle();
-}
+void mcFcoI_ThreadTasksRun( void );
 
-/*! \brief Motor speed set 
+/*! \brief 1 ms thread tasks 
  * 
  * Details.
- * Motor speed set
+ * 1 ms thread tasks 
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_MotorSpeedSet(void)
-{
-  
-}
+void mcFcoI_1msThreadTasksRun( void );
 
-/*! \brief Motor speed get 
+
+/*! \brief 10 ms thread tasks 
  * 
  * Details.
- * Motor speed get
+ * 10 ms thread tasks 
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_MotorSpeedGet(void)
-{
-  
-}
+void mcFcoI_10msThreadTasksRun( void );
 
 
-/*! \brief Configure thread tasks 
+/*! \brief 100 ms thread tasks 
  * 
  * Details.
- * Configure thread tasks 
+ * 100 ms thread tasks 
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_ThreadTasksConfig(void)
-{
-    
-}
+void mcFcoI_100msThreadTasksRun( void );
 
-/*! \brief Run thread tasks 
+/*! \brief 1000 ms thread tasks 
  * 
  * Details.
- * Run thread tasks 
+ * 1000 ms thread tasks 
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_ThreadTasksRun(void)
-{
-    mcFcoI_ThreadTasksRun();
-}
+void mcFcoI_1000msThreadTasksRun( void );
+
+
+/*! \brief Button polling
+ * 
+ * Details.
+ * Button polling
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcFcoI_ButtonPolling( void );
+
+#endif //MCFOC_H
+
+/**
+ End of File
+*/

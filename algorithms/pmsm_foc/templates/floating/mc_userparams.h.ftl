@@ -1,22 +1,22 @@
- /*******************************************************************************
- User Parameters interface file
-
-  Company:
-    Microchip Technology Inc.
+/*******************************************************************************
+  System Definitions
 
   File Name:
-    mc_userparams.h
+    userparams.h
 
   Summary:
-    Motor control parameters interface
+    Header file which defines Motor Specific and Board Specific constants 
 
   Description:
-    This file contains the motor parameters and hardware board parameters
+    This file contains the motor and board specific constants. It also defines
+ * switches which allows algorithm to be run in debug modes like Open Loop Mode,
+ * Torque mode, etc. 
+
  *******************************************************************************/
 
-// DOM-IGNORE-BEGIN
+//DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -36,161 +36,260 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ *******************************************************************************/
+//DOM-IGNORE-END
+
+#ifndef USERPARAMS_H 
+#define USERPARAMS_H
+
+/*******************************************************************************
+ * Application Configuration
 *******************************************************************************/
-// DOM-IGNORE-END
+#define ENABLE                      1u
+#define DISABLE                     0u
 
-#ifndef _USER_HEADER
-#define _USER_HEADER
+/* Alignment methods */
+#define Q_AXIS                          (0u)
+#define D_AXIS                          (1u)
 
-#include "mc_pmsm_foc_common.h"
-/***********************************************************************************************/
-/*                    include files                                                            */
-/***********************************************************************************************/
+/* Control Loop */
+#define OPEN_LOOP                        (0u)
+#define SPEED_LOOP                       (1u)
+#define TORQUE_LOOP                      (2u)
+#define POSITION_LOOP                    (3u)
 
-/***********************************************************************************************/
-/* USER CONFIGURABLE PARAMETERS - START                                                        */
-/***********************************************************************************************/
 
-/***********************************************************************************************/
-/* Algorithm Configuration parameters                                                          */
-/***********************************************************************************************/
-#define BOARD                            (${MCPMSMFOC_BOARD_SEL})                            
-#define POSITION_FEEDBACK                (${MCPMSMFOC_POSITION_FB})
 
-#define CONTROL_LOOP                     (${MCPMSMFOC_CONTROL})
-<#if MCPMSMFOC_CONTROL == "SPEED_LOOP">
-#define FIELD_WEAKENING                  (${MCPMSMFOC_FIELD_WEAKENING?then('ENABLED','DISABLED')})  /* If enabled - Field weakening */
-<#else>
-#define FIELD_WEAKENING                   (DISABLED)
-</#if>
-#define ALIGNMENT_METHOD                 (${MCPMSMFOC_ALIGNMENT})  /* alignment method  */
+/** 
+ *  Defining DEVELOPER_MODE allows the programmer to monitor debug signals via X2C Scope 
+ *  Note: X2C library has to be linked for the DEVELOPER_MODE to function                    
+ */
 
-<#if MCPMSMFOC_INTERM_FLYING_START>
-#define FLYING_START_TIME_SEC              (float)(${MCPMSMFOC_FLYING_START_TIME})
-#define MIN_FLYING_START_SPEED_RPM         (float)(${MCPMSMFOC_FLYING_START_SPEED})
-#define FLYING_START_START_CURRRENT_A      (float)(${MCPMSMFOC_FLYING_START_STARTUP_CURRENT})
-#define NULL_BRAKE_TIME_SEC               (float)(${MCPMSMFOC_FLYING_START_NULL_BRAKING_TIME})
-<#if MCPMSMFOC_FLYING_START_REGENERATIVE_BRAKING_ENABLE>
-#define REGENERATIVE_BRAKING_CURRRENT_A   (float)(${MCPMSMFOC_FLYING_START_REGENERATIVE_BRAKING_CURRENT})
-#define REGENERATIVE_BRAKE_CURRENT_RAMP_TIME_SEC (float)(${MCPMSMFOC_FLYING_START_REGENERATIVE_BRAKING_RAMP_TIME})
-</#if>
-</#if>
+#define DEVELOPER_MODE   ENABLE
 
-<#if MCPMSMFOC_POSITION_FB != "SENSORED_ENCODER">
-#define ANGLE_OFFSET_DEG                 (float)45.0    /* Angle offset while switching to closed loop */
-</#if>
-#define CURRENT_MEASUREMENT              (${MCPMSMFOC_CURRENT_MEAS})  /* Current measurement shunts */
+#define CONTROL_LOOP                     (${MCPMSMFOC_CONTROL_TYPE})
+
+/**
+ *  Defining Q_AXIS_STARTUP causes the open loop startup by injecting current in Q axis  
+ *  Un-defining Q_AXIS_STARTUP cause the open loop startup by injecting current in D axis       
+ */
+#define Q_AXIS_STARTUP    1u
+#define ALIGNMENT_METHOD                 (${MCPMSMFOC_ALIGN_OR_DETECT_AXIS})  /* alignment method  */
 
 <#if MCPMSMFOC_REF_INPUT == "Potentiometer Analog Input">
-#define POTENTIOMETER_INPUT_ENABLED       ENABLED
+#define POTENTIOMETER_INPUT_ENABLED       ENABLE
 <#else>
-#define POTENTIOMETER_INPUT_ENABLED       DISABLED
+#define POTENTIOMETER_INPUT_ENABLED       DISABLE
 </#if>
 
-<#if MCPMSMFOC_CONTROL == "SPEED_LOOP">
-#define SPEED_REF_RPM                     (float)${MCPMSMFOC_END_SPEED}   /* Speed Ref */
-<#elseif MCPMSMFOC_CONTROL == "TORQUE_LOOP">
-#define Q_CURRENT_REF_TORQUE              (${MCPMSMFOC_END_TORQUE})   /* Iq ref for torque mode */
-#define Q_CURRENT_MIN_TORQUE              (${MCPMSMFOC_MIN_TORQUE})   /* Min Iq current */
-#define Q_CURRENT_MAX_TORQUE              (${MCPMSMFOC_MAX_TORQUE})   /* Max Iq mapped to Potentiometer max */
+<#if MCPMSMFOC_CONTROL_TYPE == "Speed control">
+#define SPEED_REF_RPM                     (float)${MCPMSMFOC_OPEN_LOOP_END_SPEED}   /* Speed Ref */
+<#elseif MCPMSMFOC_CONTROL_TYPE == "Torque control">
+#define Q_CURRENT_REF_TORQUE             0.20   /* Iq ref for torque mode */
+#define Q_CURRENT_MIN_TORQUE             0.15   /* Min Iq current */
+#define Q_CURRENT_MAX_TORQUE             0.25   /* Max Iq mapped to Potentiometer max */
 </#if>
 
-/***********************************************************************************************/
-/* Motor Configuration Parameters */
-/***********************************************************************************************/
-#define MOTOR_PER_PHASE_RESISTANCE                          ((float)${MCPMSMFOC_R})
-#define MOTOR_PER_PHASE_INDUCTANCE                          ((float)${MCPMSMFOC_LD})
-#define MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH                ((float)${MCPMSMFOC_BEMF_CONST})
-#define NUM_POLE_PAIRS                                      ((float)${MCPMSMFOC_POLE_PAIRS})
-#define RATED_SPEED_RPM                                     ((float)${MCPMSMFOC_RATED_SPEED})
-#define MAX_SPEED_RPM                                       ((float)${MCPMSMFOC_MAX_SPEED})
-#define MAX_MOTOR_CURRENT                                   ((float)${MCPMSMFOC_MAX_MOTOR_CURRENT})
-#define MOTOR_CONNECTION                                    (${MCPMSMFOC_MOTOR_CONNECTION})
-<#if MCPMSMFOC_POSITION_FB == "SENSORED_ENCODER">
-#define ENCODER_PULSES_PER_REV                              ((float)${MCPMSMFOC_QE_PULSES_PER_REV})
+/**
+ *  Defining BIDIRECTION_CONTROL enables bi-directional control of the motor                            
+ */ 
+<#if MCPMSMFOC_BOARD_SEL != "MCHV3"> 
+#define BIDIRECTION_CONTROL  ENABLE
+<#else>
+#define BIDIRECTION_CONTROL  DISABLE
 </#if>
 
-/*****************************************************************************/
-/* Control Parameters                                                        */
-/*****************************************************************************/
+/**
+ *  Defining RAMP_PROFILE sets the ramp profile of speed in UI input mode                      
+ */ 
+#define STEP     0u
+#define LINEAR   1u
+#define RAMP_PROFILE   ${MCPMSMFOC_RAMP_PROFILES}
 
-/* Motor Start-up configuration parameters */
-#define LOCK_TIME_IN_SEC                (${MCPMSMFOC_LOCK_TIME})   /* Startup - Rotor alignment time */
-
-#define OPEN_LOOP_END_SPEED_RPM         (${MCPMSMFOC_OL_END_SPEED}) /* Startup - Control loop switches to close loop at this speed */
-#define OPEN_LOOP_RAMP_TIME_IN_SEC      (${MCPMSMFOC_OL_RAMP_TIME})   /* Startup - Time to reach OPEN_LOOP_END_SPEED_RPM in seconds */
-
-#define Q_CURRENT_REF_OPENLOOP          (${MCPMSMFOC_OL_IQ_REF}) /* Startup - Motor start to ramp up in current control mode */
-
-
-/* Current ramp parameters for open loop to close loop transition  */
-#define Q_CURRENT_OPENLOOP_STEP                    ((float)0.001)
-#define CLOSING_LOOP_TIME_COUNTS                   (uint32_t)( Q_CURRENT_REF_OPENLOOP / Q_CURRENT_OPENLOOP_STEP)
+/**
+ *  Field Weakening                     
+ */ 
+#define FIELD_WEAKENING (${MCPMSMFOC_ENABLE_FW?then('ENABLED','DISABLE')})
 
 /* Field weakening - Limit for -ve Idref */
-#if(FIELD_WEAKENING == ENABLED)
-#define MAX_FW_NEGATIVE_ID_REF              (float)(${MCPMSMFOC_MAX_FW_CURRENT})
+#if(FIELD_WEAKENING == ENABLE)
+#define MAX_FW_NEGATIVE_ID_REF              (float)(${MCPMSMFOC_FW_MAX_NEGATIVE_ID})
 #endif
 
-/******************************************************************************/
-/* PI controllers tuning values - */
+/*******************************************************************************
+ * System Configuration
+*******************************************************************************/
+/**
+ *  PWM frequency in Hz                            
+ */ 
+#define PWM_FREQUENCY   (${MCPMSMFOC_PWM_FREQUENCY}u)
 
-/********* D Control Loop Coefficients ****************************************/
-#define     D_CURRCNTR_PTERM           (float)(${MCPMSMFOC_ID_KP})
-#define     D_CURRCNTR_ITERM           (float)(${MCPMSMFOC_ID_KI})
-#define     D_CURRCNTR_CTERM           (float)(${MCPMSMFOC_ID_KC})
-#define     D_CURRCNTR_OUTMAX          (float)(${MCPMSMFOC_ID_OUT_MAX})
+/**
+ *  Current control Frequency                           
+ */ 
+#define CURRENT_CONTROL_FREQUENCY      ( 1.0f * PWM_FREQUENCY ) 
 
-/******** Q Control Loop Coefficients ****************************************/
-#define     Q_CURRCNTR_PTERM           (float)(${MCPMSMFOC_IQ_KP})
-#define     Q_CURRCNTR_ITERM           (float)(${MCPMSMFOC_IQ_KI})
-#define     Q_CURRCNTR_CTERM           (float)(${MCPMSMFOC_IQ_KC})
-#define     Q_CURRCNTR_OUTMAX          (float)(${MCPMSMFOC_IQ_OUT_MAX})
+/**
+ * Current control sampling time                            
+ */ 
+#define CURRENT_CONTROL_SAMPLING_TIME    (float)(1.0f/(float)CURRENT_CONTROL_FREQUENCY)
 
-/******* Velocity Control Loop Coefficients **********************************/
-#define     SPEEDCNTR_PTERM            (float)(${MCPMSMFOC_SPEED_KP})
-#define     SPEEDCNTR_ITERM            (float)(${MCPMSMFOC_SPEED_KI} * 0.01f)
-#define     SPEEDCNTR_CTERM            (float)(${MCPMSMFOC_SPEED_KC})
-#define     SPEEDCNTR_OUTMAX           (float)(${MCPMSMFOC_SPEED_OUT_MAX})
+/*******************************************************************************
+ * Motor Parameters 
+*******************************************************************************/
+/**
+ *  Winding Connection Type 
+ */
+#define WINDING_CONNECTION_TYPE  (${MCPMSMFOC_MOTOR_CONNECTION})
+
+/**
+  *  Check for motor isotropy                  
+  */
+#define NON_ISOTROPIC_MOTOR
+
+/**
+ * Rated electrical speed in RPM
+ */
+#define RATED_SPEED_IN_RPM   ((int16_t)${MCPMSMFOC_RATED_SPEED})
+
+/**
+ * Maximum electrical speed  with Field Weakening enabled in RPM
+ */
+#define MAXIMUM_SPEED_IN_RPM    ((int16_t)${MCPMSMFOC_MAX_SPEED})
+
+/**
+ * Minimum close loop electrical speed of the motor in RPM
+ */
+#define MINIMUM_SPEED_IN_RPM   (${MCPMSMFOC_OPEN_LOOP_END_SPEED}) 
+
+/**
+ * Number of pole pairs  
+ */
+#define NUM_POLE_PAIRS  ((int16_t)${MCPMSMFOC_POLE_PAIRS})  
+
+ /**
+  *  Stator resistance in Ohm                      
+  */
+#define MOTOR_PER_PHASE_RESISTANCE_IN_OHM   ((float)${MCPMSMFOC_R})    
+
+ /**
+  *  Direct axis inductance in Henry                 
+  */
+#define DIRECT_AXIS_INDUCTANCE_IN_HENRY  ((float)${MCPMSMFOC_LD})     
+
+/**
+  *  Quadrature axis inductance in Henry                 
+  */
+#define QUADRATURE_AXIS_INDUCTANCE_IN_HENRY  ((float)${MCPMSMFOC_LQ}) 
+
+ /** 
+  * Back EMF Constant in Vpeak/kRPM                   
+  */
+#define MOTOR_BEMF_CONST_VOLTS_PER_KRPM_MECH  ((float)${MCPMSMFOC_BEMF_CONST})
+
+ /** 
+  * Air gap flux in Weber                   
+  */
+#define  AIR_GAP_FLUX    (float)(  60 * MOTOR_BEMF_CONST_VOLTS_PER_KRPM_MECH / ( 1.414 * 1000 * M_PI ))
+
+ /** 
+  * Maximum peak current of the motor in amperes                     
+  */
+#define MAXIMUM_MOTOR_CURRENT_IN_AMPERE   ((float)${MCPMSMFOC_MAX_MOTOR_CURRENT})     
 
 
-/* First order low pass Filter constants used inside the project             */
-<#if MCPMSMFOC_BOARD_SEL == "MCHV3">
-#define KFILTER_ESDQ                   (float)((float)${MCPMSMFOC_PLL_EQ_FILTER})
-#define KFILTER_BEMF_AMPLITUDE         (float)((float)4000/(float)32767)
-#define KFILTER_VELESTIM               (float)((float)${MCPMSMFOC_PLL_SPEED_FILTER})
-#define KFILTER_POT                    (float)((float)250/(float)32767)
-<#else>
-#define KFILTER_ESDQ                   (float)((float)${MCPMSMFOC_PLL_EQ_FILTER})
-#define KFILTER_BEMF_AMPLITUDE         (float)((float)100/(float)32767)
-#define KFILTER_VELESTIM               (float)((float)${MCPMSMFOC_PLL_SPEED_FILTER})
-#define KFILTER_POT                    (float)((float)250/(float)32767)
-</#if>
+/*******************************************************************************
+ * Board Parameters 
+*******************************************************************************/
+/**
+ * Current sensing shunt resistance in Ohms
+ */ 
+#define CURRENT_SENSE_SHUNT_RESISTANCE_IN_OHM (float)${MCPMSMFOC_ANALOG_FRONT_END_IA_SHUNT} 
 
-/***********************************************************************************************/
-/* Driver board configuration Parameters */
-/***********************************************************************************************/
+/**
+ * Current sensing amplifier type
+ */ 
+#define INVERTING_CURRENT_GAIN_AMPLIFIER
 
-#define MAX_CURRENT                                         ((float)(${MCPMSMFOC_MAX_CURRENT})) /* Max current as per above calculations */
-#define MAX_ADC_COUNT                                       (float)${MCPMSMFOC_ADC_MAX}     /*  ADC Resolution*/
-#define MAX_ADC_INPUT_VOLTAGE                               (float)3.3      /* volts */
+/**
+ * Current sensing amplifier gain
+ */ 
+#define CURRENT_SENSE_AMPLIFIER_GAIN (float)${MCPMSMFOC_ANALOG_FRONT_END_IA_GAIN} 
 
-#define DC_BUS_VOLTAGE                                      (float)${MCPMSMFOC_DC_BUS_VOLT}     /* Volts */
-#define DCBUS_SENSE_RATIO                                   (float)${MCPMSMFOC_DC_BUS_RATIO}    /* Voltage divider ratio R2/(R2 + R1) */
+/**
+ * Voltage divider ratio for bus voltage measurement
+ */
+#define VOLTAGE_SENSE_DIVIDER_RATIO  (float)${MCPMSMFOC_DC_BUS_RATIO} 
 
-#define STATOR_VOLTAGE_LIMIT                                (float)(0.98)   /* In percentage */
+/*******************************************************************************
+ * PI Controller Parameters  
+*******************************************************************************/
+/**
+ * Speed PI Controller Parameters 
+ */
+#define SPEED_TS        (float)CURRENT_CONTROL_SAMPLING_TIME
+#define SPEED_KP        (float)(${MCPMSMFOC_SPEED_PID_KP})
+#define SPEED_KI        (float)(${MCPMSMFOC_SPEED_PID_KI} * CURRENT_CONTROL_SAMPLING_TIME)
+#define SPEED_KC        (float)(${MCPMSMFOC_SPEED_PID_KC})
+#define SPEED_YMAX      (float)(${MCPMSMFOC_SPEED_PID_YMAX})
 
-/***********************************************************************************************/
-/* Peripheral Configuration parameters */
-/***********************************************************************************************/
+/**
+ * Direct axis current PI Controller Parameters 
+ */
+#define D_CURRENT_TS    (float)CURRENT_CONTROL_SAMPLING_TIME
+#define D_CURRENT_KP    (float)(${MCPMSMFOC_ID_PID_KP})
+#define D_CURRENT_KI    (float)(${MCPMSMFOC_ID_PID_KI} * CURRENT_CONTROL_SAMPLING_TIME)
+#define D_CURRENT_KC    (float)(${MCPMSMFOC_ID_PID_KC})
+#define D_CURRENT_YMAX  (float)(${MCPMSMFOC_ID_PID_YMAX})
 
-/** PWM frequency in Hz */
-#define PWM_FREQUENCY                     (${MCPMSMFOC_PWM_FREQ}U)
+/**
+ * Quadrature axis current PI Controller Parameters 
+ */
+#define Q_CURRENT_TS     (float)CURRENT_CONTROL_SAMPLING_TIME
+#define Q_CURRENT_KP     (float)(${MCPMSMFOC_IQ_PID_KP})
+#define Q_CURRENT_KI     (float)(${MCPMSMFOC_IQ_PID_KI} * CURRENT_CONTROL_SAMPLING_TIME)
+#define Q_CURRENT_KC    (float)(${MCPMSMFOC_IQ_PID_KC})
+#define Q_CURRENT_YMAX   (float)(${MCPMSMFOC_IQ_PID_YMAX})
 
-/**********************************************************************************************/
 
-/***********************************************************************************************/
-/* USER CONFIGURABLE PARAMETERS - END                                                          */
-/***********************************************************************************************/
 
-#endif
+/*******************************************************************************
+ * Torque Mode Parameters  
+*******************************************************************************/
+<#--  #define TORQUE_MODE_MAXIMUM_CURRENT   (float)(${MCPMSMFOC_END_TORQUE})  -->
+
+
+/*******************************************************************************
+ * Start-up Parameters  
+*******************************************************************************/
+
+/**
+ * Forced alignment lock time 
+ */ 
+#define START_UP_LOCK_TIME_IN_SECOND   (${MCPMSMFOC_STARTUP_TIME}) 
+
+/**
+  * Start-up current in amperes                          
+  */
+#define START_UP_CURRENT_IN_AMPERE   (${MCPMSMFOC_STARTUP_CURRENT}) 
+
+
+/**
+ * Start-up ramp time
+ */
+#define START_UP_RAMP_TIME_IN_SECOND   (${MCPMSMFOC_OPEN_LOOP_RAMP_TIME})
+
+
+/**
+ * Start-up stabilization time
+ */
+#define START_UP_STAB_TIME_IN_SECOND   (2)
+
+
+/**
+ * Start-up transition speed 
+ */
+#define START_UP_TRANS_SPEED_IN_RPM    (${MCPMSMFOC_OPEN_LOOP_END_SPEED})
+
+#endif // USERPARAMS_H
+

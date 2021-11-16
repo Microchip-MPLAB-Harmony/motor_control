@@ -1,12 +1,11 @@
 /*******************************************************************************
-
   Rotor Position Source File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    mc_rotorposition.c
+    mc_rotor_position.c
 
   Summary:
     This file contains functions to get the rotor position of a motor
@@ -17,7 +16,7 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -45,388 +44,260 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#include "definitions.h"                // SYS function prototypes
-#include "device.h"
-#include "mc_derivedparams.h"
-#include "mc_rotorposition.h"
-#include "mc_lib.h"
-#include "mc_voltagemeasurement.h"
-#include "mc_generic_lib.h"
-#include "math.h"
-#include "assert.h"
+#include <stdint.h>
+#include "mc_rotor_position.h"
+#include "mc_generic_library.h"
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Data Types
-// *****************************************************************************
-// *****************************************************************************
-
-/******************************************************************************/
-/* Local Function Prototype                                                   */
-/******************************************************************************/
-
-__STATIC_INLINE void MCRPOS_ReadInputSignals( void );
-static void MCRPOS_ResetPLLEstimator( void );
-static void MCRPOS_InitializePLLEstimator ( void );
-__STATIC_INLINE void MCRPOS_PLLEstimator( void );
-
-/******************************************************************************/
-/*                   Global Variables                                         */
-/******************************************************************************/
-tMCRPOS_PARAMETERS_S               gMCRPOS_Parameters = { 0.0f } ;
-tMCRPOS_STATE_SIGNAL_S             gMCRPOS_StateSignals = { 0.0f };
-tMCRPOS_INPUT_SIGNAL_S             gMCRPOS_InputSignals =  {0.0f };
-tMCRPOS_OUTPUT_SIGNALS_S           gMCRPOS_OutputSignals = { 0.0f, 0.0f, 0.0f };
-tMCRPOS_ROTOR_ALIGN_STATE_S       gMCRPOS_RotorAlignState = { MCRPOS_FORCE_ALIGN, 0U,  0U };
-tMCRPOS_ROTOR_ALIGN_OUTPUT_S      gMCRPOS_RotorAlignOutput = {0U,  0U };
-tMCRPOS_ROTOR_ALIGN_PARAM_S       gMCRPOS_RotorAlignParam  = {
-                                                                  Q_CURRENT_REF_OPENLOOP,
-                                                                  LOCK_COUNT_FOR_LOCK_TIME
-                                                             };
-
-/******************************************************************************/
-/*                          LOCAL FUNCTIONS                                   */
-/******************************************************************************/
-/******************************************************************************/
-/* Function name: MCRPOS_ReadInputSignals                                     */
-/* Function parameters:   None                                                */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Read input variables required for PLL estimator                            */
-/******************************************************************************/
-__STATIC_INLINE void MCRPOS_ReadInputSignals( void )
+/*******************************************************************************
+ Private data-types 
+ *******************************************************************************/
+typedef struct
 {
-    /* Initialize input pointers  */
-    gMCRPOS_InputSignals.ialpha =  gMCLIB_CurrentAlphaBeta.alphaAxis;
-    gMCRPOS_InputSignals.ibeta  =  gMCLIB_CurrentAlphaBeta.betaAxis;
-    gMCRPOS_InputSignals.ualpha =  gMCLIB_VoltageAlphaBeta.alphaAxis;
-    gMCRPOS_InputSignals.ubeta  =  gMCLIB_VoltageAlphaBeta.betaAxis;
-    gMCRPOS_InputSignals.umax   =  gMCVOL_OutputSignals.umax;
+    float   dLsByDt;
+    float   Rs;
+    float   oneByKe;
+    float   EdqFilterParam;
+    float   WrFilterParam;
+    float   Wrmin;
+    float   Ts;
+}tmcRpo_Parameters_s;
+
+typedef struct _tmcRpo_StateVariables_s
+{
+    float  ealpha;
+    float  ebeta;
+    float  Ed;
+    float  Eq;
+    float  ualpha;
+    float  ubeta;
+    float ialpha;
+    float ibeta;
+    float  theta;
+    float  Wre;
+    float  accel;
+}tmcRpo_StateVariables_s;
+
+
+/*******************************************************************************
+ Constants 
+ *******************************************************************************/
+/*
+ * Zero Boundary
+ */
+#define EPSILON   1E-31
+
+/*
+ * Constant value for PI
+ */
+#define CONSTANT_pi        (float)3.14159265358979323846
+
+/*
+ * Constant value for root 3
+ */
+#define CONSTANT_squareRootOf3              ((float)1.732)
+
+/*
+ * Back EMF constant conversion factor from Vpeak / kRPM to Vpeak-s/rad
+ */
+#define  CONSTANT_vPeakPerKrpmTovPeakSecPerRad (float)( 3.0f  / ( 100.0f * CONSTANT_squareRootOf3 * CONSTANT_pi * NUM_POLE_PAIRS ))
+
+/*
+ * RPM to electrical rad/s conversion factor
+ */
+#define  CONSTANT_mechRpmToElecRadPerSec  (float)( CONSTANT_pi *NUM_POLE_PAIRS / 30.0f ) 
+
+/*******************************************************************************
+ Private variables  
+ *******************************************************************************/
+static tmcRpo_InputPorts_s mcRpo_InputPorts_mas[ROTOR_POSITION_INSTANCES];
+static tmcRpo_OutputPorts_s mcRpo_OutputPorts_mas[ROTOR_POSITION_INSTANCES];
+static tmcRpo_StateVariables_s mcRpo_StateVariables_mas[ROTOR_POSITION_INSTANCES];
+static tmcRpo_Parameters_s mcRpo_Parameters_mas[ROTOR_POSITION_INSTANCES];
+
+/*******************************************************************************
+ Interface variables  
+ *******************************************************************************/
+tmcRpo_ConfigParameters_s  mcRpoI_ConfigParameters_gas[ROTOR_POSITION_INSTANCES] = 
+{
+    ROTOR_POSITION_MODULE_A_CONFIG,
+#if( 2u == ROTOR_POSITION_INSTANCES )
+    ROTOR_POSITION_MODULE_B_CONFIG
+#endif
+};
+
+/*******************************************************************************
+ Private Functions 
+ *******************************************************************************/
+static tStd_ReturnType_e mcRpo_AssertionFailedReaction( const char * message )
+{
+    /* ToDo: Decide appropriate reaction function */
+     return returnType_Failed;
 }
 
-/******************************************************************************/
-/* Function name: MCRPOS_InitializePLLEstimator                               */
-/* Function parameters:   None                                                */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Initialize PLL Estimator variables                                         */
-/******************************************************************************/
-static void MCRPOS_InitializePLLEstimator( void )
+static inline void mcRpo_EulerFilter( float new, float * old, float filterParam )
 {
-    /*  Observer state and parameters initialization */
-    gMCRPOS_Parameters.lsDt = (float)(MOTOR_PER_PHASE_INDUCTANCE / FAST_LOOP_TIME_SEC);
-    gMCRPOS_Parameters.rs = MOTOR_PER_PHASE_RESISTANCE;
-    gMCRPOS_Parameters.invKFi = (float)(1.0 / MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC);
-    gMCRPOS_Parameters.kFilterEsdq = KFILTER_ESDQ;
-    gMCRPOS_Parameters.kFilterBEMFAmp = KFILTER_BEMF_AMPLITUDE;
-    gMCRPOS_Parameters.velEstimFilterK = KFILTER_VELESTIM;
-    gMCRPOS_Parameters.deltaT = FAST_LOOP_TIME_SEC;
-    gMCRPOS_Parameters.decimateRotorSpeed = DECIMATE_RATED_SPEED;
+    *old += ( new - ( *old ) ) * filterParam;
+ }
 
+#define ASSERT( expression, message ) { if(!expression)mcRpo_AssertionFailedReaction(message);}
+
+/*******************************************************************************
+ Interface Functions 
+ *******************************************************************************/
+
+/*! \brief Rotor position calculation initialization function 
+ * 
+ * Details.
+ *  Rotor position calculation initialization function 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+tStd_ReturnType_e mcRpoI_RotorPositionCalculationInit( const tmcRpo_ConfigParameters_s * const rpoParam )
+{
+    float Ke;
+    
+    tmcRpo_Parameters_s * pParam;
+    
+    /* Check if the configuration parameters data has valid address */
+    ASSERT(( NULL != rpoParam ), "Configuration parameters points to NULL address ");
+    
+    /* Initialize input ports */
+    ASSERT((      ( NULL != rpoParam->inPort.ialpha ) && (NULL != rpoParam->inPort.ibeta) 
+                     && ( NULL != rpoParam->inPort.ualpha) && (NULL != rpoParam->inPort.ubeta ) 
+                     && ( NULL != rpoParam->inPort.umax ) ), "Input ports are not assigned properly");
+    
+    
+    mcRpo_InputPorts_mas[rpoParam->Id] = rpoParam->inPort;
+    
+    /* Initialize output ports */
+    ASSERT((      ( NULL != rpoParam->outPort.theta ) && (NULL != rpoParam->outPort.Wre) 
+                     && ( NULL != rpoParam->outPort.accel ) ), "Output ports are not assigned properly");
+        
+    mcRpo_OutputPorts_mas[rpoParam->Id] = rpoParam->outPort;
+    
+    /* Update and calculate independent and dependent parameters respectively */
+    pParam = &mcRpo_Parameters_mas[rpoParam->Id];
+    pParam->Rs = rpoParam->userParam.Rs;
+    pParam->Wrmin = CONSTANT_mechRpmToElecRadPerSec * rpoParam->userParam.Wrmin;
+    pParam->Ts = rpoParam->userParam.Ts;
+    
+    ASSERT((EPSILON < rpoParam->userParam.Ts ), "Division by zero");
+    pParam->dLsByDt  = rpoParam->userParam.Ls / rpoParam->userParam.Ts;
+    
+    ASSERT((EPSILON < rpoParam->userParam.Ke ), "Division by zero");
+    Ke = CONSTANT_vPeakPerKrpmTovPeakSecPerRad * rpoParam->userParam.Ke;
+    pParam->oneByKe  = 1.0f / Ke;
+    pParam->EdqFilterParam = rpoParam->userParam.EdqFilterBandwidth;
+    pParam->WrFilterParam = rpoParam->userParam.WrFilterBandwidth;
+    
+    return returnType_Passed;
+}
+
+
+/*! \brief Rotor position calculation execution  function 
+ * 
+ * Details.
+ *  Rotor position calculation execution function 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcRpoI_RotorPositionCalculationRun( const tmcRpo_InstanceId_e Id )
+{
+    float sine, cosine;
+    float ealpha, ebeta;
+    float Wre, Ed, Eq;
+    
+    /* Read input ports */
+
+    
+    /* Calculate back EMF along alpha and beta axis */
+    ealpha  =   mcRpo_StateVariables_mas[Id].ialpha - (*mcRpo_InputPorts_mas[Id].ialpha );
+    ealpha *=  mcRpo_Parameters_mas[Id].dLsByDt;
+    ealpha -= (*mcRpo_InputPorts_mas[Id].ialpha * mcRpo_Parameters_mas[Id].Rs );
+    ealpha += mcRpo_StateVariables_mas[Id].ualpha; 
+    mcRpo_EulerFilter( ealpha, &mcRpo_StateVariables_mas[Id].ealpha, 1.0f );
+    
+    ebeta  =   mcRpo_StateVariables_mas[Id].ibeta - (*mcRpo_InputPorts_mas[Id].ibeta );
+    ebeta *=  mcRpo_Parameters_mas[Id].dLsByDt;
+    ebeta -= (*mcRpo_InputPorts_mas[Id].ibeta * mcRpo_Parameters_mas[Id].Rs );
+    ebeta +=  mcRpo_StateVariables_mas[Id].ubeta; 
+    mcRpo_EulerFilter( ebeta, &mcRpo_StateVariables_mas[Id].ebeta, 1.0f);
+    
+    /* Determine back EMF along direct and quadrature axis using estimated angle */
+    mcLib_SinCosCalc( mcRpo_StateVariables_mas[Id].theta, &sine, &cosine );
+    
+    Ed  =     mcRpo_StateVariables_mas[Id].ealpha * cosine;
+    Ed +=  ( mcRpo_StateVariables_mas[Id].ebeta * sine );
+    mcRpo_EulerFilter( Ed, &mcRpo_StateVariables_mas[Id].Ed, mcRpo_Parameters_mas[Id].EdqFilterParam);
+    
+    Eq  =    -mcRpo_StateVariables_mas[Id].ealpha * sine;
+    Eq +=  ( mcRpo_StateVariables_mas[Id].ebeta * cosine );
+    mcRpo_EulerFilter( Eq, &mcRpo_StateVariables_mas[Id].Eq, mcRpo_Parameters_mas[Id].EdqFilterParam);
+     
+     /* Determine speed  */
+    if( mcRpo_StateVariables_mas[Id].Eq  > 0.0f )
+    {
+         Wre  = mcRpo_StateVariables_mas[Id].Eq - mcRpo_StateVariables_mas[Id].Ed;
+    }
+    else
+    {
+         Wre  = mcRpo_StateVariables_mas[Id].Eq + mcRpo_StateVariables_mas[Id].Ed;
+    }
+    
+    Wre *= mcRpo_Parameters_mas[Id].oneByKe;
+    mcRpo_EulerFilter( Wre, &mcRpo_StateVariables_mas[Id].Wre, mcRpo_Parameters_mas[Id].WrFilterParam);
+               
+    /*Determine phase angle */
+    mcRpo_StateVariables_mas[Id].theta += ( mcRpo_Parameters_mas[Id].Ts * mcRpo_StateVariables_mas[Id].Wre );
+    mcLib_WrapAngleTo2Pi( &mcRpo_StateVariables_mas[Id].theta );
+    
+    /* Update state variables for next cycle calculation */
+    mcRpo_StateVariables_mas[Id].ualpha  = (*mcRpo_InputPorts_mas[Id].ualpha ) * (*mcRpo_InputPorts_mas[Id].umax );
+    mcRpo_StateVariables_mas[Id].ubeta  =  (*mcRpo_InputPorts_mas[Id].ubeta )* (*mcRpo_InputPorts_mas[Id].umax );
+    mcRpo_StateVariables_mas[Id].ialpha  = *mcRpo_InputPorts_mas[Id].ialpha;
+    mcRpo_StateVariables_mas[Id].ibeta   = *mcRpo_InputPorts_mas[Id].ibeta;
+      
+    /* Update output ports */
+    *mcRpo_OutputPorts_mas[Id].theta = mcRpo_StateVariables_mas[Id].theta;
+    *mcRpo_OutputPorts_mas[Id].Wre = mcRpo_StateVariables_mas[Id].Wre;
+    *mcRpo_OutputPorts_mas[Id].accel = mcRpo_StateVariables_mas[Id].accel;
+    
+}
+
+/*! \brief Rotor position calculation reset function 
+ * 
+ * Details.
+ *  Rotor position calculation reset function 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcRpoI_RotorPositionCalculationReset( const tmcRpo_InstanceId_e Id )
+{
     /* Reset state variables */
-    gMCRPOS_StateSignals.omegaMr = 0;
-    gMCRPOS_StateSignals.bemfFilt = 0;
-    gMCRPOS_StateSignals.velEstim = 0;
-    gMCRPOS_StateSignals.ialphaLast = 0;
-    gMCRPOS_StateSignals.ibetaLast = 0;
-    gMCRPOS_StateSignals.ualphaLast = 0;
-    gMCRPOS_StateSignals.ubetaLast = 0;
-    gMCRPOS_StateSignals.esdf = 0;
-    gMCRPOS_StateSignals.esqf = 0;
-    gMCRPOS_StateSignals.rho = 0;
-
+    mcRpo_StateVariables_mas[Id].Ed = 0.0f;
+    mcRpo_StateVariables_mas[Id].Eq = 0.0f;
+    mcRpo_StateVariables_mas[Id].ealpha = 0.0f;
+    mcRpo_StateVariables_mas[Id].ebeta = 0.0f;
+    mcRpo_StateVariables_mas[Id].theta = 0.0f;
+    mcRpo_StateVariables_mas[Id].Wre = 0.0f;
+    mcRpo_StateVariables_mas[Id].accel = 0.0f;
+    mcRpo_StateVariables_mas[Id].ualpha = 0.0f;
+    mcRpo_StateVariables_mas[Id].ubeta = 0.0f;
+    mcRpo_StateVariables_mas[Id].ialpha = 0.0f;
+    mcRpo_StateVariables_mas[Id].ibeta = 0.0f;
+    
+    /* Reset output ports */
+    *mcRpo_OutputPorts_mas[Id].Wre = 0.0f;
+    *mcRpo_OutputPorts_mas[Id].theta = 0.0f;
+    *mcRpo_OutputPorts_mas[Id].accel = 0.0f; 
 }
 
-/******************************************************************************/
-/* Function name: MCRPOS_PLLEstimator                                         */
-/* Function parameters:   None                                                */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* PLL Estimator to get the position and speed                                */
-/******************************************************************************/
-__STATIC_INLINE void MCRPOS_PLLEstimator( void )
-{
-    float tempqVelEstim;
-    tMCLIB_POSITION_S position;
-  #if(FIELD_WEAKENING == ENABLED)
-      float bemfAmp;
-  #endif
-
-    if( gMCRPOS_StateSignals.velEstim < 0 )
-    {
-        tempqVelEstim = gMCRPOS_StateSignals.velEstim * (-1);
-    }
-    else
-    {
-        tempqVelEstim = gMCRPOS_StateSignals.velEstim;
-    }
-
-    /* Stator voltage equations along alpha axis : Ealpha = Ualpha - Rs ialpha - Ls dialpha/dt    */
-
-    gMCRPOS_StateSignals.esa    =     ( gMCRPOS_StateSignals.ualphaLast )
-                                -   ( gMCRPOS_Parameters.rs  * gMCRPOS_InputSignals.ialpha )
-                                -   ( gMCRPOS_Parameters.lsDt  * ( gMCRPOS_InputSignals.ialpha - gMCRPOS_StateSignals.ialphaLast ) );
-
-    /*  Stator voltage equations along beta axis :  Ebeta = Ubeta - Rs ibeta - Ls dibeta/dt      */
-    gMCRPOS_StateSignals.esb        =     ( gMCRPOS_StateSignals.ubetaLast )
-                                  -   ( gMCRPOS_Parameters.rs  * gMCRPOS_InputSignals.ibeta )
-                                  -   ( gMCRPOS_Parameters.lsDt* ( gMCRPOS_InputSignals.ibeta - gMCRPOS_StateSignals.ibetaLast ) );
-
-  #if (ENABLED == FIELD_WEAKENING )
-    /* In field weakening BEMF amplitude is estimated to calculate Id_ref */
-    bemfAmp = sqrtf((gMCRPOS_StateSignals.esa * gMCRPOS_StateSignals.esa) + (gMCRPOS_StateSignals.esb * gMCRPOS_StateSignals.esb));
-
-    /* Filter first order for BEMF amplitude;        BEMFFilter = 1/TFilterd * Intergal{ (BEMF-BEMFFilter).dt } */
-    gMCRPOS_StateSignals.bemfFilt = gMCRPOS_StateSignals.bemfFilt +
-                                    ((bemfAmp - gMCRPOS_StateSignals.bemfFilt) * gMCRPOS_Parameters.kFilterEsdq) ;
-
-    gMCRPOS_OutputSignals.esfilt =  gMCRPOS_StateSignals.bemfFilt;
-
-  #endif
-
-    /* Calculate Sin(Angle) and Cos(Angle) */
-    position.angle     =    gMCRPOS_StateSignals.rho + gMCRPOS_StateSignals.rhoOffset;
-
-    MCLIB_WrapAngle( &position.angle);
-
-    /* Determine sin and cos values of the angle from the lookup table. */
-    MCLIB_SinCosCalc(position.angle, &position.sineAngle, &position.cosAngle);
-
-    /*    Esd =  Esa*cos(Angle) + Esb*sin(Angle) */
-    gMCRPOS_StateSignals.esd        =    (( gMCRPOS_StateSignals.esa * position.cosAngle ))
-                                                                       +    (( gMCRPOS_StateSignals.esb * position.sineAngle ));
-
-    /*   Esq = -Esa*sin(Angle) + Esb*cos(Rho)  */
-    gMCRPOS_StateSignals.esq        =    (( gMCRPOS_StateSignals.esb * position.cosAngle ))
-                            -     (( gMCRPOS_StateSignals.esa * position.sineAngle ));
-
-    /* Filter first order for Esd and Esq
-    EsdFilter = 1/TFilterd * Intergal{ (Esd-EsdFilter).dt } */
-    gMCRPOS_StateSignals.esdf        =gMCRPOS_StateSignals.esdf +
-                  ( (gMCRPOS_StateSignals.esd - gMCRPOS_StateSignals.esdf) * gMCRPOS_Parameters.kFilterEsdq) ;
-
-    gMCRPOS_StateSignals.esqf        = gMCRPOS_StateSignals.esqf +
-                  ( (gMCRPOS_StateSignals.esq - gMCRPOS_StateSignals.esqf) * gMCRPOS_Parameters.kFilterEsdq) ;
-
-    /* OmegaMr= InvKfi * (Esqf -sgn(Esqf) * Esdf) */
-    /* For stability the condition for low speed */
-    if (tempqVelEstim > gMCRPOS_Parameters.decimateRotorSpeed )
-    {
-        /* Estimated speed is greater than 10% of rated speed */
-        if( gMCRPOS_StateSignals.esqf > 0)
-        {
-            gMCRPOS_StateSignals.omegaMr = gMCRPOS_Parameters.invKFi * (gMCRPOS_StateSignals.esqf - gMCRPOS_StateSignals.esdf);
-        }
-        else
-        {
-            gMCRPOS_StateSignals.omegaMr = gMCRPOS_Parameters.invKFi * (gMCRPOS_StateSignals.esqf + gMCRPOS_StateSignals.esdf);
-        }
-    }
-    else
-    {
-        /* Estimated speed is less than 10% of rated speed */
-        if( gMCRPOS_StateSignals.velEstim > 0)
-        {
-            gMCRPOS_StateSignals.omegaMr    =    (( gMCRPOS_Parameters.invKFi * (gMCRPOS_StateSignals.esqf - gMCRPOS_StateSignals.esdf))) ;
-        }
-        else
-        {
-            gMCRPOS_StateSignals.omegaMr    =    (( gMCRPOS_Parameters.invKFi * (gMCRPOS_StateSignals.esqf + gMCRPOS_StateSignals.esdf))) ;
-        }
-    }
-
-
-    /* the integral of the estimated speed(OmegaMr) is the estimated angle */
-    gMCRPOS_StateSignals.rho    =     gMCRPOS_StateSignals.rho + (gMCRPOS_StateSignals.omegaMr) * (gMCRPOS_Parameters.deltaT);
-
-    MCLIB_WrapAngle( &gMCRPOS_StateSignals.rho);
-
-    /* the estimated speed is a filter value of the above calculated OmegaMr. The filter implementation */
-    /* is the same as for BEMF d-q components filtering */
-    gMCRPOS_StateSignals.velEstim =   gMCRPOS_StateSignals.velEstim
-                                  +    (  ( gMCRPOS_StateSignals.omegaMr - gMCRPOS_StateSignals.velEstim)
-                                     * ( gMCRPOS_Parameters.velEstimFilterK ) );
-
-    /* Update output signals */
-    gMCRPOS_OutputSignals.angle = gMCRPOS_StateSignals.rho;
-    gMCRPOS_OutputSignals.speed = gMCRPOS_StateSignals.velEstim;
-    gMCRPOS_OutputSignals.mechSpeedRPM = (float)(gMCRPOS_OutputSignals.speed * ELE_TO_MECH_RPM_SPEED);    
-
-    /* Update  state variables for next loop  */
-    gMCRPOS_StateSignals.ialphaLast    =  gMCRPOS_InputSignals.ialpha;
-    gMCRPOS_StateSignals.ibetaLast     =  gMCRPOS_InputSignals.ibeta;
-    gMCRPOS_StateSignals.ualphaLast =  gMCRPOS_InputSignals.umax * gMCRPOS_InputSignals.ualpha;
-    gMCRPOS_StateSignals.ubetaLast  =  gMCRPOS_InputSignals.umax * gMCRPOS_InputSignals.ubeta;
-}
-
-/******************************************************************************/
-/* Function name: MCRPOS_ResetPLLEstimator                                    */
-/* Function parameters:   None                                                */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Reset PLL Estimator variables                                              */
-/******************************************************************************/
-static void MCRPOS_ResetPLLEstimator( void )
-{
-    /* Reset state variables */
-    gMCRPOS_StateSignals.omegaMr = 0;
-    gMCRPOS_StateSignals.bemfFilt = 0;
-    gMCRPOS_StateSignals.velEstim = 0;
-    gMCRPOS_StateSignals.ialphaLast = 0;
-    gMCRPOS_StateSignals.ibetaLast = 0;
-    gMCRPOS_StateSignals.ualphaLast = 0;
-    gMCRPOS_StateSignals.ubetaLast = 0;
-    gMCRPOS_StateSignals.esdf = 0;
-    gMCRPOS_StateSignals.esqf = 0;
-    gMCRPOS_StateSignals.rho = 0;
-}
-
-/******************************************************************************/
-/*                      INTERFACE FUNCTIONS                                   */
-/******************************************************************************/
-
-/******************************************************************************/
-/* Function name: MCRPOS_InitializeRotorPositionSensing                       */
-/* Function parameters:   None                                                */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Initialize rotor position variables                                         */
-/******************************************************************************/
-void MCRPOS_InitializeRotorPositionSensing( void )
-{
-    /* Initialize PLL Estimator */
-    MCRPOS_InitializePLLEstimator( );
-
-}
-
-/******************************************************************************/
-/* Function name: MCRPOS_InitialRotorPositonDetection                         */
-/* Function parameters:   None                                                */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Initial rotor position detection                                           */
-/******************************************************************************/
-tMCAPP_STATUS_E MCRPOS_InitialRotorPositonDetection(tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput )
-{
-    tMCAPP_STATUS_E status = MCAPP_IN_PROGRESS ;
-    switch( gMCRPOS_RotorAlignState.rotorAlignState )
-    {
-        case MCRPOS_FORCE_ALIGN:
-        {
-            status = MCRPOS_FieldAlignment( alignOutput );
-            if( MCAPP_SUCCESS  ==  status )
-            {
-                /* PLL initialization */
-                MCRPOS_InitializeRotorPositionSensing(  );
-                MCRPOS_OffsetCalibration(gMCCTRL_CtrlParam.rotationSign);
-                gMCRPOS_RotorAlignState.rotorAlignState = MCRPOS_FORCE_ALIGN;
-            }
-        }
-        break;
-        default:
-        {
-            /* Should never come here */
-        }
-    }
-    gMCRPOS_RotorAlignState.status = gMCRPOS_RotorAlignState.rotorAlignState;
-    return status;
-}
-
-
-/******************************************************************************/
-/* Function name: MCRPOS_FieldAlignment                               */
-/* Function parameters:   None                                                */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Initial field alignment to known position                                  */
-/******************************************************************************/
-tMCAPP_STATUS_E MCRPOS_FieldAlignment( tMCRPOS_ROTOR_ALIGN_OUTPUT_S * const alignOutput )
-{
-    tMCAPP_STATUS_E status = MCAPP_IN_PROGRESS ;
-
-  #if( ALIGNMENT_METHOD == Q_AXIS || ALIGNMENT_METHOD == D_AXIS)
-    if ( gMCRPOS_RotorAlignState.startupLockCount < ( gMCRPOS_RotorAlignParam.lockTimeCount >> 1))
-    {
-      #if(ALIGNMENT_METHOD == Q_AXIS )
-        alignOutput->idRef =  0.0f;
-        alignOutput->iqRef +=  ( gMCRPOS_RotorAlignParam.lockCurrent/ (float) ( gMCRPOS_RotorAlignParam.lockTimeCount >> 1));
-        alignOutput->angle = (3*M_PI_2);
-        gMCRPOS_RotorAlignState.startupLockCount++;
-      #else
-        alignOutput->idRef =  gMCRPOS_RotorAlignParam.lockCurrent;
-        alignOutput->iqRef =  0.0f;
-        alignOutput->angle =  0.0f;
-        gMCRPOS_RotorAlignState.startupLockCount++;
-      #endif
-    }
-    else if ( gMCRPOS_RotorAlignState.startupLockCount < gMCRPOS_RotorAlignParam.lockTimeCount)
-    {
-      #if(ALIGNMENT_METHOD == Q_AXIS )
-        alignOutput->idRef =  0.0f;
-        alignOutput->iqRef =  gMCRPOS_RotorAlignParam.lockCurrent;
-        alignOutput->angle = (3*M_PI_2);
-        gMCRPOS_RotorAlignState.startupLockCount++;
-      #else
-        alignOutput->idRef =  gMCRPOS_RotorAlignParam.lockCurrent;
-        alignOutput->iqRef =  0.0f;
-        alignOutput->angle =  0.0f;
-        gMCRPOS_RotorAlignState.startupLockCount++;
-      #endif
-
-    }
-    else
-    {
-        gMCRPOS_RotorAlignState.startupLockCount = 0;
-        status = MCAPP_SUCCESS;
-    }
-  #else
-    assert(0, SELECT A ROTOR ALIGNMENT ALGORITHM );
-  #endif
-
-    return status;
-}
-
-/******************************************************************************/
-/* Function name: MCRPOS_OffsetCalibration                               */
-/* Function parameters:   None                                                */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Angle offset calibration while switching to closed loop                    */
-/******************************************************************************/
-void MCRPOS_OffsetCalibration( const int16_t direction )
-{
-    if( 1 == direction)
-    {
-        gMCRPOS_StateSignals.rhoOffset = ANGLE_OFFSET_DEG * ((float)M_PI/180);
-    }
-    else
-    {
-        gMCRPOS_StateSignals.rhoOffset = -ANGLE_OFFSET_DEG * ((float)M_PI/180);
-    }
-}
-
-/******************************************************************************/
-/* Function name: MCRPOS_PositionMeasurement                               */
-/* Function parameters:   None                                                */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Get the position using PLL estimator                                         */
-/******************************************************************************/
-void MCRPOS_PositionMeasurement( void )
-{
-    MCRPOS_ReadInputSignals( );
-    MCRPOS_PLLEstimator( );
-}
-
-/******************************************************************************/
-/* Function name: MCRPOS_ResetPositionSensing                               */
-/* Function parameters:   None                                                */
-/* Function return: None                                                      */
-/* Description:                                                               */
-/* Reset PLL Estimator variables                                         */
-/******************************************************************************/
-void MCRPOS_ResetPositionSensing( tMCRPOS_ALIGN_STATE_E state )
-{
-    gMCRPOS_RotorAlignState.rotorAlignState = state;
-    MCRPOS_ResetPLLEstimator( );
-}

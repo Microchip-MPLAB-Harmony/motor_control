@@ -1,172 +1,238 @@
 /*******************************************************************************
-  Space Vector PWM Source File
+ Generic Motor Control Library 
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    mc_pwm.c
+    mc_generic_library.c
 
   Summary:
-    This file contains functions for Space Vector PWM generation.
+    Generic Motor Control Library implemented in Q14 fixed point arithmetic.
 
   Description:
-    This file contains functions for Space Vector PWM generation.
-
+    This file implements generic vector motor control related functions
+    like  Transformations, PI Control
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
-*
-* Subject to your compliance with these terms, you may use Microchip software
-* and any derivatives exclusively with Microchip products. It is your
-* responsibility to comply with third party license terms applicable to your
-* use of third party software (including open source software) that may
-* accompany Microchip software.
-*
-* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
-* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
-* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
-* PARTICULAR PURPOSE.
-*
-* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
-* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
-* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
-* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
-* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
-* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
-* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*******************************************************************************/
+ * Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
+ *
+ * Subject to your compliance with these terms, you may use Microchip software
+ * and any derivatives exclusively with Microchip products. It is your
+ * responsibility to comply with third party license terms applicable to your
+ * use of third party software (including open source software) that may
+ * accompany Microchip software.
+ *
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE.
+ *
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+ * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ *******************************************************************************/
 // DOM-IGNORE-END
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Included Files
-// *****************************************************************************
-// *****************************************************************************
-#include "definitions.h"                // SYS function prototypes
-#include "device.h"
-#include "mc_derivedparams.h"
-#include "mc_hal.h"
+
+/*******************************************************************************
+Headers inclusions
+ *******************************************************************************/
 #include "mc_pwm.h"
-#include "mc_lib.h"
-#include "mc_generic_lib.h"
-#include "math.h"
-#include "assert.h"
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Data Types
-// *****************************************************************************
-// *****************************************************************************
+/*******************************************************************************
+ * Constants 
+ *******************************************************************************/
+#define     SQRT3_BY2                              (float)(0.866025403788)
 
-/******************************************************************************/
-/* Local Function Prototype                                                   */
-/******************************************************************************/
-
-__STATIC_INLINE void MCPWM_SVPWMTimeCalc(tMCPWM_SVPWM_S* svm);
-
-/******************************************************************************/
-/*                   Global Variables                                         */
-/******************************************************************************/
-tMCPWM_SVPWM_S    gMCPWM_SVPWM = {0.0f};
-
-
-/******************************************************************************/
-/*                          LOCAL FUNCTIONS                                   */
-/******************************************************************************/
-__STATIC_INLINE void MCPWM_SVPWMTimeCalc(tMCPWM_SVPWM_S * const svm)
+/*******************************************************************************
+ Private variables 
+ *******************************************************************************/
+typedef struct _tmcPwm_StateVariables_s 
 {
-    svm->t1 = (svm->period) * svm->t1;
-    svm->t2 = (svm->period) * svm->t2;
-    svm->tc = (svm->period - svm->t1 - svm->t2)/2;
-    svm->tb = svm->tc + svm->t2;
-    svm->ta = svm->tb + svm->t1;
+    float ualpha_df32;
+    float ubeta_df32;
+    float ua_df32;
+    float ub_df32;
+    float uc_df32;
+    float t1_f32;
+    float t2_f32;
+    float ta_f32;
+    float tb_f32;
+    float tc_f32;
+    uint16_t duty[3];
+}tmcPwm_StateVariables_s;
+
+/*******************************************************************************
+ Private variables 
+ *******************************************************************************/
+#define ASSERT(expression, message ) { if(!expression) mcPwm_AssertFailedReaction( message );}
+static tmcPwm_InputPorts_s mcPwm_InputPorts_mas[PWM_INSTANCES];
+static tmcPwm_StateVariables_s mcPwm_StateVariables_mas[PWM_INSTANCES];
+static tmcPwm_Parameters_s mcPwm_Parameters_mas[PWM_INSTANCES];
+
+/*******************************************************************************
+ Interface variables 
+ *******************************************************************************/
+tmcPwm_ConfigParameters_s mcPwmI_ConfigParameters_gas[PWM_INSTANCES] = 
+{
+    PWM_MODULE_A_CONFIG,
+#if( 2u == PWM_INSTANCES )
+    PWM_MODULE_B_CONFIG
+#endif
+};
+
+float mcPwmI_PhaseADutyCycle_gdf32;
+float mcPwmI_PhaseBDutyCycke_gdf32;
+float mcPwmI_PhaseCDutyCycle_gdf32;
+
+/*******************************************************************************
+ Private Functions 
+ *******************************************************************************/
+
+tStd_ReturnType_e mcPwm_AssertFailedReaction( const char * message )
+{
+    /*ToDo: Decide an appropriate error reaction */
+     return returnType_Failed;
 }
 
-/******************************************************************************/
-/*                      INTERFACE FUNCTIONS                                   */
-/******************************************************************************/
+static inline void mcPwm_SvpwmTimeCalculation( tmcPwm_StateVariables_s * const pState, const float Ts )
+{ 
+    float T1, T2;
+    T1 = Ts * pState->t1_f32;
+    T2 = Ts * pState->t2_f32;
+    pState->tc_f32 = ( Ts  - T1 - T2 )/2.0f;
+    pState->tb_f32 =   pState->tc_f32 +   T2;
+    pState->ta_f32 =   pState->tb_f32 +   T1;
+}
+/*******************************************************************************
+ Interface Functions 
+ *******************************************************************************/
 
-/******************************************************************************/
-/* Function name: MCPWM_SVPWMGen                                              */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
-/* Description: Determines sector based upon three reference                  */
-/*              vectors amplitude and updates duty.                           */
-/******************************************************************************/
-void MCPWM_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCPWM_SVPWM_S * const svm )
+/*! \brief PWM Module instance initialization 
+ * 
+ * Details.
+ *  PWM Module instance initialization 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+
+tStd_ReturnType_e mcPwmI_PulseWidthModulationInit( const tmcPwm_ConfigParameters_s * const pwmConfigParam )
 {
-    svm->vr1 = vAlphaBeta->betaAxis;
-    svm->vr2 = (-vAlphaBeta->betaAxis/2 + SQRT3_BY2 * vAlphaBeta->alphaAxis);
-    svm->vr3 = (-vAlphaBeta->betaAxis/2 - SQRT3_BY2 * vAlphaBeta->alphaAxis);
+    /* Check  if configuration parameters have valid memory location  */
+    ASSERT(( NULL != pwmConfigParam ), "Configuration parameters points to NULL");
+    
+    /* Initialize input ports */
+    ASSERT( ( ( NULL != pwmConfigParam->inPort.ualpha_pf32) && ( NULL != pwmConfigParam->inPort.ubeta_pf32) ),
+                  "Input ports are not assigned");
+    
+    mcPwm_InputPorts_mas[pwmConfigParam->Id] = pwmConfigParam->inPort;
+          
+    /* Update and calculate independent and independent parameters respectively */
+    mcPwm_Parameters_mas[pwmConfigParam->Id].frequencyInHz = pwmConfigParam->userParam.frequencyInHz;
+    mcPwm_Parameters_mas[pwmConfigParam->Id].period = mcHalI_PwmPeriodGet(  );
+    
+     return returnType_Passed;   
+}
 
-      if( svm->vr1 >= 0 )
-      {
-            // (xx1)
-            if( svm->vr2 >= 0 )
+
+/*! \brief Execute PWM Module instance
+ * 
+ * Details.
+ *  Execute PWM Module instance   
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+
+void mcPwmI_PulseWidthModulationRun( const tmcPwm_InstanceId_e Id )
+{
+    /* Read input ports */
+    
+    /* Inverse Clarke transformation*/
+    mcPwm_StateVariables_mas[Id].ua_df32 = *mcPwm_InputPorts_mas[Id].ubeta_pf32;
+    mcPwm_StateVariables_mas[Id].ub_df32 = - (( *mcPwm_InputPorts_mas[Id].ubeta_pf32 ) /2 )
+                                                                        +  (SQRT3_BY2 *  ( *mcPwm_InputPorts_mas[Id].ualpha_pf32 ));
+    mcPwm_StateVariables_mas[Id].uc_df32 = - (( *mcPwm_InputPorts_mas[Id].ubeta_pf32 )/2 )
+                                                                       -   ( SQRT3_BY2 *  ( *mcPwm_InputPorts_mas[Id].ualpha_pf32));
+
+    /* Space vector modulation */
+    if( mcPwm_StateVariables_mas[Id].ua_df32 >= 0 )
+    {
+        // (xx1)
+        if( mcPwm_StateVariables_mas[Id].ub_df32 >= 0 )
+        {
+            // (x11)
+            // Must be Sector 3 since Sector 7 not allowed
+            // Sector 3: (0,1,1)  0-60 degrees
+            mcPwm_StateVariables_mas[Id].t1_f32 = mcPwm_StateVariables_mas[Id].ub_df32;
+            mcPwm_StateVariables_mas[Id].t2_f32 = mcPwm_StateVariables_mas[Id].ua_df32;
+            mcPwm_SvpwmTimeCalculation( &mcPwm_StateVariables_mas[Id ], mcPwm_Parameters_mas[Id].period );
+            mcPwm_StateVariables_mas[Id].duty[0] = (uint32_t) mcPwm_StateVariables_mas[Id].ta_f32;
+            mcPwm_StateVariables_mas[Id].duty[1]  = (uint32_t) mcPwm_StateVariables_mas[Id].tb_f32;
+            mcPwm_StateVariables_mas[Id].duty[2]  = (uint32_t) mcPwm_StateVariables_mas[Id].tc_f32;
+        }
+        else
+        {
+            // (x01)
+            if(  mcPwm_StateVariables_mas[Id].uc_df32 >= 0 )
             {
-                  // (x11)
-                  // Must be Sector 3 since Sector 7 not allowed
-                  // Sector 3: (0,1,1)  0-60 degrees
-                  svm->t1 = svm->vr2;
-                  svm->t2 = svm->vr1;
-                  MCPWM_SVPWMTimeCalc(svm);
-                  svm->dPwm1 = (uint32_t)svm->ta;
-                  svm->dPwm2 = (uint32_t)svm->tb;
-                  svm->dPwm3 = (uint32_t)svm->tc;
+               // Sector 5: (1,0,1)  120-180 degrees              
+               mcPwm_StateVariables_mas[Id].t1_f32 = mcPwm_StateVariables_mas[Id].ua_df32;
+               mcPwm_StateVariables_mas[Id].t2_f32 = mcPwm_StateVariables_mas[Id].uc_df32;
+               mcPwm_SvpwmTimeCalculation( &mcPwm_StateVariables_mas[Id ], mcPwm_Parameters_mas[Id].period );
+               mcPwm_StateVariables_mas[Id].duty[0] = (uint32_t) mcPwm_StateVariables_mas[Id].tc_f32;
+               mcPwm_StateVariables_mas[Id].duty[1]  = (uint32_t) mcPwm_StateVariables_mas[Id].ta_f32;
+               mcPwm_StateVariables_mas[Id].duty[2]  = (uint32_t) mcPwm_StateVariables_mas[Id].tb_f32;
             }
             else
             {
-                  // (x01)
-                  if( svm->vr3 >= 0 )
-                  {
-                        // Sector 5: (1,0,1)  120-180 degrees
-                        svm->t1 = svm->vr1;
-                        svm->t2 = svm->vr3;
-                        MCPWM_SVPWMTimeCalc(svm);
-                        svm->dPwm1 = (uint32_t)svm->tc;
-                        svm->dPwm2 = (uint32_t)svm->ta;
-                        svm->dPwm3 = (uint32_t)svm->tb;
-                  }
-                  else
-                  {
-                        // Sector 1: (0,0,1)  60-120 degrees
-                        svm->t1 = -svm->vr2;
-                        svm->t2 = -svm->vr3;
-                        MCPWM_SVPWMTimeCalc(svm);
-                        svm->dPwm1 = (uint32_t)svm->tb;
-                        svm->dPwm2 = (uint32_t)svm->ta;
-                        svm->dPwm3 = (uint32_t)svm->tc;
-                  }
+               // Sector 1: (0,0,1)  60-120 degrees              
+               mcPwm_StateVariables_mas[Id].t1_f32 = -mcPwm_StateVariables_mas[Id].ub_df32;
+               mcPwm_StateVariables_mas[Id].t2_f32 = -mcPwm_StateVariables_mas[Id].uc_df32;
+               mcPwm_SvpwmTimeCalculation( &mcPwm_StateVariables_mas[Id ], mcPwm_Parameters_mas[Id].period );
+               mcPwm_StateVariables_mas[Id].duty[0] = (uint32_t) mcPwm_StateVariables_mas[Id].tb_f32;
+               mcPwm_StateVariables_mas[Id].duty[1]  = (uint32_t) mcPwm_StateVariables_mas[Id].ta_f32;
+               mcPwm_StateVariables_mas[Id].duty[2]  = (uint32_t) mcPwm_StateVariables_mas[Id].tc_f32;
+            }
            }
       }
       else
       {
             // (xx0)
-            if( svm->vr2 >= 0 )
+            if(  mcPwm_StateVariables_mas[Id].ub_df32 >= 0 )
             {
                   // (x10)
-                  if( svm->vr3 >= 0 )
+                  if(  mcPwm_StateVariables_mas[Id].uc_df32 >= 0 )
                   {
                         // Sector 6: (1,1,0)  240-300 degrees
-                        svm->t1 = svm->vr3;
-                        svm->t2 = svm->vr2;
-                        MCPWM_SVPWMTimeCalc(svm);
-                        svm->dPwm1 = (uint32_t)svm->tb;
-                        svm->dPwm2 = (uint32_t)svm->tc;
-                        svm->dPwm3 = (uint32_t)svm->ta;
+                        mcPwm_StateVariables_mas[Id].t1_f32 = mcPwm_StateVariables_mas[Id].uc_df32;
+                        mcPwm_StateVariables_mas[Id].t2_f32 = mcPwm_StateVariables_mas[Id].ub_df32;
+                        mcPwm_SvpwmTimeCalculation( &mcPwm_StateVariables_mas[Id ], mcPwm_Parameters_mas[Id].period );
+                        mcPwm_StateVariables_mas[Id].duty[0] = (uint32_t) mcPwm_StateVariables_mas[Id].tb_f32;
+                        mcPwm_StateVariables_mas[Id].duty[1]  = (uint32_t) mcPwm_StateVariables_mas[Id].tc_f32;
+                        mcPwm_StateVariables_mas[Id].duty[2]  = (uint32_t) mcPwm_StateVariables_mas[Id].ta_f32 ;
                   }
                   else
                   {
                         // Sector 2: (0,1,0)  300-0 degrees
-                        svm->t1 = -svm->vr3;
-                        svm->t2 = -svm->vr1;
-                        MCPWM_SVPWMTimeCalc(svm);
-                        svm->dPwm1 = (uint32_t)svm->ta;
-                        svm->dPwm2 = (uint32_t)svm->tc;
-                        svm->dPwm3 = (uint32_t)svm->tb;
+                        mcPwm_StateVariables_mas[Id].t1_f32 = -mcPwm_StateVariables_mas[Id].uc_df32;
+                        mcPwm_StateVariables_mas[Id].t2_f32 = -mcPwm_StateVariables_mas[Id].ua_df32;
+                        mcPwm_SvpwmTimeCalculation( &mcPwm_StateVariables_mas[Id ], mcPwm_Parameters_mas[Id].period );
+                        mcPwm_StateVariables_mas[Id].duty[0] = (uint32_t) mcPwm_StateVariables_mas[Id].ta_f32;
+                        mcPwm_StateVariables_mas[Id].duty[1]  = (uint32_t) mcPwm_StateVariables_mas[Id].tc_f32;
+                        mcPwm_StateVariables_mas[Id].duty[2]  = (uint32_t) mcPwm_StateVariables_mas[Id].tb_f32;
                   }
             }
             else
@@ -174,83 +240,53 @@ void MCPWM_SVPWMGen( const tMCLIB_CLARK_TRANSFORM_S * const vAlphaBeta, tMCPWM_S
                   // (x00)
                   // Must be Sector 4 since Sector 0 not allowed
                   // Sector 4: (1,0,0)  180-240 degrees
-                  svm->t1 = -svm->vr1;
-                  svm->t2 = -svm->vr2;
-                  MCPWM_SVPWMTimeCalc(svm);
-                  svm->dPwm1 = (uint32_t)svm->tc;
-                  svm->dPwm2 = (uint32_t)svm->tb;
-                  svm->dPwm3 = (uint32_t)svm->ta;
+                  mcPwm_StateVariables_mas[Id].t1_f32 = -mcPwm_StateVariables_mas[Id].ua_df32;
+                  mcPwm_StateVariables_mas[Id].t2_f32 = -mcPwm_StateVariables_mas[Id].ub_df32;
+                  mcPwm_SvpwmTimeCalculation( &mcPwm_StateVariables_mas[Id ], mcPwm_Parameters_mas[Id].period );
+                  mcPwm_StateVariables_mas[Id].duty[0] = (uint32_t) mcPwm_StateVariables_mas[Id].tc_f32;
+                  mcPwm_StateVariables_mas[Id].duty[1]  = (uint32_t) mcPwm_StateVariables_mas[Id].tb_f32;
+                  mcPwm_StateVariables_mas[Id].duty[2]  = (uint32_t) mcPwm_StateVariables_mas[Id].ta_f32;
             }
       }
+    
+    <#if __PROCESSOR?matches(".*PIC32MK.*") != true>
+     /* Update PWM timers */
+     mcPwm_StateVariables_mas[Id].duty[0] = mcPwm_Parameters_mas[Id].period -  mcPwm_StateVariables_mas[Id].duty[0];
+     mcPwm_StateVariables_mas[Id].duty[1] = mcPwm_Parameters_mas[Id].period -  mcPwm_StateVariables_mas[Id].duty[1];
+     mcPwm_StateVariables_mas[Id].duty[2] = mcPwm_Parameters_mas[Id].period -  mcPwm_StateVariables_mas[Id].duty[2];
+    </#if>
+
+     mcHalI_VoltageSourceInverterPwmSet( Id, &mcPwm_StateVariables_mas[Id].duty[0] );
+    
+    /* Write output ports */
+    
+   
 }
 
-/******************************************************************************/
-/* Function name: MCPWM_PWMModulator                                          */
-/* Function parameters: None                                                  */
-/* Function return: None                                                      */
-/* Description: PWM Modulator                                                 */
-/******************************************************************************/
-void MCPWM_PWMModulator( void )
-{
-    if(gMCPWM_SVPWM.enableSVPWM)
-    {
-        /* Calculate and set PWM duty cycles from Vr1,Vr2,Vr3 */
-        MCPWM_SVPWMGen(&gMCLIB_VoltageAlphaBeta, &gMCPWM_SVPWM);
-    }
-    else
-    {
-        /* Set PWM duty cycles to 50% which applies a NULL Vector Brake */    
-        gMCPWM_SVPWM.dPwm1 = gMCPWM_SVPWM.neutralPWM;
-        gMCPWM_SVPWM.dPwm2 = gMCPWM_SVPWM.neutralPWM;
-        gMCPWM_SVPWM.dPwm3 = gMCPWM_SVPWM.neutralPWM;
-    }
-    MCPWM_PWMDutyUpdate(&gMCPWM_SVPWM);
-}
 
-/*****************************************************************************/
-/* Function name: MCPWM_PWMOutputDisable                                        */
-/* Function parameters: None                                                 */
-/* Function return: None                                                     */
-/* Description:                                                              */
-/* Disable three phase PWM outputs                                           */
-/*****************************************************************************/
-void MCPWM_PWMOutputDisable(void)
-{
-    MCHAL_PWMOutputDisable(MCHAL_PWM_PH_U);
-    MCHAL_PWMOutputDisable(MCHAL_PWM_PH_V);
-    MCHAL_PWMOutputDisable(MCHAL_PWM_PH_W);
-}
+/*! \brief  PWM Module instance reset 
+ * 
+ * Details.
+ *  PWM Module instance  reset
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
 
-/*****************************************************************************/
-/* Function name: MCPWM_PWMOutputEnable                                        */
-/* Function parameters: None                                                 */
-/* Function return: None                                                     */
-/* Description:                                                              */
-/* Enable three phase PWM outputs                                           */
-/*****************************************************************************/
-void MCPWM_PWMOutputEnable(void)
+void mcPwmI_PulseWidthModulationReset( const tmcPwm_InstanceId_e Id   )
 {
-    MCHAL_PWMOutputEnable(MCHAL_PWM_PH_U);
-    MCHAL_PWMOutputEnable(MCHAL_PWM_PH_V);
-    MCHAL_PWMOutputEnable(MCHAL_PWM_PH_W);
-}
+   /* Reset state variables */
+    mcPwm_StateVariables_mas[Id].ualpha_df32 = 0.0f;
+    mcPwm_StateVariables_mas[Id].ubeta_df32 = 0.0f;
+    mcPwm_StateVariables_mas[Id].ua_df32 = 0.0f;
+    mcPwm_StateVariables_mas[Id].ub_df32 = 0.0f;
+    mcPwm_StateVariables_mas[Id].uc_df32  = 0.0f;
+    mcPwm_StateVariables_mas[Id].duty[0] = 0u;
+    mcPwm_StateVariables_mas[Id].duty[1] = 0u;
+    mcPwm_StateVariables_mas[Id].duty[2] = 0u;
+    
+    /* Reset output ports */
 
-/*****************************************************************************/
-/* Function name: MCPWM_PWMDutyUpdate                                        */
-/* Function parameters: None                                                 */
-/* Function return: None                                                     */
-/* Description:                                                              */
-/* interface to update duty ratio in PWM timers                              */
-/*****************************************************************************/
-void MCPWM_PWMDutyUpdate(tMCPWM_SVPWM_S * const svm)
-{
-<#if __PROCESSOR?matches("PIC32M.*") == true>
-    MCHAL_PWMDutySet(MCHAL_PWM_PH_U, svm->dPwm1);
-    MCHAL_PWMDutySet(MCHAL_PWM_PH_V, svm->dPwm2);
-    MCHAL_PWMDutySet(MCHAL_PWM_PH_W, svm->dPwm3);
-<#else>
-    MCHAL_PWMDutySet(MCHAL_PWM_PH_U, svm->period - svm->dPwm1);
-    MCHAL_PWMDutySet(MCHAL_PWM_PH_V, svm->period - svm->dPwm2);
-    MCHAL_PWMDutySet(MCHAL_PWM_PH_W, svm->period - svm->dPwm3);
-</#if>
 }

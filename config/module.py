@@ -7,7 +7,6 @@ def loadModule():
 # For PIC32MK, can search for "MC" in peripheral name.
 # For SAM devices, find peripherals as well as whether pinouts are available.
     processor = Variables.get("__PROCESSOR")
-    print(processor)
 
     periphNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
     modules = periphNode.getChildren()

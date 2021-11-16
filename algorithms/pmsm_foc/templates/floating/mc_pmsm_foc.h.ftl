@@ -1,20 +1,18 @@
 /*******************************************************************************
-  PMSM_FOC App interface file
+ PMSM_FOC App interface file
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    mc_pmsm_foc.c
+    mc_pmsm_foc.h
 
   Summary:
-    This file contains functions to initialize the motor control
-    peripherals and interface functions to control the motor.
+    Header file for PMSM_FOC APP
 
   Description:
-  This file contains functions to initialize the motor control
-  peripherals and interface functions to control the motor.
-
+    This file contains the data structures and function prototypes used by
+    PMSM FOC module.
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -42,12 +40,19 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
+#ifndef PMSM_FOC_H    // Guards against multiple inclusion
+#define PMSM_FOC_H
+
 /*******************************************************************************
- File inclusions
+ Header File inclusions 
  *******************************************************************************/
-#include "mc_error_handler.h"
-#include "mc_pmsm_foc.h"
-#include "mc_function_coordinator.h"
+
+#include <stddef.h>
+#include "mc_interface_handling.h"
+
+/*******************************************************************************
+ User data types 
+ *******************************************************************************/
 
 /*******************************************************************************
  Private variables 
@@ -67,10 +72,7 @@
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_Initialize( void )
-{   
-    mcFcoI_ApplicationInit();
-}
+void PMSM_FOC_Initialize( void );
 
 /*! \brief Motor start function 
  * 
@@ -82,10 +84,7 @@ void PMSM_FOC_Initialize( void )
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_MotorStart(void)
-{
-    mcMocI_M1Start();
-}
+void PMSM_FOC_MotorStart(void);
 
 /*! \brief Motor stop function 
  * 
@@ -97,10 +96,7 @@ void PMSM_FOC_MotorStart(void)
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_MotorStop(void)
-{
-    mcMocI_M1Stop();
-}
+void PMSM_FOC_MotorStop(void);
 
 /*! \brief Motor direction toggle 
  * 
@@ -112,10 +108,7 @@ void PMSM_FOC_MotorStop(void)
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_DirectionToggle(void)
-{
-    mcMocI_M1DirectionToggle();
-}
+void PMSM_FOC_DirectionToggle(void);
 
 /*! \brief Motor speed set 
  * 
@@ -127,10 +120,7 @@ void PMSM_FOC_DirectionToggle(void)
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_MotorSpeedSet(void)
-{
-  
-}
+void PMSM_FOC_MotorSpeedSet(void);
 
 /*! \brief Motor speed get 
  * 
@@ -142,26 +132,7 @@ void PMSM_FOC_MotorSpeedSet(void)
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_MotorSpeedGet(void)
-{
-  
-}
-
-
-/*! \brief Configure thread tasks 
- * 
- * Details.
- * Configure thread tasks 
- * 
- * @param[in]: 
- * @param[in/out]:
- * @param[out]:
- * @return:
- */
-void PMSM_FOC_ThreadTasksConfig(void)
-{
-    
-}
+void PMSM_FOC_MotorSpeedGet(void);
 
 /*! \brief Run thread tasks 
  * 
@@ -173,7 +144,10 @@ void PMSM_FOC_ThreadTasksConfig(void)
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_ThreadTasksRun(void)
-{
-    mcFcoI_ThreadTasksRun();
-}
+void PMSM_FOC_ThreadTasksRun(void);
+
+#endif //PMSM_FOC_H
+
+/**
+ End of File
+*/

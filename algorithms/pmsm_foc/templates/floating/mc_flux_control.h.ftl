@@ -1,17 +1,17 @@
 /*******************************************************************************
- Rotor Position interface file
+ PMSM Flux Regulation 
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    mc_rotor_position.h
+    mc_flux_control.h
 
   Summary:
-    Header file for rotor position
+    Header file for PMSM flux regulation 
 
   Description:
-    This file contains the data structures and function prototypes of rotor position.
+ PMSM flux regulation 
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -39,176 +39,170 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef MCRPO_H    // Guards against multiple inclusion
-#define MCRPO_H
+#ifndef MCFLX_H    // Guards against multiple inclusion
+#define MCFLX_H
 
 /*******************************************************************************
  Interface Functions 
  *******************************************************************************/
 #include <stddef.h>
 #include "mc_generic_library.h"
-#include "mc_hardware_abstraction.h"
 #include "mc_interface_handling.h"
 
 /*******************************************************************************
- Configuration constants 
+ Constants
  *******************************************************************************/
-/**
- * Number of rotor position module instances
- */
-#define ROTOR_POSITION_INSTANCES 1u  
-
-/**
- * Quadrature Encoder pulse count per mechanical revolution 
- */
-#define CONFIG_EncoderPulsesPerMechRev    (${MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV}u)
-
-/**
- * Velocity calculation pre-scale value with respect to the pulse sampling frequency
- */
-#define CONFIG_VelcoityCalculationPrescale   (float)100.0f
-
-/**
- * Number of pole pairs 
- */
-#define CONFIG_RpoNumberOfPolePairs             NUM_POLE_PAIRS
-
-/**
- * Quadrature pulse sampling frequency 
- */
-#define CONFIG_SamplingFrequency              PWM_FREQUENCY
+#define     FLUX_CONTROL_INSTANCES 1u
+#define     ANGLE_OFFSET_MIN        ((float)(M_PI_2)/(float)(32767))
+#define     DECIMATE_RATED_SPEED        (float)((RATED_SPEED_RPM *((float)M_PI/30)) * NUM_POLE_PAIRS/10)
 
 /*******************************************************************************
- Default module parameters
+ Default module parameters 
  *******************************************************************************/
-#define ROTOR_POSITION_MODULE_A_CONFIG { \
+#define FLUX_CONTROL_MODULE_A_CONFIG { \
     /* Instance Id */ \
     0u, \
+    /* Input ports */ \
+    { \
+        NULL, \
+        &mcMocI_DQVoltage_gas[0u].direct, \
+        &mcRpoI_ElectricalRotorSpeed_gaf32[0u], \
+        &mcSpeI_ReferenceIqCurrent_gaf32[0u], \
+        NULL, \
+        NULL \
+    }, \
     /* Output ports */ \
     { \
-        &mcRpoI_ElectricalRotorPosition_gaf32[0u], \
-        &mcRpoI_MechanicalRotorPosition_gaf32[0u], \
-        &mcRpoI_ElectricalRotorSpeed_gaf32[0u], \
-        &mcRpoI_ElectricalRotorAccel_gaf32[0u] \
+        NULL \
     }, \
     /* User Parameters */ \
     { \
-         CONFIG_VelcoityCalculationPrescale, \
+       0.0f \
     } \
 }
 
-#define ROTOR_POSITION_MODULE_B_CONFIG { \
+
+#define FLUX_CONTROL_MODULE_B_CONFIG { \
     /* Instance Id */ \
     1u, \
+    /* Input ports */ \
+    { \
+        NULL, \
+        mcMocI_DQVoltage_gas[1u].direct, \
+        &mcRpoI_ElectricalRotorSpeed_gaf32[1u], \
+        &mcSpeI_ReferenceIqCurrent_gaf32[1u], \
+        NULL, \
+        NULL \
+    }, \
     /* Output ports */ \
     { \
-        &mcRpoI_ElectricalRotorPosition_gaf32[1u], \
-        &mcRpoI_MechanicalRotorPosition_gaf32[1u], \
-        &mcRpoI_ElectricalRotorSpeed_gaf32[1u], \
-        &mcRpoI_ElectricalRotorAccel_gaf32[1u] \
+        NULL \
     }, \
     /* User Parameters */ \
     { \
-         CONFIG_VelcoityCalculationPrescale, \
+       0.0f \
     } \
 }
 
 /*******************************************************************************
  User defined data types  
  *******************************************************************************/
-
-typedef enum _tmcRpo_InstanceId_e
+typedef enum _tmcFlx_InstanceId_e
 {
-    encModuleInstance_01,
-    encModuleInstance_02,
-    encModuleInstance_max 
-}tmcRpo_InstanceId_e;
+    flxModuleInstance_01,
+    flxModuleInstance_02,
+    flxModuleInstance_max 
+}tmcFlx_InstanceId_e;
 
-typedef struct _tmcRpo_OutputPorts_s
+typedef struct _tmcFlx_InputPorts_s 
 {
-    float  * elecAngle;
-    float  * mechAngle;
-    float  * elecVelocity;
-    float  * accel;
-}tmcRpo_OutputPorts_s;
+    volatile float * yd;
+    volatile float * ud;
+    volatile float * wel;
+    volatile float * iqref;
+    volatile float * umax;
+    volatile float * esFilt;
+}tmcFlx_InputPorts_s;
 
-typedef struct _tmcRpo_UserParameters_s
+typedef struct _tmcFlx_OutputPorts_s
 {
-    uint16_t velocityCountPrescaler;
-}tmcRpo_UserParameters_s;
+    float  * idref;
+}tmcFlx_OutputPorts_s;
 
-typedef struct _tmcRpo_ConfigParameters_s
+typedef struct _tmcFlx_UserParameters_s
+{
+    float  wbase;                 
+    float  umaxSqr;    
+    float  esFiltCoeff; 
+    float  ls; 
+    float  rs; 
+    float  fs; 
+    float  idmax;   
+}tmcFlx_UserParameters_s;
+
+typedef struct _tmcFlx_ConfigParameters_s
 {
     /* Instance identifier */
     uint8_t Id;
-       
+    
+    /* Input ports */
+    tmcFlx_InputPorts_s inPort;
+    
     /* Output ports */
-    tmcRpo_OutputPorts_s outPort;
+    tmcFlx_OutputPorts_s outPort;
     
     /* User Parameters */
-    tmcRpo_UserParameters_s userParam;
+    tmcFlx_UserParameters_s userParam;
     
-}tmcRpo_ConfigParameters_s;
+}tmcFlx_ConfigParameters_s;
 
 
 /*******************************************************************************
  Interface variables  
  *******************************************************************************/
-extern tmcRpo_ConfigParameters_s  mcRpoI_ConfigParameters_gas[ROTOR_POSITION_INSTANCES];
+extern tmcFlx_ConfigParameters_s  mcFlxI_ConfigParameters_gas[FLUX_CONTROL_INSTANCES];
 
 /*******************************************************************************
  Interface Functions 
  *******************************************************************************/
 
-/*! \brief Rotor position calculation initialization function 
+/*! \brief Flux regulation initialization  
  * 
  * Details.
- *  Rotor position calculation initialization function 
+ * Flux regulation module initialization 
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-tStd_ReturnType_e mcRpoI_RotorPositionCalculationInit( const tmcRpo_ConfigParameters_s * const rpoParam );
+tStd_ReturnType_e mcFlxI_FluxRegulationInit( const tmcFlx_ConfigParameters_s * const FlxParam );
 
-/*! \brief Rotor position calculation trigger 
+/*! \brief Flux regulation run function 
  * 
  * Details.
- *  Rotor position calculation trigger 
+ *  Flux regulation run function 
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void mcRpoI_RotorPositionCalculationStart( const tmcRpo_InstanceId_e Id );
+void mcFlxI_FluxRegulationRun( const tmcFlx_InstanceId_e Id );
 
-/*! \brief Rotor position calculation execution  function 
+/*! \brief Flux regulation reset function 
  * 
  * Details.
- *  Rotor position calculation execution function 
+ *  Flux regulation reset function 
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void mcRpoI_RotorPositionCalculationRun( const tmcRpo_InstanceId_e Id );
+void mcFlxI_FluxRegulationReset( const tmcFlx_InstanceId_e Id );
 
-/*! \brief Rotor position calculation reset function 
- * 
- * Details.
- *  Rotor position calculation reset function 
- * 
- * @param[in]: 
- * @param[in/out]:
- * @param[out]:
- * @return:
- */
-void mcRpoI_RotorPositionCalculationReset( const tmcRpo_InstanceId_e Id );
-
-#endif //MCRPO_H
+#endif //MCFLX_H
 
 /**
  End of File

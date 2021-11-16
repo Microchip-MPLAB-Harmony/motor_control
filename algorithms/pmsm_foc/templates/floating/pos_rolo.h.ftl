@@ -43,105 +43,173 @@
 #define MCRPO_H
 
 /*******************************************************************************
- Interface Functions 
+ Header File inclusions 
  *******************************************************************************/
 #include <stddef.h>
-#include "mc_generic_library.h"
-#include "mc_hardware_abstraction.h"
 #include "mc_interface_handling.h"
+#include "mc_generic_library.h"
+#include "mc_userparams.h"
+
 
 /*******************************************************************************
- Configuration constants 
+ * Configuration parameters 
  *******************************************************************************/
 /**
- * Number of rotor position module instances
+ * Number of rotor position module instances 
  */
-#define ROTOR_POSITION_INSTANCES 1u  
+#define ROTOR_POSITION_INSTANCES 1u
 
 /**
- * Quadrature Encoder pulse count per mechanical revolution 
+ * Reduced Order Luenberger Observer gain 
  */
-#define CONFIG_EncoderPulsesPerMechRev    (${MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV}u)
+#define CONFIG_RoloHGain    (float)( 0.5 )
 
 /**
- * Velocity calculation pre-scale value with respect to the pulse sampling frequency
+ * Motor per phase resistance 
  */
-#define CONFIG_VelcoityCalculationPrescale   (float)100.0f
+#define CONFIG_MotorPerPhaseResistanceInOhm    (float) ( MOTOR_PER_PHASE_RESISTANCE_IN_OHM )
 
 /**
- * Number of pole pairs 
+ * Motor per phase inductance 
  */
-#define CONFIG_RpoNumberOfPolePairs             NUM_POLE_PAIRS
+#define CONFIG_MotorPerPhaseInductanceInHenry    (float) ( QUADRATURE_AXIS_INDUCTANCE_IN_HENRY )
 
 /**
- * Quadrature pulse sampling frequency 
+ * Speed filter corner frequency
  */
-#define CONFIG_SamplingFrequency              PWM_FREQUENCY
+#define CONFIG_RoloSpeedFilterCornerFrequency   (float)( 200.0f )
+
+/**
+ * Sampling time 
+ */
+#define CONFIG_RoloAlgorithmCycleTime   (float)( 1.0f / PWM_FREQUENCY )
 
 /*******************************************************************************
- Default module parameters
+ * Default module parameters
  *******************************************************************************/
-#define ROTOR_POSITION_MODULE_A_CONFIG { \
-    /* Instance Id */ \
+#define ROTOR_POSITION_MODULE_A_CONFIG {\
+     /* Instance Id */\
     0u, \
+\
+    /* Input ports */ \
+    {\
+        &mcMocI_FeedbackAlphaBetaCurrent_gas[0u].alpha, \
+        &mcMocI_FeedbackAlphaBetaCurrent_gas[0u].beta, \
+        &mcMocI_AlphaBetaVoltage_gas[0u].alpha, \
+        &mcMocI_AlphaBetaVoltage_gas[0u].beta, \
+        &mcVolI_UacPeakVoltage_gaf32[0u] \
+    }, \
+\
     /* Output ports */ \
     { \
         &mcRpoI_ElectricalRotorPosition_gaf32[0u], \
-        &mcRpoI_MechanicalRotorPosition_gaf32[0u], \
         &mcRpoI_ElectricalRotorSpeed_gaf32[0u], \
-        &mcRpoI_ElectricalRotorAccel_gaf32[0u] \
+        &mcRpoI_ElectricalRotorAccel_gaf32[0u]  \
     }, \
+\
     /* User Parameters */ \
     { \
-         CONFIG_VelcoityCalculationPrescale, \
-    } \
+        CONFIG_MotorPerPhaseResistanceInOhm, \
+        CONFIG_MotorPerPhaseInductanceInHenry, \
+        CONFIG_RoloHGain, \
+        CONFIG_RoloAlgorithmCycleTime, \
+        CONFIG_RoloSpeedFilterCornerFrequency  \
+    }\
 }
 
-#define ROTOR_POSITION_MODULE_B_CONFIG { \
-    /* Instance Id */ \
-    1u, \
+#define ROTOR_POSITION_MODULE_B_CONFIG {\
+     /* Instance Id */\
+    0u, \
+\
+    /* Input ports */ \
+    {\
+        &mcMocI_FeedbackAlphaBetaCurrent_gas[1u].alpha, \
+        &mcMocI_FeedbackAlphaBetaCurrent_gas[1u].beta, \
+        &mcMocI_AlphaBetaVoltage_gas[1u].alpha, \
+        &mcMocI_AlphaBetaVoltage_gas[1u].beta, \
+        &mcVolI_UacPeakVoltage_gaf32[1u] \
+    }, \
+\
     /* Output ports */ \
     { \
         &mcRpoI_ElectricalRotorPosition_gaf32[1u], \
-        &mcRpoI_MechanicalRotorPosition_gaf32[1u], \
         &mcRpoI_ElectricalRotorSpeed_gaf32[1u], \
-        &mcRpoI_ElectricalRotorAccel_gaf32[1u] \
+        &mcRpoI_ElectricalRotorAccel_gaf32[1u]  \
     }, \
+\
     /* User Parameters */ \
     { \
-         CONFIG_VelcoityCalculationPrescale, \
-    } \
+        CONFIG_MotorPerPhaseResistanceInOhm, \
+        CONFIG_MotorPerPhaseInductanceInHenry, \
+        CONFIG_RoloHGain, \
+        CONFIG_RoloAlgorithmCycleTime, \
+        CONFIG_RoloSpeedFilterCornerFrequency  \
+    }\
 }
 
 /*******************************************************************************
- User defined data types  
+Module data types  
  *******************************************************************************/
-
 typedef enum _tmcRpo_InstanceId_e
 {
-    encModuleInstance_01,
-    encModuleInstance_02,
-    encModuleInstance_max 
+    rolModuleInstance_01,
+    rolModuleInstance_02,
+    rolModuleInstance_max
 }tmcRpo_InstanceId_e;
 
-typedef struct _tmcRpo_OutputPorts_s
-{
-    float  * elecAngle;
-    float  * mechAngle;
-    float  * elecVelocity;
-    float  * accel;
-}tmcRpo_OutputPorts_s;
 
+/*! \brief Brief description.
+ *   This structure holds value of external input required by the ROLO.
+ *
+ *  This structure comprises of external inputs required to execute ROLO.
+ *  
+ */
+typedef struct _tmcRpo_InputPorts_s
+{
+    float * ialpha;
+    float * ibeta;
+    float * ualpha;
+    float * ubeta;
+    float * umax;
+}tmcRpo_InputPorts_s;
+
+
+/*! \brief Brief description.
+ *         This structure holds value of external paramaters required by the ROLO.
+ *
+ *  This structure comprises of external parameters required to execute ROLO.
+ *  
+ */
 typedef struct _tmcRpo_UserParameters_s
 {
-    uint16_t velocityCountPrescaler;
+   float Rs;
+   float Ls;
+   float H;
+   float Ts;      
+   float Wc;
 }tmcRpo_UserParameters_s;
+
+/*! \brief Brief description.
+ *         This structure holds value of output variables of ROLO.
+ *
+ *  This structure holds value of output variables of ROLO.
+ *  
+ */
+typedef struct _tmcRpo_OutputPorts_s
+{
+    float * angle;
+    float * speed;
+    float * accel;
+}tmcRpo_OutputPorts_s;
 
 typedef struct _tmcRpo_ConfigParameters_s
 {
-    /* Instance identifier */
+    /* Instance Id */
     uint8_t Id;
-       
+    
+    /* Input ports */
+    tmcRpo_InputPorts_s inPort;
+    
     /* Output ports */
     tmcRpo_OutputPorts_s outPort;
     
@@ -150,44 +218,32 @@ typedef struct _tmcRpo_ConfigParameters_s
     
 }tmcRpo_ConfigParameters_s;
 
-
 /*******************************************************************************
- Interface variables  
+ Interface Variables 
  *******************************************************************************/
 extern tmcRpo_ConfigParameters_s  mcRpoI_ConfigParameters_gas[ROTOR_POSITION_INSTANCES];
+
 
 /*******************************************************************************
  Interface Functions 
  *******************************************************************************/
 
-/*! \brief Rotor position calculation initialization function 
+/*! \brief Reduced order Luenberger observer ( ROLO ) initialization
  * 
  * Details.
- *  Rotor position calculation initialization function 
+ * Reduced order Luenberger observer ( ROLO ) initialization
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-tStd_ReturnType_e mcRpoI_RotorPositionCalculationInit( const tmcRpo_ConfigParameters_s * const rpoParam );
+tStd_ReturnType_e mcRpoI_RotorPositionCalculationInit( tmcRpo_ConfigParameters_s * const rolParam );
 
-/*! \brief Rotor position calculation trigger 
+/*! \brief Reduced order Luenberger observer ( ROLO ) run
  * 
  * Details.
- *  Rotor position calculation trigger 
- * 
- * @param[in]: 
- * @param[in/out]:
- * @param[out]:
- * @return:
- */
-void mcRpoI_RotorPositionCalculationStart( const tmcRpo_InstanceId_e Id );
-
-/*! \brief Rotor position calculation execution  function 
- * 
- * Details.
- *  Rotor position calculation execution function 
+ * Reduced order Luenberger observer ( ROLO ) run
  * 
  * @param[in]: 
  * @param[in/out]:
@@ -196,10 +252,10 @@ void mcRpoI_RotorPositionCalculationStart( const tmcRpo_InstanceId_e Id );
  */
 void mcRpoI_RotorPositionCalculationRun( const tmcRpo_InstanceId_e Id );
 
-/*! \brief Rotor position calculation reset function 
+/*! \brief Reduced order Luenberger observer ( ROLO ) reset
  * 
  * Details.
- *  Rotor position calculation reset function 
+ * Reduced order Luenberger observer ( ROLO ) reset
  * 
  * @param[in]: 
  * @param[in/out]:
@@ -207,6 +263,7 @@ void mcRpoI_RotorPositionCalculationRun( const tmcRpo_InstanceId_e Id );
  * @return:
  */
 void mcRpoI_RotorPositionCalculationReset( const tmcRpo_InstanceId_e Id );
+
 
 #endif //MCRPO_H
 

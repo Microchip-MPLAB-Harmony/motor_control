@@ -1,20 +1,17 @@
 /*******************************************************************************
-  PMSM_FOC App interface file
+ Motor Control application interface file 
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    mc_pmsm_foc.c
+    mc_motor_control.h
 
   Summary:
-    This file contains functions to initialize the motor control
-    peripherals and interface functions to control the motor.
+    Motor control algorithm interface
 
   Description:
-  This file contains functions to initialize the motor control
-  peripherals and interface functions to control the motor.
-
+    This file contains the data structures and function prototypes of motor control loop.
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -42,35 +39,83 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-/*******************************************************************************
- File inclusions
- *******************************************************************************/
-#include "mc_error_handler.h"
-#include "mc_pmsm_foc.h"
-#include "mc_function_coordinator.h"
+#ifndef MC_MOC_H    // Guards against multiple inclusion
+#define MC_MOC_H
+
 
 /*******************************************************************************
- Private variables 
+ Header files inclusions
+ *******************************************************************************/
+
+#include <stddef.h>
+#include "mc_interface_handling.h"
+#include "mc_generic_library.h"
+#include "mc_current_calculation.h"
+#include "mc_voltage_measurement.h"
+#include "mc_pwm.h"
+#include "mc_current_control.h"
+#include "mc_start_up.h"
+#include "mc_rotor_position.h"
+#include "mc_speed_control.h"
+#ifdef ENABLE_FLYING_START
+#include "mc_flying_start.h"
+#endif
+#ifdef ENABLE_FLUX_WEAKENING
+#include "mc_flux_control.h"
+#endif
+#if ( POSITION_LOOP == CONTROL_LOOP )
+#include "mc_position_control.h"
+#endif 
+
+/*******************************************************************************
+ User defined data-types
  *******************************************************************************/
 
 /*******************************************************************************
- Interface Functions 
+ Interface variables
  *******************************************************************************/
 
-/*! \brief Application initialization 
+
+/*******************************************************************************
+ * Interface Functions
+ *******************************************************************************/
+
+/*! \brief Motor A control application initialization 
  * 
  * Details.
- * Application initialization 
+ *  Motor A Control application initialization 
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_Initialize( void )
-{   
-    mcFcoI_ApplicationInit();
-}
+ void mcMocI_M1ControlApplicationInit( void );
+ 
+ /*! \brief Motor B control application initialization 
+ * 
+ * Details.
+ *  Motor B Control application initialization 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+ void mcMocI_M2ControlApplicationInit( void );
+ 
+ 
+/*! \brief Motor control application calibration
+ * 
+ * Details.
+ *  Motor Control application calibration 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcFcoI_M1PhaseCurrentSensorCalib( uint32_t status, uintptr_t context );
 
 /*! \brief Motor start function 
  * 
@@ -82,10 +127,7 @@ void PMSM_FOC_Initialize( void )
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_MotorStart(void)
-{
-    mcMocI_M1Start();
-}
+void mcMocI_M1Start(void);
 
 /*! \brief Motor stop function 
  * 
@@ -97,10 +139,7 @@ void PMSM_FOC_MotorStart(void)
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_MotorStop(void)
-{
-    mcMocI_M1Stop();
-}
+void mcMocI_M1Stop(void);
 
 /*! \brief Motor direction toggle 
  * 
@@ -112,68 +151,58 @@ void PMSM_FOC_MotorStop(void)
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_DirectionToggle(void)
-{
-    mcMocI_M1DirectionToggle();
-}
+void mcMocI_M1DirectionToggle(void);
 
-/*! \brief Motor speed set 
- * 
+
+/*! \brief Motor A control application ISR tasks
  * Details.
- * Motor speed set
+ *  Motor A Control application ISR tasks  
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_MotorSpeedSet(void)
-{
-  
-}
+void mcMocI_M1ControlTasksRun( void );
 
-/*! \brief Motor speed get 
+/*! \brief Motor B control application ISR tasks
  * 
  * Details.
- * Motor speed get
+ *  Motor B Control application ISR tasks  
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_MotorSpeedGet(void)
-{
-  
-}
+void mcMocI_M2ControlTasksRun( void );
 
-
-/*! \brief Configure thread tasks 
+/*! \brief Motor A control application reset
  * 
  * Details.
- * Configure thread tasks 
+ *  Motor A Control application reset 
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_ThreadTasksConfig(void)
-{
-    
-}
-
-/*! \brief Run thread tasks 
+ void mcMocI_M1ControlReset( void );
+ 
+ /*! \brief Motor B control application reset
  * 
  * Details.
- * Run thread tasks 
+ *  Motor B Control application reset 
  * 
  * @param[in]: 
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-void PMSM_FOC_ThreadTasksRun(void)
-{
-    mcFcoI_ThreadTasksRun();
-}
+ void mcMocI_M2ControlReset( void );
+ 
+#endif //MC_MOC_H
+
+/**
+ End of File
+*/
