@@ -12,14 +12,15 @@ import { GetComponent } from '../../../MotorControlPlant/Common/UIComponent';
 import MutlipleComponents from '../../../MotorControlPlant/Common/AddMultipleFields';
 import { getIndex } from '../../../MotorControlPlant/Common/Utils';
 import React from 'react';
-import { LoadSVGasImage } from '../../Common/NodeUtils';
+import { AddImageAndParameters, LoadImage } from '../../Common/NodeUtils';
 import { CallMouseLeave, CallMouseMove } from '../../Common/MouseEvent';
 
 
 
 var svgdoc: any = null;
 var toolTipObject: any = null;
-let actionIds = ["ramp_profiler", "fw_max_torque", "speed_loop_pid", "foc_direct_axis_pid", "foc_quadrature_axis_pid"];
+let actionIds = ["box-ramp-profiler", "box-fw-mtpa", "box-sl-pid", "box-foc-pid-direct", "box-foc-pid-quadrature", 
+                    "box-pl-pid", "box-pwm-modulator", "box-decouple-network"];
 let defaultViewGlobal = actionIds[0];
 
 
@@ -35,8 +36,8 @@ interface IState {
 }
 let obj: MotorControlandDiagnosis | null = null;
 
-let motorControlModeSymbol = "MCPMSMFOC_CONTROL";
-let ramProfilerSelectSymbol = "MCPMSMFOC_RAMP";
+let motorControlModeSymbol = "MCPMSMFOC_CONTROL_TYPE";
+let ramProfilerSelectSymbol = "MCPMSMFOC_RAMP_PROFILES";
 
 class MotorControlandDiagnosis extends React.Component<IProps, IState> {
     constructor(props: IProps) {
@@ -66,53 +67,55 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
         this.setState({ motorControlModeSelectedValue: event.value });
     }
 
-    GetImageAndParameters(props: { Image: any; Headding: any; parentUpdate: () => void; SymbolsArray: any }) {
-        return (<div className="p-fluid">
-            <div>
-                {props.Image !== null && LoadSVGasImage(props.Image)}
-                <br></br>
-                <span  style={{ fontWeight: 'bold' }}>  {props.Headding} </span>  <br></br>
-                <br></br>
-                <MutlipleComponents componentId={mc_component_id} parentUpdate={props.parentUpdate} symbolsArray={props.SymbolsArray} />
-            </div>
-        </div>);
-    }
-
     ramProfilerData() {
         return (
             <div>
-                {getIndex(this.state.ramProfilerSelectedValue, this.ramProfilerSelectArray) === 0 && LoadSVGasImage(Step)}
-                {getIndex(this.state.ramProfilerSelectedValue, this.ramProfilerSelectArray) === 1 && LoadSVGasImage(Linear)}
-                {getIndex(this.state.ramProfilerSelectedValue, this.ramProfilerSelectArray) === 2 && LoadSVGasImage(SCurve)}
+                {getIndex(this.state.ramProfilerSelectedValue, this.ramProfilerSelectArray) === 0 && LoadImage(Step)}
+                {getIndex(this.state.ramProfilerSelectedValue, this.ramProfilerSelectArray) === 1 && LoadImage(Linear)}
+                {getIndex(this.state.ramProfilerSelectedValue, this.ramProfilerSelectArray) === 2 && LoadImage(SCurve)}
 
                 <br></br> <span style={{ fontWeight: 'bold' }}>  Ramp Profiler </span>  <br></br>  <br></br>
 
                 <GetComponent componentId={mc_component_id} symbolId={ramProfilerSelectSymbol} onChange={this.RamProfileChanged} />
 
-                <MutlipleComponents componentId={mc_component_id} parentUpdate={this.refreshScreen} symbolsArray={["MCPMSMFOC_RAMP_TIME",
-                    "MCPMSMFOC_RAMP_VELOCITY", "MCPMSMFOC_RAMP_ACCELERATION", "MCPMSMFOC_REF_INPUT", "MCPMSMFOC_END_TORQUE",
-                    "MCPMSMFOC_END_SPEED", "MCPMSMFOC_MIN_TORQUE", "MCPMSMFOC_MAX_TORQUE"]} />
+                <MutlipleComponents componentId={mc_component_id} parentUpdate={this.refreshScreen} symbolsArray={["MCPMSMFOC_RAMP_PROFILER_RAMP_TIME",
+                    "MCPMSMFOC_RAMP_PROFILER_MAX_SPEED", "MCPMSMFOC_RAMP_PROFILER_MAX_ACCEL"]} />
             </div>
         );
     }
 
     speedPIParameters() {
-        return <this.GetImageAndParameters Image={PI_Parameters_Back_Calculation} Headding="Speed PI Parameters" parentUpdate={this.refreshScreen} SymbolsArray={["MCPMSMFOC_SPEED_KP", "MCPMSMFOC_SPEED_KI",
-            "MCPMSMFOC_SPEED_OUT_MAX"]} />
+        return <AddImageAndParameters Image={PI_Parameters_Back_Calculation} Headding="Speed Controller" parentUpdate={this.refreshScreen} SymbolsArray={["MCPMSMFOC_SPEED_PID_AW", "MCPMSMFOC_SPEED_PID_KP",
+            "MCPMSMFOC_SPEED_PID_KI", "MCPMSMFOC_SPEED_PID_KV", "MCPMSMFOC_SPEED_PID_KC", "MCPMSMFOC_SPEED_PID_YIMAX", "MCPMSMFOC_SPEED_PID_YMAX"]} />
     }
 
     QuadratureAxisCurrentPIController() {
-        return <this.GetImageAndParameters Image={PI_Parameters_Back_Calculation} Headding="Quadrature axis current PI Parameters" parentUpdate={this.refreshScreen} SymbolsArray={["MCPMSMFOC_IQ_KP", "MCPMSMFOC_IQ_KI",
-            "MCPMSMFOC_IQ_OUT_MAX"]} />
+        return <AddImageAndParameters Image={PI_Parameters_Back_Calculation} Headding="Q-Axis Current Controller" parentUpdate={this.refreshScreen} SymbolsArray={["MCPMSMFOC_IQ_PID_AW", "MCPMSMFOC_IQ_PID_KP",
+            "MCPMSMFOC_IQ_PID_KI", "MCPMSMFOC_IQ_PID_KV", "MCPMSMFOC_IQ_PID_KC", "MCPMSMFOC_IQ_PID_YIMAX", "MCPMSMFOC_IQ_PID_YMAX"]} />
     }
 
     DirectAxisCurrentPIParameters() {
-        return <this.GetImageAndParameters Image={PI_Parameters_Back_Calculation} Headding="Direct axis current PI Parameters" parentUpdate={this.refreshScreen} SymbolsArray={["MCPMSMFOC_ID_KP", "MCPMSMFOC_ID_KI",
-            "MCPMSMFOC_ID_OUT_MAX"]} />
+        return <AddImageAndParameters Image={PI_Parameters_Back_Calculation} Headding="D-Axis Current Controller" parentUpdate={this.refreshScreen} SymbolsArray={["MCPMSMFOC_ID_PID_AW", "MCPMSMFOC_ID_PID_KP",
+            "MCPMSMFOC_ID_PID_KI", "MCPMSMFOC_ID_PID_KV", "MCPMSMFOC_ID_PID_KC", "MCPMSMFOC_ID_PID_YIMAX", "MCPMSMFOC_ID_PID_YMAX"]} />
+    }
+
+    PositionControllerPIParameters() {
+        return <AddImageAndParameters Image={PI_Parameters_Back_Calculation} Headding="Position Controller" parentUpdate={this.refreshScreen} SymbolsArray={["MCPMSMFOC_POSITION_PID_AW", "MCPMSMFOC_POSITION_PID_KP",
+            "MCPMSMFOC_POSITION_PID_KI", "MCPMSMFOC_POSITION_PID_KV", "MCPMSMFOC_POSITION_PID_KC", "MCPMSMFOC_POSITION_PID_YIMAX", "MCPMSMFOC_POSITION_PID_YMAX"]} />
     }
 
     FWAndMTPA() {
-        return <this.GetImageAndParameters Image={null} Headding="Field Weakening" parentUpdate={this.refreshScreen} SymbolsArray={["MCPMSMFOC_FIELD_WEAKENING", "MCPMSMFOC_MAX_FW_CURRENT"]} />
+        return <AddImageAndParameters Image={null} Headding="Field Weakening And MTPA" parentUpdate={this.refreshScreen} SymbolsArray={["MCPMSMFOC_ENABLE_FW", "MCPMSMFOC_FW_MAX_NEGATIVE_ID",
+                    "MCPMSMFOC_FW_TUNING_PARAMETER", "MCPMSMFOC_ENABLE_MTPA", "MCPMSMFOC_MTPA_TUNING_PARAMETER"]} />
+    }
+
+    PWMModulator() {
+        return <AddImageAndParameters Image={null} Headding="PWM Modulator" parentUpdate={this.refreshScreen} SymbolsArray={["MCPMSMFOC_OVER_MODULATION", "MCPMSMFOC_MODULATION_TECHNIQUE",
+                    "MCPMSMFOC_SPACE_VECTOR_LIMIT"]} />
+    }
+
+    DecoupleNetwork() {
+        return <AddImageAndParameters Image={null} Headding="Decoupling Network" parentUpdate={this.refreshScreen} SymbolsArray={["MCPMSMFOC_ENABLE_DECOUPLING"]} />
     }
 
     render() {
@@ -125,7 +128,6 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
                             <GetComponent componentId={mc_component_id} symbolId={motorControlModeSymbol} onChange={this.MotorControlChanged} />
                             <label /> <br></br>
                             <MotorControlAndDiagnosis id="MotorControlAndDiagnosis" />
-
                         </div>
                         <Divider layout="vertical" />
 
@@ -134,6 +136,9 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
                         {getIndex(defaultViewGlobal, actionIds) === 2 && this.speedPIParameters()}
                         {getIndex(defaultViewGlobal, actionIds) === 3 && this.DirectAxisCurrentPIParameters()}
                         {getIndex(defaultViewGlobal, actionIds) === 4 && this.QuadratureAxisCurrentPIController()}
+                        {getIndex(defaultViewGlobal, actionIds) === 5 && this.PositionControllerPIParameters()}
+                        {getIndex(defaultViewGlobal, actionIds) === 6 && this.PWMModulator()}
+                        {getIndex(defaultViewGlobal, actionIds) === 7 && this.DecoupleNetwork()}
                     </div>
 
                 </div>
@@ -148,10 +153,12 @@ export function SetMotorControlDiagnosisDefaultWindowView(){
     defaultViewGlobal = actionIds[0];
 }
 
-export function RegisterSVGActions() {
+export function RegisterMotorDiagnosisSVGActions() {
     svgdoc = document.getElementById("MotorControlAndDiagnosis");
     actionIds.forEach(function (value) {
-        findElement(value);
+        let group = svgdoc.getElementById(value);
+        let tooltip = group.getAttribute("harmony-tooltip");
+        addEventListeners(value, tooltip, true);
     });
     toolTipObject = svgdoc.getElementById('tooltip');
 }
@@ -167,27 +174,32 @@ function sendClickAction(evt: { target: any }) {
     }
 }
 
-function findElement(id: any) {
-    var allElements = svgdoc.querySelectorAll("[data-action_id='" + id + "']");
-    for (var i = 0; i < allElements.length; i++) {
-        var element = allElements[0];
-        var tooltip = element.getAttribute("data-tooltip");
-        var element2 = element.childNodes;
-        for (var j = 0; j < element2.length; j++) {
-            var element3 = element2[j];
-            addEventListner(element3, id,tooltip);
+function addEventListeners(
+    groupid: any,
+    dialogHeading: string,
+    popupType: boolean
+  ) {
+    let group = svgdoc.getElementById(groupid);
+    IterateSVGelements(group, groupid, dialogHeading, popupType);
+  }
+function IterateSVGelements( group: any ,groupid: any,
+    dialogHeading: string,
+    popupType: boolean){
+    for (let i = 0; i < group.childNodes.length; i++) {
+        let childElement = group.childNodes[i];
+        childElement.addEventListener("click", sendClickAction, false);
+        childElement.addEventListener("mousemove", mouseMove);
+        childElement.addEventListener("mouseleave", mouseLeave);
+        if (popupType) {
+          childElement.value = groupid;
         }
-        return;
-    }
+        childElement.toolTip = dialogHeading;
+        if(childElement.childNodes.length>0){
+            IterateSVGelements(childElement, groupid, dialogHeading, popupType);
+        }
+      }
 }
 
-function addEventListner(element : any, id : any,  tooltipText :any){
-    element.addEventListener("click", sendClickAction, false);
-    element.addEventListener("mousemove", mouseMove);
-    element.addEventListener("mouseleave", mouseLeave);
-    element.value=id;
-    element.toolTip=tooltipText;
-}
 
 function mouseMove(evt: { target: any}) {
     CallMouseMove(evt, svgdoc, toolTipObject);
