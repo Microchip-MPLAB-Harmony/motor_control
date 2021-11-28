@@ -1,19 +1,26 @@
-
-
-
-import Parameters from '../../Common/AddMultipleFields';
-import { mc_component_id } from '../../Common/SymbolAccess';
+import { AddTitleAndParameters } from '../../Common/NodeUtils';
+import { AddDynamicSymbols } from '../../Common/Utils';
 import { DialogCommonInitilizeCode } from '../CustomPopUp/CustomPopUp';
+import { Divider } from "primereact/divider";
 const PWMParameters = (props :{ parentUpdate: () => void;  showToast : (arg0: any) => void ;} ) => {
 
-    let SymbolsArray = ["MCPMSMFOC_PWM_FREQ", "MCPMSMFOC_PWM_PH_U", "MCPMSMFOC_PWM_PH_V", "MCPMSMFOC_PWM_PH_W",
-        "MCPMSMFOC_PWM_DEAD_TIME", "MCPMSMFOC_PWM_FAULT"];
+    let channelConfigurationn_instance = "MCPMSMFOC_PWM_INSTANCE_";
+    let channelConfiguration = [channelConfigurationn_instance, "MCPMSMFOC_PWM_FREQUENCY", "MCPMSMFOC_PWM_DEAD_TIME"];
+
+    channelConfiguration = AddDynamicSymbols(channelConfigurationn_instance,"PWM_A", channelConfiguration);
+    channelConfiguration = AddDynamicSymbols(channelConfigurationn_instance,"PWM_B", channelConfiguration);
+    channelConfiguration = AddDynamicSymbols(channelConfigurationn_instance,"PWM_C", channelConfiguration);
+
+    let faultConfiguration = ["MCPMSMFOC_PWM_FAULT_SELECT", "MCPMSMFOC_PWM_FAULT_STATE", "MCPMSMFOC_PWM_FAULT_TYPE" , "MCPMSMFOC_PWM_FAULT_FILTER"]
         
     return (
-        <div >
-            {DialogCommonInitilizeCode(props.showToast, SymbolsArray)}
+        <div className="p-d-flex">
+            {DialogCommonInitilizeCode(props.showToast, channelConfiguration.concat(faultConfiguration))}
             {/* <div className="p-fluid"> */}
-                <Parameters componentId={mc_component_id} parentUpdate = {props.parentUpdate}symbolsArray={SymbolsArray}/>
+            <AddTitleAndParameters Headding="Channel Configuration" parentUpdate={props.parentUpdate}  SymbolsArray={channelConfiguration} />
+            <Divider layout="vertical" />
+            <br></br><br></br><br></br>
+            <AddTitleAndParameters Headding="Fault Configuration" parentUpdate={props.parentUpdate}  SymbolsArray={faultConfiguration} />
             {/* </div> */}
         </div >
     )
