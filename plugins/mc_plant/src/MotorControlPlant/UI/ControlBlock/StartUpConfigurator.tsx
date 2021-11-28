@@ -10,38 +10,30 @@ import FlyingStart from '../../../Resources/Svgs/ControlBlock/StartupConfigurato
 import { GetSymbolArray, GetySymbolValue, mc_component_id } from '../../../MotorControlPlant/Common/SymbolAccess';
 import { GetComponent } from '../../../MotorControlPlant/Common/UIComponent';
 import useForceUpdate from 'use-force-update';
-import PropertyWindowWithImage from '../../../MotorControlPlant/Common/AddMultipleFields';
 import { getIndex } from '../../../MotorControlPlant/Common/Utils';
 import { LoadImage } from '../../Common/NodeUtils';
 import useWindowDimensions from '../../Common/Dimenstion';
+import AddMultipleFields from '../../../MotorControlPlant/Common/AddMultipleFields';
 
 const StartUpConfigurator = (props: { showToast: (arg0: any) => void; }) => {
 
-    let rotor_rotation_symbolID = "MCPMSMFOC_ALIGNMENT";
-    let rotor_rotation_SymbolArray = GetSymbolArray(mc_component_id, "MCPMSMFOC_ALIGNMENT");
-    let alignment_current = "MCPMSMFOC_OL_IQ_REF";
-    let alignment_time = "MCPMSMFOC_LOCK_TIME";
+    let rotor_rotation_symbolID = "MCPMSMFOC_ALIGN_OR_DETECT_AXIS";
+    let rotor_rotation_SymbolArray = GetSymbolArray(mc_component_id, rotor_rotation_symbolID);
 
-    let end_speed = "MCPMSMFOC_OL_END_SPEED";
-    let startup_ramp_time = "MCPMSMFOC_OL_RAMP_TIME";
+    let FlyingStartCheckBox = "MCPMSMFOC_ENABLE_FLYING_START";
+    let FlyingStartSymbolsArray = ["MCPMSMFOC_FLY_START_DETECTION_TIME", "MCPMSMFOC_FLY_START_MINIMUM_SPEED", "MCPMSMFOC_FLY_START_CURRENT",];
 
-    let FlyingStartAllSymbolsArray = ["MCPMSMFOC_FLYING_START",
-        "MCPMSMFOC_FLYING_START_ID_KP", "MCPMSMFOC_FLYING_START_ID_KI", "MCPMSMFOC_FLYING_START_ID_KC", "MCPMSMFOC_FLYING_START_IQ_KP",
-        "MCPMSMFOC_FLYING_START_IQ_KI", "MCPMSMFOC_FLYING_START_IQ_KC", "MCPMSMFOC_FLYING_START_TIME", "MCPMSMFOC_FLYING_START_SPEED",
-        "MCPMSMFOC_FLYING_START_STARTUP_CURRENT", "MCPMSMFOC_FLYING_START_NULL_BRAKING_TIME", "MCPMSMFOC_FLYING_START_REGENERATIVE_BRAKING_ENABLE",
-        "MCPMSMFOC_FLYING_START_REGENERATIVE_BRAKING_CURRENT", "MCPMSMFOC_FLYING_START_REGENERATIVE_BRAKING_RAMP_TIME"];
+    let DAxisControllerSymbolArray = ["MCPMSMFOC_FLY_START_D_CONTROLLER_KP","MCPMSMFOC_FLY_START_D_CONTROLLER_KI", "MCPMSMFOC_FLY_START_D_CONTROLLER_KC"];
+    let QAxisControllerSymbolArray = ["MCPMSMFOC_FLY_START_Q_CONTROLLER_KP", "MCPMSMFOC_FLY_START_Q_CONTROLLER_KI", "MCPMSMFOC_FLY_START_Q_CONTROLLER_KC"];
+    let AdvancedConfiguration = [ "MCPMSMFOC_ENABLE_REGEN_BRAKE", "MCPMSMFOC_FLY_START_NULL_VECTOR_TIME", "MCPMSMFOC_FLY_START_PEAK_BRAKE_CURRENT", "MCPMSMFOC_FLY_START_BRAKE_RAMP_TIME"];
 
     let selectedRotationAxis = GetySymbolValue(mc_component_id, rotor_rotation_symbolID);
+    let flyingstartCheckBoxStatus = GetySymbolValue(mc_component_id, FlyingStartCheckBox);
 
     const update = useForceUpdate();
 
 
     const { height, width } = useWindowDimensions();
-
-    function UpdateSymbolValue(event: { value: String, name: String }) {
-        (window as any).javaConnector.updateSymbolData(mc_component_id, event.name, event.value);
-        update();
-    }
 
     function RotorPositionChanged(event: { value: any }) {
         (window as any).javaConnector.updateSymbolData(mc_component_id, rotor_rotation_symbolID, event.value);
@@ -49,18 +41,55 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void; }) => {
         update();
     }
 
-    function GetDirectAndQuadrature() {
+    function FlyingStartCheckBoxChanged(event: { value: any }) {
+        // (window as any).javaConnector.updateSymbolData(mc_component_id, FlyingStartCheckBox, event.value);
+        flyingstartCheckBoxStatus = GetySymbolValue(mc_component_id, FlyingStartCheckBox);
+        update();
+    }
+
+    function GetFiledAlignMentAndDetection() {
         return (<div className="p-fluid">
             <div>
-                {/* <span >  Windmilling  </span>  <br></br>
-                <span > -- Parameters symbol not af  </span>  <br></br><br></br> */}
                 <span style={{ fontWeight: 'bold' }}>  Field Alignment/Detection  </span>  <br></br><br></br>
-                <GetComponent componentId={mc_component_id} symbolId={alignment_current} onChange={UpdateSymbolValue} />
-                <br></br>
-                <GetComponent componentId={mc_component_id} symbolId={alignment_time} onChange={UpdateSymbolValue} />
-                <br></br>
+                <AddMultipleFields componentId={mc_component_id} symbolsArray={["MCPMSMFOC_ENABLE_ALIGN_OR_DETECT", "MCPMSMFOC_ALIGN_OR_DETECT_ALGORITHM"]} parentUpdate={update} />
+                <GetComponent componentId={mc_component_id} symbolId={rotor_rotation_symbolID} onChange={RotorPositionChanged} />
+                <AddMultipleFields componentId={mc_component_id} symbolsArray={["MCPMSMFOC_STARTUP_CURRENT","MCPMSMFOC_STARTUP_TIME"]} parentUpdate={update} />
             </div>
         </div>);
+    }
+
+    function GetOpenLoopSpeedRamp() {
+        return (<div className="p-fluid">
+            <div>
+                <div><span style={{ fontWeight: 'bold' }}>  Open Loop Speed Ramp  </span> <br></br> <br></br></div>
+                <AddMultipleFields componentId={mc_component_id} symbolsArray={["MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP", "MCPMSMFOC_OPEN_LOOP_END_SPEED", 
+                    "MCPMSMFOC_OPEN_LOOP_RAMP_TIME", "MCPMSMFOC_OPEN_LOOP_STAB_TIME"]} parentUpdate={update} />
+            </div>
+        </div>);
+    }
+
+    function ShowFlyingStarttParameters(){
+        return (<div className="p-fluid">
+            {GetHeadder("Flying Start")}
+            <GetComponent componentId={mc_component_id} symbolId={FlyingStartCheckBox} onChange={FlyingStartCheckBoxChanged} />
+            {flyingstartCheckBoxStatus === "true" && AddFlyingStartChildren()}
+        </div>);
+    }
+
+    function AddFlyingStartChildren(){
+        return (<div>
+            <AddMultipleFields componentId={mc_component_id} parentUpdate={update} symbolsArray={FlyingStartSymbolsArray} />
+            {GetHeadder("D-Axis Controller")}
+            <AddMultipleFields componentId={mc_component_id} parentUpdate={update} symbolsArray={DAxisControllerSymbolArray} />
+            {GetHeadder("Q-axis Controller")}
+            <AddMultipleFields componentId={mc_component_id} parentUpdate={update} symbolsArray={QAxisControllerSymbolArray} />
+            {GetHeadder("Advanced Configuration")}
+            <AddMultipleFields componentId={mc_component_id} parentUpdate={update} symbolsArray={AdvancedConfiguration} />
+        </div>)
+    }
+
+    function GetHeadder(headder : string){
+        return <div><span style={{ fontWeight: 'bold' }} >  {headder}  </span>  <br></br><br></br></div>;
     }
 
     return (
@@ -73,23 +102,14 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void; }) => {
                             <br></br>
                             <div className="p-d-flex" >
                                 <div className="p-d-flex p-flex-column">
-                                   
-                                    
                                     {getIndex(selectedRotationAxis, rotor_rotation_SymbolArray) === 0 && LoadImage(StartupForcedAlignQAxis)}
                                     {getIndex(selectedRotationAxis, rotor_rotation_SymbolArray) === 1 && LoadImage(StartupForcedAlignDAxis)}
                                 </div>
                                 <Divider layout="vertical" />
 
-                                
                                 <div className="p-fluid">
-                                <GetComponent componentId={mc_component_id} symbolId={rotor_rotation_symbolID} onChange={RotorPositionChanged} />
-                                {GetDirectAndQuadrature()}
-                                    <div><span style={{ fontWeight: 'bold' }}>  Open Loop Start-up  </span>  <br></br><br></br></div>
-                                    <div className="p-fluid">
-                                  
-                                        <div><GetComponent componentId={mc_component_id} symbolId={end_speed} onChange={UpdateSymbolValue} /><br></br></div>
-                                        <div> <GetComponent componentId={mc_component_id} symbolId={startup_ramp_time} onChange={UpdateSymbolValue} /><br></br></div>
-                                    </div>
+                                {GetFiledAlignMentAndDetection()}
+                                {GetOpenLoopSpeedRamp()}
                                 </div>
                             </div>
                         </div>
@@ -98,16 +118,10 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void; }) => {
                         {/* {callDialogCommonInitilizeCode(FlyingStartAllSymbolsArray)} */}
                         <div className="card">
                             <div className="p-d-flex">
-                            <div>
-                                        width: {width} ~ height: {height}
-                                    </div>
                                 {LoadImage(FlyingStart)}
                                 <Divider layout="vertical" />
                                 <div className="p-fluid">
-                                    <div><span style={{ fontWeight: 'bold' }} >  Flying Start  </span>  <br></br><br></br></div>
-                                    <div className="p-fluid">
-                                        <PropertyWindowWithImage componentId={mc_component_id} parentUpdate={update} symbolsArray={FlyingStartAllSymbolsArray} />
-                                    </div>
+                                    {ShowFlyingStarttParameters()}
                                 </div>
                             </div>
                         </div>
