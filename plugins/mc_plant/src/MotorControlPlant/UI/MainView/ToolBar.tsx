@@ -48,6 +48,13 @@ const Headder = () => {
         window.open('http://localhost:'+portNumber+'/motor_control/docs/index.html', '_blank', 'toolbar=0,location=0,menubar=0');
     }
 
+    function openInNewTab(href: any) {
+        Object.assign(document.createElement('a'), {
+            target: '_blank',
+            href: href,
+        }).click();
+    }
+
     return (
         <div className="Headder">
             <div>

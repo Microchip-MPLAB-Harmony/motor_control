@@ -6,7 +6,9 @@ import { RegisterAnalogFrontEndSVGActions } from "./HardwareBlock/AnalogFrontEnd
 import DialogDemo from "./CustomPopUp/CustomPopUp";
 import { StartUpConfiguratorLoad } from "./CustomPopUp/CustomPopUp";
 import { RegisterAnalogInterfaceSVGActions } from "./HardwareBlock/AnalogInterface";
-import { RegisterDigitalInterfaceSVGActions } from "./HardwareBlock/DigitalInterface";
+import { RegisterPositionControlDiagnosisSVGActions } from "./ControlBlock/PositionMesurementAndDiagnosis";
+import { RegisterVoltageMesasurementSVGActions } from "./ControlBlock/VoltageMeasurementDiagnosis";
+import { RegisterCurrentMesasurementSVGActions } from "./ControlBlock/CurrentMeasurementAndDiagnosisDualShunt";
 
 let svgdoc: any = null;
 let toolTipObject: any = null;
@@ -54,7 +56,7 @@ export function newInit() {
     "Motor Control Diagnosis",
     true
   );
-  addEventListeners("box_output_stage", "Output Stage", true);
+  addEventListeners("box_output_stage", "Output Stage Diagnosis", true);
   addEventListeners(
     "box_position_calculation_diagnosis",
     "Position Calculation Diagnosis",
@@ -71,10 +73,12 @@ export function newInit() {
     true
   );
   addEventListeners("box_pwm", "Pulse With Modulator", true);
-  addEventListeners("box_digital_interface", "Digital Interface", true);
   addEventListeners("box_analog_interface", "Analog Interface", true);
   addEventListeners("box_position_interface", "Position Interface", true);
-
+  addEventListeners("box_vdc", "Voltage Source", true);
+  addEventListeners("box_data_monitoring", "Data Monitoring", true);
+  // alert(GetTooltipObject())
+    //  svgdoc.appendChild(GetTooltipObject())
   toolTipObject = svgdoc.getElementById("tooltip");
 
   storeComponentColors();
@@ -86,9 +90,17 @@ function addEventListeners(
   popupType: boolean
 ) {
   let group = svgdoc.getElementById(groupid);
+  IterateSVGElements(group, groupid, dialogHeading, popupType);
+}
+
+function IterateSVGElements(
+  group: any,
+  groupid: any,
+  dialogHeading: string,
+  popupType: boolean
+) {
   for (let i = 0; i < group.childNodes.length; i++) {
     let childElement = group.childNodes[i];
-    let childId = childElement.getAttribute("id");
     childElement.addEventListener("click", sendClickAction, false);
     childElement.addEventListener("mousemove", mouseMove);
     childElement.addEventListener("mouseleave", mouseLeave);
@@ -96,7 +108,18 @@ function addEventListeners(
       childElement.value = dialogHeading;
     }
     childElement.toolTip = "View " + dialogHeading + " Configuration";
-    childKeyAndGroupIdValue.set(childId, groupid);
+    if (childElement.childNodes.length > 0) {
+      IterateSVGElements(childElement, groupid, dialogHeading, popupType);
+    }else{
+      try {
+        if(childElement.hasAttribute("id")){
+          let childId = childElement.getAttribute("id");
+          childKeyAndGroupIdValue.set(childId, groupid);
+        }
+      }
+      catch(err) {
+      }
+    }
   }
 }
 
@@ -113,7 +136,6 @@ function storeComponentColors() {
   let i;
   for (i = 0; i < myNodelist.length; i++) {
     if (myNodelist[i].style) {
-      alert(myNodelist[i].getAttribute("id"));
       myNodelist[i].myParm2 = myNodelist[i].style.fill;
     } else if (myNodelist[i].getAttribute("fill")) {
       myNodelist[i].myParm2 = myNodelist[i].getAttribute("fill");
@@ -126,22 +148,30 @@ function sendClickAction(evt: { target: any }) {
   if (target.correspondingUseElement) target = target.correspondingUseElement;
 
   if (target.value && target.value === "Motor Control Diagnosis") {
-    callPopUp(DialogDemo, target.Motor_Control_Diagnosis);
+    callPopUp(DialogDemo, target.value);
     RegisterMotorDiagnosisSVGActions();
     return;
+  }else if (target.value && target.value === "Position Calculation Diagnosis") {
+    callPopUp(DialogDemo, target.value);
+    RegisterPositionControlDiagnosisSVGActions();
+    return;
   } else if (target.value && target.value === "Analog Front End") {
-    callPopUp(DialogDemo, target.Analog_Front_End);
+    callPopUp(DialogDemo, target.value);
     RegisterAnalogFrontEndSVGActions();
     return;
   } else if (target.value && target.value === "Analog Interface") {
-    callPopUp(DialogDemo, target.Analog_Interface);
+    callPopUp(DialogDemo, target.value);
     RegisterAnalogInterfaceSVGActions();
     return;
-  } else if (target.value && target.value === "Digital Interface") {
-    callPopUp(DialogDemo, target.Digital_Interface);
-    RegisterDigitalInterfaceSVGActions();
+  } else if (target.value && target.value === "Voltage Measurement Diagnosis") {
+    callPopUp(DialogDemo, target.value);
+    RegisterVoltageMesasurementSVGActions();
     return;
-  } else if (target.value) {
+  } else if (target.value && target.value === "Current Measurement Diagnosis") {
+    callPopUp(DialogDemo, target.value);
+    RegisterCurrentMesasurementSVGActions();
+    return;
+  }else if (target.value) {
     callPopUp(DialogDemo, target.value);
     return;
   }
@@ -208,3 +238,7 @@ function resetColors() {
     }
   }
 }
+function GetTooltipObject(): any {
+  throw new Error("Function not implemented.");
+}
+
