@@ -5,7 +5,8 @@ import { Button } from 'primereact/button';
 import './CustomPopUp.css';
 import StartUpConfigurator from '../ControlBlock/StartUpConfigurator';
 import useForceUpdate from 'use-force-update';
-import GetMotorControlDiagnosis, { SetMotorControlDiagnosisDefaultWindowView } from '../ControlBlock/MotorControlandDiagnosis';
+import MotorControlDiagnosis, { SetMotorControlDiagnosisDefaultWindowView } from '../ControlBlock/MotorControlandDiagnosis';
+import AnalogFrontEnd, { SetAnalogFrontEndDefaultWindowView } from '../HardwareBlock/AnalogFrontEnd';
 import OutputStageDiagnosis from '../ControlBlock/OutputStageDiagnosis';
 import MotorParameters from '../HardwareBlock/MotorParameters';
 import PWMParameters from '../HardwareBlock/PWMParameters';
@@ -14,8 +15,14 @@ import { useRef } from 'react';
 import PrimeReact from 'primereact/api';
 import { clearAllSymbols, StroeSymbolArrayToMap, UpdateArrayofSymbolsResetAction } from '../../Common/Utils';
 import { mc_component_id } from '../../Common/SymbolAccess';
-import VoltageMeasurementDiagnosis from '../ControlBlock/VoltageMeasurementDiagnosis';
-import CurrentMeasurementAndDiagnosisDualShunt from '../ControlBlock/CurrentMeasurementAndDiagnosisDualShunt';
+import VoltageMeasurementDiagnosis, { SetVoltageMeasurementDefaultWindowView } from '../ControlBlock/VoltageMeasurementDiagnosis';
+import CurrentMeasurementAndDiagnosisDualShunt, { SetCurrentMeasurementDefaultWindowView } from '../ControlBlock/CurrentMeasurementAndDiagnosisDualShunt';
+import AnalogInterface, { SetAnalogInterfaceDefaultWindowView } from '../HardwareBlock/AnalogInterface';
+import PositionInterface from '../HardwareBlock/PositionInterface';
+import QuickSettings from '../MainView/QuickSettings';
+import PositionMesurementAndDiagnosis, { SetPositionControlDiagnosisDefaultWindowView } from '../ControlBlock/PositionMesurementAndDiagnosis';
+import VoltageSource from '../HardwareBlock/VoltageSource';
+import DataMonitoring from '../ControlBlock/DataMonitoring';
 
 let dialogVisibleStatus = false;
 let resetToDefaultStatus = false;
@@ -23,7 +30,7 @@ let resetStatus = false;
 let resetValues = new Map<String, Object>();
 
 let ActionId: {} | null | undefined;
-export function StarUpConfigurator(Id: string) {
+export function StartUpConfiguratorLoad(Id: string) {
     dialogVisibleStatus = true;
     ActionId = Id;
 }
@@ -120,8 +127,48 @@ const GenericPopUp = () => {
 
     const LoadMotorDiagnosis = () => {
         return (<div>
-            <GetMotorControlDiagnosis parentUpdate={update} showToast={showToast}/>
+            <MotorControlDiagnosis parentUpdate={update} showToast={showToast} />
             {SetMotorControlDiagnosisDefaultWindowView()}
+        </div>
+        );
+    }
+
+    const LoadPositionAndControlDiagnosis = () => {
+        return (<div>
+            <PositionMesurementAndDiagnosis parentUpdate={update} showToast={showToast} />
+            {SetPositionControlDiagnosisDefaultWindowView()}
+        </div>
+        );
+    }
+
+    const VoltageMeasurementAndControlDiagnosis = () => {
+        return (<div>
+            <VoltageMeasurementDiagnosis parentUpdate={update} showToast={showToast} />
+            {SetVoltageMeasurementDefaultWindowView()}
+        </div>
+        );
+    }
+
+    const CurrentMeasurementAndControlDiagnosis = () => {
+        return (<div>
+            <CurrentMeasurementAndDiagnosisDualShunt parentUpdate={update} showToast={showToast} />
+            {SetCurrentMeasurementDefaultWindowView()}
+        </div>
+        );
+    }
+
+    const LoadAnalogFrontEnd = () => {
+        return (<div>
+            <AnalogFrontEnd parentUpdate={update} showToast={showToast} />
+            {SetAnalogFrontEndDefaultWindowView()}
+        </div>
+        );
+    }
+
+    const LoadAnalogInterface = () => {
+        return (<div>
+            <AnalogInterface parentUpdate={update} showToast={showToast} />
+            {SetAnalogInterfaceDefaultWindowView()}
         </div>
         );
     }
@@ -130,18 +177,26 @@ const GenericPopUp = () => {
         <div className="dialog-demo">
             <Toast ref={toastRef} position="bottom-right" ></Toast>
             <div className="card">
-                <Dialog visible={dialogVisibleStatus} closeOnEscape closable focusOnShow maximizable modal header={ActionId} footer={renderFooter()} onHide={() => onHide()}>
-                    <div>
+                <Dialog visible={dialogVisibleStatus} closeOnEscape closable focusOnShow  modal header={ActionId} footer={renderFooter()} onHide={() => onHide()}>
+                    <div >
                         {ActionId === "Motor Parameters" && <MotorParameters parentUpdate={update} showToast={showToast} />}
                         {ActionId === "Pulse With Modulator" && <PWMParameters parentUpdate={update} showToast={showToast} />}
-                        {ActionId === "Start Up Configurator" && <StartUpConfigurator showToast={showToast}/>}
+                        {ActionId === "Start Up Configurator" && <StartUpConfigurator showToast={showToast} />}
                         {ActionId === "Motor Control Diagnosis" && LoadMotorDiagnosis()}
                         {ActionId === "Output Stage Diagnosis" && <OutputStageDiagnosis parentUpdate={update} showToast={showToast} />}
-                        {ActionId === "Current Measurement Diagnosis" && <CurrentMeasurementAndDiagnosisDualShunt parentUpdate={update} showToast={showToast}/>}
-                        {ActionId === "Voltage Measurement Diagnosis" && <VoltageMeasurementDiagnosis parentUpdate={update} showToast={showToast} />}
-                        {/* {ActionId === "Position Calculation Diagnosis" && <GetMotorControlDiagnosis />} */}
+                        {ActionId === "Current Measurement Diagnosis" && CurrentMeasurementAndControlDiagnosis()}
+                        {ActionId === "Voltage Measurement Diagnosis" && VoltageMeasurementAndControlDiagnosis()}
+                        {ActionId === "Position Calculation Diagnosis" && LoadPositionAndControlDiagnosis()}
+                        {ActionId === "Analog Front End" && LoadAnalogFrontEnd()}
+                        {ActionId === "Analog Interface" && LoadAnalogInterface()}
+                        {ActionId === "Position Interface" && <PositionInterface parentUpdate={update} showToast={showToast} />}
+                        {ActionId === "Voltage Source" && <VoltageSource parentUpdate={update} showToast={showToast} />}
+                        {ActionId === "Data Monitoring" && <DataMonitoring parentUpdate={update} showToast={showToast} />}
+                        {ActionId === "Quick Settings" && <QuickSettings parentUpdate={update} showToast={showToast} />}
                     </div>
-
+                    {/* <div style={{ marginTop: "190px"}}>
+                        down
+                    </div> */}
                 </Dialog>
             </div>
         </div>
@@ -171,8 +226,8 @@ export function DialogCommonInitilizeCode(showToast: (arg0: any) => void, symbol
     }
 }
 
-export function UpdateResetValues(symbolsArray: string[]){
-    if (resetValues.size === 0  && symbolsArray.length !==0) {
+export function UpdateResetValues(symbolsArray: string[]) {
+    if (resetValues.size === 0 && symbolsArray.length !== 0) {
         resetValues = StroeSymbolArrayToMap(resetValues, mc_component_id, symbolsArray);
     }
 }
