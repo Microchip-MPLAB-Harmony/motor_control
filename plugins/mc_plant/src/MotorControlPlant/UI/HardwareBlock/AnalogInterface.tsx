@@ -117,7 +117,6 @@ class AnalogInterface extends React.Component<IProps, IState> {
           <div className="p-d-flex">
             <AnalogInterfaceGroup id="AanlogInterfaceGroup1" />
             <AnalogInterfaceGroup id="AanlogInterfaceGroup2" />
-            {/* </div> */}
             <Divider layout="vertical" />
 
             {getIndex(defaultViewGlobal, actionIds) === 0 &&

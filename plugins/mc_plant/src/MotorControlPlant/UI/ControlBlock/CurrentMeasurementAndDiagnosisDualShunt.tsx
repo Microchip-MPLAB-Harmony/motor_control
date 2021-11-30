@@ -1,8 +1,5 @@
-
-
-import { Divider } from 'primereact/divider';
-import { ReactComponent as CurrentMeasurementAndDiagnosisDualShuntSVG } from '../../../Resources/Svgs/ControlBlock/Current_Measurement_and_Diagnosis-Dual_Shunt.svg';
-import { DialogCommonInitilizeCode } from '../CustomPopUp/CustomPopUp';
+import { Divider } from "primereact/divider";
+import { ReactComponent as CurrentMeasurementAndDiagnosisDualShuntSVG } from "../../../Resources/Svgs/ControlBlock/Current_Measurement_and_Diagnosis-Dual_Shunt.svg";
 
 import { getIndex } from "../../../MotorControlPlant/Common/Utils";
 import React from "react";
@@ -11,7 +8,11 @@ import { AddTitleAndParameters } from "../../Common/NodeUtils";
 
 var svgdoc: any = null;
 var toolTipObject: any = null;
-let actionIds = ["box-offset-correction", "box-current-scaling-bottom", "box-diagnosis"];
+let actionIds = [
+  "box-offset-correction",
+  "box-current-scaling-bottom",
+  "box-diagnosis",
+];
 let defaultViewGlobal = actionIds[0];
 
 interface IProps {
@@ -24,7 +25,10 @@ interface IState {
 }
 let obj: CurrentMeasurementAndDiagnosisDualShunt | null = null;
 
-class CurrentMeasurementAndDiagnosisDualShunt extends React.Component<IProps, IState> {
+class CurrentMeasurementAndDiagnosisDualShunt extends React.Component<
+  IProps,
+  IState
+> {
   constructor(props: IProps) {
     super(props);
 
@@ -60,7 +64,10 @@ class CurrentMeasurementAndDiagnosisDualShunt extends React.Component<IProps, IS
         <AddTitleAndParameters
           Headding="Current Scaling"
           parentUpdate={this.refreshScreen}
-          SymbolsArray={["MCPMSMFOC_CURRENT_SCALING_FORMAT","MCPMSMFOC_CURRENT_SCALING_FACTORT"]}
+          SymbolsArray={[
+            "MCPMSMFOC_CURRENT_SCALING_FORMAT",
+            "MCPMSMFOC_CURRENT_SCALING_FACTORT",
+          ]}
         />
       </div>
     );
@@ -81,7 +88,7 @@ class CurrentMeasurementAndDiagnosisDualShunt extends React.Component<IProps, IS
             "MCPMSMFOC_OFFSET_OOR_MAXIMUM",
             "MCPMSMFOC_OFFSET_OOR_MINIMUM",
             "MCPMSMFOC_OFFSET_OOR_DEBOUNCE",
-            "MCPMSMFOC_OFFSET_OOR_FAULT_TYPE"
+            "MCPMSMFOC_OFFSET_OOR_FAULT_TYPE",
           ]}
         />
       </div>
@@ -99,7 +106,8 @@ class CurrentMeasurementAndDiagnosisDualShunt extends React.Component<IProps, IS
             <Divider layout="vertical" />
             {getIndex(defaultViewGlobal, actionIds) === 0 &&
               this.OffsetCorrection()}
-            {getIndex(defaultViewGlobal, actionIds) === 1 && this.CurrentScaling()}
+            {getIndex(defaultViewGlobal, actionIds) === 1 &&
+              this.CurrentScaling()}
             {getIndex(defaultViewGlobal, actionIds) === 2 && this.Diagnosis()}
           </div>
         </div>
@@ -114,9 +122,10 @@ export function SetCurrentMeasurementDefaultWindowView() {
 }
 
 export function RegisterCurrentMesasurementSVGActions() {
-  svgdoc = document.getElementById("CurrentMeasurementAndDiagnosisDualShuntSVG");
+  svgdoc = document.getElementById(
+    "CurrentMeasurementAndDiagnosisDualShuntSVG"
+  );
   actionIds.forEach(function (value) {
-    // let group = svgdoc.getElementById(value);
     let tooltip = "Configure Parameters";
     addEventListeners(value, tooltip, true);
   });

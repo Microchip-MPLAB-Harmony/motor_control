@@ -155,7 +155,6 @@ export function RegisterAnalogFrontEndSVGActions() {
   valueAndSVG.set(actionIds[1], svgdocIcon1_2);
   valueAndSVG.set(actionIds[2], svgdocIcon2);
   actionIds.forEach(function (value) {
-    // let group = valueAndSVG.get(value).getElementById(value);
     let tooltip = "View Icon Properties";
     addEventListeners(valueAndSVG.get(value), value, tooltip, true);
     let obj = valueAndSVG.get(value).getElementById("tooltip");

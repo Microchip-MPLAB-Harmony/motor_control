@@ -164,11 +164,11 @@
 -->
   <g id="group_hardware" pointer-events="all">
     <g id="ribbon_hardware" transform="translate(150,0)">
-      <path id="shape_hardware" title="regular tooltip" fill="url('#fill_hardware')" d="M223.87 55.88h146.16l10 20-10 20H223.87l10-20z"/>
+      <path id="shape_hardware" title="regular tooltip" style="fill:url(#fill_hardware)" d="M223.87 55.88h146.16l10 20-10 20H223.87l10-20z"/>
       <text id="text624" x="302" y="83" fill="white" font-family="Helvetica" font-size="20" text-anchor="middle">Hardware</text>
     </g>
     <g id="box_analog_frontend">
-      <rect id="rect156" width="93" height="156" x="898" y="377" fill="url('#fill_hardware')" rx="5.0" ry="5.0"/>
+      <rect id="rect156" width="93" height="156" x="898" y="377" style="fill:url(#fill_hardware)" rx="5.0" ry="5.0"/>
       <text id="text158" x="945" y="450" fill="white" font-family="Helvetica" font-size="12" text-anchor="middle">
         Analog
         <tspan x="945" dy="15" text-anchor="middle">Front</tspan>
@@ -176,25 +176,25 @@
       </text>
     </g>
     <g id="box_vdc">
-      <circle id="circle1" cx="287" cy="309" r="28.624" fill="url('#fill_hardware')"/>
+      <circle id="circle1" cx="287" cy="309" r="28.624" style="fill:url(#fill_hardware)"/>
       <text id="text188" x="286" y="313" fill="white" font-family="Helvetica" font-size="12" text-anchor="middle">VDC</text>
     </g>
     <g id="box_gate_driver">
-      <rect id="rect272" width="93" height="178" x="898" y="186" fill="url('#fill_hardware')" rx="5.0" ry="5.0"/>
+      <rect id="rect272" width="93" height="178" x="898" y="186" style="fill:url(#fill_hardware)" rx="5.0" ry="5.0"/>
       <text id="text274" x="945" y="279" fill="white" font-family="Helvetica" font-size="12" text-anchor="middle">Gate
         <tspan x="945" dy="15" text-anchor="middle">Driver</tspan>
       </text>
     </g>
     <g id="box_motor">
-      <circle id="circle_motor" cx="1176" cy="288" r="28.624" fill="url('#fill_hardware')"/>
+      <circle id="circle_motor" cx="1176" cy="288" r="28.624" style="fill:url(#fill_hardware)"/>
       <text id="text_motor" x="1176" y="292" fill="white" font-family="Helvetica" font-size="12" text-anchor="middle">M</text>
     </g>
     <g id="box_pc_interface">
-      <rect id="rect346" width="120" height="60" x="392" y="559" fill="url('#fill_hardware')" rx="5.0" ry="5.0"/>
+      <rect id="rect346" width="120" height="60" x="392" y="559" style="fill:url(#fill_hardware)" rx="5.0" ry="5.0"/>
       <text id="text348" x="452" y="592" fill="white" font-family="Helvetica" font-size="12" text-anchor="middle">PC interface</text>
     </g>
     <g id="relays">
-      <rect id="rect50" width="101" height="178" x="1013" y="186" fill="url('#fill_hardware')" rx="5.0" ry="5.0"/>
+      <rect id="rect50" width="101" height="178" x="1013" y="186" style="fill:url(#fill_hardware)" rx="5.0" ry="5.0"/>
       <ellipse cx="1062" cy="264" fill="white" stroke="#000" rx="10.968" ry="11.648"/>
       <path fill="none" stroke="#000" d="M1059.92 259.18h6.09v-9.06m-17.06 20.45h10.24v-12.69m.73 6.47h6.09v14.24m-6.09-9.06h6.09"/>
       <path fill="none" stroke="#000" d="M1063.7 263.06l-3.54 1.29 3.54 1.3z"/>

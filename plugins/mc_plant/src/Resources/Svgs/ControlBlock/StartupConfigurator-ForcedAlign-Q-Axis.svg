@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="692px" height="453px" viewBox="-0.5 -0.5 692 453">
+  <defs>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="mx-gradient-ffffff-1-dae8fc-1-s-0">
+      <stop offset="0%" style="stop-color: rgb(218, 232, 252); stop-opacity: 1;"/>
+      <stop offset="100%" style="stop-color: rgb(255, 255, 255); stop-opacity: 1;"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="mx-gradient-ffffff-1-f5f5f5-1-s-0">
+      <stop offset="0%" style="stop-color: rgb(245, 245, 245); stop-opacity: 1;"/>
+      <stop offset="100%" style="stop-color: rgb(255, 255, 255); stop-opacity: 1;"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="mx-gradient-ffffff-1-e1d5e7-1-s-0">
+      <stop offset="0%" style="stop-color: rgb(225, 213, 231); stop-opacity: 1;"/>
+      <stop offset="100%" style="stop-color: rgb(255, 255, 255); stop-opacity: 1;"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="mx-gradient-ffffff-1-ffe6cc-1-s-0">
+      <stop offset="0%" style="stop-color: rgb(255, 230, 204); stop-opacity: 1;"/>
+      <stop offset="100%" style="stop-color: rgb(255, 255, 255); stop-opacity: 1;"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <g id="background">
+      <rect x="496.04" y="406.25" width="167.75" height="24" fill="none" stroke="none" pointer-events="all"/>
+      <text x="580" y="422" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Reference Speed</text>
+      <rect x="511.25" y="420.25" width="167.75" height="31.33" fill="none" stroke="none" pointer-events="all"/>
+      <text x="595" y="440" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Reference -axis current</text>
+      <path d="M 504.25 418.9 L 524.25 418.9" fill="none" stroke="#336600" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 504.25 437.9 L 524.25 437.9" fill="none" stroke="#ff3333" stroke-miterlimit="10" pointer-events="stroke"/>
+      <rect x="36.34" y="53" width="133.33" height="26.94" fill="none" stroke="none" transform="rotate(-90,103,66.47)" pointer-events="all"/>
+      <text x="103" y="70" fill="#000000" font-family="Helvetica" font-size="14px" transform="rotate(-90,103,66.47)" text-anchor="middle">Current</text>
+      <rect x="467" y="284.2" width="133.33" height="26.94" fill="none" stroke="none" pointer-events="all"/>
+      <text x="534" y="301" fill="#000000" font-family="Helvetica" font-size="14px" text-anchor="middle">time</text>
+      <path d="M 118 90.93 L 118 29.94" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 118 24.69 L 121.5 31.69 L 118 29.94 L 114.5 31.69 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 501.67 281.18 L 575.3 281.18" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 580.55 281.18 L 573.55 284.68 L 575.3 281.18 L 573.55 277.68 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <rect x="273.67" y="373.62" width="133.33" height="26.94" fill="none" stroke="none" pointer-events="all"/>
+      <text x="340" y="391" fill="#000000" font-family="Helvetica" font-size="15px" font-weight="bold" text-anchor="middle">Start-up Profile</text>
+      <path d="M 180.03 284.2 L 273.97 284.2" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 174.78 284.2 L 181.78 280.7 L 180.03 284.2 L 181.78 287.7 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 279.22 284.2 L 272.22 287.7 L 273.97 284.2 L 272.22 280.7 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <rect x="167" y="293.63" width="120" height="26.94" fill="none" stroke="none" pointer-events="all"/>
+      <text x="227" y="311" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Alignment Time</text>
+      <path d="M 282.7 284.2 L 393.97 284.2" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 277.45 284.2 L 284.45 280.7 L 282.7 284.2 L 284.45 287.7 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 399.22 284.2 L 392.22 287.7 L 393.97 284.2 L 392.22 280.7 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <rect x="280.33" y="293.63" width="120" height="26.94" fill="none" stroke="none" pointer-events="all"/>
+      <text x="340" y="311" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Ramp Time </text>
+      <path d="M 406.7 284.2 L 447.3 284.2" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 401.45 284.2 L 408.45 280.7 L 406.7 284.2 L 408.45 287.7 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 452.55 284.2 L 445.55 287.7 L 447.3 284.2 L 445.55 280.7 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <rect x="395" y="294.98" width="60" height="26.94" fill="none" stroke="none" pointer-events="all"/>
+      <text x="425" y="312" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Stabilization 
+		<tspan x="425" y="322">time</tspan></text>
+      <path d="M 173.4 290.94 L 173.4 277.46" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 278.73 290.94 L 278.73 277.46" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 400.07 290.94 L 400.07 277.46" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 454.73 290.94 L 454.73 277.46" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <rect x="0" y="174.28" width="169.67" height="26.94" fill="none" stroke="none" pointer-events="all"/>
+      <text x="85" y="191" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Alignment / Open loop
+		<tspan x="80" y="211">Current</tspan>
+	   </text>
+      <rect x="173.67" y="74.03" width="106.67" height="188.61" fill="url(#mx-gradient-ffffff-1-dae8fc-1-s-0)" stroke="none" pointer-events="all"/>
+      <path d="M 253.67 190.45 L 145.59 190.45" fill="none" stroke="#cccccc" stroke-miterlimit="10" stroke-dasharray="3 3" pointer-events="stroke"/>
+      <rect x="455" y="74.03" width="118.67" height="188.61" fill="url(#mx-gradient-ffffff-1-f5f5f5-1-s-0)" stroke="none" pointer-events="all"/>
+      <rect x="455" y="74.03" width="118.67" height="188.61" fill="url(#mx-gradient-ffffff-1-f5f5f5-1-s-0)" stroke="none" pointer-events="all"/>
+      <rect x="396.33" y="74.03" width="60.67" height="188.61" fill="url(#mx-gradient-ffffff-1-e1d5e7-1-s-0)" stroke="none" pointer-events="all"/>
+      <rect x="280.33" y="74.03" width="120" height="188.61" fill="url(#mx-gradient-ffffff-1-ffe6cc-1-s-0)" stroke="none" pointer-events="all"/>
+      <path d="M 173.67 262.64 L 221.08 198.06 Q 227 190 237 190.08 L 280.87 190.41" fill="none" stroke="#990000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 280.33 190.45 L 457 190" fill="none" stroke="#990000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 456.3 220.32 L 467.38 228.07 Q 475.58 233.8 483.77 228.07 L 489.31 224.2 Q 494.85 220.32 503.04 226.05 L 508.58 229.93 Q 514.12 233.8 522.32 228.07 L 527.86 224.2 Q 533.39 220.32 541.59 226.05 L 547.13 229.93 Q 552.67 233.8 560.86 228.07 L 571.94 220.32" fill="none" stroke="#990000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <rect x="157.67" y="69.99" width="133.33" height="26.94" fill="none" stroke="none" pointer-events="all"/>
+      <text x="224" y="87" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Field
+			<tspan x="224" y="100">Alignment</tspan>
+		 </text>
+      <rect x="273.67" y="69.99" width="133.33" height="26.94" fill="none" stroke="none" pointer-events="all"/>
+      <text x="340" y="87" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Open loop ramp</text>
+      <rect x="396.33" y="71.34" width="53.33" height="26.94" fill="none" stroke="none" pointer-events="all"/>
+      <text x="423" y="88" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Stabilization</text>
+      <rect x="436.33" y="71.34" width="120.67" height="26.94" fill="none" stroke="none" pointer-events="all"/>
+      <text x="497" y="88" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Close Loop</text>
+      <path d="M 456.58 221.21 L 456.67 189.34" fill="none" stroke="#990000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 606 81.88 L 606 20.89" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 606 15.64 L 609.5 22.64 L 606 20.89 L 602.5 22.64 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 149 264.25 L 579 263.92" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 396.33 123 L 457 123" fill="none" stroke="#336600" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 273.67 264.5 L 276.43 264.5 L 280.29 264.19 L 283.96 263.17 L 288.47 261.02 L 294.46 258.51 L 302.43 253.87 L 309.99 249.03 L 317.12 244.21 L 323.95 239.17 L 330.78 233.96 L 337.2 228.74 L 340.92 224.87 L 344.65 221 L 346.3 219.08 L 348.16 216.94 L 349.92 214.62 L 351.69 212.5 L 353.34 210.57 L 356.13 206.51 L 358.62 202.64 L 361 198.77 L 363.27 195.11 L 365.44 191.63 L 367.51 188.15 L 369.68 184.47 L 371.75 180.99 L 372.48 179.44 L 373.41 177.9 L 374.34 176.35 L 375.27 174.62 L 376.21 172.88 L 377.86 169.2 L 379.41 165.92 L 380.97 162.24 L 382.52 158.76 L 383.87 155.28 L 385.21 151.81 L 386.44 148.33 L 387.69 144.85 L 388.31 143.11 L 388.93 141.37 L 389.86 138.85 L 390.9 136.15 L 392.03 133.63 L 393.07 131.12 L 394.37 128.15 L 396.17 124.16 L 397 123" fill="none" stroke="#336600" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 456.67 123.16 L 460.89 125.16 L 462.26 125.5 L 463.14 125.54 L 463.5 125.5 L 464.75 125.7 L 465.37 125.5 L 466.16 125.33 L 466.95 125.16 L 467.67 125.08 L 468.33 125.04 L 468.96 125.08 L 469.59 125.21 L 470.13 125.41 L 470.62 125.66 L 471.05 125.5 L 471.46 125.33 L 471.91 125.12 L 472.42 124.87 L 472.96 124.58 L 473.96 124.33 L 474.96 124 L 476.5 123.62 L 477.88 123.66 L 479.21 123.75 L 480.54 123.83 L 481.87 123.91 L 483.2 124 L 484.08 124 L 485 124.04 L 485.38 124.12 L 485.75 124.12 L 486.67 124.33 L 487.54 124.58 L 488.38 124.91 L 489.21 125.29 L 490 125.7 L 490.79 126.21 L 491.54 126.75 L 492.21 127.37 L 492.37 127.75 L 492.87 127.62 L 493.41 127.41 L 493.92 127.16 L 494.5 126.87 L 495.08 126.5 L 496.13 126.04 L 497.21 125.54 L 498.29 125.04 L 499.71 124.96 L 501.12 124.83 L 502.58 124.7 L 504 124.54 L 505.42 124.37 L 506.41 124.25 L 507.42 124.12 L 508.42 124 L 508.8 123.91 L 509.59 123.66 L 510.33 123.41 L 511.12 123.2 L 511.91 123 L 512.7 122.79 L 513.5 122.62 L 514.3 122.5 L 515.04 122.45 L 515.38 122.66 L 515.71 122.87 L 516.29 123.29 L 516.83 123.75 L 517.37 124.21 L 517.92 124.66 L 518.46 125.12 L 519.55 125.37 L 520.63 125.54 L 521.71 125.66 L 522.54 125.54 L 523.42 125.33 L 524.75 125.29 L 526.08 125.25 L 527.42 125.16 L 528.25 125.25 L 529.17 125.37 L 530.08 125.54 L 530.96 125.79 L 531.83 126.08 L 532.25 126.21 L 533.05 126.16 L 533.84 126.12 L 534.58 126.08 L 535.29 126.04 L 536.09 126 L 536.92 125.83 L 537.79 125.58 L 538.75 125.25 L 539.67 125.08 L 540.58 124.91 L 541.54 124.7 L 542.79 124.33 L 543.96 123.91 L 545.08 123.54 L 546.21 123.25 L 547.58 122.96 L 548.62 122.66 L 549.66 122.37 L 550.67 122.12 L 551.33 122.08 L 552.28 122 L 553 122.08 L 553.17 122.33" fill="none" stroke="#336600" stroke-miterlimit="10" pointer-events="all"/>
+      <rect x="557" y="109.87" width="133.33" height="30" fill="none" stroke="none" pointer-events="all"/>
+      <text x="624" y="128" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Open loop 
+			<tspan x="624" y="140">end speed</tspan></text>
+      <path d="M 578 123.53 L 435 124" fill="none" stroke="#cccccc" stroke-miterlimit="10" stroke-dasharray="3 3" pointer-events="stroke"/>
+      <path d="M 150.67 265.48 L 150.67 26.37" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 150.67 21.12 L 154.17 28.12 L 150.67 26.37 L 147.17 28.12 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+      <path d="M 576.2 262.04 L 576.2 22.93" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 576.2 17.68 L 579.7 24.68 L 576.2 22.93 L 572.7 24.68 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    </g>
+  </g>
+</svg>

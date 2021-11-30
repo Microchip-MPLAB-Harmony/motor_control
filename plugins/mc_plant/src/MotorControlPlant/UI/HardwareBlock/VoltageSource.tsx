@@ -12,9 +12,7 @@ const VoltageSource = (props :{ parentUpdate: () => void;  showToast : (arg0: an
         <div >
             {DialogCommonInitilizeCode(props.showToast, SymbolsArray)}
             <div className="p-d-flex" >
-                {/* <div className="p-fluid"> */}
                     <Parameters componentId = {mc_component_id} parentUpdate = {props.parentUpdate} symbolsArray = {SymbolsArray} />
-                {/* </div> */}
             </div>
         </div >
     )

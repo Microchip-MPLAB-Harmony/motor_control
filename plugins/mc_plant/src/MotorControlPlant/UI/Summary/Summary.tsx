@@ -1,7 +1,5 @@
-import { Divider } from "primereact/divider";
-import { Panel } from 'primereact/panel';
+import { Panel } from "primereact/panel";
 import { GetySymbolValue, mc_component_id } from "../../Common/SymbolAccess";
-import { GetLabelName } from "../../Common/UIComponent";
 
 const SummaryPage = () => {
   function GetLabelAndValue(labelName: string, symbolId: string) {
@@ -67,9 +65,9 @@ const SummaryPage = () => {
             {GetySymbolValue(mc_component_id, "MCPMSMFOC_PHASEV_CH")}
           </div>
           <div className="p-field p-grid">
-          {GetLabelAndValue("DC Bus current", "")}
+            {GetLabelAndValue("DC Bus current", "")}
           </div>
-          
+
           <div className="p-field p-grid">
             {GetLabelAndValue("DC Bus Voltage", "MCPMSMFOC_DCBUSV_MODULE")},
             {GetySymbolValue(mc_component_id, "MCPMSMFOC_DCBUSV_CH")}
@@ -140,111 +138,108 @@ const SummaryPage = () => {
   function GetEnvironment() {
     return (
       <Panel header="Environment">
-          <div className="p-formgroup-inline">
-        <div className="p-field">
-          <div className="p-fluid">
-            <div className="p-field">
-              <br></br>
-              <span style={{   fontWeight: "bold" }}> Board Settings </span>
+        <div className="p-formgroup-inline">
+          <div className="p-field">
+            <div className="p-fluid">
+              <div className="p-field">
+                <br></br>
+                <span style={{ fontWeight: "bold" }}> Board Settings </span>
+              </div>
+              <div className="p-field">{BoardSettings()}</div>
             </div>
-            <div className="p-field">{BoardSettings()}</div>
+          </div>
+          <div className="p-field">
+            <div className="p-fluid">
+              <div className="p-field">
+                <br></br>
+                <span style={{ fontWeight: "bold" }}> Motor Settings </span>
+              </div>
+              <div className="p-field">{MotorSettings()}</div>
+            </div>
           </div>
         </div>
-        <div className="p-field">
-          <div className="p-fluid">
-            <div className="p-field">
-              <br></br>
-              <span style={{   fontWeight: "bold" }}> Motor Settings </span>
-            </div>
-            <div className="p-field">{MotorSettings()}</div>
-          </div>
-        </div>
-      </div>
       </Panel>
-      
     );
   }
 
   function GetHardware() {
     return (
-      <Panel header="Hardware" >
-           <div className="p-formgroup-inline">
-        <div className="p-field">
-          <div className="p-fluid">
-            <div className="p-field">
-              <br></br>
-              <span style={{  fontWeight: "bold" }}> Motor Parameters </span>
+      <Panel header="Hardware">
+        <div className="p-formgroup-inline">
+          <div className="p-field">
+            <div className="p-fluid">
+              <div className="p-field">
+                <br></br>
+                <span style={{ fontWeight: "bold" }}> Motor Parameters </span>
+              </div>
+              <div className="p-field">{MotorParameters()}</div>
             </div>
-            <div className="p-field">{MotorParameters()}</div>
+          </div>
+          <div className="p-field">
+            <div className="p-fluid">
+              <div className="p-field">
+                <br></br>
+                <span style={{ fontWeight: "bold" }}> Analog Interface </span>
+              </div>
+              <div className="p-field">{AnalogInterface()}</div>
+            </div>
+          </div>
+          <div className="p-field">
+            <div className="p-fluid">
+              <div className="p-field">
+                <br></br>
+                <span style={{ fontWeight: "bold" }}> Digital Interface </span>
+              </div>
+              <div className="p-field">{DigitalInterface()}</div>
+            </div>
+          </div>
+          <div className="p-field">
+            <div className="p-fluid">
+              <div className="p-field">
+                <br></br>
+                <span style={{ fontWeight: "bold" }}> PWM Interface </span>
+              </div>
+              <div className="p-field">{PWMInterface()}</div>
+            </div>
           </div>
         </div>
-        <div className="p-field">
-          <div className="p-fluid">
-            <div className="p-field">
-              <br></br>
-              <span style={{  fontWeight: "bold" }}> Analog Interface </span>
-            </div>
-            <div className="p-field">{AnalogInterface()}</div>
-          </div>
-        </div>
-        <div className="p-field">
-          <div className="p-fluid">
-            <div className="p-field">
-              <br></br>
-              <span style={{   fontWeight: "bold" }}> Digital Interface </span>
-            </div>
-            <div className="p-field">{DigitalInterface()}</div>
-          </div>
-        </div>
-        <div className="p-field">
-          <div className="p-fluid">
-            <div className="p-field">
-              <br></br>
-              <span style={{   fontWeight: "bold" }}> PWM Interface </span>
-            </div>
-            <div className="p-field">{PWMInterface()}</div>
-          </div>
-        </div>
-      </div>
       </Panel>
-     
     );
   }
 
   function GetControl() {
     return (
-      <Panel header="Control" >
-           <div className="p-formgroup-inline">
-        <div className="p-field">
-          <div className="p-fluid">
-            <div className="p-field">
-              <br></br>
-              <span style={{  fontWeight: "bold" }}> Start-up </span>
+      <Panel header="Control">
+        <div className="p-formgroup-inline">
+          <div className="p-field">
+            <div className="p-fluid">
+              <div className="p-field">
+                <br></br>
+                <span style={{ fontWeight: "bold" }}> Start-up </span>
+              </div>
+              <div className="p-field">{Startup()}</div>
             </div>
-            <div className="p-field">{Startup()}</div>
+          </div>
+          <div className="p-field">
+            <div className="p-fluid">
+              <div className="p-field">
+                <br></br>
+                <span style={{ fontWeight: "bold" }}> Motor Control </span>
+              </div>
+              <div className="p-field">{MotorControl()}</div>
+            </div>
+          </div>
+          <div className="p-field">
+            <div className="p-fluid">
+              <div className="p-field">
+                <br></br>
+                <span style={{ fontWeight: "bold" }}> Rotor Position </span>
+              </div>
+              <div className="p-field">{RotorPosition()}</div>
+            </div>
           </div>
         </div>
-        <div className="p-field">
-          <div className="p-fluid">
-            <div className="p-field">
-              <br></br>
-              <span style={{  fontWeight: "bold" }}> Motor Control </span>
-            </div>
-            <div className="p-field">{MotorControl()}</div>
-          </div>
-        </div>
-        <div className="p-field">
-          <div className="p-fluid">
-            <div className="p-field">
-              <br></br>
-              <span style={{   fontWeight: "bold" }}> Rotor Position </span>
-            </div>
-            <div className="p-field">{RotorPosition()}</div>
-          </div>
-        </div>
-      </div>
       </Panel>
-     
     );
   }
 

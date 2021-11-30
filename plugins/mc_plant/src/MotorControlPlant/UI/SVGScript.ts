@@ -77,8 +77,6 @@ export function newInit() {
   addEventListeners("box_position_interface", "Position Interface", true);
   addEventListeners("box_vdc", "Voltage Source", true);
   addEventListeners("box_data_monitoring", "Data Monitoring", true);
-  // alert(GetTooltipObject())
-    //  svgdoc.appendChild(GetTooltipObject())
   toolTipObject = svgdoc.getElementById("tooltip");
 
   storeComponentColors();
@@ -110,15 +108,13 @@ function IterateSVGElements(
     childElement.toolTip = "View " + dialogHeading + " Configuration";
     if (childElement.childNodes.length > 0) {
       IterateSVGElements(childElement, groupid, dialogHeading, popupType);
-    }else{
+    } else {
       try {
-        if(childElement.hasAttribute("id")){
+        if (childElement.hasAttribute("id")) {
           let childId = childElement.getAttribute("id");
           childKeyAndGroupIdValue.set(childId, groupid);
         }
-      }
-      catch(err) {
-      }
+      } catch (err) {}
     }
   }
 }
@@ -151,7 +147,10 @@ function sendClickAction(evt: { target: any }) {
     callPopUp(DialogDemo, target.value);
     RegisterMotorDiagnosisSVGActions();
     return;
-  }else if (target.value && target.value === "Position Calculation Diagnosis") {
+  } else if (
+    target.value &&
+    target.value === "Position Calculation Diagnosis"
+  ) {
     callPopUp(DialogDemo, target.value);
     RegisterPositionControlDiagnosisSVGActions();
     return;
@@ -171,7 +170,7 @@ function sendClickAction(evt: { target: any }) {
     callPopUp(DialogDemo, target.value);
     RegisterCurrentMesasurementSVGActions();
     return;
-  }else if (target.value) {
+  } else if (target.value) {
     callPopUp(DialogDemo, target.value);
     return;
   }
@@ -241,4 +240,3 @@ function resetColors() {
 function GetTooltipObject(): any {
   throw new Error("Function not implemented.");
 }
-

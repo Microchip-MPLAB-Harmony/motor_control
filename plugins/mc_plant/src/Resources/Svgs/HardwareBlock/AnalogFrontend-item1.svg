@@ -29,5 +29,9 @@
       <text id="label_output_af_item1" x="205.5" y="44.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">IvSens</text>
       <text id="label_offset_af_item1" x="94" y="104.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">Voffset</text>
     </g>
+	<g id="tooltip" visibility="hidden">
+    <rect width="80" height="24" fill="#FFFDD0" rx="2" ry="2" stroke="black" stroke-width="0.3"/>
+    <text x="4" y="15" font-size="10" font-weight="bold" fill="black" lengthAdjust="spacingAndGlyphs" font-family="Arial">t</text>
+  </g>
   </g>
 </svg>

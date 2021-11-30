@@ -109,5 +109,9 @@
         <text x="339" y="38" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Current Scaling</text>
       </g>
     </g>
+	<g id="tooltip" visibility="hidden">
+    <rect width="80" height="24" fill="#FFFDD0" rx="2" ry="2" stroke="black" stroke-width="0.3"/>
+    <text x="4" y="15" font-size="10" font-weight="bold" fill="black" lengthAdjust="spacingAndGlyphs" font-family="Arial">t</text>
+  </g>
   </g>
 </svg>
