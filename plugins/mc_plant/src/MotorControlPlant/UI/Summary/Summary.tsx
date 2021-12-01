@@ -22,8 +22,8 @@ const SummaryPage = () => {
     return (
       <div className="p-fluid">
         {GetLabelAndValue("Board Selected", "MCPMSMFOC_BOARD_SEL")}
-        {GetLabelAndValue("Board bus Voltage", "")}
-        {GetLabelAndValue("Board Power", "")}
+        {GetLabelAndValue("Board bus Voltage", "MCPMSMFOC_VOLTAGE_MAGNITUDE")}
+        {GetLabelAndValue("Board Power", "MCPMSMFOC_BOARD_POWER")}
       </div>
     );
   }
@@ -43,11 +43,11 @@ const SummaryPage = () => {
         {GetLabelAndValue("L-L Resistance", "MCPMSMFOC_R")}
         {GetLabelAndValue("D-axis Inductance", "MCPMSMFOC_LD")}
         {GetLabelAndValue("Q-axis inductance", "MCPMSMFOC_LD")}
-        {GetLabelAndValue("Pole paris", "")}
+        {GetLabelAndValue("Pole paris", "MCPMSMFOC_POLE_PAIRS")}
         {GetLabelAndValue("Rated Speed", "MCPMSMFOC_RATED_SPEED")}
-        {GetLabelAndValue("Rated Current", "")}
+        {GetLabelAndValue("Rated Current", "MCPMSMFOC_MAX_MOTOR_CURRENT")}
         {GetLabelAndValue("Max Speed", "MCPMSMFOC_MAX_SPEED")}
-        {GetLabelAndValue("BEMF Constant", "MCPMSMFOC_BEMF_CONSTANT")}
+        {GetLabelAndValue("BEMF Constant", "MCPMSMFOC_BEMF_CONST")}
       </div>
     );
   }
@@ -57,25 +57,26 @@ const SummaryPage = () => {
       <div className="p-fluid">
         <div className="p-d-flex p-flex-column">
           <div className="p-field p-grid">
-            {GetLabelAndValue("Phase Current A", "MCPMSMFOC_PHASEU_MODULE")},
-            {GetySymbolValue(mc_component_id, "MCPMSMFOC_PHASEU_CH")}
+            {GetLabelAndValue("Phase Current A", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT")},
+            {GetySymbolValue(mc_component_id, "MCPMSMFOC_PHASE_CURRENT_IA_UNIT_PHASE_CURRENT_IA_FINAL")}
           </div>
           <div className="p-field p-grid">
-            {GetLabelAndValue("Phase Current B", "MCPMSMFOC_PHASEV_MODULE")},
-            {GetySymbolValue(mc_component_id, "MCPMSMFOC_PHASEV_CH")}
+            {GetLabelAndValue("Phase Current B", "MCPMSMFOC_PHASE_CURRENT_IB_UNIT")},
+            {GetySymbolValue(mc_component_id, "MCPMSMFOC_PHASE_CURRENT_IB_UNIT_PHASE_CURRENT_IB_FINAL")}
           </div>
+          {/* <div className="p-field p-grid">
+            {GetLabelAndValue("DC Bus current", "MCPMSMFOC_DC_BUS_CURRENT_UNIT")},
+            {GetySymbolValue(mc_component_id, "MCPMSMFOC_DC_BUS_CURRENT_UNIT_DC_BUS_CURRENT_B_FINAL")}
+          </div> */}
+
           <div className="p-field p-grid">
-            {GetLabelAndValue("DC Bus current", "")}
+            {GetLabelAndValue("DC Bus Voltage", "MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT")},
+            {GetySymbolValue(mc_component_id, "MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL")}
           </div>
 
           <div className="p-field p-grid">
-            {GetLabelAndValue("DC Bus Voltage", "MCPMSMFOC_DCBUSV_MODULE")},
-            {GetySymbolValue(mc_component_id, "MCPMSMFOC_DCBUSV_CH")}
-          </div>
-
-          <div className="p-field p-grid">
-            {GetLabelAndValue("Potentiometer", "MCPMSMFOC_POT_MODULE")},
-            {GetySymbolValue(mc_component_id, "MCPMSMFOC_DCBUSV_CH")}
+            {GetLabelAndValue("Potentiometer", "MCPMSMFOC_POTENTIOMETER_VPOT_UNIT")},
+            {GetySymbolValue(mc_component_id, "MCPMSMFOC_POTENTIOMETER_VPOT_UNIT_POTENTIOMETER_VPOT_FINAL")}
           </div>
         </div>
       </div>
@@ -85,13 +86,13 @@ const SummaryPage = () => {
   function DigitalInterface() {
     return (
       <div className="p-d-flex p-flex-column">
-        {GetLabelAndValue("Start-stop button", "MCPMSMFOC_START_BUTTON")}
-        {GetLabelAndValue(
+        {GetLabelAndValue("Start-stop button", "MCPMSMFOC_BUTTON_0_NUMBER")}
+        {/* {GetLabelAndValue(
           "Direction Toggle button",
           "MCPMSMFOC_DIRECTION_BUTTON"
-        )}
-        {GetLabelAndValue("Fault LED", "MCPMSMFOC_FAULT_LED")}
-        {GetLabelAndValue("Direction LED", "MCPMSMFOC_DIRECTION_LED")}
+        )} */}
+        {GetLabelAndValue("Fault LED", "MCPMSMFOC_LED_0_NUMBER")}
+        {/* {GetLabelAndValue("Direction LED", "MCPMSMFOC_DIRECTION_LED")} */}
       </div>
     );
   }
@@ -99,10 +100,13 @@ const SummaryPage = () => {
   function Startup() {
     return (
       <div className="p-d-flex p-flex-column">
-        {GetLabelAndValue("Alignment Type", "MCPMSMFOC_ALIGNMENT")}
-        {GetLabelAndValue("Alignment Current", "MCPMSMFOC_OL_IQ_REF")}
-        {GetLabelAndValue("Start-up current", "MCPMSMFOC_OL_IQ_REF")}
-        {GetLabelAndValue("Start-up time", "MCPMSMFOC_OL_RAMP_TIME")}
+        <div className="p-field p-grid">
+            {GetLabelAndValue("Alignment Type", "MCPMSMFOC_ALIGN_OR_DETECT_ALGORITHM")},
+            {GetySymbolValue(mc_component_id, "MCPMSMFOC_ALIGN_OR_DETECT_AXIS")}
+          </div>
+        {GetLabelAndValue("Alignment Current", "MCPMSMFOC_STARTUP_CURRENT")}
+        {GetLabelAndValue("Start-up current", "MCPMSMFOC_STARTUP_CURRENT")}
+        {GetLabelAndValue("Start-up time", "MCPMSMFOC_OPEN_LOOP_RAMP_TIME")}
       </div>
     );
   }
@@ -110,10 +114,10 @@ const SummaryPage = () => {
   function PWMInterface() {
     return (
       <div className="p-d-flex p-flex-column">
-        {GetLabelAndValue("Channel A", "MCPMSMFOC_PWM_PH_U")}
-        {GetLabelAndValue("Channel B", "MCPMSMFOC_PWM_PH_V")}
-        {GetLabelAndValue("Channel C", "MCPMSMFOC_PWM_PH_W")}
-        {GetLabelAndValue("Fault pin", "MCPMSMFOC_PWM_FAULT")}
+        {GetLabelAndValue("Channel A", "MCPMSMFOC_PWM_INSTANCE__PWM_A_FINAL")}
+        {GetLabelAndValue("Channel B", "MCPMSMFOC_PWM_INSTANCE__PWM_B_FINAL")}
+        {GetLabelAndValue("Channel C", "MCPMSMFOC_PWM_INSTANCE__PWM_C_FINAL")}
+        {GetLabelAndValue("Fault pin", "MCPMSMFOC_PWM_FAULT_SELECT")}
       </div>
     );
   }
@@ -121,8 +125,8 @@ const SummaryPage = () => {
   function MotorControl() {
     return (
       <div className="p-d-flex p-flex-column">
-        {GetLabelAndValue("Control Type", "")}
-        {GetLabelAndValue("Control Feedback type", "MCPMSMFOC_CURRENT_MEAS")}
+        {GetLabelAndValue("Control Type", "MCPMSMFOC_CONTROL_TYPE")}
+        {/* {GetLabelAndValue("Control Feedback type", "MCPMSMFOC_CONTROL_TYPE")} */}
       </div>
     );
   }
@@ -130,7 +134,7 @@ const SummaryPage = () => {
   function RotorPosition() {
     return (
       <div className="p-d-flex p-flex-column">
-        {GetLabelAndValue("Algorithm", "MCPMSMFOC_POSITION_FB")}
+        {GetLabelAndValue("Algorithm", "MCPMSMFOC_POSITION_CALC_ALGORITHM")}
       </div>
     );
   }

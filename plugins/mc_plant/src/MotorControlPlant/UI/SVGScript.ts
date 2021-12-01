@@ -190,7 +190,6 @@ export function MainBlockControlAction(clickedRibbon: string) {
   let i;
   for (i = 0; i < groupArray.length; i++) {
     let group = groupArray[i];
-    alert(clickedRibbon);
     if (group !== ribbonKeyAndGroupValue.get(clickedRibbon)) {
       let element = svgdoc.getElementById(group);
       changeColor(element);

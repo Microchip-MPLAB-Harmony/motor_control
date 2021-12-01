@@ -59,7 +59,10 @@ export function AddDynamicSymbols(
 ) {
   let symbolArray = GetSymbolArray(mc_component_id, symbol);
   for (let index in symbolArray) {
-    symbolArry.push(symbol + "_" + apend + "_" + symbolArray[index]);
+    let newSymbol = symbol + "_" + apend + "_" + symbolArray[index];
+    if(!symbolArray.includes(newSymbol)){
+        symbolArry.push(newSymbol);
+    }
   }
   return symbolArry;
 }

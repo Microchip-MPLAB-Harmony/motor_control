@@ -42,7 +42,6 @@ const PWMParameters = (props: {
         props.showToast,
         channelConfiguration.concat(faultConfiguration)
       )}
-      {/* <div className="p-fluid"> */}
       <AddTitleAndParameters
         Headding="Channel Configuration"
         parentUpdate={props.parentUpdate}
@@ -57,7 +56,6 @@ const PWMParameters = (props: {
         parentUpdate={props.parentUpdate}
         SymbolsArray={faultConfiguration}
       />
-      {/* </div> */}
     </div>
   );
 };

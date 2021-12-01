@@ -9,8 +9,8 @@ const QuickSettings = (props: {
   let SymbolsArray = [
     "MCPMSMFOC_MOTOR_SEL",
     "MCPMSMFOC_BOARD_SEL",
-    "MCPMSMFOC_CURRENT_MEAS",
-    "MCPMSMFOC_POSITION_FB",
+    "MCPMSMFOC_CURRENT_MEAS_ALGORITHM",
+    "MCPMSMFOC_POSITION_CALC_ALGORITHM",
   ];
 
   return (

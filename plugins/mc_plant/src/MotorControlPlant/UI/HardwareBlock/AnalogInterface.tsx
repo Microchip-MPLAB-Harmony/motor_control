@@ -25,6 +25,11 @@ let GROUP1_B = ["MCPMSMFOC_PHASE_CURRENT_IB_NAME", Group1_B_ADC_Unit];
 let GROUP2_A = ["MCPMSMFOC_BUS_VOLTAGE_VDC_NAME", Group2_A_ADC_Unit];
 let GROUP2_B = ["MCPMSMFOC_POTENTIOMETER_VPOT_NAME", Group2_B_ADC_Unit];
 
+GROUP1_A = AddDynamicSymbols(Group1_A_ADC_Unit, "PHASE_CURRENT_IA", GROUP1_A);
+GROUP1_B = AddDynamicSymbols(Group1_B_ADC_Unit, "PHASE_CURRENT_IB", GROUP1_B);
+GROUP2_A = AddDynamicSymbols(Group2_A_ADC_Unit, "BUS_VOLTAGE_VDC", GROUP2_A);
+GROUP2_B = AddDynamicSymbols(Group2_B_ADC_Unit, "POTENTIOMETER_VPOT", GROUP2_B);
+
 interface IProps {
   parentUpdate: () => void;
   showToast: (arg0: any) => void;
@@ -43,26 +48,6 @@ class AnalogInterface extends React.Component<IProps, IState> {
     };
     this.refreshScreen = this.refreshScreen.bind(this);
     obj = this;
-    GROUP1_A = AddDynamicSymbols(
-      Group1_A_ADC_Unit,
-      "PHASE_CURRENT_IA",
-      GROUP1_A
-    );
-    GROUP1_B = AddDynamicSymbols(
-      Group1_B_ADC_Unit,
-      "PHASE_CURRENT_IB",
-      GROUP1_B
-    );
-    GROUP2_A = AddDynamicSymbols(
-      Group2_A_ADC_Unit,
-      "BUS_VOLTAGE_VDC",
-      GROUP2_A
-    );
-    GROUP2_B = AddDynamicSymbols(
-      Group2_B_ADC_Unit,
-      "POTENTIOMETER_VPOT",
-      GROUP2_B
-    );
   }
 
   refreshScreen() {
