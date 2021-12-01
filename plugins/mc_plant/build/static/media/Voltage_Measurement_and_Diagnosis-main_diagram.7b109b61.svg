@@ -47,5 +47,9 @@
       <rect x="298" y="176" width="108" height="70" fill="url(#gradient-box)" stroke="#001dbc"/>
       <text x="352" y="215" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Diagnosis</text>
     </g>
+	<g id="tooltip" visibility="hidden">
+    <rect width="80" height="24" fill="#FFFDD0" rx="2" ry="2" stroke="black" stroke-width="0.3"/>
+    <text x="4" y="15" font-size="10" font-weight="bold" fill="black" lengthAdjust="spacingAndGlyphs" font-family="Arial">t</text>
+  </g>
   </g>
 </svg>

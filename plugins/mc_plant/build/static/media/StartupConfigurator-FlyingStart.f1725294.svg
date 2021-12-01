@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="635px" height="399px" viewBox="-0.5 -0.5 635 399">
+  <defs>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="mx-gradient-ffffff-1-e1d5e7-1-s-0">
+      <stop offset="0%" style="stop-color: rgb(225, 213, 231); stop-opacity: 1;"/>
+      <stop offset="100%" style="stop-color: rgb(255, 255, 255); stop-opacity: 1;"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="mx-gradient-ffffff-1-ffe6cc-1-s-0">
+      <stop offset="0%" style="stop-color: rgb(255, 230, 204); stop-opacity: 1;"/>
+      <stop offset="100%" style="stop-color: rgb(255, 255, 255); stop-opacity: 1;"/>
+    </linearGradient>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="mx-gradient-ffffff-1-dae8fc-1-s-0">
+      <stop offset="0%" style="stop-color: rgb(218, 232, 252); stop-opacity: 1;"/>
+      <stop offset="100%" style="stop-color: rgb(255, 255, 255); stop-opacity: 1;"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <g id="background" pointer-events="none">
+      <rect x="454.25" y="352.25" width="167.75" height="24" fill="none" stroke="none"/>
+      <text x="538" y="368" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Actual angle</text>
+      <text x="547" y="386" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Estimated angle</text>
+      <rect x="463.25" y="366.25" width="167.75" height="31.33" fill="none" stroke="none"/>
+      <rect x="465.25" y="331.25" width="167.75" height="31.33" fill="none" stroke="none"/>
+      <text x="549" y="351" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Estimated speed</text>
+      <rect x="455.25" y="316.25" width="167.75" height="20" fill="none" stroke="none"/>
+      <text x="539" y="330" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Actual speed</text>
+      <rect x="355.73" y="18.35" width="170" height="219.31" fill="url(#mx-gradient-ffffff-1-e1d5e7-1-s-0)" stroke="none"/>
+      <rect x="372.25" y="213.23" width="57" height="25" fill="none" stroke="none"/>
+      <path d="M 372.25 238.23 L 391.25 213.23 L 391.25 238.23 L 410.25 213.23 L 410.25 238.23 L 429.25 213.23 L 429.25 238.23" fill="none" stroke="#336600" stroke-miterlimit="10"/>
+    </g>
+    <rect x="429.25" y="213.21" width="57" height="25" fill="none" stroke="none"/>
+    <path d="M 429.25 238.21 L 448.25 213.21 L 448.25 238.21 L 467.25 213.21 L 467.25 238.21 L 486.25 213.21 L 486.25 238.21" fill="none" stroke="#336600" stroke-miterlimit="10"/>
+    <rect x="486.25" y="213.21" width="57" height="25" fill="none" stroke="none"/>
+    <path d="M 486.25 238.21 L 505.25 213.21 L 505.25 238.21 L 524.25 213.21 L 524.25 238.21 L 543.25 213.21 L 543.25 238.21" fill="none" stroke="#336600" stroke-miterlimit="10"/>
+    <rect x="205.73" y="19.92" width="150" height="219.31" fill="url(#mx-gradient-ffffff-1-ffe6cc-1-s-0)" stroke="none"/>
+    <rect x="135.74" y="18.35" width="69.99" height="219.31" fill="url(#mx-gradient-ffffff-1-dae8fc-1-s-0)" stroke="none"/>
+    <rect x="485.74" y="248.23" width="45.51" height="31.33" fill="none" stroke="none"/>
+    <text x="508" y="267" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">time</text>
+    <rect x="241.75" y="256.23" width="82.5" height="13.45" fill="none" stroke="none"/>
+    <text x="283" y="267" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Detection Time</text>
+    <rect x="262.95" y="288.92" width="142.92" height="31.33" fill="none" stroke="none"/>
+    <text x="334" y="308" fill="#000000" font-family="Helvetica" font-size="12px" font-weight="bold" text-anchor="middle">Flying Start</text>
+    <path d="M 457.9 253.62 L 537.29 253.62" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 542.54 253.62 L 535.54 257.12 L 537.29 253.62 L 535.54 250.12 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 211.87 253.09 L 348.88 253.24" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 206.62 253.09 L 213.63 249.59 L 211.87 253.09 L 213.62 256.59 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 354.13 253.25 L 347.13 256.74 L 348.88 253.24 L 347.14 249.74 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 205.08 261.92 L 205.08 246.25" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 356.14 260.92 L 356.14 245.25" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+    <text x="173" y="31" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">No actuation</text>
+    <rect x="210.51" y="13.08" width="142.92" height="31.33" fill="none" stroke="none"/>
+    <text x="282" y="32" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Flying Start Detection</text>
+    <rect x="145.25" y="213.25" width="57" height="25" fill="none" stroke="none"/>
+    <path d="M 145.25 238.25 L 164.25 213.25 L 164.25 238.25 L 183.25 213.25 L 183.25 238.25 L 202.25 213.25 L 202.25 238.25" fill="none" stroke="#336600" stroke-miterlimit="10"/>
+    <rect x="429.25" y="212.21" width="57" height="25" fill="none" stroke="none"/>
+    <path d="M 429.25 237.21 L 448.25 212.21 L 448.25 237.21 L 467.25 212.21 L 467.25 237.21 L 486.25 212.21 L 486.25 237.21" fill="none" stroke="#ff6666" stroke-miterlimit="10"/>
+    <rect x="372.25" y="212.23" width="57" height="25" fill="none" stroke="none"/>
+    <path d="M 372.25 237.23 L 391.25 212.23 L 391.25 237.23 L 410.25 212.23 L 410.25 237.23 L 429.25 212.23 L 429.25 237.23" fill="none" stroke="#ff6666" stroke-miterlimit="10"/>
+    <rect x="486.25" y="212.21" width="57" height="25" fill="none" stroke="none"/>
+    <path d="M 486.25 237.21 L 505.25 212.21 L 505.25 237.21 L 524.25 212.21 L 524.25 237.21 L 543.25 212.21 L 543.25 237.21" fill="none" stroke="#ff6666" stroke-miterlimit="10"/>
+    <path d="M 249.75 240.25 L 249.75 210.25" fill="none" stroke="#ff6666" stroke-miterlimit="10"/>
+    <path d="M 213.19 238.36 L 221.47 234.3 Q 229.75 230.25 236.82 223.18 L 249.75 210.25" fill="none" stroke="#ff6666" stroke-miterlimit="10"/>
+    <path d="M 289.25 240.25 L 288.75 210.25" fill="none" stroke="#ff6666" stroke-miterlimit="10"/>
+    <path d="M 248.75 240.25 L 259.81 234.72 Q 268.75 230.25 275.82 223.18 L 288.75 210.25" fill="none" stroke="#ff6666" stroke-miterlimit="10"/>
+    <path d="M 316.75 240.25 L 316.25 210.25" fill="none" stroke="#ff6666" stroke-miterlimit="10"/>
+    <path d="M 289.25 240.25 L 317.25 210.25" fill="none" stroke="#ff6666" stroke-miterlimit="10"/>
+    <path d="M 106.73 242.23 L 106.73 13.62" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 106.73 8.37 L 110.23 15.37 L 106.73 13.62 L 103.23 15.37 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 524.25 113.25 L 105.73 113.38" fill="none" stroke="#ff3333" stroke-miterlimit="10" stroke-dasharray="3 3"/>
+    <path d="M 105.46 79.58 L 113.63 80.11 Q 121.79 80.64 128.51 88.05 L 132.26 92.18 Q 136.01 96.31 143.34 89.51 L 148.11 85.07 Q 152.88 80.64 160.2 87.45 L 164.97 91.88 Q 169.74 96.31 177.07 89.51 L 181.84 85.07 Q 186.61 80.64 193.94 87.45 L 198.71 91.88 Q 203.48 96.31 211.87 90.87 L 220.06 85.56 Q 228.25 80.25 236.06 86.5 L 242.15 91.37 Q 248.25 96.25 256.06 90 L 262.15 85.13 Q 268.25 80.25 276.06 86.5 L 282.15 91.37 Q 288.25 96.25 296.06 90 L 302.15 85.13 Q 308.25 80.25 316.06 86.5 L 322.15 91.37 Q 328.25 96.25 336.06 90 L 342.15 85.13 Q 348.25 80.25 356.06 86.5 L 362.15 91.37 Q 368.25 96.25 377.19 91.78 L 385.72 87.51 Q 394.25 83.25 403.19 87.72 L 408.72 90.49 Q 414.25 93.25 424.25 93.25 L 524.25 93.25" fill="none" stroke="#ff9933" stroke-miterlimit="10"/>
+    <path d="M 202.25 238.23 L 221.25 213.23 L 221.25 238.23 L 240.25 213.23 L 240.25 238.23 L 259.25 213.23 L 259.25 238.23" fill="none" stroke="#336600" stroke-miterlimit="10"/>
+    <path d="M 316.25 238.21 L 335.25 213.21 L 335.25 238.21 L 354.25 213.21 L 354.25 238.21 L 373.25 213.21 L 373.25 238.21" fill="none" stroke="#336600" stroke-miterlimit="10"/>
+    <path d="M 259.25 237.23 L 278.25 212.23 L 278.25 237.23 L 297.25 212.23 L 297.25 237.23 L 316.25 212.23 L 316.25 237.23" fill="none" stroke="#336600" stroke-miterlimit="10"/>
+    <path d="M 316.25 238.21 L 335.25 213.21 L 335.25 238.21 L 354.25 213.21 L 354.25 238.21 L 373.25 213.21 L 373.25 238.21" fill="none" stroke="#ff6666" stroke-miterlimit="10"/>
+    <path d="M 106.73 240.23 L 558.88 240.25" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 564.13 240.25 L 557.13 243.75 L 558.88 240.25 L 557.13 236.75 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
+    <path d="M 213.19 238.86 L 221.28 212.8 Q 224.25 203.25 231.32 196.18 L 237.79 189.71 Q 244.25 183.25 251.32 176.18 L 257.79 169.71 Q 264.25 163.25 268.72 154.31 L 271.49 148.78 Q 274.25 143.25 277.41 133.76 L 281.09 122.74 Q 284.25 113.25 289.8 104.93 L 298.7 91.57 Q 304.25 83.25 313.19 87.72 L 318.72 90.49 Q 324.25 93.25 333.19 88.78 L 338.72 86.01 Q 344.25 83.25 353.74 86.41 L 364.76 90.09 Q 374.25 93.25 383.19 88.78 L 388.72 86.01 Q 394.25 83.25 403.19 87.72 L 408.72 90.49 Q 414.25 93.25 424.25 93.25 L 524.25 93.25" fill="none" stroke="#000066" stroke-miterlimit="10"/>
+    <path d="M 107.17 238.25 L 126.17 213.25 L 126.17 238.25 L 145.17 213.25 L 145.17 238.25 L 164.17 213.25 L 164.17 238.25" fill="none" stroke="#336600" stroke-miterlimit="10"/>
+    <text x="50" y="113" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Minimum speed 
+	<tspan x="50" y="125">for flying start</tspan></text>
+    <text x="430" y="34" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Close Loop</text>
+    <path d="M 475.25 327.9 L 495.25 327.9" fill="none" stroke="#ff9933" stroke-miterlimit="10"/>
+    <path d="M 475.25 346.9 L 495.25 346.9" fill="none" stroke="#000066" stroke-miterlimit="10"/>
+    <path d="M 475.25 364.9 L 495.25 364.9" fill="none" stroke="#336600" stroke-miterlimit="10"/>
+    <path d="M 475.25 383.9 L 495.25 383.9" fill="none" stroke="#ff3333" stroke-miterlimit="10"/>
+  </g>
+</svg>

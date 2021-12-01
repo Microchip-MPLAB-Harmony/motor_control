@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="227px" height="130px" viewBox="-0.5 -0.5 227 130">
+  <defs/>
+  <g id="af_item1" pointer-events="all">
+    <g id="background_af_item1">
+      <path d="M 40 13 L 73.63 13" fill="none" stroke="black" pointer-events="stroke"/>
+      <path d="M 78.88 13 L 71.88 16.5 L 73.63 13 L 71.88 9.5 Z" fill="black" stroke="black"/>
+      <path d="M 15 -12 L 35 -12 L 35 29.78 L 25 38 L 15 29.78 Z" fill="#e6e6e6" stroke="black" transform="rotate(270,25,13)"/>
+      <path d="M 137 40 L 173.63 40" fill="none" stroke="black" pointer-events="stroke"/>
+      <path d="M 178.88 40 L 171.88 43.5 L 173.63 40 L 171.88 36.5 Z" fill="black" stroke="black"/>
+      <path d="M 80 0 L 140 40 L 80 80 Z" fill="#007fff" stroke="#001dbc"/>
+      <rect x="4" y="2" width="40" height="20" fill="none" stroke="none"/>
+      <rect x="186" y="30" width="40" height="20" fill="none" stroke="none"/>
+      <path d="M 56 119 L 56 70" fill="none" stroke="black"/>
+      <ellipse cx="56" cy="100" rx="10" ry="10" fill="white" stroke="black"/>
+      <text x="55.5" y="99.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">+</text>
+      <text x="55.5" y="107" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">-</text>
+      <path d="M 51 122.33 L 56 129 L 61 122.33 Z" fill="#b3b3b3" stroke="black"/>
+      <path d="M 56 119 L 56 122.33" fill="none" stroke="black"/>
+      <path d="M 40 70 L 73.63 70" fill="none" stroke="black"/>
+      <path d="M 78.88 70 L 71.88 73.5 L 73.63 70 L 71.88 66.5 Z" fill="black" stroke="black"/>
+      <path d="M 15 45 L 35 45 L 35 86.78 L 25 95 L 15 86.78 Z" fill="#e6e6e6" stroke="black" transform="rotate(270,25,70)"/>
+    </g>
+    
+    <g id="labels_af_item1">
+      <text id="label_input1_af_item1" x="23.5" y="16.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">Iv (+)</text>
+      <text id="label_input2_af_item1" x="23.5" y="73.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">Iv (-)</text>
+      <text id="label_output_af_item1" x="205.5" y="44.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">IvSens</text>
+      <text id="label_offset_af_item1" x="94" y="104.5" fill="black" font-family="Helvetica" text-anchor="middle" font-size="12px">Voffset</text>
+    </g>
+	<g id="tooltip" visibility="hidden">
+    <rect width="80" height="24" fill="#FFFDD0" rx="2" ry="2" stroke="black" stroke-width="0.3"/>
+    <text x="4" y="15" font-size="10" font-weight="bold" fill="black" lengthAdjust="spacingAndGlyphs" font-family="Arial">t</text>
+  </g>
+  </g>
+</svg>

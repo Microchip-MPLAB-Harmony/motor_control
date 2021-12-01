@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="680px" height="437px" viewBox="-0.5 -0.5 680 437">
+  <defs>
+    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="mx-gradient-ffffff-1-0050ef-1-s-0">
+      <stop offset="0%" style="stop-color:#0050ef"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <g id="background" pointer-events="none">
+      <path d="M 493.33 185.91 L 556.96 185.56" fill="none" stroke="black"/>
+      <path d="M 562.21 185.54 L 555.23 189.07 L 556.96 185.56 L 555.19 182.07 Z" fill="black" stroke="black"/>
+      <path d="M 379.64 185.96 L 443.27 185.61" fill="none" stroke="black" pointer-events="stroke"/>
+      <path d="M 448.52 185.59 L 441.54 189.12 L 443.27 185.61 L 441.5 182.12 Z" fill="black" stroke="black"/>
+      <path d="M 379.64 45.38 L 443.27 45.03" fill="none" stroke="black" pointer-events="stroke"/>
+      <path d="M 448.52 45.01 L 441.54 48.54 L 443.27 45.03 L 441.5 41.54 Z" fill="black" stroke="black"/>
+      <path d="M 570.76 300.4 L 507.13 300.4" fill="none" stroke="black" pointer-events="stroke"/>
+      <path d="M 501.88 300.4 L 508.88 296.9 L 507.13 300.4 L 508.88 303.9 Z" fill="black" stroke="black"/>
+      <path d="M 578.33 186.18 L 641.96 185.83" fill="none" stroke="black" pointer-events="stroke"/>
+      <path d="M 647.21 185.81 L 640.23 189.34 L 641.96 185.83 L 640.19 182.34 Z" fill="black" stroke="black"/>
+      <path d="M 577.91 121 L 577.91 164.63" fill="none" stroke="black" pointer-events="stroke"/>
+      <path d="M 577.91 169.88 L 574.41 162.88 L 577.91 164.63 L 581.41 162.88 Z" fill="black" stroke="black"/>
+      <path d="M 502 49 L 653 49 Q 663 49 663 59 L 663 164.62" fill="none" stroke="black"/>
+      <path d="M 663 170 L 660 163 L 663 165 L 667 163 Z" fill="black" stroke="black"/>
+      <path d="M 502 49 L 568 49 Q 578 49 578 59 L 578 79" fill="none" stroke="black"/>
+      <path d="M 578 89 L 575 77 L 578 79 L 582 77 Z" fill="black" stroke="black"/>
+      <path d="M 663.33 200.99 L 663.33 290 Q 663.33 300 653.33 299.95 L 599.7 299.66" fill="none" stroke="black"/>
+      <path d="M 594.45 299.64 L 601.47 296.17 L 599.7 299.66 L 601.43 303.17 Z" fill="black" stroke="black"/>
+      <path d="M 448.12 301.82 L 337.33 301.98 Q 327.33 302 327.35 292 L 327.52 221.37" fill="none" stroke="black"/>
+      <path d="M 327.53 216.12 L 331.01 223.13 L 327.52 221.37 L 324.01 223.11 Z" fill="black" stroke="black"/>
+      <path d="M 197.53 188.75 L 261.16 188.4" fill="none" stroke="black"/>
+      <path d="M 266.41 188.38 L 259.43 191.91 L 261.16 188.4 L 259.39 184.91 Z" fill="black" stroke="black"/>
+      <path d="M 197.53 48.17 L 261.16 47.82" fill="none" stroke="black"/>
+      <path d="M 266.41 47.8 L 259.43 51.33 L 261.16 47.82 L 259.39 44.33 Z" fill="black" stroke="black"/>
+      <path d="M 579.33 255 L 579 278.63" fill="none" stroke="black"/>
+      <path d="M 578.93 283.88 L 575.52 276.83 L 579 278.63 L 582.52 276.93 Z" fill="black" stroke="black"/>
+      <path d="M 7 177 h 70.53" fill="none" stroke="black"/>
+      <path d="M 75.78 176.8 L 68.8 180.33 L 70.53 176.82 L 68.76 173.33 Z" fill="black" stroke="black"/>
+      <path d="M 7 137 h 63" fill="none" stroke="black"/>
+      <path d="M 75.78 137.01 L 68.8 140.54 L 70.53 137.03 L 68.76 133.54 Z" fill="black" stroke="black"/>
+      <path d="M 7 97 L 71 97" fill="none" stroke="black"/>
+      <path d="M 75.78 96.8 L 68.8 100.33 L 70.53 96.82 L 68.76 93.33 Z" fill="black" stroke="black"/>
+      <path d="M 7 57 h 63" fill="none" stroke="black"/>
+      <path d="M 76 57 L 69 60 L 70 57 L 69 53 Z" fill="black" stroke="black"/>
+      <path d="M 541.9 299.5 L 541.9 397.5 Q 541.9 407.5 531.9 407.58 L 507.46 407.77" fill="none" stroke="black"/>
+      <path d="M 502.21 407.81 L 509.19 404.25 L 507.46 407.77 L 509.24 411.25 Z" fill="black" stroke="black"/>
+      <path d="M 447.46 407.89 L 383.83 407.89" fill="none" stroke="black"/>
+      <path d="M 378.58 407.89 L 385.58 404.39 L 383.83 407.89 L 385.58 411.39 Z" fill="black" stroke="black"/>
+      <g id="labels">
+        <text x="38" y="49" fill="black" font-family="serif" font-size="14px" text-anchor="middle">Uα</text>
+        <text x="38" y="89" fill="black" font-family="serif" font-size="14px" text-anchor="middle">Uβ</text>
+        <text x="38" y="128" fill="black" font-family="serif" font-size="14px" text-anchor="middle">Iα</text>
+        <text x="38" y="169" fill="black" font-family="serif" font-size="14px" text-anchor="middle">Iβ</text>
+        <text x="233" y="38" fill="black" font-family="serif" font-size="14px" text-anchor="middle">Eα</text>
+        <text x="233" y="180" fill="black" font-family="serif" font-size="14px" text-anchor="middle">Eβ</text>
+        <text x="415" y="38" fill="black" font-family="serif" font-size="14px" text-anchor="middle">Eq</text>
+        <text x="415" y="180" fill="black" font-family="serif" font-size="14px" text-anchor="middle">Ed</text>
+        <text x="345" y="273" fill="black" font-family="serif" font-size="12px" text-anchor="middle">
+        θ
+          <tspan dx="-2" dy="3">est</tspan>
+        </text>
+        <text x="355" y="412" fill="black" font-family="serif" font-size="12px" text-anchor="middle">
+        V
+          <tspan dx="-2" dy="3">est</tspan>
+        </text>
+        <text x="578" y="244" fill="black" font-family="serif" font-size="14px" text-anchor="middle">1/Ke</text>
+      </g>
+    </g>
+    <g id="boxes" pointer-events="all">
+      <g id="box_motor_model">
+        <rect x="77" y="22" width="120" height="193" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc"/>
+        <text x="137" y="122" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">Motor Model</text>
+      </g>
+      <g id="box_lpf_top">
+        <rect x="448" y="22" width="54" height="54" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc"/>
+        <path d="M 456 40 L 472 40 Q 482 40 486 49 L 495 67" fill="none" stroke="black" pointer-events="none"/>
+        <path d="M 456 67 L 456 26" fill="none" stroke="black" pointer-events="none"/>
+        <path d="M 456 67 L 498 67" fill="none" stroke="black" pointer-events="none"/>
+        <text x="473" y="14" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">LPF</text>
+      </g>
+      <g id="box_lpf_middle">
+        <rect x="448" y="161" width="53.64" height="53.64" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc"/>
+        <path d="M 456 179 L 472 179 Q 482 179 486 188 L 495 207" fill="none" stroke="black"/>
+        <path d="M 456 207 L 456 165" fill="none" stroke="black" pointer-events="none"/>
+        <path d="M 456 207 L 498 206" fill="none" stroke="black" pointer-events="none"/>
+        <text x="475" y="155" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">LPF</text>
+      </g>
+      <g id="box_sign">
+        <rect x="548.33" y="85" width="60" height="60" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc"/>
+        <path d="M 558.45 115.67 L 596.55 115.67" fill="none" stroke="black" transform="rotate(90,577.5,115.67)"/>
+        <path d="M 576.89 96.86 L 600.33 96.86" fill="none" stroke="black"/>
+        <path d="M 553.44 134.48 L 576.89 134.48" fill="none" stroke="black"/>
+        <path d="M 553.44 116.38 L 600.33 116.38" fill="none" stroke="#4d4d4d" stroke-dasharray="3 3"/>
+        <text x="599" y="77" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">Sign</text>
+      </g>
+      <g id="box_lpf_bottom">
+        <text x="473" y="375" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">LPF</text>
+        <rect x="447.46" y="382" width="53.64" height="53.64" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc"/>
+        <path d="M 455.45 399.74 L 471.36 399.74 Q 481.36 399.74 485.68 408.76 L 494.58 427.31" fill="none" stroke="black"/>
+         <path d="M 455.45 427.31 L 455.57 386" fill="none" stroke="black" pointer-events="none"/>
+        <path d="M 455.45 427.31 L 497.57 427" fill="none" stroke="black" pointer-events="none"/>
+     </g>
+      <g id="box_ab_dq">
+        <rect x="267.53" y="22" width="120" height="193" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc"/>
+        <path d="M 267.53 215 L 387.53 22" fill="none" stroke="black" pointer-events="none"/>
+        <text x="301" y="79" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">AB</text>
+        <text x="351" y="169" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">DQ</text>
+      </g>
+      <g id="box_integral">
+        <rect x="448" y="274" width="54" height="54" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc"/>
+        <path d="M 456.11 320.31 L 456.23 279" fill="none" stroke="black"/>
+        <path d="M 456.11 320.31 L 498.23 320" fill="none" stroke="black"/>
+        <path d="M 456.59 320.31 L 491.48 291.04" fill="none" stroke="black"/>
+        <text x="476" y="269" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">Integral</text>
+      </g>
+      <g id="box_x_1">
+        <ellipse cx="578.33" cy="186" rx="15" ry="15" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc"/>
+        <text x="578" y="190" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">X</text>
+      </g>
+      <g id="box_calculus">
+        <ellipse cx="663.33" cy="185.99" rx="15" ry="15" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc"/>
+        <path d="M 652.72 196.6 L 673.94 175.38" fill="none" stroke="black"/>
+        <path d="M 652.72 175.38 L 673.94 196.6" fill="none" stroke="black"/>
+        <text x="655" y="188" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">-</text>
+        <text x="664" y="180" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">+</text>
+      </g>
+      <g id="box_x_2">
+        <ellipse cx="578.33" cy="299.63" rx="15" ry="15" fill="url(#mx-gradient-ffffff-1-0050ef-1-s-0)" stroke="#001dbc"/>
+        <text x="578" y="303" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">X</text>
+      </g>
+    </g>
+	<g id="tooltip" visibility="hidden">
+    <rect width="80" height="24" fill="#FFFDD0" rx="2" ry="2" stroke="black" stroke-width="0.3"/>
+    <text x="4" y="15" font-size="10" font-weight="bold" fill="black" lengthAdjust="spacingAndGlyphs" font-family="Arial">t</text>
+  </g>
+  </g>
+</svg>
