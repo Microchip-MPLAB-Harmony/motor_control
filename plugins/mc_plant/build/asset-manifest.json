@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "./static/css/main.53b59cfc.chunk.css",
-    "main.js": "./static/js/main.539478db.chunk.js",
-    "main.js.map": "./static/js/main.539478db.chunk.js.map",
+    "main.js": "./static/js/main.ae9afe0a.chunk.js",
+    "main.js.map": "./static/js/main.ae9afe0a.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.1722c99a.js",
     "runtime-main.js.map": "./static/js/runtime-main.1722c99a.js.map",
     "static/css/2.e4be9ebd.chunk.css": "./static/css/2.e4be9ebd.chunk.css",
@@ -23,7 +23,6 @@
     "static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-SCurve.2d7997fa.svg": "./static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-SCurve.2d7997fa.svg",
     "static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-Step.633ee22e.svg": "./static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-Step.633ee22e.svg",
     "static/media/Motor_Control_and_Diagnosis-main_diagram.55480171.svg": "./static/media/Motor_Control_and_Diagnosis-main_diagram.55480171.svg",
-    "static/media/Motor_Parameters.9bb2bcd9.png": "./static/media/Motor_Parameters.9bb2bcd9.png",
     "static/media/Output_Stage_and_Diagnosis.44efa697.svg": "./static/media/Output_Stage_and_Diagnosis.44efa697.svg",
     "static/media/Position_Measurement_and_Diagnosis-Equation_based.9726002a.svg": "./static/media/Position_Measurement_and_Diagnosis-Equation_based.9726002a.svg",
     "static/media/Position_Measurement_and_Diagnosis-Quadrature_decoder.49908101.svg": "./static/media/Position_Measurement_and_Diagnosis-Quadrature_decoder.49908101.svg",
@@ -40,6 +39,6 @@
     "static/css/2.e4be9ebd.chunk.css",
     "static/js/2.74e51c46.chunk.js",
     "static/css/main.53b59cfc.chunk.css",
-    "static/js/main.539478db.chunk.js"
+    "static/js/main.ae9afe0a.chunk.js"
   ]
 }

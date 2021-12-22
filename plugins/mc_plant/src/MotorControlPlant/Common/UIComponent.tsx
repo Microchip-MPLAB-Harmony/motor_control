@@ -1,6 +1,7 @@
 import { Checkbox } from "primereact/checkbox";
 import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
+import { int32ARGBColor } from "react-native-svg";
 
 import {
   GetSymbolArray,
@@ -82,6 +83,7 @@ function Component(props: {
               componentId={props.componentId}
               symbolId={props.symbolId}
               symbolValue={value}
+              minFractionValue={GetMinFractionValueBasedSymbolType(props.componentId, props.symbolId)}
               minValue={GetSymbolMinValue(props.componentId, props.symbolId)}
               maxValue={GetSymbolMaxValue(props.componentId, props.symbolId)}
               onChange={(target) => props.onChange(target.target)}
@@ -132,6 +134,15 @@ function Component(props: {
       alert("Invalid SymbolType.");
   }
   return component;
+}
+
+function GetMinFractionValueBasedSymbolType(componentId: any, symbolID: any ){
+  let typeofSymbol = GetSymbolType(componentId, symbolID);
+  alert(typeofSymbol)
+  if(typeofSymbol === "Float"){
+    return 1;
+  }
+  return 0;
 }
 
 function GetComponentType(props: { componentId: any; symbolID: any }) {
@@ -190,6 +201,7 @@ export function GetInputNumber(props: {
   componentId: any;
   symbolId: any;
   symbolValue: any;
+  minFractionValue : any;
   minValue: any;
   maxValue: any;
   onChange: (arg0: any) => void;
@@ -202,7 +214,9 @@ export function GetInputNumber(props: {
       id={props.symbolId}
       style={{ width: "8rem", height: "1.4rem" }}
       value={props.symbolValue}
+      minFractionDigits={props.minFractionValue}
       maxFractionDigits={8}
+      mode="decimal"
       showButtons
       min={props.minValue}
       max={props.maxValue}

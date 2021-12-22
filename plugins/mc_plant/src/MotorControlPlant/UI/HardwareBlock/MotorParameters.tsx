@@ -1,6 +1,5 @@
 import Parameters from "../../Common/AddMultipleFields";
 import { mc_component_id } from "../../Common/SymbolAccess";
-import icon from "../../../Resources/Images/Motor_Parameters.png";
 import { Divider } from "primereact/divider";
 import { DialogCommonInitilizeCode } from "../CustomPopUp/CustomPopUp";
 
@@ -29,8 +28,6 @@ const MotorParameters = (props: {
           parentUpdate={props.parentUpdate}
           symbolsArray={SymbolsArray}
         />
-        <Divider layout="vertical" />
-        <img src={icon} alt="icon" />
       </div>
     </div>
   );
