@@ -160,13 +160,17 @@
       <rect x="451.96" y="328.39" width="55.96" height="61.68" fill="url(#gradient-box)" stroke="#001dbc"/>
       <path d="M 507.92 328.39 L 451.96 390.07" fill="none" stroke="#000000" stroke-miterlimit="10"/>
       <text x="468" y="345" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">DQ</text>
-      <text x="490" y="376" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">AB</text>
+      <text x="490" y="376" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Alpha
+		<tspan x="490" y="388">-Beta</tspan>
+	  </text>
     </g>
     <g id="box-ab-uvw" pointer-events="all" harmony-tooltip="">
       <rect x="528.9" y="328.39" width="55.96" height="61.68" fill="url(#gradient-box)" stroke="#001dbc"/>
       <path d="M 577.87 328.39 L 528.9 381.07" fill="none" stroke="#000000" stroke-miterlimit="10"/>
-      <text x="545" y="345" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">AB</text>
-      <text x="564" y="376" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">UVW</text>
+      <text x="551" y="340" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Alpha-
+		<tspan x="543" y="353">Beta</tspan>
+	  </text>
+      <text x="564" y="376" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">ABC</text>
     </g>
     <g id="box-ramp-profiler" pointer-events="all" harmony-tooltip="Configure Ramp Profiler">
       <rect x="41.78" y="39.51" width="56.52" height="52.68" fill="url(#gradient-box)" stroke="#001dbc"/>
