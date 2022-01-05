@@ -4,6 +4,7 @@ import { CallMouseLeave, CallMouseMove } from "../Common/MouseEvent";
 import { RegisterMotorDiagnosisSVGActions } from "./ControlBlock/MotorControlandDiagnosis";
 import { RegisterAnalogFrontEndSVGActions } from "./HardwareBlock/AnalogFrontEnd";
 import DialogDemo from "./CustomPopUp/CustomPopUp";
+import PopUpWithoutFooter, { PopupWithoutFooterInput } from './CustomPopUp/PopUpWithoutFooter';
 import { StartUpConfiguratorLoad } from "./CustomPopUp/CustomPopUp";
 import { RegisterAnalogInterfaceSVGActions } from "./HardwareBlock/AnalogInterface";
 import { RegisterPositionControlDiagnosisSVGActions } from "./ControlBlock/PositionMesurementAndDiagnosis";
@@ -77,6 +78,12 @@ export function newInit() {
   addEventListeners("box_position_interface", "Position Interface", true);
   addEventListeners("box_vdc", "Voltage Source", true);
   addEventListeners("box_data_monitoring", "Data Monitoring", true);
+
+  addEventListeners("box_clock_manager", "Clock Manager", true);
+  addEventListeners("box_io_manager", "IO Manager", true);
+  addEventListeners("box_interrupts_exception", "Interrupts Exception Manager", true);
+  addEventListeners("box_memory_manager", "Memory Control Manager", true);
+
   toolTipObject = svgdoc.getElementById("tooltip");
 
   storeComponentColors();
@@ -170,7 +177,19 @@ function sendClickAction(evt: { target: any }) {
     callPopUp(DialogDemo, target.value);
     RegisterCurrentMesasurementSVGActions();
     return;
-  } else if (target.value) {
+  } else if (target.value && target.value === "Clock Manager") {
+    callPopUpWithOutFooter(PopUpWithoutFooter, target.value, "To configure Clock Manager, Please goto \"Project Graph/plugins/Clock Manager\" ");
+    return;
+  } else if (target.value && target.value === "IO Manager") {
+    callPopUpWithOutFooter(PopUpWithoutFooter, target.value, "To configure IO Manager, Please goto \"Project Graph/plugins/PIN Manager\" ");
+    return;
+  }else if (target.value && target.value === "Interrupts Exception Manager") {
+    callPopUpWithOutFooter(PopUpWithoutFooter, target.value, "To configure Interrupts Exception Manager, Please goto \"Project Graph/plugins/NVIC Configuration\" ");
+    return;
+  }else if (target.value && target.value === "Memory Control Manager") {
+    callPopUpWithOutFooter(PopUpWithoutFooter, target.value, "To configure Memory Control Manager, Please goto \"Project Graph/plugins/MPU Configuration\" ");
+    return;
+  }else if (target.value) {
     callPopUp(DialogDemo, target.value);
     return;
   }
@@ -225,6 +244,12 @@ function callPopUp(Component: any, action_id: any) {
   ReactDOM.render(helloCreate, document.querySelector("#popup"));
 }
 
+function callPopUpWithOutFooter(Component: any, action_id: any, message : string) {
+  const helloCreate = React.createElement(Component);
+  PopupWithoutFooterInput(action_id, message);
+  ReactDOM.render(helloCreate, document.querySelector("#popup"));
+}
+
 function resetColors() {
   let myNodelist = svgdoc.querySelectorAll("*");
   let i;
@@ -236,3 +261,4 @@ function resetColors() {
     }
   }
 }
+
