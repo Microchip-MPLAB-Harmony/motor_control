@@ -144,14 +144,14 @@ const GenericPopUp = () => {
             label="Reset"
             tooltip="Reset symbols to original value"
             tooltipOptions={{ position: "left" }}
-            style={{ height: "1.75rem", fontSize: "12px" }}
+            style={{ height: "1.75rem", fontSize: "14px" }}
             onClick={() => onReset()}
           />
           <Button
             type="button"
             className="p-button-raised p-button-rounded"
             label="Close"
-            style={{ height: "1.75rem", fontSize: "12px" }}
+            style={{ height: "1.75rem", fontSize: "14px" }}
             onClick={() => onHide()}
             autoFocus
           />

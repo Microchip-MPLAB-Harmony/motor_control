@@ -1,7 +1,6 @@
 import { Checkbox } from "primereact/checkbox";
 import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
-import { int32ARGBColor } from "react-native-svg";
 
 import {
   GetSymbolArray,
@@ -190,7 +189,7 @@ export function GetComponent(props: {
 
 export const GetLabelName: React.FC<LabelProps> = (props): JSX.Element => (
   <>
-    <label style={{ fontSize: "12px" }} className="p-col">
+    <label style={{ fontSize: "14px" }} className="p-col">
       {" "}
       {props.labelName + " "}{" "}
     </label>
@@ -212,7 +211,7 @@ export function GetInputNumber(props: {
   return (
     <InputNumber
       id={props.symbolId}
-      style={{ width: "8rem", height: "1.4rem" }}
+      style={{ width: "8rem", height: "1.7rem", fontSize: "12px"  }}
       value={props.symbolValue}
       minFractionDigits={props.minFractionValue}
       maxFractionDigits={8}
@@ -239,6 +238,7 @@ export function GetDropDown(props: {
   return (
     <Dropdown
       id={props.symbolId}
+      style={{height: "2.3rem", fontSize: "14px"  }}
       value={props.symbolValue}
       options={props.symbolArray}
       onChange={(e) => updateValue(e)}

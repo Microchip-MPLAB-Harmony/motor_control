@@ -17,7 +17,6 @@ const QuickSettings = (props: {
     <div>
       {DialogCommonInitilizeCode(props.showToast, SymbolsArray)}
       <div className="p-d-flex">
-        {/* <div className="p-fluid"> */}
         <Parameters
           componentId={mc_component_id}
           parentUpdate={props.parentUpdate}
