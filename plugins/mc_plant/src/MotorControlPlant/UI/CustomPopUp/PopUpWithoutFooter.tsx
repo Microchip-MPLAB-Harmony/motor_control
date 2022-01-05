@@ -22,6 +22,7 @@ const PopUpWithoutFooter = () => {
           visible={dialogVisibleStatus}
           closeOnEscape
           closable
+          maximizable={true}
           focusOnShow
           modal
           header={ActionId}

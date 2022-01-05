@@ -229,6 +229,7 @@ const GenericPopUp = () => {
       <div className="card">
         <Dialog
           visible={dialogVisibleStatus}
+          maximizable={true}
           closeOnEscape
           closable
           focusOnShow
