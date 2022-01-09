@@ -51,6 +51,14 @@ class mcFocI_DigitalInterfaceClass:
                 if pad.startswith("P"):
                     self.function_Map.append(pad)  
 
+        elif "SAME70" in MCU:
+            pins =  ATDF.getNode("/avr-tools-device-file/pinouts/pinout@[name=\"LQFP144\"]").getChildren()
+
+            for pin in pins:
+                pad = pin.getAttribute("pad")
+                if pad.startswith("P"):
+                    self.function_Map.append(pad)  
+       
         self.function_Map.sort()   
 
     def setSymbolValues(self):

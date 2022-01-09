@@ -40,8 +40,20 @@ class mcAniI_AnalogInterfaceClass:
         self.component = component
         
         self.function_Map  = dict()
-        
-		if "SAME54" in MCU: 
+        if "SAME70" in MCU: 
+            unit_path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"AFEC\"]"
+            units = ATDF.getNode(unit_path).getChildren()
+
+            for unit in units:
+                key = unit.getAttribute("name")
+                channel_Path = unit_path + "/instance@[name=\"" + key + "\"]/signals"
+                channels = ATDF.getNode(channel_Path).getChildren()
+                self.function_Map[key] = list()
+                for channel in channels:
+                    if( (None != channel.getAttribute("index")) and ("AD" == channel.getAttribute("group"))):
+                        self.function_Map[key].append( "Channel" + " " + str(channel.getAttribute("index")))
+
+        elif "SAME54" in MCU: 
             unit_path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]"
             units = ATDF.getNode(unit_path).getChildren()
 
@@ -102,7 +114,9 @@ class mcAniI_AnalogInterfaceClass:
         self.sym_ANALOG_MODULE_02.setVisible(False)
         self.sym_ANALOG_MODULE_02.setDefaultValue("None")
 
-        if ("SAME54" == MCU ):
+        if ("SAME70" == MCU ):
+            resolution = ["12", "13", "14", "15", "16"]
+        elif ("SAME54" == MCU ):
             resolution = ["12", "16", "10", "8"]
         else:
             resolution = ["12", "16", "10", "8"]

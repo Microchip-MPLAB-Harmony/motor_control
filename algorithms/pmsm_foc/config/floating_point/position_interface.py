@@ -39,7 +39,33 @@ class mcFocI_PositionInterfaceClass:
         self.mapForQea = dict()
         self.mapForQeb = dict()
         
-        if "SAME54" in MCU:
+        if "SAME70" in MCU:
+            module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"TC\"]"
+            modules = ATDF.getNode(module_Path).getChildren()
+            
+            self.instance_List = list()
+            self.function_Map = dict()
+            self.function_Map["QEA"] = dict()
+            self.function_Map["QEB"] = dict()
+
+            for module in modules:
+                key = module.getAttribute("name")
+                self.instance_List.append(key)
+                channel_Path = module_Path + "/instance@[name=\"" + key + "\"]/signals"
+                channels = ATDF.getNode(channel_Path).getChildren()
+
+                self.function_Map["QEA"][key] = list()
+                self.function_Map["QEB"][key] = list()
+
+                for channel in channels:
+                    if "TIOA" == channel.getAttribute("group"):
+                        self.function_Map["QEA"][key].append(str(channel.getAttribute("pad")))
+                    if "TIOB" == channel.getAttribute("group"):
+                        self.function_Map["QEB"][key].append(str(channel.getAttribute("pad")))    
+
+            self.instance_List.sort() 
+
+        elif "SAME54" in MCU:
             module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"PDEC\"]"
             modules = ATDF.getNode(module_Path).getChildren()
             

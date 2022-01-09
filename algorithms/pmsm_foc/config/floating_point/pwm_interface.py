@@ -43,8 +43,24 @@ class mcPwmI_PwmInterfaceClass:
         self.algorithm = algorithm
         self.component = component
 
+        if "SAME70" in MCU: 
+            module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"PWM\"]"
+            node = ATDF.getNode(module_Path)
+            inst = node.getChildren()
 
-        if "SAME54" in MCU: 
+            self.function_Map = dict()
+            for ins in inst:
+                key = ins.getAttribute("name")
+                self.function_Map[key] = set() 
+                inst_Path = module_Path + "/instance@[name=\"" + key + "\"]/signals"
+                
+                channels =  ATDF.getNode(inst_Path).getChildren()
+                for channel in channels:
+                    self.function_Map[key].add("Channel" + " " + channel.getAttribute("index"))
+                
+                self.function_Map[key] = sorted(list(self.function_Map[key]))
+
+        elif "SAME54" in MCU: 
             module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]"
             node = ATDF.getNode(module_Path)
             inst = node.getChildren()
@@ -61,8 +77,7 @@ class mcPwmI_PwmInterfaceClass:
                 
                 self.function_Map[key] = sorted(list(self.function_Map[key]))
 
- 
-
+       
     """
     Description:
     This function discards alphabets and returns the numbers only

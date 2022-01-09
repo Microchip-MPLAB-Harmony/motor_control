@@ -60,6 +60,11 @@
 /*******************************************************************************
  Constants
  *******************************************************************************/
+<#if __PROCESSOR?matches(".*SAME70.*") == true>
+#define ADC_CALLBACK AFEC_CALLBACK
+#define TCC_CALLBACK PWM_CALLBACK
+</#if>
+
 #define     SW_DEBOUNCE_DLY_500MS      (uint32_t)( 500 )
 
 
