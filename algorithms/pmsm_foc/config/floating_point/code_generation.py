@@ -265,6 +265,8 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
             mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_D5x_E5x_MC_FLYINGSTART.X.a")
         elif(("SAME7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR"))):
             mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_E7x_S7x_V7x_MC_FLYINGSTART.X.a")
+        elif("PIC32MK" in Variables.get("__PROCESSOR")):
+            mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_PIC32MK_MC_FLYINGSTART.X.a")
         mcPmsmFocPosFlyingStartLibraryFile.setOutputName("lib_mc_flyingstart.a")
         mcPmsmFocPosFlyingStartLibraryFile.setDestPath("motor_control/pmsm_foc/")
         mcPmsmFocPosFlyingStartLibraryFile.setEnabled(False)

@@ -24,18 +24,17 @@
 
 
 #---------------------------------------------------------------------------------------#
-#                                           IMPORT                                      #
-#---------------------------------------------------------------------------------------#
-
-#---------------------------------------------------------------------------------------#
-#                                 GLOBAL VARIABLES                                      #
+#                               Import                                                  #
 #---------------------------------------------------------------------------------------#
 import inspect
 import xml.etree.ElementTree as ET
 import os.path
+#---------------------------------------------------------------------------------------#
+#                              Global variables                                         #
+#---------------------------------------------------------------------------------------#
 
 #---------------------------------------------------------------------------------------#
-#                                 GLOBAL VARIABLES                                      #
+#                              Classes                                                  #
 #---------------------------------------------------------------------------------------#
 class mcFocI_DigitalInterfaceClass:
     def __init__(self, algorithm, component):
@@ -59,10 +58,26 @@ class mcFocI_DigitalInterfaceClass:
                 if pad.startswith("P"):
                     self.function_Map.append(pad)  
        
+        elif "PIC32MK" in MCU:
+            # currentPath = os.path.dirname(os.path.abspath(inspect.stack()[0][1]))
+            currentPath = Variables.get("__CSP_DIR") + "/peripheral/gpio_02467"
+            deviceXmlPath = os.path.join(currentPath, "plugin/pin_xml/components/" + Variables.get("__PROCESSOR") + ".xml")
+            deviceXmlTree = ET.parse(deviceXmlPath)
+            deviceXmlRoot = deviceXmlTree.getroot()
+            pinoutXmlName = deviceXmlRoot.get("pins")
+            pinoutXmlPath = os.path.join(currentPath, "plugin/pin_xml/pins/" + pinoutXmlName + ".xml")
+            pinoutXmlPath = os.path.normpath(pinoutXmlPath)
+
+            pinFileContent = ET.fromstring((open(pinoutXmlPath, "r")).read())
+            for item in pinFileContent.findall("pins/pin"):
+                if item.attrib["name"].startswith("R"):
+                    self.function_Map.append(item.attrib["name"]) 
+
         self.function_Map.sort()   
 
     def setSymbolValues(self):
-        information = Database.sendMessage("bsp", "MCPMSMFOC_READ_DII_INFORMATION", {})
+        information = Database.sendMessage("bsp", "MCPMSMFOC_DIGITAL_INTERFACE", {})
+        
         if (None != information):
             index = 0
             for key, value in information["BUTTONS"].items():
@@ -70,6 +85,9 @@ class mcFocI_DigitalInterfaceClass:
                 self.sym_BUTTON_NAME[index].setValue(key)
                 self.sym_BUTTON_PIN[index].setValue(value["PAD"])
                 index += 1
+            self.sym_AVAILABLE_BUTTONS.setValue(index)
+
+
             
             index = 0
             for key, value in information["LEDS"].items():
@@ -77,6 +95,7 @@ class mcFocI_DigitalInterfaceClass:
                 self.sym_LED_NAME[index].setValue(key)
                 self.sym_LED_PIN[index].setValue(value["PAD"])
                 index += 1
+            self.sym_AVAILABLE_LEDS.setValue(index)
 
     def createSymbols(self):   
         self.sym_NODE = self.component.createMenuSymbol(None, None)
@@ -111,6 +130,10 @@ class mcFocI_DigitalInterfaceClass:
             functions = ["Start/Stop", "Direction Toggle", "Custom"]
             self.sym_BUTTON_FUNCTION[index]  = self.component.createComboSymbol("MCPMSMFOC_BUTTON_"+ str(index)+ "_FUNCTION", self.sym_BUTTON_INDEX[index], functions)
             self.sym_BUTTON_FUNCTION[index].setLabel("Function")
+            try:
+                self.sym_BUTTON_FUNCTION[index].setDefaultValue(functions[index])
+            except:
+                self.sym_BUTTON_FUNCTION[index].setDefaultValue("Custom")
 
         max_NUMBER_OF_LEDS = 10
         self.sym_LED_INDEX = dict()
@@ -141,9 +164,14 @@ class mcFocI_DigitalInterfaceClass:
             functions = ["Fault indication", "Direction indication", "Custom"]
             self.sym_LED_FUNCTION[index] = self.component.createComboSymbol("MCPMSMFOC_LED_"+ str(index)+"_FUNCTION", self.sym_LED_INDEX[index], functions)
             self.sym_LED_FUNCTION[index].setLabel("Function")
+            try:
+                self.sym_LED_FUNCTION[index].setDefaultValue(functions[index])
+            except:
+                self.sym_LED_FUNCTION[index].setDefaultValue("Custom")
+
                
     def handleMessage(self, ID, information):
-        if ("MCPMSMFOC_SEND_DII_INFORMATION" == ID) and (None != information):
+        if ("BSP_DIGITAL_INTERFACE" == ID) and (None != information):
             index = 0
             for key, value in information["BUTTONS"].items():
                 self.sym_BUTTON_INDEX[index].setVisible(True)

@@ -198,19 +198,19 @@ class mcMocI_MotorControlAndDiagnosis:
 
         self.sym_SPEED_PID_KP = self.component.createFloatSymbol("MCPMSMFOC_SPEED_PID_KP", self.sym_SPEED_PID)
         self.sym_SPEED_PID_KP.setLabel("Kp")
-        self.sym_SPEED_PID_KP.setDefaultValue(mcMotC_SpeedPiPararameterDictFloating["Custom"]["KP"])
+        self.sym_SPEED_PID_KP.setDefaultValue(mcMotC_SpeedPiPararameterDictFloating["dsPICDEM MCLV-2"]["KP"])
 
 
         self.sym_SPEED_PID_KI = self.component.createFloatSymbol("MCPMSMFOC_SPEED_PID_KI", self.sym_SPEED_PID)
         self.sym_SPEED_PID_KI.setLabel("Ki")
-        self.sym_SPEED_PID_KI.setDefaultValue(mcMotC_SpeedPiPararameterDictFloating["Custom"]["KI"])
+        self.sym_SPEED_PID_KI.setDefaultValue(mcMotC_SpeedPiPararameterDictFloating["dsPICDEM MCLV-2"]["KI"])
 
         # self.sym_SPEED_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_SPEED_PID_KV", self.sym_SPEED_PID)
         # self.sym_SPEED_PID_KV.setLabel("Kv")
 
         self.sym_SPEED_PID_KC = self.component.createFloatSymbol("MCPMSMFOC_SPEED_PID_KC", self.sym_SPEED_PID)
         self.sym_SPEED_PID_KC.setLabel("Kc")
-        self.sym_SPEED_PID_KC.setDefaultValue(mcMotC_SpeedPiPararameterDictFloating["Custom"]["KC"])
+        self.sym_SPEED_PID_KC.setDefaultValue(mcMotC_SpeedPiPararameterDictFloating["dsPICDEM MCLV-2"]["KC"])
         self.sym_SPEED_PID_KC.setVisible(True)
         self.sym_SPEED_PID_KC.setDependencies(self.showSymbolForAntiWindup, ["MCPMSMFOC_SPEED_PID_AW"])
 
@@ -238,19 +238,19 @@ class mcMocI_MotorControlAndDiagnosis:
 
         self.sym_ID_PID_KP = self.component.createFloatSymbol("MCPMSMFOC_ID_PID_KP", self.sym_ID_PID)
         self.sym_ID_PID_KP.setLabel("Kp")
-        self.sym_ID_PID_KP.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["Custom"]["KP"])
+        self.sym_ID_PID_KP.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["dsPICDEM MCLV-2"]["KP"])
         
 
         self.sym_ID_PID_KI = self.component.createFloatSymbol("MCPMSMFOC_ID_PID_KI", self.sym_ID_PID)
         self.sym_ID_PID_KI.setLabel("Ki")
-        self.sym_ID_PID_KI.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["Custom"]["KI"])
+        self.sym_ID_PID_KI.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["dsPICDEM MCLV-2"]["KI"])
 
         # self.sym_ID_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_ID_PID_KV", self.sym_ID_PID)
         # self.sym_ID_PID_KV.setLabel("Kv")
 
         self.sym_ID_PID_KC = self.component.createFloatSymbol("MCPMSMFOC_ID_PID_KC", self.sym_ID_PID)
         self.sym_ID_PID_KC.setLabel("Kc")
-        self.sym_ID_PID_KC.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["Custom"]["KC"])
+        self.sym_ID_PID_KC.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["dsPICDEM MCLV-2"]["KC"])
         self.sym_ID_PID_KC.setVisible(True)
         self.sym_ID_PID_KC.setDependencies(self.showSymbolForAntiWindup, ["MCPMSMFOC_ID_PID_AW"])
 
@@ -276,18 +276,18 @@ class mcMocI_MotorControlAndDiagnosis:
 
         self.sym_IQ_PID_KP = self.component.createFloatSymbol("MCPMSMFOC_IQ_PID_KP", self.sym_IQ_PID)
         self.sym_IQ_PID_KP.setLabel("Kp")
-        self.sym_IQ_PID_KP.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["Custom"]["KP"])
+        self.sym_IQ_PID_KP.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["dsPICDEM MCLV-2"]["KP"])
 
         self.sym_IQ_PID_KI = self.component.createFloatSymbol("MCPMSMFOC_IQ_PID_KI", self.sym_IQ_PID)
         self.sym_IQ_PID_KI.setLabel("Ki")
-        self.sym_IQ_PID_KI.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["Custom"]["KI"])
+        self.sym_IQ_PID_KI.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["dsPICDEM MCLV-2"]["KI"])
 
         # self.sym_IQ_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_IQ_PID_KV", self.sym_IQ_PID)
         # self.sym_IQ_PID_KV.setLabel("Kv")
 
         self.sym_IQ_PID_KC = self.component.createFloatSymbol("MCPMSMFOC_IQ_PID_KC", self.sym_IQ_PID)
         self.sym_IQ_PID_KC.setLabel("Kc")
-        self.sym_IQ_PID_KC.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["Custom"]["KC"])
+        self.sym_IQ_PID_KC.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["dsPICDEM MCLV-2"]["KC"])
         self.sym_IQ_PID_KC.setVisible(True)
         self.sym_IQ_PID_KC.setDependencies(self.showSymbolForAntiWindup, ["MCPMSMFOC_IQ_PID_AW"])
 

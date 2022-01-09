@@ -61,7 +61,7 @@ class mcFocI_DataMonitoringClass:
             symbol.setVisible(False)
 
     def handleMessage(self, ID, information):
-        if( ID == "MCPMSMFOC_SEND_DMI_INFORMATION"):
+        if( ID == "BSP_DATA_MONITORING"):
            pass
 
     def onAttachmentConnected(self, source, target):

@@ -65,6 +65,12 @@
 #define TCC_CALLBACK PWM_CALLBACK
 </#if>
 
+
+<#if __PROCESSOR?matches(".*PIC32MK.*") == true>
+#define ADC_CALLBACK ADCHS_CALLBACK
+#define TCC_CALLBACK MCPWM_CH_CALLBACK
+</#if>
+
 #define     SW_DEBOUNCE_DLY_500MS      (uint32_t)( 500 )
 
 

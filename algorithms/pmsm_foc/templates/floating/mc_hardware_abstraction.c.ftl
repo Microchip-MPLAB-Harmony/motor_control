@@ -95,6 +95,10 @@ void mcHalI_VoltageSourceInverterPwmSet( tmcHal_InverterInstanceId_e Id, uint16_
         ${MCPMSMFOC_PWM_INSTANCE}_ChannelDutySet(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}, duty[0] );
         ${MCPMSMFOC_PWM_INSTANCE}_ChannelDutySet(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}, duty[1] );
         ${MCPMSMFOC_PWM_INSTANCE}_ChannelDutySet(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}, duty[2] );
+    <#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+        ${MCPMSMFOC_PWM_INSTANCE}_ChannelPrimaryDutySet(${MCPMSMFOC_PWM_INSTANCE}_CH_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}, duty[0] );
+        ${MCPMSMFOC_PWM_INSTANCE}_ChannelPrimaryDutySet(${MCPMSMFOC_PWM_INSTANCE}_CH_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}, duty[1] );
+        ${MCPMSMFOC_PWM_INSTANCE}_ChannelPrimaryDutySet(${MCPMSMFOC_PWM_INSTANCE}_CH_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}, duty[2] );
     </#if>
     }
     else 
@@ -127,6 +131,10 @@ void mcHalI_VoltageSourceInverterPwmDisable(void)
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL} );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL} );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL} );
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipDisable( ${MCPMSMFOC_PWM_INSTANCE}_CH_1 );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipDisable( ${MCPMSMFOC_PWM_INSTANCE}_CH_2 );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipDisable( ${MCPMSMFOC_PWM_INSTANCE}_CH_3 );
 </#if>
 
 }
@@ -154,6 +162,10 @@ void mcHalI_VoltageSourceInverterPwmEnable(void)
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL} );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL} );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL} );
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipEnable( ${MCPMSMFOC_PWM_INSTANCE}_CH_1 );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipEnable( ${MCPMSMFOC_PWM_INSTANCE}_CH_2 );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipEnable( ${MCPMSMFOC_PWM_INSTANCE}_CH_3 );
 </#if>
    
 }
@@ -174,6 +186,22 @@ uint16_t mcHalI_VoltageSignalGet( void )
     return ADC1_ConversionResultGet();
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     return AFEC0_ChannelResultGet(AFEC_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL});
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>  
+  <#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC7" >
+    return ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL});
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC0"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH0);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC1"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH1);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC2"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH2);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC3"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH3);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC4"> 
+    return  = ADCHS_ChannelResultGet(ADCHS_CH4);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC5"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH5);
+  </#if> 
 </#if>
 }
 
@@ -201,6 +229,22 @@ uint16_t mcHalI_PhaseACurrentSignalGet( uint8_t Id )
     }
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     return ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_UNIT_PHASE_CURRENT_IA_FINAL});
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    <#if MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC7" >
+        return ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_UNIT_PHASE_CURRENT_IA_FINAL});
+    <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC0"> 
+        return ADCHS_ChannelResultGet(ADCHS_CH0);
+    <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC1"> 
+        return ADCHS_ChannelResultGet(ADCHS_CH1);
+    <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC2"> 
+        return ADCHS_ChannelResultGet(ADCHS_CH2);
+    <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC3"> 
+        return ADCHS_ChannelResultGet(ADCHS_CH3);
+    <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC4"> 
+        return ADCHS_ChannelResultGet(ADCHS_CH4);
+    <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC5"> 
+        return ADCHS_ChannelResultGet(ADCHS_CH5);
+    </#if> 
 </#if>    
 }
 
@@ -222,6 +266,22 @@ uint16_t mcHalI_PhaseBCurrentSignalGet( uint8_t Id )
     return ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ConversionResultGet();   
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     return ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IB_UNIT_PHASE_CURRENT_IB_FINAL});
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#if MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC7" >
+    return ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_PHASE_CURRENT_IB_UNIT_PHASE_CURRENT_IB_FINAL});
+<#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC0"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH0);
+<#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC1"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH1);
+<#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC2"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH2);
+<#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC3"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH3);
+<#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC4"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH4);
+<#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC5"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH5);
+</#if>
 </#if>
    
 }
@@ -244,6 +304,23 @@ uint16_t mcHalI_PotentiometerSignalGet( void )
     return ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ConversionResultGet();
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     return ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT_POTENTIOMETER_VPOT_FINAL});
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+   <#if MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC7" >
+     return ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL});
+   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC0"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH0);
+   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC1"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH1);
+   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC2"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH2);
+   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC3"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH3);
+   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC4"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH4);
+   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC5"> 
+    return ADCHS_ChannelResultGet(ADCHS_CH5);
+   </#if> 
+
 </#if>
 }
 
@@ -309,6 +386,8 @@ void mcHalI_AdcInterruptDisable( void )
     ADC0_InterruptsDisable( ADC_STATUS_RESRDY );
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     NVIC_DisableIRQ(AFEC0_IRQn);
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    EVIC_SourceDisable(INT_SOURCE_ADC_DATA0);
 </#if>
 } 
 
@@ -328,6 +407,8 @@ void mcHalI_AdcInterruptEnable( void )
     ADC0_InterruptsEnable( ADC_STATUS_RESRDY );  
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     NVIC_EnableIRQ(AFEC0_IRQn); 
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    EVIC_SourceEnable(INT_SOURCE_ADC_DATA0);
 </#if>
 } 
 
@@ -348,6 +429,8 @@ void mcHalI_AdcInterruptClear( void )
     ADC0_InterruptsClear(ADC_STATUS_MASK);
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     NVIC_ClearPendingIRQ(AFEC0_IRQn);
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    EVIC_SourceStatusClear(INT_SOURCE_ADC_DATA0);
 </#if>
 }
 
@@ -368,6 +451,8 @@ void mcHalI_ADCEnable( void )
     ADC0_Enable();
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
 
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+
 </#if>
 }
 
@@ -387,6 +472,8 @@ void mcHalI_AdcCallBackRegister(ADC_CALLBACK  callback, uintptr_t context)
     ADC0_CallbackRegister( callback, context);
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     AFEC0_CallbackRegister( callback, context);
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    ADCHS_CallbackRegister(ADCHS_CH0, callback, context);
 </#if>
 }
 
@@ -407,6 +494,8 @@ void mcHalI_PwmTimerStart( void )
     ${MCPMSMFOC_PWM_INSTANCE}_PWMStart( );  
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(0x7); 
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    ${MCPMSMFOC_PWM_INSTANCE}_Start();
 </#if>
 }
 
@@ -426,6 +515,8 @@ void mcHalI_PwmInterruptDisable( void )
     NVIC_DisableIRQ(${MCPMSMFOC_PWM_INSTANCE}_OTHER_IRQn);
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     NVIC_DisableIRQ(${MCPMSMFOC_PWM_INSTANCE}_IRQn);
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    EVIC_SourceDisable( INT_SOURCE_PWM1 );
 </#if>
 } 
 
@@ -445,6 +536,9 @@ void mcHalI_PwmInterruptEnable( void )
     NVIC_EnableIRQ(${MCPMSMFOC_PWM_INSTANCE}_OTHER_IRQn);  
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     NVIC_EnableIRQ(${MCPMSMFOC_PWM_INSTANCE}_IRQn);
+
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    EVIC_SourceEnable( INT_SOURCE_PWM1 );
 </#if>
 } 
 
@@ -465,6 +559,8 @@ void mcHalI_PwmInterruptClear( void )
     NVIC_ClearPendingIRQ(${MCPMSMFOC_PWM_INSTANCE}_OTHER_IRQn);
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     NVIC_ClearPendingIRQ(${MCPMSMFOC_PWM_INSTANCE}_IRQn);
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    EVIC_SourceStatusClear(INT_SOURCE_PWM1);
 </#if>
 }
 
@@ -482,6 +578,9 @@ void mcHalI_PwmEnable( void )
 {
 <#if __PROCESSOR?matches(".*SAME54.*") == true>
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+
 </#if>
    
 }
@@ -502,6 +601,8 @@ uint16_t mcHalI_PwmPeriodGet( void )
     return ${MCPMSMFOC_PWM_INSTANCE}_PWM24bitPeriodGet( );
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     return ${MCPMSMFOC_PWM_INSTANCE}_ChannelPeriodGet( PWM_CHANNEL_0 );
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    return ${MCPMSMFOC_PWM_INSTANCE}_PrimaryPeriodGet();
 </#if>
 }
 
@@ -521,6 +622,9 @@ void mcHalI_PwmCallbackRegister( TCC_CALLBACK  callback, uintptr_t context )
     ${MCPMSMFOC_PWM_INSTANCE}_PWMCallbackRegister( callback, (uintptr_t)context);
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     ${MCPMSMFOC_PWM_INSTANCE}_CallbackRegister( callback, (uintptr_t)context);
+
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    ${MCPMSMFOC_PWM_INSTANCE}_CallbackRegister(${MCPMSMFOC_PWM_INSTANCE}_CH_1, callback, (uintptr_t)context);
 </#if>
 
 }
@@ -540,10 +644,44 @@ void mcHalI_Group01SignalRead( uint16_t Id  )
 <#if __PROCESSOR?matches(".*SAME54.*") == true>
     mcHalI_PhaseACurrent_gdu16 = mcHalI_PhaseACurrentSignalGet( Id );
     mcHalI_PhaseBCurrent_gdu16  = mcHalI_PhaseBCurrentSignalGet( Id );
+
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     mcHalI_PhaseACurrent_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_UNIT_PHASE_CURRENT_IA_FINAL});
     mcHalI_PhaseBCurrent_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IB_UNIT_PHASE_CURRENT_IB_FINAL});
-</#if> 
+
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+  <#if MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC7" >
+    mcHalI_PhaseACurrent_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_UNIT_PHASE_CURRENT_IA_FINAL});
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC0"> 
+    mcHalI_PhaseACurrent_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH0);
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC1"> 
+    mcHalI_PhaseACurrent_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH1);
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC2"> 
+    mcHalI_PhaseACurrent_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH2);
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC3"> 
+    mcHalI_PhaseACurrent_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH3);
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC4"> 
+    mcHalI_PhaseACurrent_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH4);
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC5"> 
+    mcHalI_PhaseACurrent_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH5);
+  </#if> 
+
+  <#if MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC7" >
+    mcHalI_PhaseBCurrent_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_PHASE_CURRENT_IB_UNIT_PHASE_CURRENT_IB_FINAL});
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC0"> 
+    mcHalI_PhaseBCurrent_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH0);
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC1"> 
+    mcHalI_PhaseBCurrent_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH1);
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC2"> 
+    mcHalI_PhaseBCurrent_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH2);
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC3"> 
+    mcHalI_PhaseBCurrent_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH3);
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC4"> 
+    mcHalI_PhaseBCurrent_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH4);
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC5"> 
+    mcHalI_PhaseBCurrent_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH5);
+  </#if> 
+</#if>
 }
 
 /*! \brief Read Group 02 signal 
@@ -564,7 +702,41 @@ void mcHalI_Group02SignalRead( uint16_t Id  )
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     mcHalI_DcBusVoltage_gdu16  = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL});
     mcHalI_Potentiometer_gdu16 = ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT_POTENTIOMETER_VPOT_FINAL});
-</#if> 
+
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+  <#if MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC7" >
+    mcHalI_DcBusVoltage_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL});
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC0"> 
+    mcHalI_DcBusVoltage_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH0);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC1"> 
+    mcHalI_DcBusVoltage_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH1);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC2"> 
+    mcHalI_DcBusVoltage_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH2);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC3"> 
+    mcHalI_DcBusVoltage_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH3);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC4"> 
+    mcHalI_DcBusVoltage_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH4);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC5"> 
+    mcHalI_DcBusVoltage_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH5);
+  </#if> 
+
+  <#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC7" >
+   mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT_POTENTIOMETER_VPOT_FINAL});
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC0"> 
+    mcHalI_Potentiometer_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH0);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC1"> 
+    mcHalI_Potentiometer_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH1);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC2"> 
+    mcHalI_Potentiometer_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH2);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC3"> 
+    mcHalI_Potentiometer_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH3);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC4"> 
+    mcHalI_Potentiometer_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH4);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC5"> 
+    mcHalI_Potentiometer_gdu16  = ADCHS_ChannelResultGet(ADCHS_CH5);
+  </#if> 
+</#if>
+    
 }
 
 /*! \brief Re-assign ADC channels for  Group 01 signals and enable hardware trigger 
@@ -588,6 +760,8 @@ void mcHalI_Group01SignalHardwareTrigger( uint16_t Id  )
     ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_InterruptsClear(ADC_STATUS_MASK);
     ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_InterruptsEnable( ADC_STATUS_RESRDY );
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
 
 </#if>    
 }
@@ -616,6 +790,8 @@ void mcHalI_Group02SignalSoftwareTrigger( uint16_t Id  )
 
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
 
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+
 </#if>
 
 }
@@ -637,6 +813,8 @@ void mcHalI_EncoderStart( uint16_t Id  )
     ${MCPMSMFOC_ENCODER_PERIPHERAL}_QDECStart();
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
    ${MCPMSMFOC_ENCODER_PERIPHERAL}_QuadratureStart();
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+    ${MCPMSMFOC_ENCODER_PERIPHERAL}_Start();
 </#if>
 }
 
@@ -656,8 +834,26 @@ int32_t mcHalI_EncoderPositionGet( uint16_t Id  )
         return ${MCPMSMFOC_ENCODER_PERIPHERAL}_QDECPositionGet();
     <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
         return ${MCPMSMFOC_ENCODER_PERIPHERAL}_QuadraturePositionGet();
+    <#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+        return ${MCPMSMFOC_ENCODER_PERIPHERAL}_PositionGet();
     </#if>
 }
 
+<#if __PROCESSOR?matches(".*PIC32MK.*") == true>
+/*! \brief Get the encoder velocity count
+ * 
+ * Details.
+ * Get the encoder count
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+int32_t mcHalI_EncoderVelocityGet( uint16_t Id  )
+{
+    return ${MCPMSMFOC_ENCODER_PERIPHERAL}_VelocityGet();
+}
+</#if>
 </#if>
 

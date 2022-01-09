@@ -46,7 +46,7 @@ class mcEvtI_EventSystemClass:
         if "SAME54" in MCU: 
             pwmInstance = global_PWM_MODULE.getValue().upper()
             adcInstance = global_ADC_MODULE.getValue().upper()
-            eic = filter(str.isdigit, str( global_PWM_FAULT.getValue()))
+            eic = filter(str.isdigit, str( global_PWM_FAULT))
             generator0 = generator1 = user0 = user1 = 0
 
             if (pwmInstance != "NONE") and (adcInstance != "NONE"):

@@ -44,7 +44,7 @@ class mcAnf_AnalogFrontEndClass:
         
         bsp_Active_Status = True
         if( bsp_Active_Status == True):
-            self.afe_Information = Database.sendMessage("bsp", "MCPMSMFOC_READ_AFE_INFORMATION", {})
+            self.afe_Information = Database.sendMessage("bsp", "MCPMSMFOC_ANALOG_FRONT_END", {})
             
     def handleMessage(self, ID, information):
         if( ID == "BSP_ANALOG_FRONT_END") and ( None != information ):
@@ -58,10 +58,10 @@ class mcAnf_AnalogFrontEndClass:
             self.sym_NODE_IB_OFFSET.setValue(float(information["IB"]["OFFSET"]))
             self.sym_NODE_IB_SHUNT.setValue(float(information["IB"]["SHUNT"]))
 
-            # self.sym_NODE_IDC_OPAMP.setValue("External op-amp")
-            self.sym_NODE_IDC_GAIN.setValue(float(information["IDC"]["GAIN"]))
-            self.sym_NODE_IDC_OFFSET.setValue(float(information["IDC"]["OFFSET"]))
-            self.sym_NODE_IDC_SHUNT.setValue(float(information["IDC"]["SHUNT"]))
+            # # self.sym_NODE_IDC_OPAMP.setValue("External op-amp")
+            # self.sym_NODE_IDC_GAIN.setValue(float(information["IDC"]["GAIN"]))
+            # self.sym_NODE_IDC_OFFSET.setValue(float(information["IDC"]["OFFSET"]))
+            # self.sym_NODE_IDC_SHUNT.setValue(float(information["IDC"]["SHUNT"]))
 
             self.sym_NODE_VDC_TOP.setValue(float(information["VDC"]["TOP"]))
             self.sym_NODE_VDC_BOTTOM.setValue(float(information["VDC"]["BOTTOM"]))
@@ -142,36 +142,36 @@ class mcAnf_AnalogFrontEndClass:
 
 
          # Current measurement
-        self.sym_NODE_IDC = self.component.createMenuSymbol("MCPMSMFOC_ANALOG_FRONT_END_IDC", self.sym_NODE)
-        self.sym_NODE_IDC.setLabel("DC bus current")
+        # self.sym_NODE_IDC = self.component.createMenuSymbol("MCPMSMFOC_ANALOG_FRONT_END_IDC", self.sym_NODE)
+        # self.sym_NODE_IDC.setLabel("DC bus current")
         
-        available = [ "External op-amp", "Internal op-amp"]
-        self.sym_NODE_IDC_OPAMP = self.component.createComboSymbol("MCPMSMFOC_ANALOG_FRONT_END_IDC_OPAMP", self.sym_NODE_IDC, available)
-        self.sym_NODE_IDC_OPAMP.setLabel("Op-amp")
+        # available = [ "External op-amp", "Internal op-amp"]
+        # self.sym_NODE_IDC_OPAMP = self.component.createComboSymbol("MCPMSMFOC_ANALOG_FRONT_END_IDC_OPAMP", self.sym_NODE_IDC, available)
+        # self.sym_NODE_IDC_OPAMP.setLabel("Op-amp")
 
-        self.sym_NODE_IDC_GAIN = self.component.createFloatSymbol("MCPMSMFOC_ANALOG_FRONT_END_IDC_GAIN", self.sym_NODE_IDC)
-        self.sym_NODE_IDC_GAIN.setLabel("Gain")
+        # self.sym_NODE_IDC_GAIN = self.component.createFloatSymbol("MCPMSMFOC_ANALOG_FRONT_END_IDC_GAIN", self.sym_NODE_IDC)
+        # self.sym_NODE_IDC_GAIN.setLabel("Gain")
 
-        try:
-            self.sym_NODE_IDC_GAIN.setDefaultValue(float(self.afe_Information["IDC"]["GAIN"]))
-        except:
-            pass
+        # try:
+        #     self.sym_NODE_IDC_GAIN.setDefaultValue(float(self.afe_Information["IDC"]["GAIN"]))
+        # except:
+        #     pass
 
-        self.sym_NODE_IDC_OFFSET = self.component.createFloatSymbol("MCPMSMFOC_ANALOG_FRONT_END_IDC_OFFSET", self.sym_NODE_IDC)
-        self.sym_NODE_IDC_OFFSET.setLabel("Offset")
+        # self.sym_NODE_IDC_OFFSET = self.component.createFloatSymbol("MCPMSMFOC_ANALOG_FRONT_END_IDC_OFFSET", self.sym_NODE_IDC)
+        # self.sym_NODE_IDC_OFFSET.setLabel("Offset")
 
-        try:
-            self.sym_NODE_IDC_OFFSET.setDefaultValue(float(self.afe_Information["IDC"]["OFFSET"]))
-        except:
-            pass
+        # try:
+        #     self.sym_NODE_IDC_OFFSET.setDefaultValue(float(self.afe_Information["IDC"]["OFFSET"]))
+        # except:
+        #     pass
 
-        self.sym_NODE_IDC_SHUNT = self.component.createFloatSymbol("MCPMSMFOC_ANALOG_FRONT_END_IDC_SHUNT", self.sym_NODE_IDC)
-        self.sym_NODE_IDC_SHUNT.setLabel("Shunt resistance (ohm)")
+        # self.sym_NODE_IDC_SHUNT = self.component.createFloatSymbol("MCPMSMFOC_ANALOG_FRONT_END_IDC_SHUNT", self.sym_NODE_IDC)
+        # self.sym_NODE_IDC_SHUNT.setLabel("Shunt resistance (ohm)")
 
-        try:
-            self.sym_NODE_IDC_SHUNT.setDefaultValue(float(self.afe_Information["IDC"]["SHUNT"]))
-        except:
-            pass
+        # try:
+        #     self.sym_NODE_IDC_SHUNT.setDefaultValue(float(self.afe_Information["IDC"]["SHUNT"]))
+        # except:
+        #     pass
 
         # Voltage measurement
         self.sym_NODE_VDC = self.component.createMenuSymbol("MCPMSMFOC_ANALOG_FRONT_END_VDC", self.sym_NODE)

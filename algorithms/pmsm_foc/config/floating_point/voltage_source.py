@@ -41,7 +41,7 @@ class mcSrcI_VoltageSourceClass:
         self.component = component
 
     def setValues(self):
-        self.information = Database.sendMessage("bsp", "MCPMSMFOC_READ_VSRC_INFORMATION", {})
+        self.information = Database.sendMessage("bsp", "MCPMSMFOC_VOLTAGE_SOURCE", {})
     
     def createSymbols(self):
         # Root Node 
@@ -61,7 +61,7 @@ class mcSrcI_VoltageSourceClass:
 
 
     def handleMessage(self, ID, information):
-        if( ID == "MCPMSMFOC_SEND_VSRC_INFORMATION"):
+        if( ID == "BSP_VOLTAGE_SOURCE"):
             if None != information:
                 self.sym_VOLTAGE.setValue(float(information["VDC"]))
                 

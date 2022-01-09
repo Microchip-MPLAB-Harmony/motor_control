@@ -89,6 +89,55 @@ class mcFocI_PositionInterfaceClass:
                         self.function_Map["QEB"][key].append(str(channel.getAttribute("pad")))   
 
             self.instance_List.sort() 
+
+        elif "PIC32MK" in MCU:
+            # Pin to quadrature decoder mapping       
+            currentPath = Variables.get("__CSP_DIR") + "/peripheral/gpio_02467"
+            deviceXmlPath = os.path.join(currentPath, "plugin/pin_xml/components/" + Variables.get("__PROCESSOR") + ".xml")
+            deviceXmlTree = ET.parse(deviceXmlPath)
+            deviceXmlRoot = deviceXmlTree.getroot()
+            pinoutXmlName = deviceXmlRoot.get("pins")
+            pinoutXmlPath = os.path.join(currentPath, "plugin/pin_xml/pins/" + pinoutXmlName + ".xml")
+            pinoutXmlPath = os.path.normpath(pinoutXmlPath)
+
+            familiesXmlName = deviceXmlRoot.get("families")
+            familiesXmlPath = os.path.join(currentPath, "plugin/pin_xml/families/" + familiesXmlName + ".xml")
+            familiesXmlPath = os.path.normpath(familiesXmlPath)
+
+            pinFileContent = ET.fromstring((open(familiesXmlPath, "r")).read())
+
+            self.function_Map = {'QEA': {}, 'QEB':{}}
+            self.instance_List = set()
+            for group in pinFileContent.findall("groups/group"):
+                for function in group.findall("function"):
+                    if function.attrib["name"].startswith("QEA"):
+                        for pin in group.findall("pin"):
+                            channel = self.numericFilter(function.attrib["name"])
+                            unit = "QEI" + channel
+                            pad = self.stringReplace(pin.attrib["name"])
+
+                            try:
+                                self.function_Map["QEA"][unit].append( pad )
+                            except:
+                                self.function_Map["QEA"][unit] = list()  
+                                self.function_Map["QEA"][unit] = [pad]
+                        
+                            self.instance_List.add(unit)
+
+                    if function.attrib["name"].startswith("QEB"):
+                        for pin in group.findall("pin"):
+                            channel = self.numericFilter(function.attrib["name"])
+                            unit = "QEI" + channel
+                            pad = self.stringReplace(pin.attrib["name"])
+
+                            try:
+                                self.function_Map["QEB"][unit].append(pad)
+                            except:
+                                self.function_Map["QEB"][unit] = list()  
+                                self.function_Map["QEB"][unit] = [pad]
+
+                            self.instance_List.add(unit)
+
             self.instance_List = list(self.instance_List)
 
     def numericFilter( self, input_String ):
@@ -103,7 +152,7 @@ class mcFocI_PositionInterfaceClass:
         # Root node 
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Position Interface")
-        self.sym_NODE.setVisible(False)
+        # self.sym_NODE.setVisible(False)
         self.sym_NODE.setDependencies(self.encoderDependency, ["MCPMSMFOC_POSITION_CALC_ALGORITHM"])
       
         # Root node 
@@ -136,10 +185,10 @@ class mcFocI_PositionInterfaceClass:
                                                                ])
 
     def setSymbolValues(self):
-        information = Database.sendMessage("bsp", "MCPMSMFOC_READ_POSI_INFORMATION", {})
+        information = Database.sendMessage("bsp", "MCPMSMFOC_POSITION_INTERFACE", {})
         if( None != information ):
             if information["QEA"]["FUNCTION"][0][0] == information["QEB"]["FUNCTION"][0][0]:
-                self.sym_PERIPHERAL.setValue(information["QEA"][0])
+                self.sym_PERIPHERAL.setValue(information["QEA"]["FUNCTION"][0][0])
 
             self.sym_QEA.setValue(information["QEA"]["FUNCTION"][0][1])
             self.sym_QEB.setValue(information["QEB"]["FUNCTION"][0][1])
@@ -161,7 +210,7 @@ class mcFocI_PositionInterfaceClass:
     def updatePLIB(self, symbol, event):      
         message = {}
         component = symbol.getComponent()
-        pulses = (float(component.getSymbolValue("MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV")) * 4) / component.getSymbolValue("MCPMSMFOC_POLE_PAIRS")
+        pulses = float(component.getSymbolValue("MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV"))
         message['PULSES_PER_REV'] = pulses
         
         Database.sendMessage(self.sym_ENCODER_MODULE.getValue().lower(), "PMSM_FOC_ENCODER_CONF", message )
@@ -184,7 +233,7 @@ class mcFocI_PositionInterfaceClass:
             symbol.setVisible(False)
 
     def handleMessage(self, ID, information ):
-        if( "MCBSP_SEND_POSI_INFORMATION" == ID ):
+        if( "BSP_POSITION_INTERFACE" == ID ):
              if( None != information ):
                 if information["QEA"]["FUNCTION"][0][0] == information["QEB"]["FUNCTION"][0][0]:
                     self.sym_PERIPHERAL.setValue(information["QEA"]["FUNCTION"][0][0])
@@ -202,7 +251,7 @@ class mcFocI_PositionInterfaceClass:
         remoteID = remoteComponent.getID()
         connectID = source["id"]
         
-        pulses = (float(localComponent.getSymbolValue("MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV")) * 4) / localComponent.getSymbolValue("MCPMSMFOC_POLE_PAIRS")
+        pulses = float(localComponent.getSymbolValue("MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV"))
         message['PULSES_PER_REV'] = pulses
 
         if (connectID == "pmsmfoc_QDEC"):

@@ -53,7 +53,7 @@
  Constants
  *******************************************************************************/
 #define CONSTANT_Pi                                        (float)3.14159265358979323846
-#define CONSTANT_QdecPulsesPerElecRev         (uint16_t)( ( CONFIG_EncoderPulsesPerMechRev * 4 ) /CONFIG_RpoNumberOfPolePairs)
+#define CONSTANT_QdecPulsesPerElecRev         (uint16_t)( CONFIG_EncoderPulsesPerMechRev /CONFIG_RpoNumberOfPolePairs)
 #define CONSTANT_QdecPulsesToMechAngle     (float)(2.0f*CONSTANT_Pi/CONFIG_EncoderPulsesPerMechRev )
 #define CONSTANT_QdecPulsesToElecAngle       (float)(2.0f*CONSTANT_Pi/CONSTANT_QdecPulsesPerElecRev )
 #define CONSTANT_QdecVelocitySampleFreq     (float)((float)PWM_FREQUENCY / (float)CONFIG_VelcoityCalculationPrescale)
@@ -169,7 +169,7 @@ void mcRpoI_RotorPositionCalculationRun( const tmcRpo_InstanceId_e Id )
     mcRpo_StateVariables_mas[Id].synCounter++;
     
     /* Calculate mechanical position */
-    mcRpo_StateVariables_mas[Id].mechAngleCount = (int32_t)mcHalI_EncoderPositionGet( Id );
+    mcRpo_StateVariables_mas[Id].mechAngleCount = (int32_t)mcHalI_EncoderPositionGet( Id ) % CONFIG_EncoderPulsesPerMechRev;   
    *mcRpo_OutputPorts_mas[Id].mechAngle = mcRpo_StateVariables_mas[Id].mechAngleCount *  mcRpo_Parameters_mas[Id].encCountToMechAngle;
     mcLib_WrapAngleTo2Pi( mcRpo_OutputPorts_mas[Id].mechAngle  );
     

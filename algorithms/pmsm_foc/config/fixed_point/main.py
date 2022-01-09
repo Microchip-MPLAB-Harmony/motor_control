@@ -28,40 +28,40 @@ global mcPmsmFocInstanceName
 global mcPmsmFocSeries
 
 # Execute file for motor module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_MotorParameter.py"  )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/mcPmsmFoc_MotorParameter.py"  )
 
 # Execute file for inverter module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_Inverter.py"  )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/mcPmsmFoc_Inverter.py"  )
 
 # Execute file for Analog interface module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_AnalogInterface.py"  )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/mcPmsmFoc_AnalogInterface.py"  )
 
 # Execute file for Current Measurement and Diagnosis module
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_CurrentMeasurement.py"  )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/mcPmsmFoc_CurrentMeasurement.py"  )
 
 # Execute file for Digital interface module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_DigitalInterface.py" )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/mcPmsmFoc_DigitalInterface.py" )
 
 # Execute file for motor control and diagnosis module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_MotorControl.py"  )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/mcPmsmFoc_MotorControl.py"  )
 
 # Execute file for position meaurement and diagnosis module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_PositionMeasurement.py" )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/mcPmsmFoc_PositionMeasurement.py" )
 
 # Execute file for position interface  module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_PositionInterface.py"  )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/mcPmsmFoc_PositionInterface.py"  )
 
 # Execute file for PWM interface module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_PwmInterface.py" )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/mcPmsmFoc_PwmInterface.py" )
 
 # Execute file for start-up module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_Startup.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/mcPmsmFoc_Startup.py"   )
 
 # Execute file for data monitoring module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_DataMonitoring.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/mcPmsmFoc_DataMonitoring.py"   )
 
 # Execute file for Flying Start module 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/mcPmsmFoc_FlyingStart.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/mcPmsmFoc_FlyingStart.py"   )
 
 
 #=========================================================================================================#

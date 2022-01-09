@@ -482,7 +482,6 @@ void mcFcoI_ButtonPolling(void)
     <#return "Error">
   </#if>
 </#function>
-
 <#if MCPMSMFOC_BUTTONS_AVAILABLE != 0 >
     <#list 0..10 as index>
         mcHal_ButtonResponse((tmcHal_ButtonState_e)(!${buttonName(index)}_Get()), &${buttonFunction(index)});
