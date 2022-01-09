@@ -114,9 +114,9 @@ const SummaryPage = () => {
   function PWMInterface() {
     return (
       <div className="p-d-flex p-flex-column">
-        {GetLabelAndValue("Channel A", "MCPMSMFOC_PWM_INSTANCE__PWM_A_FINAL")}
-        {GetLabelAndValue("Channel B", "MCPMSMFOC_PWM_INSTANCE__PWM_B_FINAL")}
-        {GetLabelAndValue("Channel C", "MCPMSMFOC_PWM_INSTANCE__PWM_C_FINAL")}
+        {GetLabelAndValue("Channel A", "MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL")}
+        {GetLabelAndValue("Channel B", "MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL")}
+        {GetLabelAndValue("Channel C", "MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL")}
         {GetLabelAndValue("Fault pin", "MCPMSMFOC_PWM_FAULT_SELECT")}
       </div>
     );

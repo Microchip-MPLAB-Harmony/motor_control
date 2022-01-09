@@ -166,6 +166,73 @@ void mcVolI_VoltageCalculationRun( const tmcVol_InstanceId_e Id )
     /* Write output ports */
 }
 
+<#if true == MCPMSMFOC_OVER_VOLTAGE >
+/*! \brief Overvoltage diagnosis 
+ * 
+ * Details.
+ *  Overvoltage diagnosis 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+
+ void mcVolI_OverVoltageDiagnose(const tmcVol_InstanceId_e Id )
+ {
+    /* Perform diagnosis only if voltage is valid */
+    busVoltage = *mcVol_OutputPorts_mas[Id].busVoltage;
+    if( ${MCPMSMFOC_OVER_VOLTAGE_LIMIT} < busVoltage )
+    {
+      if( constant_OVER_VOLTAGE_DEBOUNCE_COUNT < mcVol_StateVariables_mas[Id].overVoltageDebounceCount )
+      {
+          /* ToDO: Log overvoltage failure */
+      }
+      else 
+      {
+          mcVol_StateVariables_mas[Id].overVoltageDebounceCount++;  
+      }
+    }
+    else 
+    {
+        mcVol_StateVariables_mas[Id].overVoltageDebounceCount = 0u; 
+    }
+ }
+</#if>
+
+<#if true == MCPMSMFOC_UNDER_VOLTAGE >
+ /*! \brief Under voltage diagnosis 
+ * 
+ * Details.
+ *  Under voltage diagnosis 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+
+ void mcVolI_UnderVoltageDiagnose(const tmcVol_InstanceId_e Id )
+ {
+    /* Perform diagnosis only if voltage is valid */
+    busVoltage = *mcVol_OutputPorts_mas[Id].busVoltage;
+    if( ${MCPMSMFOC_UNDER_VOLTAGE_LIMIT} > busVoltage )
+    {
+      if( constant_UNDER_VOLTAGE_DEBOUNCE_COUNT < mcVol_StateVariables_mas[Id].underVoltageDebounceCount )
+      {
+          /* ToDO: Log overvoltage failure */
+      }
+      else 
+      {
+          mcVol_StateVariables_mas[Id].underVoltageDebounceCount++;  
+      }
+    }
+    else 
+    {
+        mcVol_StateVariables_mas[Id].underVoltageDebounceCount = 0u; 
+    }
+ }
+</#if>
 
 
 /*! \brief Voltage calculation reset 

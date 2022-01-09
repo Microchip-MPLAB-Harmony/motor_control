@@ -297,9 +297,10 @@ void mcFcoI_MotorAInterruptTasksRun( uint32_t status, uintptr_t context )
         
     /* Synchronize ISR with the thread tasks  */
     mcFco_InterruptAndThreadSync();
-    
+<#--  <#if true == "MCPMSMFOC_DATA_MONITOR_ENABLE">     -->
     /* Update X2C Scope */
     X2CScope_Update();
+<#--  </#if>  -->
 }
 
 
@@ -450,18 +451,45 @@ void mcFcoI_1000msThreadTasksRun( void )
  * @param[out]:
  * @return:
  */
-void mcFcoI_ButtonPolling()
+
+void mcFcoI_ButtonPolling(void)
 {
-    /* Check whether S2 push button is pressed */
-    if( mcState_Idle == mcMocI_MotorRunningState_gae[0u] )
-    {
-        mcHal_ButtonResponse((tmcHal_ButtonState_e)(!mcHalI_StartStopButtonGet()), &PMSM_FOC_MotorStart);
+<#function buttonName index>
+   <#if 0 == index>
+    <#return MCPMSMFOC_BUTTON_0_NAME>
+  <#elseif 1 == index>
+    <#return MCPMSMFOC_BUTTON_1_NAME>
+  <#else>
+    <#return "You messed up">
+  </#if>
 
-        mcHal_ButtonResponse((tmcHal_ButtonState_e)(!mcHalI_DirectionButtonGet()), &PMSM_FOC_DirectionToggle);
+</#function>
 
-    }
-    else
-    {
-        mcHal_ButtonResponse((tmcHal_ButtonState_e)(!mcHalI_StartStopButtonGet()), &PMSM_FOC_MotorStop);
-    }   
- }
+<#function buttonFunction index>
+   <#if 0 == index>
+    <#assign symbol = MCPMSMFOC_BUTTON_0_FUNCTION>
+  <#elseif 1 == index>
+    <#assign symbol = MCPMSMFOC_BUTTON_1_FUNCTION>
+  <#else>
+    <#return "Error">
+  </#if>
+
+  <#if "Start/Stop" == symbol>
+    <#return "PMSM_FOC_MotorStartStop">
+  <#elseif "Direction Toggle" == symbol>
+    <#return "PMSM_FOC_DirectionToggle">
+  <#else>
+    <#return "Error">
+  </#if>
+</#function>
+
+<#if MCPMSMFOC_BUTTONS_AVAILABLE != 0 >
+    <#list 0..10 as index>
+        mcHal_ButtonResponse((tmcHal_ButtonState_e)(!${buttonName(index)}_Get()), &${buttonFunction(index)});
+
+        <#if index == ( MCPMSMFOC_BUTTONS_AVAILABLE -1 )>
+            <#break>
+        </#if>
+    </#list>
+</#if>  
+}

@@ -121,7 +121,7 @@ static inline void mcFlx_EulerFilter( float new, float * old, float filterParam 
  * @param[out]:
  * @return:
  */
-tStd_ReturnType_e mcFlxI_RotorPositionCalculationInit( const tmcFlx_ConfigParameters_s * const flxParam )
+tStd_ReturnType_e mcFlxI_FluxRegulationInit( const tmcFlx_ConfigParameters_s * const flxParam )
 {   
     tmcFlx_Parameters_s * pParam;
     
@@ -166,7 +166,7 @@ tStd_ReturnType_e mcFlxI_RotorPositionCalculationInit( const tmcFlx_ConfigParame
  * @param[out]:
  * @return:
  */
-void mcFlxI_RotorPositionCalculationRun( const tmcFlx_InstanceId_e Id )
+void mcFlxI_FluxRegulationRun( const tmcFlx_InstanceId_e Id )
 {
     float UqRef, UdSquare,OmegaLs, idref;
 
@@ -225,7 +225,7 @@ void mcFlxI_RotorPositionCalculationRun( const tmcFlx_InstanceId_e Id )
  * @param[out]:
  * @return:
  */
-void mcFlxI_RotorPositionCalculationReset( const tmcFlx_InstanceId_e Id )
+void mcFlxI_FluxRegulationReset( const tmcFlx_InstanceId_e Id )
 {
      /* Reset state variables */
     mcFlx_StateVariables_mas[Id].iqrefFilt = 0.0f;

@@ -126,11 +126,32 @@ void mcMocI_M1ControlApplicationInit( void )
  * @param[out]:
  * @return:
  */
- void mcMocI_M2ControlApplicationInit( void )
+void mcMocI_M2ControlApplicationInit( void )
 {   
      
 }
 
+/*! \brief Motor start stop function 
+ * 
+ * Details.
+ * Motor start stop function  
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcMocI_M1StartStop(void)
+{
+    if( mcState_Idle == mcMocI_MotorRunningState_gae[0u])
+    {
+        mcMocI_M1Start();
+    }
+    else
+    {
+        mcMocI_M1Stop();
+    }
+}
 
 /*! \brief Motor start function 
  * 
@@ -204,11 +225,19 @@ void mcMocI_M1Stop(void)
  */
 void mcMocI_M1DirectionToggle(void)
 {
-    /* Change rotation sign */
-    mcMocI_RotationSign_gas8[0u] = -mcMocI_RotationSign_gas8[0u];
+    if( mcState_Idle == mcMocI_MotorRunningState_gae[0u])
+    {
+        /* Change rotation sign */
+        mcMocI_RotationSign_gas8[0u] = -mcMocI_RotationSign_gas8[0u];
 
-    /* Toggle direction indicator LED */
-    mcHalI_DirectionIndicatorToggle();
+    <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
+      <#if "Direction indication" == MCPMSMFOC_LED_0_FUNCTION >
+        ${MCPMSMFOC_LED_0_NAME}_Toggle();
+      <#elseif "Direction indication" == MCPMSMFOC_LED_1_FUNCTION >
+        ${MCPMSMFOC_LED_1_NAME}_Toggle();   
+      </#if>
+    </#if>
+    }
 }
 
 /*! \brief Motor M1 control application ISR tasks

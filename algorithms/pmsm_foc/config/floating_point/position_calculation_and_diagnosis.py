@@ -49,8 +49,8 @@ class mcRpoI_PositionCalculationAndDiagnosis:
         else:
             self.sym_ALGORITHM.addKey("SENSORLESS_PLL", "0", "Equation based PLL")
             self.sym_ALGORITHM.addKey("SENSORED_ENCODER", "1", "Quadrature Encoder")
-            self.sym_ALGORITHM.addKey("SENSORLESS_ROLO", "1", "Reduced Order Luenberger Observer")
-            self.sym_ALGORITHM.addKey("SENSORLESS_SMO", "2", "Sliding Mode Observer")
+            self.sym_ALGORITHM.addKey("SENSORLESS_ROLO", "1", "Reduced Order Luenberger Observer (Beta)")
+            self.sym_ALGORITHM.addKey("SENSORLESS_SMO", "2", "Sliding Mode Observer (Beta)")
         self.sym_ALGORITHM.setOutputMode("Key")
         self.sym_ALGORITHM.setDisplayMode("Description")
 
@@ -61,7 +61,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
 
         self.sym_ED_FILTER_PARAMETER = self.component.createFloatSymbol("MCPMSMFOC_ED_FILTER_PARAMETER", self.sym_ED_FILTER )
         self.sym_ED_FILTER_PARAMETER.setLabel("Filter Parameter")
-        self.sym_ED_FILTER_PARAMETER.setDefaultValue(0.5)
+        self.sym_ED_FILTER_PARAMETER.setDefaultValue(0.0183)
 
         self.sym_EQ_FILTER = self.component.createMenuSymbol("MCPMSMFOC_EQ_FILTER", self.sym_ALGORITHM)
         self.sym_EQ_FILTER.setLabel("Eq Filter")
@@ -69,7 +69,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
        
         self.sym_EQ_FILTER_PARAMETER = self.component.createFloatSymbol("MCPMSMFOC_EQ_FILTER_PARAMETER", self.sym_EQ_FILTER )
         self.sym_EQ_FILTER_PARAMETER.setLabel("Filter Parameter")
-        self.sym_EQ_FILTER_PARAMETER.setDefaultValue(0.5)
+        self.sym_EQ_FILTER_PARAMETER.setDefaultValue(0.0183)
 
         self.sym_SPEED_FILTER = self.component.createMenuSymbol("MCPMSMFOC_SPEED_FILTER", self.sym_ALGORITHM)
         self.sym_SPEED_FILTER.setLabel("Speed Filter")
@@ -77,7 +77,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
        
         self.sym_SPEED_FILTER_PARAMETER = self.component.createFloatSymbol("MCPMSMFOC_SPEED_FILTER_PARAMETER", self.sym_SPEED_FILTER )
         self.sym_SPEED_FILTER_PARAMETER.setLabel("Filter Parameter")
-        self.sym_SPEED_FILTER_PARAMETER.setDefaultValue(0.5)
+        self.sym_SPEED_FILTER_PARAMETER.setDefaultValue(0.0053)
 
         self.sym_NOISE_FILTER = self.component.createMenuSymbol("MCPMSMFOC_ENCODER_DNF", self.sym_ALGORITHM)
         self.sym_NOISE_FILTER.setLabel("Digital Noise Filter")
@@ -93,7 +93,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
        
         self.sym_QDEC_PULSE_PER_EREV = self.component.createIntegerSymbol("MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV", self.sym_QDEC )
         self.sym_QDEC_PULSE_PER_EREV.setLabel("Pulse Per electrical rotation")
-        self.sym_QDEC_PULSE_PER_EREV.setDefaultValue(250)
+        self.sym_QDEC_PULSE_PER_EREV.setDefaultValue(200)
 
 
     def showAlgorithmDependentSymbols(self, symbol, event):

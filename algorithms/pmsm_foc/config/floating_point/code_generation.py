@@ -42,6 +42,22 @@ def mcPmsmFocCodeGenUpdate(symbol, event):
         else:
             component.getSymbolByID("MCPMSMFOC_POS_PLL_HEADER").setEnabled(False)
             component.getSymbolByID("MCPMSMFOC_POS_PLL_SOURCE").setEnabled(False)
+
+        if(key == "SENSORLESS_ROLO"):
+            component.getSymbolByID("MCPMSMFOC_POS_ROLO_HEADER").setEnabled(True)
+            component.getSymbolByID("MCPMSMFOC_POS_ROLO_SOURCE").setEnabled(True)
+        else:
+            component.getSymbolByID("MCPMSMFOC_POS_ROLO_HEADER").setEnabled(False)
+            component.getSymbolByID("MCPMSMFOC_POS_ROLO_SOURCE").setEnabled(False)
+
+        if(key == "SENSORLESS_SMO"):
+            component.getSymbolByID("MCPMSMFOC_POS_SMO_HEADER").setEnabled(True)
+            component.getSymbolByID("MCPMSMFOC_POS_SMO_SOURCE").setEnabled(True)
+        else:
+            component.getSymbolByID("MCPMSMFOC_POS_SMO_HEADER").setEnabled(False)
+            component.getSymbolByID("MCPMSMFOC_POS_SMO_SOURCE").setEnabled(False)
+
+
     elif (event["id"] == "MCPMSMFOC_FLYING_START_CODE_TYPE"):
         if event["value"] == 1:
             if(component.getSymbolByID("MCPMSMFOC_FLYING_START").getValue() == True):
@@ -95,6 +111,9 @@ def mcPmsmFocCodeGenUpdate(symbol, event):
 
             
 def mcGen_GenerateCode(mcPmsmFocComponent):
+
+    coreComponent = Database.getComponentByID("core")
+
     configName = Variables.get("__CONFIGURATION_NAME")
     if(("PIC32CM" in Variables.get("__PROCESSOR")) or ( "SAMC21" in Variables.get("__PROCESSOR"))):
         templatePath = "/algorithms/pmsm_foc/templates/fixed/"
@@ -154,6 +173,17 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
         mcPmsmFocPosPllSourceFile.setType("SOURCE")
         mcPmsmFocPosPllSourceFile.setMarkup(True)
 
+        # Disable default main file and generate from ftl file 
+        coreComponent.getSymbolByID("CoreMainFile").setValue(False)
+        mainSourceFile = mcPmsmFocComponent.createFileSymbol("MAIN_MOTOR_CONTROL_C", None)
+        mainSourceFile.setSourcePath(templatePath + "main.c.ftl")
+        mainSourceFile.setOutputName("main.c")
+        mainSourceFile.setMarkup(True)
+        mainSourceFile.setOverwrite(False)
+        mainSourceFile.setDestPath("../../")
+        mainSourceFile.setProjectPath("")
+        mainSourceFile.setType("SOURCE")
+
         mcPmsmFocPosPllHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_PLL_HEADER", None)
         mcPmsmFocPosPllHeaderFile.setSourcePath(templatePath + "pos_pll.h.ftl")
         mcPmsmFocPosPllHeaderFile.setOutputName("mc_rotor_position.h")
@@ -161,6 +191,38 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
         mcPmsmFocPosPllHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
         mcPmsmFocPosPllHeaderFile.setType("HEADER")
         mcPmsmFocPosPllHeaderFile.setMarkup(True)
+
+        mcPmsmFocPosSmoSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_SMO_SOURCE", None)
+        mcPmsmFocPosSmoSourceFile.setSourcePath(templatePath + "pos_smo.c.ftl")
+        mcPmsmFocPosSmoSourceFile.setOutputName("mc_rotor_position.c")
+        mcPmsmFocPosSmoSourceFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocPosSmoSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+        mcPmsmFocPosSmoSourceFile.setType("SOURCE")
+        mcPmsmFocPosSmoSourceFile.setMarkup(True)
+
+        mcPmsmFocPosSmoHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_SMO_HEADER", None)
+        mcPmsmFocPosSmoHeaderFile.setSourcePath(templatePath + "pos_smo.h.ftl")
+        mcPmsmFocPosSmoHeaderFile.setOutputName("mc_rotor_position.h")
+        mcPmsmFocPosSmoHeaderFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocPosSmoHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+        mcPmsmFocPosSmoHeaderFile.setType("HEADER")
+        mcPmsmFocPosSmoHeaderFile.setMarkup(True)
+
+        mcPmsmFocPosRoloSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ROLO_SOURCE", None)
+        mcPmsmFocPosRoloSourceFile.setSourcePath(templatePath + "pos_rolo.c.ftl")
+        mcPmsmFocPosRoloSourceFile.setOutputName("mc_rotor_position.c")
+        mcPmsmFocPosRoloSourceFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocPosRoloSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+        mcPmsmFocPosRoloSourceFile.setType("SOURCE")
+        mcPmsmFocPosRoloSourceFile.setMarkup(True)
+
+        mcPmsmFocPosRoloHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ROLO_HEADER", None)
+        mcPmsmFocPosRoloHeaderFile.setSourcePath(templatePath + "pos_rolo.h.ftl")
+        mcPmsmFocPosRoloHeaderFile.setOutputName("mc_rotor_position.h")
+        mcPmsmFocPosRoloHeaderFile.setDestPath("motor_control/pmsm_foc/")
+        mcPmsmFocPosRoloHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+        mcPmsmFocPosRoloHeaderFile.setType("HEADER")
+        mcPmsmFocPosRoloHeaderFile.setMarkup(True)
 
         mcPmsmFocPosEncSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ENCODER_SOURCE", None)
         mcPmsmFocPosEncSourceFile.setSourcePath(templatePath + "pos_encoder.c.ftl")
@@ -201,10 +263,7 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
         mcPmsmFocPosFlyingStartLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_FLYING_START_LIB", None)
         if(("SAMD5" in Variables.get("__PROCESSOR")) or ("SAME5" in Variables.get("__PROCESSOR"))):
             mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_D5x_E5x_MC_FLYINGSTART.X.a")
-        elif(("SAME7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR"))):
-            mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_E7x_S7x_V7x_MC_FLYINGSTART.X.a")
-        elif("PIC32MK" in Variables.get("__PROCESSOR")):
-            mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_PIC32MK_MC_FLYINGSTART.X.a")
+   
         mcPmsmFocPosFlyingStartLibraryFile.setOutputName("lib_mc_flyingstart.a")
         mcPmsmFocPosFlyingStartLibraryFile.setDestPath("motor_control/pmsm_foc/")
         mcPmsmFocPosFlyingStartLibraryFile.setEnabled(False)

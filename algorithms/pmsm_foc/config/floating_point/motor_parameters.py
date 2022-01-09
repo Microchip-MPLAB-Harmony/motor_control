@@ -47,7 +47,7 @@ class mcMotI_MotorParametersClass:
         self.component = component
 
         # Read motor parameters from motor.xml
-        path = Module.getPath() + "/algorithms/pmsm_foc/config/motor.xml"
+        path = Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/motor.xml"
         motor_File = open(path, "r")
         motor_Content = ET.fromstring(motor_File.read()) 
 

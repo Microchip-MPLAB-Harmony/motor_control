@@ -27,18 +27,18 @@
 #---------------------------------------------------------------------------------------#
                                    
 # PI controller Parameters
-mcMotC_CurrentPiPararameterDictFixed =  {    'MCLV2' :   { 'KP' : 0.71,
+mcMotC_CurrentPiPararameterDictFixed =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0.71,
                                                       'KI' : 917,
                                             
                                                     },
                                         'Custom' :   { 'KP' : 0.71,
                                                        'KI' : 917
                                                     },            
-                                        'MCHV3' :   { 'KP' : 6.1,
+                                        'dsPICDEM MCHV-3' :   { 'KP' : 6.1,
                                                       'KI' : 469
                                                     },
                                    }
-mcMotC_CurrentPiPararameterDictFloating =  {    'MCLV2' :   { 'KP' : 0.02,
+mcMotC_CurrentPiPararameterDictFloating =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0.01,
                                                       'KI' : 1.0,
                                                       'KC' : 0.5
                                            },
@@ -46,13 +46,13 @@ mcMotC_CurrentPiPararameterDictFloating =  {    'MCLV2' :   { 'KP' : 0.02,
                                                        'KI' : 1.0,
                                                        'KC' : 0.5
                                                     },            
-                                        'MCHV3' :   { 'KP' : 0.02,
+                                        'dsPICDEM MCHV-3' :   { 'KP' : 0.02,
                                                       'KI' : 1.0,
                                                       'KC' : 0.5
                                                     },
                                    }
 
-mcMotC_SpeedPiPararameterDictFixed =  {    'MCLV2' :   { 'KP' : 0.001,
+mcMotC_SpeedPiPararameterDictFixed =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0.001,
                                                     'KI' : 0.03,
                                                     
                                                    
@@ -62,21 +62,21 @@ mcMotC_SpeedPiPararameterDictFixed =  {    'MCLV2' :   { 'KP' : 0.001,
                                                   
                                                    
                                                   },
-                                      'MCHV3' :   { 'KP' : 0.001,
+                                      'dsPICDEM MCHV-3' :   { 'KP' : 0.001,
                                                     'KI' : 0.03,
                                                  
                                                   },
                                  }  
 
-mcMotC_SpeedPiPararameterDictFloating =  {    'MCLV2' :   { 'KP' : 0.005,
-                                                    'KI' : 0.00002,
+mcMotC_SpeedPiPararameterDictFloating =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0.005,
+                                                    'KI' : 0.002,
                                                     'KC' : 0.5
                                                    },
                                       'Custom' :   { 'KP' : 0.005,
                                                      'KI' : 0.00002,
                                                      'KC' : 0.5
                                                    },
-                                      'MCHV3' :   { 'KP' : 0.005,
+                                      'dsPICDEM MCHV-3' :   { 'KP' : 0.005,
                                                     'KI' : 0.00002,
                                                     'KC' : 0.5
                                                   },
@@ -103,7 +103,7 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_CONTROL_TYPE.addKey("SPEED_LOOP", "0", "Speed control")
         self.sym_CONTROL_TYPE.addKey("TORQUE_LOOP", "1", "Torque control")
         self.sym_CONTROL_TYPE.addKey("OPEN_LOOP", "2", "Open loop control")
-        self.sym_CONTROL_TYPE.addKey("POSITION_LOOP", "3", "Position control")
+        # self.sym_CONTROL_TYPE.addKey("POSITION_LOOP", "3", "Position control")
         self.sym_CONTROL_TYPE.setOutputMode("Key")
         self.sym_CONTROL_TYPE.setDisplayMode("Description")
 
@@ -130,7 +130,8 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_RAMP_PROFILER = self.component.createMenuSymbol(None, self.sym_NODE)
         self.sym_RAMP_PROFILER.setLabel("Ramp Profiler")
 
-        supported_Profiles = ["Step", "Linear", "Pulse", "S-Curve", "Sine Sweep"]
+        # supported_Profiles = ["Step", "Linear", "Pulse", "S-Curve", "Sine Sweep"]
+        supported_Profiles = ["Step", "Linear"]
         self.sym_RAMP_PROFILES = self.component.createComboSymbol( "MCPMSMFOC_RAMP_PROFILES", self.sym_RAMP_PROFILER, supported_Profiles)
         self.sym_RAMP_PROFILES.setLabel("Profile")
         
@@ -169,8 +170,8 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_POSITION_PID_KI = self.component.createFloatSymbol("MCPMSMFOC_POSITION_PID_KI", self.sym_POSITION_PID)
         self.sym_POSITION_PID_KI.setLabel("Ki")
 
-        self.sym_POSITION_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_POSITION_PID_KV", self.sym_POSITION_PID)
-        self.sym_POSITION_PID_KV.setLabel("Kv")
+        # self.sym_POSITION_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_POSITION_PID_KV", self.sym_POSITION_PID)
+        # self.sym_POSITION_PID_KV.setLabel("Kv")
 
         self.sym_POSITION_PID_KC = self.component.createFloatSymbol("MCPMSMFOC_POSITION_PID_KC", self.sym_POSITION_PID)
         self.sym_POSITION_PID_KC.setLabel("Kc")
@@ -204,8 +205,8 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_SPEED_PID_KI.setLabel("Ki")
         self.sym_SPEED_PID_KI.setDefaultValue(mcMotC_SpeedPiPararameterDictFloating["Custom"]["KI"])
 
-        self.sym_SPEED_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_SPEED_PID_KV", self.sym_SPEED_PID)
-        self.sym_SPEED_PID_KV.setLabel("Kv")
+        # self.sym_SPEED_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_SPEED_PID_KV", self.sym_SPEED_PID)
+        # self.sym_SPEED_PID_KV.setLabel("Kv")
 
         self.sym_SPEED_PID_KC = self.component.createFloatSymbol("MCPMSMFOC_SPEED_PID_KC", self.sym_SPEED_PID)
         self.sym_SPEED_PID_KC.setLabel("Kc")
@@ -244,8 +245,8 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_ID_PID_KI.setLabel("Ki")
         self.sym_ID_PID_KI.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["Custom"]["KI"])
 
-        self.sym_ID_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_ID_PID_KV", self.sym_ID_PID)
-        self.sym_ID_PID_KV.setLabel("Kv")
+        # self.sym_ID_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_ID_PID_KV", self.sym_ID_PID)
+        # self.sym_ID_PID_KV.setLabel("Kv")
 
         self.sym_ID_PID_KC = self.component.createFloatSymbol("MCPMSMFOC_ID_PID_KC", self.sym_ID_PID)
         self.sym_ID_PID_KC.setLabel("Kc")
@@ -281,8 +282,8 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_IQ_PID_KI.setLabel("Ki")
         self.sym_IQ_PID_KI.setDefaultValue(mcMotC_CurrentPiPararameterDictFloating["Custom"]["KI"])
 
-        self.sym_IQ_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_IQ_PID_KV", self.sym_IQ_PID)
-        self.sym_IQ_PID_KV.setLabel("Kv")
+        # self.sym_IQ_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_IQ_PID_KV", self.sym_IQ_PID)
+        # self.sym_IQ_PID_KV.setLabel("Kv")
 
         self.sym_IQ_PID_KC = self.component.createFloatSymbol("MCPMSMFOC_IQ_PID_KC", self.sym_IQ_PID)
         self.sym_IQ_PID_KC.setLabel("Kc")
@@ -312,24 +313,24 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_FW_IMAX.setVisible(False)
         self.sym_FW_IMAX.setDependencies(self.showThisSymbol, ["MCPMSMFOC_ENABLE_FW"])
 
-        self.sym_FW_TUNING = self.component.createFloatSymbol("MCPMSMFOC_FW_TUNING_PARAMETER", self.sym_FW)
-        self.sym_FW_TUNING.setLabel("Tuning Parameter")
-        self.sym_FW_TUNING.setDefaultValue(1.0)
-        self.sym_FW_TUNING.setMax(1.1)
-        self.sym_FW_TUNING.setMin(0.90)
-        self.sym_FW_TUNING.setVisible(False)
-        self.sym_FW_TUNING.setDependencies(self.showThisSymbol, ["MCPMSMFOC_ENABLE_FW"])
+        # self.sym_FW_TUNING = self.component.createFloatSymbol("MCPMSMFOC_FW_TUNING_PARAMETER", self.sym_FW)
+        # self.sym_FW_TUNING.setLabel("Tuning Parameter")
+        # self.sym_FW_TUNING.setDefaultValue(1.0)
+        # self.sym_FW_TUNING.setMax(1.1)
+        # self.sym_FW_TUNING.setMin(0.90)
+        # self.sym_FW_TUNING.setVisible(False)
+        # self.sym_FW_TUNING.setDependencies(self.showThisSymbol, ["MCPMSMFOC_ENABLE_FW"])
 
-        self.sym_MTPA = self.component.createBooleanSymbol("MCPMSMFOC_ENABLE_MTPA", self.sym_FW_AND_MTPA)
-        self.sym_MTPA.setLabel("Enable MTPA")
+        # self.sym_MTPA = self.component.createBooleanSymbol("MCPMSMFOC_ENABLE_MTPA", self.sym_FW_AND_MTPA)
+        # self.sym_MTPA.setLabel("Enable MTPA")
 
-        self.sym_MTPA_TUNING = self.component.createFloatSymbol("MCPMSMFOC_MTPA_TUNING_PARAMETER", self.sym_MTPA)
-        self.sym_MTPA_TUNING.setLabel("Tuning Parameter")
-        self.sym_MTPA_TUNING.setDefaultValue(1.0)
-        self.sym_MTPA_TUNING.setMax(1.1)
-        self.sym_MTPA_TUNING.setMin(0.90)
-        self.sym_MTPA_TUNING.setVisible(False)
-        self.sym_MTPA_TUNING.setDependencies(self.showThisSymbol, ["MCPMSMFOC_ENABLE_MTPA"])
+        # self.sym_MTPA_TUNING = self.component.createFloatSymbol("MCPMSMFOC_MTPA_TUNING_PARAMETER", self.sym_MTPA)
+        # self.sym_MTPA_TUNING.setLabel("Tuning Parameter")
+        # self.sym_MTPA_TUNING.setDefaultValue(1.0)
+        # self.sym_MTPA_TUNING.setMax(1.1)
+        # self.sym_MTPA_TUNING.setMin(0.90)
+        # self.sym_MTPA_TUNING.setVisible(False)
+        # self.sym_MTPA_TUNING.setDependencies(self.showThisSymbol, ["MCPMSMFOC_ENABLE_MTPA"])
         
         # --------------------------------------- PWM Modulator ------------------------#
         self.sym_PWM_MODULATOR = self.component.createMenuSymbol("MCPMSMFOC_PWM_MODULATOR", self.sym_NODE)
@@ -340,14 +341,15 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_OVER_MODULATION.setLabel("Enable over modulation")
 
         # Modulation technique
-        pwm_Techniques = ["Normal SVPWM", "Bus Clamped SVPWM"]
+        # pwm_Techniques = ["Normal SVPWM", "Bus Clamped SVPWM"]
+        pwm_Techniques = ["Normal SVPWM"]
         self.sym_MODULATION_TECHNIQUE = self.component.createComboSymbol("MCPMSMFOC_MODULATION_TECHNIQUE", self.sym_PWM_MODULATOR, pwm_Techniques)
         self.sym_MODULATION_TECHNIQUE.setLabel("Modulation Technique")
 
         # Modulation technique
-        self.sym_SPACE_VECTOR_LIMIT = self.component.createFloatSymbol("MCPMSMFOC_SPACE_VECTOR_LIMIT", self.sym_PWM_MODULATOR)
-        self.sym_SPACE_VECTOR_LIMIT.setLabel("Space Vector Limit (%)")
-        self.sym_SPACE_VECTOR_LIMIT.setDefaultValue(98)
+        # self.sym_SPACE_VECTOR_LIMIT = self.component.createFloatSymbol("MCPMSMFOC_SPACE_VECTOR_LIMIT", self.sym_PWM_MODULATOR)
+        # self.sym_SPACE_VECTOR_LIMIT.setLabel("Space Vector Limit (%)")
+        # self.sym_SPACE_VECTOR_LIMIT.setDefaultValue(98)
 
         # --------------------------------------- Decoupling network  ------------------------#
         self.sym_DECOUPLING_NETWORK = self.component.createMenuSymbol("MCPMSMFOC_DECOUPLING_NETWORK", self.sym_NODE)
@@ -473,6 +475,8 @@ class mcMocI_MotorControlAndDiagnosis:
 
     def updatePIParameters(self, symbol, event):
         board = event["symbol"].getSelectedKey()
+
+        print("Parameters:", board, mcMotC_SpeedPiPararameterDictFloating )
 
         self.sym_ID_PID_KP.setValue(float(mcMotC_CurrentPiPararameterDictFloating[board]["KP"]))
         self.sym_ID_PID_KI.setValue(float(mcMotC_CurrentPiPararameterDictFloating[board]["KI"]))

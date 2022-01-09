@@ -72,6 +72,22 @@ void PMSM_FOC_Initialize( void )
     mcFcoI_ApplicationInit();
 }
 
+
+/*! \brief Motor start-stop function 
+ * 
+ * Details.
+ * Motor start-stop function  
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void PMSM_FOC_MotorStartStop(void)
+{
+    mcMocI_M1StartStop();
+}
+
 /*! \brief Motor start function 
  * 
  * Details.

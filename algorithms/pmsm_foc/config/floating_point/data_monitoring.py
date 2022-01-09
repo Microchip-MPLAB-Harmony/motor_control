@@ -44,7 +44,8 @@ class mcFocI_DataMonitoringClass:
         self.sym_PROTOCOL.setLabel("Enable data monitoring")
         
         # 
-        protocols = ['X2C Scope', 'XCP' ]
+        # protocols = ['X2C Scope', 'XCP' ]
+        protocols = ['X2C Scope']
         self.sym_PROTOCOL = self.component.createComboSymbol("MCPMSMFOC_DATA_MONITOR_PROTOCOL", self.sym_NODE, protocols)
         self.sym_PROTOCOL.setLabel("Protocol")
         self.sym_PROTOCOL.setVisible(False)

@@ -117,6 +117,18 @@
  */
 void mcFcoI_M1PhaseCurrentSensorCalib( uint32_t status, uintptr_t context );
 
+/*! \brief Motor start stop function 
+ * 
+ * Details.
+ * Motor start stop function  
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcMocI_M1StartStop(void);
+
 /*! \brief Motor start function 
  * 
  * Details.

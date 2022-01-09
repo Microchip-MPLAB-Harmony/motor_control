@@ -1,4 +1,3 @@
-# coding: utf-8
 """*****************************************************************************
 * Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
 *
@@ -22,13 +21,19 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
-import os
+#------------------------------------------------------------------------------------#
+#                     CURRENT MEASUREMENT AND DIAGNOSIS BACKEND                      #
+#------------------------------------------------------------------------------------#
+def mcCuM_CreateMHCSymbols( mcPmsmFocComponent):
+    mcCuM_AlgorithmSelection = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_CURRENT_MEAS", mcPmsmFocAlgoMenu)
+    mcCuM_AlgorithmSelection.setLabel("Select Current Measurement Method")
+    mcCuM_AlgorithmSelection.addKey("DUAL_SHUNT", "0", "Dual Shunt")
+    #self.algorithm.addKey("SINGLE_SHUNT", "0", "Single Shunt")
+    mcCuM_AlgorithmSelection.setOutputMode("Key")
+    mcCuM_AlgorithmSelection.setDisplayMode("Description")
 
-MCU =  ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series")
-if ("SAMC21" in MCU ) or "PIC32CM" in MCU:
-    execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/main.py"   )
-else:
-    # General Purpose function classes
-    execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/main.py"   )
 
-    
+def mcCuMI_CurrentMeasurement( mcPmsmFocComponent ):
+    mcCuM_CreateMHCSymbols( mcPmsmFocComponent )
+
+  

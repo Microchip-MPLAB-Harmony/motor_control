@@ -96,8 +96,41 @@ extern tMCERR_STATE_SIGNAL_S    gMCERR_StateSignals;
 // *****************************************************************************
 // *****************************************************************************
 
+/*! \brief Register the callback function which is called when fault is detected
+ * 
+ * Details.
+ * Register the callback function which is called when fault is detected
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
 void mcErr_FaultCallbackRegister(MCERR_FAULT_CALLBACK callback, uintptr_t context);
+
+
+/*! \brief Clear the error status 
+ * 
+ * Details.
+ * Clear the error status 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
 void mcErr_ErrorClear( void );
+
+/*! \brief Fault ISR when the overcurrent is detected at external pin 
+ * 
+ * Details.
+ * Fault ISR when the overcurrent is detected at external pin 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
 void mcErr_FaultControlISR(uint32_t status, uintptr_t context);
 
 #ifdef    __cplusplus

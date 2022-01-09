@@ -61,7 +61,7 @@
 /**
  * Quadrature Encoder pulse count per mechanical revolution 
  */
-#define CONFIG_EncoderPulsesPerMechRev    (${MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV}u)
+#define CONFIG_EncoderPulsesPerMechRev    (${MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV}u * NUM_POLE_PAIRS )
 
 /**
  * Velocity calculation pre-scale value with respect to the pulse sampling frequency

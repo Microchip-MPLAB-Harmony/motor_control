@@ -60,17 +60,6 @@
 /*******************************************************************************
  Constants
  *******************************************************************************/
-<#if __PROCESSOR?matches(".*SAME70.*") == true>
-#define ADC_CALLBACK AFEC_CALLBACK
-#define TCC_CALLBACK PWM_CALLBACK
-</#if>
-
-
-<#if __PROCESSOR?matches(".*PIC32MK.*") == true>
-#define ADC_CALLBACK ADCHS_CALLBACK
-#define TCC_CALLBACK MCPWM_CH_CALLBACK
-</#if>
-
 #define     SW_DEBOUNCE_DLY_500MS      (uint32_t)( 500 )
 
 
@@ -108,37 +97,12 @@ typedef enum _tmcHal_InverterInstanceId_e
 
 
 /*******************************************************************************
+ Function macros 
+ *******************************************************************************/
+
+/*******************************************************************************
  Interface Functions 
  *******************************************************************************/
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
-#define mcHalI_FaultLedSet()                         GPIO_PB27_Set()
-#define mcHalI_FaultLedClear()                       GPIO_PB27_Clear()
-#define mcHalI_FaultLedToggle()                     GPIO_PB27_Toggle()
-#define mcHalI_DirectionIndicatorSet()           GPIO_PB26_Set()
-#define mcHalI_DirectionIndicatorClear()        GPIO_PB26_Clear()
-#define mcHalI_DirectionIndicatorToggle()      GPIO_PB26_Toggle()
-#define mcHalI_DirectionButtonGet()               GPIO_PD10_Get()
-#define mcHalI_StartStopButtonGet()              GPIO_PD09_Get()
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
-#define mcHalI_FaultLedSet()                         GPIO_PA24_Set()
-#define mcHalI_FaultLedClear()                       GPIO_PA24_Clear()
-#define mcHalI_FaultLedToggle()                     GPIO_PA24_Toggle()
-#define mcHalI_DirectionIndicatorSet()           GPIO_PC23_Set()
-#define mcHalI_DirectionIndicatorClear()        GPIO_PC23_Clear()
-#define mcHalI_DirectionIndicatorToggle()      GPIO_PC23_Toggle()
-#define mcHalI_DirectionButtonGet()               GPIO_PC1_Get()
-#define mcHalI_StartStopButtonGet()              GPIO_PC3_Get()
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
-#define mcHalI_FaultLedSet()                         GPIO_RG15_Set()
-#define mcHalI_FaultLedClear()                       GPIO_RG15_Clear()
-#define mcHalI_FaultLedToggle()                     GPIO_RG15_Toggle()
-#define mcHalI_DirectionIndicatorSet()           GPIO_RF5_Set()
-#define mcHalI_DirectionIndicatorClear()        GPIO_RF5_Clear()
-#define mcHalI_DirectionIndicatorToggle()      GPIO_RF5_Toggle()
-#define mcHalI_DirectionButtonGet()               GPIO_RC7_Get()
-#define mcHalI_StartStopButtonGet()              GPIO_RG1_Get()
-</#if>
-
 /*! \brief Set PWM Channels of the voltage source inverter
  * 
  * Details.

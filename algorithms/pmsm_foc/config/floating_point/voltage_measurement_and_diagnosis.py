@@ -50,6 +50,8 @@ class mcVolI_VoltageMeasurementAndDiagnosis:
         self.sym_SCALING_FACTOR = self.component.createFloatSymbol("MCPMSMFOC_VOLTAGE_SCALING_FACTORT", self.sym_SCALING )
         self.sym_SCALING_FACTOR.setLabel("Scaling factor")
         self.sym_SCALING_FACTOR.setDefaultValue(0.0625)
+        self.sym_SCALING_FACTOR.setDependencies(self.scalingFactorCalculate, ["MCPMSMFOC_ANALOG_FRONT_END_VDC_TOP_RES", "MCPMSMFOC_ANALOG_FRONT_END_VDC_BOTTOM_RES"])
+        self.sym_SCALING_FACTOR.setReadOnly(True)
 
         # Diagnosis
         self.sym_PROCESSING = self.component.createMenuSymbol(None, self.sym_NODE)
@@ -65,6 +67,7 @@ class mcVolI_VoltageMeasurementAndDiagnosis:
 
         self.sym_OVER_VOLTAGE = self.component.createBooleanSymbol("MCPMSMFOC_OVER_VOLTAGE", self.sym_DIAGNOSIS)
         self.sym_OVER_VOLTAGE.setLabel("Enable over voltage diagnosis")
+        self.sym_OVER_VOLTAGE.setReadOnly(True)
 
         self.sym_OVER_VOLTAGE_LIMIT = self.component.createFloatSymbol("MCPMSMFOC_OVER_VOLTAGE_LIMIT", self.sym_OVER_VOLTAGE)
         self.sym_OVER_VOLTAGE_LIMIT.setLabel("Over voltage limit (V)")
@@ -84,6 +87,7 @@ class mcVolI_VoltageMeasurementAndDiagnosis:
 
         self.sym_UNDER_VOLTAGE = self.component.createBooleanSymbol("MCPMSMFOC_UNDER_VOLTAGE", self.sym_DIAGNOSIS)
         self.sym_UNDER_VOLTAGE.setLabel("Enable under voltage diagnosis")
+        self.sym_UNDER_VOLTAGE.setReadOnly(True)
 
         self.sym_UNDER_VOLTAGE_LIMIT = self.component.createFloatSymbol("MCPMSMFOC_UNDER_VOLTAGE_LIMIT", self.sym_UNDER_VOLTAGE)
         self.sym_UNDER_VOLTAGE_LIMIT.setLabel("Under voltage limit (V)")
@@ -106,6 +110,15 @@ class mcVolI_VoltageMeasurementAndDiagnosis:
             symbol.setVisible(True)
         else:
             symbol.setVisible(False)
+
+    def scalingFactorCalculate(self, symbol, event):
+        component = symbol.getComponent()
+        Rb = component.getSymbolByID("MCPMSMFOC_ANALOG_FRONT_END_VDC_BOTTOM_RES").getValue()
+        Rt = component.getSymbolByID("MCPMSMFOC_ANALOG_FRONT_END_VDC_TOP_RES").getValue()
+        try:
+            symbol.setValue(Rb/(Rb + Rt))
+        except:
+            symbol.setValue(0.0) 
 
     def __call__(self):
         self.createSymbols()

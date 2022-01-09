@@ -85,18 +85,18 @@
 /*
  * Q-axis back EMF filter parameter 
  */
-#define CONFIG_PllEdFilterParameter      (float)(0.0183)
+#define CONFIG_PllEdFilterParameter      (float)(${MCPMSMFOC_ED_FILTER_PARAMETER})
 
 /*
  * D-axis back EMF filter parameter 
  */
-#define CONFIG_PllEqFilterParameter  (float)(0.0183)
+#define CONFIG_PllEqFilterParameter  (float)(${MCPMSMFOC_EQ_FILTER_PARAMETER})
 
 
 /*
  * Open loop end speed in RPM
  */
-#define CONFIG_PllSpeedFilterParameter        (float)(0.0053)
+#define CONFIG_PllSpeedFilterParameter        (float)(${MCPMSMFOC_SPEED_FILTER_PARAMETER})
 
 /*******************************************************************************
  Default module parameters 

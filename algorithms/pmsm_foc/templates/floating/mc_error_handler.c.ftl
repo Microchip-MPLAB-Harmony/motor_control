@@ -40,67 +40,93 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Included Files
-// *****************************************************************************
-// *****************************************************************************
+
+
+/*******************************************************************************
+Headers inclusions
+ *******************************************************************************/
 #include "mc_error_handler.h"
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Data Types
-// *****************************************************************************
-// *****************************************************************************
-
-
-/******************************************************************************/
-/* Local Function Prototype                                                   */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                   Global Variables                                         */
-/******************************************************************************/
+  
+/*******************************************************************************
+ Private variables 
+ *******************************************************************************/
 tMCERR_STATE_SIGNAL_S    gMCERR_StateSignals;
 MCERR_CALLBACK_OBJECT    MCERR_CallbackObj;
 
-/******************************************************************************/
-/*  Function name: MCERR_FaultCallbackRegister                                */
-/*  Function parameters: callback function, context                           */
-/*  Function return: None                                                     */
-/*  Description: Register the callback function which is called when fault is detected */
-/******************************************************************************/
+/*******************************************************************************
+ Interface variables 
+ *******************************************************************************/
+
+/*******************************************************************************
+ Private Functions 
+ *******************************************************************************/
+
+/*******************************************************************************
+ Interface Functions 
+ *******************************************************************************/
+
+/*! \brief Register the callback function which is called when fault is detected
+ * 
+ * Details.
+ * Register the callback function which is called when fault is detected
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+
 void mcErr_FaultCallbackRegister(MCERR_FAULT_CALLBACK callback, uintptr_t context)
 {
     MCERR_CallbackObj.callback_fn = callback;
     MCERR_CallbackObj.context = context;
 }
 
-/******************************************************************************/
-/*  Function name: MCERR_ErrorClear                                           */
-/*  Function parameters: None                                                 */
-/*  Function return: None                                                     */
-/*  Description: Clear the error status                                      */
-/******************************************************************************/
+
+/*! \brief Clear the error status 
+ * 
+ * Details.
+ * Clear the error status 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
 void mcErr_ErrorClear( void )
 {
     gMCERR_StateSignals.errorCode = 0;
-    mcHalI_FaultLedClear();
+<#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
+  <#if "Fault indication" == MCPMSMFOC_LED_0_FUNCTION >
+    ${MCPMSMFOC_LED_0_NAME}_Clear();
+  <#elseif "Fault indication" == MCPMSMFOC_LED_1_FUNCTION >
+    ${MCPMSMFOC_LED_1_NAME}_Clear();   
+  </#if>
+</#if>
 }
 
 
-/******************************************************************************/
-/*  Function name: MCERR_FaultControlISR                                      */
-/*  Function parameters: status, context                                      */
-/*  Function return: None                                                     */
-/*  Description: Fault ISR when the overcurrent is detected at external pin   */
-/***************************************************************************/
-
+/*! \brief Fault ISR when the overcurrent is detected at external pin 
+ * 
+ * Details.
+ * Fault ISR when the overcurrent is detected at external pin 
+ * 
+ * @param[in]: 
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
 void mcErr_FaultControlISR(uint32_t status, uintptr_t context)
 {
-   /* Indicate the failure status by glowing LED D2 */
-    mcHalI_FaultLedSet();
+  <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
+    /* Indicate the failure status by glowing LED D2 */
+    <#if "Fault indication" == MCPMSMFOC_LED_0_FUNCTION >
+        ${MCPMSMFOC_LED_0_NAME}_Set();
+    <#elseif "Fault indication" == MCPMSMFOC_LED_1_FUNCTION >
+        ${MCPMSMFOC_LED_1_NAME}_Set();   
+    </#if>
+  </#if>
+
     gMCERR_StateSignals.errorCode |= (1 << MCERR_OVERCURRENT);
     PMSM_FOC_MotorStop();
 

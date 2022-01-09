@@ -46,10 +46,12 @@ class mcCurI_CurrentMeasurementAndDiagnosis:
         supported_Algorithms = ["Static", "Dynamic"]
         self.sym_OFFSET_ALGORITHM = self.component.createComboSymbol("MCPMSMFOC_OFFSET_CORRECTION_ALGORITHM", self.sym_OFFSET, supported_Algorithms)
         self.sym_OFFSET_ALGORITHM.setLabel("Select algorithm")
+        self.sym_OFFSET_ALGORITHM.setReadOnly(True)
 
         self.sym_OFFSET_SAMPLES = self.component.createIntegerSymbol("MCPMSMFOC_OFFSET_CORRECTION_SAMPLE", self.sym_OFFSET)
         self.sym_OFFSET_SAMPLES.setLabel("Number of samples")
         self.sym_OFFSET_SAMPLES.setDefaultValue(1024)
+        self.sym_OFFSET_SAMPLES.setReadOnly(True)
 
         # Current Scaling 
         self.sym_SCALING = self.component.createMenuSymbol(None, self.sym_NODE)
@@ -62,6 +64,8 @@ class mcCurI_CurrentMeasurementAndDiagnosis:
         self.sym_SCALING_FACTOR = self.component.createFloatSymbol("MCPMSMFOC_CURRENT_SCALING_FACTORT", self.sym_SCALING )
         self.sym_SCALING_FACTOR.setLabel("Scaling factor")
         self.sym_SCALING_FACTOR.setDefaultValue(0.0625)
+        self.sym_SCALING_FACTOR.setDependencies(self.scalingFactorCalculate, ["MCPMSMFOC_ANALOG_FRONT_END_IA_GAIN", "MCPMSMFOC_ANALOG_FRONT_END_IA_OFFSET", "MCPMSMFOC_ANALOG_FRONT_END_IA_SHUNT"])
+        self.sym_SCALING_FACTOR.setReadOnly(True)
 
         # Diagnosis
         self.sym_DIAGNOSIS = self.component.createMenuSymbol(None, self.sym_NODE)
@@ -69,6 +73,8 @@ class mcCurI_CurrentMeasurementAndDiagnosis:
 
         self.sym_CURRENT_OOR = self.component.createBooleanSymbol("MCPMSMFOC_CURRENT_OOR", self.sym_DIAGNOSIS)
         self.sym_CURRENT_OOR.setLabel("Enable current range diagnosis")
+        self.sym_CURRENT_OOR.setReadOnly(True)
+        
 
         self.sym_CURRENT_OOR_MAXIMUM = self.component.createFloatSymbol("MCPMSMFOC_CURRENT_OOR_MAXIMUM", self.sym_CURRENT_OOR)
         self.sym_CURRENT_OOR_MAXIMUM.setLabel("Maximum current")
@@ -88,6 +94,7 @@ class mcCurI_CurrentMeasurementAndDiagnosis:
 
         self.sym_OFFSET_OOR = self.component.createBooleanSymbol("MCPMSMFOC_OFFSET_OOR", self.sym_DIAGNOSIS)
         self.sym_OFFSET_OOR.setLabel("Enable Offset range diagnosis")
+        self.sym_OFFSET_OOR.setReadOnly(True)
 
         self.sym_OFFSET_OOR_MAXIMUM = self.component.createFloatSymbol("MCPMSMFOC_OFFSET_OOR_MAXIMUM", self.sym_OFFSET_OOR)
         self.sym_OFFSET_OOR_MAXIMUM.setLabel("Maximum Offset")
@@ -109,6 +116,16 @@ class mcCurI_CurrentMeasurementAndDiagnosis:
         self.sym_OFFSET_OOR_FAULT_TYPE.setLabel("Fault type")
         self.sym_OFFSET_OOR_FAULT_TYPE.setVisible(False)
         self.sym_OFFSET_OOR_FAULT_TYPE.setDependencies(self.showThisSymbol, ["MCPMSMFOC_OFFSET_OOR"])
+
+    def scalingFactorCalculate(self, symbol, event):
+        component = symbol.getComponent()
+        Gain = component.getSymbolByID("MCPMSMFOC_ANALOG_FRONT_END_IA_GAIN").getValue()
+        Offset = component.getSymbolByID("MCPMSMFOC_ANALOG_FRONT_END_IA_OFFSET").getValue()
+        Shunt = component.getSymbolByID("MCPMSMFOC_ANALOG_FRONT_END_IA_SHUNT").getValue()
+        try:
+            symbol.setValue((3.30 - Offset)/ (Gain * 4046 *Shunt ))
+        except:
+            symbol.setValue(0.0) 
 
     def showThisSymbol(self, symbol, event):
         if True == event["symbol"].getValue():

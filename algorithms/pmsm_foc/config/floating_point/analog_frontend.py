@@ -47,28 +47,27 @@ class mcAnf_AnalogFrontEndClass:
             self.afe_Information = Database.sendMessage("bsp", "MCPMSMFOC_READ_AFE_INFORMATION", {})
             
     def handleMessage(self, ID, information):
-        if( ID == "MCPMSMFOC_SEND_AFE_INFORMATION"):
-            if None != information:
-                # self.sym_NODE_IA_OPAMP.setValue("External op-amp")
-                self.sym_NODE_IA_GAIN.setValue(float(information["IA"]["GAIN"]))
-                self.sym_NODE_IA_OFFSET.setValue(float(information["IA"]["OFFSET"]))
-                self.sym_NODE_IA_SHUNT.setValue(float(information["IA"]["SHUNT"]))
+        if( ID == "BSP_ANALOG_FRONT_END") and ( None != information ):
+            # self.sym_NODE_IA_OPAMP.setValue("External op-amp")
+            self.sym_NODE_IA_GAIN.setValue(float(information["IA"]["GAIN"]))
+            self.sym_NODE_IA_OFFSET.setValue(float(information["IA"]["OFFSET"]))
+            self.sym_NODE_IA_SHUNT.setValue(float(information["IA"]["SHUNT"]))
 
-                # self.sym_NODE_IB_OPAMP.setValue("External op-amp")
-                self.sym_NODE_IB_GAIN.setValue(float(information["IB"]["GAIN"]))
-                self.sym_NODE_IB_OFFSET.setValue(float(information["IB"]["OFFSET"]))
-                self.sym_NODE_IB_SHUNT.setValue(float(information["IB"]["SHUNT"]))
+            # self.sym_NODE_IB_OPAMP.setValue("External op-amp")
+            self.sym_NODE_IB_GAIN.setValue(float(information["IB"]["GAIN"]))
+            self.sym_NODE_IB_OFFSET.setValue(float(information["IB"]["OFFSET"]))
+            self.sym_NODE_IB_SHUNT.setValue(float(information["IB"]["SHUNT"]))
 
-                # self.sym_NODE_IDC_OPAMP.setValue("External op-amp")
-                self.sym_NODE_IDC_GAIN.setValue(float(information["IDC"]["GAIN"]))
-                self.sym_NODE_IDC_OFFSET.setValue(float(information["IDC"]["OFFSET"]))
-                self.sym_NODE_IDC_SHUNT.setValue(float(information["IDC"]["SHUNT"]))
+            # self.sym_NODE_IDC_OPAMP.setValue("External op-amp")
+            self.sym_NODE_IDC_GAIN.setValue(float(information["IDC"]["GAIN"]))
+            self.sym_NODE_IDC_OFFSET.setValue(float(information["IDC"]["OFFSET"]))
+            self.sym_NODE_IDC_SHUNT.setValue(float(information["IDC"]["SHUNT"]))
 
-                self.sym_NODE_VDC_TOP.setValue(float(information["VDC"]["TOP"]))
-                self.sym_NODE_VDC_BOTTOM.setValue(float(information["VDC"]["BOTTOM"]))
-
-                ratio = self.information["VDC"]["BOTTOM"]/(self.information["VDC"]["BOTTOM"] + self.information["VDC"]["TOP"])
-                self.sym_VOLTAGE_RATIO.setValue(float(ratio))
+            self.sym_NODE_VDC_TOP.setValue(float(information["VDC"]["TOP"]))
+            self.sym_NODE_VDC_BOTTOM.setValue(float(information["VDC"]["BOTTOM"]))
+ 
+            ratio = float(information["VDC"]["BOTTOM"])/(float(information["VDC"]["BOTTOM"])  + float(information["VDC"]["TOP"]))
+            self.sym_VOLTAGE_RATIO.setValue(float(ratio))
                
     
     def createSymbols(self):

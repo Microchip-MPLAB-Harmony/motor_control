@@ -197,7 +197,7 @@ int16_t mcRmpI_ReferenceProfileGenerate( void )
     {
           case referenceProfile_Step:
           {
-	   mcRmp_StateVariables_mds.currentValue = mcRmp_StateVariables_mds.inputValue;
+	          mcRmp_StateVariables_mds.currentValue = mcRmp_StateVariables_mds.inputValue;
           }
           break;
 		
@@ -211,14 +211,14 @@ int16_t mcRmpI_ReferenceProfileGenerate( void )
 	     {                
 	          mcRmp_StateVariables_mds.currentValue += mcRmp_StateVariables_mds.rampPerSamplingPeriod;
 	     }
-               else if( s32a < -mcRmp_StateVariables_mds.rampPerSamplingPeriod )
-               {
-                    mcRmp_StateVariables_mds.currentValue -= mcRmp_StateVariables_mds.rampPerSamplingPeriod;
-               }
-               else 
-               {
-                   /* Do nothing */
-               }		
+          else if( s32a < -mcRmp_StateVariables_mds.rampPerSamplingPeriod )
+          {
+               mcRmp_StateVariables_mds.currentValue -= mcRmp_StateVariables_mds.rampPerSamplingPeriod;
+          }
+          else 
+          {
+               /* Do nothing */
+          }		
 	}
 	break;
 				

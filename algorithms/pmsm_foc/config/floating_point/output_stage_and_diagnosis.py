@@ -40,13 +40,14 @@ class mcOstI_OutputStageAndDiagnosis:
         self.sym_NODE.setLabel("Output stage & diagnosis")
 
         # Control to PWM ratio
-        supported_Ratios = ["1:1", "1:2", "1:4"]
+        # supported_Ratios = ["1:1", "1:2", "1:4"]
+        supported_Ratios = ["1:1"]
         self.sym_CONTROL_TO_PWM = self.component.createComboSymbol("MCPMSMFOC_CONTROL_TO_PWM_RATIO", self.sym_NODE, supported_Ratios)
         self.sym_CONTROL_TO_PWM.setLabel("Control to PWM ratio")
 
-        self.sym_MAXIMUM_RMS_VOLTAGE = self.component.createFloatSymbol("MCPMSMFOC_MAXIMUM_RMS_VOLTAGE", self.sym_NODE)
-        self.sym_MAXIMUM_RMS_VOLTAGE.setLabel("Maximum RMS Voltage")
-        self.sym_MAXIMUM_RMS_VOLTAGE.setDefaultValue(230)
+        # self.sym_MAXIMUM_RMS_VOLTAGE = self.component.createFloatSymbol("MCPMSMFOC_MAXIMUM_RMS_VOLTAGE", self.sym_NODE)
+        # self.sym_MAXIMUM_RMS_VOLTAGE.setLabel("Maximum RMS Voltage")
+        # self.sym_MAXIMUM_RMS_VOLTAGE.setDefaultValue(230)
     
     def __call__(self):
         self.createSymbols()

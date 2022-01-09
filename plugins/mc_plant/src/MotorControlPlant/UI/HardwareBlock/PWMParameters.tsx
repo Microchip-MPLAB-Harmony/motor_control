@@ -6,7 +6,7 @@ const PWMParameters = (props: {
   parentUpdate: () => void;
   showToast: (arg0: any) => void;
 }) => {
-  let channelConfigurationn_instance = "MCPMSMFOC_PWM_INSTANCE_";
+  let channelConfigurationn_instance = "MCPMSMFOC_PWM_INSTANCE";
   let channelConfiguration = [
     channelConfigurationn_instance,
     "MCPMSMFOC_PWM_FREQUENCY",

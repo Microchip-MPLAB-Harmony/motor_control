@@ -88,7 +88,7 @@ class mcSupI_StartupConfigurator:
         self.sym_OL_RAMP_TIME.setDependencies( self.showThisSymbol, ['MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP'])
 
         self.sym_OL_STAB_TIME = self.component.createFloatSymbol( "MCPMSMFOC_OPEN_LOOP_STAB_TIME", self.sym_OL_RAMP )
-        self.sym_OL_STAB_TIME.setLabel("Ramp time (s)")
+        self.sym_OL_STAB_TIME.setLabel("Stabilization time (s)")
         self.sym_OL_STAB_TIME.setDependencies( self.showThisSymbol, ['MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP'])
         self.sym_OL_STAB_TIME.setDefaultValue(2)
         

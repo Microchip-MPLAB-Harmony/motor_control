@@ -51,7 +51,7 @@ class mcFun_AdvancedComboSymbol:
         self.final.setVisible(False)
 
         for key in self.data.keys():
-            name = self.dependency.getID() + "_" + self.Id + "_" + str( key )       
+            name = self.dependency.getID() + "_" + self.Id + "_" + str( key )  
             self.symbol[key] = self.component.createComboSymbol(name, root, self.data[key] )
             self.symbol[key].setLabel(self.description)
             self.symbol[key].setDependencies( self.showComboSymbol, [self.dependency.getID()])
@@ -67,7 +67,14 @@ class mcFun_AdvancedComboSymbol:
 
         
     def setDefaultValue( self, value ):
-        pass
+        instance = self.dependency.getValue()
+
+        for key in self.data.keys():
+            if( key == instance ):
+                self.symbol[key].setDefaultValue(value)
+                
+        
+        self.final.setDefaultValue(self.numericFilter(value))
 
     def setReadOnly(self, value ):
         pass
@@ -80,6 +87,9 @@ class mcFun_AdvancedComboSymbol:
         
         self.final.setValue(self.numericFilter(value))
 
+    def getFinalSymbol(self):
+        return self.final
+    
     def getValue_( self ):
         return self.final.getValue()
 

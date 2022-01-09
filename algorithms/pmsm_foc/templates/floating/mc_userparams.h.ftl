@@ -76,7 +76,7 @@
 #define Q_AXIS_STARTUP    1u
 #define ALIGNMENT_METHOD                 (${MCPMSMFOC_ALIGN_OR_DETECT_AXIS})  /* alignment method  */
 
-<#if MCPMSMFOC_REF_INPUT == "Potentiometer Analog Input">
+<#if MCPMSMFOC_REF_INPUT == "From potentiometer">
 #define POTENTIOMETER_INPUT_ENABLED       ENABLE
 <#else>
 #define POTENTIOMETER_INPUT_ENABLED       DISABLE
@@ -283,7 +283,7 @@
 /**
  * Start-up stabilization time
  */
-#define START_UP_STAB_TIME_IN_SECOND   (2)
+#define START_UP_STAB_TIME_IN_SECOND   (${MCPMSMFOC_OPEN_LOOP_STAB_TIME})
 
 
 /**
