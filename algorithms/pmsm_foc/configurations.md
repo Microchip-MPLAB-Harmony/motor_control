@@ -16,11 +16,11 @@ Allows to select application mode like open loop or speed loop or torque loop.
 
 Position feedback determines the feedback loop implementation like PLL estimator sensorless or Encoder based sensored algorithm. 
 
-![control algorithm](images/control_strategy.png)
+![control algorithm](images/control_strategy.jpg)
 
 This allows to configure startup parameters and control loop PI parameters. 
 
-![pi parameters](images/control_parameters.png)
+![pi parameters](images/control_parameters.jpg)
 
 ### Flying Start Parameters
 Allows configuration of Flying Start Detection Parameters. 
@@ -42,12 +42,10 @@ By default, the implementation of this mode is part of an archive file lib_mc_fl
     - Peak Regenerative Braking Current - Defines the maximum regenerative braking current applied in A.
     - Regenerative Braking Ramp Duration - Defines the duration in seconds during which the regenerative braking current ramps from 0 to Peak Regenerative Braking Current. 
 
-![flying start parameters](images/flyingstart_parameters.png)
-
 ### PWM Configurations
 Select the PWM frequency and PWM channels used to drive Phase U, V and W based on board connections. Selected configurations are passed to the PWM PLIB. PWM PLIB is auto-configured for FOC algorithm. 
 
-![pwm](images/pwm_parameters.png)
+![pwm](images/pwm_parameters.jpg)
 
 *Note: Flying start is not supported in SAMC21 and PIC32MK CM MC project. 
 
@@ -55,25 +53,25 @@ Select the PWM frequency and PWM channels used to drive Phase U, V and W based o
 
 Select ADC channels used for Phase U current, Phase V Current, DC Bus voltage and potentiometer based on the board connections. Selected configurations are passed to the ADC PLIB. ADC PLIB is auto-configured for FOC algorithm. 
 
-![adc](images/adc_parameters.png)
+![adc](images/adc_parameters.jpg)
 
 ### Encoder Configurations
 
 Select the number of encoder pulses per revolution of the motor. Selected configurations are passed to the QDEC PLIB. 
 
-![encoder](images/encoder.png)
+![encoder](images/encoder.jpg)
 
 ### Motor Parameters
 
 Allows to configure motor parameters. Microchip direct motors are selectable and pre-configured. User can select custom motor to configure parameters for other motors. 
 
-![motor parameters](images/motor_parameters.png)
+![motor parameters](images/motor_parameters.jpg)
 
 ### Control Board Parameters
 
 Allows to configure control board parameters. Microchip's motor control development boards like dsPICDEM MCLV-2 development board are selectable and pre-configured. User can select custom board to configure parameters for other boards. 
 
-![control board](images/board_parameters.png)
+![control board](images/board_parameters.jpg)
 
 ### IO Pin Configurations
 

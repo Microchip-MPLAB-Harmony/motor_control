@@ -14,7 +14,7 @@ PMSM_FOC connects to the Peripheral Libraries (PLIBs) from CSP repository and X2
 
 This component depends on ADC PLIB for phase current measurement, DC bus voltage and potentiometer measurement. PWM PLIB is used to generate three phase signals to control the motor. For quadrature encoder sensor position feedback, PMSM_FOC interacts with QDEC peripheral. 
 
-
+In addition to the generation of code, it also provides back-end support for **Motor Control Plant**.
 ## Supported Microcontrollers and Development Boards
 
 | Microcontroller     | MCLV2  | MCHV3                                               |
@@ -27,8 +27,25 @@ This component depends on ADC PLIB for phase current measurement, DC bus voltage
 | PIC32CM MC  | Yes | Yes |
 
 
-## Supported Features
+## Motor Control Plant
+The Motor Control Plant Configurator (MCPC) is an extension of the MPLAB® ecosystem for developing Microchip’s next-generation application firmware for motor control on Microchip® 32-bit devices. 
 
+It has a graphical tool that enables an effortless configuration and generation of motor control application C code for Microchip 32-bit devices. 
+
+The details of the tool is available at [Motor Control Plant](mc_plant_docs/introduction.md).
+
+The following table summarizes the supported Microchip's 32-bit MCUs in MC Plant:
+
+|Device Families |   Links     |
+|----------------|-------------| 
+| PIC32MK        |    [PIC32MK Family](https://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/pic32-32-bit-mcus/pic32mk)     |
+| SAM E5x        |    [SAME5x Family](https://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/sam-32-bit-mcus/sam-e)     |
+| SAM E7x        |    [SAME7x Family](https://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/sam-32-bit-mcus/sam-e)     |
+
+## PMSM FOC Component for devices without MC Plant support
+This section describes the software design, algorithm and configuration options for those devices which do not have **MC Plant** support yet.
+
+The following table shows the supported features with PMSM FOC Component.
 ![supported_features](images/supported_features.jpg)
 
 

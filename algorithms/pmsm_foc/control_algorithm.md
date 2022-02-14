@@ -34,20 +34,20 @@ The working principle of the Reduced Order Luenberger Observer can be found in [
 
 Like any other back EMF based sensorless technique, the main disadvantage of Reduced Order Luenberger Observer is its inability to estimate the rotor angle at lower rotor speeds because of very low value of back EMF. Therefore, the FOC algorithm also integrates the ramp-up profile for motor start. The reference speed is incremented linearly using an open loop phase voltage control until the required minimum reference speed for the observer is reached.
 
-**Quadrature Encoder**
+**Quadrature Encoder**	
 
 An incremental optical encoder provides two pulse trains which are in quadrature with each other. Some encoders also have an index pulse which helps in finding the precide rotor position spatially. 
 
 Microcontroller quadrature encoder peripheral is used to capture and decode quadrature encoder siganls. Peripheral gives the rotor position based on the quadrature pulse. And velocity is calculated by measuring encoder pulses in known time interval. PIC32MK QEI peripheral gives the velocity directly. 
 Please refer to the [Application Note AN2757](https://www.microchip.com/wwwAppNotes/AppNotes.aspx?appnote=en607365)
 
-![encoder_signals](images/encoder_signals.png)
+![encoder_signals](images/encoder_signals.jpg)
 
 **Field Weakening**
 
 The field weakening for PMSM implies imposing a negative value of d-axis current, which has the role of weakening the air gap flux linkage. Field weakening is required to enable the PMSM motor to rotate above its rated speed. An equation based field weakening is implemented.
 
-![flux_weakening](images/flux_weakening.png)
+![flux_weakening](images/flux_weakening.jpg)
 
 **Flying Start**
 

@@ -12,7 +12,7 @@ has_toc: false
 -   Instantiate PMSM_FOC component
 -   Connect to required PLIBs (ADC, PWM, QDEC) and X2CScope and UART. Configure ADC, PWM and QDEC parameters in PMSM_FOC UI. Please refer to the project graph shown below. **Note that PLIB names will be different for different devices**
 
-![project graph](images/project_graph.png)
+![project graph](images/project_graph.jpg)
 
 -   Select motor, control board, position feedback method in UI. Configure advanced parameters like field weakening, flying start. 
 -   Configure pins in the pin manager

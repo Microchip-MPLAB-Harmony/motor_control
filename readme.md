@@ -40,10 +40,8 @@ notes and licensing information.
 
 | Algorithm |  Description |
 |------------ | -------------- |
-| [PMSM FOC Algorithm](algorithms/pmsm_foc/readme.md) | To Control Permanant Magnet Synchronous Motors using Field Oriented Control (FOC) |
+| [PMSM FOC Algorithm](algorithms/pmsm_foc/readme.md) | To Control Permanent Magnet Synchronous Motors using Field Oriented Control (FOC) |
 |||
-
-
 
 # Motor Control Demo Applications Repositories
 
