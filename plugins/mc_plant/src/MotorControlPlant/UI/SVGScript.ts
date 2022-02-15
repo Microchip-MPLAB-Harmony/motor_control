@@ -31,6 +31,20 @@ export let groupArray = [
 ];
 
 let ribbonKeyAndGroupValue = new Map<string, string>();
+export let quickSettingsText =  "Quick Settings";
+export let analogFrontEndText = "Analog Front End";
+export let motorParameters = "Motor Parameters";
+export let startupConfiguratorText =  "Start Up Configurator";
+export let motorControlDiagnosisText = "Motor Control & Diagnosis";
+export let positionMeasurementCalculationText =  "Position Calculation & Diagnosis";
+export let currentMeasurementAndDiagnosisText = "Current Measurement & Diagnosis";
+export let voltageMeasurementAndDiagnosisText = "Voltage Measurement & Diagnosis";
+export let pulseWidthModulatorText =  "Pulse Width Modulator";
+export let analogInterfaceText = "Analog Interface";
+export let positionInterfaceText =  "Position Interface";
+export let voltageSourceText = "Voltage Source";
+export let dataMonitoringText =  "Data Monitoring";
+export let outputStageDignosisText =  "Output Stage Diagnosis";
 
 export function newInit() {
   svgdoc = document.getElementById("motor");
@@ -45,41 +59,41 @@ export function newInit() {
   ribbonKeyAndGroupValue.set(ribbon_peripheral, peripheralGroup);
   ribbonKeyAndGroupValue.set(ribbon_mcu_config, mcuGroup);
 
-  addEventListeners("box_quicksettings", "Quick Settings", true);
+  addEventListeners("box_quicksettings",quickSettingsText, true);
   addEventListeners(ribbon_hardware, "Hardware Configurations", false);
   addEventListeners(ribbon_control, "Control Configurations", false);
   addEventListeners(ribbon_peripheral, "Peripheral Configurations", false);
   addEventListeners(ribbon_mcu_config, "MCU Configurations", false);
 
-  addEventListeners("box_analog_frontend", "Analog Front End", true);
-  addEventListeners("box_motor", "Motor Parameters", true);
-  addEventListeners("box_startup_configurator", "Start Up Configurator", true);
+  addEventListeners("box_analog_frontend",analogFrontEndText, true);
+  addEventListeners("box_motor", motorParameters, true);
+  addEventListeners("box_startup_configurator", startupConfiguratorText , true);
   addEventListeners(
     "box_motor_control_diagnosis",
-    "Motor Control Diagnosis",
+    motorControlDiagnosisText,
     true
   );
-  addEventListeners("box_output_stage", "Output Stage Diagnosis", true);
+  addEventListeners("box_output_stage",outputStageDignosisText, true);
   addEventListeners(
     "box_position_calculation_diagnosis",
-    "Position Calculation Diagnosis",
+    positionMeasurementCalculationText,
     true
   );
   addEventListeners(
     "box_current_measurement_diagnosis",
-    "Current Measurement Diagnosis",
+    currentMeasurementAndDiagnosisText,
     true
   );
   addEventListeners(
     "box_voltage_measurement_diagnosis",
-    "Voltage Measurement Diagnosis",
+    voltageMeasurementAndDiagnosisText,
     true
   );
-  addEventListeners("box_pwm", "Pulse With Modulator", true);
-  addEventListeners("box_analog_interface", "Analog Interface", true);
-  addEventListeners("box_position_interface", "Position Interface", true);
-  addEventListeners("box_vdc", "Voltage Source", true);
-  addEventListeners("box_data_monitoring", "Data Monitoring", true);
+  addEventListeners("box_pwm", pulseWidthModulatorText, true);
+  addEventListeners("box_analog_interface", analogInterfaceText, true);
+  addEventListeners("box_position_interface", positionInterfaceText, true);
+  addEventListeners("box_vdc", voltageSourceText, true);
+  addEventListeners("box_data_monitoring", dataMonitoringText, true);
 
   addEventListeners("box_clock_manager", "Clock Manager", true);
   addEventListeners("box_io_manager", "IO Manager", true);
@@ -155,30 +169,30 @@ function sendClickAction(evt: { target: any }) {
   let target = evt.target;
   if (target.correspondingUseElement) target = target.correspondingUseElement;
 
-  if (target.value && target.value === "Motor Control Diagnosis") {
+  if (target.value && target.value === motorControlDiagnosisText) {
     callPopUp(DialogDemo, target.value);
     RegisterMotorDiagnosisSVGActions();
     return;
   } else if (
     target.value &&
-    target.value === "Position Calculation Diagnosis"
+    target.value === positionMeasurementCalculationText
   ) {
     callPopUp(DialogDemo, target.value);
     RegisterPositionControlDiagnosisSVGActions();
     return;
-  } else if (target.value && target.value === "Analog Front End") {
+  } else if (target.value && target.value === analogFrontEndText) {
     callPopUp(DialogDemo, target.value);
     RegisterAnalogFrontEndSVGActions();
     return;
-  } else if (target.value && target.value === "Analog Interface") {
+  } else if (target.value && target.value === analogInterfaceText) {
     callPopUp(DialogDemo, target.value);
     RegisterAnalogInterfaceSVGActions();
     return;
-  } else if (target.value && target.value === "Voltage Measurement Diagnosis") {
+  } else if (target.value && target.value === voltageMeasurementAndDiagnosisText) {
     callPopUp(DialogDemo, target.value);
     RegisterVoltageMesasurementSVGActions();
     return;
-  } else if (target.value && target.value === "Current Measurement Diagnosis") {
+  } else if (target.value && target.value === currentMeasurementAndDiagnosisText) {
     callPopUp(DialogDemo, target.value);
     RegisterCurrentMesasurementSVGActions();
     return;
@@ -275,7 +289,7 @@ function callPopUpWithOutFooter(
   ReactDOM.render(helloCreate, document.querySelector("#popup"));
 }
 
-function resetColors() {
+export function resetColors() {
   let myNodelist = svgdoc.querySelectorAll("*");
   let i;
   for (i = 0; i < myNodelist.length; i++) {

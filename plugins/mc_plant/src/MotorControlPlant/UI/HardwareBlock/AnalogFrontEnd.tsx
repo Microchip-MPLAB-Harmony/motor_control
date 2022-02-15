@@ -90,12 +90,12 @@ class AnalogFrontEnd extends React.Component<IProps, IState> {
   Default_ICON2_1() {
     return (
       <div>
-        <AddImageAndParameters
+        {/* <AddImageAndParameters
           Image={null}
           Headding="DC Bus Current"
           parentUpdate={this.refreshScreen}
           SymbolsArray={Defautl_ICON2_1_Array_Current}
-        />
+        /> */}
         <AddImageAndParameters
           Image={null}
           Headding="DC Bus Voltage"

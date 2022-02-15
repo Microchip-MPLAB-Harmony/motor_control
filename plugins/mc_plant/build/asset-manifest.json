@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "./static/css/main.d8149e09.css",
-    "main.js": "./static/js/main.0ce57fb2.js",
-    "static/js/787.cfd8f164.chunk.js": "./static/js/787.cfd8f164.chunk.js",
+    "main.css": "./static/css/main.89414c64.css",
+    "main.js": "./static/js/main.ca6ad0b8.js",
+    "static/js/787.28cb0dcd.chunk.js": "./static/js/787.28cb0dcd.chunk.js",
     "static/media/primeicons.svg": "./static/media/primeicons.c6e2053303524e39530c.svg",
     "static/media/primeicons.eot": "./static/media/primeicons.7fc4d8e224d1ff1b9c62.eot",
     "static/media/primeicons.woff": "./static/media/primeicons.449aa8c65cdc5c2a8686.woff",
     "static/media/primeicons.ttf": "./static/media/primeicons.91bacab1f083f2795272.ttf",
     "static/media/mc_plant_view.svg": "./static/media/mc_plant_view.971bb03565bdcae20b1212cf6605e23e.svg",
-    "static/media/Motor_Control_and_Diagnosis-main_diagram.svg": "./static/media/Motor_Control_and_Diagnosis-main_diagram.cdeaf9f7eb28f9630753a3f12384b1fb.svg",
+    "static/media/Motor_Control_and_Diagnosis-main_diagram.svg": "./static/media/Motor_Control_and_Diagnosis-main_diagram.4971ed033cc67f1059765eaec9e777da.svg",
     "static/media/StartupConfigurator-ForcedAlign-D-Axis.svg": "./static/media/StartupConfigurator-ForcedAlign-D-Axis.478810548277b159dd2a748b3f3f3d75.svg",
     "static/media/StartupConfigurator-ForcedAlign-Q-Axis.svg": "./static/media/StartupConfigurator-ForcedAlign-Q-Axis.5219939e1884c9b85ef56a48313c3afb.svg",
     "static/media/Position_Measurement_and_Diagnosis-Equation_based.svg": "./static/media/Position_Measurement_and_Diagnosis-Equation_based.9726002a01899b427a3271a62b38a2d1.svg",
@@ -26,12 +26,12 @@
     "static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-Step.svg": "./static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-Step.633ee22ee3de33bdf128c19cb4b664dd.svg",
     "static/media/Tooltip.svg": "./static/media/Tooltip.8611f8d24a7401824069d461119c1aa6.svg",
     "index.html": "./index.html",
-    "main.d8149e09.css.map": "./static/css/main.d8149e09.css.map",
-    "main.0ce57fb2.js.map": "./static/js/main.0ce57fb2.js.map",
-    "787.cfd8f164.chunk.js.map": "./static/js/787.cfd8f164.chunk.js.map"
+    "main.89414c64.css.map": "./static/css/main.89414c64.css.map",
+    "main.ca6ad0b8.js.map": "./static/js/main.ca6ad0b8.js.map",
+    "787.28cb0dcd.chunk.js.map": "./static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d8149e09.css",
-    "static/js/main.0ce57fb2.js"
+    "static/css/main.89414c64.css",
+    "static/js/main.ca6ad0b8.js"
   ]
 }

@@ -137,7 +137,6 @@ function Component(props: {
 
 function GetMinFractionValueBasedSymbolType(componentId: any, symbolID: any ){
   let typeofSymbol = GetSymbolType(componentId, symbolID);
-  alert(typeofSymbol)
   if(typeofSymbol === "Float"){
     return 1;
   }

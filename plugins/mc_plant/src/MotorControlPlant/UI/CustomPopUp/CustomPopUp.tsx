@@ -37,6 +37,22 @@ import PositionMesurementAndDiagnosis, {
 } from "../ControlBlock/PositionMesurementAndDiagnosis";
 import VoltageSource from "../HardwareBlock/VoltageSource";
 import DataMonitoring from "../ControlBlock/DataMonitoring";
+import {
+  motorControlDiagnosisText,
+  motorParameters,
+  pulseWidthModulatorText,
+  startupConfiguratorText,
+  outputStageDignosisText,
+  currentMeasurementAndDiagnosisText,
+  voltageMeasurementAndDiagnosisText,
+  positionMeasurementCalculationText,
+  analogFrontEndText,
+  analogInterfaceText,
+  positionInterfaceText,
+  voltageSourceText,
+  dataMonitoringText,
+  quickSettingsText,
+} from "../SVGScript";
 
 let dialogVisibleStatus = false;
 let resetToDefaultStatus = false;
@@ -141,8 +157,8 @@ const GenericPopUp = () => {
           <Button
             type="button"
             className="p-button-raised p-button-rounded"
-            label="Reset"
-            tooltip="Reset symbols to original value"
+            label="Revert"
+            tooltip="Revert symbols to previous saved value"
             tooltipOptions={{ position: "left" }}
             style={{ height: "1.75rem", fontSize: "14px" }}
             onClick={() => onReset()}
@@ -239,40 +255,40 @@ const GenericPopUp = () => {
           onHide={() => onHide()}
         >
           <div>
-            {ActionId === "Motor Parameters" && (
+            {ActionId === motorParameters && (
               <MotorParameters parentUpdate={update} showToast={showToast} />
             )}
-            {ActionId === "Pulse With Modulator" && (
+            {ActionId === pulseWidthModulatorText && (
               <PWMParameters parentUpdate={update} showToast={showToast} />
             )}
-            {ActionId === "Start Up Configurator" && (
+            {ActionId === startupConfiguratorText && (
               <StartUpConfigurator showToast={showToast} />
             )}
-            {ActionId === "Motor Control Diagnosis" && LoadMotorDiagnosis()}
-            {ActionId === "Output Stage Diagnosis" && (
+            {ActionId === motorControlDiagnosisText && LoadMotorDiagnosis()}
+            {ActionId === outputStageDignosisText && (
               <OutputStageDiagnosis
                 parentUpdate={update}
                 showToast={showToast}
               />
             )}
-            {ActionId === "Current Measurement Diagnosis" &&
+            {ActionId === currentMeasurementAndDiagnosisText &&
               CurrentMeasurementAndControlDiagnosis()}
-            {ActionId === "Voltage Measurement Diagnosis" &&
+            {ActionId === voltageMeasurementAndDiagnosisText &&
               VoltageMeasurementAndControlDiagnosis()}
-            {ActionId === "Position Calculation Diagnosis" &&
+            {ActionId === positionMeasurementCalculationText &&
               LoadPositionAndControlDiagnosis()}
-            {ActionId === "Analog Front End" && LoadAnalogFrontEnd()}
-            {ActionId === "Analog Interface" && LoadAnalogInterface()}
-            {ActionId === "Position Interface" && (
+            {ActionId === analogFrontEndText && LoadAnalogFrontEnd()}
+            {ActionId === analogInterfaceText && LoadAnalogInterface()}
+            {ActionId === positionInterfaceText && (
               <PositionInterface parentUpdate={update} showToast={showToast} />
             )}
-            {ActionId === "Voltage Source" && (
+            {ActionId === voltageSourceText && (
               <VoltageSource parentUpdate={update} showToast={showToast} />
             )}
-            {ActionId === "Data Monitoring" && (
+            {ActionId === dataMonitoringText && (
               <DataMonitoring parentUpdate={update} showToast={showToast} />
             )}
-            {ActionId === "Quick Settings" && (
+            {ActionId === quickSettingsText && (
               <QuickSettings parentUpdate={update} showToast={showToast} />
             )}
           </div>
@@ -299,7 +315,7 @@ export function ResetSymbols(
 ) {
   UpdateArrayofSymbolsResetAction(resetValues, mc_component_id, symbolsArray);
   SetResetStatus(false);
-  showToast("Reset Action Completed!");
+  showToast("Revert Action Completed!");
 }
 
 export function DialogCommonInitilizeCode(
