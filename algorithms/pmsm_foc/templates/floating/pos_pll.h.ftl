@@ -116,7 +116,8 @@
         { \
             &mcRpoI_ElectricalRotorPosition_gaf32[0u], \
             &mcRpoI_ElectricalRotorSpeed_gaf32[0u], \
-            &mcRpoI_ElectricalRotorAccel_gaf32[0u] \
+            &mcRpoI_ElectricalRotorAccel_gaf32[0u], \
+            &mcRpoI_BackEMF_gaf32[0u] \
         }, \
         /* User Parameters */ \
         { \
@@ -145,7 +146,8 @@
         { \
             &mcRpoI_ElectricalRotorPosition_gaf32[1u], \
             &mcRpoI_ElectricalRotorSpeed_gaf32[1u], \
-            &mcRpoI_ElectricalRotorAccel_gaf32[1u] \
+            &mcRpoI_ElectricalRotorAccel_gaf32[1u], \
+            &mcRpoI_BackEMF_gaf32[1u] \
         }, \
         /* User Parameters */ \
         { \
@@ -185,6 +187,7 @@ typedef struct _tmcRpo_OutputPorts_s
     float  * theta;
     float  * Wre;
     float  * accel;
+    float  * es;
 }tmcRpo_OutputPorts_s;
 
 typedef struct _tmcRpo_UserParameters_s

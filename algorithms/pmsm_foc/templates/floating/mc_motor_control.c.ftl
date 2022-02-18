@@ -301,6 +301,19 @@ void mcMocI_M1ControlTasksRun( void  )
         {
            if( 1u ==  mcSupI_OpenLoopStartupRun( 0u ) )
            {
+               /* Switch angle from open loop to close loop */
+               mcLib_InvParkTransform(&mcMocI_DQVoltage_gas[0u], mcMocI_SpaceVectorAngle_gaf32[0u], &mcMocI_AlphaBetaVoltage_gas[0u]);
+               mcLib_InvParkTransform(&mcMocI_FeedbackDQCurrent_gas[0u], mcMocI_SpaceVectorAngle_gaf32[0u], & mcMocI_FeedbackAlphaBetaCurrent_gas[0u]);
+                
+               mcLib_ParkTransform(&mcMocI_AlphaBetaVoltage_gas[0u], mcRpoI_ElectricalRotorPosition_gaf32[0u], &mcMocI_DQVoltage_gas[0u]);
+               mcLib_ParkTransform(&mcMocI_FeedbackAlphaBetaCurrent_gas[0u], mcRpoI_ElectricalRotorPosition_gaf32[0u], &mcMocI_FeedbackDQCurrent_gas[0u]);
+              
+               /* Update PI controller states */
+               mcRegI_IdCurrentControlIntegralSet(0u, mcMocI_DQVoltage_gas[0u].direct );
+               mcRegI_IqCurrentControlIntegralSet(0u, mcMocI_DQVoltage_gas[0u].quadrature );
+               mcSpeI_SpeedControlIntegralSet( 0u, mcMocI_FeedbackDQCurrent_gas[0u].quadrature );
+
+               /* Change control state */
                mcMocI_MotorRunningState_gae[0u] = mcState_Foc;
            }
    

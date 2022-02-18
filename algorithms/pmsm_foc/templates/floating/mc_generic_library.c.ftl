@@ -44,24 +44,11 @@
  *******************************************************************************/
 #include "mc_generic_library.h"
 #include "mc_current_control.h"
+#include "math.h"
 
 /*******************************************************************************
  * Constants
  *******************************************************************************/
-#define     M_PI                                                          (float)3.14159265358979323846
-#define     M_PI_2                                                      (float)1.57079632679489661923
-#define     M_2_PI                                                      (float)( 2.0f * M_PI )
-#define     SINGLE_ELEC_ROT_RADS_PER_SEC        (float)((float)(2.0) * (float)M_PI)
-
-#define     SQRT3                                                       (float)( 1.732)
-#define     SQRT3_BY2                                               (float)(0.866025403788)
-
-#define     ONE_BY_SQRT3                                         (float)(0.5773502691)
-#define     TWO_BY_SQRT3                                        (float)(1.1547005384)
-#define     TOTAL_SINE_TABLE_ANGLE                    (float)(2.0f * (float)M_PI)
-#define     TABLE_SIZE                                                256
-#define     ANGLE_STEP                                              (TOTAL_SINE_TABLE_ANGLE/(float)TABLE_SIZE)
-#define     ONE_BY_ANGLE_STEP                               (1/ANGLE_STEP)
 
 /* Sine table */
 float sineTable[TABLE_SIZE] =
@@ -270,7 +257,7 @@ void mcLib_ImposeLimits( float * const input, const float lowerLimit, const floa
  */
 float  mcLib_SquareRootCalculate( float square )
 {
-    return 0.0f;
+    return sqrt(square);
 }
 
 /*! \brief Clarke Transform 

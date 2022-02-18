@@ -166,7 +166,7 @@ class mcPwmI_PwmInterfaceClass:
         # PWM Period
         self.sym_DEAD_TIME = self.component.createFloatSymbol("MCPMSMFOC_PWM_DEAD_TIME", self.sym_PWM )
         self.sym_DEAD_TIME.setLabel("Dead time (uS)")
-        self.sym_DEAD_TIME.setDefaultValue(1.0)
+        self.sym_DEAD_TIME.setDefaultValue(0.64)
         
         # PWM Channel A
         global global_ADC_TRIGGER

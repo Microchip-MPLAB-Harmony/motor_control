@@ -50,7 +50,7 @@ Headers inclusions
 /*******************************************************************************
  * Constants 
  *******************************************************************************/
-#define     SQRT3                                   ((float)1.732)
+#define     CONSTANT_SquareRoot3                                   ((float)1.732)
 
 /*******************************************************************************
  Private data-types 
@@ -161,7 +161,7 @@ void mcVolI_VoltageCalculationRun( const tmcVol_InstanceId_e Id )
                                     mcVol_Parameters_mas[Id].dcVoltageFiltParam );
     
     /* Calculate maximum inverter AC peak voltage */
-    *mcVol_OutputPorts_mas[Id].maximumUacPeak = *mcVol_OutputPorts_mas[Id].filteredBusVoltage / SQRT3;
+    *mcVol_OutputPorts_mas[Id].maximumUacPeak = *mcVol_OutputPorts_mas[Id].filteredBusVoltage / CONSTANT_SquareRoot3;
     
     /* Write output ports */
 }

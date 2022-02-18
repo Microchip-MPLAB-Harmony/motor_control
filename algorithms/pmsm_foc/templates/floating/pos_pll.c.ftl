@@ -212,6 +212,10 @@ void mcRpoI_RotorPositionCalculationRun( const tmcRpo_InstanceId_e Id )
     float sine, cosine;
     float ealpha, ebeta;
     float Wre, Ed, Eq;
+
+#if (ENABLE == FIELD_WEAKENING )
+    float esSquare;
+#endif
     
     /* Read input ports */
 
@@ -228,6 +232,14 @@ void mcRpoI_RotorPositionCalculationRun( const tmcRpo_InstanceId_e Id )
     ebeta -= (*mcRpo_InputPorts_mas[Id].ibeta * mcRpo_Parameters_mas[Id].Rs );
     ebeta +=  mcRpo_StateVariables_mas[Id].ubeta; 
     mcRpo_EulerFilter( ebeta, &mcRpo_StateVariables_mas[Id].ebeta, 1.0f);
+
+#if (ENABLE == FIELD_WEAKENING )
+    /* Calculate BEMF for field weakening*/
+    esSquare =  ( mcRpo_StateVariables_mas[Id].ebeta * mcRpo_StateVariables_mas[Id].ebeta ) 
+       +  ( mcRpo_StateVariables_mas[Id].ealpha * mcRpo_StateVariables_mas[Id].ealpha );
+
+    *mcRpo_OutputPorts_mas[Id].es = mcLib_SquareRootCalculate(esSquare);
+#endif
     
     /* Determine back EMF along direct and quadrature axis using estimated angle */
     mcLib_SinCosCalc( mcRpo_StateVariables_mas[Id].theta, &sine, &cosine );

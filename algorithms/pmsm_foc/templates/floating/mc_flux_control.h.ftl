@@ -48,13 +48,22 @@
 #include <stddef.h>
 #include "mc_generic_library.h"
 #include "mc_interface_handling.h"
+#include "mc_userparams.h"
 
 /*******************************************************************************
  Constants
  *******************************************************************************/
 #define     FLUX_CONTROL_INSTANCES 1u
-#define     ANGLE_OFFSET_MIN        ((float)(M_PI_2)/(float)(32767))
-#define     DECIMATE_RATED_SPEED        (float)((RATED_SPEED_RPM *((float)M_PI/30)) * NUM_POLE_PAIRS/10)
+
+#define CONFIG_UsmaxSquareNormalized    (float)(0.96f)
+#define CONFIG_UsFilterCoefficient      (float)(0.0163f)
+#define CONFIG_BaseSpeedInRpm           (float)(RATED_SPEED_IN_RPM)
+
+#if( ENABLE == FIELD_WEAKENING )
+#define CONFIG_MaximumFWCurrent         (float)(MAX_FW_NEGATIVE_ID_REF)
+#else
+#define CONFIG_MaximumFWCurrent         (float)(0)
+#endif 
 
 /*******************************************************************************
  Default module parameters 
@@ -68,16 +77,22 @@
         &mcMocI_DQVoltage_gas[0u].direct, \
         &mcRpoI_ElectricalRotorSpeed_gaf32[0u], \
         &mcSpeI_ReferenceIqCurrent_gaf32[0u], \
-        NULL, \
+        &mcVolI_UacPeakVoltage_gaf32[0u], \
         NULL \
     }, \
     /* Output ports */ \
     { \
-        NULL \
+        &mcSpeI_ReferenceIdCurrent_gaf32[0u] \
     }, \
     /* User Parameters */ \
     { \
-       0.0f \
+        CONFIG_BaseSpeedInRpm, \
+        CONFIG_UsmaxSquareNormalized, \
+        CONFIG_UsFilterCoefficient, \
+        QUADRATURE_AXIS_INDUCTANCE_IN_HENRY, \
+        MOTOR_PER_PHASE_RESISTANCE_IN_OHM, \
+        PWM_FREQUENCY, \
+        CONFIG_MaximumFWCurrent \
     } \
 }
 
@@ -91,16 +106,22 @@
         mcMocI_DQVoltage_gas[1u].direct, \
         &mcRpoI_ElectricalRotorSpeed_gaf32[1u], \
         &mcSpeI_ReferenceIqCurrent_gaf32[1u], \
-        NULL, \
+        &mcVolI_UacPeakVoltage_gaf32[1u], \
         NULL \
     }, \
     /* Output ports */ \
     { \
-        NULL \
+        &mcSpeI_ReferenceIdCurrent_gaf32[1u] \
     }, \
     /* User Parameters */ \
     { \
-       0.0f \
+        CONFIG_BaseSpeedInRpm, \
+        CONFIG_UsmaxSquareNormalized, \
+        CONFIG_UsFilterCoefficient, \
+        QUADRATURE_AXIS_INDUCTANCE_IN_HENRY, \
+        MOTOR_PER_PHASE_RESISTANCE_IN_OHM, \
+        PWM_FREQUENCY, \
+        CONFIG_MaximumFWCurrent \
     } \
 }
 
@@ -121,7 +142,7 @@ typedef struct _tmcFlx_InputPorts_s
     volatile float * wel;
     volatile float * iqref;
     volatile float * umax;
-    volatile float * esFilt;
+    volatile float * es;
 }tmcFlx_InputPorts_s;
 
 typedef struct _tmcFlx_OutputPorts_s
@@ -133,7 +154,7 @@ typedef struct _tmcFlx_UserParameters_s
 {
     float  wbase;                 
     float  umaxSqr;    
-    float  esFiltCoeff; 
+    float  usFiltCoeff; 
     float  ls; 
     float  rs; 
     float  fs; 

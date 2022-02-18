@@ -106,6 +106,7 @@ float mcRpoI_MechanicalRotorPosition_gaf32[1u];
 float mcRpoI_ElectricalRotorPosition_gaf32[1u];
 float mcRpoI_ElectricalRotorSpeed_gaf32[1u];
 float mcRpoI_ElectricalRotorAccel_gaf32[1u];
+float mcRpoI_BackEMF_gaf32[1u];
 
 /* Speed Regulation module */
 float mcSpeI_ReferenceIqCurrent_gaf32[1u];

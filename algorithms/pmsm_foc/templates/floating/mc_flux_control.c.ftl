@@ -53,7 +53,7 @@ typedef struct _tmcFlx_Parameters_s
 {
     float  wbase;                 
     float  umaxSqr;    
-    float  esFiltCoeff; 
+    float  usFiltCoeff; 
     float  lsByDt; 
     float  rs;  
     float ls;
@@ -71,6 +71,17 @@ typedef struct _tmcFlx_StateVariables_s
 /*******************************************************************************
  Constants 
  *******************************************************************************/
+
+/**
+ * Constant value of PI
+ */
+#define CONSTANT_Pi                                (float)3.14159265358979323846
+
+/**
+ * RPM to Rad Per Second Conversion factor
+ */
+#define CONSTANT_RpmToRadPerSec        (float)( 2.0f * NUM_POLE_PAIRS * CONSTANT_Pi / 60.0f )
+
 
 /*******************************************************************************
  Private variables  
@@ -129,10 +140,9 @@ tStd_ReturnType_e mcFlxI_FluxRegulationInit( const tmcFlx_ConfigParameters_s * c
     ASSERT(( NULL != flxParam ), "Configuration parameters points to NULL address ");
     
     /* Initialize input ports */
-    ASSERT((      ( NULL != flxParam->inPort.esFilt ) && (NULL != flxParam->inPort.iqref) 
+    ASSERT((      ( NULL != flxParam->inPort.es ) && (NULL != flxParam->inPort.iqref) 
                      && ( NULL != flxParam->inPort.ud) && (NULL != flxParam->inPort.umax ) 
-                     && ( NULL != flxParam->inPort.wel ) &&  ( NULL != flxParam->inPort.yd )),
-                           "Input ports are not assigned properly");
+                     && ( NULL != flxParam->inPort.wel )),"Input ports are not assigned properly");
     
     
     mcFlx_InputPorts_mas[flxParam->Id] = flxParam->inPort;
@@ -145,9 +155,9 @@ tStd_ReturnType_e mcFlxI_FluxRegulationInit( const tmcFlx_ConfigParameters_s * c
     /* Update and calculate independent and dependent parameters respectively */
     pParam = &mcFlx_Parameters_mas[flxParam->Id];
     pParam->rs =flxParam->userParam.rs ;   
-    pParam->wbase = flxParam->userParam.wbase;
+    pParam->wbase = CONSTANT_RpmToRadPerSec* flxParam->userParam.wbase;
     pParam->umaxSqr = flxParam->userParam.umaxSqr;
-    pParam->esFiltCoeff = flxParam->userParam.esFiltCoeff;
+    pParam->usFiltCoeff = flxParam->userParam.usFiltCoeff;
     pParam->idmax = flxParam->userParam.idmax;
     pParam->ls = flxParam->userParam.ls;
     pParam->lsByDt = flxParam->userParam.fs * flxParam->userParam.ls;
@@ -180,7 +190,7 @@ void mcFlxI_FluxRegulationRun( const tmcFlx_InstanceId_e Id )
         }
 
         UqRef = mcLib_SquareRootCalculate((float)(  mcFlx_Parameters_mas[Id].umaxSqr - UdSquare));
-        mcFlx_EulerFilter( UqRef, & mcFlx_StateVariables_mas[Id].uqrefFilt, mcFlx_Parameters_mas[Id].esFiltCoeff );
+        mcFlx_EulerFilter( UqRef, & mcFlx_StateVariables_mas[Id].uqrefFilt, mcFlx_Parameters_mas[Id].usFiltCoeff );
       
         OmegaLs = ( ( *mcFlx_InputPorts_mas[Id].wel  ) *  mcFlx_Parameters_mas[Id].ls);
 
@@ -189,7 +199,7 @@ void mcFlxI_FluxRegulationRun( const tmcFlx_InstanceId_e Id )
         idref *= mcFlx_Parameters_mas[Id].lsByDt;
         idref +=  mcFlx_StateVariables_mas[Id].uqrefFilt * ( *mcFlx_InputPorts_mas[Id].umax);
         idref -= (  mcFlx_Parameters_mas[Id].rs * ( *mcFlx_InputPorts_mas[Id].iqref ) );
-        idref -= ( *mcFlx_InputPorts_mas[Id].esFilt );
+        idref -= ( *mcFlx_InputPorts_mas[Id].es );
         idref /= OmegaLs;
         
         mcFlx_StateVariables_mas[Id].iqrefLast = ( *mcFlx_InputPorts_mas[Id].iqref );

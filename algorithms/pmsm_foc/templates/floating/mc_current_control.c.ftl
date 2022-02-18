@@ -152,6 +152,11 @@ void mcRegI_CurrentControllerParameterSet( const tmcReg_InstanceId_e Id,  tmcLib
  */
 void mcRegI_CurrentRegulationRun( const tmcReg_InstanceId_e Id )
 {
+    /* Direct axis current control  */
+    mcReg_IdController_mas[Id].feedback =  *mcReg_InputPorts_mas[Id].Idact;
+    mcReg_IdController_mas[Id].reference  =  *mcReg_InputPorts_mas[Id].Idref;
+    mcLib_PiControllerRun(&mcReg_IdController_mas[Id] );
+    
     /* Quadrature axis current reference  */ 
 #if ( CONTROL_LOOP == TORQUE_LOOP )
   #if ( ENABLE == POTENTIOMETER_INPUT_ENABLED )  
@@ -162,19 +167,11 @@ void mcRegI_CurrentRegulationRun( const tmcReg_InstanceId_e Id )
 #else 
     mcReg_IqController_mas[Id].reference  = *mcReg_InputPorts_mas[Id].Iqref;
 #endif
-
+    
     /* Quadrature axis current control  */
     mcReg_IqController_mas[Id].feedback = *mcReg_InputPorts_mas[Id].Iqact;
     mcLib_PiControllerRun(&mcReg_IqController_mas[Id]);
-    
-    if( mcState_Foc ==  mcMocI_MotorRunningState_gae[Id] )
-    {
-        /* Direct axis current control  */
-        mcReg_IdController_mas[Id].feedback =  *mcReg_InputPorts_mas[Id].Idact;
-        mcReg_IdController_mas[Id].reference  =  *mcReg_InputPorts_mas[Id].Idref;
-        mcLib_PiControllerRun(&mcReg_IdController_mas[Id] );
-    }
-       
+  
     /* Write output ports */
     *mcReg_OutputPorts_mas[Id].Uq =  mcReg_IqController_mas[0].Yout;
     *mcReg_OutputPorts_mas[Id].Ud =  mcReg_IdController_mas[0].Yout;
