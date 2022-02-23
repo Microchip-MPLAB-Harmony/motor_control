@@ -11,7 +11,8 @@ var toolTipObject: any = null;
 let actionIds = [
   "box-offset-correction",
   "box-current-scaling-bottom",
-  "box-diagnosis",
+  "box-current-scaling-top",
+  "box-diagnosis"
 ];
 let defaultViewGlobal = actionIds[0];
 
@@ -106,9 +107,9 @@ class CurrentMeasurementAndDiagnosisDualShunt extends React.Component<
             <Divider layout="vertical" />
             {getIndex(defaultViewGlobal, actionIds) === 0 &&
               this.OffsetCorrection()}
-            {getIndex(defaultViewGlobal, actionIds) === 1 &&
+            {(getIndex(defaultViewGlobal, actionIds) === 1 || getIndex(defaultViewGlobal, actionIds) === 2) &&
               this.CurrentScaling()}
-            {getIndex(defaultViewGlobal, actionIds) === 2 && this.Diagnosis()}
+            {getIndex(defaultViewGlobal, actionIds) === 3 && this.Diagnosis()}
           </div>
         </div>
       </div>
