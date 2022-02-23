@@ -15,6 +15,12 @@ import {
   AddImageAndParameters,
   AddTitleAndParameters,
 } from "../../Common/NodeUtils";
+import {
+  DialogCommonInitilizeCode,
+  GetResetStatus,
+  GetResetToDefaultStatus,
+  ResetDialogSettings,
+} from "../CustomPopUp/CustomPopUp";
 
 let svgEB: any = null;
 let svgQD: any = null;
@@ -31,6 +37,14 @@ let actionIds = [
   "box-quadraturedecoder",
 ];
 let defaultViewGlobal = actionIds[0];
+
+let motorModelSymbolsArray: any[] = [];
+let showABIQModelSymbols: any[] = [];
+let showLPFEdModelSymbols = ["MCPMSMFOC_ED_FILTER_PARAMETER"];
+let showPFEqModelSymbols = ["MCPMSMFOC_EQ_FILTER_PARAMETER"];
+let showLPFSpeedModelSymbols = ["MCPMSMFOC_SPEED_FILTER_PARAMETER"];
+let showDigitalNoiseFilterSymbols = ["MCPMSMFOC_ENCODER_DNF_COUNT"];
+let showQuadratureDecoderSymbols = ["MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV"];
 
 interface IProps {
   parentUpdate: () => void;
@@ -80,53 +94,83 @@ class PositionMesurementAndDiagnosis extends React.Component<IProps, IState> {
 
   ShowMotorModel() {
     return (
-      <AddImageAndParameters
-        Image={null}
-        Headding="Motor Model"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={[]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          motorModelSymbolsArray.concat([positionMesurementModel])
+        )}
+        <AddImageAndParameters
+          Image={null}
+          Headding="Motor Model"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={motorModelSymbolsArray}
+        />
+      </div>
     );
   }
 
   ShowABIQModel() {
     return (
-      <AddImageAndParameters
-        Image={null}
-        Headding="AB - IQ Transform"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={[]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          showABIQModelSymbols.concat([positionMesurementModel])
+        )}
+        <AddImageAndParameters
+          Image={null}
+          Headding="AB - IQ Transform"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={showABIQModelSymbols}
+        />
+      </div>
     );
   }
 
   ShowLPFEdModel() {
     return (
-      <AddTitleAndParameters
-        Headding="Ed Filter"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={["MCPMSMFOC_ED_FILTER_PARAMETER"]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          showLPFEdModelSymbols.concat([positionMesurementModel])
+        )}
+        <AddTitleAndParameters
+          Headding="Ed Filter"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={showLPFEdModelSymbols}
+        />
+      </div>
     );
   }
 
   ShowLPFEqModel() {
     return (
-      <AddTitleAndParameters
-        Headding="Eq Filter"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={["MCPMSMFOC_EQ_FILTER_PARAMETER"]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          showPFEqModelSymbols.concat([positionMesurementModel])
+        )}
+        <AddTitleAndParameters
+          Headding="Eq Filter"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={showPFEqModelSymbols}
+        />
+      </div>
     );
   }
 
   ShowLPFSpeedModel() {
     return (
-      <AddTitleAndParameters
-        Headding="Speed Filter"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={["MCPMSMFOC_SPEED_FILTER_PARAMETER"]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          showLPFSpeedModelSymbols.concat([positionMesurementModel])
+        )}
+        <AddTitleAndParameters
+          Headding="Speed Filter"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={showLPFSpeedModelSymbols}
+        />
+      </div>
     );
   }
 
@@ -150,21 +194,33 @@ class PositionMesurementAndDiagnosis extends React.Component<IProps, IState> {
 
   showDigitalNoiseFilter() {
     return (
-      <AddTitleAndParameters
-        Headding="Digital Noise Filter"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={["MCPMSMFOC_ENCODER_DNF_COUNT"]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          showDigitalNoiseFilterSymbols.concat([positionMesurementModel])
+        )}
+        <AddTitleAndParameters
+          Headding="Digital Noise Filter"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={showDigitalNoiseFilterSymbols}
+        />
+      </div>
     );
   }
 
   showQuadratureDecoder() {
     return (
-      <AddTitleAndParameters
-        Headding="Quadrature Decoder"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={["MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV"]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          showQuadratureDecoderSymbols.concat([positionMesurementModel])
+        )}
+        <AddTitleAndParameters
+          Headding="Quadrature Decoder"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={showQuadratureDecoderSymbols}
+        />
+      </div>
     );
   }
 
@@ -199,12 +255,24 @@ class PositionMesurementAndDiagnosis extends React.Component<IProps, IState> {
     );
   }
 
+  showUnderDevlopMent() {
+    return (
+      <div className="p-d-flex">
+        <div className="p-d-flex p-flex-column">
+          {this.GetPositonControlElement()}
+          <h2> Under Implementation... </h2>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
         <div className="card">
           {GetSelectedPositionControlIndex() === 0 && this.showEB()}
           {GetSelectedPositionControlIndex() === 1 && this.showQD()}
+          {(GetSelectedPositionControlIndex() === 2 || GetSelectedPositionControlIndex() === 3)  && this.showUnderDevlopMent()}
         </div>
       </div>
     );
@@ -213,6 +281,9 @@ class PositionMesurementAndDiagnosis extends React.Component<IProps, IState> {
 export default PositionMesurementAndDiagnosis;
 
 export function SetPositionControlDiagnosisDefaultWindowView() {
+  if (GetResetToDefaultStatus() || GetResetStatus()) {
+    return;
+  }
   if (GetSelectedPositionControlIndex() === 0) {
     defaultViewGlobal = actionIds[0];
   } else if (GetSelectedPositionControlIndex() === 1) {
@@ -223,11 +294,7 @@ export function SetPositionControlDiagnosisDefaultWindowView() {
 function GetSelectedPositionControlIndex() {
   let symbolValue = GetySymbolValue(mc_component_id, positionMesurementModel);
   let symbolArray = GetSymbolArray(mc_component_id, positionMesurementModel);
-  if (getIndex(symbolValue, symbolArray) === 0) {
-    return 0;
-  } else {
-    return 1;
-  }
+  return getIndex(symbolValue, symbolArray);
 }
 
 export function RegisterPositionControlDiagnosisSVGActions() {
@@ -276,6 +343,7 @@ function sendClickAction(evt: { target: any }) {
   if (target.correspondingUseElement) target = target.correspondingUseElement;
   if (target.value) {
     defaultViewGlobal = target.value;
+    ResetDialogSettings();
     obj?.refreshScreen();
     return;
   }
