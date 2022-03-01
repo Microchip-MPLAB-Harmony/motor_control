@@ -5,6 +5,12 @@ import { getIndex } from "../../../MotorControlPlant/Common/Utils";
 import React from "react";
 import { CallMouseLeave, CallMouseMove } from "../../Common/MouseEvent";
 import { AddTitleAndParameters } from "../../Common/NodeUtils";
+import {
+  DialogCommonInitilizeCode,
+  GetResetStatus,
+  GetResetToDefaultStatus,
+  ResetDialogSettings,
+} from "../CustomPopUp/CustomPopUp";
 
 var svgdoc: any = null;
 var toolTipObject: any = null;
@@ -12,9 +18,29 @@ let actionIds = [
   "box-offset-correction",
   "box-current-scaling-bottom",
   "box-current-scaling-top",
-  "box-diagnosis"
+  "box-diagnosis",
 ];
 let defaultViewGlobal = actionIds[0];
+
+let offsetCorrectionSymbolArray = [
+  "MCPMSMFOC_OFFSET_CORRECTION_ALGORITHM",
+  "MCPMSMFOC_OFFSET_CORRECTION_SAMPLE",
+];
+let currentScalingSymbolArray = [
+  "MCPMSMFOC_CURRENT_SCALING_FORMAT",
+  "MCPMSMFOC_CURRENT_SCALING_FACTORT",
+];
+let diagnosisSymbolArray = [
+  "MCPMSMFOC_CURRENT_OOR",
+  "MCPMSMFOC_CURRENT_OOR_MAXIMUM",
+  "MCPMSMFOC_CURRENT_OOR_DEBOUNCE",
+  "MCPMSMFOC_CURRENT_OOR_FAULT_TYPE",
+  "MCPMSMFOC_OFFSET_OOR",
+  "MCPMSMFOC_OFFSET_OOR_MAXIMUM",
+  "MCPMSMFOC_OFFSET_OOR_MINIMUM",
+  "MCPMSMFOC_OFFSET_OOR_DEBOUNCE",
+  "MCPMSMFOC_OFFSET_OOR_FAULT_TYPE",
+];
 
 interface IProps {
   parentUpdate: () => void;
@@ -47,13 +73,14 @@ class CurrentMeasurementAndDiagnosisDualShunt extends React.Component<
   OffsetCorrection() {
     return (
       <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          offsetCorrectionSymbolArray
+        )}
         <AddTitleAndParameters
           Headding="Offset Correction"
           parentUpdate={this.refreshScreen}
-          SymbolsArray={[
-            "MCPMSMFOC_OFFSET_CORRECTION_ALGORITHM",
-            "MCPMSMFOC_OFFSET_CORRECTION_SAMPLE",
-          ]}
+          SymbolsArray={offsetCorrectionSymbolArray}
         />
       </div>
     );
@@ -62,13 +89,14 @@ class CurrentMeasurementAndDiagnosisDualShunt extends React.Component<
   CurrentScaling() {
     return (
       <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          currentScalingSymbolArray
+        )}
         <AddTitleAndParameters
           Headding="Current Scaling"
           parentUpdate={this.refreshScreen}
-          SymbolsArray={[
-            "MCPMSMFOC_CURRENT_SCALING_FORMAT",
-            "MCPMSMFOC_CURRENT_SCALING_FACTORT",
-          ]}
+          SymbolsArray={currentScalingSymbolArray}
         />
       </div>
     );
@@ -77,20 +105,11 @@ class CurrentMeasurementAndDiagnosisDualShunt extends React.Component<
   Diagnosis() {
     return (
       <div>
+        {DialogCommonInitilizeCode(this.props.showToast, diagnosisSymbolArray)}
         <AddTitleAndParameters
           Headding="Diagnosis"
           parentUpdate={this.refreshScreen}
-          SymbolsArray={[
-            "MCPMSMFOC_CURRENT_OOR",
-            "MCPMSMFOC_CURRENT_OOR_MAXIMUM",
-            "MCPMSMFOC_CURRENT_OOR_DEBOUNCE",
-            "MCPMSMFOC_CURRENT_OOR_FAULT_TYPE",
-            "MCPMSMFOC_OFFSET_OOR",
-            "MCPMSMFOC_OFFSET_OOR_MAXIMUM",
-            "MCPMSMFOC_OFFSET_OOR_MINIMUM",
-            "MCPMSMFOC_OFFSET_OOR_DEBOUNCE",
-            "MCPMSMFOC_OFFSET_OOR_FAULT_TYPE",
-          ]}
+          SymbolsArray={diagnosisSymbolArray}
         />
       </div>
     );
@@ -107,7 +126,8 @@ class CurrentMeasurementAndDiagnosisDualShunt extends React.Component<
             <Divider layout="vertical" />
             {getIndex(defaultViewGlobal, actionIds) === 0 &&
               this.OffsetCorrection()}
-            {(getIndex(defaultViewGlobal, actionIds) === 1 || getIndex(defaultViewGlobal, actionIds) === 2) &&
+            {(getIndex(defaultViewGlobal, actionIds) === 1 ||
+              getIndex(defaultViewGlobal, actionIds) === 2) &&
               this.CurrentScaling()}
             {getIndex(defaultViewGlobal, actionIds) === 3 && this.Diagnosis()}
           </div>
@@ -119,6 +139,9 @@ class CurrentMeasurementAndDiagnosisDualShunt extends React.Component<
 export default CurrentMeasurementAndDiagnosisDualShunt;
 
 export function SetCurrentMeasurementDefaultWindowView() {
+  if (GetResetToDefaultStatus() || GetResetStatus()) {
+    return;
+  }
   defaultViewGlobal = actionIds[0];
 }
 
@@ -138,6 +161,7 @@ function sendClickAction(evt: { target: any }) {
   if (target.correspondingUseElement) target = target.correspondingUseElement;
   if (target.value) {
     defaultViewGlobal = target.value;
+    ResetDialogSettings();
     obj?.refreshScreen();
     return;
   }
