@@ -5,7 +5,8 @@ import icon from "../../../Resources/Images/MICH4C.png";
 
 import "../../../Styles/Headder.css";
 import PrimeReact from "primereact/api";
-import { LoadImage, HideDiv, ShowDiv } from "../../Common/NodeUtils";
+import { LoadImage, HideDiv, ShowDiv } from '../../Common/NodeUtils';
+import { ZoomInReact, ZoomOutReact } from '../../Common/SymbolAccess';
 
 let portNumber = (window as any).javaConnector.getPortNumber();
 
@@ -46,11 +47,25 @@ const Headder = () => {
         label="HELP"
         tooltip="View MC Plant help"
         tooltipOptions={{ position: "bottom" }}
-        icon="pi pi-search"
+        // icon="pi pi-search"
         className="p-button p-button-text  p-mr-2"
         iconPos="right"
         style={{ fontWeight: "bold", color: "black" }}
         onClick={() => LoadHelp()}
+      />
+      <Button
+        tooltip="Ctrl + Mouse Scroll Up"
+        tooltipOptions={{ position: "left" }}
+        icon="pi pi-search-plus"
+        className="p-button-rounded p-button-text p-button-plain p-button-lg p-mr-1"
+        onClick={() => ZoomIn()}
+      />
+      <Button
+        tooltip="Ctrl + Mouse Scroll Down"
+        tooltipOptions={{ position: "left" }}
+        icon="pi pi-search-minus"
+        className="p-button-rounded p-button-text p-button-lg p-button-plain"
+        onClick={() => ZoomOut()}
       />
     </React.Fragment>
   );
@@ -78,6 +93,14 @@ const Headder = () => {
     );
   };
 
+  function ZoomIn(){
+    ZoomInReact();
+  }
+
+  function ZoomOut(){
+    ZoomOutReact();
+  }
+
   function openInNewTab(href: any) {
     Object.assign(document.createElement("a"), {
       target: "_blank",
@@ -91,7 +114,7 @@ const Headder = () => {
         <Toolbar
           left={leftContents}
           right={rightContents}
-          style={{ background: "white", height: "60px", border: "white" }}
+          style={{ background: "white", height: "60px", maxHeight:"60px", border: "white", positon:"sticky", top:"0", overflow:"hidden" }}
         />
       </div>
     </div>

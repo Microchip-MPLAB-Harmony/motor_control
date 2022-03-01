@@ -76,3 +76,11 @@ export function UpdateSymbolValue(
 export function clearSymbol(componentId: any, symbolId: any): void {
   (window as any).javaConnector.clearSymbol(componentId, symbolId);
 }
+
+export function ZoomInReact(){
+  (window as any).javaConnector.ZoomInReactCall();
+}
+
+export function ZoomOutReact(){
+  (window as any).javaConnector.ZoomOutReactCall();
+}
