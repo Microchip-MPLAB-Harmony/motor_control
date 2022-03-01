@@ -16,6 +16,7 @@ import { getIndex } from "../../../MotorControlPlant/Common/Utils";
 import React from "react";
 import { AddImageAndParameters, LoadImage } from "../../Common/NodeUtils";
 import { CallMouseLeave, CallMouseMove } from "../../Common/MouseEvent";
+import { DialogCommonInitilizeCode, ResetDialogSettings, GetResetToDefaultStatus, GetResetStatus } from '../CustomPopUp/CustomPopUp';
 
 var svgdoc: any = null;
 var toolTipObject: any = null;
@@ -45,6 +46,72 @@ let obj: MotorControlandDiagnosis | null = null;
 
 let motorControlModeSymbol = "MCPMSMFOC_CONTROL_TYPE";
 let ramProfilerSelectSymbol = "MCPMSMFOC_RAMP_PROFILES";
+let ramProfilerSymbols2 = [
+  "MCPMSMFOC_RAMP_PROFILER_RAMP_TIME",
+  "MCPMSMFOC_RAMP_PROFILER_MAX_SPEED",
+  "MCPMSMFOC_RAMP_PROFILER_MAX_ACCEL",
+];
+
+let ramProfilerSymbolCollection = [ramProfilerSelectSymbol];
+
+ramProfilerSymbolCollection =
+  ramProfilerSymbolCollection.concat(ramProfilerSymbols2);
+
+let fieldWeakeningSymbols = [
+  "MCPMSMFOC_ENABLE_FW",
+  "MCPMSMFOC_FW_MAX_NEGATIVE_ID",
+  "MCPMSMFOC_FW_TUNING_PARAMETER",
+  "MCPMSMFOC_ENABLE_MTPA",
+  "MCPMSMFOC_MTPA_TUNING_PARAMETER",
+];
+
+let speedPIParametersArray = [
+  "MCPMSMFOC_SPEED_PID_AW",
+  "MCPMSMFOC_SPEED_PID_KP",
+  "MCPMSMFOC_SPEED_PID_KI",
+  "MCPMSMFOC_SPEED_PID_KV",
+  "MCPMSMFOC_SPEED_PID_KC",
+  "MCPMSMFOC_SPEED_PID_YIMAX",
+  "MCPMSMFOC_SPEED_PID_YMAX",
+];
+
+let quadratureAxisCurrentPISymbols = [
+  "MCPMSMFOC_IQ_PID_AW",
+  "MCPMSMFOC_IQ_PID_KP",
+  "MCPMSMFOC_IQ_PID_KI",
+  "MCPMSMFOC_IQ_PID_KV",
+  "MCPMSMFOC_IQ_PID_KC",
+  "MCPMSMFOC_IQ_PID_YIMAX",
+  "MCPMSMFOC_IQ_PID_YMAX",
+];
+
+let directAxisCurrentPIParametersSymbols = [
+  "MCPMSMFOC_ID_PID_AW",
+  "MCPMSMFOC_ID_PID_KP",
+  "MCPMSMFOC_ID_PID_KI",
+  "MCPMSMFOC_ID_PID_KV",
+  "MCPMSMFOC_ID_PID_KC",
+  "MCPMSMFOC_ID_PID_YIMAX",
+  "MCPMSMFOC_ID_PID_YMAX",
+];
+
+let positionControlPIParametersSymbols = [
+  "MCPMSMFOC_POSITION_PID_AW",
+  "MCPMSMFOC_POSITION_PID_KP",
+  "MCPMSMFOC_POSITION_PID_KI",
+  "MCPMSMFOC_POSITION_PID_KV",
+  "MCPMSMFOC_POSITION_PID_KC",
+  "MCPMSMFOC_POSITION_PID_YIMAX",
+  "MCPMSMFOC_POSITION_PID_YMAX",
+];
+
+let pwmModulatorSymbols = [
+  "MCPMSMFOC_OVER_MODULATION",
+  "MCPMSMFOC_MODULATION_TECHNIQUE",
+  "MCPMSMFOC_SPACE_VECTOR_LIMIT"
+];
+
+let decoupleNetworkSymbols = ["MCPMSMFOC_ENABLE_DECOUPLING"];
 
 class MotorControlandDiagnosis extends React.Component<IProps, IState> {
   constructor(props: IProps) {
@@ -86,6 +153,10 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
   ramProfilerData() {
     return (
       <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          ramProfilerSymbolCollection.concat([motorControlModeSymbol])
+        )}
         {getIndex(
           this.state.ramProfilerSelectedValue,
           this.ramProfilerSelectArray
@@ -108,11 +179,7 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
         <MutlipleComponents
           componentId={mc_component_id}
           parentUpdate={this.refreshScreen}
-          symbolsArray={[
-            "MCPMSMFOC_RAMP_PROFILER_RAMP_TIME",
-            "MCPMSMFOC_RAMP_PROFILER_MAX_SPEED",
-            "MCPMSMFOC_RAMP_PROFILER_MAX_ACCEL",
-          ]}
+          symbolsArray={ramProfilerSymbols2}
         />
       </div>
     );
@@ -120,120 +187,120 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
 
   speedPIParameters() {
     return (
-      <AddImageAndParameters
-        Image={PI_Parameters_Back_Calculation}
-        Headding="Speed Controller"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={[
-          "MCPMSMFOC_SPEED_PID_AW",
-          "MCPMSMFOC_SPEED_PID_KP",
-          "MCPMSMFOC_SPEED_PID_KI",
-          "MCPMSMFOC_SPEED_PID_KV",
-          "MCPMSMFOC_SPEED_PID_KC",
-          "MCPMSMFOC_SPEED_PID_YIMAX",
-          "MCPMSMFOC_SPEED_PID_YMAX",
-        ]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          speedPIParametersArray.concat([motorControlModeSymbol])
+        )}
+        <AddImageAndParameters
+          Image={PI_Parameters_Back_Calculation}
+          Headding="Speed Controller"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={speedPIParametersArray}
+        />
+      </div>
     );
   }
 
   QuadratureAxisCurrentPIController() {
     return (
-      <AddImageAndParameters
-        Image={PI_Parameters_Back_Calculation}
-        Headding="Q-Axis Current Controller"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={[
-          "MCPMSMFOC_IQ_PID_AW",
-          "MCPMSMFOC_IQ_PID_KP",
-          "MCPMSMFOC_IQ_PID_KI",
-          "MCPMSMFOC_IQ_PID_KV",
-          "MCPMSMFOC_IQ_PID_KC",
-          "MCPMSMFOC_IQ_PID_YIMAX",
-          "MCPMSMFOC_IQ_PID_YMAX",
-        ]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          quadratureAxisCurrentPISymbols.concat([motorControlModeSymbol])
+        )}
+        <AddImageAndParameters
+          Image={PI_Parameters_Back_Calculation}
+          Headding="Q-Axis Current Controller"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={quadratureAxisCurrentPISymbols}
+        />
+      </div>
     );
   }
 
   DirectAxisCurrentPIParameters() {
     return (
-      <AddImageAndParameters
-        Image={PI_Parameters_Back_Calculation}
-        Headding="D-Axis Current Controller"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={[
-          "MCPMSMFOC_ID_PID_AW",
-          "MCPMSMFOC_ID_PID_KP",
-          "MCPMSMFOC_ID_PID_KI",
-          "MCPMSMFOC_ID_PID_KV",
-          "MCPMSMFOC_ID_PID_KC",
-          "MCPMSMFOC_ID_PID_YIMAX",
-          "MCPMSMFOC_ID_PID_YMAX",
-        ]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          directAxisCurrentPIParametersSymbols.concat([motorControlModeSymbol])
+        )}
+        <AddImageAndParameters
+          Image={PI_Parameters_Back_Calculation}
+          Headding="D-Axis Current Controller"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={directAxisCurrentPIParametersSymbols}
+        />
+      </div>
     );
   }
 
   PositionControllerPIParameters() {
     return (
-      <AddImageAndParameters
-        Image={PI_Parameters_Back_Calculation}
-        Headding="Position Controller"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={[
-          "MCPMSMFOC_POSITION_PID_AW",
-          "MCPMSMFOC_POSITION_PID_KP",
-          "MCPMSMFOC_POSITION_PID_KI",
-          "MCPMSMFOC_POSITION_PID_KV",
-          "MCPMSMFOC_POSITION_PID_KC",
-          "MCPMSMFOC_POSITION_PID_YIMAX",
-          "MCPMSMFOC_POSITION_PID_YMAX",
-        ]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          positionControlPIParametersSymbols.concat([motorControlModeSymbol])
+        )}
+        <AddImageAndParameters
+          Image={PI_Parameters_Back_Calculation}
+          Headding="Position Controller"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={positionControlPIParametersSymbols}
+        />
+      </div>
     );
   }
 
   FWAndMTPA() {
     return (
-      <AddImageAndParameters
-        Image={null}
-        Headding="Field Weakening And MTPA"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={[
-          "MCPMSMFOC_ENABLE_FW",
-          "MCPMSMFOC_FW_MAX_NEGATIVE_ID",
-          "MCPMSMFOC_FW_TUNING_PARAMETER",
-          "MCPMSMFOC_ENABLE_MTPA",
-          "MCPMSMFOC_MTPA_TUNING_PARAMETER",
-        ]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          fieldWeakeningSymbols.concat([motorControlModeSymbol])
+        )}
+        <AddImageAndParameters
+          Image={null}
+          Headding="Field Weakening And MTPA"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={fieldWeakeningSymbols}
+        />
+      </div>
     );
   }
 
   PWMModulator() {
     return (
-      <AddImageAndParameters
-        Image={null}
-        Headding="PWM Modulator"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={[
-          "MCPMSMFOC_OVER_MODULATION",
-          "MCPMSMFOC_MODULATION_TECHNIQUE",
-          "MCPMSMFOC_SPACE_VECTOR_LIMIT",
-        ]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          pwmModulatorSymbols.concat([motorControlModeSymbol])
+        )}
+        <AddImageAndParameters
+          Image={null}
+          Headding="PWM Modulator"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={pwmModulatorSymbols}
+        />
+      </div>
     );
   }
 
   DecoupleNetwork() {
     return (
-      <AddImageAndParameters
-        Image={null}
-        Headding="Decoupling Network"
-        parentUpdate={this.refreshScreen}
-        SymbolsArray={["MCPMSMFOC_ENABLE_DECOUPLING"]}
-      />
+      <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          decoupleNetworkSymbols.concat([motorControlModeSymbol])
+        )}
+        <AddImageAndParameters
+          Image={null}
+          Headding="Decoupling Network"
+          parentUpdate={this.refreshScreen}
+          SymbolsArray={decoupleNetworkSymbols}
+        />
+      </div>
     );
   }
 
@@ -278,6 +345,9 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
 export default MotorControlandDiagnosis;
 
 export function SetMotorControlDiagnosisDefaultWindowView() {
+  if(GetResetToDefaultStatus() || GetResetStatus()){
+     return;
+  }
   defaultViewGlobal = actionIds[0];
 }
 
@@ -296,6 +366,7 @@ function sendClickAction(evt: { target: any }) {
   if (target.correspondingUseElement) target = target.correspondingUseElement;
   if (target.value) {
     defaultViewGlobal = target.value;
+    ResetDialogSettings();
     obj?.refreshScreen();
     return;
   }

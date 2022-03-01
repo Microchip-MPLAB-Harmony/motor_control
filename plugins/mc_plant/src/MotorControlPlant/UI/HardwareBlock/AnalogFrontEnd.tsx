@@ -6,6 +6,7 @@ import { getIndex } from "../../Common/Utils";
 import React from "react";
 import { AddImageAndParameters } from "../../Common/NodeUtils";
 import { CallMouseLeave, CallMouseMove } from "../../Common/MouseEvent";
+import { DialogCommonInitilizeCode, GetResetStatus, GetResetToDefaultStatus, ResetDialogSettings } from '../CustomPopUp/CustomPopUp';
 
 let svgIcon1_1: any = null;
 let svgdocIcon1_2: any = null;
@@ -67,29 +68,36 @@ class AnalogFrontEnd extends React.Component<IProps, IState> {
 
   Default_ICON1_1() {
     return (
-      <AddImageAndParameters
+      <div>
+        {DialogCommonInitilizeCode(this.props.showToast, Defautl_ICON1_1_Array)}
+        <AddImageAndParameters
         Image={null}
         Headding="Phase A Current"
         parentUpdate={this.refreshScreen}
         SymbolsArray={Defautl_ICON1_1_Array}
       />
+      </div>
     );
   }
 
   Default_ICON1_2() {
     return (
-      <AddImageAndParameters
+      <div>
+         {DialogCommonInitilizeCode(this.props.showToast, Defautl_ICON1_2_Array)}
+         <AddImageAndParameters
         Image={null}
         Headding="Phase B Current"
         parentUpdate={this.refreshScreen}
         SymbolsArray={Defautl_ICON1_2_Array}
       />
+      </div>
     );
   }
 
   Default_ICON2_1() {
     return (
       <div>
+         {DialogCommonInitilizeCode(this.props.showToast, Defautl_ICON2_1_Array_Voltage)}
         {/* <AddImageAndParameters
           Image={null}
           Headding="DC Bus Current"
@@ -140,6 +148,9 @@ class AnalogFrontEnd extends React.Component<IProps, IState> {
 export default AnalogFrontEnd;
 
 export function SetAnalogFrontEndDefaultWindowView() {
+  if (GetResetToDefaultStatus() || GetResetStatus()) {
+    return;
+  }
   defaultViewGlobal = actionIds[0];
 }
 
@@ -184,6 +195,7 @@ function sendClickAction(evt: { target: any }) {
   if (target.correspondingUseElement) target = target.correspondingUseElement;
   if (target.value) {
     defaultViewGlobal = target.value;
+    ResetDialogSettings();
     obj?.refreshScreen();
     return;
   }

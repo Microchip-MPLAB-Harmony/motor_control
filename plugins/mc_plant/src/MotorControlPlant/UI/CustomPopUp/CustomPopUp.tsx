@@ -306,6 +306,7 @@ export function callClearSymbols(
 ) {
   clearAllSymbols(mc_component_id, symbolsArray);
   SetResetToDefaultStatus(false);
+  ResetDialogSettings();
   showToast("Reset to Default Action Completed!");
 }
 
@@ -313,8 +314,13 @@ export function ResetSymbols(
   showToast: (arg0: any) => void,
   symbolsArray: string[]
 ) {
-  UpdateArrayofSymbolsResetAction(resetValues, mc_component_id, symbolsArray);
+  if(resetValues.size === 0){
+    clearAllSymbols(mc_component_id, symbolsArray);
+  }else{
+    UpdateArrayofSymbolsResetAction(resetValues, mc_component_id, symbolsArray);
+  }
   SetResetStatus(false);
+  ResetDialogSettings();
   showToast("Revert Action Completed!");
 }
 

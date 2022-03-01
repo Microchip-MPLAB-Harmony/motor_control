@@ -5,6 +5,7 @@ import { AddDynamicSymbols, getIndex } from "../../Common/Utils";
 import React from "react";
 import { AddImageAndParameters, AddTitileOnly } from "../../Common/NodeUtils";
 import { CallMouseLeave, CallMouseMove } from "../../Common/MouseEvent";
+import { DialogCommonInitilizeCode, GetResetStatus, GetResetToDefaultStatus, ResetDialogSettings } from '../CustomPopUp/CustomPopUp';
 
 let svgGroup1: any = null;
 let svgGroup2: any = null;
@@ -57,6 +58,7 @@ class AnalogInterface extends React.Component<IProps, IState> {
   Default_ICON1_1() {
     return (
       <div>
+        {DialogCommonInitilizeCode(this.props.showToast, GROUP1_A.concat(GROUP1_B))}
         <AddTitileOnly Headding="Group 01 Signals" />
         <AddImageAndParameters
           Image={null}
@@ -77,6 +79,7 @@ class AnalogInterface extends React.Component<IProps, IState> {
   Default_ICON1_2() {
     return (
       <div>
+         {DialogCommonInitilizeCode(this.props.showToast, GROUP2_A.concat(GROUP2_B))}
         <AddTitileOnly Headding="Group 02 Signals" />
         <AddImageAndParameters
           Image={null}
@@ -117,6 +120,9 @@ class AnalogInterface extends React.Component<IProps, IState> {
 export default AnalogInterface;
 
 export function SetAnalogInterfaceDefaultWindowView() {
+  if (GetResetToDefaultStatus() || GetResetStatus()) {
+    return;
+  }
   defaultViewGlobal = actionIds[0];
 }
 
@@ -142,6 +148,7 @@ function sendClickAction(evt: { target: any }) {
   if (target.correspondingUseElement) target = target.correspondingUseElement;
   if (target.value) {
     defaultViewGlobal = target.value;
+    ResetDialogSettings();
     obj?.refreshScreen();
     return;
   }

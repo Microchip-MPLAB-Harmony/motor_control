@@ -12,7 +12,7 @@ const PositionInterface = (props: {
   SymbolsArray = AddDynamicSymbols(selectInstance, "QEB", SymbolsArray);
 
   return (
-    <div>
+    <div className="p-d-flex">
       {DialogCommonInitilizeCode(props.showToast, SymbolsArray)}
       <Parameters
         componentId={mc_component_id}

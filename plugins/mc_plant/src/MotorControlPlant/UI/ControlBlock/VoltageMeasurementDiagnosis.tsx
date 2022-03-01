@@ -1,6 +1,11 @@
 import { Divider } from "primereact/divider";
 import { ReactComponent as VoltageMeasurementDiagnosisSVG } from "../../../Resources/Svgs/ControlBlock/Voltage_Measurement_and_Diagnosis-main_diagram.svg";
-import { DialogCommonInitilizeCode } from "../CustomPopUp/CustomPopUp";
+import {
+  DialogCommonInitilizeCode,
+  GetResetStatus,
+  GetResetToDefaultStatus,
+  ResetDialogSettings,
+} from "../CustomPopUp/CustomPopUp";
 
 import { getIndex } from "../../../MotorControlPlant/Common/Utils";
 import React from "react";
@@ -11,6 +16,22 @@ var svgdoc: any = null;
 var toolTipObject: any = null;
 let actionIds = ["box-voltagescaling", "box-processing", "box-diagnosis"];
 let defaultViewGlobal = actionIds[0];
+
+let voltageScallingSymbolArray = [
+  "MCPMSMFOC_VOLTAGE_SCALING_FORMAT",
+  "MCPMSMFOC_VOLTAGE_SCALING_FACTORT",
+];
+let processingSymbolArray = ["MCPMSMFOC_VOLTAGE_PROCESSING"];
+let diagnosisSymbolArray = [
+  "MCPMSMFOC_OVER_VOLTAGE",
+  "MCPMSMFOC_OVER_VOLTAGE_LIMIT",
+  "MCPMSMFOC_OVER_VOLTAGE_DEBOUNCE",
+  "MCPMSMFOC_OVER_VOLTAGE_FAULT_TYPE",
+  "MCPMSMFOC_UNDER_VOLTAGE",
+  "MCPMSMFOC_UNDER_VOLTAGE_LIMIT",
+  "MCPMSMFOC_UNDER_VOLTAGE_DEBOUNCE",
+  "MCPMSMFOC_UNDER_VOLTAGE_FAULT_TYPE",
+];
 
 interface IProps {
   parentUpdate: () => void;
@@ -40,13 +61,14 @@ class VoltageMeasurementDiagnosis extends React.Component<IProps, IState> {
   VoltageScalling() {
     return (
       <div>
+        {DialogCommonInitilizeCode(
+          this.props.showToast,
+          voltageScallingSymbolArray
+        )}
         <AddTitleAndParameters
           Headding="Voltage Scaling"
           parentUpdate={this.refreshScreen}
-          SymbolsArray={[
-            "MCPMSMFOC_VOLTAGE_SCALING_FORMAT",
-            "MCPMSMFOC_VOLTAGE_SCALING_FACTORT",
-          ]}
+          SymbolsArray={voltageScallingSymbolArray}
         />
       </div>
     );
@@ -55,10 +77,11 @@ class VoltageMeasurementDiagnosis extends React.Component<IProps, IState> {
   Processing() {
     return (
       <div>
+        {DialogCommonInitilizeCode(this.props.showToast, processingSymbolArray)}
         <AddTitleAndParameters
           Headding="Processing"
           parentUpdate={this.refreshScreen}
-          SymbolsArray={["MCPMSMFOC_VOLTAGE_PROCESSING"]}
+          SymbolsArray={processingSymbolArray}
         />
       </div>
     );
@@ -67,19 +90,11 @@ class VoltageMeasurementDiagnosis extends React.Component<IProps, IState> {
   Diagnosis() {
     return (
       <div>
+        {DialogCommonInitilizeCode(this.props.showToast, diagnosisSymbolArray)}
         <AddTitleAndParameters
           Headding="Diagnosis"
           parentUpdate={this.refreshScreen}
-          SymbolsArray={[
-            "MCPMSMFOC_OVER_VOLTAGE",
-            "MCPMSMFOC_OVER_VOLTAGE_LIMIT",
-            "MCPMSMFOC_OVER_VOLTAGE_DEBOUNCE",
-            "MCPMSMFOC_OVER_VOLTAGE_FAULT_TYPE",
-            "MCPMSMFOC_UNDER_VOLTAGE",
-            "MCPMSMFOC_UNDER_VOLTAGE_LIMIT",
-            "MCPMSMFOC_UNDER_VOLTAGE_DEBOUNCE",
-            "MCPMSMFOC_UNDER_VOLTAGE_FAULT_TYPE",
-          ]}
+          SymbolsArray={diagnosisSymbolArray}
         />
       </div>
     );
@@ -107,6 +122,9 @@ class VoltageMeasurementDiagnosis extends React.Component<IProps, IState> {
 export default VoltageMeasurementDiagnosis;
 
 export function SetVoltageMeasurementDefaultWindowView() {
+  if (GetResetToDefaultStatus() || GetResetStatus()) {
+    return;
+  }
   defaultViewGlobal = actionIds[0];
 }
 
@@ -125,6 +143,7 @@ function sendClickAction(evt: { target: any }) {
   if (target.correspondingUseElement) target = target.correspondingUseElement;
   if (target.value) {
     defaultViewGlobal = target.value;
+    ResetDialogSettings();
     obj?.refreshScreen();
     return;
   }
