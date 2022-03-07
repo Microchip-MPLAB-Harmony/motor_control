@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Package name="motor_control">
     <Dependencies>
-        <Dependency name="csp" version="v3.9.1"/>
-        <Dependency name="x2c" version="v1.1.4"/>
+        <Dependency name="csp" version="v3.11.0"/>
+        <Dependency name="x2c" version="v1.2.0"/>
+		 <Dependency name="bsp" version="v3.11.0"/>
     </Dependencies>
 </Package>
