@@ -1,3 +1,12 @@
+---
+parent: Theoretical Background 
+grand_parent: Motor Control Plant Projects
+title: Permanent Magnet Synchronous Motors
+nav_order: 1
+has_children: false
+has_toc: false
+--- 
+
 <!-- Styling  -->
 <style>
     body {

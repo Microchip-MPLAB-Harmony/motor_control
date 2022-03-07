@@ -1,3 +1,11 @@
+---
+parent: Theoretical Background 
+grand_parent: Motor Control Plant Projects
+title: Field Oriented Control
+nav_order: 2
+has_children: false
+has_toc: false
+--- 
 <style>
  body {
         counter-reset: h1;
@@ -105,6 +113,7 @@
     }
 }
 </style>
+
 
 # Introduction
 The Field Oriented Control (FOC) is the conventional control scheme for permanent-magnet synchronous motors. It generally results in smoother torque, slightly higher efficiency, and higher torque-speed curve, compared to six-step control, but requires a measurement or estimate of rotor position, and is more computationally intensive.

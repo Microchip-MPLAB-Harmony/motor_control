@@ -1,4 +1,11 @@
-
+---
+parent: Getting Started
+grand_parent: Motor Control Plant
+title: Generate Code with MCC
+nav_order: 3
+has_children: false
+has_toc: false
+--- 
 <style>
     body {
         counter-reset: h1

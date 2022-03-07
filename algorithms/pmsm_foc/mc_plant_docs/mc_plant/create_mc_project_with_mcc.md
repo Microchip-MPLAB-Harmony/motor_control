@@ -1,4 +1,11 @@
-
+---
+parent: Getting Started
+grand_parent: Motor Control Plant
+title: Create MCC project for MC Plant
+nav_order: 1
+has_children: false
+has_toc: false
+--- 
 <!-- Styling  -->
 <style>
  body {

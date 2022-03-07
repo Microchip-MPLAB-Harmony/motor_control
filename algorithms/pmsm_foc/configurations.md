@@ -1,6 +1,6 @@
 ---
-parent: PMSM FOC Component
-grand_parent: Microchip MPLAB® Harmony 3 Motor Control
+parent: Non Motor Control Plant Projects
+grand_parent: PMSM FOC Component
 title: Configuring the Library
 nav_order: 3
 has_children: false

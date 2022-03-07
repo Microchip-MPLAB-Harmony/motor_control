@@ -1,3 +1,12 @@
+---
+parent: Theoretical Background 
+grand_parent: Motor Control Plant Projects
+title: Rotor Position Calculation
+nav_order: 4
+has_children: false
+has_toc: false
+--- 
+
 <!-- Styling  -->
 <style>
  body {

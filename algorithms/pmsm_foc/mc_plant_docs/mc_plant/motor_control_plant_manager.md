@@ -1,4 +1,11 @@
-
+---
+parent: Getting Started
+grand_parent: Motor Control Plant
+title: MC Plant Manager
+nav_order: 2
+has_children: true
+has_toc: false
+--- 
 <!-- Styling  -->
 <style>
  body {

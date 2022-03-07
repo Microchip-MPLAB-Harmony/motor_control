@@ -1,3 +1,12 @@
+---
+parent: Theoretical Background 
+grand_parent: Motor Control Plant Projects
+title: Current Measurement
+nav_order: 3
+has_children: false
+has_toc: false
+--- 
+
 <style>
  body {
         counter-reset: h1;

@@ -1,3 +1,11 @@
+---
+parent: MC Plant Manager 
+grand_parent: Getting Started
+title: Software Modules
+nav_order:3
+has_children: false
+has_toc: false
+--- 
 <!-- Styling  -->
 <style>
  body {

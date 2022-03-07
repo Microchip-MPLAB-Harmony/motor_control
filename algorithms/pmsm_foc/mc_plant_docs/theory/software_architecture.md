@@ -1,3 +1,11 @@
+---
+parent: Software Design
+grand_parent: Motor Control Plant Projects
+title: Implementation Details
+nav_order: 1
+has_children: false
+has_toc: false
+--- 
 <style>
  body {
         counter-reset: h1;
