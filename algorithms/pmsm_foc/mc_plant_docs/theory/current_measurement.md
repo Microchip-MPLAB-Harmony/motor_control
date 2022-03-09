@@ -1,5 +1,5 @@
 ---
-parent: Theoretical Background 
+parent: Theoretical Background
 grand_parent: Motor Control Plant Projects
 title: Current Measurement
 nav_order: 3

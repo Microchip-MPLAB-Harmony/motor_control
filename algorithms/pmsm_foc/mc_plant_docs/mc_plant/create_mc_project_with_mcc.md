@@ -1,6 +1,6 @@
 ---
 parent: Getting Started
-grand_parent: Motor Control Plant
+grand_parent: Motor Control Plant Projects
 title: Create MCC project for MC Plant
 nav_order: 1
 has_children: false

@@ -1,8 +1,8 @@
 ---
-parent: MC Plant Manager 
-grand_parent: Getting Started
+parent: Getting Started
+grand_parent: Motor Control Plant Projects
 title: Software Modules
-nav_order:3
+nav_order: 5
 has_children: false
 has_toc: false
 --- 

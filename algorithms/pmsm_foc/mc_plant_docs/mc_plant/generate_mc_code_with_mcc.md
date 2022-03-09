@@ -1,8 +1,8 @@
 ---
 parent: Getting Started
-grand_parent: Motor Control Plant
+grand_parent: Motor Control Plant Projects
 title: Generate Code with MCC
-nav_order: 3
+nav_order: 6
 has_children: false
 has_toc: false
 --- 

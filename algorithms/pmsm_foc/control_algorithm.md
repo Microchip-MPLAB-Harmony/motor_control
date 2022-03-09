@@ -1,6 +1,5 @@
 ---
 parent: Non Motor Control Plant Projects		
-grand_parent: PMSM FOC Component
 title: Control Algorithm
 nav_order: 2
 has_children: false

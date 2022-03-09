@@ -1,5 +1,5 @@
 ---
-parent: Theoretical Background 
+parent: Theoretical Background
 grand_parent: Motor Control Plant Projects
 title: Field Oriented Control
 nav_order: 2
@@ -126,7 +126,7 @@ A three-phase AC has a stationary part called the stator; a rotating part called
 Electromagnetic torque <!-- $T_{em}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\d92cjWJoLE.svg"> is proportional to the cross product of stator currents and rotor flux linkage. Here <!-- $\hat{z}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\tIEFzEFr1S.svg"> is a unit vector along the axis of rotation, <!-- $x$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\YsRyFdoDY5.svg"> and <!-- $y$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\yJhQL4bHic.svg"> are components of a two-dimensional plane perpendicular to <!-- $\hat{z}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\MJhZvUS8Cv.svg">, and the current vector is an equivalent vector sum of currents based on how the resulting fields are aligned with these <!-- $x$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\mDTcE1ZszV.svg"> and <!-- $y$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\892SKVLe92.svg"> axes.
 <!-- $
 \begin{aligned}
-T_{em} &= \tfrac{3}{2}N_{p}({\vec{{\psi}}} \times \vec{I} ) \\
+T_{em} &= \tfrac{3}{2}N_{p}({\vec{{psi}}} \times \vec{I}) \\
        &= \tfrac{3}{2}N_{p}({\psi_{x}}{I_{y}} - {\psi_{y}}{I_{x}})\hat{z} \\
        &= \tfrac{3}{2}N_{p}{\psi}I{\sin{\phi}}
 \end{aligned}

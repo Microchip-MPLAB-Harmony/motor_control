@@ -1,6 +1,5 @@
 ﻿---
-parent: Non Motor Control Plant Projects
-grand_parent: PMSM FOC Component
+parent: Non Motor Control Plant Projects		
 title: Software Design
 nav_order: 1
 has_children: false

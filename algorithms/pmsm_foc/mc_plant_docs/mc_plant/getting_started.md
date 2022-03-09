@@ -1,6 +1,5 @@
 ---
-parent: Motor Control Plant
-grand_parent: PMSM FOC Component
+parent: Motor Control Plant Projects
 title: Getting Started
 nav_order: 3
 has_children: true

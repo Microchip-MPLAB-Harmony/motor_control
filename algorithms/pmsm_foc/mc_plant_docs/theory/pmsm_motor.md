@@ -1,5 +1,5 @@
 ---
-parent: Theoretical Background 
+parent: Theoretical Background
 grand_parent: Motor Control Plant Projects
 title: Permanent Magnet Synchronous Motors
 nav_order: 1
@@ -130,17 +130,17 @@ The effective mathematical model of PMSM is critical for controller and observer
 The following equation represents the stationary model of PMSM:
 
 <!-- $
-  \vec{u}_{{\alpha}{\beta}} = R_{s}{\vec{i}_{{\alpha}{\beta}}} + {\frac{d}{dt}}{\bf{{L}}_{{\alpha}{\beta}}}{\vec{i}_{{\alpha}{\beta}}} + \vec{e}_{{\alpha}{\beta}}
+  \vec{u}_{alpha}{\beta} = R_{s}{\vec{i}_{alpha}{\beta}} + {\frac{d}{dt}}{\bf{{L}}_{alpha}{\beta}}{\vec{i}_{alpha}{\beta}} + \vec{e}_{alpha}{\beta}
 $ --> 
 <p align="center">
 <img style="transform: translateY(0.1em); background: white;" src="svg\oihAe4nS7y.svg">
 </p>
 
-where <!-- $\vec{u}_{{\alpha}{\beta}} = \begin{bmatrix}u_{\alpha} & u_{\beta}\end{bmatrix}^T$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\tKXq4XkR0d.svg"> is the stator voltage in stationary reference frame; <!-- $\vec{i}_{{\alpha}{\beta}} = \begin{bmatrix}i_{\alpha} & i_{\beta}\end{bmatrix}^T$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\xvgaaGZbNJ.svg"> is the stator current in stationary reference frame; <!-- $\vec{e}_{{\alpha}{\beta}} = \begin{bmatrix}e_{\alpha} & e_{\beta}\end{bmatrix}^T$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\7O5PAWFt5K.svg"> is the stator back EMF in stationary reference frame; <!-- $R_{s}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\Dcm43Fz41Y.svg">  is the stator per phase resistance.
+where <!-- $\vec{u}_{alpha}{\beta} = \begin{bmatrix}u_{alpha} & u_{\beta}\end{bmatrix}^T$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\tKXq4XkR0d.svg"> is the stator voltage in stationary reference frame; <!-- $\vec{i}_{alpha}{\beta} = \begin{bmatrix}i_{alpha} & i_{\beta}\end{bmatrix}^T$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\xvgaaGZbNJ.svg"> is the stator current in stationary reference frame; <!-- $\vec{e}_{alpha}{\beta} = \begin{bmatrix}e_{alpha} & e_{\beta}\end{bmatrix}^T$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\7O5PAWFt5K.svg"> is the stator back EMF in stationary reference frame; <!-- $R_{s}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\Dcm43Fz41Y.svg">  is the stator per phase resistance.
 
 
 <!-- $
-\bf{{L}}_{{\alpha}{\beta}} = 
+\bf{{L}}_{\alpha}{\beta} = 
 \begin{bmatrix}
 \frac{L_{d} + L_{q}}{2} + \frac{L_{d} - L_{q}}{2}\cos(\theta_{e})& \frac{L_{d} - L_{q}}{2}\sin(\theta_{e})\\[0.6em]
 \frac{L_{d} - L_{q}}{2}\sin(\theta_{e}) & \frac{L_{d} + L_{q}}{2} + \frac{L_{d} - L_{q}}{2}\cos(\theta_{e})
@@ -154,7 +154,7 @@ $ -->
 
 
 <!-- $
-{\vec{e}_{{\alpha}{\beta}}} = 
+{\vec{e}_{\alpha}{\beta}} = 
 \omega_{e}\lambda_{m}
 \begin{bmatrix}
 -\sin(2\theta_{e})\\[0.6em]

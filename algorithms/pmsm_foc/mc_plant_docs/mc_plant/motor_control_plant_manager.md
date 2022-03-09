@@ -1,9 +1,9 @@
 ---
 parent: Getting Started
-grand_parent: Motor Control Plant
+grand_parent: Motor Control Plant Projects
 title: MC Plant Manager
 nav_order: 2
-has_children: true
+has_children: false
 has_toc: false
 --- 
 <!-- Styling  -->

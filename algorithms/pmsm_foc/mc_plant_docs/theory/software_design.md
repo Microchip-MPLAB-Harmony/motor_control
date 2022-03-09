@@ -1,6 +1,5 @@
 ---
 parent: Motor Control Plant Projects
-grand_parent: PMSM FOC Component
 title: Software Design
 nav_order: 2
 has_children: true

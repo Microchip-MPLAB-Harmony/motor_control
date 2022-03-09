@@ -1,7 +1,7 @@
 ---
-parent: Microchip MPLAB® Harmony 3 Motor Control
 title: PMSM FOC Component
-has_children: true
+nav_order: 2
+has_children: false
 has_toc: false
 ---
 

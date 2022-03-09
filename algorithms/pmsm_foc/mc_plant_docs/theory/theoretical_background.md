@@ -1,6 +1,5 @@
 ---
 parent: Motor Control Plant Projects
-grand_parent: PMSM FOC Component
 title: Theoretical Background
 nav_order: 1
 has_children: true
