@@ -41,7 +41,7 @@ execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/analog_i
 execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/position_interface.py"   )
 
 # Software module classes 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/startup_configurator.py"   )
+execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/startup_Configurator.py"   )
 execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/motor_control_and_diagnosis.py"   )
 execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/position_calculation_and_diagnosis.py"   )
 execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/output_stage_and_diagnosis.py"   )
