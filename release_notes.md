@@ -19,7 +19,7 @@ has_children: true
 
 ### Required MPLAB Harmony v3 Modules
 * csp v3.11.0
-* bsp v3.11.0
+* bsp v3.11.1
 * x2c v1.2.0
 * dev_packs v3.11.0
 * mcc v1.0.9
