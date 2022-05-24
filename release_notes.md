@@ -9,6 +9,29 @@ has_children: true
 
 # Microchip MPLAB Harmony 3 Release Notes
 
+## Motor Control Release v3.8.1
+
+### Bug fixes
+* Fix Package Plugin path ( Apple Mac issue )
+
+### Known Issues
+* same as v3.8.0
+
+### Required MPLAB Harmony v3 Modules
+* csp v3.11.0
+* bsp v3.11.1
+* x2c v1.2.0
+* dev_packs v3.11.0
+* mcc v1.1.0
+
+### Development Tools
+* [MPLAB X IDE v6.00](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB XC32 C/C++ Compiler v4.00](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Code Configurator (MCC) v5.1.2
+  * X2CScope v1.3.0.
+  
+  
 ## Motor Control Release v3.8.0
 
 ### New Features
