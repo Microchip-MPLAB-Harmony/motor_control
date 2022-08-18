@@ -59,7 +59,7 @@
 #define CONFIG_UsFilterCoefficient      (float)(0.0163f)
 #define CONFIG_BaseSpeedInRpm           (float)(RATED_SPEED_IN_RPM)
 
-#if( ENABLE == FIELD_WEAKENING )
+#if( ENABLE == ENABLE_FLUX_WEAKENING )
 #define CONFIG_MaximumFWCurrent         (float)(MAX_FW_NEGATIVE_ID_REF)
 #else
 #define CONFIG_MaximumFWCurrent         (float)(0)
@@ -73,12 +73,11 @@
     0u, \
     /* Input ports */ \
     { \
-        NULL, \
         &mcMocI_DQVoltage_gas[0u].direct, \
         &mcRpoI_ElectricalRotorSpeed_gaf32[0u], \
         &mcSpeI_ReferenceIqCurrent_gaf32[0u], \
         &mcVolI_UacPeakVoltage_gaf32[0u], \
-        NULL \
+        &mcRpoI_BackEMF_gaf32[0u] \
     }, \
     /* Output ports */ \
     { \
@@ -102,12 +101,11 @@
     1u, \
     /* Input ports */ \
     { \
-        NULL, \
         mcMocI_DQVoltage_gas[1u].direct, \
         &mcRpoI_ElectricalRotorSpeed_gaf32[1u], \
         &mcSpeI_ReferenceIqCurrent_gaf32[1u], \
         &mcVolI_UacPeakVoltage_gaf32[1u], \
-        NULL \
+        &mcRpoI_BackEMF_gaf32[1u] \
     }, \
     /* Output ports */ \
     { \
@@ -137,7 +135,6 @@ typedef enum _tmcFlx_InstanceId_e
 
 typedef struct _tmcFlx_InputPorts_s 
 {
-    volatile float * yd;
     volatile float * ud;
     volatile float * wel;
     volatile float * iqref;

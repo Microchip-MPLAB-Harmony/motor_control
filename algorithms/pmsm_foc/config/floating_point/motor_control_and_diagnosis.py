@@ -38,16 +38,16 @@ mcMotC_CurrentPiPararameterDictFixed =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0.71
                                                       'KI' : 469
                                                     },
                                    }
-mcMotC_CurrentPiPararameterDictFloating =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0.01,
-                                                      'KI' : 1.0,
+mcMotC_CurrentPiPararameterDictFloating =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0.4,
+                                                      'KI' : 10.0,
                                                       'KC' : 0.5
                                            },
                                         'Custom' :   { 'KP' : 0.02,
                                                        'KI' : 1.0,
                                                        'KC' : 0.5
                                                     },            
-                                        'dsPICDEM MCHV-3' :   { 'KP' : 0.02,
-                                                      'KI' : 1.0,
+                                        'dsPICDEM MCHV-3' :   { 'KP' : 0.2,
+                                                      'KI' : 0.0002,
                                                       'KC' : 0.5
                                                     },
                                    }
@@ -76,8 +76,8 @@ mcMotC_SpeedPiPararameterDictFloating =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0.0
                                                      'KI' : 0.00002,
                                                      'KC' : 0.5
                                                    },
-                                      'dsPICDEM MCHV-3' :   { 'KP' : 0.005,
-                                                    'KI' : 0.00002,
+                                      'dsPICDEM MCHV-3' :   { 'KP' : 0.003,
+                                                    'KI' : 0.0015,
                                                     'KC' : 0.5
                                                   },
                                  }                                  
@@ -307,9 +307,14 @@ class mcMocI_MotorControlAndDiagnosis:
 
         self.sym_FW = self.component.createBooleanSymbol("MCPMSMFOC_ENABLE_FW", self.sym_FW_AND_MTPA)
         self.sym_FW.setLabel("Enable field weakening")
-
+        
+        # Enable flying start after functional test
+        self.sym_FW.setReadOnly(True)
+        
         self.sym_FW_IMAX = self.component.createFloatSymbol("MCPMSMFOC_FW_MAX_NEGATIVE_ID", self.sym_FW)
         self.sym_FW_IMAX.setLabel("Max Negative Current")
+        self.sym_FW_IMAX.setMax(100)
+        self.sym_FW_IMAX.setMin(-100.0)
         self.sym_FW_IMAX.setVisible(False)
         self.sym_FW_IMAX.setDependencies(self.showThisSymbol, ["MCPMSMFOC_ENABLE_FW"])
 
@@ -475,8 +480,6 @@ class mcMocI_MotorControlAndDiagnosis:
 
     def updatePIParameters(self, symbol, event):
         board = event["symbol"].getSelectedKey()
-
-        print("Parameters:", board, mcMotC_SpeedPiPararameterDictFloating )
 
         self.sym_ID_PID_KP.setValue(float(mcMotC_CurrentPiPararameterDictFloating[board]["KP"]))
         self.sym_ID_PID_KI.setValue(float(mcMotC_CurrentPiPararameterDictFloating[board]["KI"]))

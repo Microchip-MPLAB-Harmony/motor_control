@@ -25,6 +25,8 @@
 #---------------------------------------------------------------------------------------#
 #                                     IMPORT                                            #
 #---------------------------------------------------------------------------------------#
+import xml.etree.ElementTree as ET
+import os
 
 #---------------------------------------------------------------------------------------#
 #                                 GLOBAL VARIABLES                                      #
@@ -33,6 +35,22 @@ class mcRpoI_PositionCalculationAndDiagnosis:
     def __init__(self, algorithm, component):
         self.algorithm = algorithm
         self.component = component
+
+        # Read motor parameters from motor.xml
+        path = Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/motor.xml"
+        motor_File = open(path, "r")
+        motor_Content = ET.fromstring(motor_File.read()) 
+
+        self.motor_List = list()
+        self.motor_Parameters = dict()
+
+        for motor in motor_Content.findall("motor"):
+            name = motor.attrib["name"]
+            self.motor_List.append(motor.attrib["name"])
+            self.motor_Parameters[name] = dict()
+            for parameter in motor.findall("parameter"):
+                param = parameter.attrib["id"]
+                self.motor_Parameters[name][param] = parameter.attrib["value"]
 
     def createSymbols(self):
         # Root node 
@@ -61,7 +79,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
 
         self.sym_ED_FILTER_PARAMETER = self.component.createFloatSymbol("MCPMSMFOC_ED_FILTER_PARAMETER", self.sym_ED_FILTER )
         self.sym_ED_FILTER_PARAMETER.setLabel("Filter Parameter")
-        self.sym_ED_FILTER_PARAMETER.setDefaultValue(0.0183)
+        self.sym_ED_FILTER_PARAMETER.setDefaultValue(0.183)
 
         self.sym_EQ_FILTER = self.component.createMenuSymbol("MCPMSMFOC_EQ_FILTER", self.sym_ALGORITHM)
         self.sym_EQ_FILTER.setLabel("Eq Filter")
@@ -69,7 +87,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
        
         self.sym_EQ_FILTER_PARAMETER = self.component.createFloatSymbol("MCPMSMFOC_EQ_FILTER_PARAMETER", self.sym_EQ_FILTER )
         self.sym_EQ_FILTER_PARAMETER.setLabel("Filter Parameter")
-        self.sym_EQ_FILTER_PARAMETER.setDefaultValue(0.0183)
+        self.sym_EQ_FILTER_PARAMETER.setDefaultValue(0.183)
 
         self.sym_SPEED_FILTER = self.component.createMenuSymbol("MCPMSMFOC_SPEED_FILTER", self.sym_ALGORITHM)
         self.sym_SPEED_FILTER.setLabel("Speed Filter")
@@ -93,6 +111,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
        
         self.sym_QDEC_PULSE_PER_EREV = self.component.createIntegerSymbol("MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV", self.sym_QDEC )
         self.sym_QDEC_PULSE_PER_EREV.setLabel("Pulse Per electrical rotation")
+        self.sym_QDEC_PULSE_PER_EREV.setDependencies( self.symbolUpdate, ["MCPMSMFOC_MOTOR_SEL"])
         self.sym_QDEC_PULSE_PER_EREV.setDefaultValue(200)
 
 
@@ -110,4 +129,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
             self.sym_SPEED_FILTER.setVisible(False)
             self.sym_NOISE_FILTER.setVisible(True)
             self.sym_QDEC.setVisible(True)
-        
+
+    def symbolUpdate( self, symbol, event ):
+        motor = event["symbol"].getValue()
+        symbol.setValue( int( self.motor_Parameters[motor]['QE_PULSES_PER_REV'] ))

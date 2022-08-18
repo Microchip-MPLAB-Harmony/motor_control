@@ -59,21 +59,9 @@
 #define VOLTAGE_MEASUREMENT_INSTANCES 1u 
 
 /**
- * Voltage divider top resistance in ohms
- */
-#define VOLTAGE_DIVIDER_TOP_RESISTANCE_IN_KOHM (float)30.0f
-
-/**
- * Voltage divider bottom resistance in ohms
- */
-#define VOLTAGE_DIVIDER_BOTTOM_RESISTANCE_IN_KOHM (float)2.0f
-
-/**
  * ADC count to volts 
  */
-#define VOLTAGE_DIVIDER_RATIO  (float)((    VOLTAGE_DIVIDER_BOTTOM_RESISTANCE_IN_KOHM )               \
-                                                                        /(  VOLTAGE_DIVIDER_TOP_RESISTANCE_IN_KOHM              \
-                                                                          +  VOLTAGE_DIVIDER_BOTTOM_RESISTANCE_IN_KOHM ))
+#define VOLTAGE_DIVIDER_RATIO  (float)(VOLTAGE_SENSE_DIVIDER_RATIO)
 
 /**
  * ADC reference voltage 

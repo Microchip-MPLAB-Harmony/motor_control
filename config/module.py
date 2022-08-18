@@ -24,7 +24,8 @@ def loadModule():
             encoderPresent = True
 ###############################################################################
 
-    if all(x in processor for x in ["PIC32MK", "MC"]) or ("SAME70" in processor) or ("SAME54" in processor) or ("SAMC21" in processor) or all(x in processor for x in ["PIC32CM", "MC"]):
+    if  all(x in processor for x in ["PIC32MK", "MC"]) or ("SAME70" in processor) or ("SAMRH707" in processor) or ("SAME54" in processor) or ("SAMC21" in processor) or all(x in processor for x in ["PIC32CM", "MC"]):
+                                            
         mcPmsmFocComponent = Module.CreateComponent("pmsm_foc",
                                                  "PMSM FOC",
                                                  "/Motor Control/", "algorithms/pmsm_foc/config/pmsm_foc.py")

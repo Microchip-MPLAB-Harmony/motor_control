@@ -301,7 +301,6 @@ class mcAniI_AnalogInterfaceClass:
 
     def handleMessage(self, ID, information ):   
         if( "BSP_ANALOG_INTERFACE" == ID ) and ( None != information):
-            print(information)
             # Phase A current 
             self.sym_IA_UNIT.setValue(information["IA"]["FUNCTION"][0][0])
             self.sym_IA_CHANNEL.setValue("Channel" + " " + information["IA"]["FUNCTION"][0][1])

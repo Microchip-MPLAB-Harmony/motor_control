@@ -63,6 +63,26 @@ class mcPwmI_PwmInterfaceClass:
             global global_PWM_FAULT
             global_PWM_FAULT = "FAULT_PWM_ID2"
 
+        if "SAME70" in MCU: 
+            module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"PWM\"]"
+            node = ATDF.getNode(module_Path)
+            inst = node.getChildren()
+
+            self.function_Map = dict()
+            for ins in inst:
+                key = ins.getAttribute("name")
+                self.function_Map[key] = set() 
+                inst_Path = module_Path + "/instance@[name=\"" + key + "\"]/signals"
+                
+                channels =  ATDF.getNode(inst_Path).getChildren()
+                for channel in channels:
+                    self.function_Map[key].add("Channel" + " " + channel.getAttribute("index"))
+                
+                self.function_Map[key] = sorted(list(self.function_Map[key]))
+
+            global global_PWM_FAULT
+            global_PWM_FAULT = "FAULT_PWM_ID2"
+
         elif "SAME54" in MCU: 
             module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]"
             node = ATDF.getNode(module_Path)

@@ -27,35 +27,37 @@ import os
 MCU =  ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series")
 
 # General Purpose function classes
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/general_functions.py"   )
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "general_functions.py" ))
+
 
 # Hardware block Classes
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/voltage_source.py"   )
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/analog_frontend.py"   )
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/motor_parameters.py"   )
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "voltage_source.py" ))
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "analog_frontend.py" ))
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "motor_parameters.py" ))
 
 # Peripherals block classes
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/pwm_interface.py"   )
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/digital_interface.py"   )
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/analog_interface.py"   )
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/position_interface.py"   )
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "pwm_interface.py" ))
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "digital_interface.py" ))
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "analog_interface.py" ))
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "position_interface.py" ))
 
 # Software module classes 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/startup_configurator.py"   )
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/motor_control_and_diagnosis.py"   )
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/position_calculation_and_diagnosis.py"   )
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/output_stage_and_diagnosis.py"   )
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/current_measurement_and_diagnosis.py"   )
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/voltage_measurement_and_diagnosis.py"   )
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "startup_configurator.py" ))
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "motor_control_and_diagnosis.py" ))
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "position_calculation_and_diagnosis.py" ))
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "output_stage_and_diagnosis.py" ))
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "current_measurement_and_diagnosis.py" ))
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "voltage_measurement_and_diagnosis.py" ))
 
 # Data monitoring class
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/data_monitoring.py"   )
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "data_monitoring.py" ))
 
 # Event system 
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/event_system_configuration.py"   )
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "event_system_configuration.py" ))
 
 # Code generation
-execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/code_generation.py"   )
+execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "code_generation.py" ))
+
 
 
 #=========================================================================================================#
@@ -101,7 +103,7 @@ def instantiateComponent(mcPmsmFocComponent):
     sym_SELECTED_BOARD = mcPmsmFocComponent.createKeyValueSetSymbol("MCPMSMFOC_BOARD_SEL", sym_BOARD_NODE )
     sym_SELECTED_BOARD.setLabel("Development board")
     sym_SELECTED_BOARD.addKey("dsPICDEM MCLV-2", "0", "dsPICDEM MCLV-2")
-    # sym_SELECTED_BOARD.addKey("dsPICDEM MCHV-3", "1", "dsPICDEM MCHV-3")
+    sym_SELECTED_BOARD.addKey("dsPICDEM MCHV-3", "1", "dsPICDEM MCHV-3")
     # sym_SELECTED_BOARD.addKey("CUSTOM", "2", "Custom")
     sym_SELECTED_BOARD.setOutputMode("Key")
     sym_SELECTED_BOARD.setDisplayMode("Description")

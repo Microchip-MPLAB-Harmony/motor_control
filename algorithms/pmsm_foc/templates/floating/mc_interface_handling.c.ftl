@@ -124,6 +124,7 @@ tmcLib_ClarkTransform_s mcMocI_AlphaBetaVoltage_gas[1u];
 tmcLib_ParkTransform_s mcMocI_FeedbackDQCurrent_gas[1u];
 tmcLib_ParkTransform_s mcMocI_DQVoltage_gas[1u];
 tmcMoc_ControlStates_e mcMocI_MotorRunningState_gae[1u];
+uint8_t mcMocI_RunningStatus_gde[1u];
 
 /* Position Control module */
 float mcPosI_ReferenceElectricalPosition_gaf32[1u];

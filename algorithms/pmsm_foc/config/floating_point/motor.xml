@@ -8,7 +8,7 @@
         <parameter description = "Rated speed"                       id  = "RATED_SPEED"       value =  "2804"      />
         <parameter description = "Maximum speed"                     id  = "MAX_SPEED"         value =  "3500"      />
         <parameter description = "Maximum field weakening current"   id  = "MAX_FW_CURRENT"    value = "-2.0"       />
-        <parameter description = "Quadrature pulses per revolution"  id  = "QE_PULSES_PER_REV" value =  "250"       />
+        <parameter description = "Quadrature pulses per revolution"  id  = "QE_PULSES_PER_REV" value =  "200"       />
         <parameter description = "Maximum motor current"             id  = "MAX_MOTOR_CURRENT" value =  "4.0"       />
         <parameter description = "Winding connection"                id  = "MOTOR_CONNECTION"  value =  "STAR"      />
     </motor>
@@ -34,7 +34,7 @@
         <parameter description = "Rated speed"                       id  = "RATED_SPEED"       value =  "3000"      />
         <parameter description = "Maximum speed"                     id  = "MAX_SPEED"         value =  "5000"      />
         <parameter description = "Maximum field weakening current"   id  = "MAX_FW_CURRENT"    value = "-2.0"       />
-        <parameter description = "Quadrature pulses per revolution"  id  = "QE_PULSES_PER_REV" value =  "2500"      />
+        <parameter description = "Quadrature pulses per revolution"  id  = "QE_PULSES_PER_REV" value =  "2000"      />
         <parameter description = "Maximum motor current"             id  = "MAX_MOTOR_CURRENT" value =  "4.0"       />
         <parameter description = "Winding connection"                id  = "MOTOR_CONNECTION"  value =  "STAR"      />
     </motor>

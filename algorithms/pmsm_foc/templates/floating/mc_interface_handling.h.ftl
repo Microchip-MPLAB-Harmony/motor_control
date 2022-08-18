@@ -71,10 +71,11 @@ typedef struct
 
 typedef enum
 {
-#ifdef ENABLE_FLYING_START
+#if ( ENABLE == ENABLE_FLYING_START )
     mcState_FlyingStart,
 #endif
     mcState_Startup,
+    mcState_StartupToFoc,
     mcState_Foc,
     mcState_Idle,
     mcState_Error
@@ -134,6 +135,7 @@ extern tmcLib_ClarkTransform_s mcMocI_AlphaBetaVoltage_gas[1u];
 extern tmcLib_ParkTransform_s mcMocI_FeedbackDQCurrent_gas[1u];
 extern tmcLib_ParkTransform_s mcMocI_DQVoltage_gas[1u];
 extern tmcMoc_ControlStates_e mcMocI_MotorRunningState_gae[1u];
+extern uint8_t mcMocI_RunningStatus_gde[1u];
 
 /* Position Control module */
 extern float mcPosI_ReferenceElectricalPosition_gaf32[1u];

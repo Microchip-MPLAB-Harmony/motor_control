@@ -161,8 +161,10 @@ void mcRegI_CurrentRegulationRun( const tmcReg_InstanceId_e Id )
 #if ( CONTROL_LOOP == TORQUE_LOOP )
   #if ( ENABLE == POTENTIOMETER_INPUT_ENABLED )  
     mcReg_IqController_mas[Id].reference = mcHalI_Potentiometer_gdu16 * Q_CURRENT_REF_TORQUE / 4096.0f; 
+	mcReg_IqController_mas[Id].reference *= (float)mcMocI_RotationSign_gas8[0u];
   #else 
     mcReg_IqController_mas[Id].reference  = Q_CURRENT_REF_TORQUE;
+	mcReg_IqController_mas[Id].reference *= (float)mcMocI_RotationSign_gas8[0u];
   #endif
 #else 
     mcReg_IqController_mas[Id].reference  = *mcReg_InputPorts_mas[Id].Iqref;

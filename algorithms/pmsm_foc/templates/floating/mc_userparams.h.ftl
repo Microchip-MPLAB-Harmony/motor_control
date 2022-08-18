@@ -82,9 +82,9 @@
 #define POTENTIOMETER_INPUT_ENABLED       DISABLE
 </#if>
 
-<#if MCPMSMFOC_CONTROL_TYPE == "Speed control">
+<#if MCPMSMFOC_CONTROL_TYPE == "SPEED_LOOP">
 #define SPEED_REF_RPM                     (float)${MCPMSMFOC_OPEN_LOOP_END_SPEED}   /* Speed Ref */
-<#elseif MCPMSMFOC_CONTROL_TYPE == "Torque control">
+<#elseif MCPMSMFOC_CONTROL_TYPE == "TORQUE_LOOP">
 #define Q_CURRENT_REF_TORQUE             0.20   /* Iq ref for torque mode */
 #define Q_CURRENT_MIN_TORQUE             0.15   /* Min Iq current */
 #define Q_CURRENT_MAX_TORQUE             0.25   /* Max Iq mapped to Potentiometer max */
@@ -93,7 +93,7 @@
 /**
  *  Defining BIDIRECTION_CONTROL enables bi-directional control of the motor                            
  */ 
-<#if MCPMSMFOC_BOARD_SEL != "MCHV3"> 
+<#if MCPMSMFOC_BOARD_SEL != "dsPICDEM MCHV-3"> 
 #define BIDIRECTION_CONTROL  ENABLE
 <#else>
 #define BIDIRECTION_CONTROL  DISABLE
@@ -107,12 +107,17 @@
 #define RAMP_PROFILE   ${MCPMSMFOC_RAMP_PROFILES}
 
 /**
+ *  Flying start                     
+ */ 
+#define ENABLE_FLYING_START (${MCPMSMFOC_ENABLE_FLYING_START?then('ENABLE','DISABLE')})
+
+/**
  *  Field Weakening                     
  */ 
-#define FIELD_WEAKENING (${MCPMSMFOC_ENABLE_FW?then('ENABLED','DISABLE')})
+#define ENABLE_FLUX_WEAKENING (${MCPMSMFOC_ENABLE_FW?then('ENABLE','DISABLE')})
 
 /* Field weakening - Limit for -ve Idref */
-#if(FIELD_WEAKENING == ENABLE)
+#if(ENABLE_FLUX_WEAKENING == ENABLE)
 #define MAX_FW_NEGATIVE_ID_REF              (float)(${MCPMSMFOC_FW_MAX_NEGATIVE_ID})
 #endif
 

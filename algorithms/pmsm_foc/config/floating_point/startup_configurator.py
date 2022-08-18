@@ -96,6 +96,9 @@ class mcSupI_StartupConfigurator:
         # Symbols for flying start configuration
         self.sym_FLYING = self.component.createBooleanSymbol( "MCPMSMFOC_ENABLE_FLYING_START", self.sym_NODE )
         self.sym_FLYING.setLabel("Flying Start")
+        
+        # Enable flying start after functional test
+        self.sym_FLYING.setReadOnly(True)
 
         self.sym_DETECT_TIME = self.component.createFloatSymbol( "MCPMSMFOC_FLY_START_DETECTION_TIME", self.sym_FLYING )
         self.sym_DETECT_TIME.setLabel("Detection Time")

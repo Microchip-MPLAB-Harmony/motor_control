@@ -305,19 +305,19 @@ uint16_t mcHalI_PotentiometerSignalGet( void )
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     return ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT_POTENTIOMETER_VPOT_FINAL});
 <#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
-   <#if MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC7" >
-     return ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL});
-   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC0"> 
+   <#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC7" >
+     return ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT_BUS_VOLTAGE_VPOT_FINAL});
+   <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC0"> 
     return ADCHS_ChannelResultGet(ADCHS_CH0);
-   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC1"> 
+   <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC1"> 
     return ADCHS_ChannelResultGet(ADCHS_CH1);
-   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC2"> 
+   <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC2"> 
     return ADCHS_ChannelResultGet(ADCHS_CH2);
-   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC3"> 
+   <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC3"> 
     return ADCHS_ChannelResultGet(ADCHS_CH3);
-   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC4"> 
+   <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC4"> 
     return ADCHS_ChannelResultGet(ADCHS_CH4);
-   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC5"> 
+   <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC5"> 
     return ADCHS_ChannelResultGet(ADCHS_CH5);
    </#if> 
 
@@ -387,7 +387,7 @@ void mcHalI_AdcInterruptDisable( void )
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     NVIC_DisableIRQ(AFEC0_IRQn);
 <#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
-    EVIC_SourceDisable(INT_SOURCE_ADC_DATA0);
+    EVIC_SourceDisable(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].INTERRUPT_ADC_RESULT});
 </#if>
 } 
 
@@ -408,7 +408,7 @@ void mcHalI_AdcInterruptEnable( void )
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     NVIC_EnableIRQ(AFEC0_IRQn); 
 <#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
-    EVIC_SourceEnable(INT_SOURCE_ADC_DATA0);
+    EVIC_SourceEnable(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].INTERRUPT_ADC_RESULT});
 </#if>
 } 
 
@@ -430,7 +430,7 @@ void mcHalI_AdcInterruptClear( void )
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     NVIC_ClearPendingIRQ(AFEC0_IRQn);
 <#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
-    EVIC_SourceStatusClear(INT_SOURCE_ADC_DATA0);
+    EVIC_SourceStatusClear(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].INTERRUPT_ADC_RESULT});
 </#if>
 }
 
@@ -473,7 +473,7 @@ void mcHalI_AdcCallBackRegister(ADC_CALLBACK  callback, uintptr_t context)
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     AFEC0_CallbackRegister( callback, context);
 <#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
-    ADCHS_CallbackRegister(ADCHS_CH0, callback, context);
+    ADCHS_CallbackRegister(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].ADC_CH_PHASE_U}, callback, context);
 </#if>
 }
 
@@ -782,7 +782,7 @@ void mcHalI_Group02SignalSoftwareTrigger( uint16_t Id  )
     /* Select channels for Group 02 signals */
     ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ChannelSelect( ADC_POSINPUT_AIN${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT_POTENTIOMETER_VPOT_FINAL}, ADC_NEGINPUT_GND);
     ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelSelect( ADC_POSINPUT_AIN${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL}, ADC_NEGINPUT_GND);
-    
+
     /* Enable software  trigger */
     ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_InterruptsClear(ADC_STATUS_MASK);
     ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_InterruptsDisable( ADC_STATUS_RESRDY );

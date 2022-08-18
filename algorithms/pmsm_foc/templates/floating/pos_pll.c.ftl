@@ -213,7 +213,7 @@ void mcRpoI_RotorPositionCalculationRun( const tmcRpo_InstanceId_e Id )
     float ealpha, ebeta;
     float Wre, Ed, Eq;
 
-#if (ENABLE == FIELD_WEAKENING )
+#if (ENABLE == ENABLE_FLUX_WEAKENING )
     float esSquare;
 #endif
     
@@ -233,7 +233,7 @@ void mcRpoI_RotorPositionCalculationRun( const tmcRpo_InstanceId_e Id )
     ebeta +=  mcRpo_StateVariables_mas[Id].ubeta; 
     mcRpo_EulerFilter( ebeta, &mcRpo_StateVariables_mas[Id].ebeta, 1.0f);
 
-#if (ENABLE == FIELD_WEAKENING )
+#if (ENABLE == ENABLE_FLUX_WEAKENING )
     /* Calculate BEMF for field weakening*/
     esSquare =  ( mcRpo_StateVariables_mas[Id].ebeta * mcRpo_StateVariables_mas[Id].ebeta ) 
        +  ( mcRpo_StateVariables_mas[Id].ealpha * mcRpo_StateVariables_mas[Id].ealpha );

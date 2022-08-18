@@ -109,10 +109,23 @@ static tStd_ReturnType_e mcSpe_AssertionFailedReaction( const char * message )
      return returnType_Failed;
 }
 
-void mcSpe_EulerFilter( float input, float * filterOut, float filterParam )
+
+void mcSpe_LinearRamping( float * pInput, const float rampRate, float Final )
 {
-    *filterOut = (*filterOut ) + filterParam * ( input - (*filterOut ) );
+    if( *pInput < ( Final - rampRate ))
+    {
+        *pInput += rampRate;
+    }
+    else if( *pInput > ( Final + rampRate ))
+    {
+        *pInput -= rampRate;
+    }
+    else
+    {
+        *pInput = Final;
+    }
 }
+
 
 void mcSpe_MinimumLimitSet( float * value, float minLimit )
 {
@@ -186,41 +199,62 @@ tStd_ReturnType_e  mcSpeI_SpeedRegulationInit( const tmcSpe_ConfigParameters_s *
  * @return:
  */
 void mcSpeI_SpeedRegulationRun( const tmcSpe_InstanceId_e Id )
-{    
-    /* Read input ports */
-#if ( CONTROL_LOOP == POSITION_LOOP )
-    *mcSpe_OutputPorts_mas[Id].referenceSpeed = *mcSpe_InputPorts_mas[Id].referenceSpeed;
-#endif
-    
-    
-#if ( CONTROL_LOOP == SPEED_LOOP )
-  #if ( ENABLE == POTENTIOMETER_INPUT_ENABLED )  
-    float refSpeed;
-     
-    /* Calculate reference speed */
-    refSpeed  = *mcSpe_InputPorts_mas[Id].potReading * mcSpe_Parameters_mas[Id].adcCountToSpeed;
-    mcSpe_MinimumLimitSet( &refSpeed,  mcSpe_Parameters_mas[Id].minReferenceSpeed );
-    refSpeed *= mcMocI_RotationSign_gas8[Id];
-    mcSpe_EulerFilter( refSpeed, mcSpe_OutputPorts_mas[Id].referenceSpeed, mcSpe_Parameters_mas[Id].refSpeedFiltParam );
-  #else
-     float refSpeed;
-     refSpeed = mcRmpI_ReferenceProfileGenerate(  );
-     mcSpe_MinimumLimitSet( &refSpeed,  mcSpe_Parameters_mas[Id].minReferenceSpeed );
-    *mcSpe_OutputPorts_mas[Id].referenceSpeed  = mcMocI_RotationSign_gas8[Id] *  refSpeed;
-  #endif
-#endif
-                    
-    /*Run PI controller for speed */
-    mcSpe_SpeedController_mas[Id].reference = *mcSpe_OutputPorts_mas[Id].referenceSpeed;
-    mcSpe_SpeedController_mas[Id].feedback = *mcSpe_InputPorts_mas[Id].actualSpeed;
-     
-    mcLib_PiControllerRun(&mcSpe_SpeedController_mas[Id] );
-     
-    /* Update PI controller output */
-   *mcSpe_OutputPorts_mas[Id].iqref =  mcSpe_SpeedController_mas[Id].Yout;
-     
-    /* Write output ports */
-       
+{  
+    //    static uint32_t count = 0u;
+    if(  1u == mcMocI_RunningStatus_gde[Id] )
+    {  
+        /* Read input ports */
+    #if ( CONTROL_LOOP == POSITION_LOOP )
+        *mcSpe_OutputPorts_mas[Id].referenceSpeed = *mcSpe_InputPorts_mas[Id].referenceSpeed;
+    #endif
+        
+        
+    #if ( CONTROL_LOOP == SPEED_LOOP )
+    #if ( ENABLE == POTENTIOMETER_INPUT_ENABLED )  
+        float refSpeed;
+        
+        /* Calculate reference speed */
+        refSpeed  = *mcSpe_InputPorts_mas[Id].potReading * mcSpe_Parameters_mas[Id].adcCountToSpeed;
+        mcSpe_MinimumLimitSet( &refSpeed,  mcSpe_Parameters_mas[Id].minReferenceSpeed );
+        refSpeed *= mcMocI_RotationSign_gas8[Id];
+        mcSpe_LinearRamping(mcSpe_OutputPorts_mas[Id].referenceSpeed, CONFIG_RampRate, refSpeed);
+    #else
+        float refSpeed;
+        refSpeed = mcRmpI_ReferenceProfileGenerate(  );
+        mcSpe_MinimumLimitSet( &refSpeed,  mcSpe_Parameters_mas[Id].minReferenceSpeed );
+        *mcSpe_OutputPorts_mas[Id].referenceSpeed  = mcMocI_RotationSign_gas8[Id] *  refSpeed;
+    #endif
+    #endif
+                        
+        /*Run PI controller for speed */
+        mcSpe_SpeedController_mas[Id].reference = *mcSpe_OutputPorts_mas[Id].referenceSpeed;
+
+    //        count++;
+    //        
+    //        if( count < 10000 )
+    //        {
+    //            mcSpe_SpeedController_mas[Id].reference = 260;
+    //        }
+    //        else if( count < 20000)
+    //        {
+    //            mcSpe_SpeedController_mas[Id].reference = 500;
+    //           
+    //        }
+    //        else 
+    //        {
+    //             count = 0;
+    //        }
+        
+        mcSpe_SpeedController_mas[Id].feedback = *mcSpe_InputPorts_mas[Id].actualSpeed;
+
+        mcLib_PiControllerRun(&mcSpe_SpeedController_mas[Id] );
+        
+        /* Update PI controller output */
+       *mcSpe_OutputPorts_mas[Id].iqref =  mcSpe_SpeedController_mas[Id].Yout;
+        
+        /* Write output ports */
+    }
+        
 }
 
 
