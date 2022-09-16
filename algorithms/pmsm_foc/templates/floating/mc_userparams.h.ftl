@@ -56,9 +56,6 @@
 #define OPEN_LOOP                        (0u)
 #define SPEED_LOOP                       (1u)
 #define TORQUE_LOOP                      (2u)
-#define POSITION_LOOP                    (3u)
-
-
 
 /** 
  *  Defining DEVELOPER_MODE allows the programmer to monitor debug signals via X2C Scope 

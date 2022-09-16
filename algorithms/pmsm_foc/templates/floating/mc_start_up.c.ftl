@@ -196,36 +196,33 @@ uint8_t mcSupI_OpenLoopStartupRun( const tmcSup_InstanceId_e Id )
         /* Lock the rotor at specified rotor angle */
         case startupState_InitialPosition:
         {   
-          float iref;
+           float iref;
             
-          mcSup_StateVariables_mas[Id].trackCounter++;
-            
-          iref = mcSup_StateVariables_mas[Id].trackCounter *   mcSup_Parameters_mas[Id].currentRampRate; 
-             
-            /* Set output ports for alignment */
-          #if(Q_AXIS == ALIGNMENT_METHOD )
-           *mcSup_OutputPorts_mas[Id].Idref = 0.0f;
-           *mcSup_OutputPorts_mas[Id].Iqref = mcMocI_RotationSign_gas8[Id] * iref;
-          #else
-           *mcSup_OutputPorts_mas[Id].Iqref = 0.0f;
-           *mcSup_OutputPorts_mas[Id].Idref = mcMocI_RotationSign_gas8[Id] * iref;
-          #endif
+           mcSup_StateVariables_mas[Id].trackCounter++;
+           iref = mcSup_StateVariables_mas[Id].trackCounter *   mcSup_Parameters_mas[Id].currentRampRate; 
 
             if( mcSup_Parameters_mas[Id].halfAlignmentTimeLoopCount >= mcSup_StateVariables_mas[Id].trackCounter )
             {
               #if(Q_AXIS == ALIGNMENT_METHOD )
                 *mcSup_OutputPorts_mas[Id].theta = mcMocI_RotationSign_gas8[Id] * CONSTANT_Pi;
+                *mcSup_OutputPorts_mas[Id].Idref = 0.0f;
+                *mcSup_OutputPorts_mas[Id].Iqref = mcMocI_RotationSign_gas8[Id] * iref;
               #else
                *mcSup_OutputPorts_mas[Id].theta =  mcMocI_RotationSign_gas8[Id] * CONSTANT_PiBy2;
+               *mcSup_OutputPorts_mas[Id].Iqref = 0.0f;
+               *mcSup_OutputPorts_mas[Id].Idref = mcMocI_RotationSign_gas8[Id] * iref;
               #endif
-
             }
             else if( mcSup_Parameters_mas[Id].alignmentTimeLoopCount >= mcSup_StateVariables_mas[Id].trackCounter )
             {
               #if(Q_AXIS == ALIGNMENT_METHOD )
                 *mcSup_OutputPorts_mas[Id].theta = 3*mcMocI_RotationSign_gas8[Id] * CONSTANT_PiBy2;
+                *mcSup_OutputPorts_mas[Id].Idref = 0.0f;
+                *mcSup_OutputPorts_mas[Id].Iqref = mcMocI_RotationSign_gas8[Id] *  mcSup_Parameters_mas[Id].alignmentCurrent;
               #else
                *mcSup_OutputPorts_mas[Id].theta = 0.0f;
+               *mcSup_OutputPorts_mas[Id].Idref =  mcMocI_RotationSign_gas8[Id] *  mcSup_Parameters_mas[Id].alignmentCurrent;
+                *mcSup_OutputPorts_mas[Id].Iqref = 0.0f;
               #endif
             }
             else 

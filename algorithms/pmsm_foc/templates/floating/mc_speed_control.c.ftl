@@ -200,14 +200,20 @@ tStd_ReturnType_e  mcSpeI_SpeedRegulationInit( const tmcSpe_ConfigParameters_s *
  */
 void mcSpeI_SpeedRegulationRun( const tmcSpe_InstanceId_e Id )
 {  
-    //    static uint32_t count = 0u;
     if(  1u == mcMocI_RunningStatus_gde[Id] )
     {  
         /* Read input ports */
-    #if ( CONTROL_LOOP == POSITION_LOOP )
-        *mcSpe_OutputPorts_mas[Id].referenceSpeed = *mcSpe_InputPorts_mas[Id].referenceSpeed;
-    #endif
         
+    #if ( CONTROL_LOOP == TORQUE_LOOP )
+    #if ( ENABLE == POTENTIOMETER_INPUT_ENABLED )  
+        *mcSpe_OutputPorts_mas[Id].iqref =  mcHalI_Potentiometer_gdu16 * Q_CURRENT_REF_TORQUE / 4096.0f; 
+        *mcSpe_OutputPorts_mas[Id].iqref*= (float)mcMocI_RotationSign_gas8[0u];
+     #else 
+        *mcSpe_OutputPorts_mas[Id].iqref = Q_CURRENT_REF_TORQUE;
+        *mcSpe_OutputPorts_mas[Id].iqref *= (float)mcMocI_RotationSign_gas8[0u];
+       #endif
+        return;
+    #endif      
         
     #if ( CONTROL_LOOP == SPEED_LOOP )
     #if ( ENABLE == POTENTIOMETER_INPUT_ENABLED )  
@@ -224,28 +230,9 @@ void mcSpeI_SpeedRegulationRun( const tmcSpe_InstanceId_e Id )
         mcSpe_MinimumLimitSet( &refSpeed,  mcSpe_Parameters_mas[Id].minReferenceSpeed );
         *mcSpe_OutputPorts_mas[Id].referenceSpeed  = mcMocI_RotationSign_gas8[Id] *  refSpeed;
     #endif
-    #endif
-                        
-        /*Run PI controller for speed */
-        mcSpe_SpeedController_mas[Id].reference = *mcSpe_OutputPorts_mas[Id].referenceSpeed;
-
-    //        count++;
-    //        
-    //        if( count < 10000 )
-    //        {
-    //            mcSpe_SpeedController_mas[Id].reference = 260;
-    //        }
-    //        else if( count < 20000)
-    //        {
-    //            mcSpe_SpeedController_mas[Id].reference = 500;
-    //           
-    //        }
-    //        else 
-    //        {
-    //             count = 0;
-    //        }
-        
-        mcSpe_SpeedController_mas[Id].feedback = *mcSpe_InputPorts_mas[Id].actualSpeed;
+      /*Run PI controller for speed */
+       mcSpe_SpeedController_mas[Id].reference = *mcSpe_OutputPorts_mas[Id].referenceSpeed;        
+       mcSpe_SpeedController_mas[Id].feedback = *mcSpe_InputPorts_mas[Id].actualSpeed;
 
         mcLib_PiControllerRun(&mcSpe_SpeedController_mas[Id] );
         
@@ -253,6 +240,7 @@ void mcSpeI_SpeedRegulationRun( const tmcSpe_InstanceId_e Id )
        *mcSpe_OutputPorts_mas[Id].iqref =  mcSpe_SpeedController_mas[Id].Yout;
         
         /* Write output ports */
+    #endif
     }
         
 }

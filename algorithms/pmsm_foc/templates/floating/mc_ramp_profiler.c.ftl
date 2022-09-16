@@ -74,33 +74,6 @@ Headers inclusions
 
 #endif
 
-
-#if ( CONTROL_LOOP == POSITION_LOOP ) 
-
-/**
- * Constant value of PI
- */
-#define CONSTANT_Pi                                (float)3.14159265358979323846
-
-/**
- * RPM to Rad Per Second Conversion factor
- */
-#define CONSTANT_RpmToRadPerSec        (float)( 2.0f * CONFIG_RmpNumberOfPolePairs * CONSTANT_Pi / 60.0f )
-
-
-/**
- * Final Speed for Ramp Profiler 
- */
-#define CONSTANT_RampProfileRampPerSec  (float)( CONFIG_RampProfileRampPerSec  * CONSTANT_RpmToRadPerSec )
-
-
-/**
- * Default Speed for Ramp Profiler 
- */
-#define CONSTANT_RampProfileDefaultValue   (float)( CONFIG_RampProfileDefaultValue  * CONSTANT_RpmToRadPerSec )
-
-#endif
-
 /*******************************************************************************
  Private data-types  
  *******************************************************************************/
@@ -145,6 +118,7 @@ tmcRmp_RampProfilerConfig_s mcRmpI_RampProfilerConfig_mds =  RAMP_PROFILER_MODUL
 
 void mcRmpI_ReferenceProfileInit( tmcRmp_RampProfilerConfig_s * pParam )
 {
+#if ( CONTROL_LOOP != TORQUE_LOOP )
 #if( ENABLE == DEVELOPER_MODE )    
      mcRmp_StateVariables_mds.profileType = pParam->profileType;
      if( referenceProfile_Linear == pParam->profileType )
@@ -182,6 +156,7 @@ void mcRmpI_ReferenceProfileInit( tmcRmp_RampProfilerConfig_s * pParam )
      mcRmp_StateVariables_mds.currentValue =  0.0f;
      
 #endif 
+#endif
 }
 
 void mcRmpI_ReferenceProfileInputCommand( int16_t commandValue )
@@ -192,6 +167,7 @@ void mcRmpI_ReferenceProfileInputCommand( int16_t commandValue )
 
 int16_t mcRmpI_ReferenceProfileGenerate( void )
 {
+    #if ( CONTROL_LOOP != TORQUE_LOOP )
     /* Scale the input RPM to internal units */
     switch(mcRmp_StateVariables_mds.profileType)
     {
@@ -228,7 +204,9 @@ int16_t mcRmpI_ReferenceProfileGenerate( void )
 	}
 	break;
     }
+    #endif
     return mcRmp_StateVariables_mds.currentValue;
+
 }
 
 /* !\brief Reset ramp profiler
@@ -244,6 +222,8 @@ int16_t mcRmpI_ReferenceProfileGenerate( void )
 
 void mcRmpI_ReferenceProfileReset( void )
 {
+#if (CONTROL_LOOP != TORQUE_LOOP )
     mcRmp_StateVariables_mds.currentValue = 0.0f;
     mcRmp_StateVariables_mds.inputValue = mcRmp_StateVariables_mds.defaultValue;
+#endif
 }

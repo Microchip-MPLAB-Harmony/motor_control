@@ -63,9 +63,6 @@
 #if ( ENABLE == ENABLE_FLUX_WEAKENING )
 #include "mc_flux_control.h"
 #endif
-#if ( POSITION_LOOP == CONTROL_LOOP )
-#include "mc_position_control.h"
-#endif 
 
 /*******************************************************************************
  User defined data-types

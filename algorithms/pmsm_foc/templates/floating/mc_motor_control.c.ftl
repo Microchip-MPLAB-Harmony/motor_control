@@ -54,7 +54,7 @@
 #define CONSTANT_Pi                                (float)(3.141593)
 #define CONSTANT_2Pi                              (float)(2.0f * CONSTANT_Pi )
 #define CONFIG_AngleDecrementRate      (float)(0.0005)
-#define CONFIG_TransitionDeltaAngle      (float)(0.0000 + CONFIG_AngleDecrementRate )
+#define CONFIG_TransitionDeltaAngle      (float)(0.0000 )
 
 
 /*******************************************************************************
@@ -68,7 +68,9 @@ typedef struct _tmcMoc_StateVariables_s
 /*******************************************************************************
  Private Functions 
  *******************************************************************************/
+ <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>     
 static tmcMoc_StateVariables_s mcMoc_StateVariables_mas[1u];
+</#if>
 
 /*******************************************************************************
  Interface Functions 
@@ -118,12 +120,7 @@ void mcMocI_M1ControlApplicationInit( void )
 #if ( ENABLE == ENABLE_FLYING_START )
      initStatus |= mcFlyI_FlyingStartInit( &mcFlyI_ConfigParameters_gas[0u] );
 #endif
-    
-#if ( POSITION_LOOP == CONTROL_LOOP )
-     /* Initialize position  control module */
-     initStatus |= mcPosI_PositionRegulationInit(&mcPosI_ConfigParameters_gas[0u]);
-#endif
-     
+        
      if( ( initStatus & returnType_Failed ) || ( initStatus & returnType_Aborted ))
      {
          /* Log initialization failure flag  */
@@ -271,10 +268,12 @@ void mcMocI_M1DirectionToggle(void)
  */
 void mcMocI_M1ControlTasksRun( void  )
 {
-    tmcMoc_StateVariables_s * pState;
-     
-    pState = &mcMoc_StateVariables_mas[0u];
 
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'> 
+    tmcMoc_StateVariables_s * pState;
+	pState = &mcMoc_StateVariables_mas[0u];     
+				
+</#if>
     /* Read phase currents ( Group 01 )*/
     mcHalI_Group01SignalRead( 0u );
     
@@ -323,7 +322,9 @@ void mcMocI_M1ControlTasksRun( void  )
         case mcState_Startup:
         {
            if( 1u ==  mcSupI_OpenLoopStartupRun( 0u ) )
-           {              
+           {   
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>      
+			
                /* Calculate difference between close loop and open loop angle */
                pState->openToCloseLoopDelAngle = mcMocI_SpaceVectorAngle_gaf32[0u] - mcRpoI_ElectricalRotorPosition_gaf32[0u];
                if( CONSTANT_Pi <  pState->openToCloseLoopDelAngle )
@@ -349,21 +350,34 @@ void mcMocI_M1ControlTasksRun( void  )
                
                /* Change control state */
                mcMocI_MotorRunningState_gae[0u] = mcState_StartupToFoc;
+<#else>
+            /* Update current controller states */
+            mcRegI_IdCurrentControlIntegralSet(0u, mcMocI_DQVoltage_gas[0u].direct );
+            mcRegI_IqCurrentControlIntegralSet(0u, mcMocI_DQVoltage_gas[0u].quadrature );
+               
+            /* Update speed controller parameters */
+            mcSpeI_SpeedControlIntegralSet( 0u, mcMocI_FeedbackDQCurrent_gas[0u].quadrature );
+            mcSpeI_ReferenceElectricalSpeed_gaf32[0u] = mcRpoI_ElectricalRotorSpeed_gaf32[0u];
+               
+            /* Change control state */
+            mcMocI_MotorRunningState_gae[0u] = mcState_Foc;
+</#if>
            }
    
         }
         break;
-        
+ 
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'> 
         case mcState_StartupToFoc:
         {
             mcMocI_SpaceVectorAngle_gaf32[0u] = mcRpoI_ElectricalRotorPosition_gaf32[0u] + pState->openToCloseLoopDelAngle;
             mcLib_WrapAngleTo2Pi(&mcMocI_SpaceVectorAngle_gaf32[0u] );
             
-            if(  pState->openToCloseLoopDelAngle >  CONFIG_TransitionDeltaAngle )
+            if( ( pState->openToCloseLoopDelAngle  + CONFIG_AngleDecrementRate ) >=  CONFIG_TransitionDeltaAngle )
             {
                  pState->openToCloseLoopDelAngle -= CONFIG_AngleDecrementRate;
             }
-            else if(  pState->openToCloseLoopDelAngle < -CONFIG_TransitionDeltaAngle )
+            else if(  ( pState->openToCloseLoopDelAngle - CONFIG_AngleDecrementRate ) <= -CONFIG_TransitionDeltaAngle )
             {
                  pState->openToCloseLoopDelAngle += CONFIG_AngleDecrementRate;
             }
@@ -376,6 +390,7 @@ void mcMocI_M1ControlTasksRun( void  )
             mcSpeI_SpeedRegulationRun( 0u );
         }
         break;
+</#if>
         case mcState_Foc:
         {
             /* Switched to closed by slowly decreasing the offset which is present in the estimated angle during open loop */
@@ -388,9 +403,6 @@ void mcMocI_M1ControlTasksRun( void  )
             mcFlxI_FluxRegulationRun( 0u );
           #endif
             
-          #if ( POSITION_LOOP == CONTROL_LOOP )
-            mcPosI_PositionRegulationRun( 0u );
-          #endif
             /* Speed regulation  */
             mcSpeI_SpeedRegulationRun( 0u );
         }
@@ -475,11 +487,7 @@ void mcMocI_M1ControlReset( void )
      mcFlyI_FlyingStartReset( 0u );
 #endif
     
-#if( POSITION_LOOP == CONTROL_LOOP )
-     /* Reset position  control module */
-     mcPosI_PositionRegulationReset( 0u );
-#endif
-    
+   
     /* Reset pulse width modulation function */
     mcPwmI_PulseWidthModulationReset( 0u );
 }
