@@ -65,7 +65,7 @@ class mcSupI_StartupConfigurator:
 
         self.sym_CURRENT = self.component.createFloatSymbol( "MCPMSMFOC_STARTUP_CURRENT", self.sym_ALIGN )
         self.sym_CURRENT.setLabel("Alignment current")
-        self.sym_CURRENT.setDefaultValue(0.4)
+        self.sym_CURRENT.setDefaultValue(0.2)
         self.sym_CURRENT.setDependencies( self.showThisSymbol, ['MCPMSMFOC_ENABLE_ALIGN_OR_DETECT'])
 
         self.sym_TIME = self.component.createFloatSymbol( "MCPMSMFOC_STARTUP_TIME", self.sym_ALIGN )
@@ -114,7 +114,7 @@ class mcSupI_StartupConfigurator:
 
         self.sym_FLYING_START_CURRENT = self.component.createFloatSymbol( "MCPMSMFOC_FLY_START_CURRENT", self.sym_FLYING )
         self.sym_FLYING_START_CURRENT.setLabel("Current (A)")
-        self.sym_FLYING_START_CURRENT.setDefaultValue(0.4)
+        self.sym_FLYING_START_CURRENT.setDefaultValue(0.2)
         self.sym_FLYING_START_CURRENT.setDependencies( self.showThisSymbol, ['MCPMSMFOC_ENABLE_FLYING_START'])
         self.sym_FLYING_START_CURRENT.setVisible(False)
 
@@ -168,7 +168,7 @@ class mcSupI_StartupConfigurator:
 
         self.sym_PEAK_BRAKE_CURRENT = self.component.createFloatSymbol( "MCPMSMFOC_FLY_START_PEAK_BRAKE_CURRENT", self.sym_ADVANCED )
         self.sym_PEAK_BRAKE_CURRENT.setLabel("Peak braking current (A)")
-        self.sym_PEAK_BRAKE_CURRENT.setDefaultValue(0.4)
+        self.sym_PEAK_BRAKE_CURRENT.setDefaultValue(0.2)
 
         self.sym_BRAKE_RAMP_TIME = self.component.createFloatSymbol( "MCPMSMFOC_FLY_START_BRAKE_RAMP_TIME", self.sym_ADVANCED )
         self.sym_BRAKE_RAMP_TIME.setLabel("Braking ramp time (s)")

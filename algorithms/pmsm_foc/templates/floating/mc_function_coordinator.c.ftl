@@ -292,15 +292,34 @@ void mcFcoI_ApplicationInit( void )
  */
 void mcFcoI_MotorAInterruptTasksRun( uint32_t status, uintptr_t context )
 {
+    /* Read phase currents ( Group 01 )*/
+    mcHalI_Group01SignalRead( 0u );
+    
+    /* Re-assign ADC channels and perform trigger  */
+    mcHalI_Group02SignalSoftwareTrigger( 0u );
+	
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
+    /* Rotor position estimation */
+    mcRpoI_RotorPositionCalculationRun( 0u );   	
+</#if>
+    
+    /* Voltage measurement */
+    mcVolI_VoltageCalculationRun( 0u );
+    
     /* Motor A Control tasks  */
     mcMocI_M1ControlTasksRun(  );
         
     /* Synchronize ISR with the thread tasks  */
     mcFco_InterruptAndThreadSync();
-<#--  <#if true == "MCPMSMFOC_DATA_MONITOR_ENABLE">     -->
+    
+      /* Read voltage and potentiometer signal ( Group 02 ) */
+    mcHalI_Group02SignalRead( 0u );
+    
+    /* Re-assign and enable hardware trigger for Group 01 signal */
+    mcHalI_Group01SignalHardwareTrigger( 0u );
+          
     /* Update X2C Scope */
     X2CScope_Update();
-<#--  </#if>  -->
 }
 
 

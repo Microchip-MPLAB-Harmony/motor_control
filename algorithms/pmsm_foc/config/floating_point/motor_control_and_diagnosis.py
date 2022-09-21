@@ -47,7 +47,7 @@ mcMotC_CurrentPiPararameterDictFloating =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0
                                                        'KC' : 0.5
                                                     },            
                                         'dsPICDEM MCHV-3' :   { 'KP' : 0.2,
-                                                      'KI' : 0.0002,
+                                                      'KI' : 10.0,
                                                       'KC' : 0.5
                                                     },
                                    }
@@ -76,8 +76,8 @@ mcMotC_SpeedPiPararameterDictFloating =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0.0
                                                      'KI' : 0.00002,
                                                      'KC' : 0.5
                                                    },
-                                      'dsPICDEM MCHV-3' :   { 'KP' : 0.003,
-                                                    'KI' : 0.0015,
+                                      'dsPICDEM MCHV-3' :   { 'KP' : 0.0006,
+                                                    'KI' : 0.015,
                                                     'KC' : 0.5
                                                   },
                                  }                                  
