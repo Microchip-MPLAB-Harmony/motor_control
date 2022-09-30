@@ -1,5 +1,5 @@
 packagePluginConfiguration:
-- name: Motor Control Plant Manager
+- name: QSpin Motor Control Configuration
   pluginID: MOTOR_CONTROL_PLANT_CONFIGURATOR
   binaryFilePath: ../harmony-services/plugins/generic_plugin.jar
   typeOfPlugin: JAVA

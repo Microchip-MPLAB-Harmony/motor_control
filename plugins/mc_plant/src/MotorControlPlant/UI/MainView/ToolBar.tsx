@@ -1,10 +1,10 @@
-import React from "react";
-import { Button } from "primereact/button";
-import { Toolbar } from "primereact/toolbar";
-import icon from "../../../Resources/Images/MICH4C.png";
+import React from 'react';
+import { Button } from 'primereact/button';
+import { Toolbar } from 'primereact/toolbar';
+import icon from '../../../Resources/Images/MICH4C.png';
 
-import "../../../Styles/Headder.css";
-import PrimeReact from "primereact/api";
+import '../../../Styles/Headder.css';
+import PrimeReact from 'primereact/api';
 import { LoadImage, HideDiv, ShowDiv } from '../../Common/NodeUtils';
 import { ZoomInReact, ZoomOutReact } from '../../Common/SymbolAccess';
 
@@ -16,9 +16,9 @@ const Headder = () => {
   const leftContents = (
     <React.Fragment>
       {LoadImage(icon)}
-      <label style={{ fontSize: "18px", fontWeight: "bolder" }}>
-        {" "}
-        MOTOR CONTROL PLANT{" "}
+      <label style={{ fontSize: '18px', fontWeight: 'bolder' }}>
+        {' '}
+        Harmony QSpin PMSM FOC{' '}
       </label>
     </React.Fragment>
   );
@@ -28,41 +28,41 @@ const Headder = () => {
       <Button
         label="HOME"
         tooltip="View MC Plant Home Screen"
-        tooltipOptions={{ position: "bottom" }}
+        tooltipOptions={{ position: 'bottom' }}
         icon="pi pi-home"
         iconPos="left"
         className="p-button p-button-text p-mr-2"
-        style={{ fontWeight: "bold", color: "black" }}
+        style={{ fontWeight: 'bold', color: 'black' }}
         onClick={() => LoadHome()}
       />
       <Button
         label="SUMMARY"
         tooltip="View Summary"
-        tooltipOptions={{ position: "bottom" }}
+        tooltipOptions={{ position: 'bottom' }}
         className="p-button p-button-text  p-mr-2"
-        style={{ fontWeight: "bold", color: "black" }}
+        style={{ fontWeight: 'bold', color: 'black' }}
         onClick={() => LoadSummary()}
       />
       <Button
         label="HELP"
         tooltip="View MC Plant help"
-        tooltipOptions={{ position: "bottom" }}
+        tooltipOptions={{ position: 'bottom' }}
         // icon="pi pi-search"
         className="p-button p-button-text  p-mr-2"
         iconPos="right"
-        style={{ fontWeight: "bold", color: "black" }}
+        style={{ fontWeight: 'bold', color: 'black' }}
         onClick={() => LoadHelp()}
       />
       <Button
         tooltip="Ctrl + Mouse Scroll Up"
-        tooltipOptions={{ position: "left" }}
+        tooltipOptions={{ position: 'left' }}
         icon="pi pi-search-plus"
         className="p-button-rounded p-button-text p-button-plain p-button-lg p-mr-1"
         onClick={() => ZoomIn()}
       />
       <Button
         tooltip="Ctrl + Mouse Scroll Down"
-        tooltipOptions={{ position: "left" }}
+        tooltipOptions={{ position: 'left' }}
         icon="pi pi-search-minus"
         className="p-button-rounded p-button-text p-button-lg p-button-plain"
         onClick={() => ZoomOut()}
@@ -71,39 +71,39 @@ const Headder = () => {
   );
 
   const HideAll = () => {
-    HideDiv(document.getElementById("motor"));
-    HideDiv(document.getElementById("summary"));
+    HideDiv(document.getElementById('motor'));
+    HideDiv(document.getElementById('summary'));
   };
 
   const LoadHome = () => {
     HideAll();
-    ShowDiv(document.getElementById("motor"), null);
+    ShowDiv(document.getElementById('motor'), null);
   };
 
   const LoadSummary = () => {
     HideAll();
-    ShowDiv(document.getElementById("summary"), null);
+    ShowDiv(document.getElementById('summary'), null);
   };
 
   const LoadHelp = () => {
     window.open(
-      "http://localhost:" + portNumber + "/motor_control/docs/index.html",
-      "_blank",
-      "toolbar=0,location=0,menubar=0"
+      'http://localhost:' + portNumber + '/motor_control/docs/index.html',
+      '_blank',
+      'toolbar=0,location=0,menubar=0'
     );
   };
 
-  function ZoomIn(){
+  function ZoomIn() {
     ZoomInReact();
   }
 
-  function ZoomOut(){
+  function ZoomOut() {
     ZoomOutReact();
   }
 
   function openInNewTab(href: any) {
-    Object.assign(document.createElement("a"), {
-      target: "_blank",
+    Object.assign(document.createElement('a'), {
+      target: '_blank',
       href: href,
     }).click();
   }
@@ -114,7 +114,15 @@ const Headder = () => {
         <Toolbar
           left={leftContents}
           right={rightContents}
-          style={{ background: "white", height: "60px", maxHeight:"60px", border: "white", positon:"sticky", top:"0", overflow:"hidden" }}
+          style={{
+            background: 'white',
+            height: '60px',
+            maxHeight: '60px',
+            border: 'white',
+            positon: 'sticky',
+            top: '0',
+            overflow: 'hidden',
+          }}
         />
       </div>
     </div>
