@@ -8,6 +8,30 @@ has_children: true
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+## Motor Control Release v3.9.0
+
+### New Features
+* Motor Control Plant Manager is renamed as **QSpin Motor Control Configuration**
+* Added QSpin support for PMSM_FOC_Component for PIC32MK MCA devices
+* Added QSpin support for MCHV3 development board
+
+### Known Issues
+* None
+
+### Required MPLAB Harmony v3 Modules
+* csp v3.13.1
+* bsp v3.14.0
+* x2c v1.3.0
+* dev_packs v3.13.1
+* mcc H3 Library v1.1.5
+
+### Development Tools
+* [MPLAB X IDE v6.00](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB XC32 C/C++ Compiler v4.10](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Code Configurator (MCC) v5.1.17
+  * X2CScope v1.3.3.
+  
 
 ## Motor Control Release v3.8.1
 

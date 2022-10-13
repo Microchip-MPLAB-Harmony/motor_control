@@ -1,0 +1,18 @@
+package:
+  format-version: "1.0.0"
+  name: "motor_control"
+  type: "api"
+  status: "production"
+  required: true
+  version: "3.9.0"
+
+  dependencies:
+    - name: "csp"
+      type: "package"
+      version: "3.13.1"
+    - name: "x2c"
+      type: "package"
+      version: "1.3.0"
+    - name: "bsp"
+      type: "package"
+      version: "3.14.0"      
