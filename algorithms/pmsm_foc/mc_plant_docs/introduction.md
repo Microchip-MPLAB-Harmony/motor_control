@@ -223,10 +223,10 @@ This section briefly describes some of the theoretical concepts related to PMSM 
 }
 </style>
 
-# Motor Control Plant
+# Harmony QSpin Motor Control 
 
 ## Introduction
-The Motor Control Plant Configurator (MCPC) is an extension of the MPLAB® ecosystem for developing Microchip’s next-generation application firmware for motor control on Microchip® 32-bit devices. 
+The Harmony Qspin(Quick Spin) Motor Control (MCPC) is an extension of the MPLAB® ecosystem for developing Microchip’s next-generation application firmware for motor control on Microchip® 32-bit devices. 
 
 It has a graphical tool that enables an effortless configuration and generation of motor control application C code for Microchip 32-bit devices.
     <p align="center">
@@ -248,9 +248,9 @@ This document introduces the readers to the basics of an PMSM based electric mot
  
 
 ## Getting Started
-This section briefly describes the basic steps to get started with the **Motor Control Plant**. It consists of following steps:
+This section briefly describes the basic steps to get started with the **Harmony Qspin**. It consists of following steps:
 
 - [Create a new MPLAB® Harmony v3 project using MCC](mc_plant/create_mc_project_with_mcc.md)
-- [Configure motor control firmware using Motor Control Plant Manager](mc_plant/motor_control_plant_manager.md)
+- [Configure motor control firmware using Qspin Motor Control Configuration](mc_plant/motor_control_plant_manager.md)
 - [Generate the source code](mc_plant/generate_mc_code_with_mcc.md)
 

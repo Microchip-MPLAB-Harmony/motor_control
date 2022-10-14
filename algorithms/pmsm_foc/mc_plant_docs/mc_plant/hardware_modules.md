@@ -116,7 +116,7 @@ has_toc: false
 </style>
 
 # Setting Hardware Modules
-This section describes how to set-up hardware modules for motor control application project with Motor Control Plant.
+This section describes how to set-up hardware modules for motor control application project with Harmony QSpin.
 
 ## Configure PMSM parameters
 The PMSM parameter can be configured in following simple steps:
@@ -136,7 +136,7 @@ There are two ways by which the motor control board can be configured.
 ## Microchip's Development Board and Reference Designs
 Microchip offers a number of motor control development boards and reference designs. These boards can be selected from **Quick Settings** logo to use these boards for developmental activities. 
 
-Following steps list the procedure to select the Motor Control Plant supported development board and reference design.
+Following steps list the procedure to select the Harmony Qspin supported development board and reference design.
 
 - Click on the "Quick setting" icon as shown below.
 ![Quick Settings](images/quick_settings.jpg "Quick Settings")
@@ -147,10 +147,10 @@ Following steps list the procedure to select the Motor Control Plant supported d
 
 
 ## Setting Board Parameters from Scratch
-The Motor Control Plant can be used to configure the board parameters from scratch. Following steps list the procedure to configure the board parameters from scratch.
+The Harmony Qspin can be used to configure the board parameters from scratch. Following steps list the procedure to configure the board parameters from scratch.
 
 ## Setting Analog Front End 
-The following section describes various analog front end circuit and how it can be configured using Motor Control Plant.
+The following section describes various analog front end circuit and how it can be configured using Harmony Qspin.
 
 ### Theoretical Background
 The Field Oriented Control of an AC motor requires current, voltage and rotor position information. These signals are processed using analog circuits before it is sent to the microcontroller to be used for the control tasks. The control software has to be cognizant of these analog circuit parameters in order to reconstruct the actual analog signal for control operations.
@@ -170,8 +170,8 @@ $ -->
 </p>
 
 
-### Configuring Analog front End with MC Plant
-In Motor Control Plant analog parameters can be set in following steps.
+### Configuring Analog front End with Harmony Qspin
+In Harmony Qspin analog parameters can be set in following steps.
 
 1. Launch **Analog Front End** by clicking on the block
 
@@ -192,7 +192,7 @@ In Motor Control Plant analog parameters can be set in following steps.
 
 
 ## Setting Analog Interface
-The following section describes the analog interfaces and how it can be configured using Motor Control Plant.
+The following section describes the analog interfaces and how it can be configured using Harmony Qspin.
 
 ### Theoretical Background
 The analog signals has to be converted to digital signals for the microcontroller devices to use. For Field Oriented control, the analog signals are converted to corresponding digital signals using ADCs. 
@@ -209,8 +209,8 @@ The software essentially has to perform following tasks:
 - Set the ADC unit and channel to be used to convert analog signals to digital signals
 - Configure ADC parameters like resolution, trigger source etc.
 
-### Configuring Analog Interface using MC Plant
-In Motor Control Plant analog parameters can be set in following steps.
+### Configuring Analog Interface using Harmony Qspin
+In Harmony Qspin analog parameters can be set in following steps.
 
 1. Launch **Analog Interface** by clicking on the block
 

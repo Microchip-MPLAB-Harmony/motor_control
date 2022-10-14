@@ -1,0 +1,92 @@
+#indexlist
+{
+	font-family: verdana, arial, helvetica, sans-serif;
+  font-style: normal;
+	font-variant: normal;
+	font-size: 11px;
+	width: 200px;
+	float: left;
+	margin-left: 5px;
+	margin-top:10px;
+}
+.IndexSection
+{
+	margin-top:5px;
+	font-weight: bold;
+	font-size: 13px;
+}
+.PrimaryIndexTerm
+{
+	margin-left: 5mm;
+	font-weight: normal;
+	font-size: 10px;	
+}
+.PrimaryIndexTerm a,
+.PrimaryIndexTerm a:visited
+{
+	text-decoration: none;
+}
+.PrimaryIndexTerm a:hover
+{
+	text-decoration: underline;
+}
+.SecondaryIndexTerm
+{
+	margin-left: 5mm;
+	font-weight: normal;	
+	font-size: 10px;
+}
+#indexNavigationList
+{
+	float: top;
+	font-family:verdana,arial;
+	
+}	
+.indexNavigationItemAvailable
+{
+	float:left;
+	border: solid 1px #cecece;
+	background-color: #d9a600;
+	text-align: center;
+	width: 20px;
+	font-weight: bold;
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
+.indexNavigationItemAvailable a,
+.indexNavigationItemAvailable a:visited
+{
+	text-decoration: none;
+}
+.indexNavigationItemAvailable a:hover
+{
+	text-decoration: underline;
+}
+.indexNavigationItemNotAvailable
+{
+	float:left;
+	border: solid 1px #cecece;
+	background-color: #cecece;	
+	text-align: center;
+	width: 20px;	
+	font-weight: normal;
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
+.popupDiv
+{
+	background-color:#CECECE;
+	border:1px solid black;
+	font-family:verdana,arial,helvetica,sans-serif;
+	font-size:10px;
+	font-weight:normal;
+	padding:2px;
+	margin-left: 5px;
+}
+.popupDivInner
+{
+	background-color:#FFFFFF;
+	color: #b20000;
+	margin-left: 5px; 
+	margin-right: 5px;
+}

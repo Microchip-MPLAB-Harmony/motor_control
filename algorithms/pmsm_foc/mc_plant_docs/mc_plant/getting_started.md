@@ -115,4 +115,4 @@ has_toc: false
 </style>
 
 # Getting Started
-This section describes how to quickly develop a motor control application project with **Motor Control Plant**
+This section describes how to quickly develop a motor control application project with **Harmony QSpin**

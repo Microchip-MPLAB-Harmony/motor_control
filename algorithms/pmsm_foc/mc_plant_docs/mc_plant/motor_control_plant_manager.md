@@ -121,7 +121,7 @@ The Motor Control Plant Manager (MCPM) is an intuitive graphical tool for develo
 The following section briefly describes how to configure motor control firmware for a user application.
 
 ## How to configure Motor Control Application
-1. Launch the Motor Control Plant Manager from the MCC plugin list.    
+1. Launch the QSpin Motor Control Configuration from the MCC plugin list.    
     <p align="center">
     <img src="images/launch_plant_manager.jpg"/>
     <figcaption align= "center">Figure.1 - Launching Motor Control Plant Manager </figcaption>

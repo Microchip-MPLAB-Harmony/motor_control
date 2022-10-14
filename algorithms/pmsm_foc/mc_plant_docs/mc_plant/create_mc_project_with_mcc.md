@@ -119,7 +119,7 @@ has_toc: false
 This section describes step by step process for creating a new Motor Control Project using MPLAB Code Configurator (MCC) from scratch. 
 
 ## Procedure
-The following section describes uses SAME70 microcontroller to illustrate the process for creating a new motor control project with Motor Control Plant.
+The following section describes uses SAME70 microcontroller to illustrate the process for creating a new motor control project with Harmony Qspin.
 
 1. Launch MPLAB® X IDE from the Microsoft Windows® Start menu. 
 2. Go to the **File** option in the menu bar and select "**New project**"
@@ -177,4 +177,4 @@ The following section describes uses SAME70 microcontroller to illustrate the pr
         <figcaption align= "center">Figure.1 - Project set-up </figcaption>
     </p>
 
-10. Launch **Motor Control Plant Manager** plugin
+10. Launch **Qspin Motor Control Configuration** plugin

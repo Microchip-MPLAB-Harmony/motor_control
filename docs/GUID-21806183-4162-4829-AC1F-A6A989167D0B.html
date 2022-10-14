@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="Software Design" />
+<meta name="DC.relation" scheme="URI" content="GUID-C8A962A9-21E8-4034-9826-BF47F79E568F.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="software-design" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<title>Software Design</title>
+<meta name="Microsoft.Help.Id" content="GUID-0A4BC4EE-29F5-4736-8125-17139B84E7B5-software-design" />
+<meta name="Microsoft.Help.TocParent" content="GUID-0A4BC4EE-29F5-4736-8125-17139B84E7B5" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony 3 Motor Control Reference A 12/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+         
+         function copyContent(content, button) {
+         
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                     button.textContent = "Copy";
+                     button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+               console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+         }
+         
+         function cpy(id, button) {
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            
+            copyContent(content, button);
+         }
+         
+         document.addEventListener("DOMContentLoaded", function(event) {
+            document.querySelectorAll(".codeblock").forEach(function(elem) {
+               elem.style.position = "relative";
+               var copy = document.createElement("button");
+               copy.textContent = "Copy";
+               copy.setAttribute("class", "copy-code");
+               
+               var content = elem.textContent;
+               
+               copy.addEventListener("click", function(){
+                  copyContent(content, copy);
+               });
+               
+               elem.addEventListener("mouseenter", function(evt){
+                  elem.prepend(copy);
+               });
+            });
+            
+            document.querySelectorAll(".codeblock").forEach(function(elem) {
+               elem.addEventListener("mouseleave", function(evt){
+                  document.querySelector(".copy-code").remove();
+               });
+            });
+         });
+         
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-21806183-4162-4829-AC1F-A6A989167D0B"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><link rel="stylesheet" type="text/css" href="syntax-highlight.css" /><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style><link rel="stylesheet" type="text/css" href="syntax-highlight.css" /></head>
+<body id="software-design">
+<h1 class="title topictitle1" id="ariaid-title1">Software Design</h1><div class="body"><p class="p"><strong class="ph b">SAMC21 and PIC32CM MC</strong></p>
+<ul class="ul"><li class="li"><p class="p">PMSM FOC Control loop is implemented in the ADC result ready interrupt. Refer to the flow chart given below.</p>
+</li>
+<li class="li"><p class="p">ADC channel conversion is triggered by the PWM overflow/zero match event. This trigger point could vary based on the current measurement techniques and MCU PWM IP implementation.</p>
+</li>
+<li class="li"><p class="p">For bandwidth constraints, the FOC is executed every alternate PWM cycle</p>
+</li>
+<li class="li"><p class="p">Slow loop task is executed in every 10ms in the task process. Polling of switches for user inputs is handled in the slow loop task.</p>
+</li>
+</ul>
+<p class="p"><strong class="ph b">Timing Diagram</strong></p>
+<br /><img class="image" src="GUID-38444F13-F291-4DA1-BE06-C1CEB3962270-low.jpg" alt="timing_diagram" /><br /><p class="p"><strong class="ph b">Flow Chart</strong></p>
+<br /><img class="image" src="GUID-EC34CC1B-6F16-4112-BE82-7C4E0F6AB473-low.jpg" alt="flow_chart" /><br /><p class="p"><strong class="ph b">State Machine</strong></p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Idle</strong>:</p>
+</li>
+</ul>
+<p class="p">In this state, control waits for the switch press.</p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Field Alignment</strong>:</p>
+</li>
+</ul>
+<p class="p">Rotor is aligned to known position at D-axis or Q-axis by applying a pre-defined value of the current for a pre-defined length of time. The magnitude of the current and the length of the time for which it is applied depends upon the electrical and mechanical time constant of the PMSM motor drive. Electrical time constant of the motor is a function of R and L values of the motor windings, whereas the mechanical time constant of the motor drive is primarily a function of the static load on the motor shaft.</p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Open Loop</strong>:</p>
+</li>
+</ul>
+<p class="p">This state is applicable to sensorless position feedback methods. In this state, the speed of the PMSM motor is gradually ramped up using an open loop control. During this mode, the rotor angle is derived from the asserted open loop speed reference. This derived rotor angle would be lagging from the actual rotor angle. The speed is ramped up linearly to a minimum value required for the PLL estimator to estimate the electrical speed of the PMSM motor with sufficient accuracy. Rotor angle information is obtained by integrating the estimated electrical speed of the motor.</p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Closed Loop</strong>:</p>
+</li>
+</ul>
+<p class="p">Control switched to closed loop and rotor angle is obtained from the configured position feedback method.</p>
+<p class="p"><strong class="ph b">Code Structure</strong>
+<img class="image" src="GUID-5E28BE92-BA58-4C94-AC46-B29CB61D836C-low.jpg" alt="code_structure" /><br /></p>
+<p class="p">Configurations:</p>
+<ul class="ul"><li class="li"><p class="p">mc_userparameters.h contains the user configurations.</p>
+</li>
+</ul>
+<p class="p">PMSM FOC Application:</p>
+<ul class="ul"><li class="li"><p class="p">mc_pmsm_foc.c/h - PMSM FOC algorithm interface file</p>
+</li>
+</ul>
+<p class="p">Interrupts:</p>
+<ul class="ul"><li class="li"><p class="p">mc_function_coordinator.c - Initializes and coordinates motor control ISR and slow task processes</p>
+</li>
+<li class="li"><p class="p">mc_error_handler.c - PWM fault ISR to take corrective action on over-current</p>
+</li>
+</ul>
+<p class="p">Control Middleware:</p>
+<ul class="ul"><li class="li"><p class="p">mc_motor_control.c/h - Implements the motor control state machines.</p>
+</li>
+</ul>
+<p class="p">Control library:</p>
+<ul class="ul"><li class="li"><p class="p">mc_start_up.c/h - Implements the initial field alignment and open loop start-up profile.</p>
+</li>
+<li class="li"><p class="p">mc_speed_control.c/h - Calculate and regulates the reference speed</p>
+</li>
+<li class="li"><p class="p">mc_current_control.c/h - Controls the direct and quadrature axis currents</p>
+</li>
+<li class="li"><p class="p">mc_rotor_position.c/.h - Calculate the position and speed of the rotor</p>
+</li>
+<li class="li"><p class="p">mc_voltage_measurement.c/h - Get the DC Bus voltage</p>
+</li>
+<li class="li"><p class="p">mc_current_measurement.c/h - Get the motor phase currents</p>
+</li>
+<li class="li"><p class="p">mc_interface_handling.c/h - Manages global variables and data-types</p>
+</li>
+<li class="li"><p class="p">mc_generic_library.c/h - FOC library</p>
+</li>
+<li class="li"><p class="p">mc_pwm.c/h - Space Vector modulation (SVM) and updating PWM duty cycles</p>
+</li>
+<li class="li"><p class="p">mc_ramp_profiler.c/h - Speed reference profiles for user inputs</p>
+</li>
+</ul>
+<p class="p">HAL:</p>
+<ul class="ul"><li class="li"><p class="p">mc_hardware_abstraction.c/h - Hardware Abstraction Layer to interact with PLIBs</p>
+</li>
+</ul>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-C8A962A9-21E8-4034-9826-BF47F79E568F.html">Projects without Harmony QSpin</a></div>
+</div>
+</div></body>
+</html>

@@ -119,7 +119,7 @@ has_toc: false
 
 
 # Rotor Position Sensing <a name="introduction"></a>
-The rotor position information is crucial to control the torque of the motor of an electric drive with Field Oriented Control. The following section describes different rotor position measurement technique in an electric drive, and how it can be configured with Motor Control Plant.
+The rotor position information is crucial to control the torque of the motor of an electric drive with Field Oriented Control. The following section describes different rotor position measurement technique in an electric drive, and how it can be configured with Harmony QSpin.
 
 ## Rotor Position Sensing Technique <a name="Rotor_Position_Sensing"></a>
 Rotor position measurement technique can be broadly classified into sensored techniques and sensorless techniques. The sensored techniques uses actual physical sensors to determine the rotor position, whereas sensorless techniques uses estimators or state observers with phase currents and voltages as inputs to determine the rotor angle.
