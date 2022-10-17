@@ -115,16 +115,16 @@ has_toc: false
 }
 </style>
 
-# Motor Control Plant Manager
-The Motor Control Plant Manager (MCPM) is an intuitive graphical tool for developing motor control application software.
+# Qspin Motor Control Confiuration
+The Harmony Qspin Motor Control is an intuitive graphical tool for developing motor control application software.
 
 The following section briefly describes how to configure motor control firmware for a user application.
 
 ## How to configure Motor Control Application
 1. Launch the QSpin Motor Control Configuration from the MCC plugin list.    
     <p align="center">
-    <img src="images/launch_plant_manager.jpg"/>
-    <figcaption align= "center">Figure.1 - Launching Motor Control Plant Manager </figcaption>
+    <img src="images/launch_qspin.png"/>
+    <figcaption align= "center">Figure.1 - Launching Harmony Qspin </figcaption>
     </p>
 
 2. Set the motor and board parameters.

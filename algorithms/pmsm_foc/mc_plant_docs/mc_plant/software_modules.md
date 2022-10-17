@@ -147,7 +147,7 @@ Figure 1 shows a complete start-up procedure for a sensorless PMSM motor drive:
   <figcaption align= "center">Figure.1 - Open-loop Start-up Procedure </figcaption>
 </p>
 
-In **MC Plant** the start-up configurator can be configured in following simple steps:
+In **Harmony Qspin** the start-up configurator can be configured in following simple steps:
 - Click on the "Start-up Configurator" block as shown below.
     <p align="center">
         <img src="images/start_up_module.JPG" />
@@ -169,7 +169,7 @@ In **MC Plant** the start-up configurator can be configured in following simple 
 ## Motor control and diagnosis
 The **Motor control and diagnosis** module is responsible for the implementation of core motor control algorithm. It implements the motor control state machine, and the core control parameters. For details refer [Software Architecture](theory/software_architecture.md).
 
-In **MC Plant** the **Motor control and diagnosis** module can be configured in following simple steps:
+In **Harmony Qspin** the **Motor control and diagnosis** module can be configured in following simple steps:
 
 - Click on the "Motor control and diagnosis" block as shown below.
     <p align="center">
@@ -199,7 +199,7 @@ In **MC Plant** the **Motor control and diagnosis** module can be configured in 
 ## Current measurement and diagnosis
 The **Current measurement and diagnosis** module is responsible for the implementation of motor current measurement technique required for the motor control application. For details refer [Software Architecture](theory/current_measurement.md).
 
-In **MC Plant** the **Current measurement and diagnosis** module can be configured in following simple steps:
+In **Harmony Qspin** the **Current measurement and diagnosis** module can be configured in following simple steps:
 - Click on the "Current measurement and diagnosis" block as shown below.
     <p align="center">
         <img src="images/current_calculation_and_diagnosis.jpg" />
@@ -215,7 +215,7 @@ In **MC Plant** the **Current measurement and diagnosis** module can be configur
 The **Voltage measurement and diagnosis** module is responsible for the implementation of motor voltage measurement technique required for the motor control application. 
 
 
-In **MC Plant** the **Voltage measurement and diagnosis** module can be configured in following simple steps:
+In **Harmony Qspin** the **Voltage measurement and diagnosis** module can be configured in following simple steps:
 - Click on the "Voltage measurement and diagnosis" block as shown below.
     <p align="center">
         <img src="images/voltage_measurement_and_diagnosis.jpg" />
@@ -230,7 +230,7 @@ In **MC Plant** the **Voltage measurement and diagnosis** module can be configur
 ## Rotor position calculation and diagnosis
 The **Rotor position calculation and diagnosis** module is responsible for the implementation of rotor position measurement technique required for the motor control application. For details refer [Rotor Position Measurement](theory/rotor_position_measurement.md)
 
-In **MC Plant** the **Rotor position calculation and diagnosis** module can be configured in following simple steps:
+In **Harmony Qspin** the **Rotor position calculation and diagnosis** module can be configured in following simple steps:
 - Click on the "Rotor position calculation and diagnosis" block as shown below.
     <p align="center">
         <img src="images/Position_calculation_and_diagnosis.jpg" />

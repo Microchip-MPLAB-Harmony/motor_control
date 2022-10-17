@@ -115,7 +115,7 @@ has_toc: false
 </style>
 
 # Field Oriented Control Implementation
-The generated code from the Motor Control Plant intends to achieve following goals:
+The generated code from the Harmony QSpin intends to achieve following goals:
 - to spin a motor based on simple user inputs
 - to be modular and maintainable
 - to be a clear example to Microchip customers for a motor control Application using Microchip's 32 bit MCU devices

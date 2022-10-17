@@ -1,5 +1,5 @@
 # Field Oriented Control Implementation
-The generated code from the Motor Control Plant intends to achieve following goals:
+The generated code from the Harmony Qspin intends to achieve following goals:
 - to spin a motor based on simple user inputs
 - to be modular and maintainable
 - to be a clear example to Microchip customers for a motor control Application using Microchip's 32 bit MCU devices
@@ -14,7 +14,7 @@ The motor startup process involves so-called “open-loop” operation. When the
 Figure XX shows a high level block diagram of the software.
 
 
-** Software Architecture**
+**Software Architecture**
 
 The software performs following tasks:
 - Microcontroller and motor control peripheral initialization
@@ -27,7 +27,7 @@ The software performs following tasks:
 
 On power-on reset, the software initializes the microcontroller and motor control peripherals according to the user requirements. 
 
-** Motor control state machine**
+**Motor control state machine**
 The software implements the motor control tasks in ADC ISR. The ADC ISR incorporates following states:
 - **Idle**. In this state, the motor does not spin. The software waits for a valid button press from the user to start the motor.
  

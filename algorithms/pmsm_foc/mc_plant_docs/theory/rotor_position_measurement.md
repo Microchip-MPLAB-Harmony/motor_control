@@ -132,7 +132,7 @@ Figure 1 shows different measurement rotor position sensing technique used in  e
   <figcaption align= "center">Figure.1 - Rotor Position Sensing Techniques </figcaption>
 </p>
 
-In this article, we will focus on the few of the popular rotor position measurement techniques, and how to configure them with **Motor Control Plant**.
+In this article, we will focus on the few of the popular rotor position measurement techniques, and how to configure them with **Harmony Qspin**.
 
 ### Quadrature Encoder <a name="Rotor_Position_Sensing_qdec"></a>
 Quadrature encoders, also known as incremental encoders or optical encoders, detect position and speed of rotating motion systems. 

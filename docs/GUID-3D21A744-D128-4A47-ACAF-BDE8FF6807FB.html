@@ -225,7 +225,7 @@
         
       </style><link rel="stylesheet" type="text/css" href="syntax-highlight.css" /></head>
 <body id="field-oriented-control-implementation">
-<h1 class="title topictitle1" id="ariaid-title1">Field Oriented Control Implementation</h1><div class="body"><p class="p">The generated code from the Motor Control Plant intends to achieve following goals:</p>
+<h1 class="title topictitle1" id="ariaid-title1">Field Oriented Control Implementation</h1><div class="body"><p class="p">The generated code from the Harmony Qspin intends to achieve following goals:</p>
 <ul class="ul"><li class="li"><p class="p">to spin a motor based on simple user inputs</p>
 </li>
 <li class="li"><p class="p">to be modular and maintainable</p>
@@ -238,7 +238,7 @@
 The software spins a motor using a velocity control loop, with an inner current loop using field-oriented control (FOC) to manage motor current and torque. Sensorless estimation techniques are used to estimate motor position for commutation and velocity control. User input is provided with a potentiometer and buttons to start and stop the motor, or to reverse direction. A state machine is used to control the transitions between these different modes of operation.</p>
 <p class="p">The motor startup process involves so-called “open-loop” operation. When the motor is at rest or moving very slowly, the sensorless estimator is not accurate enough; instead, a special set of states is provided to manage startup, in which commutation is forced at a desired acceleration rate, and the velocity control loop is disabled.</p>
 <p class="p">Figure XX shows a high level block diagram of the software.</p>
-<p class="p">** Software Architecture**</p>
+<p class="p"><strong class="ph b">Software Architecture</strong></p>
 <p class="p">The software performs following tasks:</p>
 <ul class="ul"><li class="li"><p class="p">Microcontroller and motor control peripheral initialization</p>
 </li>
@@ -251,7 +251,7 @@ The software spins a motor using a velocity control loop, with an inner current 
 </ul>
 <p class="p"><strong class="ph b">Motor control peripheral initialization.</strong></p>
 <p class="p">On power-on reset, the software initializes the microcontroller and motor control peripherals according to the user requirements.</p>
-<p class="p">** Motor control state machine**
+<p class="p"><strong class="ph b">Motor control state machine</strong>
 The software implements the motor control tasks in ADC ISR. The ADC ISR incorporates following states:</p>
 <ul class="ul"><li class="li"><p class="p"><strong class="ph b">Idle</strong>. In this state, the motor does not spin. The software waits for a valid button press from the user to start the motor.</p>
 </li>

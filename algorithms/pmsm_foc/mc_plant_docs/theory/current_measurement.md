@@ -117,7 +117,7 @@ has_toc: false
 
 
 # Current Measurement
-The phase current information is crucial to control the torque of the motor of an electric drive with Field Oriented Control. The following section describes different current measurement principles in an electric drive, and how it can be configured with Motor Control Plant.
+The phase current information is crucial to control the torque of the motor of an electric drive with Field Oriented Control. The following section describes different current measurement principles in an electric drive, and how it can be configured with Harmony Qspin.
 
 ## Current Measurement Principles:
 Figure 1 shows different measurement principles used for phase current measurement in an electric drive.
