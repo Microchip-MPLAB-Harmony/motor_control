@@ -36,6 +36,5 @@ def loadModule():
         mcPmsmFocComponent.addDependency("pmsmfoc_PWM", "PWM", False, True)
 
         mcPmsmFocComponent.addDependency("pmsmfoc_QDEC", "QDEC", False, True)
-        # mcPmsmFocComponent.setDependencyEnabled("pmsmfoc_QDEC", False)
 
-        mcPmsmFocComponent.addDependency("pmsmfoc_X2CSCOPE", "Data stream", False, True)
+        mcPmsmFocComponent.addDependency("pmsmfoc_X2CSCOPE", "Data Interface", False, True)

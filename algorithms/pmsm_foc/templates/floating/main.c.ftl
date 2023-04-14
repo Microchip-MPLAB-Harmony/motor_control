@@ -51,7 +51,7 @@
 #include <stdbool.h>                    // Defines true
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include "definitions.h"                // SYS function prototypes
-
+#include "mc_application.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -63,6 +63,9 @@ int main ( void )
 {
     /* Initialize all modules */
     SYS_Initialize ( NULL );
+    
+    /* Initialize application */
+    mcAppI_ApplicationInit();
 
     while ( true )
     {
@@ -70,12 +73,10 @@ int main ( void )
         SYS_Tasks ( );
         
         /* Motor control main loop tasks */
-        PMSM_FOC_ThreadTasksRun();
+        mcAppI_NonISRTasks();
         
-    <#--  <#if true == "MCPMSMFOC_DATA_MONITOR_ENABLE">  -->
-        /* X2C Communication */
+       /* X2C Communication */
         X2CScope_Communicate();
-    <#--  </#if>  -->
     }
 
     /* Execution should not come here during normal operation */

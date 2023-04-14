@@ -24,276 +24,435 @@
 
 import os
 
+global templatePath
+templatePath = "/algorithms/pmsm_foc/templates/floating/"
 
-def mcPmsmFocCodeGenUpdate(symbol, event):
+global zsmtLibraryPath
+zsmtLibraryPath = Module.getPath()+"../mc_zsmt_libraries/"
+
+
+def mcGen_GenerateCodeUpdate(symbol, event):
     component = symbol.getComponent()
-    if (event["id"] == "MCPMSMFOC_POSITION_CALC_ALGORITHM"):
+    
+    if ( str( event["id"] ) == "MCPMSMFOC_ALIGN_OR_DETECT_ALGORITHM"):
+       
+        # ToDO: Check 
+        if ( ( str( event["value"] ) == "INITIAL_POSITION_DETECTION" ) or ( event["value"]  == 1 )) :
+            component.getSymbolByID("MCPMSMFOC_IPD_HEADER").setEnabled(True)
+            # component.getSymbolByID("MCPMSMFOC_IPD_SOURCE").setEnabled(True)
+        else:
+            component.getSymbolByID("MCPMSMFOC_IPD_HEADER").setEnabled(False)
+            # component.getSymbolByID("MCPMSMFOC_IPD_SOURCE").setEnabled(False)
+                        
+    elif ( str( event["id"]) == "MCPMSMFOC_POSITION_CALC_ALGORITHM"):  
         symObj = event["symbol"]
-        key = symObj.getSelectedKey()
-        if(key == "SENSORED_ENCODER"):
-            component.getSymbolByID("MCPMSMFOC_POS_ENCODER_HEADER").setEnabled(True)    
-            component.getSymbolByID("MCPMSMFOC_POS_ENCODER_SOURCE").setEnabled(True)            
-        else:
-            component.getSymbolByID("MCPMSMFOC_POS_ENCODER_HEADER").setEnabled(False)    
-            component.getSymbolByID("MCPMSMFOC_POS_ENCODER_SOURCE").setEnabled(False)
-        if(key == "SENSORLESS_PLL"):
-            component.getSymbolByID("MCPMSMFOC_POS_PLL_HEADER").setEnabled(True)
-            component.getSymbolByID("MCPMSMFOC_POS_PLL_SOURCE").setEnabled(True)
-        else:
-            component.getSymbolByID("MCPMSMFOC_POS_PLL_HEADER").setEnabled(False)
-            component.getSymbolByID("MCPMSMFOC_POS_PLL_SOURCE").setEnabled(False)
-
-        if(key == "SENSORLESS_ROLO"):
-            component.getSymbolByID("MCPMSMFOC_POS_ROLO_HEADER").setEnabled(True)
-            component.getSymbolByID("MCPMSMFOC_POS_ROLO_SOURCE").setEnabled(True)
-        else:
-            component.getSymbolByID("MCPMSMFOC_POS_ROLO_HEADER").setEnabled(False)
-            component.getSymbolByID("MCPMSMFOC_POS_ROLO_SOURCE").setEnabled(False)
-
-        if(key == "SENSORLESS_SMO"):
-            component.getSymbolByID("MCPMSMFOC_POS_SMO_HEADER").setEnabled(True)
-            component.getSymbolByID("MCPMSMFOC_POS_SMO_SOURCE").setEnabled(True)
-        else:
-            component.getSymbolByID("MCPMSMFOC_POS_SMO_HEADER").setEnabled(False)
-            component.getSymbolByID("MCPMSMFOC_POS_SMO_SOURCE").setEnabled(False)
-
-
-    elif (event["id"] == "MCPMSMFOC_FLYING_START_CODE_TYPE"):
-        if event["value"] == 1:
-            if(component.getSymbolByID("MCPMSMFOC_FLYING_START").getValue() == True):
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(True)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(True)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
-                
-            else:
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(False)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)                
-                
-        else:
-            if(component.getSymbolByID("MCPMSMFOC_FLYING_START").getValue() == True):
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(True)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(True)
-                
-            else:
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(False)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
-                
-    elif (event["id"] == "MCPMSMFOC_FLYING_START"):
-        if event["value"] == True:
-            if(component.getSymbolByID("MCPMSMFOC_FLYING_START_CODE_TYPE").getValue() == 1):
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(True)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(True)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
-                
-            else:
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(True)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
-                component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(True)
-                
-        else:
-            component.getSymbolByID("MCPMSMFOC_FLYING_START_HEADER").setEnabled(False)
-            component.getSymbolByID("MCPMSMFOC_FLYING_START_SOURCE").setEnabled(False)
-            component.getSymbolByID("MCPMSMFOC_FLYING_START_LIB").setEnabled(False)
-
-    if (event["id"] == "MCPMSMFOC_REF_INPUT"):
-        symObj = event["symbol"]
-        key = symObj.getSelectedKey()
-        if(key == "INPUT_FROM_API"):
-            component.getSymbolByID("MCPMSMFOC_RAMP_PROFILER_HEADER").setEnabled(True)    
-            component.getSymbolByID("MCPMSMFOC_RAM_PROFILER_SOURCE").setEnabled(True)            
-        else:
-            component.getSymbolByID("MCPMSMFOC_RAMP_PROFILER_HEADER").setEnabled(False)    
-            component.getSymbolByID("MCPMSMFOC_RAM_PROFILER_SOURCE").setEnabled(False)
+        key = (symObj.getSelectedKey()).lower()
+        modulePath = templatePath + "Field_Oriented_Control/"
+      
+        for root, dirs, files in os.walk(Module.getPath() + modulePath + "inc"):
+            for filename in files:
+                if (filename.startswith("opt_rpo")):
+                    if key in filename:
+                        component.getSymbolByID(filename).setEnabled(True)
+                    else:
+                        component.getSymbolByID(filename).setEnabled(False) 
+                        
+        for root, dirs, files in os.walk(Module.getPath() + modulePath + "src"):
+            for filename in files:
+                if (filename.startswith("opt_rpo")):
+                    if key in filename:
+                        component.getSymbolByID(filename).setEnabled(True)
+                    else:
+                        component.getSymbolByID(filename).setEnabled(False) 
             
-
-            
+      
 def mcGen_GenerateCode(mcPmsmFocComponent):
-
     coreComponent = Database.getComponentByID("core")
-
     configName = Variables.get("__CONFIGURATION_NAME")
-    if(("PIC32CM" in Variables.get("__PROCESSOR")) or ( "SAMC21" in Variables.get("__PROCESSOR"))):
-        templatePath = "/algorithms/pmsm_foc/templates/fixed/"
-        mcPmsmFocSystemDefFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_DEF", None)
-        mcPmsmFocSystemDefFile.setType("STRING")
-        mcPmsmFocSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-        mcPmsmFocSystemDefFile.setSourcePath(templatePath + "system/definitions.h.ftl")
-        mcPmsmFocSystemDefFile.setMarkup(True)
 
-        mcPmsmFocSystemInitFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_INIT", None)
-        mcPmsmFocSystemInitFile.setType("STRING")
-        mcPmsmFocSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
-        mcPmsmFocSystemInitFile.setSourcePath(templatePath + "system/initialization.c.ftl")
-        mcPmsmFocSystemInitFile.setMarkup(True)
-
-        mcPmsmFocRampProfilerHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_RAMP_PROFILER_HEADER", None)
-        mcPmsmFocRampProfilerHeaderFile.setSourcePath(templatePath + "ramp_profiler.h.ftl")
-        mcPmsmFocRampProfilerHeaderFile.setOutputName("mc_ramp_profiler.h")
-        mcPmsmFocRampProfilerHeaderFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocRampProfilerHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocRampProfilerHeaderFile.setType("HEADER")
-        mcPmsmFocRampProfilerHeaderFile.setMarkup(True)
-
-        mcPmsmFocRampProfilerSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_RAMP_PROFILER_SOURCE", None)
-        mcPmsmFocRampProfilerSourceFile.setSourcePath(templatePath + "ramp_profiler.c.ftl")
-        mcPmsmFocRampProfilerSourceFile.setOutputName("mc_ramp_profiler.c")
-        mcPmsmFocRampProfilerSourceFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocRampProfilerSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocRampProfilerSourceFile.setType("HEADER")
-        mcPmsmFocRampProfilerSourceFile.setMarkup(True)
+    #-----------------------------------------------------------------------------------------------------------------------
+    #     Main File
+    #-----------------------------------------------------------------------------------------------------------------------   
+    # Disable default main file and generate from ftl file 
+    coreComponent.getSymbolByID("CoreMainFile").setValue(False)
+    mainSourceFile = mcPmsmFocComponent.createFileSymbol("MAIN_MOTOR_CONTROL_C", None)
+    mainSourceFile.setSourcePath(templatePath + "main.c.ftl")
+    mainSourceFile.setOutputName("main.c")
+    mainSourceFile.setMarkup(True)
+    mainSourceFile.setOverwrite(False)
+    mainSourceFile.setDestPath("../../")
+    mainSourceFile.setProjectPath("")
+    mainSourceFile.setType("SOURCE")
         
-    else:
-        templatePath = "/algorithms/pmsm_foc/templates/floating/"
+    #-----------------------------------------------------------------------------------------------------------------------
+    #     Application source and header file
+    #-----------------------------------------------------------------------------------------------------------------------
+    filename = "mc_application.c.ftl"
+    projectPath = "config/" + configName + "/QSpin"
     
-        # Included in the if condition to avoid interference
-        mcPmsmFocCodeGen = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_CODE_GEN", None)
-        mcPmsmFocCodeGen.setVisible(False)
-        mcPmsmFocCodeGen.setDependencies(mcPmsmFocCodeGenUpdate, ["MCPMSMFOC_POSITION_CALC_ALGORITHM","MCPMSMFOC_FLYING_START","MCPMSMFOC_FLYING_START_CODE_TYPE"])
+    # Include directory 
+    appIncludeDirectory = mcPmsmFocComponent.createSettingSymbol(None, None)
+    appIncludeDirectory.setCategory("C32")
+    appIncludeDirectory.setKey("extra-include-directories")
+    appIncludeDirectory.setValue("../src/" + projectPath)
+    appIncludeDirectory.setAppend(True, ";")
         
-        mcPmsmFocSystemDefFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_DEF", None)
-        mcPmsmFocSystemDefFile.setType("STRING")
-        mcPmsmFocSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-        mcPmsmFocSystemDefFile.setSourcePath(templatePath + "system/definitions.h.ftl")
-        mcPmsmFocSystemDefFile.setMarkup(True)
-
-        mcPmsmFocSystemInitFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_INIT", None)
-        mcPmsmFocSystemInitFile.setType("STRING")
-        mcPmsmFocSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
-        mcPmsmFocSystemInitFile.setSourcePath(templatePath + "system/initialization.c.ftl")
-        mcPmsmFocSystemInitFile.setMarkup(True)
-
-        mcPmsmFocPosPllSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_PLL_SOURCE", None)
-        mcPmsmFocPosPllSourceFile.setSourcePath(templatePath + "pos_pll.c.ftl")
-        mcPmsmFocPosPllSourceFile.setOutputName("mc_rotor_position.c")
-        mcPmsmFocPosPllSourceFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosPllSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosPllSourceFile.setType("SOURCE")
-        mcPmsmFocPosPllSourceFile.setMarkup(True)
-
-        # Disable default main file and generate from ftl file 
-        coreComponent.getSymbolByID("CoreMainFile").setValue(False)
-        mainSourceFile = mcPmsmFocComponent.createFileSymbol("MAIN_MOTOR_CONTROL_C", None)
-        mainSourceFile.setSourcePath(templatePath + "main.c.ftl")
-        mainSourceFile.setOutputName("main.c")
-        mainSourceFile.setMarkup(True)
-        mainSourceFile.setOverwrite(False)
-        mainSourceFile.setDestPath("../../")
-        mainSourceFile.setProjectPath("")
-        mainSourceFile.setType("SOURCE")
-
-        mcPmsmFocPosPllHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_PLL_HEADER", None)
-        mcPmsmFocPosPllHeaderFile.setSourcePath(templatePath + "pos_pll.h.ftl")
-        mcPmsmFocPosPllHeaderFile.setOutputName("mc_rotor_position.h")
-        mcPmsmFocPosPllHeaderFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosPllHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosPllHeaderFile.setType("HEADER")
-        mcPmsmFocPosPllHeaderFile.setMarkup(True)
-
-        mcPmsmFocPosSmoSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_SMO_SOURCE", None)
-        mcPmsmFocPosSmoSourceFile.setSourcePath(templatePath + "pos_smo.c.ftl")
-        mcPmsmFocPosSmoSourceFile.setOutputName("mc_rotor_position.c")
-        mcPmsmFocPosSmoSourceFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosSmoSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosSmoSourceFile.setType("SOURCE")
-        mcPmsmFocPosSmoSourceFile.setMarkup(True)
-
-        mcPmsmFocPosSmoHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_SMO_HEADER", None)
-        mcPmsmFocPosSmoHeaderFile.setSourcePath(templatePath + "pos_smo.h.ftl")
-        mcPmsmFocPosSmoHeaderFile.setOutputName("mc_rotor_position.h")
-        mcPmsmFocPosSmoHeaderFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosSmoHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosSmoHeaderFile.setType("HEADER")
-        mcPmsmFocPosSmoHeaderFile.setMarkup(True)
-
-        mcPmsmFocPosRoloSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ROLO_SOURCE", None)
-        mcPmsmFocPosRoloSourceFile.setSourcePath(templatePath + "pos_rolo.c.ftl")
-        mcPmsmFocPosRoloSourceFile.setOutputName("mc_rotor_position.c")
-        mcPmsmFocPosRoloSourceFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosRoloSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosRoloSourceFile.setType("SOURCE")
-        mcPmsmFocPosRoloSourceFile.setMarkup(True)
-
-        mcPmsmFocPosRoloHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ROLO_HEADER", None)
-        mcPmsmFocPosRoloHeaderFile.setSourcePath(templatePath + "pos_rolo.h.ftl")
-        mcPmsmFocPosRoloHeaderFile.setOutputName("mc_rotor_position.h")
-        mcPmsmFocPosRoloHeaderFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosRoloHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosRoloHeaderFile.setType("HEADER")
-        mcPmsmFocPosRoloHeaderFile.setMarkup(True)
-
-        mcPmsmFocPosEncSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ENCODER_SOURCE", None)
-        mcPmsmFocPosEncSourceFile.setSourcePath(templatePath + "pos_encoder.c.ftl")
-        mcPmsmFocPosEncSourceFile.setOutputName("mc_rotor_position.c")
-        mcPmsmFocPosEncSourceFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosEncSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosEncSourceFile.setType("SOURCE")
-        mcPmsmFocPosEncSourceFile.setMarkup(True)
-
-        mcPmsmFocPosEncHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_POS_ENCODER_HEADER", None)
-        mcPmsmFocPosEncHeaderFile.setSourcePath(templatePath + "pos_encoder.h.ftl")
-        mcPmsmFocPosEncHeaderFile.setOutputName("mc_rotor_position.h")
-        mcPmsmFocPosEncHeaderFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosEncHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosEncHeaderFile.setType("HEADER")
-        mcPmsmFocPosEncHeaderFile.setMarkup(True)
-
-
-        mcPmsmFocPosFlyingStartHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_FLYING_START_HEADER", None)
-        mcPmsmFocPosFlyingStartHeaderFile.setSourcePath(templatePath + "flyingstart.h")
-        mcPmsmFocPosFlyingStartHeaderFile.setOutputName("mc_flyingstart.h")
-        mcPmsmFocPosFlyingStartHeaderFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosFlyingStartHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosFlyingStartHeaderFile.setType("HEADER")
-        mcPmsmFocPosFlyingStartHeaderFile.setMarkup(True)
-        mcPmsmFocPosFlyingStartHeaderFile.setEnabled(False)
+    appSourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+    appSourceFile.setSourcePath(templatePath + filename)
+    if (filename.endswith(".ftl")):
+        filename = filename[:-4]
+    appSourceFile.setOutputName(filename)
+    appSourceFile.setDestPath("QSpin")
+    appSourceFile.setProjectPath(projectPath)
+    appSourceFile.setType("SOURCE")
+    appSourceFile.setMarkup(True)
+                
+    filename = "mc_application.h.ftl"
+    projectPath = "config/" + configName + "/QSpin"
+    appHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+    appHeaderFile.setSourcePath(templatePath + filename)
+    if (filename.endswith(".ftl")):
+        filename = filename[:-4]
+    appHeaderFile.setOutputName(filename)
+    appHeaderFile.setDestPath("QSpin")
+    appHeaderFile.setProjectPath(projectPath)
+    appHeaderFile.setType("HEADER")
+    appHeaderFile.setMarkup(True)
+    #-----------------------------------------------------------------------------------------------------------------------
+    #     Types File
+    #-----------------------------------------------------------------------------------------------------------------------
+    filename = "mc_types.h.ftl"
+    projectPath = "config/" + configName + "/QSpin"
+    appHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+    appHeaderFile.setSourcePath(templatePath + filename)
+    if (filename.endswith(".ftl")):
+        filename = filename[:-4]
+    appHeaderFile.setOutputName(filename)
+    appHeaderFile.setDestPath("QSpin")
+    appHeaderFile.setProjectPath(projectPath)
+    appHeaderFile.setType("HEADER")
+    appHeaderFile.setMarkup(True)
+        
+    #-----------------------------------------------------------------------------------------------------------------------
+    #     Field Oriented Control module code generation
+    #-----------------------------------------------------------------------------------------------------------------------
+    modulePath = templatePath + "Field_Oriented_Control/"
+    projectPath = "config/" + configName + "/QSpin/Field_Oriented_Control/"
     
-
-        mcPmsmFocPosFlyingStartSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_FLYING_START_SOURCE", None)
-        mcPmsmFocPosFlyingStartSourceFile.setSourcePath("../mc_src_flying_start/src/mc_flyingstart.c")
-        mcPmsmFocPosFlyingStartSourceFile.setOutputName("mc_flyingstart.c")
-        mcPmsmFocPosFlyingStartSourceFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosFlyingStartSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
-        mcPmsmFocPosFlyingStartSourceFile.setType("SOURCE")
-        mcPmsmFocPosFlyingStartSourceFile.setMarkup(True)
-        mcPmsmFocPosFlyingStartSourceFile.setEnabled(False)
-        
-        mcPmsmFocPosFlyingStartLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_FLYING_START_LIB", None)
-        if(("SAMD5" in Variables.get("__PROCESSOR")) or ("SAME5" in Variables.get("__PROCESSOR"))):
-            mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_D5x_E5x_MC_FLYINGSTART.X.a")
-        elif(("SAME7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR"))):
-            mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_SAM_E7x_S7x_V7x_MC_FLYINGSTART.X.a")
-        elif("PIC32MK" in Variables.get("__PROCESSOR")):
-            mcPmsmFocPosFlyingStartLibraryFile.setSourcePath("/algorithms/pmsm_foc/lib/flying_start/lib_PIC32MK_MC_FLYINGSTART.X.a")
-        mcPmsmFocPosFlyingStartLibraryFile.setOutputName("lib_mc_flyingstart.a")
-        mcPmsmFocPosFlyingStartLibraryFile.setDestPath("motor_control/pmsm_foc/")
-        mcPmsmFocPosFlyingStartLibraryFile.setEnabled(False)
-   
-   
-
-    for root, dirs, files in os.walk(Module.getPath()+ templatePath ):
+    focIncludeDirectory = mcPmsmFocComponent.createSettingSymbol(None, None)
+    focIncludeDirectory.setCategory("C32")
+    focIncludeDirectory.setKey("extra-include-directories")
+    focIncludeDirectory.setValue("../src/" + projectPath + "inc")
+    focIncludeDirectory.setAppend(True, ";")
+    
+    for root, dirs, files in os.walk(Module.getPath() + modulePath + "src"):
         for filename in files:
-            if (".c" in filename and "mc_" in filename):
+            if (".c" in filename):
+                if filename.startswith("mc_"):
+                    mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                    mcPmsmFocSourceFile.setSourcePath(modulePath + "src/" + filename)
+                    if (filename.endswith(".ftl")):
+                        filename = filename[:-4]
+                    mcPmsmFocSourceFile.setOutputName(filename)
+                    mcPmsmFocSourceFile.setDestPath("QSpin/Field_Oriented_Control/src")
+                    mcPmsmFocSourceFile.setProjectPath(projectPath + "src")
+                    mcPmsmFocSourceFile.setType("SOURCE")
+                    mcPmsmFocSourceFile.setMarkup(True)
+                    
+                elif filename.startswith("opt_rpo"):
+                    mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                    mcPmsmFocHeaderFile.setSourcePath(modulePath + "src/" + filename)
+                    mcPmsmFocHeaderFile.setOutputName("mc_rotor_position_calculation.c")
+                    mcPmsmFocHeaderFile.setDestPath("QSpin/Field_Oriented_Control/src")
+                    mcPmsmFocHeaderFile.setProjectPath(projectPath + "src")
+                    mcPmsmFocHeaderFile.setType("SOURCE")
+                    mcPmsmFocHeaderFile.setMarkup(True)
+                    
+                elif filename.startswith("opt_foc"):
+                    mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                    mcPmsmFocHeaderFile.setSourcePath(modulePath + "src/" + filename)
+                    mcPmsmFocHeaderFile.setOutputName("mc_field_oriented_control.c")
+                    mcPmsmFocHeaderFile.setDestPath("QSpin/Field_Oriented_Control/src")
+                    mcPmsmFocHeaderFile.setProjectPath(projectPath + "src")
+                    mcPmsmFocHeaderFile.setType("SOURCE")
+                    mcPmsmFocHeaderFile.setMarkup(True)
+                
+    for root, dirs, files in os.walk(Module.getPath() + modulePath + "inc"):
+        for filename in files:
+            if (".h" in filename):
+                if filename.startswith("mc_"):
+                    mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                    mcPmsmFocHeaderFile.setSourcePath(modulePath + "inc/" + filename)
+                    if (filename.endswith(".ftl")):
+                        filename = filename[:-4]
+                    mcPmsmFocHeaderFile.setOutputName(filename)
+                    mcPmsmFocHeaderFile.setDestPath("QSpin/Field_Oriented_Control/inc")
+                    mcPmsmFocHeaderFile.setProjectPath(projectPath + "inc")
+                    mcPmsmFocHeaderFile.setType("HEADER")
+                    mcPmsmFocHeaderFile.setMarkup(True)
+                    
+                elif filename.startswith("opt_rpo"):
+                    mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                    mcPmsmFocHeaderFile.setSourcePath(modulePath + "inc/" + filename)
+                    mcPmsmFocHeaderFile.setOutputName("mc_rotor_position_calculation.h")
+                    mcPmsmFocHeaderFile.setDestPath("QSpin/Field_Oriented_Control/inc")
+                    mcPmsmFocHeaderFile.setProjectPath(projectPath + "inc")
+                    mcPmsmFocHeaderFile.setType("HEADER")
+                    mcPmsmFocHeaderFile.setMarkup(True)
+                    
+                elif filename.startswith("opt_foc"):
+                    mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                    mcPmsmFocHeaderFile.setSourcePath(modulePath + "inc/" + filename)
+                    mcPmsmFocHeaderFile.setOutputName("mc_field_oriented_control.h")
+                    mcPmsmFocHeaderFile.setDestPath("QSpin/Field_Oriented_Control/inc")
+                    mcPmsmFocHeaderFile.setProjectPath(projectPath + "inc")
+                    mcPmsmFocHeaderFile.setType("HEADER")
+                    mcPmsmFocHeaderFile.setMarkup(True)
+     
+    # ipdSourceFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_IPD_SOURCE", None)
+    # ipdSourceFile.setSourcePath(modulePath + "src/" + "opt_ipd.c.ftl")
+    # ipdSourceFile.setOutputName("mc_initial_position_detection.c")
+    # ipdSourceFile.setDestPath("QSpin/Field_Oriented_Control/src")
+    # ipdSourceFile.setProjectPath(projectPath + "src")
+    # ipdSourceFile.setType("SOURCE")
+    # ipdSourceFile.setMarkup(True)
+
+    ipdHeaderFile = mcPmsmFocComponent.createFileSymbol("MCPMSMFOC_IPD_HEADER", None)
+    ipdHeaderFile.setSourcePath(modulePath + "inc/" + "opt_ipd.h.ftl")
+    ipdHeaderFile.setOutputName("mc_initial_position_detection.h")
+    ipdHeaderFile.setDestPath("QSpin/Field_Oriented_Control/inc")
+    ipdHeaderFile.setProjectPath(projectPath + "inc")
+    ipdHeaderFile.setType("HEADER")
+    ipdHeaderFile.setMarkup(True)
+    
+    if os.path.exists(zsmtLibraryPath):
+        if( ("SAME7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR"))):      
+            zsmtLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_ZSMT_LIB_SAME70_A", None)
+            zsmtLibraryFile.setSourcePath("../mc_zsmt_libraries/Harmony/lib/libCortexM7-ATSAM_MCHP_ZSMT.a")
+            zsmtLibraryFile.setOutputName("libCortexM7-ATSAM_MCHP_ZSMT.a")
+            zsmtLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/lib/")     
+            
+            ipdLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_IPD_LIB_SAME70_A", None)
+            ipdLibraryFile.setSourcePath("../mc_zsmt_libraries/Harmony/lib/libCortexM7-ATSAM_MCHP_IPD.a")
+            ipdLibraryFile.setOutputName("libCortexM7-ATSAM_MCHP_IPD.a")
+            ipdLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/lib/")         
+        
+        elif( ("PIC32CM" in Variables.get("__PROCESSOR")) or ("SAMD2" in Variables.get("__PROCESSOR")) or ("SAMC2" in Variables.get("__PROCESSOR")) or ("SAML2" in Variables.get("__PROCESSOR"))):               
+            zsmtLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_ZSMT_A_PIC32MK_A", None)
+            zsmtLibraryFile.setSourcePath("../mc_zsmt_libraries/Harmony/lib/libCortexM0Plus-ATSAM_MCHP_ZSMT.a")
+            zsmtLibraryFile.setOutputName("libCortexM0Plus-ATSAM_MCHP_ZSMT.a")
+            zsmtLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/lib/")        
+            
+            ipdLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_IPD_A_PIC32MK_A", None)
+            ipdLibraryFile.setSourcePath("../mc_zsmt_libraries/Harmony/lib/libCortexM0Plus-ATSAM_MCHP_IPD.a")
+            ipdLibraryFile.setOutputName("libCortexM0Plus-ATSAM_MCHP_IPD.a")
+            ipdLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/lib/")        
+    
+        elif( ("SAMD5" in Variables.get("__PROCESSOR")) or ("SAME5" in Variables.get("__PROCESSOR"))):
+            zsmtLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_ZSMT_LIB_SAME54_A", None)
+            zsmtLibraryFile.setSourcePath("../mc_zsmt_libraries/Harmony/lib/libCortexM4-ATSAM_MCHP_ZSMT.a")
+            zsmtLibraryFile.setOutputName("libCortexM4-ATSAM_MCHP_ZSMT.a")
+            zsmtLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/lib/")        
+            
+            ipdLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_IPD_LIB_SAME54_A", None)
+            ipdLibraryFile.setSourcePath("../mc_zsmt_libraries/Harmony/lib/libCortexM4-ATSAM_MCHP_IPD.a")
+            ipdLibraryFile.setOutputName("libCortexM4-ATSAM_MCHP_IPD.a")
+            ipdLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/lib/")       
+    
+        elif("PIC32MX" in Variables.get("__PROCESSOR")):
+            zsmtLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_ZSMT_A_PIC32MX_A", None)
+            zsmtLibraryFile.setSourcePath("../mc_zsmt_libraries/Harmony/lib/libPIC32MX_MCHP.a")
+            zsmtLibraryFile.setOutputName("libPIC32MX_MCHP_ZSMT.a")
+            zsmtLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/lib/")
+            
+            ipdLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_IPD_LIB_SAME54_A", None)
+            ipdLibraryFile.setSourcePath("../mc_zsmt_libraries/Harmony/lib/libCortexM4-ATSAM_MCHP_IPD.a")
+            ipdLibraryFile.setOutputName("libCortexM4-ATSAM_MCHP_IPD.a")
+            ipdLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/lib/")  
+    
+        elif("PIC32MZ" in Variables.get("__PROCESSOR")):              
+            zsmtLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_ZSMT_A_PIC32MK_A", None)
+            zsmtLibraryFile.setSourcePath("../mc_zsmt_libraries/Harmony/lib/libPIC32MK_MCHP_ZSMT.a")
+            zsmtLibraryFile.setOutputName("libPIC32MK_MCHP_ZSMT.a")
+            zsmtLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/lib/") 
+            
+            ipdLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_IPD_LIB_SAME54_A", None)
+            ipdLibraryFile.setSourcePath("../mc_zsmt_libraries/Harmony/lib/libCortexM4-ATSAM_MCHP_IPD.a")
+            ipdLibraryFile.setOutputName("libCortexM4-ATSAM_MCHP_IPD.a")
+            ipdLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/lib/")        
+    
+        elif("PIC32MK" in Variables.get("__PROCESSOR")):
+            zsmtLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_ZSMT_A_PIC32MK_A", None)
+            zsmtLibraryFile.setSourcePath("../mc_zsmt_libraries/Harmony/lib/libPIC32MK_MCHP_ZSMT.a")
+            zsmtLibraryFile.setOutputName("libPIC32MK_MCHP_ZSMT.a")
+            zsmtLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/lib/") 
+            
+            ipdLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_IPD_A_PIC32MK_A", None)
+            ipdLibraryFile.setSourcePath("../mc_zsmt_libraries/Harmony/lib/libPIC32MK_MCHP_IPD.a")
+            ipdLibraryFile.setOutputName("libPIC32MK_MCHP_IPD.a")
+            ipdLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/lib/") 
+                           
+    #-----------------------------------------------------------------------------------------------------------------------
+    #     Current Calculation module code generation
+    #-----------------------------------------------------------------------------------------------------------------------
+    modulePath = templatePath + "Current_Calculation/"
+    projectPath = "config/" + configName + "/QSpin/Current_Calculation/"
+    
+    curIncludeDirectory = mcPmsmFocComponent.createSettingSymbol(None, None)
+    curIncludeDirectory.setCategory("C32")
+    curIncludeDirectory.setKey("extra-include-directories")
+    curIncludeDirectory.setValue("../src/" + projectPath + "inc")
+    curIncludeDirectory.setAppend(True, ";")
+    
+    for root, dirs, files in os.walk(Module.getPath() + modulePath + "src"):
+        for filename in files:
+            if (".c" in filename and filename.startswith("mc_")):
                 mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
-                mcPmsmFocSourceFile.setSourcePath(templatePath + filename)
+                mcPmsmFocSourceFile.setSourcePath(modulePath + "src/" + filename)
                 if (filename.endswith(".ftl")):
                     filename = filename[:-4]
                 mcPmsmFocSourceFile.setOutputName(filename)
-                mcPmsmFocSourceFile.setDestPath("motor_control/pmsm_foc/")
-                mcPmsmFocSourceFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+                mcPmsmFocSourceFile.setDestPath("QSpin/Current_Calculation/src")
+                mcPmsmFocSourceFile.setProjectPath(projectPath + "src")
                 mcPmsmFocSourceFile.setType("SOURCE")
                 mcPmsmFocSourceFile.setMarkup(True)
-
-            if (".h" in filename and "mc_" in filename):
+                
+    for root, dirs, files in os.walk(Module.getPath() + modulePath + "inc"):
+        for filename in files:
+            if (".h" in filename and filename.startswith("mc_")):
                 mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
-                mcPmsmFocHeaderFile.setSourcePath( templatePath + filename)
+                mcPmsmFocHeaderFile.setSourcePath(modulePath + "inc/" + filename)
                 if (filename.endswith(".ftl")):
                     filename = filename[:-4]
                 mcPmsmFocHeaderFile.setOutputName(filename)
-                mcPmsmFocHeaderFile.setDestPath("motor_control/pmsm_foc/")
-                mcPmsmFocHeaderFile.setProjectPath("config/" + configName +"/motor_control/pmsm_foc/")
+                mcPmsmFocHeaderFile.setDestPath("QSpin/Current_Calculation/inc")
+                mcPmsmFocHeaderFile.setProjectPath(projectPath + "inc")
                 mcPmsmFocHeaderFile.setType("HEADER")
                 mcPmsmFocHeaderFile.setMarkup(True)
-  
+                
+    #-----------------------------------------------------------------------------------------------------------------------
+    #     Voltage Calculation module code generation
+    #-----------------------------------------------------------------------------------------------------------------------
+    modulePath = templatePath + "Voltage_Calculation/"
+    projectPath = "config/" + configName + "/QSpin/Voltage_Calculation/"
+    
+    volIncludeDirectory = mcPmsmFocComponent.createSettingSymbol(None, None)
+    volIncludeDirectory.setCategory("C32")
+    volIncludeDirectory.setKey("extra-include-directories")
+    volIncludeDirectory.setValue("../src/" + projectPath + "inc")
+    volIncludeDirectory.setAppend(True, ";")
+    
+    for root, dirs, files in os.walk(Module.getPath() + modulePath + "src"):
+        for filename in files:
+            if (".c" in filename and filename.startswith("mc_")):
+                mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                mcPmsmFocSourceFile.setSourcePath(modulePath + "src/" + filename)
+                if (filename.endswith(".ftl")):
+                    filename = filename[:-4]
+                mcPmsmFocSourceFile.setOutputName(filename)
+                mcPmsmFocSourceFile.setDestPath("QSpin/Voltage_Calculation/src")
+                mcPmsmFocSourceFile.setProjectPath(projectPath + "src")
+                mcPmsmFocSourceFile.setType("SOURCE")
+                mcPmsmFocSourceFile.setMarkup(True)
+                
+    for root, dirs, files in os.walk(Module.getPath() + modulePath + "inc"):
+        for filename in files:
+            if (".h" in filename and filename.startswith("mc_")):
+                mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                mcPmsmFocHeaderFile.setSourcePath(modulePath + "inc/" + filename)
+                if (filename.endswith(".ftl")):
+                    filename = filename[:-4]
+                mcPmsmFocHeaderFile.setOutputName(filename)
+                mcPmsmFocHeaderFile.setDestPath("QSpin/Voltage_Calculation/inc")
+                mcPmsmFocHeaderFile.setProjectPath(projectPath + "inc")
+                mcPmsmFocHeaderFile.setType("HEADER")
+                mcPmsmFocHeaderFile.setMarkup(True)
+                
+    #-----------------------------------------------------------------------------------------------------------------------
+    #     Utilities module code generation
+    #-----------------------------------------------------------------------------------------------------------------------\    
+    # Include directory    
+    modulePath = templatePath + "Utilities/"
+    projectPath = "config/" + configName + "/QSpin/Utilities/"
+    
+    utilIncludeDirectory = mcPmsmFocComponent.createSettingSymbol(None, None)
+    utilIncludeDirectory.setCategory("C32")
+    utilIncludeDirectory.setKey("extra-include-directories")
+    utilIncludeDirectory.setValue("../src/" + projectPath + "inc")
+    utilIncludeDirectory.setAppend(True, ";")
+    
+    for root, dirs, files in os.walk(Module.getPath() + modulePath + "src"):
+        for filename in files:
+            if (".c" in filename and filename.startswith("mc_")):
+                mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                mcPmsmFocSourceFile.setSourcePath(modulePath + "src/" + filename)
+                if (filename.endswith(".ftl")):
+                    filename = filename[:-4]
+                mcPmsmFocSourceFile.setOutputName(filename)
+                mcPmsmFocSourceFile.setDestPath("QSpin/Utilities/src")
+                mcPmsmFocSourceFile.setProjectPath(projectPath + "src")
+                mcPmsmFocSourceFile.setType("SOURCE")
+                mcPmsmFocSourceFile.setMarkup(True)
+                
+    for root, dirs, files in os.walk(Module.getPath() + modulePath + "inc"):
+        for filename in files:
+            if (".h" in filename and filename.startswith("mc_")):
+                mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                mcPmsmFocHeaderFile.setSourcePath(modulePath + "inc/" + filename)
+                if (filename.endswith(".ftl")):
+                    filename = filename[:-4]
+                mcPmsmFocHeaderFile.setOutputName(filename)
+                mcPmsmFocHeaderFile.setDestPath("QSpin/Utilities/inc")
+                mcPmsmFocHeaderFile.setProjectPath(projectPath + "inc")
+                mcPmsmFocHeaderFile.setType("HEADER")
+                mcPmsmFocHeaderFile.setMarkup(True)
+                
+    #-----------------------------------------------------------------------------------------------------------------------
+    #     Hardware abstraction code generation
+    #-----------------------------------------------------------------------------------------------------------------------
+    modulePath = templatePath + "Hardware_Abstraction/"
+    projectPath = "config/" + configName + "/QSpin/Hardware_Abstraction/"
+    
+    # Include directory 
+    halIncludeDirectory = mcPmsmFocComponent.createSettingSymbol(None, None)
+    halIncludeDirectory.setCategory("C32")
+    halIncludeDirectory.setKey("extra-include-directories")
+    halIncludeDirectory.setValue("../src/" + projectPath + "inc")
+    halIncludeDirectory.setAppend(True, ";")
+    
+    for root, dirs, files in os.walk(Module.getPath() + modulePath + "src"):
+        for filename in files:
+            if (".c" in filename and filename.startswith("mc_")):
+                mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                mcPmsmFocSourceFile.setSourcePath(modulePath + "src/" + filename)
+                if (filename.endswith(".ftl")):
+                    filename = filename[:-4]
+                mcPmsmFocSourceFile.setOutputName(filename)
+                mcPmsmFocSourceFile.setDestPath("QSpin/Hardware_Abstraction/src")
+                mcPmsmFocSourceFile.setProjectPath(projectPath + "src")
+                mcPmsmFocSourceFile.setType("SOURCE")
+                mcPmsmFocSourceFile.setMarkup(True)
+                
+    for root, dirs, files in os.walk(Module.getPath() + modulePath + "inc"):
+        for filename in files:
+            if (".h" in filename and filename.startswith("mc_")):
+                mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                mcPmsmFocHeaderFile.setSourcePath(modulePath + "inc/" + filename)
+                if (filename.endswith(".ftl")):
+                    filename = filename[:-4]
+                mcPmsmFocHeaderFile.setOutputName(filename)
+                mcPmsmFocHeaderFile.setDestPath("QSpin/Hardware_Abstraction/inc")
+                mcPmsmFocHeaderFile.setProjectPath(projectPath + "inc")
+                mcPmsmFocHeaderFile.setType("HEADER")
+                mcPmsmFocHeaderFile.setMarkup(True)
+                
+    # Included in the if condition to avoid interference
+    mcPmsmFocCodeGen = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_CODE_GEN", None)
+    mcPmsmFocCodeGen.setVisible(False)
+    mcPmsmFocCodeGen.setDependencies(mcGen_GenerateCodeUpdate,
+                                                             ["MCPMSMFOC_POSITION_CALC_ALGORITHM",
+                                                              "MCPMSMFOC_FLYING_START",
+                                                              "MCPMSMFOC_FLYING_START_CODE_TYPE",
+                                                              "MCPMSMFOC_ALIGN_OR_DETECT_ALGORITHM",
+    ])
+    

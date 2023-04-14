@@ -26,37 +26,39 @@ import os
 
 MCU =  ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series")
 
-# General Purpose function classes
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "general_functions.py" ))
+#  Get scripts path 
+scriptLocation =  os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point")
 
+# General Purpose function classes
+execfile(os.path.join( scriptLocation, "general_functions.py" ))
 
 # Hardware block Classes
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "voltage_source.py" ))
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "analog_frontend.py" ))
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "motor_parameters.py" ))
+execfile(os.path.join( scriptLocation, "voltage_source.py" ))
+execfile(os.path.join( scriptLocation, "analog_frontend.py" ))
+execfile(os.path.join( scriptLocation, "motor_parameters.py" ))
 
 # Peripherals block classes
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "pwm_interface.py" ))
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "digital_interface.py" ))
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "analog_interface.py" ))
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "position_interface.py" ))
+execfile(os.path.join( scriptLocation, "pwm_interface.py" ))
+execfile(os.path.join( scriptLocation, "digital_interface.py" ))
+execfile(os.path.join( scriptLocation, "analog_interface.py" ))
+execfile(os.path.join( scriptLocation, "position_interface.py" ))
 
 # Software module classes 
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "startup_configurator.py" ))
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "motor_control_and_diagnosis.py" ))
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "position_calculation_and_diagnosis.py" ))
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "output_stage_and_diagnosis.py" ))
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "current_measurement_and_diagnosis.py" ))
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "voltage_measurement_and_diagnosis.py" ))
+execfile(os.path.join( scriptLocation, "startup_configurator.py" ))
+execfile(os.path.join( scriptLocation, "motor_control_and_diagnosis.py" ))
+execfile(os.path.join( scriptLocation, "position_calculation_and_diagnosis.py" ))
+execfile(os.path.join( scriptLocation, "output_stage_and_diagnosis.py" ))
+execfile(os.path.join( scriptLocation, "current_measurement_and_diagnosis.py" ))
+execfile(os.path.join( scriptLocation, "voltage_measurement_and_diagnosis.py" ))
 
 # Data monitoring class
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "data_monitoring.py" ))
+execfile(os.path.join( scriptLocation, "data_monitoring.py" ))
 
 # Event system 
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "event_system_configuration.py" ))
+execfile(os.path.join( scriptLocation, "event_system_configuration.py" ))
 
 # Code generation
-execfile(os.path.join(Module.getPath(), "algorithms", "pmsm_foc", "config", "floating_point", "code_generation.py" ))
+execfile(os.path.join(scriptLocation, "code_generation.py" ))
 
 
 
@@ -90,9 +92,17 @@ def instantiateComponent(mcPmsmFocComponent):
     mcPmsmFocInstanceName = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_INSTANCE_NAME", None)
     mcPmsmFocInstanceName.setVisible(False)
     mcPmsmFocInstanceName.setDefaultValue(mcPmsmFocComponent.getID().upper())
+    
+    
+    #-----------------------------------------------------------------------------------------------------#
+    #                                 DEVELOPER MODE                                                                #
+    #-----------------------------------------------------------------------------------------------------#  
+    sym_BOARD_NODE = mcPmsmFocComponent.createBooleanSymbol("MCPMSMFOC_DEVELOPER_MODE", None)
+    sym_BOARD_NODE.setLabel("Enable developer mode")
+    sym_BOARD_NODE.setVisible(True)
  
     #-----------------------------------------------------------------------------------------------------#
-    #                                 BOARD SELECTION                                                     #
+    #                                 BOARD SELECTION                                                              #
     #-----------------------------------------------------------------------------------------------------#    
     sym_BOARD_NODE = mcPmsmFocComponent.createMenuSymbol("MCPMSMFOC_BOARD_CONF", None)
     sym_BOARD_NODE.setLabel("Board Configuration")
@@ -104,7 +114,7 @@ def instantiateComponent(mcPmsmFocComponent):
     sym_SELECTED_BOARD.setLabel("Development board")
     sym_SELECTED_BOARD.addKey("dsPICDEM MCLV-2", "0", "dsPICDEM MCLV-2")
     sym_SELECTED_BOARD.addKey("dsPICDEM MCHV-3", "1", "dsPICDEM MCHV-3")
-    # sym_SELECTED_BOARD.addKey("CUSTOM", "2", "Custom")
+    sym_SELECTED_BOARD.addKey("CUSTOM", "2", "Custom")
     sym_SELECTED_BOARD.setOutputMode("Key")
     sym_SELECTED_BOARD.setDisplayMode("Description")
     sym_SELECTED_BOARD.setDefaultValue(0)

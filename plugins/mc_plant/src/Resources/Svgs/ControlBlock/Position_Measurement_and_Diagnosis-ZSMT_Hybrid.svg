@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Optical experiment involving a primary and secondary observer, and an angle tracker -->
+<!-- Author: Your Name Here -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="-0.5 -0.5 1160 382">
+
+    <!-- Define the gradient for the boxes -->
+    <defs>
+        <linearGradient id="gradient-box" x1="0%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%" stop-color="#0050ef" />
+        <stop offset="100%" stop-color="#ffffff" />
+        </linearGradient>
+    </defs>
+
+    <!-- Group for the lines -->
+    <g id="lines" pointer-events="none">
+        <path d="M 218 86 L 285.26 86" fill="none" stroke="black" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" />
+        <path d="M 295.76 86 L 281.76 93 L 285.26 86 L 281.76 79 Z" fill="black" stroke="black"  stroke-width="2" stroke-miterlimit="10" pointer-events="all" />
+        <path d="M 218 300 L 285.26 300" fill="none" stroke="black" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" />
+        <path d="M 295.76 300 L 281.76 307 L 285.26 300 L 281.76 293 Z" fill="black" stroke="black" stroke-width="2" stroke-miterlimit="10" pointer-events="all" />
+        <path d="M 540 182 L 607.26 182" fill="none" stroke="black" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" />
+        <path d="M 617.76 182 L 603.76 189 L 607.26 182 L 603.76 175 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all" />
+        <path d="M 814 126 L 881.26 126" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" />
+        <path d="M 891.76 126 L 877.76 133 L 881.26 126 L 877.76 119 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all" />
+        <path d="M 812 206 L 879.26 206" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" />
+        <path d="M 889.76 206 L 875.76 213 L 879.26 206 L 875.76 199 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-width="2" stroke-miterlimit="10" pointer-events="all" />
+    </g>
+
+    <g id="box-Primary-Observer" pointer-events="none">
+        <rect x="0" y="0" width="216" height="160" fill="url(#gradient-box)" stroke="#000000" stroke-width="1" pointer-events="all" />
+        <text x="100" y="70" fill="rgb(0,0,0)" font-family="Verdana" font-size="24px" text-anchor="middle">Primary</text>
+        <text x="100" y="100" fill="rgb(0,0,0)" font-family="Verdana" font-size="24px" text-anchor="middle">Observer</text>
+    </g>
+
+    <g id="box-Secondary-Observer" pointer-events="none">
+        <rect x="0" y="220" width="216" height="160" fill="url(#gradient-box)" stroke="#000000" stroke-width="1" pointer-events="all" />
+        <text x="100" y="300" fill="rgb(0,0,0)" font-family="Verdana" font-size="24px" text-anchor="middle">Secondary</text>
+        <text x="100" y="330" fill="rgb(0,0,0)" font-family="Verdana" font-size="24px" text-anchor="middle">Observer</text>
+    </g>
+
+    <g id="box-Angle-Tracker" pointer-events="none">
+        <rect x="298" y="0" width="240" height="380" fill="url(#gradient-box)" stroke="#000000" stroke-width="1" pointer-events="all" />
+        <text x="418" y="200" fill="rgb(0,0,0)" font-family="Verdana" font-size="24px" text-anchor="middle">Angle Tracker</text>
+    </g>
+
+    <g id="box-Soft-Switch" pointer-events="none">
+        <rect x="622" y="72" width="192" height="196" fill="url(#gradient-box)" stroke="#000000" stroke-width="1" pointer-events="all" />
+        <path d="M 726 98 L 786 98" fill="none" stroke="#747474" stroke-width="4" stroke-miterlimit="10" pointer-events="stroke" />
+        <rect x="686" y="98" width="60" height="120" fill="none" stroke="#747474" stroke-width="4" pointer-events="all" />
+        <path d="M 650 218 L 710 218" fill="none" stroke="#747474" stroke-width="4" stroke-miterlimit="10" pointer-events="stroke" />
+        <text x="720" y="255" fill="rgb(0,0,0)" font-family="Verdana" font-size="24px" text-anchor="middle">Soft Switch</text>
+    </g>
+
+    <g id="text-output" pointer-events="none">
+        <g transform="translate(-0.5 -0.5)scale(2)">
+            <text x="450" y="68" fill="rgb(0, 0, 0)" font-family="Verdana" font-size="12px" text-anchor="left">Speed (RPM)</text>
+            <text x="450" y="107" fill="rgb(0, 0, 0)" font-family="Verdana" font-size="12px" text-anchor="left">Electrical Angle (Rad)</text>
+        </g>
+    </g>
+</svg>
