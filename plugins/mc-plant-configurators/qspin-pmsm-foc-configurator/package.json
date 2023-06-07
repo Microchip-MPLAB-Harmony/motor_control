@@ -1,0 +1,58 @@
+{
+  "name": "qspin-pmsm-foc-configurator",
+  "version": "1.0.0",
+  "private": true,
+  "homepage": ".",
+  "headers": {
+    "Access-Control-Allow-Origin": "*"
+  },
+  "dependencies": {
+    "@mplab_harmony/harmony-plugin-core-service": "1.0.0",
+    "@mplab_harmony/harmony-plugin-ui": "2.0.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "primeflex": "^3.2.1",
+    "primeicons": "^5.0.0",
+    "primereact": "^8.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-transition-group": "^4.4.2",
+    "typescript": "^4.7.4",
+    "web-vitals": "^2.1.0"
+  },
+  "devDependencies": {
+    "react-scripts": "^5.0.1"
+  },
+  "resolutions": {
+    "lodash": "^4.17.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
