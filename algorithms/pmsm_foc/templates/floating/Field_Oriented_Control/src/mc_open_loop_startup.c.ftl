@@ -12,7 +12,7 @@
 
   Description:
     - This file implements functions for open loop start-up
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -58,7 +58,11 @@ Local configuration options
 *******************************************************************************/
 typedef enum
 {
+<#if 'IPD' != MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
   startupState_Align,
+<#else>
+  startupState_Ipd,
+</#if>
   startupState_Ramp,
   startupState_Stabilize
 }tmcSup_State_e;
@@ -102,22 +106,22 @@ Private Functions
 *******************************************************************************/
 
 /*******************************************************************************
- * Interface Functions 
+ * Interface Functions
 *******************************************************************************/
 /*! \brief Initialize open loop start-up module
- * 
+ *
  * Details.
  * Initialize open loop start-up module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcSupI_OpenLoopStartupInit( tmcSup_Parameters_s * const pParameters )
-{  
+{
     float32_t temp;
-    
+
     /** Link state variable structure to the module */
     pParameters->pStatePointer = (void *)&mcSup_State_mds;
     tmcSup_State_s * pState =  &mcSup_State_mds;
@@ -147,8 +151,13 @@ void  mcSupI_OpenLoopStartupInit( tmcSup_Parameters_s * const pParameters )
     pState->openLoopAngle = 0.0f;
     pState->openLoopSpeed= 0.0f;
 
+<#if 'IPD' != MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
     /** Set the initial state of the state machine  */
     pState->StartupState = startupState_Align;
+<#else>
+    /** Set the initial state of the state machine  */
+    pState->StartupState = startupState_Ipd;
+</#if>
 
     /** Set initialization flag as true */
     pState->initDone = true;
@@ -239,17 +248,19 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
 
     if( pState->enable )
     {
- <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-         if( 1u == pState->oneTimeAlignDone )
-         {
-             return StdReturn_Complete;
-         }
-</#if>
         /** Execute open loop start-up */
         switch(pState->StartupState)
         {
+<#if 'IPD' != MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
             case startupState_Align:
             {
+
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
+                if( 1u == pState->oneTimeAlignDone )
+                {
+                    return StdReturn_Complete;
+                }
+</#if>
                 ++pState->zCounter;
 
                 if( pState->zCounter <= ( pState->alignmentTimeLoopCount >> 1u ) )
@@ -264,10 +275,10 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
                 *pIDref = pState->alignmentCurrent;
 
                  pState->openLoopAngle = ONE_PI_BY_TWO;
- </#if>                    
+ </#if>
                 }
                 else if( pState->zCounter <= pState->alignmentTimeLoopCount )
-                {    
+                {
 <#if 'Q_AXIS' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
                 *pIQref = direction * pState->alignmentCurrent;
                 *pIDref = 0.0f;
@@ -278,13 +289,13 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
                 *pIDref = pState->alignmentCurrent;
 
                 pState->openLoopAngle = 0.0f;
-</#if>               
+</#if>
                 }
-                else 
+                else
                 {
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
 <#if ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' ) >
-                    pState->StartupState = startupState_Ramp; 
+                    pState->StartupState = startupState_Ramp;
 <#else>
                     pState->oneTimeAlignDone = 1u;
                     openLoopStatus = StdReturn_Complete;
@@ -292,19 +303,51 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
                     /** Start encoder */
                     mcHalI_EncoderStart();
 <#else>
-                    pState->StartupState = startupState_Ramp; 
+                    pState->StartupState = startupState_Ramp;
 </#if>
-                    
+
                     /** Reset counter */
                     pState->zCounter = 0u;
                 }
-                
+
                 /** Truncate angle from 0 to 2Pi */
                 mcUtils_TruncateAngle0To2Pi(&pState->openLoopAngle);
-                   
+
                 break;
             }
+<#else>
+            case startupState_Ipd:
+            {
 
+
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
+                if( 1u == pState->oneTimeAlignDone )
+                {
+                    return StdReturn_Complete;
+                }
+                else
+                {
+                    pState->openLoopAngle = *pAngle;
+                }
+<#else>
+                pState->openLoopAngle = *pAngle;
+</#if>
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
+<#if ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' ) >
+                pState->StartupState = startupState_Ramp;
+<#else>
+                pState->oneTimeAlignDone = 1u;
+                openLoopStatus = StdReturn_Complete;
+</#if>
+                /** Start encoder */
+                mcHalI_EncoderStart();
+<#else>
+                pState->StartupState = startupState_Ramp;
+</#if>
+
+                break;
+            }
+</#if>
             case startupState_Ramp:
             {
                 ++pState->zCounter;
@@ -373,14 +416,14 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
 
 
 /*! \brief Reset Open loop start-up
- * 
+ *
  * Details.
  * Reset Open loop start-up
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcSupI_OpenLoopStartupReset( const tmcSup_Parameters_s * const pParameters )
 {
@@ -389,7 +432,11 @@ void mcSupI_OpenLoopStartupReset( const tmcSup_Parameters_s * const pParameters 
     pState = (tmcSup_State_s *)pParameters->pStatePointer;
 
     /** Reset open loop startup state variables  */
+<#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
+    pState->StartupState = startupState_Ramp;
+<#else>
     pState->StartupState = startupState_Align;
+</#if>
     pState->openLoopSpeed = 0.0f;
     pState->openLoopAngle = 0.0f;
     pState->zCounter = 0u;

@@ -50,11 +50,11 @@
 #include "mc_hardware_abstraction.h"
 
 /*******************************************************************************
- Default module parameters 
+ Default module parameters
  *******************************************************************************/
 
 /*******************************************************************************
- Default module parameters 
+ Default module parameters
  *******************************************************************************/
 
 /*******************************************************************************
@@ -91,7 +91,7 @@ typedef struct
 }tmcCur_ModuleData_s;
 
 /*******************************************************************************
- Interface variables 
+ Interface variables
  *******************************************************************************/
 extern tmcCur_ModuleData_s mcCurI_ModuleData_gds;
 
@@ -107,7 +107,7 @@ __STATIC_INLINE void mcCur_InputsRead( tmcCur_Input_s * const pInput )
 __STATIC_INLINE void mcCur_ParametersSet( tmcCur_Parameters_s * const pParameters )
 {
     pParameters->adcToCurrentFactor = (float32_t)(${MCPMSMFOC_CURRENT_SCALING_FACTORT});
-    
+
 <#if MCPMSMFOC_OFFSET_OOR == true >
     pParameters->minOffset = (float32_t)(${MCPMSMFOC_OFFSET_OOR_MINIMUM});
     pParameters->maxOffset = (float32_t)(${MCPMSMFOC_OFFSET_OOR_MAXIMUM});
@@ -115,52 +115,52 @@ __STATIC_INLINE void mcCur_ParametersSet( tmcCur_Parameters_s * const pParameter
 }
 
 /*******************************************************************************
- Interface functions 
+ Interface functions
  *******************************************************************************/
 
-/*! \brief Current control initialization function 
- * 
+/*! \brief Current control initialization function
+ *
  * Details.
- *  Current control initialization function 
- * 
- * @param[in]: 
+ *  Current control initialization function
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 void mcCurI_CurrentCalculationInit( tmcCur_ModuleData_s * const pModule );
 
-/*! \brief Function to calculate the current sensor offset  
- * 
+/*! \brief Function to calculate the current sensor offset
+ *
  * Details.
- * Function to calculate current sensor offset 
- * 
- * @param[in]: 
+ * Function to calculate current sensor offset
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 tmcTypes_StdReturn_e mcCurI_CurrentOffsetCalculation( tmcCur_ModuleData_s * const pModule );
-    
+
 /*! \brief Function to calculate the phase  currents
- * 
+ *
  * Details.
- * Function to calculate phase currents 
- * 
- * @param[in]: 
+ * Function to calculate phase currents
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 void mcCurI_CurrentCalculation( tmcCur_ModuleData_s * const pModule );
 
-   
-/*! \brief Function to reset phase current calculation 
- * 
+
+/*! \brief Function to reset phase current calculation
+ *
  * Details.
- * Function to reset phase current calculation  
- * 
- * @param[in]: 
+ * Function to reset phase current calculation
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:

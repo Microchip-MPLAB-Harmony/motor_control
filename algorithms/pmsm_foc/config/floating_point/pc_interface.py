@@ -39,18 +39,18 @@ class mcPciI_PCInterfaceClass:
     def __init__( self, algorithm, component):
         self.algorithm = algorithm
         self.component = component
-    
+
     def createSymbols(self):
-        # Root Node 
+        # Root Node
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("PC interface")
 
-        # 
+        #
         supported_Interfaces = ["Wired", "TCP/IP"]
         self.sym_PC_INTERFACES = self.component.createComboSymbol("MCPMSMFOC_PC_INTERFACE_SELECTION", self.sym_NODE, supported_Interfaces)
         self.sym_PC_INTERFACES.setLabel("Gate driver interface")
 
     def __call__(self):
         self.createSymbols()
-        
+
 

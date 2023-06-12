@@ -12,7 +12,7 @@
 
   Description:
     - This file implements functions for rotor position estimation
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -108,13 +108,13 @@ Private Functions
  * Interface Functions
 *******************************************************************************/
 /*! \brief Initialize rotor position estimation module
- * 
+ *
  * Details.
  * Initialize rotor position estimation module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
@@ -313,10 +313,10 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
 
 
 /*! \brief Reset Rotor position estimation
- * 
+ *
  * Details.
  * Reset Rotor position estimation
- * 
+ *
  * @param[in]: None
  * @param[in/out]: None
  * @param[out]: None

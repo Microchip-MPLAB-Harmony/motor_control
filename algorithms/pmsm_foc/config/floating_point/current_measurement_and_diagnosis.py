@@ -35,11 +35,11 @@ class mcCurI_CurrentMeasurementAndDiagnosis:
         self.component = component
 
     def createSymbols(self):
-        #Root node 
+        #Root node
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Current measurement & diagnosis")
 
-        # Current Offset 
+        # Current Offset
         self.sym_OFFSET = self.component.createMenuSymbol(None, self.sym_NODE)
         self.sym_OFFSET.setLabel("Offset correction")
 
@@ -53,10 +53,10 @@ class mcCurI_CurrentMeasurementAndDiagnosis:
         self.sym_OFFSET_SAMPLES.setDefaultValue(1024)
         self.sym_OFFSET_SAMPLES.setReadOnly(True)
 
-        # Current Scaling 
+        # Current Scaling
         self.sym_SCALING = self.component.createMenuSymbol(None, self.sym_NODE)
         self.sym_SCALING.setLabel("Current scaling")
-        
+
         supported_Formats = ["Real"]
         self.sym_SCALING_FORMAT = self.component.createComboSymbol("MCPMSMFOC_CURRENT_SCALING_FORMAT", self.sym_SCALING, supported_Formats )
         self.sym_SCALING_FORMAT.setLabel("Format")
@@ -74,7 +74,7 @@ class mcCurI_CurrentMeasurementAndDiagnosis:
         self.sym_CURRENT_OOR = self.component.createBooleanSymbol("MCPMSMFOC_CURRENT_OOR", self.sym_DIAGNOSIS)
         self.sym_CURRENT_OOR.setLabel("Enable current range diagnosis")
         self.sym_CURRENT_OOR.setReadOnly(True)
-        
+
 
         self.sym_CURRENT_OOR_MAXIMUM = self.component.createFloatSymbol("MCPMSMFOC_CURRENT_OOR_MAXIMUM", self.sym_CURRENT_OOR)
         self.sym_CURRENT_OOR_MAXIMUM.setLabel("Maximum current")
@@ -123,9 +123,9 @@ class mcCurI_CurrentMeasurementAndDiagnosis:
         Offset = component.getSymbolByID("MCPMSMFOC_ANALOG_FRONT_END_IA_OFFSET").getValue()
         Shunt = component.getSymbolByID("MCPMSMFOC_ANALOG_FRONT_END_IA_SHUNT").getValue()
         try:
-            symbol.setValue((3.30 - Offset)/ (Gain * 4095 *Shunt ))
+            symbol.setValue((3.30 - Offset)/ (Gain * 2048 *Shunt ))
         except:
-            symbol.setValue(0.0) 
+            symbol.setValue(0.0)
 
     def showThisSymbol(self, symbol, event):
         if True == event["symbol"].getValue():

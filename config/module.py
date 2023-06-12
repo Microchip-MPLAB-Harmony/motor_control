@@ -37,4 +37,4 @@ def loadModule():
 
         mcPmsmFocComponent.addDependency("pmsmfoc_QDEC", "QDEC", False, True)
 
-        mcPmsmFocComponent.addDependency("pmsmfoc_X2CSCOPE", "Data Interface", False, True)
+        mcPmsmFocComponent.addDependency("pmsmfoc_X2CSCOPE", "DSCI", False, True)

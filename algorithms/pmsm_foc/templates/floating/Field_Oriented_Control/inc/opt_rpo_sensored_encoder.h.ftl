@@ -6,9 +6,9 @@
 
   Summary:
     Header file which contains variables and function prototypes for pulse width modulation
- 
+
   Description:
-    This file contains variables and function prototypes which are generally used for pulse 
+    This file contains variables and function prototypes which are generally used for pulse
     width modulation. It is implemented in Q2.14 fixed Point Arithmetic.
 
  *******************************************************************************/
@@ -42,7 +42,7 @@
 #define MCRPC_H
 
 /*******************************************************************************
- * Header inclusions 
+ * Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
 #include "mc_motor.h"
@@ -53,7 +53,7 @@
 
 
 /*******************************************************************************
- Default Module configuration parameters 
+ Default Module configuration parameters
 *******************************************************************************/
 
 /*******************************************************************************
@@ -71,19 +71,19 @@ typedef struct
 {
     /** Motor parameters */
     tmcMot_PMSM_s  * pMotorParameters;
-    
+
     float32_t dt;
     uint16_t velocityCountPrescaler;
 
     /** Encoder parameters */
     uint16_t encPulsesPerElecRev;
     uint16_t encPulsePerMechRev;
-    
+
     void * pStatePointer;
 }tmcRpc_Parameters_s;
 
 /*******************************************************************************
- * Interface variables 
+ * Interface variables
 *******************************************************************************/
 
 /*******************************************************************************
@@ -136,7 +136,7 @@ __STATIC_INLINE void mcRpcI_ParametersSet( tmcRpc_Parameters_s * const pParamete
 {
     /** Motor parameters */
     pParameters->pMotorParameters = &mcMotI_PMSM_gds;
-    
+
      pParameters->velocityCountPrescaler = 100u;
      pParameters->dt = (float32_t)(${MCPMSMFOC_PWM_PERIOD});
 
@@ -146,16 +146,16 @@ __STATIC_INLINE void mcRpcI_ParametersSet( tmcRpc_Parameters_s * const pParamete
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
 *******************************************************************************/
 /*! \brief Initialize rotor position estimation module
- * 
+ *
  * Details.
  * Initialize rotor position estimation module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcRpcI_RotorPositionCalcInit( tmcRpc_Parameters_s * const pParameters );
@@ -194,18 +194,18 @@ void  mcRpcI_RotorPositionCalcDisable( tmcRpc_Parameters_s * const pParameters )
  * @param[out]: None
  * @return: None
  */
-void mcRpcI_RotorPositionCalc(  const tmcRpc_Parameters_s * const pParameters, 
+void mcRpcI_RotorPositionCalc(  const tmcRpc_Parameters_s * const pParameters,
                                   float32_t * const pAngle, float32_t * const pSpeed );
 
 /*! \brief Reset Rotor position estimation
- * 
+ *
  * Details.
  * Reset Rotor position estimation
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcRpcI_RotorPositionCalcReset( const tmcRpc_Parameters_s * const pParameters );
 

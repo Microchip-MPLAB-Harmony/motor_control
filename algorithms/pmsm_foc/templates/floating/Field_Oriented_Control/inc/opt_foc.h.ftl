@@ -6,7 +6,7 @@
 
   Summary:
     Header file which contains variables and function prototypes for Field Oriented Control ( FOC )
- 
+
   Description:
     This file contains variables and function prototypes which are generally used for Field Oriented
     Control ( FOC ).
@@ -42,12 +42,15 @@
 #define MCFOC_H
 
 /*******************************************************************************
- * Header inclusions 
+ * Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
 #include "mc_pwm.h"
-<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >  
+<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >
 #include "mc_open_loop_startup.h"
+</#if>
+<#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
+#include "mc_flying_start.h"
 </#if>
 #include "mc_flux_control.h"
 #include "mc_torque_control.h"
@@ -63,7 +66,7 @@
 #include "mc_voltage_measurement.h"
 
 /*******************************************************************************
- Default Module configuration parameters 
+ Default Module configuration parameters
 *******************************************************************************/
 
 /*******************************************************************************
@@ -71,7 +74,7 @@ Type Definition
 *******************************************************************************/
 typedef struct
 {
-    tmcTypes_ABC_s  iABC;
+    tmcTypes_ABC_s iABC;
     float32_t uBus;
     float32_t reference;
 <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
@@ -81,6 +84,11 @@ typedef struct
 
 typedef struct
 {
+    tmcTypes_AlphaBeta_s  iAlphaBeta;
+    tmcTypes_AlphaBeta_s  uAlphaBeta;
+    tmcTypes_DQ_s  iDQ;
+    float32_t elecAngle;
+    float32_t elecSpeed;
     int16_t duty[3u];
 }tmcFoc_Output_s;
 
@@ -99,7 +107,7 @@ typedef struct
 }tmcFocI_ModuleData_s;
 
 /*******************************************************************************
- * Interface variables 
+ * Interface variables
 *******************************************************************************/
 extern tmcFocI_ModuleData_s mcFocI_ModuleData_gds;
 
@@ -119,7 +127,7 @@ extern tmcFocI_ModuleData_s mcFocI_ModuleData_gds;
 __STATIC_INLINE void mcFocI_InputsRead( tmcFocI_ModuleData_s * const pModule )
 {
     tmcFoc_Input_s * pInput = &pModule->dInput;
-     
+
     pInput->iABC.a = (float32_t)mcCurI_ModuleData_gds.dOutput.iABC.a;
     pInput->iABC.b = (float32_t)mcCurI_ModuleData_gds.dOutput.iABC.b;
 
@@ -188,7 +196,7 @@ __STATIC_INLINE void mcFocI_OutputPortWrite( tmcFoc_Output_s * const pOutput )
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
 *******************************************************************************/
 /*! \brief Initialize Field Oriented Control ( FOC ) module
  *

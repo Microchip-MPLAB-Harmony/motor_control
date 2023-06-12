@@ -39,18 +39,18 @@ class mcGdrI_GateDriverInterfaceClass:
     def __init__( self, algorithm, component):
         self.algorithm = algorithm
         self.component = component
-    
+
     def createSymbols(self):
-        # Root Node 
+        # Root Node
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Gate driver interface")
 
-        # 
+        #
         supported_Drivers = ["Discrete", "IPM", "Smart Drivers"]
         self.sym_DRIVERS = self.component.createComboSymbol("MCPMSMFOC_GATE_DRIVER_SELECTION", self.sym_NODE, supported_Drivers)
         self.sym_DRIVERS.setLabel("Gate driver interface")
 
     def __call__(self):
         self.createSymbols()
-        
+
 

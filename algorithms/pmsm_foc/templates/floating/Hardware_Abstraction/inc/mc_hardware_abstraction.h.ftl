@@ -99,6 +99,18 @@ __STATIC_INLINE uint16_t mcHalI_PwmPeriodGet( void )
 __STATIC_FORCEINLINE void mcHalI_InverterPwmSet( const int16_t * const dutyCycle )
 {
 <#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if MCPMSMFOC_FOC_X2C_ENABLE == true>
+    uint8_t status;
+        
+    status = (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}, dutyCycle[0u] );
+    status &= (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}, dutyCycle[1u] );
+    status &= (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}, dutyCycle[2u] );
+
+    if( 0u == status )
+    {
+      /** ToDO: Log error */
+    }
+<#else>
     uint8_t status;
     uint16_t period;
     uint16_t duty[3u] = {0u};
@@ -116,6 +128,7 @@ __STATIC_FORCEINLINE void mcHalI_InverterPwmSet( const int16_t * const dutyCycle
     {
       /** ToDO: Log error */
     }
+</#if>
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     uint16_t period;
     uint16_t duty[3u] = {0u};
@@ -503,29 +516,29 @@ void mcHalI_InverterPwmDisable( void );
 <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
     <#list 0..10 as index>
         <#if "Direction indication" == ledFunction(index)>
-		 /*! \brief Set direction indicator
-		 * 
-		 * Details.
-		 * Set direction indicator
-		 * 
-		 * @param[in]: 
-		 * @param[in/out]:
-		 * @param[out]:
-		 * @return:
-		 */
+         /*! \brief Set direction indicator
+         * 
+         * Details.
+         * Set direction indicator
+         * 
+         * @param[in]: 
+         * @param[in/out]:
+         * @param[out]:
+         * @return:
+         */
          void mcHal_DirectionIndication( void );
          
          <#elseif "Fault indication" == ledFunction(index)>
         /*! \brief Set fault indicator
-		 * 
-		 * Details.
-		 * Set fault indicator
-		 * 
-		 * @param[in]: 
-		 * @param[in/out]:
-		 * @param[out]:
-		 * @return:
-		 */
+         * 
+         * Details.
+         * Set fault indicator
+         * 
+         * @param[in]: 
+         * @param[in/out]:
+         * @param[out]:
+         * @return:
+         */
         void mcHal_FaultIndicationSet( void );
         
         </#if>
@@ -613,32 +626,32 @@ void mcHalI_PwmCallbackRegister( MCPWM_CH_CALLBACK callback, uintptr_t context )
 
 <#--  Get button function  -->
 <#function buttonFunction index>
-   <#if 0 == index>
-    <#return MCPMSMFOC_BUTTON_0_FUNCTION>
-  <#elseif 1 == index>
-    <#return MCPMSMFOC_BUTTON_1_FUNCTION>
-  <#else>
-    <#return "Error">
-  </#if>
+<#if 0 == index>
+<#return MCPMSMFOC_BUTTON_0_FUNCTION>
+<#elseif 1 == index>
+<#return MCPMSMFOC_BUTTON_1_FUNCTION>
+<#else>
+<#return "Error">
+</#if>
 </#function>
 
 <#if MCPMSMFOC_BUTTONS_AVAILABLE != 0 >
-    <#list 0..10 as index>
-        <#if "Start/Stop" == buttonFunction(index)>
+<#list 0..( MCPMSMFOC_BUTTONS_AVAILABLE - 1 ) as index>
+<#if "Start/Stop" == buttonFunction(index)>
 bool mcHalI_StartStopButtonState( void );
-           <#break>
-        </#if>
-    </#list>
+<#break>
+</#if>
+</#list>
 </#if>
 
 
 <#if MCPMSMFOC_BUTTONS_AVAILABLE != 0 >
-    <#list 0..10 as index>
-        <#if "Direction Toggle" == buttonFunction(index)>
+<#list 0..( MCPMSMFOC_BUTTONS_AVAILABLE - 1 ) as index>
+<#if "Direction Toggle" == buttonFunction(index)>
 bool mcHalI_DirectionButtonState( void );
-           <#break>
-        </#if>
-    </#list>
+<#break>
+</#if>
+</#list>
 </#if>  
 
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>

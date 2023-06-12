@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { RegisterMotorDiagnosisSVGActions } from './ControlBlock/MotorControlandDiagnosis';
 import { RegisterAnalogFrontEndSVGActions } from './HardwareBlock/AnalogFrontEnd';
 import DialogDemo, { CustomPopUpLoadConfig } from './CustomPopUp/CustomPopUp';
@@ -12,7 +12,6 @@ import {
   CallMouseLeave,
   CallMouseMove
 } from '@mplab_harmony/harmony-plugin-ui/build/svg/MouseEvent';
-import PWMParameters from './HardwareBlock/PWMParameters';
 
 let svgdoc: any = null;
 let toolTipObject: any = null;
@@ -41,6 +40,8 @@ export let positionInterfaceText = 'Position Interface';
 export let voltageSourceText = 'Voltage Source';
 export let dataMonitoringText = 'Data Monitoring';
 export let outputStageDignosisText = 'Output Stage Diagnosis';
+
+export const popUproot = ReactDOM.createRoot(document.querySelector('#popup') as HTMLElement);
 
 export function newInit() {
   svgdoc = document.getElementById('motor');
@@ -137,37 +138,37 @@ function sendClickAction(evt: { target: any }) {
   if (target.correspondingUseElement) target = target.correspondingUseElement;
 
   if (target.value && target.value === motorControlDiagnosisText) {
-    callPopUp(DialogDemo, target.value, '65vw', '70vh');
+    callPopUp(DialogDemo, target.value, '95rem', '60rem');
     setTimeout(() => {
       RegisterMotorDiagnosisSVGActions();
     }, 1000);
     return;
   } else if (target.value && target.value === positionMeasurementCalculationText) {
-    callPopUp(DialogDemo, target.value, '65vw', '55vh');
+    callPopUp(DialogDemo, target.value, '98rem', '50rem');
     setTimeout(() => {
       RegisterPositionControlDiagnosisSVGActions();
     }, 1000);
     return;
   } else if (target.value && target.value === analogFrontEndText) {
-    callPopUp(DialogDemo, target.value, '50vw', '45vh');
+    callPopUp(DialogDemo, target.value, '75rem', '40rem');
     setTimeout(() => {
       RegisterAnalogFrontEndSVGActions();
     }, 1000);
     return;
   } else if (target.value && target.value === analogInterfaceText) {
-    callPopUp(DialogDemo, target.value, '40vw', '50vh');
+    callPopUp(DialogDemo, target.value, '70rem', '42rem');
     setTimeout(() => {
       RegisterAnalogInterfaceSVGActions();
     }, 1000);
     return;
   } else if (target.value && target.value === voltageMeasurementAndDiagnosisText) {
-    callPopUp(DialogDemo, target.value, '50vw', '55vh');
+    callPopUp(DialogDemo, target.value, '80rem', '35rem');
     setTimeout(() => {
       RegisterVoltageMesasurementSVGActions();
     }, 1000);
     return;
   } else if (target.value && target.value === currentMeasurementAndDiagnosisText) {
-    callPopUp(DialogDemo, target.value, '60vw', '55vh');
+    callPopUp(DialogDemo, target.value, '85rem', '40rem');
     setTimeout(() => {
       RegisterCurrentMesasurementSVGActions();
     }, 1000);
@@ -201,31 +202,31 @@ function sendClickAction(evt: { target: any }) {
     );
     return;
   } else if (target.value === motorParameters) {
-    callPopUp(DialogDemo, target.value, '30vw', '60vh');
+    callPopUp(DialogDemo, target.value, '50rem', '50rem');
     return;
   } else if (target.value === pulseWidthModulatorText) {
-    callPopUp(DialogDemo, target.value, '50vw', '55vh');
+    callPopUp(DialogDemo, target.value, '70rem', '45rem');
     return;
   } else if (target.value === positionInterfaceText) {
-    callPopUp(DialogDemo, target.value, '20vw', '35vh');
+    callPopUp(DialogDemo, target.value, '30rem', '30rem');
     return;
   } else if (target.value === outputStageDignosisText) {
-    callPopUp(DialogDemo, target.value, '40vw', '25vh');
+    callPopUp(DialogDemo, target.value, '45rem', '20rem');
     return;
   } else if (target.value === startupConfiguratorText) {
-    callPopUp(DialogDemo, target.value, '60vw', '75vh');
+    callPopUp(DialogDemo, target.value, '90rem', '70rem');
     return;
   } else if (target.value === quickSettingsText) {
-    callPopUp(DialogDemo, target.value, '30vw', '30vh');
+    callPopUp(DialogDemo, target.value, '40rem', '25rem');
     return;
   } else if (target.value === dataMonitoringText) {
-    callPopUp(DialogDemo, target.value, '25vw', '25vh');
+    callPopUp(DialogDemo, target.value, '35rem', '20rem');
     return;
   } else if (target.value === voltageSourceText) {
-    callPopUp(DialogDemo, target.value, '25vw', '25vh');
+    callPopUp(DialogDemo, target.value, '35rem', '20rem');
     return;
   } else if (target.value) {
-    callPopUp(DialogDemo, target.value, '60vw', '60vh');
+    callPopUp(DialogDemo, target.value, '80rem', '70rem');
     return;
   }
   let value: string = childKeyAndGroupIdValue.get(target.id) || '';
@@ -274,15 +275,15 @@ function changeColor(group: any) {
 }
 
 function callPopUp(Component: any, action_id: any, width: any, height: any) {
-  const helloCreate = React.createElement(Component);
+  const element = React.createElement(Component);
   CustomPopUpLoadConfig(action_id, width, height);
-  ReactDOM.render(helloCreate, document.querySelector('#popup'));
+  popUproot.render(element);
 }
 
 function callPopUpWithOutFooter(Component: any, action_id: any, message: string) {
-  const helloCreate = React.createElement(Component);
-  PopupWithoutFooterInput(action_id, message, '40vw', '20vh');
-  ReactDOM.render(helloCreate, document.querySelector('#popup'));
+  const element = React.createElement(Component);
+  PopupWithoutFooterInput(action_id, message, '50rem', '15rem');
+  popUproot.render(element);
 }
 
 export function resetColors() {

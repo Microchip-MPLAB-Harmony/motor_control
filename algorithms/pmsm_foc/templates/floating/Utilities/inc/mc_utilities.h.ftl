@@ -6,9 +6,9 @@
 
   Summary:
     Header file which contains variables and function prototypes of  generic library functions.
- 
+
   Description:
-    This file contains variables and function prototypes of generic library functions 
+    This file contains variables and function prototypes of generic library functions
     which are generally used in Motor Control. Implemented in Q2.14 Fixed Point Arithmetic.
  *******************************************************************************/
 
@@ -44,55 +44,55 @@
 #include "math.h"
 
 /******************************************************************************
- * Constants 
+ * Constants
 ******************************************************************************/
-/** 
+/**
   * Epsilon
   */
 #define EPSILON  (float32_t)(1.0e-31)
 
-/** 
+/**
   * Inverse of epsilon
   */
 #define ONE_BY_EPSILON (float32_t)(1.0e31)
 
-/** 
+/**
   * PI
   */
 #define ONE_PI  (float32_t)(3.14159265f)
 
-/** 
+/**
   * 2PI
   */
 #define TWO_PI (float32_t)(6.28318530f)
 
-/** 
+/**
   * PI/2
   */
 #define ONE_PI_BY_TWO     (float32_t)(1.57079632)
 
-/** 
+/**
   * 1/ SQUARE_ROOT( 2 )
   */
 #define ONE_BY_SQRT2  (float32_t)(0.7071067812)
 
-/** 
+/**
   * 1/ SQUARE_ROOT( 3 )
   */
 #define ONE_BY_SQRT3   (float32_t)( 0.577350269 )
 
-/** 
+/**
   * 2/ SQUARE_ROOT( 2 )
   */
 #define TWO_BY_SQRT3  (float32_t)( 1.154700538 )
 
 /******************************************************************************
- * Macro functions 
+ * Macro functions
 ******************************************************************************/
 #define UTIL_IS_ZERO(input)    (((input) < EPSILON ) && ( (input) > -EPSILON ))
 
 /******************************************************************************
- * User-defined data structure  
+ * User-defined data structure
 ******************************************************************************/
 typedef struct
 {
@@ -101,9 +101,21 @@ typedef struct
     uint16_t cnt;
 } button_response_t;
 
+typedef struct
+{
+    float32_t x;
+    float32_t y;
+}tUTIL_2DPoints_s;
+
+typedef struct
+{
+    uint8_t dataPoints;
+    tUTIL_2DPoints_s  points[10u];
+}tUTIL_2DPlot_s;
+
 
 /******************************************************************************
- * Interface variables 
+ * Interface variables
 ******************************************************************************/
 
 __STATIC_INLINE float32_t UTIL_SquareRootFloat( const float32_t x  )
@@ -180,11 +192,27 @@ __STATIC_INLINE void UTIL_SaturateFloat( float32_t * const input, const float32_
     }
 }
 
+__STATIC_INLINE void UTIL_SaturateS16( int16_t * const input, const int16_t min, const int16_t max  )
+{
+    if( max < (*input ) )
+    {
+        *input = max;
+    }
+    else if( min > (*input ))
+    {
+        *input = min;
+    }
+    else
+    {
+        /** For MISRA Compliance */
+    }
+}
+
 
 __STATIC_INLINE float32_t UTIL_AngleDifferenceCalc( const float32_t plus, const float32_t minus )
 {
      float32_t diff = plus - minus;
-     
+
      if( diff > ONE_PI )
      {
          diff -= TWO_PI;
@@ -197,17 +225,17 @@ __STATIC_INLINE float32_t UTIL_AngleDifferenceCalc( const float32_t plus, const 
      {
         /** Do nothing */
      }
-     
+
      return diff;
 }
 
 __STATIC_INLINE void UTIL_LinearRampFloat( float32_t * pValue, const float32_t rampRate, const float32_t final )
 {
-     if( ( *pValue + rampRate ) < final ) 
+     if( ( *pValue + rampRate ) < final )
      {
          *pValue += rampRate;
      }
-     else if( ( *pValue - rampRate ) > final ) 
+     else if( ( *pValue - rampRate ) > final )
      {
          *pValue -= rampRate;
      }
@@ -218,8 +246,9 @@ __STATIC_INLINE void UTIL_LinearRampFloat( float32_t * pValue, const float32_t r
 }
 
 
+
 /******************************************************************************
- * Interface functions  
+ * Interface functions
 ******************************************************************************/
 /*! \brief Calculate sine and cosine value
  *
@@ -269,5 +298,30 @@ void mcUtils_ButtonResponse(button_response_t * buttonResData, void (* buttonJob
  * @return:
  */
 void mcUtils_TruncateAngle0To2Pi( float32_t * const angle );
+
+/*! \brief Initialize 2D plot
+ *
+ * Details.
+ * Initialize 2D plot
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void UTIL_2DPlotInitialize( tUTIL_2DPlot_s * const p2DPlot, const uint8_t dataPoints,
+                                            const tUTIL_2DPoints_s points[] );
+
+/*! \brief Read from 2D plot
+ *
+ * Details.
+ * Read from 2D plot
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+float32_t UTIL_2DPlotRead( tUTIL_2DPlot_s * const p2DPlot,  const float32_t xPoint );
 
 #endif // MC_UTILS

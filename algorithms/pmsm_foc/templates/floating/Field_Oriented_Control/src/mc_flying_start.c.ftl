@@ -12,7 +12,7 @@
 
   Description:
     - This file implements functions for flying Start
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -54,12 +54,12 @@ Local configuration options
 #ifdef CONSTANT_2Pi
 #undef CONSTANT_2Pi
 #endif
-#define CONSTANT_2Pi (float)( 6.28318530718f)
+#define CONSTANT_2Pi (float32_t)( 6.28318530718f)
 
 /*
  * RPM to Radians per second conversion factor
  */
-#define CONSTANT_RpmToRadPerSec  (float)( CONSTANT_2Pi / 60.0f )
+#define CONSTANT_RpmToRadPerSec  (float32_t)( CONSTANT_2Pi / 60.0f )
 
 /*******************************************************************************
  Private data types
@@ -90,10 +90,10 @@ typedef struct tmcFly_State_s
     /** Parameters */
     uint32_t detectLoopCount;
     uint32_t exceedCounterCount;
-    float minSpeedForFlyingStart;
-    float flyingStartCurrent;
-    float brakeCurrent;
-    float brakeCurrentStep;
+    float32_t minSpeedForFlyingStart;
+    float32_t flyingStartCurrent;
+    float32_t brakeCurrent;
+    float32_t brakeCurrentStep;
     uint32_t fadeOutLoopCount;
     uint32_t halfFadeOutBurstLoopCount;
     uint32_t fadeOutBurstLoopCount;
@@ -119,21 +119,21 @@ Private Functions
 *******************************************************************************/
 
 /*******************************************************************************
- * Interface Functions 
+ * Interface Functions
 *******************************************************************************/
 /*! \brief Initialize flying Start module
- * 
+ *
  * Details.
  * Initialize flying Start module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcFlyI_FlyingStartInit( tmcFly_Parameters_s * const pParameters )
-{  
-     float temp = 0.0f;
+{
+     float32_t temp = 0.0f;
      tmcFly_State_s * pFlyingStart = NULL;
 
      /** Set state pointer */
@@ -150,9 +150,13 @@ void  mcFlyI_FlyingStartInit( tmcFly_Parameters_s * const pParameters )
      pFlyingStart->detectLoopCount = (uint32_t)temp;
 
      pFlyingStart->minSpeedForFlyingStart = pParameters->minRpmForFlyingStart;
-     pFlyingStart->flyingStartCurrent = pParameters->flyingStartCurrentInAmps;
+
+<#if true == MCPMSMFOC_ENABLE_REGEN_BRAKE>
      pFlyingStart->brakeCurrent = pParameters->brakeCurrenInAmps;
-     pFlyingStart->brakeCurrentStep = pParameters->brakeCurrentStepInAmps;
+
+     temp = ( pParameters->brakeCurrentRampTimeInSec / pParameters->dt);
+     pFlyingStart->brakeCurrentStep = pFlyingStart->brakeCurrent/ temp;
+</#if>
 
      temp = ( pParameters->fadeOutTime / pParameters->dt);
      pFlyingStart->fadeOutLoopCount =  (uint32_t)temp;
@@ -161,7 +165,7 @@ void  mcFlyI_FlyingStartInit( tmcFly_Parameters_s * const pParameters )
      pFlyingStart->fadeOutBurstLoopCount =  (uint32_t)temp;
 
      pFlyingStart->halfFadeOutBurstLoopCount =  pFlyingStart->fadeOutBurstLoopCount >> 1u;
-     
+
      /** Neutral PWM */
      pFlyingStart->halfPwmPeriodCount = pParameters->pwmPeriodCount;
 
@@ -241,17 +245,17 @@ void  mcFlyI_FlyingStartDisable( tmcFly_Parameters_s * const pParameters )
  * @return: None
  */
 tmcTypes_StdReturn_e  mcFlyI_FlyingStart( tmcFly_Parameters_s * const pParameters,
-                                   const float speed, const float commandDirection,
-                                   float * const pIdref, float * const pIqref,
+                                   const float32_t speed, const float32_t commandDirection,
+                                   float32_t * const pIdref, float32_t * const pIqref,
                                    bool * const pDutyOverride, int16_t * const pDuty )
 {
     /** Flying start status  */
     tmcTypes_StdReturn_e status = StdReturn_Progress;
-    
+
     /** Get the linked state variable */
     tmcFly_State_s * pFlyingStart;
     pFlyingStart = (tmcFly_State_s *)pParameters->pStatePointer;
-     
+
     if( pFlyingStart->enable )
     {
         /** Flying start state machine  */
@@ -271,7 +275,7 @@ tmcTypes_StdReturn_e  mcFlyI_FlyingStart( tmcFly_Parameters_s * const pParameter
                     }
                     else
                     {
-                            
+
                     }
                 }
                 else
@@ -281,11 +285,11 @@ tmcTypes_StdReturn_e  mcFlyI_FlyingStart( tmcFly_Parameters_s * const pParameter
 
                 if( pFlyingStart->detectCounter > pFlyingStart->detectLoopCount )
                 {
-#ifdef ENABLE_REGENERATIVE_BRAKING
+<#if true == MCPMSMFOC_ENABLE_REGEN_BRAKE>
                     pFlyingStart->flyingStartState = FlyingStart_Brake;
-#else
+<#else>
                     pFlyingStart->flyingStartState = FlyingStart_FadeOut;
-#endif
+</#if>
                     pFlyingStart->detectCounter = 0u;
                 }
                 else
@@ -300,7 +304,7 @@ tmcTypes_StdReturn_e  mcFlyI_FlyingStart( tmcFly_Parameters_s * const pParameter
                 break;
             }
 
-#ifdef ENABLE_REGENERATIVE_BRAKING
+<#if true == MCPMSMFOC_ENABLE_REGEN_BRAKE>
             case FlyingStart_Brake:
             {
                 if( speed > pFlyingStart->minSpeedForFlyingStart )
@@ -323,7 +327,7 @@ tmcTypes_StdReturn_e  mcFlyI_FlyingStart( tmcFly_Parameters_s * const pParameter
                 }
                 break;
             }
-#endif
+</#if>
 
             case FlyingStart_FadeOut:
             {
@@ -380,14 +384,14 @@ tmcTypes_StdReturn_e  mcFlyI_FlyingStart( tmcFly_Parameters_s * const pParameter
 
 
 /*! \brief Reset Flying Start
- * 
+ *
  * Details.
  * Reset Flying Start
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcFlyI_FlyingStartReset( const tmcFly_Parameters_s * const pParameters )
 {

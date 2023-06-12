@@ -25,7 +25,7 @@
 #---------------------------------------------------------------------------------------#
 #                                     IMPORT                                            #
 #---------------------------------------------------------------------------------------#
-                             
+
 # PI controller Parameters
 mcMotC_SpeedPiPararameterDictFloating =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0.005,
                                                     'KI' : 0.002,
@@ -39,7 +39,7 @@ mcMotC_SpeedPiPararameterDictFloating =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0.0
                                                     'KI' : 0.015,
                                                     'KC' : 0.5
                                                   },
-                                 }                                  
+                                 }
 
 
 #---------------------------------------------------------------------------------------#
@@ -52,10 +52,22 @@ class mcMocI_MotorControlAndDiagnosis:
 
     def createSymbols(self):
 
-        # Root node 
+        # Root node
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Motor Control and Diagnosis")
-        
+
+        # Model based code enable switch
+        self.sym_X2C_ENABLE = self.component.createBooleanSymbol("MCPMSMFOC_FOC_X2C_ENABLE", self.sym_NODE )
+        self.sym_X2C_ENABLE.setLabel("Enable X2C model based generation ")
+        self.sym_X2C_ENABLE.setDefaultValue(False)
+        self.sym_X2C_ENABLE.setDependencies(self.updateProjectGraph, ["MCPMSMFOC_FOC_X2C_ENABLE"])
+
+        self.sym_X2C_ID = self.component.createStringSymbol("MCPMSMFOC_FOC_X2C_ID", None)
+        self.sym_X2C_ID.setLabel("Peripheral ID")
+        # self.sym_X2C_ID.setVisible(False)
+        self.sym_X2C_ID.setDefaultValue("X2CScope")
+        self.sym_X2C_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_FOC_X2C_ENABLE"] )
+
         # Control strategy
         self.sym_CONTROL_TYPE = self.component.createKeyValueSetSymbol("MCPMSMFOC_CONTROL_TYPE", self.sym_NODE )
         self.sym_CONTROL_TYPE.setLabel("Control type")
@@ -84,7 +96,7 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_MAX_INPUT.setLabel("Maximum reference value")
         self.sym_MAX_INPUT.setDefaultValue(3000)
         self.sym_MAX_INPUT.setDependencies(self.setMaximum, ["MCPMSMFOC_CONTROL_TYPE"])
-          
+
         # --------------------- Ramp Profiler -----------------------------------------#
         self.sym_RAMP_PROFILER = self.component.createMenuSymbol(None, self.sym_NODE)
         self.sym_RAMP_PROFILER.setLabel("Ramp Profiler")
@@ -93,7 +105,7 @@ class mcMocI_MotorControlAndDiagnosis:
         supported_Profiles = ["Step", "Linear"]
         self.sym_RAMP_PROFILES = self.component.createComboSymbol( "MCPMSMFOC_RAMP_PROFILES", self.sym_RAMP_PROFILER, supported_Profiles)
         self.sym_RAMP_PROFILES.setLabel("Profile")
-        
+
         self.sym_RAMP_PROILE_MAX_SPEED = self.component.createFloatSymbol("MCPMSMFOC_RAMP_PROFILER_MAX_SPEED", self.sym_RAMP_PROFILER)
         self.sym_RAMP_PROILE_MAX_SPEED.setLabel("Ramp rate ( RPM/ s) ")
         self.sym_RAMP_PROILE_MAX_SPEED.setDefaultValue(100)
@@ -192,18 +204,18 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_ID_PID_KP = self.component.createFloatSymbol("MCPMSMFOC_ID_PID_KP", self.sym_ID_PID)
         self.sym_ID_PID_KP.setLabel("Kp")
         self.sym_ID_PID_KP.setDefaultValue(self.initCurrentLoopKp(self.component))
-        self.sym_ID_PID_KP.setDependencies(self.calculateCurrentLoopKp, ["MCPMSMFOC_LD", 
-                                                                                                               "MCPMSMFOC_LQ", 
-                                                                                                               "MCPMSMFOC_VOLTAGE_MAGNITUDE", 
+        self.sym_ID_PID_KP.setDependencies(self.calculateCurrentLoopKp, ["MCPMSMFOC_LD",
+                                                                                                               "MCPMSMFOC_LQ",
+                                                                                                               "MCPMSMFOC_VOLTAGE_MAGNITUDE",
                                                                                                                "MCPMSMFOC_MOTOR_CONNECTION"])
-               
+
 
         self.sym_ID_PID_KI = self.component.createFloatSymbol("MCPMSMFOC_ID_PID_KI", self.sym_ID_PID)
         self.sym_ID_PID_KI.setLabel("Ki")
         self.sym_ID_PID_KI.setDefaultValue(self.initCurrentLoopKi(self.component))
-        self.sym_ID_PID_KI.setDependencies(self.calculateCurrentLoopKi, ["MCPMSMFOC_LD", 
-                                                                                                               "MCPMSMFOC_LQ", 
-                                                                                                               "MCPMSMFOC_VOLTAGE_MAGNITUDE", 
+        self.sym_ID_PID_KI.setDependencies(self.calculateCurrentLoopKi, ["MCPMSMFOC_LD",
+                                                                                                               "MCPMSMFOC_LQ",
+                                                                                                               "MCPMSMFOC_VOLTAGE_MAGNITUDE",
                                                                                                                "MCPMSMFOC_MOTOR_CONNECTION",
                                                                                                                "MCPMSMFOC_PWM_FREQUENCY"])
 
@@ -239,14 +251,14 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_IQ_PID_KP = self.component.createFloatSymbol("MCPMSMFOC_IQ_PID_KP", self.sym_IQ_PID)
         self.sym_IQ_PID_KP.setLabel("Kp")
         self.sym_IQ_PID_KP.setDefaultValue(self.initCurrentLoopKp(self.component))
-        self.sym_IQ_PID_KP.setDependencies(self.calculateCurrentLoopKp, ["MCPMSMFOC_LD", 
-                                                                                                               "MCPMSMFOC_LQ", 
+        self.sym_IQ_PID_KP.setDependencies(self.calculateCurrentLoopKp, ["MCPMSMFOC_LD",
+                                                                                                               "MCPMSMFOC_LQ",
                                                                                                                "MCPMSMFOC_RATED_SPEED"])
 
         self.sym_IQ_PID_KI = self.component.createFloatSymbol("MCPMSMFOC_IQ_PID_KI", self.sym_IQ_PID)
         self.sym_IQ_PID_KI.setLabel("Ki")
         self.sym_IQ_PID_KI.setDefaultValue(self.initCurrentLoopKi(self.component))
-        self.sym_IQ_PID_KI.setDependencies(self.calculateCurrentLoopKi, ["MCPMSMFOC_R", 
+        self.sym_IQ_PID_KI.setDependencies(self.calculateCurrentLoopKi, ["MCPMSMFOC_R",
                                                                                                                "MCPMSMFOC_RATED_SPEED"])
 
         # self.sym_IQ_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_IQ_PID_KV", self.sym_IQ_PID)
@@ -274,7 +286,7 @@ class mcMocI_MotorControlAndDiagnosis:
 
         self.sym_FW = self.component.createBooleanSymbol("MCPMSMFOC_ENABLE_FW", self.sym_FW_AND_MTPA)
         self.sym_FW.setLabel("Enable field weakening")
-                
+
         self.sym_FW_IMAX = self.component.createFloatSymbol("MCPMSMFOC_FW_MAX_NEGATIVE_ID", self.sym_FW)
         self.sym_FW_IMAX.setLabel("Max Negative Current")
         self.sym_FW_IMAX.setMax(100)
@@ -290,8 +302,8 @@ class mcMocI_MotorControlAndDiagnosis:
         # self.sym_FW_TUNING.setVisible(False)
         # self.sym_FW_TUNING.setDependencies(self.showThisSymbol, ["MCPMSMFOC_ENABLE_FW"])
 
-        # self.sym_MTPA = self.component.createBooleanSymbol("MCPMSMFOC_ENABLE_MTPA", self.sym_FW_AND_MTPA)
-        # self.sym_MTPA.setLabel("Enable MTPA")
+        self.sym_MTPA = self.component.createBooleanSymbol("MCPMSMFOC_ENABLE_MTPA", self.sym_FW_AND_MTPA)
+        self.sym_MTPA.setLabel("Enable MTPA")
         #
         # self.sym_MTPA_TUNING = self.component.createFloatSymbol("MCPMSMFOC_MTPA_TUNING_PARAMETER", self.sym_MTPA)
         # self.sym_MTPA_TUNING.setLabel("Tuning Parameter")
@@ -300,7 +312,7 @@ class mcMocI_MotorControlAndDiagnosis:
         # self.sym_MTPA_TUNING.setMin(0.90)
         # self.sym_MTPA_TUNING.setVisible(False)
         # self.sym_MTPA_TUNING.setDependencies(self.showThisSymbol, ["MCPMSMFOC_ENABLE_MTPA"])
-        
+
         # --------------------------------------- PWM Modulator ------------------------#
         self.sym_PWM_MODULATOR = self.component.createMenuSymbol("MCPMSMFOC_PWM_MODULATOR", self.sym_NODE)
         self.sym_PWM_MODULATOR.setLabel("PWM Modulator")
@@ -332,7 +344,7 @@ class mcMocI_MotorControlAndDiagnosis:
         if "Step" == event["symbol"].getValue():
             self.sym_RAMP_PROILE_MAX_SPEED.setVisible(False)
             self.sym_RAMP_PROILE_MAX_ACCEL.setVisible(False)
-        
+
         elif "Linear" == event["symbol"].getValue():
             self.sym_RAMP_PROILE_MAX_SPEED.setVisible(True)
             self.sym_RAMP_PROILE_MAX_ACCEL.setVisible(False)
@@ -421,35 +433,35 @@ class mcMocI_MotorControlAndDiagnosis:
         bandwidth = component.getSymbolValue("MCPMSMFOC_CL_BANDWIDTH")
 
         bandwidth = 2000
-       
+
         Ls = (Ld+Lq)/2
         Kp = (bandwidth * Ls) / max_volt
         Ts = 1.0 / component.getSymbolValue("MCPMSMFOC_PWM_FREQUENCY")
         Ki = (bandwidth * Rs * Ts) / max_volt
 
     def calculateCurrentLoopKp(self, symbol, event):
-        
+
         component = symbol.getComponent()
         Ld = component.getSymbolValue("MCPMSMFOC_LD")
         Lq = component.getSymbolValue("MCPMSMFOC_LQ")
-        
+
         # Set the bandwidthof PI controller to 10% of the electrical speed
         zp = component.getSymbolValue("MCPMSMFOC_POLE_PAIRS")
         bandwidth = 0.1 * (2 * zp /60) * component.getSymbolValue("MCPMSMFOC_RATED_SPEED")
-             
+
         Ls = (Ld + Lq)/2
-       
+
         symbol.setValue(bandwidth * Ls)
 
 
     def calculateCurrentLoopKi(self, symbol, event):
         component = symbol.getComponent()
         Rs = component.getSymbolValue("MCPMSMFOC_R")
-        
+
         # Set the bandwidthof PI controller to 10% of the electrical speed
         zp = component.getSymbolValue("MCPMSMFOC_POLE_PAIRS")
         bandwidth = 0.1 * (2 * zp /60) * component.getSymbolValue("MCPMSMFOC_RATED_SPEED")
-       
+
         symbol.setValue(bandwidth * Rs)
 
     def initCurrentLoopKp(self, component):
@@ -477,29 +489,47 @@ class mcMocI_MotorControlAndDiagnosis:
         #
         # return Ki
         return 0.0
-    
+
     def updateProjectGraph(self, symbol, event):
-        # if symbol.getValue() == True:
-        #     # Get all the connected Harmony components
-        #     listOfComps = Database.getActiveComponentIDs()
-        #
-        #     for comp in listOfComps:
-        #         if comp == "X2CScope":
-        #             # Deactivate component 
-        #             Database.deactivateComponents([comp])
-        #
-        #         elif comp == "X2C Model":
-        #             # X2C Model is found 
-        #             modelFound = 1
-        #
-        #     if modelFound == 0:
-        #         # Instantiate and connect 
-        #         Database.activateComponents(["X2C Model"])
-                
-        pass
+        if symbol.getValue() == True:
+            # Get all the connected Harmony components
+            listOfComps = Database.getActiveComponentIDs()
 
+            for comp in listOfComps:
+                if comp == "X2CScope":
+                    # Deactivate component
+                    Database.deactivateComponents([comp])
 
+                elif comp == "X2C Model":
+                    # X2C Model is found
+                    modelFound = 1
 
+            if modelFound == 0:
+                # Instantiate and connect
+                Database.activateComponents(["X2C Model"])
+
+    def updatePeripheralInstance(self, symbol, event):
+        # Determine peripheral ID.
+        if( True == event["value"]):
+            autoComponentIDTable = [symbol.getValue()]
+            res = Database.deactivateComponents(autoComponentIDTable)
+
+            symbol.setValue("X2C Model")
+
+            # Activate and connect the default PWM peripheral
+            res = Database.activateComponents(["X2C Model"])
+            autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE", "X2C Model", "x2cModel" ]]
+            res = Database.connectDependencies(autoComponentIDTable)
+        else:
+            autoComponentIDTable = [symbol.getValue()]
+            res = Database.deactivateComponents(autoComponentIDTable)
+
+            symbol.setValue("X2CScope")
+
+            # Activate and connect the default PWM peripheral
+            res = Database.activateComponents(["X2CScope"])
+            autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE", "X2CScope", "x2cScope_Scope" ]]
+            res = Database.connectDependencies(autoComponentIDTable)
 
     def __call__(self):
         self.detPositionPIParameters()
@@ -507,10 +537,10 @@ class mcMocI_MotorControlAndDiagnosis:
         self.detPositionPIParameters()
         self.createSymbols()
 
-    
 
 
-        
+
+
 
 
 

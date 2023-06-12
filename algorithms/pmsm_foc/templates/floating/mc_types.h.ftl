@@ -11,7 +11,7 @@
     Motor control types
 
   Description:
- Motor control types 
+ Motor control types
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -84,11 +84,11 @@ typedef enum
     StdReturn_Fail,
     StdReturn_Complete
 }tmcTypes_StdReturn_e;
-       
+
 /*******************************************************************************
  Interface variables
  *******************************************************************************/
- 
+
 #endif //MC_TYPES_H
 
 /**

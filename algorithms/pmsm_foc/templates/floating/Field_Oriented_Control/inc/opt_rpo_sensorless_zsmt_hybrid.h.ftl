@@ -48,6 +48,7 @@
 #include "mc_types.h"
 #include "mc_motor.h"
 #include "mc_utilities.h"
+#include "mc_key_manager.h"
 
 /*******************************************************************************
  Constants
@@ -71,7 +72,7 @@ typedef struct
 
     /** Sampling time  */
     float32_t dt;
-    
+
     void * pStatePointer;
 }tmcRpe_Parameters_s;
 
@@ -101,14 +102,14 @@ __STATIC_INLINE void mcRpe_ParametersSet(tmcRpe_Parameters_s * const pParameters
  *******************************************************************************/
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
  *******************************************************************************/
 
 /*! \brief Initialize rotor position estimation module
- * 
+ *
  * Details.
  * Initialize rotor position estimation module
- * 
+ *
  * @param[in]: None
  * @param[in/out]: None
  * @param[out]: None
@@ -170,10 +171,10 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
 void mcRpeI_CarrierSignalInjection(tmcRpe_Parameters_s * pParameters, tmcTypes_DQ_s * const pUdq );
 
 /*! \brief Reset Rotor position estimation
- * 
+ *
  * Details.
  * Reset Rotor position estimation
- * 
+ *
  * @param[in]: None
  * @param[in/out]: None
  * @param[out]: None

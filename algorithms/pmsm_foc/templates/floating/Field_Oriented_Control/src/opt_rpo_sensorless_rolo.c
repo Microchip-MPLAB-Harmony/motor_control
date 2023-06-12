@@ -12,7 +12,7 @@
 
   Description:
     - This file implements functions for rotor position estimation
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -181,7 +181,7 @@ __STATIC_INLINE void mcRpe_TustinApply( float32_t * const Kp, float32_t * const 
 __STATIC_INLINE void mcRpe_AngleTrackingLoopInit( tmcRpe_Parameters_s * const pParameter, tmcRpe_PhaseDetector_s * pState)
 {
 #if defined TYPE_II_PLL
-    float32_t rho = TWO_PI * 10.0f;
+    float32_t rho = TWO_PI * pParameter->f0InHertz;
     float32_t zeta = 0.7f;
     float32_t keps = 0.35f;
     float32_t zp = pParameter->pMotorParameters->PolePairs;
@@ -200,7 +200,7 @@ __STATIC_INLINE void mcRpe_AngleTrackingLoopInit( tmcRpe_Parameters_s * const pP
     float32_t rho, zp, jp;
     zp = pParameter->pMotorParameters->PolePairs;
     jp = pParameter->pMotorParameters->JmInKgPerCmSquare;
-    rho = TWO_PI * 10.0f;
+    rho = TWO_PI * pParameter->f0InHertz;
     float32_t phi2speed    = 60.0f / ( zp * TWO_PI );
     float32_t torque2speed = 1.0f/jp;
     float32_t Keps = pParameter->Keps;
@@ -362,13 +362,13 @@ __STATIC_INLINE void mcRpe_AngleTrackingLoopReset( tmcRpe_PhaseDetector_s * pSta
  * Interface Functions
 *******************************************************************************/
 /*! \brief Initialize rotor position estimation module
- * 
+ *
  * Details.
  * Initialize rotor position estimation module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
@@ -384,8 +384,8 @@ void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
     pState->RsInOhms  =  pParameters->pMotorParameters->RsInOhms;
     pState->LsInHenry  =  pParameters->pMotorParameters->LqInHenry;
     pState->PolePairs = pParameters->pMotorParameters->PolePairs;
-    pState->H   = pParameters->H;
     pState->dt  =  pParameters->dt;
+    pState->H   = -pParameters->lambda * pState->dt;
     pState->oneMinusH   =  1.0f - pState->H;
     pState->HLsByTs   =  pState->H * pState->LsInHenry / pState->dt;
     pState->HLsByTsMinusRs =  pState->HLsByTs - pState->RsInOhms;
@@ -544,10 +544,10 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
 
 
 /*! \brief Reset Rotor position estimation
- * 
+ *
  * Details.
  * Reset Rotor position estimation
- * 
+ *
  * @param[in]: None
  * @param[in/out]: None
  * @param[out]: None

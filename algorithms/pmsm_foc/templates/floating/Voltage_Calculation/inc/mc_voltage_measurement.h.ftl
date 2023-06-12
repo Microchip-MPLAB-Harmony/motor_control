@@ -1,5 +1,5 @@
 /*******************************************************************************
- Voltage measurement 
+ Voltage measurement
 
   Company:
     Microchip Technology Inc.
@@ -8,10 +8,10 @@
     mc_voltage_measurement.h
 
   Summary:
-   Voltage measurement 
+   Voltage measurement
 
   Description:
-  Voltage measurement 
+  Voltage measurement
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -53,7 +53,7 @@
  *******************************************************************************/
 
 /*******************************************************************************
- Default module parameters 
+ Default module parameters
  *******************************************************************************/
 
 /*******************************************************************************
@@ -81,17 +81,17 @@ typedef struct
 {
     /* Input ports */
     tmcVol_Input_s dInput;
-    
+
     /* Output ports */
     tmcVol_Output_s dOutput;
-    
+
     /* User Parameters */
     tmcVol_Parameters_s dParameters;
-       
+
 }tmcVol_ModuleData_s;
 
 /*******************************************************************************
- Interface Variables  
+ Interface Variables
  *******************************************************************************/
 extern tmcVol_ModuleData_s mcVolI_ModuleData_gds;
 
@@ -109,27 +109,27 @@ __STATIC_INLINE void mcVol_InputPortsRead(tmcVol_Input_s * const pInput )
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
  *******************************************************************************/
 
-/*! \brief Voltage calculation initialization function 
- * 
+/*! \brief Voltage calculation initialization function
+ *
  * Details.
- *  Voltage calculation initialization function 
- * 
- * @param[in]: 
+ *  Voltage calculation initialization function
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 void mcVolI_VoltageCalculationInit( tmcVol_ModuleData_s * const pModule );
 
-/*! \brief Voltage calculation function 
- * 
+/*! \brief Voltage calculation function
+ *
  * Details.
- *  Voltage calculation function 
- * 
- * @param[in]: 
+ *  Voltage calculation function
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -137,12 +137,12 @@ void mcVolI_VoltageCalculationInit( tmcVol_ModuleData_s * const pModule );
 void mcVolI_VoltageCalculation( tmcVol_ModuleData_s * const pModule );
 
 
-/*! \brief Voltage calculation reset 
- * 
+/*! \brief Voltage calculation reset
+ *
  * Details.
- *  Voltage calculation reset 
- * 
- * @param[in]: 
+ *  Voltage calculation reset
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:

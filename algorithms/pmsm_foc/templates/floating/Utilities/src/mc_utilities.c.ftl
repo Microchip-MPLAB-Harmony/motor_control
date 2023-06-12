@@ -142,17 +142,17 @@ const static float cosineTable[CONSTANT_SineTableSize] =
 };
 // </editor-fold>
 
-	
+
 /*******************************************************************************
- *  Functions 
+ *  Functions
  *******************************************************************************/
 
 /*! \brief Calculate sine and cosine value
- * 
+ *
  * Details
- * Calculate sine value 
- * 
- * @param[in]: 
+ * Calculate sine value
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -195,11 +195,11 @@ void mcUtils_SineCosineCalculation(const float32_t angle,
 }
 
 /*! \brief Linear ramp
- * 
+ *
  * Details
  * Linear ramp
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -221,11 +221,11 @@ void mcUtils_LinearRamp(int32_t * const input, const int32_t stepSize, const int
 }
 
 /*! \brief Button response Function
- * 
+ *
  * Details
- * Button response function 
- * 
- * @param[in]: 
+ * Button response function
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -286,4 +286,78 @@ void mcUtils_TruncateAngle0To2Pi( float32_t * const angle )
     {
        /* Do nothing */
     }
+}
+
+/*! \brief Initialize 2D plot
+ *
+ * Details.
+ * Initialize 2D plot
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void UTIL_2DPlotInitialize( tUTIL_2DPlot_s * const p2DPlot, const uint8_t dataPoints,
+                                            const tUTIL_2DPoints_s points[] )
+{
+     p2DPlot->dataPoints = dataPoints;
+
+     for( uint8_t index = 0u; index < 10u; index++ )
+     {
+         if( index < dataPoints )
+         {
+             p2DPlot->points[index] = points[index];
+         }
+         else
+         {
+             p2DPlot->points[index].x = 0.0f;
+             p2DPlot->points[index].y = 0.0f;
+         }
+     }
+}
+
+/*! \brief Read from 2D plot
+ *
+ * Details.
+ * Read from 2D plot
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+float32_t UTIL_2DPlotRead( tUTIL_2DPlot_s * const p2DPlot,  const float32_t xPoint )
+{
+     float32_t slope = 0.0f;
+     float32_t yValue = 0.0f;
+     tUTIL_2DPoints_s * pPoint;
+
+     pPoint = p2DPlot->points;
+
+     if( xPoint <= pPoint[0u].x)
+     {
+         yValue = pPoint[0u].y;
+     }
+     else if( xPoint >= pPoint[p2DPlot->dataPoints - 1u].x)
+     {
+         yValue = pPoint[p2DPlot->dataPoints - 1u].y;
+     }
+     else
+     {
+         for( uint8_t index = 0u; index < p2DPlot->dataPoints; index++ )
+         {
+             if( pPoint[index].x < xPoint )
+             {
+                 slope = UTIL_DivisionFloat(( pPoint[index + 1u].y  - pPoint[index].y ),
+                             ( pPoint[index + 1u].x  - pPoint[index].x ));
+
+                 /** Interpolate values between index and ( index - 1u )*/
+                 yValue = pPoint[index].y + slope * ( xPoint - pPoint[index].x );
+                 break;
+             }
+         }
+     }
+
+     return yValue;
 }

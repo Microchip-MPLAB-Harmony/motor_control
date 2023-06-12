@@ -6,9 +6,9 @@
 
   Summary:
     Header file which contains variables and function prototypes for pulse width modulation
- 
+
   Description:
-    This file contains variables and function prototypes which are generally used for pulse 
+    This file contains variables and function prototypes which are generally used for pulse
     width modulation. It is implemented in Q2.14 fixed Point Arithmetic.
 
  *******************************************************************************/
@@ -42,12 +42,12 @@
 #define MCREF_H
 
 /*******************************************************************************
- * Header inclusions 
+ * Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
 
 /*******************************************************************************
- Default Module configuration parameters 
+ Default Module configuration parameters
 *******************************************************************************/
 
 /*******************************************************************************
@@ -67,7 +67,7 @@ typedef struct
 }tmcRef_Parameters_s;
 
 /*******************************************************************************
- * Interface variables 
+ * Interface variables
 *******************************************************************************/
 
 /*******************************************************************************
@@ -86,13 +86,15 @@ typedef struct
 __STATIC_INLINE void mcRefI_ParametersSet( tmcRef_Parameters_s * const pParameters )
 {
 <#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
-<#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER' ) || ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_ZSMT_HYBRID') > 
+<#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_ZSMT_HYBRID') >
     pParameters->minimumRpm = -(float32_t)${MCPMSMFOC_MAX_SPEED};
+<#elseif ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER')>
+    pParameters->minimumRpm = (float32_t)0.0f;
 <#else>
     pParameters->minimumRpm = (float32_t)${MCPMSMFOC_OPEN_LOOP_END_SPEED};
 </#if>
     pParameters->maximumRpm = (float32_t)${MCPMSMFOC_MAX_SPEED};
- 
+
 <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     pParameters->rpmPerSecond = (float32_t)(${MCPMSMFOC_RAMP_PROFILER_MAX_SPEED});
     pParameters->dt =(float32_t)(${MCPMSMFOC_PWM_PERIOD});
@@ -101,16 +103,16 @@ __STATIC_INLINE void mcRefI_ParametersSet( tmcRef_Parameters_s * const pParamete
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
 *******************************************************************************/
 /*! \brief Initialize reference control module
- * 
+ *
  * Details.
  * Initialize reference control module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcRefI_ReferenceControlInit( tmcRef_Parameters_s * const pParameters );
@@ -153,14 +155,14 @@ void mcRefI_ReferenceControl(  tmcRef_Parameters_s * const pParameters,
                                                     const float32_t command, float32_t * const pOut );
 
 /*! \brief Reset Reference control
- * 
+ *
  * Details.
  * Reset Reference control
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcRefI_ReferenceControlReset( tmcRef_Parameters_s * const pParameters );
 

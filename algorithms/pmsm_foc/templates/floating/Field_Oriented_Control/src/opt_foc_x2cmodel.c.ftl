@@ -41,16 +41,16 @@
 // DOM-IGNORE-END
 
 /*******************************************************************************
- Header File inclusions  
+ Header File inclusions
  *******************************************************************************/
 #include "mc_field_oriented_control.h"
 
 /*******************************************************************************
- Constants 
+ Constants
  *******************************************************************************/
 
 /*******************************************************************************
- User defined data-types  
+ User defined data-types
  *******************************************************************************/
 
 /*******************************************************************************
@@ -58,7 +58,7 @@
  *******************************************************************************/
 
 /*******************************************************************************
- Interface Variables  
+ Interface Variables
  *******************************************************************************/
 extern void X2C_Update(void);
 
@@ -67,15 +67,15 @@ extern void X2C_Update(void);
  *******************************************************************************/
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
  *******************************************************************************/
 
 /*! \brief  Field oriented control enable
- * 
+ *
  * Details.
  *   Field oriented control enable
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -83,8 +83,8 @@ extern void X2C_Update(void);
 void mcFocI_FieldOrientedControlEnable( void )
 {
     /** User code - Begin */
- 
-   /** User code - End */  
+
+   /** User code - End */
 }
 
 /*! \brief  Field oriented control disable
@@ -100,7 +100,7 @@ void mcFocI_FieldOrientedControlEnable( void )
 void mcFocI_FieldOrientedControlDisable( void )
 {
    /** User code - Begin */
- 
+
    /** User code - End */
 }
 
@@ -117,28 +117,28 @@ void mcFocI_FieldOrientedControlDisable( void )
 void mcFocI_FieldOrientedControlInit( void )
 {
     /** Initialize FOC model */
-    X2C_Initialize();  
+    X2C_Initialize();
 }
 
 /*! \brief Field oriented control
- * 
+ *
  * Details.
  *   Field oriented control
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
- 
+
 void mcFocI_FieldOrientedControlFast( void  )
-{   
+{
     /** Read input ports */
     mcFoc_InputPortsRead();
-       
+
     /** Execute FOC model */
     X2C_Update();
-                
+
     /** Write output ports */
     mcFoc_OutputPortsWrite();
 }
@@ -173,16 +173,16 @@ void mcFocI_FieldOrientedControlSlow( void  )
 void mcFocI_MotorDirectionChange( void )
 {
    /** User code - Begin */
- 
+
    /** User code - End */
 }
 
 /*! \brief  Field oriented control reset
- * 
+ *
  * Details.
  * Field oriented control reset
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -190,6 +190,6 @@ void mcFocI_MotorDirectionChange( void )
 void mcFocI_FieldOrientedControlReset(  void   )
 {
    /** User code - Begin */
- 
+
    /** User code - End */
 }

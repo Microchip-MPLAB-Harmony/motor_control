@@ -26,9 +26,9 @@ import os
 
 MCU =  ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series")
 if ("SAMC21" in MCU ) or "PIC32CM" in MCU:
-    execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/main.py"   )
+    execfile(Module.getPath() + "/algorithms/pmsm_foc/config/fixed_point/main.py")
 else:
     # General Purpose function classes
-    execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/main.py"   )
+    execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/main.py")
 
     

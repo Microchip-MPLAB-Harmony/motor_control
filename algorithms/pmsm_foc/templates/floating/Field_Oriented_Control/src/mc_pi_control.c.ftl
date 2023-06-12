@@ -78,11 +78,11 @@ void mcUtils_PiControlInit( float32_t Kp, float32_t Ki, float32_t dt,  tmcUtils_
 }
 
 /*! \brief
- * 
- * Details
- * 
  *
- * @param[in]: 
+ * Details
+ *
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:

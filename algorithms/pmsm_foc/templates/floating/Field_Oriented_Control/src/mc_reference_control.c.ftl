@@ -12,7 +12,7 @@
 
   Description:
     - This file implements functions for reference control
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -83,21 +83,21 @@ Private Functions
 *******************************************************************************/
 
 /*******************************************************************************
- * Interface Functions 
+ * Interface Functions
 *******************************************************************************/
 
 /*! \brief Initialize reference control module
- * 
+ *
  * Details.
  * Initialize reference control module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcRefI_ReferenceControlInit( tmcRef_Parameters_s * const pParameters )
-{  
+{
     /** Link state variable structure to the module */
     pParameters->pStatePointer = (void *)&mcRef_State_mds;
 
@@ -213,7 +213,7 @@ void mcRefI_ReferenceControl(  tmcRef_Parameters_s * const pParameters,
          {
              *pOut = command;
          }
-     
+
 <#elseif MCPMSMFOC_RAMP_PROFILES == 'Linear'>
          if( ( pState->reference + pState->rampRate ) < command )
          {
@@ -255,14 +255,14 @@ void mcRefI_ReferenceControl(  tmcRef_Parameters_s * const pParameters,
 
 
 /*! \brief Reset Reference control
- * 
+ *
  * Details.
  * Reset Reference control
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcRefI_ReferenceControlReset( tmcRef_Parameters_s * const pParameters )
 {
@@ -271,7 +271,12 @@ void mcRefI_ReferenceControlReset( tmcRef_Parameters_s * const pParameters )
     tmcRef_State_s * pState;
     pState = (tmcRef_State_s *)pParameters->pStatePointer;
 
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_ZSMT_HYBRID'>
+    /** Reset reference control state variables  */
+    pState->reference = 0.0f;
+<#else>
     /** Reset reference control state variables  */
     pState->reference = pState->lowerLimit;
+</#if>
 </#if>
 }

@@ -6,6 +6,7 @@ encoding//algorithms/pmsm_foc/config/floating_point/analog_frontend.py=utf-8
 encoding//algorithms/pmsm_foc/config/floating_point/analog_interface.py=utf-8
 encoding//algorithms/pmsm_foc/config/floating_point/code_generation.py=utf-8
 encoding//algorithms/pmsm_foc/config/floating_point/current_measurement_and_diagnosis.py=utf-8
+encoding//algorithms/pmsm_foc/config/floating_point/data_monitoring.py=utf-8
 encoding//algorithms/pmsm_foc/config/floating_point/digital_interface.py=utf-8
 encoding//algorithms/pmsm_foc/config/floating_point/event_system_configuration.py=utf-8
 encoding//algorithms/pmsm_foc/config/floating_point/gate_driver.py=utf-8

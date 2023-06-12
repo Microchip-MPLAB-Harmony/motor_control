@@ -6,9 +6,9 @@
 
   Summary:
     Header file which contains variables and function prototypes for pulse width modulation
- 
+
   Description:
-    This file contains variables and function prototypes which are generally used for pulse 
+    This file contains variables and function prototypes which are generally used for pulse
     width modulation. It is implemented in Q2.14 fixed Point Arithmetic.
 
  *******************************************************************************/
@@ -42,14 +42,14 @@
 #define MCPWM_H
 
 /*******************************************************************************
- * Header inclusions 
+ * Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
 #include "mc_utilities.h"
 #include "mc_hardware_abstraction.h"
 
 /*******************************************************************************
- Default Module configuration parameters 
+ Default Module configuration parameters
 *******************************************************************************/
 
 /*******************************************************************************
@@ -58,11 +58,13 @@ Type Definition
 typedef struct
 {
      uint16_t pwmPeriodCount;
+     uint16_t deadTimeCount;
+     float32_t maxModIndex;
      void * pStatePointer;
 }tmcPwm_Parameters_s;
 
 /*******************************************************************************
- * Interface variables 
+ * Interface variables
 *******************************************************************************/
 
 /*******************************************************************************
@@ -81,19 +83,29 @@ typedef struct
 __STATIC_INLINE void mcPwmI_ParametersSet( tmcPwm_Parameters_s * const pParameters )
 {
      pParameters->pwmPeriodCount = mcHalI_PwmPeriodGet();
+
+     /** ToDo: Calculate in QSpin and update the value directly  */
+     pParameters->deadTimeCount =38u;
+
+ <#if MCPMSMFOC_OVER_MODULATION == true >
+     pParameters->maxModIndex = 1.15f;
+ <#else>
+    pParameters->maxModIndex = 1.0f;
+  </#if>
+
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
 *******************************************************************************/
 /*! \brief Initialize PWM modulator
- * 
+ *
  * Details.
- * Initialize PWM Modulator 
- * 
- * @param[in]: None 
+ * Initialize PWM Modulator
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcPwmI_PulseWidthModulationInit( tmcPwm_Parameters_s * const pParameters );
@@ -138,14 +150,14 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
                                                            int16_t * const pDuty );
 
 /*! \brief Reset PWM Modulator
- * 
+ *
  * Details.
  * Reset PWM Modulator
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcPwmI_PulseWidthModulationReset( const tmcPwm_Parameters_s * const pParameters );
 

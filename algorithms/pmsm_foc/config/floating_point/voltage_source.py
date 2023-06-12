@@ -42,13 +42,13 @@ class mcSrcI_VoltageSourceClass:
 
     def setValues(self):
         self.information = Database.sendMessage("bsp", "MCPMSMFOC_VOLTAGE_SOURCE", {})
-    
+
     def createSymbols(self):
-        # Root Node 
+        # Root Node
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Voltage source")
 
-        # 
+        #
         self.sym_VOLTAGE = self.component.createFloatSymbol("MCPMSMFOC_VOLTAGE_MAGNITUDE", self.sym_NODE )
         self.sym_VOLTAGE.setLabel("Voltage magnitude")
         try:
@@ -64,10 +64,10 @@ class mcSrcI_VoltageSourceClass:
         if( ID == "BSP_VOLTAGE_SOURCE"):
             if None != information:
                 self.sym_VOLTAGE.setValue(float(information["VDC"]))
-                
+
     def __call__(self):
         self.setValues()
         self.createSymbols()
-    
-        
+
+
 

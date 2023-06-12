@@ -39,13 +39,13 @@ class mcAnf_AnalogFrontEndClass:
     def __init__( self, algorithm, component):
         self.algorithm = algorithm
         self.component = component
-    
+
     def setSymbolDefaults(self):
-        
+
         bsp_Active_Status = True
         if( bsp_Active_Status == True):
             self.afe_Information = Database.sendMessage("bsp", "MCPMSMFOC_ANALOG_FRONT_END", {})
-            
+
     def handleMessage(self, ID, information):
         if( ID == "BSP_ANALOG_FRONT_END") and ( None != information ):
             # self.sym_NODE_IA_OPAMP.setValue("External op-amp")
@@ -65,24 +65,24 @@ class mcAnf_AnalogFrontEndClass:
 
             self.sym_NODE_VDC_TOP.setValue(float(information["VDC"]["TOP"]))
             self.sym_NODE_VDC_BOTTOM.setValue(float(information["VDC"]["BOTTOM"]))
- 
+
             ratio = float(information["VDC"]["BOTTOM"])/(float(information["VDC"]["BOTTOM"])  + float(information["VDC"]["TOP"]))
             self.sym_VOLTAGE_RATIO.setValue(float(ratio))
-               
-    
+
+
     def createSymbols(self):
-        # Root Node 
+        # Root Node
         self.sym_NODE = self.component.createMenuSymbol(None, None )
         self.sym_NODE.setLabel("Analog Front End")
 
         # Current measurement
         self.sym_NODE_IA = self.component.createMenuSymbol("MCPMSMFOC_ANALOG_FRONT_END_IA", self.sym_NODE)
         self.sym_NODE_IA.setLabel("Phase A current")
-        
+
         available = [ "External op-amp", "Internal op-amp"]
         self.sym_NODE_IA_OPAMP = self.component.createComboSymbol("MCPMSMFOC_ANALOG_FRONT_END_IA_OPAMP", self.sym_NODE_IA, available)
         self.sym_NODE_IA_OPAMP.setLabel("Op-amp")
-       
+
         self.sym_NODE_IA_GAIN = self.component.createFloatSymbol("MCPMSMFOC_ANALOG_FRONT_END_IA_GAIN", self.sym_NODE_IA)
         self.sym_NODE_IA_GAIN.setLabel("Gain")
 
@@ -104,7 +104,7 @@ class mcAnf_AnalogFrontEndClass:
         self.sym_NODE_IA_SHUNT.setLabel("Shunt resistance (ohm)")
 
         try:
-            self.sym_NODE_IA_SHUNT.setDefaultValue(float(self.afe_Information["IA"]["SHUNT"])) 
+            self.sym_NODE_IA_SHUNT.setDefaultValue(float(self.afe_Information["IA"]["SHUNT"]))
         except:
             pass
 
@@ -112,7 +112,7 @@ class mcAnf_AnalogFrontEndClass:
         # Current measurement
         self.sym_NODE_IB = self.component.createMenuSymbol("MCPMSMFOC_ANALOG_FRONT_END_IB", self.sym_NODE)
         self.sym_NODE_IB.setLabel("Phase B current")
-        
+
         available = [ "External op-amp", "Internal op-amp"]
         self.sym_NODE_IB_OPAMP = self.component.createComboSymbol("MCPMSMFOC_ANALOG_FRONT_END_IB_OPAMP", self.sym_NODE_IB, available)
         self.sym_NODE_IB_OPAMP.setLabel("Op-amp")
@@ -136,14 +136,14 @@ class mcAnf_AnalogFrontEndClass:
         self.sym_NODE_IB_SHUNT = self.component.createFloatSymbol("MCPMSMFOC_ANALOG_FRONT_END_IB_SHUNT", self.sym_NODE_IB)
         self.sym_NODE_IB_SHUNT.setLabel("Shunt resistance (ohm)")
         try:
-            self.sym_NODE_IB_SHUNT.setDefaultValue(float(self.afe_Information["IB"]["SHUNT"])) 
+            self.sym_NODE_IB_SHUNT.setDefaultValue(float(self.afe_Information["IB"]["SHUNT"]))
         except:
             pass
 
         # Current measurement
         # self.sym_NODE_IDC = self.component.createMenuSymbol("MCPMSMFOC_ANALOG_FRONT_END_IDC", self.sym_NODE)
         # self.sym_NODE_IDC.setLabel("DC bus current")
-        
+
         # available = [ "External op-amp", "Internal op-amp"]
         # self.sym_NODE_IDC_OPAMP = self.component.createComboSymbol("MCPMSMFOC_ANALOG_FRONT_END_IDC_OPAMP", self.sym_NODE_IDC, available)
         # self.sym_NODE_IDC_OPAMP.setLabel("Op-amp")
@@ -175,7 +175,7 @@ class mcAnf_AnalogFrontEndClass:
         # Voltage measurement
         self.sym_NODE_VDC = self.component.createMenuSymbol("MCPMSMFOC_ANALOG_FRONT_END_VDC", self.sym_NODE)
         self.sym_NODE_VDC.setLabel("DC bus voltage")
-        
+
         self.sym_NODE_VDC_TOP = self.component.createFloatSymbol("MCPMSMFOC_ANALOG_FRONT_END_VDC_TOP_RES", self.sym_NODE_VDC)
         self.sym_NODE_VDC_TOP.setLabel("Top resistance")
         try:
@@ -200,7 +200,7 @@ class mcAnf_AnalogFrontEndClass:
 
         self.sym_VOLTAGE_RATIO.setDependencies(self.detVoltageDividerRatio, ["MCPMSMFOC_ANALOG_FRONT_END_VDC_TOP_RES", "MCPMSMFOC_ANALOG_FRONT_END_VDC_BOTTOM_RES"])
 
-       
+
     def detVoltageDividerRatio(self, symbol, event):
         component = symbol.getComponent()
         Rb = component.getSymbolByID("MCPMSMFOC_ANALOG_FRONT_END_VDC_BOTTOM_RES").getValue()
@@ -208,7 +208,7 @@ class mcAnf_AnalogFrontEndClass:
         try:
             symbol.setValue(Rb/(Rb + Rt))
         except:
-            symbol.setValue(0.0) 
+            symbol.setValue(0.0)
 
 
     def __call__(self):

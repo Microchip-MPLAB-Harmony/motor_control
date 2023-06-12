@@ -16,6 +16,13 @@ extern "C" {
 #include "mc_types.h"
 #include "mc_current_calculation.h"
 #include "mc_voltage_measurement.h"
+#include "mc_hardware_abstraction.h"
+#include "mc_key_manager.h"
+
+
+/*******************************************************************************
+ Macros
+ *******************************************************************************/
 
 /*******************************************************************************
  User defined data-types
@@ -75,7 +82,7 @@ __STATIC_INLINE void mcIpdI_InputPortsRead( tmcIpd_Input_s * const pInput )
      pInput->iA = mcCurI_ModuleData_gds.dOutput.iABC.a;
      pInput->iB = mcCurI_ModuleData_gds.dOutput.iABC.b;
      pInput->iC = mcCurI_ModuleData_gds.dOutput.iABC.c;
-     
+
      pInput->uBus = mcVolI_ModuleData_gds.dOutput.uBus;
 }
 

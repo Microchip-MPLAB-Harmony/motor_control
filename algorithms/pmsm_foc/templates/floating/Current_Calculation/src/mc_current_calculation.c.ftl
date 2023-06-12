@@ -1,5 +1,5 @@
 /*******************************************************************************
- Current calculation functions 
+ Current calculation functions
 
   Company:
      - Microchip Technology Inc.
@@ -12,7 +12,7 @@
 
   Description:
      - Current calculation functions
- 
+
  *******************************************************************************/
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -49,12 +49,12 @@
  *******************************************************************************/
 
 /*******************************************************************************
- Private constants 
+ Private constants
  *******************************************************************************/
 #define OFFSET_SAMPLES    128u
 
 /*******************************************************************************
- Private data-types 
+ Private data-types
  *******************************************************************************/
 
 typedef struct
@@ -73,46 +73,46 @@ typedef struct
 }tmcCur_States_s;
 
 /*******************************************************************************
- Private variables  
+ Private variables
  *******************************************************************************/
 static tmcCur_States_s  mcCur_State_mds;
 
 /*******************************************************************************
- Private Functions 
+ Private Functions
  *******************************************************************************/
 
 /*******************************************************************************
- Interface variables 
+ Interface variables
  *******************************************************************************/
 tmcCur_ModuleData_s mcCurI_ModuleData_gds;
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
  *******************************************************************************/
 
-/*! \brief Current control initialization function 
- * 
+/*! \brief Current control initialization function
+ *
  * Details.
- *  Current control initialization function 
- * 
- * @param[in]: 
+ *  Current control initialization function
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 void mcCurI_CurrentCalculationInit( tmcCur_ModuleData_s * const pModule )
-{   
+{
     tmcCur_States_s * pState;
     pState = &mcCur_State_mds;
-        
+
     /** Set parameters */
     tmcCur_Parameters_s * pParameters = &pModule->dParameters;
     mcCur_ParametersSet( pParameters);
-    
+
     /** Update intermediate parameters */
     pState = &mcCur_State_mds;
     pState->adcToCurrentFactor = pParameters->adcToCurrentFactor;
-    
+
 <#if MCPMSMFOC_OFFSET_OOR == true >
     pState->maxOffset = pParameters->maxOffset;
     pState->minOffset = pParameters->minOffset;
@@ -121,12 +121,12 @@ void mcCurI_CurrentCalculationInit( tmcCur_ModuleData_s * const pModule )
 
 
 
-/*! \brief Function to calculate the current sensor offset  
- * 
+/*! \brief Function to calculate the current sensor offset
+ *
  * Details.
- * Function to calculate current sensor offset 
- * 
- * @param[in]: 
+ * Function to calculate current sensor offset
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -172,26 +172,26 @@ tmcTypes_StdReturn_e mcCurI_CurrentOffsetCalculation( tmcCur_ModuleData_s * cons
 
             /** ToDO: Log error */
         }
-        
+
 </#if>
 
     }
 
     return status;
 }
-    
+
 /*! \brief Function to calculate the phase  currents
- * 
+ *
  * Details.
- * Function to calculate phase currents 
- * 
- * @param[in]: 
+ * Function to calculate phase currents
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 void mcCurI_CurrentCalculation( tmcCur_ModuleData_s * const pModule )
-{  
+{
     tmcCur_States_s * pState;
     pState = &mcCur_State_mds;
 
@@ -209,13 +209,13 @@ void mcCurI_CurrentCalculation( tmcCur_ModuleData_s * const pModule )
 }
 
 
-   
-/*! \brief Function to reset phase current calculation 
- * 
+
+/*! \brief Function to reset phase current calculation
+ *
  * Details.
- * Function to reset phase current calculation  
- * 
- * @param[in]: 
+ * Function to reset phase current calculation
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:

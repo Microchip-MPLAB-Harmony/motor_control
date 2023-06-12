@@ -57,8 +57,26 @@ Headers inclusions
 /*******************************************************************************
  Private variables 
  *******************************************************************************/
-static button_response_t  mcAppI_DirectionButton_gds;
+ <#--  Get button function  -->
+<#function buttonFunction index>
+<#if 0 == index>
+<#return MCPMSMFOC_BUTTON_0_FUNCTION>
+<#elseif 1 == index>
+<#return MCPMSMFOC_BUTTON_1_FUNCTION>
+<#else>
+<#return "Error">
+</#if>
+</#function>
+<#if MCPMSMFOC_BUTTONS_AVAILABLE != 0 >
+<#list 0..( MCPMSMFOC_BUTTONS_AVAILABLE - 1 ) as index>
+<#if "Start/Stop" == buttonFunction(index)>
 static button_response_t  mcAppI_StartStopButton_gds;
+</#if>
+<#if "Direction Toggle" == buttonFunction(index)>
+static button_response_t  mcAppI_DirectionButton_gds;
+</#if>
+</#list>
+</#if>
 static uint32_t mcAppI_1msSyncCounter_gdu32;
 static uintptr_t dummyForMisra;
 static uint8_t runStatus = 0u;
@@ -85,9 +103,15 @@ __STATIC_INLINE void mcAppI_MotorStartStop(void)
 {
     if( 0u == runStatus )
     {
+<#if true == MCPMSMFOC_FOC_X2C_ENABLE>
+        /** Start motor  */
+        mcFocI_FieldOrientedControlEnable();
+<#else>
         /** Start motor  */
         mcFocI_FieldOrientedControlEnable( &mcFocI_ModuleData_gds );
-        
+</#if>
+
+<#if MCPMSMFOC_FOC_X2C_ENABLE == false>        
 <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
         /** Enable initial position detection  */
         mcIpdI_InitialPositionDetectEnable(&mcIpdI_ModuleData_gds);
@@ -100,6 +124,7 @@ __STATIC_INLINE void mcAppI_MotorStartStop(void)
         mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
 </#if>
 </#if>
+</#if>
 
         /** Enable voltage source inverter */
         mcHalI_InverterPwmEnable();
@@ -108,12 +133,19 @@ __STATIC_INLINE void mcAppI_MotorStartStop(void)
     }
     else
     {
+<#if true == MCPMSMFOC_FOC_X2C_ENABLE>
+        /** Stop motor  */
+        mcFocI_FieldOrientedControlDisable();
+<#else>
         /** Start motor  */
         mcFocI_FieldOrientedControlDisable( &mcFocI_ModuleData_gds );
-     
+</#if>
+   
+<#if MCPMSMFOC_FOC_X2C_ENABLE == false>     
  <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
         /** Disable initial position detection  */
         mcIpdI_InitialPositionDetectDisable(&mcIpdI_ModuleData_gds);
+</#if>
 </#if>
 
         /** Enable voltage source inverter */
@@ -136,7 +168,7 @@ __STATIC_INLINE void mcAppI_MotorStartStop(void)
 
 <#--  Get led function  -->
 <#function ledFunction index>
-   <#if 0 == index>
+  <#if 0 == index>
     <#return MCPMSMFOC_LED_0_FUNCTION>
   <#elseif 1 == index>
     <#return MCPMSMFOC_LED_1_FUNCTION>
@@ -148,8 +180,14 @@ __STATIC_INLINE void mcAppI_DirectionReverse(void)
 {
     if( 0u == runStatus )
     {
+<#if true == MCPMSMFOC_FOC_X2C_ENABLE>
+       /** Change state variable to toggle motor spin direction  */
+       mcFocI_MotorDirectionChange( );
+<#else>
        /** Change state variable to toggle motor spin direction  */
        mcFocI_MotorDirectionChange(&mcFocI_ModuleData_gds);
+</#if>
+
    
 <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
 <#list 0..10 as index>
@@ -187,7 +225,7 @@ __STATIC_INLINE void mcAppI_1msTasksHandler( void )
 </#function>
 
 <#if MCPMSMFOC_BUTTONS_AVAILABLE != 0 >
-<#list 0..10 as index>
+<#list 0..( MCPMSMFOC_BUTTONS_AVAILABLE - 1 ) as index>
 <#if "Start/Stop" == buttonFunction(index)>
     /** Start-stop button scan  */
     mcAppI_StartStopButton_gds.inputVal = mcHalI_StartStopButtonState();
@@ -201,8 +239,12 @@ __STATIC_INLINE void mcAppI_1msTasksHandler( void )
 </#list>
 </#if>  
    
+<#if true == MCPMSMFOC_FOC_X2C_ENABLE>
+       
+<#else>
     /** Field Oriented control - Slow Tasks */
     mcFocI_FieldOrientedControlSlow(&mcFocI_ModuleData_gds);
+</#if>
 
 }
 
@@ -267,8 +309,10 @@ void mcAppI_ApplicationInit( void )
     /** Disable PWM output */
     mcHalI_InverterPwmDisable();
 
+<#if MCPMSMFOC_FOC_X2C_ENABLE == false>
     /** Set motor parameters */
     mcMotI_MotorParametersInit( &mcMotI_PMSM_gds);
+</#if>
         
     /** Initialize Current calculation */
     mcCurI_CurrentCalculationInit(&mcCurI_ModuleData_gds);
@@ -276,13 +320,26 @@ void mcAppI_ApplicationInit( void )
     /** Initialize Voltage measurement  */
     mcVolI_VoltageCalculationInit( &mcVolI_ModuleData_gds );
    
+<#if MCPMSMFOC_FOC_X2C_ENABLE == false>
  <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS > 
     /** Initialize Initial position detection */
     mcIpdI_InitialPositionDetectInit(&mcIpdI_ModuleData_gds);
 </#if>
+</#if>
 
+<#if true == MCPMSMFOC_FOC_X2C_ENABLE>
+    /** Initialize PMSM motor control */
+    mcFocI_FieldOrientedControlInit();
+<#else>
     /** Initialize PMSM motor control */
     mcFocI_FieldOrientedControlInit( &mcFocI_ModuleData_gds);
+</#if>
+
+ <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS > 
+    /** Initialize key manager */
+    mcKeyI_KeyManagerInit();
+</#if>
+
 }
 
 /*! \brief Over current reaction ISR
@@ -303,8 +360,13 @@ void mcAppI_OverCurrentReactionIsr( uint32_t status,  uintptr_t context )
 void mcAppI_OverCurrentReactionIsr( MCPWM_CH_STATUS status, uintptr_t context )
 </#if>
 {
+<#if true == MCPMSMFOC_FOC_X2C_ENABLE>
+    /** Initialize PMSM motor control */
+    mcFocI_FieldOrientedControlDisable();
+<#else>
     /** Initialize PMSM motor control */
     mcFocI_FieldOrientedControlInit( &mcFocI_ModuleData_gds);
+</#if>
 
     /** Reset software modules */
     mcAppI_ApplicationReset();
@@ -358,7 +420,16 @@ void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
     /** Current sense amplifiers offset calculation */
     if( StdReturn_Complete == returnStatus )
     {
-<#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >    
+<#if MCPMSMFOC_FOC_X2C_ENABLE == true>
+<#if __PROCESSOR?matches(".*SAME54.*") == true>
+        mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
+<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+        mcHalI_AdcCallBackRegister( (AFEC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
+<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+        mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
+</#if>
+<#else>
+ <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >    
 <#if __PROCESSOR?matches(".*SAME54.*") == true>
         mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
@@ -375,20 +446,23 @@ void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
         mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 </#if>
 </#if>
+</#if>
     }
     else
     {
         /** For MISRA Compliance */
     }
 
+<#if MCPMSMFOC_X2CScope == "X2CScope">
     /** Calibration and monitoring update */
     X2CScope_Update();
+</#if>
 
      /** ADC end of conversion interrupt generation for FOC control */
     mcHalI_AdcInterruptClear();
     mcHalI_AdcInterruptEnable();
 }
-
+<#if MCPMSMFOC_FOC_X2C_ENABLE == false>
  <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
 
 /*! \brief Initial position detection
@@ -453,14 +527,17 @@ void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t conte
     /** Increment interrupt counter */
     mcAppI_1msSyncCounter_gdu32++;
 
-    /** Data monitoring and control */
+<#if MCPMSMFOC_X2CScope == "X2CScope">
+    /** Calibration and monitoring update */
     X2CScope_Update();
+</#if>
   
     /** ADC end of conversion interrupt generation for FOC control */
     mcHalI_AdcInterruptClear();
     mcHalI_AdcInterruptEnable();
 }
 
+</#if>
 </#if>
 
 /*! \brief Interrupt tasks execution 
@@ -501,8 +578,13 @@ void mcAppI_AdcFinishedIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
     /** Current calculation */
     mcCurI_CurrentCalculation(&mcCurI_ModuleData_gds);
 
+<#if true == MCPMSMFOC_FOC_X2C_ENABLE>
+    /** Initialize PMSM motor control */
+    mcFocI_FieldOrientedControlFast();
+<#else>
     /** Initialize PMSM motor control */
     mcFocI_FieldOrientedControlFast( &mcFocI_ModuleData_gds);
+</#if>
 
     /** Set duty */
     mcHalI_InverterPwmSet(mcPwmI_Duty_gau16);
@@ -525,8 +607,10 @@ void mcAppI_AdcFinishedIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
     mcHalI_AdcHardwareTriggerRenable();
 </#if>
 
+<#if MCPMSMFOC_X2CScope == "X2CScope">
     /** Calibration and monitoring update */
     X2CScope_Update();
+</#if>
 
     /** Increment interrupt counter */
     mcAppI_1msSyncCounter_gdu32++;
@@ -571,6 +655,11 @@ void mcAppI_ApplicationReset( void )
     /** Voltage measurement  */
     mcVolI_VoltageCalculationReset( &mcVolI_ModuleData_gds );
 
+<#if true == MCPMSMFOC_FOC_X2C_ENABLE>
+    /** PMSM motor control */
+    mcFocI_FieldOrientedControlReset();
+<#else>
     /** PMSM motor control */
     mcFocI_FieldOrientedControlReset( &mcFocI_ModuleData_gds);
+</#if>
 }

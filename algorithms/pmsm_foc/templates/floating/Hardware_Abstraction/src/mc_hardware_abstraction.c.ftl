@@ -12,7 +12,7 @@
 
   Description:
     This file contains implementation of the hardware abstraction
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -64,12 +64,12 @@ int16_t mcPwmI_Duty_gau16[3u];
  * Interface Functions
 *******************************************************************************/
 
-/*! \brief Enable PWM inverter 
- * 
+/*! \brief Enable PWM inverter
+ *
  * Details.
  * Enable PWM inverter
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -94,12 +94,12 @@ void mcHalI_InverterPwmEnable( void )
 </#if>
 }
 
-/*! \brief Disable PWM inverter 
- * 
+/*! \brief Disable PWM inverter
+ *
  * Details.
  * Disable PWM inverter
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -151,11 +151,11 @@ void mcHalI_InverterPwmDisable( void )
 <#list 0..10 as index>
 <#if "Direction indication" == ledFunction(index)>
 /*! \brief Set direction indicator
- * 
+ *
  * Details.
  * Set direction indicator
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -173,11 +173,11 @@ void mcHal_DirectionIndication( void )
 <#list 0..10 as index>
 <#if "Fault indication" == ledFunction(index)>
 /*! \brief Set fault indicator
- * 
+ *
  * Details.
  * Set fault indicator
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -192,11 +192,11 @@ void mcHal_FaultIndicationSet( void )
 </#if>
 
 /*! \brief ADC Enable
- * 
+ *
  * Details.
  * ADC Enable
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -226,7 +226,7 @@ void mcHalI_AdcEnable( void )
 void mcHalI_PwmInterruptEnable( void )
 {
 <#if __PROCESSOR?matches(".*SAME54.*") == true>
-    NVIC_EnableIRQ(${MCPMSMFOC_PWM_INSTANCE}_OTHER_IRQn);  
+    NVIC_EnableIRQ(${MCPMSMFOC_PWM_INSTANCE}_OTHER_IRQn);
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
     NVIC_EnableIRQ(${MCPMSMFOC_PWM_INSTANCE}_IRQn);
 <#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
@@ -235,11 +235,11 @@ void mcHalI_PwmInterruptEnable( void )
 }
 
 /*! \brief PWM timer Start
- * 
+ *
  * Details.
  * PWM timer Start
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -247,22 +247,22 @@ void mcHalI_PwmInterruptEnable( void )
 void mcHalI_PwmTimerStart( void )
 {
 <#if __PROCESSOR?matches(".*SAME54.*") == true>
-    ${MCPMSMFOC_PWM_INSTANCE}_PWMStart( );  
+    ${MCPMSMFOC_PWM_INSTANCE}_PWMStart( );
 <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}_MASK); 
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}_MASK); 
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}_MASK); 
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}_MASK);
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}_MASK);
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}_MASK);
 <#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
     ${MCPMSMFOC_PWM_INSTANCE}_Start();
 </#if>
 }
 
 /*! \brief ADC callback function
- * 
+ *
  * Details.
  * ADC callback function
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -286,11 +286,11 @@ void mcHalI_AdcCallBackRegister( ADCHS_CALLBACK callback, uintptr_t context )
 </#if>
 
 /*! \brief PWM fault callback function
- * 
+ *
  * Details.
  * PWM fault callback function
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -337,7 +337,7 @@ void mcHalI_PwmCallbackRegister( MCPWM_CH_CALLBACK callback, uintptr_t context )
 </#function>
 
 <#if MCPMSMFOC_BUTTONS_AVAILABLE != 0 >
-<#list 0..10 as index>
+<#list 0..( MCPMSMFOC_BUTTONS_AVAILABLE - 1 ) as index>
 <#if "Start/Stop" == buttonFunction(index)>
 bool mcHalI_StartStopButtonState( void )
 {
@@ -348,9 +348,8 @@ bool mcHalI_StartStopButtonState( void )
 </#list>
 </#if>
 
-
 <#if MCPMSMFOC_BUTTONS_AVAILABLE != 0 >
-<#list 0..10 as index>
+<#list 0..( MCPMSMFOC_BUTTONS_AVAILABLE - 1 ) as index>
 <#if "Direction Toggle" == buttonFunction(index)>
 bool mcHalI_DirectionButtonState( void )
 {
@@ -359,15 +358,15 @@ bool mcHalI_DirectionButtonState( void )
 <#break>
 </#if>
 </#list>
-</#if>  
+</#if>
 
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
 /*! \brief Start the encoder peripheral
- * 
+ *
  * Details.
  * Start the encoder peripheral
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:

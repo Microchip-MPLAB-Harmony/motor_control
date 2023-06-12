@@ -30,6 +30,7 @@
 #---------------------------------------------------------------------------------------#
 #                                Global Variables                                       #
 #---------------------------------------------------------------------------------------#
+autoConnectTable = []
 
 #---------------------------------------------------------------------------------------#
 #                                   Classes                                             #
@@ -38,10 +39,10 @@ class mcAniI_AnalogInterfaceClass:
     def __init__(self, algorithm, component ):
         self.algorithm = algorithm
         self.component = component
-        
+
         self.function_Map  = dict()
         if "PIC32MK" in MCU:
-            # Dedicated channels 
+            # Dedicated channels
             channelList = []
             self.function_Map = dict()
             ADC_Max_DedicatedChannels = 0
@@ -70,8 +71,8 @@ class mcAniI_AnalogInterfaceClass:
                         except:
                             self.function_Map[key] = [cha]
 
-            # Shared channels 
-            
+            # Shared channels
+
             # For PIC32M devices: Each Analog channel on the part must have a Data Register.  Each existing
             # Data register should indicate that there is an Analog pin for that signal.
             SignalNumber = 0
@@ -84,8 +85,8 @@ class mcAniI_AnalogInterfaceClass:
                         self.function_Map["ADC7"].append("Channel" +" " + str(SignalNumber))
                     except:
                         self.function_Map["ADC7"] = ["Channel" +" " + str(SignalNumber)]
-                                
-        elif "SAME70" in MCU: 
+
+        elif "SAME70" in MCU:
             unit_path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"AFEC\"]"
             units = ATDF.getNode(unit_path).getChildren()
 
@@ -98,7 +99,7 @@ class mcAniI_AnalogInterfaceClass:
                     if( (None != channel.getAttribute("index")) and ("AD" == channel.getAttribute("group"))):
                         self.function_Map[key].append( "Channel" + " " + str(channel.getAttribute("index")))
 
-        elif "SAME54" in MCU: 
+        elif "SAME54" in MCU:
             unit_path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]"
             units = ATDF.getNode(unit_path).getChildren()
 
@@ -115,11 +116,11 @@ class mcAniI_AnalogInterfaceClass:
                 function_Set = sorted(function_Set)
                 self.function_Map[key] = ["Channel" + " " + str(element) for element in list(function_Set)]
 
-  
+
     def adchsATDFRegisterPath(self, ModuleName, RegisterName):
-        labelPath = str('/avr-tools-device-file/modules/module@[name="' 
-                       + ModuleName + '"]/register-group@[name="' 
-                       + ModuleName + '"]/register@[name="' 
+        labelPath = str('/avr-tools-device-file/modules/module@[name="'
+                       + ModuleName + '"]/register-group@[name="'
+                       + ModuleName + '"]/register@[name="'
                        + RegisterName + '"]')
         return labelPath
 
@@ -142,7 +143,7 @@ class mcAniI_AnalogInterfaceClass:
         return valuePath
 
     def createSymbols( self ):
-        # Root node 
+        # Root node
         self.sym_NODE = self.component.createMenuSymbol(None, None )
         self.sym_NODE.setLabel("Analog Interface")
 
@@ -154,7 +155,7 @@ class mcAniI_AnalogInterfaceClass:
         global global_ADC_MODULE
         global_ADC_MODULE = self.sym_ANALOG_MODULE_01
 
-    
+
         self.sym_ANALOG_MODULE_02 = self.component.createStringSymbol("MCPMSMFOC_ADC_MODULE_02", None)
         self.sym_ANALOG_MODULE_02.setVisible(False)
         self.sym_ANALOG_MODULE_02.setDefaultValue("None")
@@ -171,12 +172,12 @@ class mcAniI_AnalogInterfaceClass:
         self.sym_RESOLUTION = self.component.createComboSymbol( "MCPMSMFOC_ADC_RESOLUTION", None, resolution )
         self.sym_RESOLUTION.setLabel("Resolution")
         self.sym_RESOLUTION.setVisible(False)
-            
-        # ____________________________________________ Group 01 ___________________________________________________#  
+
+        # ____________________________________________ Group 01 ___________________________________________________#
         self.sym_GROUP_01 = self.component.createMenuSymbol(None, self.sym_NODE )
         self.sym_GROUP_01.setLabel("Group 01 Signals")
 
-        # Phase A current 
+        # Phase A current
         self.sym_IA = self.component.createMenuSymbol("MCPMSMFOC_PHASE_CURRENT_IA_NODE", self.sym_GROUP_01)
         self.sym_IA.setLabel("Signal A Configuration")
 
@@ -188,11 +189,21 @@ class mcAniI_AnalogInterfaceClass:
         self.sym_IA_UNIT = self.component.createComboSymbol("MCPMSMFOC_PHASE_CURRENT_IA_UNIT", self.sym_IA, sorted(self.function_Map.keys()))
         self.sym_IA_UNIT.setLabel("ADC unit")
 
+        self.sym_IA_UNIT_ID = self.component.createStringSymbol("MCPMSMFOC_IA_ADC_PERIPHERAL_ID", None)
+        self.sym_IA_UNIT_ID.setLabel("Peripheral ID")
+        # self.sym_IA_UNIT_ID.setVisible(False)
+
+        if "PIC32MK" in MCU:
+            self.sym_IA_UNIT_ID.setDefaultValue("adchs")
+        else:
+            self.sym_IA_UNIT_ID.setDefaultValue((self.sym_IA_UNIT.getValue()).lower())
+            self.sym_IA_UNIT_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_PHASE_CURRENT_IA_UNIT"] )
+
         self.sym_IA_CHANNEL = mcFun_AdvancedComboSymbol("ADC channel", "PHASE_CURRENT_IA", self.component)
         self.sym_IA_CHANNEL.createComboSymbol( self.sym_IA_UNIT, self.sym_IA, self.function_Map )
         self.sym_IA_CHANNEL.setDefaultValue("Channel 0")
 
-        # Phase B current 
+        # Phase B current
         self.sym_IB = self.component.createMenuSymbol("MCPMSMFOC_PHASE_CURRENT_IB_NODE", self.sym_GROUP_01)
         self.sym_IB.setLabel("Signal B Configuration")
 
@@ -200,20 +211,29 @@ class mcAniI_AnalogInterfaceClass:
         self.sym_IB_NAME.setLabel("Signal Name")
         self.sym_IB_NAME.setDefaultValue("IbSens")
         self.sym_IB_NAME.setReadOnly(True)
-        
+
         self.sym_IB_UNIT = self.component.createComboSymbol("MCPMSMFOC_PHASE_CURRENT_IB_UNIT", self.sym_IB,  sorted(self.function_Map.keys()))
         self.sym_IB_UNIT.setLabel("ADC unit")
+
+        self.sym_IB_UNIT_ID = self.component.createStringSymbol("MCPMSMFOC_IB_ADC_PERIPHERAL_ID", None)
+        self.sym_IB_UNIT_ID.setLabel("Peripheral ID")
+        self.sym_IB_UNIT_ID.setVisible(False)
+        if "PIC32MK" in MCU:
+            self.sym_IB_UNIT_ID.setDefaultValue("adchs")
+        else:
+            self.sym_IB_UNIT_ID.setDefaultValue((self.sym_IB_UNIT.getValue()).lower())
+            self.sym_IB_UNIT_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_PHASE_CURRENT_IB_UNIT"] )
 
         self.sym_IB_CHANNEL = mcFun_AdvancedComboSymbol("ADC channel", "PHASE_CURRENT_IB", self.component)
         self.sym_IB_CHANNEL.createComboSymbol( self.sym_IB_UNIT, self.sym_IB, self.function_Map )
         self.sym_IB_CHANNEL.setDefaultValue("Channel 0")
 
-        # ____________________________________________ Group 02 ___________________________________________________#  
+        # ____________________________________________ Group 02 ___________________________________________________#
 
         self.sym_GROUP_02 = self.component.createMenuSymbol(None, self.sym_NODE )
         self.sym_GROUP_02.setLabel("Group 02 Signals")
 
-        # Phase A current 
+        # Phase A current
         self.sym_VDC = self.component.createMenuSymbol("MCPMSMFOC_BUS_VOLTAGE_VDC_NODE", self.sym_GROUP_02)
         self.sym_VDC.setLabel("Signal A Configuration")
 
@@ -224,6 +244,12 @@ class mcAniI_AnalogInterfaceClass:
 
         self.sym_VDC_UNIT = self.component.createComboSymbol("MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT", self.sym_VDC,  sorted(self.function_Map.keys()))
         self.sym_VDC_UNIT.setLabel("ADC unit")
+
+        self.sym_VDC_UNIT_ID = self.component.createStringSymbol("MCPMSMFOC_VDC_ADC_PERIPHERAL_ID", None)
+        self.sym_VDC_UNIT_ID.setLabel("Peripheral ID")
+        self.sym_VDC_UNIT_ID.setVisible(False)
+        self.sym_VDC_UNIT_ID.setDefaultValue((self.sym_VDC_UNIT.getValue()).lower())
+        self.sym_VDC_UNIT_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT"] )
 
         self.sym_VDC_CHANNEL = mcFun_AdvancedComboSymbol("ADC channel", "BUS_VOLTAGE_VDC", self.component)
         self.sym_VDC_CHANNEL.createComboSymbol( self.sym_VDC_UNIT, self.sym_VDC, self.function_Map )
@@ -237,9 +263,15 @@ class mcAniI_AnalogInterfaceClass:
         self.sym_VPOT_NAME.setLabel("Signal Name")
         self.sym_VPOT_NAME.setDefaultValue("VpotSens")
         self.sym_VPOT_NAME.setReadOnly(True)
-        
+
         self.sym_VPOT_UNIT = self.component.createComboSymbol("MCPMSMFOC_POTENTIOMETER_VPOT_UNIT", self.sym_VPOT,  sorted(self.function_Map.keys()))
         self.sym_VPOT_UNIT.setLabel("ADC unit")
+
+        self.sym_VPOT_UNIT_ID = self.component.createStringSymbol("MCPMSMFOC_VPOT_ADC_PERIPHERAL_ID", None)
+        self.sym_VPOT_UNIT_ID.setLabel("Peripheral ID")
+        self.sym_VPOT_UNIT_ID.setVisible(False)
+        self.sym_VPOT_UNIT_ID.setDefaultValue((self.sym_VPOT_UNIT.getValue()).lower())
+        self.sym_VPOT_UNIT_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_POTENTIOMETER_VPOT_UNIT"] )
 
         self.sym_VPOT_CHANNEL = mcFun_AdvancedComboSymbol("ADC channel", "POTENTIOMETER_VPOT", self.component)
         self.sym_VPOT_CHANNEL.createComboSymbol( self.sym_VPOT_UNIT, self.sym_VPOT, self.function_Map )
@@ -261,63 +293,63 @@ class mcAniI_AnalogInterfaceClass:
                                                                self.sym_VPOT_CHANNEL.getSymbolID()
                                                                ])
 
-    
+
     def setSymbolValues(self):
-        
+
         information = Database.sendMessage("bsp", "MCPMSMFOC_ANALOG_INTERFACE", {})
-     
+
         if( None != information):
-            # Phase A current 
+            # Phase A current
             self.sym_IA_UNIT.setValue(information["IA"]["FUNCTION"][0][0])
             self.sym_IA_CHANNEL.setValue("Channel" + " " + information["IA"]["FUNCTION"][0][1])
 
-            # Phase B current 
+            # Phase B current
             self.sym_IB_UNIT.setValue(information["IB"]["FUNCTION"][0][0])
             self.sym_IB_CHANNEL.setValue("Channel" + " " + information["IB"]["FUNCTION"][0][1])
-            
-            # DC bus current 
+
+            # DC bus current
             # self.sym_IDC_UNIT.setValue(information["IDC"]["FUNCTION"][0][0])
             # self.sym_IDC_CHANNEL.setValue("Channel" + " " + information["IDC"]["FUNCTION"][0][1])
 
-            # DC bus voltage 
+            # DC bus voltage
             self.sym_VDC_UNIT.setValue(information["VDC"]["FUNCTION"][0][0])
-            self.sym_VDC_CHANNEL.setValue("Channel" + " " + information["VDC"]["FUNCTION"][0][1])  
-        
-            # Get the possible analog interfaces for Vpot 
-            self.sym_VPOT_UNIT.setValue(information["VPOT"]["FUNCTION"][0][0])
-            self.sym_VPOT_CHANNEL.setValue("Channel" + " " + information["VPOT"]["FUNCTION"][0][1])  
+            self.sym_VDC_CHANNEL.setValue("Channel" + " " + information["VDC"]["FUNCTION"][0][1])
 
-    def handleMessage(self, ID, information ):   
+            # Get the possible analog interfaces for Vpot
+            self.sym_VPOT_UNIT.setValue(information["VPOT"]["FUNCTION"][0][0])
+            self.sym_VPOT_CHANNEL.setValue("Channel" + " " + information["VPOT"]["FUNCTION"][0][1])
+
+    def handleMessage(self, ID, information ):
         if( "BSP_ANALOG_INTERFACE" == ID ) and ( None != information):
-            # Phase A current 
+            # Phase A current
             self.sym_IA_UNIT.setValue(information["IA"]["FUNCTION"][0][0])
             self.sym_IA_CHANNEL.setValue("Channel" + " " + information["IA"]["FUNCTION"][0][1])
 
-            # Phase B current 
+            # Phase B current
             self.sym_IB_UNIT.setValue(information["IB"]["FUNCTION"][0][0])
             self.sym_IB_CHANNEL.setValue("Channel" + " " + information["IB"]["FUNCTION"][0][1])
 
-            # DC bus current 
+            # DC bus current
             # self.sym_IDC_UNIT.setValue(information["IDC"]["FUNCTION"][0][0])
             # self.sym_IDC_CHANNEL.setValue("Channel" + " " + information["IDC"]["FUNCTION"][0][1])
 
-            # DC bus voltage 
+            # DC bus voltage
             self.sym_VDC_UNIT.setValue(information["VDC"]["FUNCTION"][0][0])
-            self.sym_VDC_CHANNEL.setValue("Channel" + " " + information["VDC"]["FUNCTION"][0][1])  
-        
-            # Get the possible analog interfaces for Vpot 
+            self.sym_VDC_CHANNEL.setValue("Channel" + " " + information["VDC"]["FUNCTION"][0][1])
+
+            # Get the possible analog interfaces for Vpot
             self.sym_VPOT_UNIT.setValue(information["VPOT"]["FUNCTION"][0][0])
-            self.sym_VPOT_CHANNEL.setValue("Channel" + " " + information["VPOT"]["FUNCTION"][0][1])  
+            self.sym_VPOT_CHANNEL.setValue("Channel" + " " + information["VPOT"]["FUNCTION"][0][1])
 
     def numericFilter( self, input_String ):
         numeric_filter = filter(str.isdigit, str(input_String))
         return "".join(numeric_filter)
 
     def updateAbstractionLayer(self, symbol, event):
-        message = {}  
+        message = {}
 
         trigger = global_ADC_TRIGGER.getValue()
-                      
+
         message['PHASE_U'   ] = int(self.numericFilter(self.sym_IA_UNIT.getValue()      ))
         message['PHASE_U_CH'] = int(self.numericFilter(self.sym_IA_CHANNEL.getValue()   ))
         message['PHASE_V'   ] = int(self.numericFilter(self.sym_IB_UNIT.getValue()      ))
@@ -328,7 +360,7 @@ class mcAniI_AnalogInterfaceClass:
         message['VDC_CH'    ] = int(self.numericFilter(self.sym_VDC_CHANNEL.getValue()  ))
         message['RESOLUTION'] = int(self.numericFilter(self.sym_RESOLUTION.getValue()   ))
         message['TRIGGER'   ] = self.numericFilter(trigger                          )
-           
+
         plib01_Id = self.sym_ANALOG_MODULE_01.getValue()
         if(plib01_Id != "None" ):
             Database.sendMessage( plib01_Id, "PMSM_FOC_ADC_CH_CONF", message)
@@ -336,11 +368,34 @@ class mcAniI_AnalogInterfaceClass:
         plib02_Id = self.sym_ANALOG_MODULE_02.getValue()
         if(plib02_Id != "None" ):
             Database.sendMessage( plib02_Id, "PMSM_FOC_ADC_CH_CONF", message)
-            
+
+    def updatePeripheralInstance(self, symbol, event):
+        # Disconnect existing dependencies
+        # autoDisconnectTable = [[self.component.getID(), "pmsmfoc_PWM"]]
+        # res = Database.disconnectDependencies(autoDisconnectTable)
+        global autoConnectTable
+
+        # Remove old peripheral from the list
+        if len(autoConnectTable) == 4:
+            autoConnectTable.remove(symbol.getValue().lower())
+
+            # De-activate the peripheral if no analog channel uses it
+            if symbol.getValue().lower() not in autoConnectTable:
+                res = Database.deactivateComponents([symbol.getValue().lower()])
+
+        # Update ADC peripherals being used
+        symbol.setValue(event["value"].lower())
+        autoConnectTable.append(event["value"].lower())
+
+        # Activate and connect
+        res = Database.activateComponents([event["value"].lower()])
+
+        autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_ADC", event["value"].lower(), str(event["value"].upper()) + "_ADC"]]
+        res = Database.connectDependencies(autoComponentIDTable)
 
     def onAttachmentConnected(self, source, target):
         message = {}
- 
+
         localComponent = source["component"]
         remoteComponent = target["component"]
         remoteID = remoteComponent.getID()
@@ -348,7 +403,7 @@ class mcAniI_AnalogInterfaceClass:
         targetID = target["id"]
 
         trigger = localComponent.getSymbolValue("MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL")
-                      
+
         message['PHASE_U'   ] = int(self.numericFilter(self.sym_IA_UNIT.getValue()      ))
         message['PHASE_U_CH'] = int(self.numericFilter(self.sym_IA_CHANNEL.getValue()   ))
         message['PHASE_V'   ] = int(self.numericFilter(self.sym_IB_UNIT.getValue()      ))
@@ -359,14 +414,14 @@ class mcAniI_AnalogInterfaceClass:
         message['VDC_CH'    ] = int(self.numericFilter(self.sym_VDC_CHANNEL.getValue()  ))
         message['RESOLUTION'] = int(self.numericFilter(self.sym_RESOLUTION.getValue()   ))
         message['TRIGGER'   ] = self.numericFilter(trigger                          )
-    
+
         if ( connectID == "pmsmfoc_ADC" ):
             instanceNum = (filter(str.isdigit,str(remoteID)))
             if (instanceNum == str(0) or instanceNum == ""):
                 self.sym_ANALOG_MODULE_01.setValue(remoteID)
             else:
                 self.sym_ANALOG_MODULE_02.setValue(remoteID)
-    
+
             Database.sendMessage(remoteID, "PMSM_FOC_ADC_CH_CONF", message)
 
     """
@@ -384,8 +439,8 @@ class mcAniI_AnalogInterfaceClass:
         self.setSymbolValues()
 
 
-            
-    
+
+
 
 
 

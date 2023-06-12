@@ -12,7 +12,7 @@
 
   Description:
     - This file implements functions for speed control
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -77,20 +77,20 @@ Private Functions
 *******************************************************************************/
 
 /*******************************************************************************
- * Interface Functions 
+ * Interface Functions
 *******************************************************************************/
 /*! \brief Initialize speed control module
- * 
+ *
  * Details.
  * Initialize speed control module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcSpeI_SpeedControlInit( tmcSpe_Parameters_s * const pParameters )
-{  
+{
     /** Link state variable structure to the module */
     pParameters->pStatePointer = (void *)&mcSpe_State_mds;
 
@@ -217,8 +217,8 @@ void mcSpeI_SpeedControlAuto(  const tmcSpe_Parameters_s * const pParameters,
          float32_t error = nref - nact;
 
          /** ToDO: Calculate Ymax and Ymin based on the motor control states. Remove the magic numbers  */
-         pState->bPIController.Ymax = 10000.0f;
-         pState->bPIController.Ymin = -10000.0f;
+         pState->bPIController.Ymax = pParameters->Ymax;
+         pState->bPIController.Ymin = -pParameters->Ymax;
 
          mcUtils_PiControl( error, &pState->bPIController );
          *pOut = pState->bPIController.Yo;
@@ -232,14 +232,14 @@ void mcSpeI_SpeedControlAuto(  const tmcSpe_Parameters_s * const pParameters,
 
 
 /*! \brief Reset Flux control
- * 
+ *
  * Details.
  * Reset Flux control
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcSpeI_SpeedControlReset( const tmcSpe_Parameters_s * const pParameters )
 {

@@ -35,14 +35,14 @@ class mcVolI_VoltageMeasurementAndDiagnosis:
         self.component = component
 
     def createSymbols(self):
-        #Root node 
+        #Root node
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Voltage measurement & diagnosis")
 
-        # Voltage Scaling 
+        # Voltage Scaling
         self.sym_SCALING = self.component.createMenuSymbol(None, self.sym_NODE)
         self.sym_SCALING.setLabel("Voltage scaling")
-        
+
         supported_Formats = ["Real"]
         self.sym_SCALING_FORMAT = self.component.createComboSymbol("MCPMSMFOC_VOLTAGE_SCALING_FORMAT", self.sym_SCALING, supported_Formats )
         self.sym_SCALING_FORMAT.setLabel("Format")
@@ -110,7 +110,7 @@ class mcVolI_VoltageMeasurementAndDiagnosis:
         self.sym_UNDER_VOLTAGE_FAULT_TYPE.setLabel("Fault type")
         self.sym_UNDER_VOLTAGE_FAULT_TYPE.setVisible(False)
         self.sym_UNDER_VOLTAGE_FAULT_TYPE.setDependencies(self.showThisSymbol, ["MCPMSMFOC_UNDER_VOLTAGE"])
-        
+
     def showThisSymbol(self, symbol, event):
         if True == event["symbol"].getValue():
             symbol.setVisible(True)
@@ -124,7 +124,7 @@ class mcVolI_VoltageMeasurementAndDiagnosis:
         try:
             symbol.setValue(Rb/(Rb + Rt))
         except:
-            symbol.setValue(0.0) 
+            symbol.setValue(0.0)
 
     def adcToVoltsCalculate(self, symbol, event):
         symbol.setValue(3.3 /( event["value"] * 4095 ))

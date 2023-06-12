@@ -1,5 +1,5 @@
 /*******************************************************************************
- Motor Control application interface file 
+ Motor Control application interface file
 
   Company:
     Microchip Technology Inc.
@@ -66,7 +66,7 @@
 static inline void mcFoc_InputPortsRead( void  )
 {
    /** User code - Begin */
- 
+
    /** User code - End */
 }
 
@@ -107,11 +107,11 @@ void mcFocI_FieldOrientedControlEnable( void );
 void mcFocI_FieldOrientedControlDisable( void );
 
 /*! \brief  Field oriented control initialization
- * 
+ *
  * Details.
  *   Field oriented control initialization
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -119,16 +119,16 @@ void mcFocI_FieldOrientedControlDisable( void );
 void mcFocI_FieldOrientedControlInit( void  );
 
 /*! \brief Field oriented control
- * 
+ *
  * Details.
  *   Field oriented control
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
- 
+
 void mcFocI_FieldOrientedControlFast( void  );
 
 /*! \brief Field oriented control
@@ -157,17 +157,17 @@ void mcFocI_FieldOrientedControlSlow( void  );
 void mcFocI_MotorDirectionChange( void );
 
 /*! \brief  Field oriented control reset
- * 
+ *
  * Details.
  * Field oriented control reset
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 void mcFocI_FieldOrientedControlReset( void );
- 
+
 #endif //MC_MOC_H
 
 /**

@@ -39,10 +39,10 @@ class mcPid_PiControllerParameters:
     def __init__( self, algorithm, component):
         self.algorithm = algorithm
         self.component = component
-    
+
     def determineCurrentParameters(self):
         pass
 
-   
+
 
 

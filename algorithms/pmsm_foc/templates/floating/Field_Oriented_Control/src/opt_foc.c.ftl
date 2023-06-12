@@ -12,7 +12,7 @@
 
   Description:
     - This file implements functions for Field Oriented Control ( FOC )
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -52,7 +52,7 @@ Local configuration options
 /*******************************************************************************
  Private data types
 *******************************************************************************/
- <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'> 
+ <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 typedef enum
 {
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
@@ -68,38 +68,33 @@ typedef struct
  {
      bool enable;
      bool initDone;
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'> 
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
      tmcFoc_FocState_e FocState;
 </#if>
-     tmcTypes_AlphaBeta_s iAlphaBeta;
-     tmcTypes_AlphaBeta_s uAlphaBeta;
-     tmcTypes_DQ_s iDQ;
      tmcTypes_DQ_s uDQ;
-<#if !(( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_ZSMT_HYBRID' ) && ( MCPMSMFOC_CONTROL_TYPE != 'OPEN_LOOP' )) >   
+<#if !(( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_ZSMT_HYBRID' ) && ( MCPMSMFOC_CONTROL_TYPE != 'OPEN_LOOP' )) >
      float32_t openLoopAngle;
      float32_t openLoopSpeed;
 </#if>
-     float32_t closeLoopAngle;
-     float32_t closeLoopSpeed;
      float32_t iQref;
      float32_t iDref;
      float32_t nRef;
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>    
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>    
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
      float32_t angleDifference;
 </#if>
 </#if>
      float32_t commandDirection;
      float32_t ratedSpeedInRpm;
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>  
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
      tmcFly_Parameters_s bFlyingStart;
 </#if>
 </#if>
 
-<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >  
+<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >
      tmcSup_Parameters_s bOpenLoopStartup;
-</#if>   
+</#if>
      tmcPwm_Parameters_s bPwmModulator;
      tmcFlx_Parameters_s bFluxController;
      tmcTor_Parameters_s bTorqueController;
@@ -124,10 +119,10 @@ static tmcFoc_State_s mcFoc_State_mds;
 #if ( ENABLE == ENABLE_FOC_ANGLE_OVERRIDE  )
 static float32_t mcFoc_FocOverrideAngle_gdf32 = 0.0f;
 #endif
+</#if>
 
-#if ( 'TORQUE_LOOP' == CONTROL_LOOP  )
+<#if ( MCPMSMFOC_CONTROL_TYPE == 'TORQUE_LOOP' )>
 static float32_t mcFoc_FocOverrideCurrent_gdf32 = 0.4f;
-#endif
 </#if>
 
 /*******************************************************************************
@@ -139,10 +134,18 @@ tmcFocI_ModuleData_s mcFocI_ModuleData_gds;
 Macro Functions
 *******************************************************************************/
 /**
- *  Open loop angle to close loop angle transition rate. 
+ * Constant value of 2/PI
  */
-#define ROTOR_ANGLE_RAMP_RATE     (float32_t)( 1.0e-5 )
+#define TWO_BY_PI (float32_t)(0.6366198)
 
+/**
+ *  Open loop angle to close loop angle transition rate.
+ */
+<#if MCPMSMFOC_BOARD_SEL == "dsPICDEM MCLV-2">
+#define ROTOR_ANGLE_RAMP_RATE     (float32_t)( 1.0e-5 )
+<#elseif MCPMSMFOC_BOARD_SEL == "dsPICDEM MCHV-3">
+#define ROTOR_ANGLE_RAMP_RATE     (float32_t)( 2.0e-5 )
+</#if>
 
 /*******************************************************************************
 Private Functions
@@ -201,20 +204,20 @@ __STATIC_FORCEINLINE void mcFoc_InverseParkTransformation( const tmcTypes_DQ_s *
 }
 
 /*******************************************************************************
- * Interface Functions 
+ * Interface Functions
 *******************************************************************************/
 /*! \brief Initialize Field Oriented Control ( FOC ) module
- * 
+ *
  * Details.
  * Initialize Field Oriented Control ( FOC ) module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcFocI_FieldOrientedControlInit( tmcFocI_ModuleData_s * const pModule )
-{  
+{
     /** Link state variable structure to the module */
     pModule->pStatePointer = (void *)&mcFoc_State_mds;
 
@@ -226,14 +229,14 @@ void  mcFocI_FieldOrientedControlInit( tmcFocI_ModuleData_s * const pModule )
 
     /** Update state variables */
     mcFoc_State_mds.ratedSpeedInRpm = pModule->dParameters.pMotorParameters->NratedInRpm;
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>  
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
     /** Initialize flying start module */
     mcFlyI_FlyingStartInit( &mcFoc_State_mds.bFlyingStart );
 </#if>
 </#if>
 
-<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >  
+<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >
     /** Initialize open loop start-up module */
     mcSupI_OpenLoopStartupInit( &mcFoc_State_mds.bOpenLoopStartup );
 </#if>
@@ -249,10 +252,15 @@ void  mcFocI_FieldOrientedControlInit( tmcFocI_ModuleData_s * const pModule )
 
     /** Initialize flux control module */
     mcFlxI_FluxControlInit( &mcFoc_State_mds.bFluxController);
-    
+
 <#if ( MCPMSMFOC_ENABLE_FW == true ) >
     /** Initialize flux weakening module */
     mcFlxI_FluxWeakeningInit(  &mcFoc_State_mds.bFluxController );
+</#if>
+
+<#if ( MCPMSMFOC_ENABLE_MTPA == true ) >
+    /** Initialize MTPA module */
+    mcFlxI_MTPAInit(  &mcFoc_State_mds.bFluxController );
 </#if>
 
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
@@ -297,14 +305,14 @@ void  mcFocI_FieldOrientedControlEnable( tmcFocI_ModuleData_s * const pParameter
          /** For MISRA Compliance */
     }
 
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>  
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
     /** Enable flying start module */
     mcFlyI_FlyingStartEnable( &mcFoc_State_mds.bFlyingStart );
 </#if>
 </#if>
 
-<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >  
+<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >
     /** Enable open loop start-up module */
     mcSupI_OpenLoopStartupEnable( &mcFoc_State_mds.bOpenLoopStartup );
 </#if>
@@ -321,11 +329,16 @@ void  mcFocI_FieldOrientedControlEnable( tmcFocI_ModuleData_s * const pParameter
     /** Enable flux control module */
     mcFlxI_FluxControlEnable( &mcFoc_State_mds.bFluxController);
 
+<#if ( MCPMSMFOC_ENABLE_MTPA == true ) >
+    /** Enable MTPA module */
+    mcFlxI_MTPAEnable(  &pState->bFluxController );
+</#if>
+
 <#if ( MCPMSMFOC_ENABLE_FW == true ) >
     /** Enable flux weakening module */
     mcFlxI_FluxWeakeningEnable(  &pState->bFluxController );
 </#if>
-   
+
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
     /** Enable rotor position calculation  */
     mcRpcI_RotorPositionCalcEnable( &mcFoc_State_mds.bPositionCalculation);
@@ -338,7 +351,7 @@ void  mcFocI_FieldOrientedControlEnable( tmcFocI_ModuleData_s * const pParameter
     mcPwmI_PulseWidthModulationEnable( &mcFoc_State_mds.bPwmModulator );
 
     /** Set FOC state machine */
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'> 
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
     mcFoc_State_mds.FocState = FocState_FlyingStart;
 <#else>
@@ -376,18 +389,18 @@ void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParamete
         /** For MISRA Compliance */
     }
 
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>  
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
     /** Disable flying start module */
     mcFlyI_FlyingStartDisable( &mcFoc_State_mds.bFlyingStart );
  </#if>
   </#if>
- 
-<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >  
+
+<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >
     /** Disable open loop start-up module */
     mcSupI_OpenLoopStartupDisable( &mcFoc_State_mds.bOpenLoopStartup );
  </#if>
- 
+
     /** Disable reference control module */
     mcRefI_ReferenceControlDisable( &mcFoc_State_mds.bReferenceController);
 
@@ -399,6 +412,11 @@ void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParamete
 
     /** Disable flux control module */
     mcFlxI_FluxControlDisable( &mcFoc_State_mds.bFluxController);
+
+<#if ( MCPMSMFOC_ENABLE_MTPA == true ) >
+    /** Disable MTPA module */
+    mcFlxI_MTPADisable(  &pState->bFluxController );
+</#if>
 
 <#if ( MCPMSMFOC_ENABLE_FW == true ) >
     /** Disable flux weakening module */
@@ -431,7 +449,7 @@ void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParamete
  * @param[out]: None
  * @return: None
  */
- <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'> 
+ <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 {
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
@@ -446,29 +464,33 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     tmcFoc_State_s * pState;
     pState = (tmcFoc_State_s *)pModule->pStatePointer;
 
+    /** Get the output structure pointer */
+    tmcFoc_Output_s * pOutput;
+    pOutput = &pModule->dOutput;
+
     /** Read FOC inputs  */
     mcFocI_InputsRead( pModule );
 
     /** Clarke transformation */
-    mcFoc_ClarkeTransformation( &pModule->dInput.iABC, &pState->iAlphaBeta);
+    mcFoc_ClarkeTransformation( &pModule->dInput.iABC, &pOutput->iAlphaBeta);
 
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-    mcRpcI_RotorPositionCalc(&pState->bPositionCalculation, &pState->closeLoopAngle, &pState->closeLoopSpeed );
+    mcRpcI_RotorPositionCalc(&pState->bPositionCalculation, &pOutput->elecAngle, &pOutput->elecSpeed );
 <#elseif MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_SMO'>
     /** Rotor position estimation */
     tmcTypes_AlphaBeta_s eAlphaBeta;
-    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, pState->nRef, &pState->iAlphaBeta, &pState->uAlphaBeta,
-                                            &eAlphaBeta, &pState->closeLoopAngle, &pState->closeLoopSpeed );
+    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, pState->nRef, &pOutput->iAlphaBeta, &pOutput->uAlphaBeta,
+                                            &eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
 <#elseif MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_ROLO'>
     /** Rotor position estimation */
     tmcTypes_AlphaBeta_s eAlphaBeta;
-    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, pState->nRef, &pState->iAlphaBeta, &pState->uAlphaBeta,
-                                            &eAlphaBeta, &pState->closeLoopAngle, &pState->closeLoopSpeed );
+    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, pState->nRef, &pOutput->iAlphaBeta, &pOutput->uAlphaBeta,
+                                            &eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
 <#else>
     /** Rotor position estimation */
     tmcTypes_AlphaBeta_s eAlphaBeta;
-    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, &pState->iAlphaBeta, &pState->uAlphaBeta,
-                                            &eAlphaBeta, &pState->closeLoopAngle, &pState->closeLoopSpeed );
+    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, &pOutput->iAlphaBeta, &pOutput->uAlphaBeta,
+                                            &eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
 </#if>
 
     switch(pState->FocState )
@@ -477,7 +499,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
         case FocState_FlyingStart:
         {
             tmcTypes_StdReturn_e flyingStartStatus;
-            flyingStartStatus = mcFlyI_FlyingStart( &pState->bFlyingStart, pState->closeLoopSpeed, pState->commandDirection,
+            flyingStartStatus = mcFlyI_FlyingStart( &pState->bFlyingStart, pOutput->elecSpeed, pState->commandDirection,
                                                                             &pState->iDref, &pState->iQref, &dutyOverride, mcPwmI_Duty_gau16 );
 
             if( StdReturn_Success == flyingStartStatus )
@@ -519,11 +541,14 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
         case FocState_Startup:
         {
             tmcTypes_StdReturn_e startupStatus;
+        <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
+            pState->openLoopAngle = pModule->dInput.initialAngle;
+        </#if>
             startupStatus = mcSupI_OpenLoopStartup( &pState->bOpenLoopStartup, pState->commandDirection, &pState->iQref,
-                                                                            &pState->iDref, &pState->openLoopAngle, &pState->openLoopSpeed );
-            
-            pState->nRef = pState->openLoopSpeed; 
-            
+                                                    &pState->iDref, &pState->openLoopAngle, &pState->openLoopSpeed );
+
+            pState->nRef = pState->openLoopSpeed;
+
             if( StdReturn_Complete == startupStatus )
             {
 <#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
@@ -534,10 +559,10 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
                 /** Set reference current */
                 pState->iQref = mcFoc_FocOverrideCurrent_gdf32;
 </#if>
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>    
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
                 /** Calculate angle difference */
-                pState->angleDifference = UTIL_AngleDifferenceCalc( pState->openLoopAngle, pState->closeLoopAngle );
-       
+                pState->angleDifference = UTIL_AngleDifferenceCalc( pState->openLoopAngle, pOutput->elecAngle );
+
                 /** Set FOC state machine to ClosingLoop */
                 pState->FocState = FocState_ClosingLoop;
 <#else>
@@ -558,13 +583,13 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 </#if>
                 /** Sine-cosine calculation */
                 mcUtils_SineCosineCalculation( pState->openLoopAngle, &sine, &cosine );
-                
+
 <#if MCPMSMFOC_DEVELOPER_MODE == true>
 #endif
 </#if>
                 break;
             }
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>         
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
 	        case FocState_ClosingLoop:
             {
 <#if MCPMSMFOC_DEVELOPER_MODE == true>
@@ -577,18 +602,18 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
                 mcUtils_SineCosineCalculation( mcFoc_FocOverrideAngle_gdf32, &sine, &cosine );
 #else
 </#if>
-                float32_t angle = pState->closeLoopAngle + pState->angleDifference;
+                float32_t angle = pOutput->elecAngle + pState->angleDifference;
                 mcUtils_TruncateAngle0To2Pi(&angle);
-                
+
                 /** Ramp-down angle difference */
                 UTIL_LinearRampFloat(&pState->angleDifference, ROTOR_ANGLE_RAMP_RATE, 0.0f );
-                
+
                 if( UTIL_IS_ZERO( pState->angleDifference ))
                 {
                     pState->angleDifference = 0.0f;
                     pState->FocState = FocState_CloseLoop;
                 }
-                
+
                 /** Sine-cosine calculation */
                 mcUtils_SineCosineCalculation( angle, &sine, &cosine );
 <#if MCPMSMFOC_DEVELOPER_MODE == true>
@@ -600,7 +625,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 <#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
                 /** Execute speed controller */
                 pState->nRef *=  pState->commandDirection;
-                mcSpeI_SpeedControlAuto( &pState->bSpeedController, pState->nRef, pState->closeLoopSpeed, 
+                mcSpeI_SpeedControlAuto( &pState->bSpeedController, pState->nRef, pOutput->elecSpeed,
                                                            &pState->iQref );
 
 <#elseif ( MCPMSMFOC_CONTROL_TYPE == 'TORQUE_LOOP' ) >
@@ -612,7 +637,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
                 pState->iQref = mcFoc_FocOverrideCurrent_gdf32;
 </#if>
                 break;
-            }  
+            }
 </#if>
 
             case FocState_CloseLoop:
@@ -628,30 +653,58 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 #else
 </#if>
                 /** Sine-cosine calculation */
-                mcUtils_SineCosineCalculation( pState->closeLoopAngle, &sine, &cosine );
+                mcUtils_SineCosineCalculation( pOutput->elecAngle, &sine, &cosine );
 <#if MCPMSMFOC_DEVELOPER_MODE == true>
 #endif
 </#if>
 
                 /** Reference Control */
                 mcRefI_ReferenceControl( &mcFoc_State_mds.bReferenceController, pModule->dInput.reference, &pState->nRef );
+<#if ( ( MCPMSMFOC_ENABLE_FW == true ) && ( MCPMSMFOC_ENABLE_MTPA == true )) >
 
-<#if ( MCPMSMFOC_ENABLE_FW == true ) >
+               /** Execute flux weakening  */
+               float32_t idrefFW = 0.0f;
+               float32_t idrefMTPA = 0.0f;
+
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
                 /** Execute flux weakening  */
                 mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,
-                                        pModule->dInput.uBus, pState->closeLoopSpeed, &pState->iDQ, &pState->iDref );
+                                        pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &idrefFW );
 <#else>
                 /** Execute flux weakening  */
                 mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,  &eAlphaBeta,
-                                         pModule->dInput.uBus, pState->closeLoopSpeed, &pState->iDQ, &pState->iDref );
+                                         pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &idrefFW );
+</#if>
+
+               mcFlxI_MTPA(  &pState->bFluxController, &pOutput->iDQ, &idrefMTPA );
+
+               /** */
+               if( idrefMTPA < idrefFW ) {
+                    pState->iDref = idrefMTPA;
+               }
+               else {
+                    pState->iDref = idrefFW;
+               }
+
+<#elseif ( MCPMSMFOC_ENABLE_MTPA ==  true ) >
+               mcFlxI_MTPA(  &pState->bFluxController, &pOutput->iDQ, &idrefMTPA );
+<#elseif ( MCPMSMFOC_ENABLE_FW == true ) >
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
+
+                /** Execute flux weakening  */
+                mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,
+                                        pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &pState->iDref );
+<#else>
+                /** Execute flux weakening  */
+                mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,  &eAlphaBeta,
+                                         pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &pState->iDref );
 </#if>
 </#if>
 
 <#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
                 /** Execute speed controller */
                 pState->nRef *=  pState->commandDirection;
-                mcSpeI_SpeedControlAuto(&pState->bSpeedController,  pState->nRef, pState->closeLoopSpeed, 
+                mcSpeI_SpeedControlAuto(&pState->bSpeedController,  pState->nRef, pOutput->elecSpeed,
                                                           &pState->iQref );
 
 <#elseif ( MCPMSMFOC_CONTROL_TYPE == 'TORQUE_LOOP' ) >
@@ -673,34 +726,33 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     }
 
     /** Park Transformation */
-    mcFoc_ParkTransformation( &pState->iAlphaBeta, sine, cosine, &pState->iDQ );
+    mcFoc_ParkTransformation( &pOutput->iAlphaBeta, sine, cosine, &pOutput->iDQ );
 
     /** Compute Q-axis controller output limit */
-    float32_t ydLimit = pModule->dInput.uBus * ONE_BY_SQRT3;
+    float32_t ydLimit = pModule->dInput.uBus * TWO_BY_PI;
 
     /** Execute flux control */
-    mcFlxI_FluxControlAuto( &pState->bFluxController, pState->iDref, pState->iDQ.d, ydLimit, &pState->uDQ.d );
+    mcFlxI_FluxControlAuto( &pState->bFluxController, pState->iDref, pOutput->iDQ.d, ydLimit, &pState->uDQ.d );
 
     /** Apply circle limit for Q-axis reference current clamping  */
-    float32_t yqLimit = UTIL_SquareRootFloat( UTIL_SquareFloat( ydLimit * ydLimit )
-                                            - UTIL_SquareFloat( pState->uDQ.d * pState->uDQ.d ));
+    float32_t yqLimit = UTIL_SquareRootFloat( UTIL_SquareFloat( ydLimit )  - UTIL_SquareFloat( pState->uDQ.d ));
 
 
     /** Execute torque control */
-    mcTorI_TorqueControlAuto( &pState->bTorqueController, pState->iQref, pState->iDQ.q, yqLimit, &pState->uDQ.q );
+    mcTorI_TorqueControlAuto( &pState->bTorqueController, pState->iQref, pOutput->iDQ.q, yqLimit, &pState->uDQ.q );
 
     /** Inverse Park transformation */
-    mcFoc_InverseParkTransformation( &pState->uDQ, sine, cosine, &pState->uAlphaBeta );
+    mcFoc_InverseParkTransformation( &pState->uDQ, sine, cosine, &pOutput->uAlphaBeta );
 
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
     if(  false == dutyOverride )
     {
     /** Space vector modulation */
-    mcPwmI_PulseWidthModulation(&pState->bPwmModulator, pModule->dInput.uBus, &pState->uAlphaBeta, mcPwmI_Duty_gau16 );
+    mcPwmI_PulseWidthModulation(&pState->bPwmModulator, pModule->dInput.uBus, &pOutput->uAlphaBeta, mcPwmI_Duty_gau16 );
     }
 <#else>
      /** Space vector modulation */
-    mcPwmI_PulseWidthModulation(&pState->bPwmModulator, pModule->dInput.uBus, &pState->uAlphaBeta, mcPwmI_Duty_gau16 );
+    mcPwmI_PulseWidthModulation(&pState->bPwmModulator, pModule->dInput.uBus, &pOutput->uAlphaBeta, mcPwmI_Duty_gau16 );
 </#if>
 }
 
@@ -715,12 +767,16 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     tmcFoc_State_s * pState;
     pState = (tmcFoc_State_s *)pModule->pStatePointer;
 
+    /** Get the output structure pointer */
+    tmcFoc_Output_s * pOutput;
+    pOutput = &pModule->dOutput;
+
     /** Read FOC inputs  */
     mcFocI_InputsRead( pModule );
 
     /** Clarke transformation */
-    mcFoc_ClarkeTransformation( &pModule->dInput.iABC, &pState->iAlphaBeta);
-    
+    mcFoc_ClarkeTransformation( &pModule->dInput.iABC, &pOutput->iAlphaBeta);
+
     <#if ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' ) >
     mcSupI_OpenLoopStartup( &pState->bOpenLoopStartup, pState->commandDirection, &pState->iQref,
                                                                             &pState->iDref, &pState->openLoopAngle, &pState->openLoopSpeed );
@@ -728,8 +784,8 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 
     /** Rotor position estimation */
     tmcTypes_AlphaBeta_s eAlphaBeta;
-    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, &pState->iAlphaBeta, &pState->uAlphaBeta,
-                                            &eAlphaBeta, pModule->dInput.initialAngle, &pState->closeLoopAngle, &pState->closeLoopSpeed );
+    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, &pOutput->iAlphaBeta, &pOutput->uAlphaBeta,
+                                            &eAlphaBeta, pModule->dInput.initialAngle, &pOutput->elecAngle, &pOutput->elecSpeed );
 
      /** Reference Control */
      mcRefI_ReferenceControl( &mcFoc_State_mds.bReferenceController, pModule->dInput.reference, &pState->nRef );
@@ -737,47 +793,46 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 <#if ( MCPMSMFOC_ENABLE_FW == true ) >
      /** Execute flux weakening  */
      mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,  &eAlphaBeta,
-                                         pModule->dInput.uBus, pState->closeLoopSpeed, &pState->iDQ, &pState->iDref );
-                                         
+                                         pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &pState->iDref );
+
      /** Sine-cosine calculation */
-     mcUtils_SineCosineCalculation( pState->closeLoopAngle, &sine, &cosine );
+     mcUtils_SineCosineCalculation( pOutput->elecAngle, &sine, &cosine );
 <#else>
      /** Sine-cosine calculation */
-     mcUtils_SineCosineCalculation( pState->closeLoopAngle, &sine, &cosine );
+     mcUtils_SineCosineCalculation( pOutput->elecAngle, &sine, &cosine );
 </#if>
      pState->nRef *=  pState->commandDirection;
-     
+
      /** Execute speed controller */
-     mcSpeI_SpeedControlAuto(&pState->bSpeedController, pState->nRef, pState->closeLoopSpeed, 
+     mcSpeI_SpeedControlAuto(&pState->bSpeedController, pState->nRef, pOutput->elecSpeed,
                                                &pState->iQref );
 
     /** Park Transformation */
-    mcFoc_ParkTransformation( &pState->iAlphaBeta, sine, cosine, &pState->iDQ );
+    mcFoc_ParkTransformation( &pOutput->iAlphaBeta, sine, cosine, &pOutput->iDQ );
 
     /** Compute Q-axis controller output limit */
-    float32_t ydLimit = pModule->dInput.uBus * ONE_BY_SQRT3;
+    float32_t ydLimit = pModule->dInput.uBus * TWO_BY_PI;
 
     /** Execute flux control */
-    mcFlxI_FluxControlAuto( &pState->bFluxController, pState->iDref, pState->iDQ.d, ydLimit, &pState->uDQ.d );
+    mcFlxI_FluxControlAuto( &pState->bFluxController, pState->iDref, pOutput->iDQ.d, ydLimit, &pState->uDQ.d );
 
     /** Apply circle limit for Q-axis reference current clamping  */
-    float32_t yqLimit = UTIL_SquareRootFloat( UTIL_SquareFloat( ydLimit * ydLimit )
-                                            - UTIL_SquareFloat( pState->uDQ.d * pState->uDQ.d ));
+    float32_t yqLimit = UTIL_SquareRootFloat( UTIL_SquareFloat( ydLimit ) - UTIL_SquareFloat( pState->uDQ.d * pState->uDQ.d ));
 
     /** Execute torque control */
-    mcTorI_TorqueControlAuto( &pState->bTorqueController, pState->iQref, pState->iDQ.q, yqLimit, &pState->uDQ.q );
+    mcTorI_TorqueControlAuto( &pState->bTorqueController, pState->iQref, pOutput->iDQ.q, yqLimit, &pState->uDQ.q );
 
     /** High Frequency pulse injection */
     mcRpeI_CarrierSignalInjection(&pState->bPositionEstimation, &pState->uDQ);
 
     /** Inverse Park transformation */
-    mcFoc_InverseParkTransformation( &pState->uDQ, sine, cosine, &pState->uAlphaBeta );
+    mcFoc_InverseParkTransformation( &pState->uDQ, sine, cosine, &pOutput->uAlphaBeta );
 
      /** Space vector modulation */
-    mcPwmI_PulseWidthModulation(&pState->bPwmModulator, pModule->dInput.uBus, &pState->uAlphaBeta, pModule->dOutput.duty );
+    mcPwmI_PulseWidthModulation(&pState->bPwmModulator, pModule->dInput.uBus, &pOutput->uAlphaBeta, pModule->dOutput.duty );
 
     /** Write ouput ports  */
-    mcFocI_OutputPortWrite(&pModule->dOutput);
+    mcFocI_OutputPortWrite(pOutput);
 }
 </#if>
 
@@ -817,14 +872,14 @@ void mcFocI_MotorDirectionChange(const tmcFocI_ModuleData_s * const pParameters)
 
 }
 /*! \brief Reset Field Oriented Control ( FOC )
- * 
+ *
  * Details.
  * Reset Field Oriented Control ( FOC )
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcFocI_FieldOrientedControlReset( const tmcFocI_ModuleData_s * const pParameters )
 {
@@ -839,7 +894,7 @@ void mcFocI_FieldOrientedControlReset( const tmcFocI_ModuleData_s * const pParam
 
     /** Reset flux control module */
     mcFlxI_FluxControlReset( &mcFoc_State_mds.bFluxController);
-    
+
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
 <#else>
    /** Reset rotor position estimation  */

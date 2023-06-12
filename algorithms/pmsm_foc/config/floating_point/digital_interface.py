@@ -40,15 +40,15 @@ class mcFocI_DigitalInterfaceClass:
     def __init__(self, algorithm, component):
         self.algorithm = algorithm
         self.component = component
-        
-        # Get list of function_Maps 
+
+        # Get list of function_Maps
         self.function_Map = list()
         if "SAME54" in MCU:
             pins =  ATDF.getNode("/avr-tools-device-file/pinouts/pinout@[name=\"SAMD51P\"]").getChildren()
             for pin in pins:
                 pad = pin.getAttribute("pad")
                 if pad.startswith("P"):
-                    self.function_Map.append(pad)  
+                    self.function_Map.append(pad)
 
         elif "SAME70" in MCU:
             pins =  ATDF.getNode("/avr-tools-device-file/pinouts/pinout@[name=\"LQFP144\"]").getChildren()
@@ -56,8 +56,8 @@ class mcFocI_DigitalInterfaceClass:
             for pin in pins:
                 pad = pin.getAttribute("pad")
                 if pad.startswith("P"):
-                    self.function_Map.append(pad)  
-       
+                    self.function_Map.append(pad)
+
         elif "PIC32MK" in MCU:
             # currentPath = os.path.dirname(os.path.abspath(inspect.stack()[0][1]))
             currentPath = Variables.get("__CSP_DIR") + "/peripheral/gpio_02467"
@@ -71,13 +71,13 @@ class mcFocI_DigitalInterfaceClass:
             pinFileContent = ET.fromstring((open(pinoutXmlPath, "r")).read())
             for item in pinFileContent.findall("pins/pin"):
                 if item.attrib["name"].startswith("R"):
-                    self.function_Map.append(item.attrib["name"]) 
+                    self.function_Map.append(item.attrib["name"])
 
-        self.function_Map.sort()   
+        self.function_Map.sort()
 
     def setSymbolValues(self):
         information = Database.sendMessage("bsp", "MCPMSMFOC_DIGITAL_INTERFACE", {})
-        
+        print("Debug, Digital Interface**", information)
         if (None != information):
             index = 0
             for key, value in information["BUTTONS"].items():
@@ -88,7 +88,7 @@ class mcFocI_DigitalInterfaceClass:
             self.sym_AVAILABLE_BUTTONS.setValue(index)
 
 
-            
+
             index = 0
             for key, value in information["LEDS"].items():
                 self.sym_LED_INDEX[index].setVisible(True)
@@ -97,10 +97,10 @@ class mcFocI_DigitalInterfaceClass:
                 index += 1
             self.sym_AVAILABLE_LEDS.setValue(index)
 
-    def createSymbols(self):   
+    def createSymbols(self):
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Digital Interface")
-        
+
         max_NUMBER_OF_BUTTONS = 10
         self.sym_BUTTON_INDEX = dict()
         self.sym_BUTTON_NAME = dict()
@@ -119,7 +119,7 @@ class mcFocI_DigitalInterfaceClass:
             self.sym_BUTTON_INDEX[index] = self.component.createMenuSymbol(None, self.sym_BUTTON_NODE)
             self.sym_BUTTON_INDEX[index].setLabel("Button"+ " " + str(index))
             self.sym_BUTTON_INDEX[index].setVisible(False)
-                
+
             self.sym_BUTTON_NAME[index]  = self.component.createStringSymbol("MCPMSMFOC_BUTTON_"+ str(index)+"_NAME", self.sym_BUTTON_INDEX[index])
             self.sym_BUTTON_NAME[index].setLabel("Name")
             self.sym_BUTTON_NAME[index].setDefaultValue("BUTTON" + str(index))
@@ -149,11 +149,11 @@ class mcFocI_DigitalInterfaceClass:
         self.sym_AVAILABLE_LEDS.setDefaultValue(0)
         self.sym_AVAILABLE_LEDS.setVisible(False)
 
-        for index in range(max_NUMBER_OF_LEDS):             
+        for index in range(max_NUMBER_OF_LEDS):
             self.sym_LED_INDEX[index] = self.component.createMenuSymbol(None, self.sym_LED_NODE)
             self.sym_LED_INDEX[index].setLabel("Led"+ " " + str(index))
             self.sym_LED_INDEX[index].setVisible(False)
-            
+
             self.sym_LED_NAME[index] = self.component.createStringSymbol("MCPMSMFOC_LED_"+ str(index)+"_NAME", self.sym_LED_INDEX[index])
             self.sym_LED_NAME[index].setLabel("Name")
             self.sym_LED_NAME[index].setDefaultValue("LED" + str(index))
@@ -169,8 +169,9 @@ class mcFocI_DigitalInterfaceClass:
             except:
                 self.sym_LED_FUNCTION[index].setDefaultValue("Custom")
 
-               
+
     def handleMessage(self, ID, information):
+        print("Debug, Digital Interface", information)
         if ("BSP_DIGITAL_INTERFACE" == ID) and (None != information):
             index = 0
             for key, value in information["BUTTONS"].items():
@@ -187,7 +188,7 @@ class mcFocI_DigitalInterfaceClass:
                 self.sym_LED_NAME[index].setValue(key)
                 self.sym_LED_PIN[index].setValue(value["PAD"])
                 index += 1
-            
+
             self.sym_AVAILABLE_LEDS.setValue(index)
 
     def __call__(self):

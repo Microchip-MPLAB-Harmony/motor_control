@@ -12,7 +12,7 @@
 
   Description:
     - This file implements functions for flux control
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -76,12 +76,30 @@ typedef struct
 }tmcFlx_FluxWeakening_s;
 </#if>
 
+<#if ( MCPMSMFOC_ENABLE_MTPA == true ) >
+typedef struct
+{
+    bool enable;
+    bool initDone;
+
+    tUTIL_2DPlot_s LdLqDiffPlot;
+
+    float32_t psi;
+    float32_t ldMinusLq;
+    float32_t idref;
+}tmcFlx_MTPA_s;
+</#if>
+
 typedef struct
 {
     bool enable;
     bool initDone;
 <#if ( MCPMSMFOC_ENABLE_FW == true ) >
     tmcFlx_FluxWeakening_s bFluxWeakening;
+</#if>
+
+<#if ( MCPMSMFOC_ENABLE_MTPA == true ) >
+    tmcFlx_MTPA_s bMTPA;
 </#if>
     tmcUtils_PiControl_s bPIController;
 }tmcFlx_State_s;
@@ -104,20 +122,20 @@ Private Functions
 *******************************************************************************/
 
 /*******************************************************************************
- * Interface Functions 
+ * Interface Functions
 *******************************************************************************/
 /*! \brief Initialize flux control module
- * 
+ *
  * Details.
  * Initialize flux control module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcFlxI_FluxControlInit( tmcFlx_Parameters_s * const pParameters )
-{  
+{
     /** Link state variable structure to the module */
     pParameters->pStatePointer = (void *)&mcFlx_State_mds;
 
@@ -368,7 +386,7 @@ void  mcFlxI_FluxWeakeningInit( tmcFlx_Parameters_s * const pParameters )
 
     float32_t zp = pParameters->pMotorParameters->PolePairs ;
     pState->mechRpmToElecRadPerSec = TWO_PI * zp / 60.0f;
-    
+
     /** ToDO: Recheck the formula */
     float32_t ke = pParameters->pMotorParameters->KeInVpeakPerKrpm * ONE_BY_SQRT3/ 1000.0f;
     pState->ke = ke;
@@ -566,5 +584,167 @@ void mcFlxI_FluxWeakeningReset( const tmcFlx_Parameters_s * const pParameters )
 
     /** Reset PI Controller */
     mcUtils_PiControlReset( 0.0f, &pState->bPIController );
+}
+</#if>
+
+<#if MCPMSMFOC_ENABLE_MTPA == true >
+/*! \brief Enable MTPA module
+ *
+ * Details.
+ * Enable MTPA module
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+void  mcFlxI_MTPAEnable( tmcFlx_Parameters_s * const pParameters )
+{
+    /** Get the linked state variable */
+     tmcFlx_MTPA_s * pState;
+     pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
+
+     if( ( NULL == pState ) || ( !pState->initDone ))
+     {
+          /** Initialize parameters */
+         mcFlxI_MTPAInit(pParameters);
+     }
+     else
+     {
+          /** For MISRA Compliance */
+     }
+
+     /** Set enable flag as true */
+     pState->enable = true;
+}
+
+/*! \brief Disable MTPA module
+ *
+ * Details.
+ * Disable MTPA module
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+void  mcFlxI_MTPADisable( tmcFlx_Parameters_s * const pParameters )
+{
+     /** Get the linked state variable */
+     tmcFlx_MTPA_s * pState;
+     pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
+
+     if( NULL != pState)
+     {
+         /** Reset state variables  */
+         mcFlxI_MTPAReset(pParameters);
+     }
+     else
+     {
+         /** For MISRA Compliance */
+     }
+
+     /** Set enable flag as true */
+     pState->enable = false;
+}
+
+
+
+/*! \brief Disable MTPA module
+ *
+ * Details.
+ * Disable MTPA module
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+void  mcFlxI_MTPAInit( tmcFlx_Parameters_s * const pParameters )
+{
+    /** Declare intermediate variables */
+    float32_t temp;
+    uint8_t  samplePoints;
+    tmcFlx_MTPA_s * pState;
+
+    /** Initialize plots */
+    tUTIL_2DPoints_s LdLqDiffArray[] = LDMINUSLQ_VS_IS;
+
+    /** Get the linked state variable */
+    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
+
+    /** Initialize Ld plot */
+    samplePoints = (uint8_t)(sizeof(LdLqDiffArray)/ sizeof(LdLqDiffArray[0u] ));
+    UTIL_2DPlotInitialize(&pState->LdLqDiffPlot, samplePoints, LdLqDiffArray );
+
+    /** Set parameters */
+    mcFlxI_ParametersSet(pParameters);
+
+    /** Calculate per phase KEMF */
+    temp = ONE_BY_SQRT3 * pParameters->pMotorParameters->KeInVpeakPerKrpm;
+
+    /** Calculate in radian/s */
+    temp = temp * 60.0f / ( TWO_PI * 1000.0f );
+    pState->psi = temp * pParameters->pMotorParameters->PolePairs;
+
+    /** Set enable flag as true */
+    pState->initDone = true;
+}
+
+/*! \brief Disable MTPA module
+ *
+ * Details.
+ * Disable MTPA module
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+void  mcFlxI_MTPA( tmcFlx_Parameters_s * const pParameters,
+                   const tmcTypes_DQ_s * const pIdq, float32_t * const pIdref )
+{
+     /** Intermediate variables */
+     float32_t Is;
+     float32_t temp;
+     float32_t LdLqDiff;
+
+     /** Get the linked state variable */
+     tmcFlx_MTPA_s * pState;
+     pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
+
+     if( pState->enable )
+     {
+         /** Get the stator current magnitude */
+         Is = UTIL_MagnitudeFloat( pIdq->d, pIdq->q );
+
+         /** Get Ld value from characteristic curve  */
+         LdLqDiff =UTIL_2DPlotRead( &pState->LdLqDiffPlot, Is );
+
+         /** Determine intermediate value of MTPA equation */
+         temp = 0.5f * pState->psi/ LdLqDiff;
+
+         /** Calculate d-axis reference current for MTPA */
+         *pIdref = temp - UTIL_SquareRootFloat(( temp * temp ) + (  pIdq->q *  pIdq->q ));
+     }
+     else
+     {
+         mcFlxI_MTPAReset(pParameters);
+     }
+}
+
+/*! \brief Disable MTPA module
+ *
+ * Details.
+ * Disable MTPA module
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+void  mcFlxI_MTPAReset( tmcFlx_Parameters_s * const pParameters )
+{
+
 }
 </#if>

@@ -6,7 +6,7 @@
 
   Summary:
     Header file which contains variables and function prototypes for open loop start-up
- 
+
   Description:
     This file contains variables and function prototypes which are generally used for open loop start-up.
 
@@ -41,7 +41,7 @@
 #define MCSUP_H
 
 /*******************************************************************************
- * Header inclusions 
+ * Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
 #include "mc_utilities.h"
@@ -51,7 +51,7 @@
 </#if>
 
 /*******************************************************************************
- Default Module configuration parameters 
+ Default Module configuration parameters
 *******************************************************************************/
 /*******************************************************************************
  Parameters
@@ -93,11 +93,11 @@ __STATIC_INLINE void mcSupI_ParametersSet( tmcSup_Parameters_s * const pParamete
 }
 
 /*******************************************************************************
- * Interface variables 
+ * Interface variables
 *******************************************************************************/
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
 *******************************************************************************/
 
 /*! \brief Initialize open loop start-up module

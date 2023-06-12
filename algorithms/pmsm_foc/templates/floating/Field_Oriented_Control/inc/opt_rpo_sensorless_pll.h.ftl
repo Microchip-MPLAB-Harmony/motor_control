@@ -6,9 +6,9 @@
 
   Summary:
     Header file which contains variables and function prototypes for pulse width modulation
- 
+
   Description:
-    This file contains variables and function prototypes which are generally used for pulse 
+    This file contains variables and function prototypes which are generally used for pulse
     width modulation. It is implemented in Q2.14 fixed Point Arithmetic.
 
  *******************************************************************************/
@@ -42,14 +42,14 @@
 #define MCRPE_H
 
 /*******************************************************************************
- * Header inclusions 
+ * Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
 #include "mc_motor.h"
 #include "mc_utilities.h"
 
 /*******************************************************************************
- Default Module configuration parameters 
+ Default Module configuration parameters
 *******************************************************************************/
 
 /*******************************************************************************
@@ -68,7 +68,7 @@ typedef struct
 }tmcRpe_Parameters_s;
 
 /*******************************************************************************
- * Interface variables 
+ * Interface variables
 *******************************************************************************/
 
 /*******************************************************************************
@@ -96,16 +96,16 @@ __STATIC_INLINE void mcRpeI_ParametersSet( tmcRpe_Parameters_s * const pParamete
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
 *******************************************************************************/
 /*! \brief Initialize rotor position estimation module
- * 
+ *
  * Details.
  * Initialize rotor position estimation module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters );
@@ -151,14 +151,14 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
                                                      float32_t * pAngle, float32_t * pSpeed );
 
 /*! \brief Reset Rotor position estimation
- * 
+ *
  * Details.
  * Reset Rotor position estimation
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcRpeI_RotorPositionEstimReset( const tmcRpe_Parameters_s * const pParameters );
 

@@ -6,7 +6,7 @@
 
   Summary:
     Header file which contains variables and function prototypes for torque control
- 
+
   Description:
     This file contains variables and function prototypes which are generally used for
     torque control.
@@ -42,13 +42,13 @@
 #define MCTOR_H
 
 /*******************************************************************************
- * Header inclusions 
+ * Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
 #include "mc_pi_control.h"
 
 /*******************************************************************************
- Default Module configuration parameters 
+ Default Module configuration parameters
 *******************************************************************************/
 
 /*******************************************************************************
@@ -63,7 +63,7 @@ typedef struct
 }tmcTor_Parameters_s;
 
 /*******************************************************************************
- * Interface variables 
+ * Interface variables
 *******************************************************************************/
 //#define RAM_EXECUTE
 
@@ -88,7 +88,7 @@ __STATIC_INLINE void mcTorI_ParametersSet( tmcTor_Parameters_s * const pParamete
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
 *******************************************************************************/
 /*! \brief Initialize flux control module
  *

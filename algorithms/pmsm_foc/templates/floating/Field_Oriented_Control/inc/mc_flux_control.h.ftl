@@ -6,7 +6,7 @@
 
   Summary:
     Header file which contains variables and function prototypes for flux control
- 
+
   Description:
     This file contains variables and function prototypes which are generally used for flux
     control
@@ -42,14 +42,14 @@
 #define MCFLX_H
 
 /*******************************************************************************
- * Header inclusions 
+ * Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
 #include "mc_pi_control.h"
 #include "mc_motor.h"
 
 /*******************************************************************************
- Default Module configuration parameters 
+ Default Module configuration parameters
 *******************************************************************************/
 
 /*******************************************************************************
@@ -68,7 +68,7 @@ typedef struct
 }tmcFlx_Parameters_s;
 
 /*******************************************************************************
- * Interface variables 
+ * Interface variables
 *******************************************************************************/
 //#define RAM_EXECUTE
 
@@ -98,16 +98,16 @@ __STATIC_INLINE void mcFlxI_ParametersSet( tmcFlx_Parameters_s * const pParamete
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
 *******************************************************************************/
 /*! \brief Initialize flux control module
- * 
+ *
  * Details.
  * Initialize flux control module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcFlxI_FluxControlInit( tmcFlx_Parameters_s * const pParameters );
@@ -163,14 +163,14 @@ void mcFlxI_FluxControlAuto(  const tmcFlx_Parameters_s * const pParameters,
                                               const float32_t iDref, const  float32_t iDact, const float32_t yLimit, float32_t * const pOut );
 
 /*! \brief Reset Flux control
- * 
+ *
  * Details.
  * Reset Flux control
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcFlxI_FluxControlReset( const tmcFlx_Parameters_s * const pParameters );
 
@@ -259,6 +259,70 @@ void mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
  * @return:
  */
 void mcFlxI_FluxWeakeningReset( const tmcFlx_Parameters_s * const pParameters );
+
+</#if>
+
+<#if MCPMSMFOC_ENABLE_MTPA == true >
+/*! \brief Enable MTPA module
+ *
+ * Details.
+ * Enable MTPA module
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+void  mcFlxI_MTPAEnable( tmcFlx_Parameters_s * const pParameters );;
+
+/*! \brief Disable MTPA module
+ *
+ * Details.
+ * Disable MTPA module
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+void  mcFlxI_MTPADisable( tmcFlx_Parameters_s * const pParameters );
+
+/*! \brief Disable MTPA module
+ *
+ * Details.
+ * Disable MTPA module
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+void  mcFlxI_MTPAInit( tmcFlx_Parameters_s * const pParameters );
+
+/*! \brief Disable MTPA module
+ *
+ * Details.
+ * Disable MTPA module
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+void  mcFlxI_MTPA( tmcFlx_Parameters_s * const pParameters,
+                   const tmcTypes_DQ_s * const pIdq, float32_t * const pIdref );
+
+/*! \brief Disable MTPA module
+ *
+ * Details.
+ * Disable MTPA module
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+void  mcFlxI_MTPAReset( tmcFlx_Parameters_s * const pParameters );
 
 </#if>
 

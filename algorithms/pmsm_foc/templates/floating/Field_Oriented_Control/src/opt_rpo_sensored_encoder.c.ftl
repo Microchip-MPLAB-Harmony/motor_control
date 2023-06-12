@@ -12,7 +12,7 @@
 
   Description:
     - This file implements functions for rotor position estimation
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -65,7 +65,7 @@ typedef struct
    /** States */
    bool enable;
    bool initDone;
-   
+
     uint16_t encPulsesPerElecRev;
     uint16_t velocityCountPrescaler;
     uint16_t encOverflow;
@@ -74,7 +74,7 @@ typedef struct
     uint16_t encLowerThreshold;
     float32_t encPulsesToElecVelocity;
     float32_t encPulsesToElecAngle;
-    
+
     uint16_t synCounter;
     uint16_t encCount;
     uint16_t encCountForPositionLast;
@@ -106,13 +106,13 @@ Private Functions
  * Interface Functions
 *******************************************************************************/
 /*! \brief Initialize rotor position estimation module
- * 
+ *
  * Details.
  * Initialize rotor position estimation module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcRpcI_RotorPositionCalcInit( tmcRpc_Parameters_s * const pParameters )
@@ -128,14 +128,14 @@ void  mcRpcI_RotorPositionCalcInit( tmcRpc_Parameters_s * const pParameters )
     pState->encPulsesPerElecRev =  pParameters->encPulsesPerElecRev;
     pState->velocityCountPrescaler = pParameters->velocityCountPrescaler;
     pState->encPulsesToElecAngle =  TWO_PI / (float32_t)pState->encPulsesPerElecRev;
-    
+
     float32_t temp = (float32_t)pParameters->encPulsesPerElecRev * pParameters->pMotorParameters->PolePairs;
     pState->encPulsesToElecVelocity =  60.0f / ( temp * pParameters->dt * (float32_t)pParameters->velocityCountPrescaler );
     pState->encUpperThreshold = QDEC_UPPER_THRESHOLD;
     pState->encLowerThreshold = QDEC_LOWER_THRESHOLD ;
     pState->encOverflow = (uint16_t)( QDEC_RESET_COUNT % pParameters->encPulsesPerElecRev) ;
     pState->encUnderflow = pParameters->encPulsesPerElecRev - pState->encOverflow;
-   
+
     /** Set initialization flag to true */
     pState->initDone = true;
 }
@@ -219,53 +219,53 @@ void mcRpcI_RotorPositionCalc(  const tmcRpc_Parameters_s * const pParameters,
 
      if( pState->enable )
      {
-   
+
          tmcRpc_Input_s dInput = { 0u };
-         
+
          pState->synCounter++;
-         
+
          /** Read input ports */
          mcRpcI_PositionCounterRead( &dInput );
-    
-		/* Calculate position */
-		pState->encCount = (uint16_t)dInput.encPulseCount;
-			    
-		if(       ( pState->encCount > pState->encUpperThreshold ) 
-			          && ( pState->encCountForPositionLast < pState->encLowerThreshold))
-		{
-		    pState->positionCompensation += pState->encUnderflow;
-		}
-		else if(( pState->encCountForPositionLast > pState->encUpperThreshold) 
-			          && ( pState->encCount < pState->encLowerThreshold))
-		{
-		    pState->positionCompensation += pState->encOverflow;
-		}
-		else
-		{
-		       /* Do nothing */
-		}
-			
-		pState->positionCompensation %=  pState->encPulsesPerElecRev;
-		pState->encCountForPosition  =  ( pState->encCount + pState->positionCompensation) % pState->encPulsesPerElecRev;
-		pState->encCountForPositionLast =  pState->encCount;
-			
-		/* Calculate velocity */
-		if( pState->synCounter > pState->velocityCountPrescaler )
-		{
-		    pState->synCounter = 0u;
-		    pState->encCountForVelocity = ( int16_t )pState->encCount -  ( int16_t )pState->encCountForVelocityLast;
-		    pState->encCountForVelocityLast = (int16_t)pState->encCount;
-		}
-			   
-		/* Write speed and position output */
-		*pSpeed = (float32_t)pState->encCountForVelocity * pState->encPulsesToElecVelocity;
-		*pAngle  = (float32_t)pState->encCountForPosition * pState->encPulsesToElecAngle;
-			   
-		/* Limit rotor angle range to 0 to 2*M_PI for lookup table */
-		mcUtils_TruncateAngle0To2Pi( pAngle );
+
+        /* Calculate position */
+        pState->encCount = (uint16_t)dInput.encPulseCount;
+
+        if(       ( pState->encCount > pState->encUpperThreshold )
+                      && ( pState->encCountForPositionLast < pState->encLowerThreshold))
+        {
+            pState->positionCompensation += pState->encUnderflow;
+        }
+        else if(( pState->encCountForPositionLast > pState->encUpperThreshold)
+                      && ( pState->encCount < pState->encLowerThreshold))
+        {
+            pState->positionCompensation += pState->encOverflow;
+        }
+        else
+        {
+               /* Do nothing */
+        }
+
+        pState->positionCompensation %=  pState->encPulsesPerElecRev;
+        pState->encCountForPosition  =  ( pState->encCount + pState->positionCompensation) % pState->encPulsesPerElecRev;
+        pState->encCountForPositionLast =  pState->encCount;
+
+        /* Calculate velocity */
+        if( pState->synCounter > pState->velocityCountPrescaler )
+        {
+            pState->synCounter = 0u;
+            pState->encCountForVelocity = ( int16_t )pState->encCount -  ( int16_t )pState->encCountForVelocityLast;
+            pState->encCountForVelocityLast = (int16_t)pState->encCount;
+        }
+
+        /* Write speed and position output */
+        *pSpeed = (float32_t)pState->encCountForVelocity * pState->encPulsesToElecVelocity;
+        *pAngle  = (float32_t)pState->encCountForPosition * pState->encPulsesToElecAngle;
+
+        /* Limit rotor angle range to 0 to 2*M_PI for lookup table */
+        mcUtils_TruncateAngle0To2Pi( pAngle );
      }
      else
-     {                  
+     {
          /** Rotor position estimation */
          mcRpcI_RotorPositionCalcReset( pParameters );
 
@@ -277,10 +277,10 @@ void mcRpcI_RotorPositionCalc(  const tmcRpc_Parameters_s * const pParameters,
 
 
 /*! \brief Reset Rotor position estimation
- * 
+ *
  * Details.
  * Reset Rotor position estimation
- * 
+ *
  * @param[in]: None
  * @param[in/out]: None
  * @param[out]: None
@@ -319,12 +319,12 @@ typedef struct
    /** States */
    bool enable;
    bool initDone;
-   
+
     uint16_t encPulsesPerElecRev;
     uint16_t velocityCountPrescaler;
     float32_t encPulsesToElecVelocity;
-    float32_t encPulsesToElecAngle;    
-    
+    float32_t encPulsesToElecAngle;
+
     uint16_t synCounter;
     uint16_t encPulsesForPosition;
     int16_t encPulsesForVelocity;
@@ -352,13 +352,13 @@ Private Functions
  * Interface Functions
 *******************************************************************************/
 /*! \brief Initialize rotor position estimation module
- * 
+ *
  * Details.
  * Initialize rotor position estimation module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcRpcI_RotorPositionCalcInit( tmcRpc_Parameters_s * const pParameters )
@@ -374,10 +374,10 @@ void  mcRpcI_RotorPositionCalcInit( tmcRpc_Parameters_s * const pParameters )
     pState->encPulsesPerElecRev =  pParameters->encPulsesPerElecRev;
     pState->velocityCountPrescaler = pParameters->velocityCountPrescaler;
     pState->encPulsesToElecAngle =  TWO_PI / (float32_t)pState->encPulsesPerElecRev;
-    
+
     float32_t temp = (float32_t)pParameters->encPulsesPerElecRev * pParameters->pMotorParameters->PolePairs;
     pState->encPulsesToElecVelocity =  60.0f / ( temp * pParameters->dt * (float32_t)pParameters->velocityCountPrescaler );
-   
+
     /** Set initialization flag to true */
     pState->initDone = true;
 }
@@ -461,34 +461,34 @@ void mcRpcI_RotorPositionCalc(  const tmcRpc_Parameters_s * const pParameters,
 
      if( pState->enable )
      {
-   
+
          tmcRpc_Input_s dInput = { 0u };
-         
+
          pState->synCounter++;
-         
+
          /** Read input ports */
          mcRpcI_PositionCounterRead( &dInput );
-    
-		/* Get position pulse count */
-		pState->encPulsesForPosition = (uint16_t)dInput.encPulseCount;
-			
-		/* Calculate velocity */
-		if( pState->synCounter > pState->velocityCountPrescaler )
-		{
-		    pState->synCounter = 0u;
-		    mcRpcI_SpeedCounterRead( &dInput );
-		    pState->encPulsesForVelocity = (int16_t)dInput.encVelocityCount;
-		}
-			   
-		/* Write speed and position output */
-		*pSpeed = (float32_t)pState->encPulsesForVelocity * pState->encPulsesToElecVelocity;
-		*pAngle  = (float32_t)pState->encPulsesForPosition * pState->encPulsesToElecAngle;
-			   
-		/* Limit rotor angle range to 0 to 2*M_PI for lookup table */
-		mcUtils_TruncateAngle0To2Pi( pAngle );
+
+        /* Get position pulse count */
+        pState->encPulsesForPosition = (uint16_t)dInput.encPulseCount;
+
+        /* Calculate velocity */
+        if( pState->synCounter > pState->velocityCountPrescaler )
+        {
+            pState->synCounter = 0u;
+            mcRpcI_SpeedCounterRead( &dInput );
+            pState->encPulsesForVelocity = (int16_t)dInput.encVelocityCount;
+        }
+
+        /* Write speed and position output */
+        *pSpeed = (float32_t)pState->encPulsesForVelocity * pState->encPulsesToElecVelocity;
+        *pAngle  = (float32_t)pState->encPulsesForPosition * pState->encPulsesToElecAngle;
+
+        /* Limit rotor angle range to 0 to 2*M_PI for lookup table */
+        mcUtils_TruncateAngle0To2Pi( pAngle );
      }
      else
-     {                  
+     {
          /** Rotor position estimation */
          mcRpcI_RotorPositionCalcReset( pParameters );
 
@@ -500,10 +500,10 @@ void mcRpcI_RotorPositionCalc(  const tmcRpc_Parameters_s * const pParameters,
 
 
 /*! \brief Reset Rotor position estimation
- * 
+ *
  * Details.
  * Reset Rotor position estimation
- * 
+ *
  * @param[in]: None
  * @param[in/out]: None
  * @param[out]: None

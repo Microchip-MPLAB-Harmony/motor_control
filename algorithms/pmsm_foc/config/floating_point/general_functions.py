@@ -26,7 +26,7 @@
 * File Name: general_functions.py
 *
 * Description:
-* General functions 
+* General functions
 *
 *****************************************************************************"""
 class mcFun_AdvancedComboSymbol:
@@ -51,7 +51,7 @@ class mcFun_AdvancedComboSymbol:
         self.final.setVisible(False)
 
         for key in self.data.keys():
-            name = self.dependency.getID() + "_" + self.Id + "_" + str( key )  
+            name = self.dependency.getID() + "_" + self.Id + "_" + str( key )
             self.symbol[key] = self.component.createComboSymbol(name, root, self.data[key] )
             self.symbol[key].setLabel(self.description)
             self.symbol[key].setDependencies( self.showComboSymbol, [self.dependency.getID()])
@@ -65,15 +65,15 @@ class mcFun_AdvancedComboSymbol:
             self.depend[key].setVisible(False)
             self.depend[key].setDependencies( self.callbackFunction, [name])
 
-        
+
     def setDefaultValue( self, value ):
         instance = self.dependency.getValue()
 
         for key in self.data.keys():
             if( key == instance ):
                 self.symbol[key].setDefaultValue(value)
-                
-        
+
+
         self.final.setDefaultValue(self.numericFilter(value))
 
     def setReadOnly(self, value ):
@@ -84,12 +84,12 @@ class mcFun_AdvancedComboSymbol:
         for key in self.data.keys():
             if( key == instance ):
                 self.symbol[key].setValue(value )
-        
+
         self.final.setValue(self.numericFilter(value))
 
     def getFinalSymbol(self):
         return self.final
-    
+
     def getValue_( self ):
         return self.final.getValue()
 
@@ -102,9 +102,9 @@ class mcFun_AdvancedComboSymbol:
     def getSymbolID(self):
         ID = self.dependency.getID() + "_" + self.Id + "_FINAL"
         return ID
-    
+
     def showComboSymbol( self, symbol, event ):
-        symbol_Id = symbol.getID()  
+        symbol_Id = symbol.getID()
         if( event["symbol"].getValue() in symbol_Id ):
             symbol.setVisible(True)
         else:

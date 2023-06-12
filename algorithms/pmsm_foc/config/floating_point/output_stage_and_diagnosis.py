@@ -35,7 +35,7 @@ class mcOstI_OutputStageAndDiagnosis:
         self.component = component
 
     def createSymbols(self):
-        #Root node 
+        #Root node
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Output stage & diagnosis")
 
@@ -48,7 +48,6 @@ class mcOstI_OutputStageAndDiagnosis:
         # self.sym_MAXIMUM_RMS_VOLTAGE = self.component.createFloatSymbol("MCPMSMFOC_MAXIMUM_RMS_VOLTAGE", self.sym_NODE)
         # self.sym_MAXIMUM_RMS_VOLTAGE.setLabel("Maximum RMS Voltage")
         # self.sym_MAXIMUM_RMS_VOLTAGE.setDefaultValue(230)
-    
+
     def __call__(self):
         self.createSymbols()
-      

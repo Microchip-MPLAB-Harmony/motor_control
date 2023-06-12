@@ -38,11 +38,11 @@ class mcFocI_PositionInterfaceClass:
         # Read position interfaces from ATDF file
         self.mapForQea = dict()
         self.mapForQeb = dict()
-        
+
         if "SAME70" in MCU:
             module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"TC\"]"
             modules = ATDF.getNode(module_Path).getChildren()
-            
+
             self.instance_List = list()
             self.function_Map = dict()
             self.function_Map["QEA"] = dict()
@@ -61,14 +61,14 @@ class mcFocI_PositionInterfaceClass:
                     if "TIOA" == channel.getAttribute("group"):
                         self.function_Map["QEA"][key].append(str(channel.getAttribute("pad")))
                     if "TIOB" == channel.getAttribute("group"):
-                        self.function_Map["QEB"][key].append(str(channel.getAttribute("pad")))    
+                        self.function_Map["QEB"][key].append(str(channel.getAttribute("pad")))
 
-            self.instance_List.sort() 
+            self.instance_List.sort()
 
         elif "SAME54" in MCU:
             module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"PDEC\"]"
             modules = ATDF.getNode(module_Path).getChildren()
-            
+
             self.instance_List = list()
             self.function_Map = dict()
             self.function_Map["QEA"] = dict()
@@ -82,16 +82,16 @@ class mcFocI_PositionInterfaceClass:
                 self.function_Map["QEA"][key] = list()
                 self.function_Map["QEB"][key] = list()
 
-                for channel in channels:          
+                for channel in channels:
                     if "0" == channel.getAttribute("index"):
                         self.function_Map["QEA"][key].append(str(channel.getAttribute("pad")))
                     if "1" == channel.getAttribute("index"):
-                        self.function_Map["QEB"][key].append(str(channel.getAttribute("pad")))   
+                        self.function_Map["QEB"][key].append(str(channel.getAttribute("pad")))
 
-            self.instance_List.sort() 
+            self.instance_List.sort()
 
         elif "PIC32MK" in MCU:
-            # Pin to quadrature decoder mapping       
+            # Pin to quadrature decoder mapping
             currentPath = Variables.get("__CSP_DIR") + "/peripheral/gpio_02467"
             deviceXmlPath = os.path.join(currentPath, "plugin/pin_xml/components/" + Variables.get("__PROCESSOR") + ".xml")
             deviceXmlTree = ET.parse(deviceXmlPath)
@@ -119,9 +119,9 @@ class mcFocI_PositionInterfaceClass:
                             try:
                                 self.function_Map["QEA"][unit].append( pad )
                             except:
-                                self.function_Map["QEA"][unit] = list()  
+                                self.function_Map["QEA"][unit] = list()
                                 self.function_Map["QEA"][unit] = [pad]
-                        
+
                             self.instance_List.add(unit)
 
                     if function.attrib["name"].startswith("QEB"):
@@ -133,7 +133,7 @@ class mcFocI_PositionInterfaceClass:
                             try:
                                 self.function_Map["QEB"][unit].append(pad)
                             except:
-                                self.function_Map["QEB"][unit] = list()  
+                                self.function_Map["QEB"][unit] = list()
                                 self.function_Map["QEB"][unit] = [pad]
 
                             self.instance_List.add(unit)
@@ -148,22 +148,28 @@ class mcFocI_PositionInterfaceClass:
         my_String = my_String.replace("RP","R")
         return my_String
 
-    def createSymbols(self):        
-        # Root node 
+    def createSymbols(self):
+        # Root node
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Position Interface")
         # self.sym_NODE.setVisible(False)
         self.sym_NODE.setDependencies(self.encoderDependency, ["MCPMSMFOC_POSITION_CALC_ALGORITHM"])
-      
-        # Root node 
+
+        # Root node
         self.sym_ENCODER = self.component.createMenuSymbol("MCPMSMFOC_ENCODER_", self.sym_NODE )
         self.sym_ENCODER.setLabel("Encoder Connections")
-        
+
         # Peripheral selection
         self.sym_PERIPHERAL = self.component.createComboSymbol("MCPMSMFOC_ENCODER_PERIPHERAL", self.sym_ENCODER, self.instance_List)
         self.sym_PERIPHERAL.setLabel("Select instance")
 
-        # QEA                 
+        self.sym_PERIPHERAL_ID = self.component.createStringSymbol("MCPMSMFOC_ENCODER_PERIPHERAL_ID", None)
+        self.sym_PERIPHERAL_ID.setLabel("Peripheral ID")
+        self.sym_PERIPHERAL_ID.setVisible(False)
+        self.sym_PERIPHERAL_ID.setDefaultValue((self.sym_PERIPHERAL.getValue()).lower())
+        self.sym_PERIPHERAL_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_ENCODER_PERIPHERAL"] )
+
+        # QEA
         self.sym_QEA = mcFun_AdvancedComboSymbol("QEA", "QEA", self.component)
         self.sym_QEA.createComboSymbol(self.sym_PERIPHERAL, self.sym_ENCODER, self.function_Map["QEA"])
 
@@ -207,29 +213,44 @@ class mcFocI_PositionInterfaceClass:
         else:
             symbol.setVisible(False)
 
-    def updatePLIB(self, symbol, event):      
+    def updatePLIB(self, symbol, event):
         message = {}
         component = symbol.getComponent()
         pulses = float(component.getSymbolValue("MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV"))
         message['PULSES_PER_REV'] = pulses
-        
+
         Database.sendMessage(self.sym_ENCODER_MODULE.getValue().lower(), "PMSM_FOC_ENCODER_CONF", message )
-      
-    
+
+    def updatePeripheralInstance(self, symbol, event):
+        if( (symbol.getValue()).lower() != event["value"].lower()):
+            # De-activate existing dependencies
+            autoComponentIDTable = [(symbol.getValue()).lower()]
+            res = Database.deactivateComponents(autoComponentIDTable)
+
+            # Set new dependency
+            symbol.setValue(event["value"].lower())
+
+             # Activate and connect the default PWM peripheral
+            autoConnectTable = [event["value"].lower()]
+            res = Database.activateComponents(autoConnectTable)
+
+            autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_QDEC", event["value"].lower(), str(event["value"].upper()) + "_QDEC"]]
+            res = Database.connectDependencies(autoComponentIDTable)
+
     """
     Description:
-    This function shows the rotor position algorithm parameters depending upon the selected 
+    This function shows the rotor position algorithm parameters depending upon the selected
     algorithm
     """
     def encoderDependency(self, symbol, event):
         symObj = event["symbol"]
         if symObj.getSelectedKey() == "SENSORED_ENCODER":
             symbol.setVisible(False)
-            symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", True)
+            # symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", True)
             symbol.setVisible(True)
         else:
             symbol.setVisible(True)
-            symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", False)
+            # symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", False)
             symbol.setVisible(False)
 
     def handleMessage(self, ID, information ):
@@ -241,7 +262,7 @@ class mcFocI_PositionInterfaceClass:
                 self.sym_QEA.setValue(information["QEA"]["FUNCTION"][0][1])
                 self.sym_QEB.setValue(information["QEB"]["FUNCTION"][0][1])
 
-             
+
 
 
     def onAttachmentConnected(self, source, target):
@@ -250,7 +271,7 @@ class mcFocI_PositionInterfaceClass:
         remoteComponent = target["component"]
         remoteID = remoteComponent.getID()
         connectID = source["id"]
-        
+
         pulses = float(localComponent.getSymbolValue("MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV"))
         message['PULSES_PER_REV'] = pulses
 
@@ -266,4 +287,3 @@ class mcFocI_PositionInterfaceClass:
         self.createSymbols()
         self.setSymbolValues()
 
-     

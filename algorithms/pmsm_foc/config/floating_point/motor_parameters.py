@@ -29,17 +29,17 @@
 *
 *****************************************************************************"""
 #----------------------------------------------------------------------------------#
-#                                       IMPORT                                     # 
+#                                       IMPORT                                     #
 #----------------------------------------------------------------------------------#
 import xml.etree.ElementTree as ET
 import os
 
 #----------------------------------------------------------------------------------#
-#                        SUPPORTED MOTOR PARAMETERS                                # 
+#                        SUPPORTED MOTOR PARAMETERS                                #
 #----------------------------------------------------------------------------------#
 
 #----------------------------------------------------------------------------------#
-#                             MOTOR CLASS  FUNCTIONS                               # 
+#                             MOTOR CLASS  FUNCTIONS                               #
 #----------------------------------------------------------------------------------#
 class mcMotI_MotorParametersClass:
     def __init__(self, algorithm, component):
@@ -49,7 +49,7 @@ class mcMotI_MotorParametersClass:
         # Read motor parameters from motor.xml
         path = Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/motor.xml"
         motor_File = open(path, "r")
-        motor_Content = ET.fromstring(motor_File.read()) 
+        motor_Content = ET.fromstring(motor_File.read())
 
         self.motor_List = list()
         self.motor_Parameters = dict()
@@ -61,14 +61,14 @@ class mcMotI_MotorParametersClass:
             for parameter in motor.findall("parameter"):
                 param = parameter.attrib["id"]
                 self.motor_Parameters[name][param] = parameter.attrib["value"]
-            
-        
+
+
     def createSymbols(self):
         '''
-            Motor Parameters symbol structure 
-                                        
+            Motor Parameters symbol structure
+
         '''
-        # Root Node 
+        # Root Node
         self.sym_NODE = self.component.createMenuSymbol("MCPMSMFOC_MOTOR_CONFIG", None)
         self.sym_NODE.setLabel("Motor Configuration")
 
@@ -76,7 +76,7 @@ class mcMotI_MotorParametersClass:
         self.sym_SELECT_MOTOR = self.component.createComboSymbol("MCPMSMFOC_MOTOR_SEL", self.sym_NODE, self.motor_List )
         self.sym_SELECT_MOTOR.setLabel("Selected Motor")
         default_Motor = self.sym_SELECT_MOTOR.getValue()
-        
+
         # Motor connection type symbol
         self.sym_POLARITY = self.component.createKeyValueSetSymbol("MCPMSMFOC_MOTOR_CONNECTION", self.sym_SELECT_MOTOR)
         self.sym_POLARITY.setLabel("Motor Connection")
@@ -85,18 +85,18 @@ class mcMotI_MotorParametersClass:
         self.sym_POLARITY.setOutputMode("Key")
         self.sym_POLARITY.setDisplayMode("Description")
         self.sym_POLARITY.setSelectedKey(self.motor_Parameters[default_Motor]['MOTOR_CONNECTION'])
-            
-        # Motor line-line resistance 
+
+        # Motor line-line resistance
         self.sym_RS = self.component.createFloatSymbol("MCPMSMFOC_R", self.sym_SELECT_MOTOR)
         self.sym_RS.setLabel("Phase Resistance (ohms)")
         self.sym_RS.setDefaultValue(float(self.motor_Parameters[default_Motor]['R']))
 
-        # Motor direct axis inductance 
+        # Motor direct axis inductance
         self.sym_LD = self.component.createFloatSymbol("MCPMSMFOC_LD", self.sym_SELECT_MOTOR)
         self.sym_LD.setLabel("Phase Direct Axis Inductance Ld (Henry)")
         self.sym_LD.setDefaultValue(float(self.motor_Parameters[default_Motor]['LD']))
 
-        # Motor quadrature axis inductance 
+        # Motor quadrature axis inductance
         self.sym_LQ = self.component.createFloatSymbol("MCPMSMFOC_LQ", self.sym_SELECT_MOTOR)
         self.sym_LQ.setLabel("Phase Quadrature Axis Inductance Lq (Henry)")
         self.sym_LQ.setDefaultValue(float(self.motor_Parameters[default_Motor]['LQ']))
@@ -105,18 +105,18 @@ class mcMotI_MotorParametersClass:
         self.sym_ZP = self.component.createFloatSymbol("MCPMSMFOC_POLE_PAIRS", self.sym_SELECT_MOTOR)
         self.sym_ZP.setLabel("Motor Pole Pairs")
         self.sym_ZP.setDefaultValue(float(self.motor_Parameters[default_Motor]['POLE_PAIRS']))
-            
+
         # Motor back emf constant
         self.sym_KE = self.component.createFloatSymbol("MCPMSMFOC_BEMF_CONST", self.sym_SELECT_MOTOR)
         self.sym_KE.setLabel("Motor BEMF Constant (Vpk L-L/KRPM)")
         self.sym_KE.setDefaultValue(float(self.motor_Parameters[default_Motor]['BEMF_CONST']))
 
-        # Motor rated speed 
+        # Motor rated speed
         self.sym_N_RATED = self.component.createFloatSymbol("MCPMSMFOC_RATED_SPEED", self.sym_SELECT_MOTOR)
         self.sym_N_RATED.setLabel("Motor Rated Speed (RPM)")
         self.sym_N_RATED.setDefaultValue(float(self.motor_Parameters[default_Motor]['RATED_SPEED']))
-            
-        # Motor maximum speed 
+
+        # Motor maximum speed
         self.sym_N_MAX = self.component.createFloatSymbol("MCPMSMFOC_MAX_SPEED", self.sym_SELECT_MOTOR)
         self.sym_N_MAX.setLabel("Motor Max Speed (RPM)")
         self.sym_N_MAX.setDefaultValue(float(self.motor_Parameters[default_Motor]['MAX_SPEED']))
@@ -126,11 +126,11 @@ class mcMotI_MotorParametersClass:
         self.sym_I_MAX.setLabel("Max Motor Current (A)")
         self.sym_I_MAX.setDefaultValue(float(self.motor_Parameters[default_Motor]['MAX_MOTOR_CURRENT']))
 
-        # Initialize callback functions 
+        # Initialize callback functions
         self.sym_DEPENDNCIES = self.component.createStringSymbol("MCPMSMFOC_MOTOR_PARAMS", self.sym_SELECT_MOTOR)
         self.sym_DEPENDNCIES.setVisible(False)
         self.sym_DEPENDNCIES.setDependencies( self.symbolUpdate, ["MCPMSMFOC_MOTOR_SEL"])
-    
+
     def symbolUpdate( self, symbol, event ):
         motor = event["symbol"].getValue()
         if motor in self.motor_List:
@@ -146,8 +146,8 @@ class mcMotI_MotorParametersClass:
             self.sym_POLARITY.setSelectedKey(  self.motor_Parameters[motor]['MOTOR_CONNECTION'])
 
     def __call__( self ):
-        
-        # Create MHC symbols for Motor parameters 
+
+        # Create MHC symbols for Motor parameters
         self.createSymbols()
 
 

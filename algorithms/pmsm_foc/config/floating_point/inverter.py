@@ -39,13 +39,13 @@ class mcInvI_VoltageSourceInverterClass:
     def __init__( self, algorithm, component):
         self.algorithm = algorithm
         self.component = component
-    
+
     def createSymbols(self):
-        # Root Node 
+        # Root Node
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Voltage source inverter")
 
-        # 
+        #
         supported_Inverters = ["Voltage source inverter", "Current source inverter", "Multi-stage voltage source inverter"]
         self.sym_DRIVERS = self.component.createComboSymbol("MCPMSMFOC_INVERTER_SELECTION", self.sym_NODE, supported_Inverters)
         self.sym_DRIVERS.setLabel("Gate driver interface")
@@ -54,5 +54,5 @@ class mcInvI_VoltageSourceInverterClass:
 
     def __call__(self):
         self.createSymbols()
-        
+
 

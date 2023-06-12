@@ -12,7 +12,7 @@
 
   Description:
     - This file implements functions for flux control
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -77,20 +77,20 @@ Private Functions
 *******************************************************************************/
 
 /*******************************************************************************
- * Interface Functions 
+ * Interface Functions
 *******************************************************************************/
 /*! \brief Initialize flux control module
- * 
+ *
  * Details.
  * Initialize flux control module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcTorI_TorqueControlInit( tmcTor_Parameters_s * const pParameters )
-{  
+{
      /** Link state variable structure to the module */
      pParameters->pStatePointer = (void *)&mcTor_State_mds;
 
@@ -233,14 +233,14 @@ void mcTorI_TorqueControlAuto(  const tmcTor_Parameters_s * const pParameters,
 
 
 /*! \brief Reset Torque control
- * 
+ *
  * Details.
  * Reset Torque control
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcTorI_TorqueControlReset( const tmcTor_Parameters_s * const pParameters )
 {

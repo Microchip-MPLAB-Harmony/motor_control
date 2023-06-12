@@ -1,5 +1,5 @@
 /*******************************************************************************
- Pulse width modulation function 
+ Pulse width modulation function
 
   Company:
     Microchip Technology Inc.
@@ -12,7 +12,7 @@
 
   Description:
     This file implements functions for pulse width modulation .
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -48,9 +48,8 @@ Headers inclusions
 /*******************************************************************************
 Local configuration options
 *******************************************************************************/
-#define ENABLE_CLASSICAL_SVPWM
 #define SQRT3   (float32_t)(1.73205080756887)
-#define THREE_BY_TWO     (float)(1.50f)
+#define DT_PADDING           (int16_t)12
 
 /*******************************************************************************
  Private data types
@@ -70,6 +69,10 @@ typedef struct
     bool enable;
     bool initDone;
     int16_t pwmPeriodCount;
+    int16_t minPeriodCount;
+    int16_t maxPeriodCount;
+    float32_t maxModIndex;
+    float32_t uBusFactor;
 }tmcPwm_State_s;
 
 /*******************************************************************************
@@ -94,20 +97,22 @@ __STATIC_INLINE int16_t mcPwm_IntegerScale( const float32_t factor, int16_t inpu
     return (int16_t)result;
 }
 /*******************************************************************************
- * Interface Functions 
+ * Interface Functions
 *******************************************************************************/
 /*! \brief Initialize PWM modulator
- * 
+ *
  * Details.
- * Initialize PWM Modulator 
- * 
- * @param[in]: None 
+ * Initialize PWM Modulator
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcPwmI_PulseWidthModulationInit( tmcPwm_Parameters_s * const pParameters )
-{  
+{
+    float32_t allowedRange;
+
     /** Link state variable structure to the module */
     pParameters->pStatePointer = (void *)&mcPwm_State_mds;
     tmcPwm_State_s * pState = &mcPwm_State_mds;
@@ -116,7 +121,13 @@ void  mcPwmI_PulseWidthModulationInit( tmcPwm_Parameters_s * const pParameters )
     mcPwmI_ParametersSet(pParameters);
 
     /** Update state variables */
-    pState->pwmPeriodCount = (int16_t)pParameters->pwmPeriodCount;
+    pState->pwmPeriodCount = (int16_t)pParameters->pwmPeriodCount ;
+    pState->minPeriodCount = (int16_t)pParameters->deadTimeCount + DT_PADDING;
+    pState->maxPeriodCount = pState->pwmPeriodCount - pState->minPeriodCount;
+    pState->maxModIndex = pParameters->maxModIndex;
+
+    allowedRange = (float32_t)( (float32_t)pState->maxPeriodCount - (float32_t)pState->minPeriodCount);
+    pState->uBusFactor = (float32_t)( allowedRange / (float32_t)pState->pwmPeriodCount );
 }
 
 /*! \brief Enable PWM modulator
@@ -196,7 +207,12 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
                                                            int16_t * const pDuty )
 {
     tmcPwm_Sector_e bSector;
+    float32_t uRef;
+    float32_t uMax;
     float32_t uA, uB, uC;
+    float32_t uAlphaNorm, uBetaNorm;
+    float32_t modIndex;
+
 
     /** Get the linked state variable */
     tmcPwm_State_s * pState;
@@ -204,16 +220,19 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
 
     if( pState->enable )
     {
-        /** Apply bus voltage based circle limitation */
-        float32_t uAlphaNorm, uBetaNorm;
+        /** Apply bus voltage based circle limitation */;
+        uRef = UTIL_MagnitudeFloat(pUalphaBeta->alpha, pUalphaBeta->beta);
+        uMax = pState->uBusFactor * uBus / SQRT3;
 
-<#if MCPMSMFOC_OVER_MODULATION == true >
-        uAlphaNorm = pUalphaBeta->alpha * THREE_BY_TWO / uBus;
-        uBetaNorm = pUalphaBeta->beta * THREE_BY_TWO / uBus;
-<#else>
-        uAlphaNorm = pUalphaBeta->alpha * SQRT3 / uBus;
-        uBetaNorm = pUalphaBeta->beta * SQRT3 / uBus;
-</#if>
+        modIndex = uRef/ uMax;
+
+        if( modIndex > pState->maxModIndex  )       {
+            /** Overmodulation condition */
+            modIndex = pState->maxModIndex;
+        }
+
+        uAlphaNorm = modIndex * pUalphaBeta->alpha/ uMax;
+        uBetaNorm = modIndex * pUalphaBeta->beta/uMax;
 
         /** Calculate abc voltage from alpha-beta voltage  */
         uA = uBetaNorm;
@@ -258,7 +277,6 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
             }
         }
 
-#if defined ENABLE_CLASSICAL_SVPWM
         switch(bSector)
         {
             case SECTOR_1:
@@ -350,7 +368,11 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
             }
             break;
          }
-#endif
+
+        /** Limit the duty cycle values */
+        UTIL_SaturateS16(&pDuty[0u], pState->minPeriodCount, pState->maxPeriodCount );
+        UTIL_SaturateS16(&pDuty[1u], pState->minPeriodCount, pState->maxPeriodCount );
+        UTIL_SaturateS16(&pDuty[2u], pState->minPeriodCount, pState->maxPeriodCount );
     }
     else
     {
@@ -359,14 +381,14 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
 }
 
 /*! \brief Reset PWM Modulator
- * 
+ *
  * Details.
- * Reset PWM Modulator 
- * 
- * @param[in]: None 
+ * Reset PWM Modulator
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcPwmI_PulseWidthModulationReset( const tmcPwm_Parameters_s * const pParameters )
 {

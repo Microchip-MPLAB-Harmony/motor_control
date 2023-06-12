@@ -6,9 +6,9 @@
 
   Summary:
     Header file which contains variables and function prototypes for pulse width modulation
- 
+
   Description:
-    This file contains variables and function prototypes which are generally used for pulse 
+    This file contains variables and function prototypes which are generally used for pulse
     width modulation. It is implemented in Q2.14 fixed Point Arithmetic.
 
  *******************************************************************************/
@@ -42,14 +42,14 @@
 #define MCRPE_H
 
 /*******************************************************************************
- * Header inclusions 
+ * Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
 #include "mc_motor.h"
 #include "mc_utilities.h"
 
 /*******************************************************************************
- Default Module configuration parameters 
+ Default Module configuration parameters
 *******************************************************************************/
 
 /*******************************************************************************
@@ -64,6 +64,7 @@ typedef struct
     float32_t boundaryI;
     float32_t m;
     float32_t lambda;
+    float32_t f0InHertz;
     float32_t minRPM;
     float32_t dt;
 
@@ -71,7 +72,7 @@ typedef struct
 }tmcRpe_Parameters_s;
 
 /*******************************************************************************
- * Interface variables 
+ * Interface variables
 *******************************************************************************/
 
 /*******************************************************************************
@@ -93,24 +94,25 @@ __STATIC_INLINE void mcRpeI_ParametersSet( tmcRpe_Parameters_s * const pParamete
     pParameters->pMotorParameters = &mcMotI_PMSM_gds;
 
     /** BEMF observer parameters */
-    pParameters->dt = (float32_t)(0.00005);
-    pParameters->boundaryI = (float32_t)0.5;
-    pParameters->m = ((float32_t)8000.0);
-    pParameters->lambda = ((float32_t)-1000.0);
-    pParameters->minRPM = ((float32_t)500.0);
+    pParameters->dt = (float32_t)${MCPMSMFOC_PWM_PERIOD};
+    pParameters->boundaryI = (float32_t)${MCPMSMFOC_SWITCHING_FUNCTION_BOUNDARY};
+    pParameters->m = (float32_t)${MCPMSMFOC_SWITCHING_FUNCTION_GAIN};
+    pParameters->lambda = (float32_t)${MCPMSMFOC_BEMF_OBSERVER_POLE};
+    pParameters->f0InHertz = (float32_t)${MCPMSMFOC_PHASE_DETECTION_F0};
+    pParameters->minRPM = (float32_t)(${MCPMSMFOC_OPEN_LOOP_END_SPEED});
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
 *******************************************************************************/
 /*! \brief Initialize rotor position estimation module
- * 
+ *
  * Details.
  * Initialize rotor position estimation module
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
+ * @param[out]: None
  * @return: None
  */
 void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters );
@@ -157,14 +159,14 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
                                                      float32_t * pAngle, float32_t * pSpeed );
 
 /*! \brief Reset Rotor position estimation
- * 
+ *
  * Details.
  * Reset Rotor position estimation
- * 
- * @param[in]: None 
+ *
+ * @param[in]: None
  * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+ * @param[out]: None
+ * @return:
  */
 void mcRpeI_RotorPositionEstimReset( const tmcRpe_Parameters_s * const pParameters );
 

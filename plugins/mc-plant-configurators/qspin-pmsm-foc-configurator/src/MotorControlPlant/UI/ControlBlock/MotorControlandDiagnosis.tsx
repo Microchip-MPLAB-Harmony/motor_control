@@ -16,6 +16,7 @@ import { mc_component_id } from '../MainView/MainBlock';
 import {
   GetSymbolArray,
   GetSymbolLabelName,
+  GetSymbolReadOnlyStatus,
   GetSymbolValue
 } from '@mplab_harmony/harmony-plugin-core-service/build/database-access/SymbolAccess';
 import {
@@ -33,10 +34,10 @@ import {
 import {
   AddMultipleUIComponentsWithLabel,
   CallMouseMove,
+  CheckBox,
   StateLabel
 } from '@mplab_harmony/harmony-plugin-ui';
 import { CallMouseLeave } from '@mplab_harmony/harmony-plugin-ui/build/svg/MouseEvent';
-import { Checkbox } from 'primereact/checkbox';
 
 var svgdoc: any = null;
 var toolTipObject: any = null;
@@ -60,7 +61,6 @@ interface IState {
   motorControlModeSelectedValue?: any;
   ramProfilerSelectedValue?: any;
   currentView?: string;
-  motorBasedDesignValue?: boolean;
 }
 let obj: MotorControlandDiagnosis | null = null;
 
@@ -131,7 +131,7 @@ let pwmModulatorSymbols = [
 ];
 
 let decoupleNetworkSymbols = ['MCPMSMFOC_ENABLE_DECOUPLING'];
-let motorBasedDesignSymbolId = 'MCPMSMFOC_FOC_X2C_ENABLE ';
+let motorBasedDesignSymbolId = 'MCPMSMFOC_FOC_X2C_ENABLE';
 
 class MotorControlandDiagnosis extends React.Component<IProps, IState> {
   constructor(props: IProps) {
@@ -140,10 +140,7 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
     this.state = {
       currentView: defaultViewGlobal,
       motorControlModeSelectedValue: GetSymbolValue(mc_component_id, motorControlModeSymbol),
-      ramProfilerSelectedValue: GetSymbolValue(mc_component_id, ramProfilerSelectSymbol),
-      motorBasedDesignValue: convertToBoolean(
-        GetSymbolValue(mc_component_id, motorBasedDesignSymbolId)
-      )
+      ramProfilerSelectedValue: GetSymbolValue(mc_component_id, ramProfilerSelectSymbol)
     };
     this.MotorControlChanged = this.MotorControlChanged.bind(this);
     this.RamProfileChanged = this.RamProfileChanged.bind(this);
@@ -161,7 +158,7 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
   }
 
   MotorControlChanged(onChangeData: Map<String, any>) {
-    this.setState({ motorControlModeSelectedValue: onChangeData.get('symbolValue') });
+    // this.setState({ motorControlModeSelectedValue: onChangeData.get('symbolValue') });
   }
 
   SymbolValueChanged(onchange: Map<String, any>) {
@@ -353,13 +350,16 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
                 </div>
 
                 <div className='flex align-items-center'>
-                  <Checkbox
-                    className='ml-4'
-                    name={'MotorBasedDesign'}
-                    checked={this.state.motorBasedDesignValue}
-                    onChange={(e) => {
-                      this.setState({ motorBasedDesignValue: e.checked });
-                    }}
+                  <CheckBox
+                    componentId={mc_component_id}
+                    symbolId={motorBasedDesignSymbolId}
+                    symbolListeners={[motorBasedDesignSymbolId]}
+                    onChange={this.MotorControlChanged}
+                    symbolValue={GetSymbolValue(mc_component_id, motorBasedDesignSymbolId)}
+                    styleObject={{ width: '20px', height: '20px' }}
+                    className={'ml-4'}
+                    readOnly={GetSymbolReadOnlyStatus(mc_component_id, motorBasedDesignSymbolId)}
+                    visible={true}
                   />
                   <label
                     htmlFor='ingredient1'

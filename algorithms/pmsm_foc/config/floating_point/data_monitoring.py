@@ -34,16 +34,16 @@ class mcFocI_DataMonitoringClass:
         self.algorithm = algorithm
         self.component = component
 
-    def createSymbols(self):        
-        # Root node 
+    def createSymbols(self):
+        # Root node
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Data Monitoring")
 
         # Data communication Enable
         self.sym_PROTOCOL = self.component.createBooleanSymbol("MCPMSMFOC_DATA_MONITOR_ENABLE", self.sym_NODE)
         self.sym_PROTOCOL.setLabel("Enable data monitoring")
-        
-        # 
+
+        #
         # protocols = ['X2C Scope', 'XCP' ]
         protocols = ['X2C Scope']
         self.sym_PROTOCOL = self.component.createComboSymbol("MCPMSMFOC_DATA_MONITOR_PROTOCOL", self.sym_NODE, protocols)
@@ -68,12 +68,22 @@ class mcFocI_DataMonitoringClass:
         if (source["id"] == "pmsmfoc_X2CSCOPE"):
             self.sym_X2CSCOPE.setValue( target["component"].getID())
 
+            # Get the X2C Communication peripheral
+            # commPeripheral = Database.getSymbolValue("X2CScope", "X2C_COMM_INSTANCE")
+            #
+            # # Activate and connect peripheral
+            # autoConnectTable = [commPeripheral]
+            # res = Database.activateComponents(autoConnectTable)
+            #
+            # autoComponentIDTable = [[ target["component"].getID(), "x2cScopeUartDependency", commPeripheral.lower(), commPeripheral.upper() + "_UART"]]
+            # res = Database.connectDependencies(autoComponentIDTable)
+
+
     def onAttachmentDisconnected(self, source, target):
         if (source["id"] == "pmsmfoc_X2CSCOPE"):
             self.sym_X2CSCOPE.setValue("None")
-    
+
     def __call__(self):
         self.createSymbols()
 
 
-     

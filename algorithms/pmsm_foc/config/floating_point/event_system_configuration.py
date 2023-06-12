@@ -37,13 +37,13 @@
 class mcEvtI_EventSystemClass:
     def __init__(self ):
         self.setConfiguration()
-                            
+
     def createSymbols( self ):
        pass
 
-    
+
     def setConfiguration(self):
-        if "SAME54" in MCU: 
+        if "SAME54" in MCU:
             pwmInstance = global_PWM_MODULE.getValue().upper()
             adcInstance = global_ADC_MODULE.getValue().upper()
             eic = filter(str.isdigit, str( global_PWM_FAULT))
@@ -54,14 +54,14 @@ class mcEvtI_EventSystemClass:
                 #EVSYS channel 1 = EIC fault pin to TCC event 1 fault
                 Database.setSymbolValue("evsys", "EVSYS_CHANNEL_0", True)
                 Database.setSymbolValue("evsys", "EVSYS_CHANNEL_1", True)
-                Database.setSymbolValue("evsys", "EVSYS_CHANNEL_0_EDGE", 1) 
+                Database.setSymbolValue("evsys", "EVSYS_CHANNEL_0_EDGE", 1)
                 Database.setSymbolValue("evsys", "EVSYS_CHANNEL_1_EDGE", 1)
-                
+
                 #Find event GENERATOR numbers from ATDF
                 node = ATDF.getNode("/avr-tools-device-file/devices/device/events/generators")
                 generators = []
                 sortedGenerators = []
-            
+
                 for id in range(0, len(node.getChildren())):
                     generators.append(id)
                     generators[id] = node.getChildren()[id].getAttribute("name")
@@ -80,7 +80,7 @@ class mcEvtI_EventSystemClass:
 
                 for id in range(0, len(node.getChildren())):
                     users.append(id)
-                    users[id] = node.getChildren()[id].getAttribute("name")   
+                    users[id] = node.getChildren()[id].getAttribute("name")
                 for id in range(0, len(node.getChildren())):
                     if str(adcInstance) + "_START" in users[id]:
                         user0 = int(node.getChildren()[id].getAttribute("index"))
@@ -88,10 +88,10 @@ class mcEvtI_EventSystemClass:
                         user1 = int(node.getChildren()[id].getAttribute("index"))
 
                 Database.setSymbolValue("evsys", "EVSYS_CHANNEL_0_GENERATOR", int(generator0))
-                Database.setSymbolValue("evsys", "EVSYS_CHANNEL_1_GENERATOR", int(generator1))   
+                Database.setSymbolValue("evsys", "EVSYS_CHANNEL_1_GENERATOR", int(generator1))
                 Database.setSymbolValue("evsys", "EVSYS_USER_" + str(user0), 1)
                 Database.setSymbolValue("evsys", "EVSYS_USER_" + str(user1), 2)
-            
+
 
     def updatePLIB(self, symbol, event):
         pass
@@ -112,8 +112,8 @@ class mcEvtI_EventSystemClass:
         self.setConfiguration()
 
 
-            
-    
+
+
 
 
 

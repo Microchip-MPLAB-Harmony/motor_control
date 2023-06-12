@@ -11,7 +11,7 @@
  Application
 
   Description:
-   Application 
+   Application
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -47,36 +47,41 @@
  *******************************************************************************/
 #include "mc_types.h"
 #include "definitions.h"
-#include "mc_hardware_abstraction.h" 
+#include "mc_hardware_abstraction.h"
 #include "mc_current_calculation.h"
 #include "mc_voltage_measurement.h"
+<#if MCPMSMFOC_FOC_X2C_ENABLE == false>
 #include "mc_motor.h"
+</#if>
 #include "mc_field_oriented_control.h"
-
+<#if MCPMSMFOC_FOC_X2C_ENABLE == false>
 <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
 #include "mc_initial_position_detection.h"
 </#if>
-
+</#if>
+<#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
+#include "mc_key_manager.h"
+</#if>
 
 /*******************************************************************************
  Private data-types
  *******************************************************************************/
 
 /*******************************************************************************
- * Interface variables 
+ * Interface variables
  *******************************************************************************/
 
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
  *******************************************************************************/
 
-/*! \brief Application initialization 
- * 
+/*! \brief Application initialization
+ *
  * Details.
- * Application initialization 
- * 
- * @param[in]: 
+ * Application initialization
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -104,11 +109,11 @@ void mcAppI_OverCurrentReactionIsr( MCPWM_CH_STATUS status, uintptr_t context );
 
 
 /*! \brief Motor control application calibration
- * 
+ *
  * Details.
- *  Motor Control application calibration 
- * 
- * @param[in]: 
+ *  Motor Control application calibration
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -121,13 +126,14 @@ void mcAppI_AdcCalibrationIsr( uint32_t status, uintptr_t context );
 void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context );
 </#if>
 
+<#if MCPMSMFOC_FOC_X2C_ENABLE == false>
 <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
 /*! \brief Initial position detection ISR
- * 
+ *
  * Details.
  *  Initial position detection ISR
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -138,6 +144,7 @@ void mcAppI_InitialPositionDetectIsr(ADC_STATUS status, uintptr_t context );
 void mcAppI_InitialPositionDetectIsr( uint32_t status, uintptr_t context );
 <#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
 void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context );
+</#if>
 </#if>
 </#if>
 
@@ -171,12 +178,12 @@ void mcAppI_AdcFinishedIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context );
  */
 void mcAppI_NonISRTasks( void );
 
-/*! \brief Application reset 
- * 
+/*! \brief Application reset
+ *
  * Details.
- * Application reset 
- * 
- * @param[in]: 
+ * Application reset
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:

@@ -6,7 +6,7 @@
 
   Summary:
     Header file which contains variables and function prototypes for speed control
- 
+
   Description:
     This file contains variables and function prototypes which are generally used for speed
     control
@@ -42,13 +42,13 @@
 #define MCSPE_H
 
 /*******************************************************************************
- * Header inclusions 
+ * Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
 #include "mc_pi_control.h"
 
 /*******************************************************************************
- Default Module configuration parameters 
+ Default Module configuration parameters
 *******************************************************************************/
 
 /*******************************************************************************
@@ -59,11 +59,12 @@ typedef struct
      float32_t Kp;
      float32_t Ki;
      float32_t dt;
+     float32_t Ymax;
      void * pStatePointer;
 }tmcSpe_Parameters_s;
 
 /*******************************************************************************
- * Interface variables 
+ * Interface variables
 *******************************************************************************/
 //#define RAM_EXECUTE
 
@@ -86,10 +87,11 @@ __STATIC_INLINE void mcSpeI_ParametersSet( tmcSpe_Parameters_s * const pParamete
    pParameters->Kp = (float32_t)${MCPMSMFOC_SPEED_PID_KP};
    pParameters->Ki = (float32_t)${MCPMSMFOC_SPEED_PID_KI};
    pParameters->dt = (float32_t)(${MCPMSMFOC_PWM_PERIOD});
+   pParameters->Ymax = (float32_t)(${MCPMSMFOC_MAX_MOTOR_CURRENT});
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
 *******************************************************************************/
 /*! \brief Initialize speed control module
  *

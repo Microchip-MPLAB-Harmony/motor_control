@@ -2,7 +2,6 @@ import { ReactComponent as MotorControlPlant } from '../../../Resources/Svgs/mc_
 import { ReactComponent as Tooltip } from '../../../Resources/Svgs/Tooltip.svg';
 import Headder from './ToolBar';
 import { newInit, resetColors } from '../SVGScript';
-import { SetComponentId } from '@mplab_harmony/harmony-plugin-core-service';
 import { useEffect } from 'react';
 import { globalSymbolSStateData } from '@mplab_harmony/harmony-plugin-ui/build/components/Components';
 import {
@@ -17,8 +16,6 @@ export let SummaryPageHeading = 'QSpin PMSM FOC Summary';
 const MainBlock = () => {
   useEffect(() => {
     newInit();
-    SetComponentId(mc_component_id);
-    SetComponentId(core_id);
   }, []);
 
   function ShowAll() {
