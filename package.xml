@@ -2,7 +2,8 @@
 <Package name="motor_control">
     <Dependencies>
         <Dependency name="csp" version="v3.17.0"/>
-        <Dependency name="x2c" version="x2c_scope_update"/>
+        <Dependency name="x2c" version="v1.4.0"/>
         <Dependency name="bsp" version="v3.16.0"/>
+        <Dependency name="harmony-services" version="v1.3.1"/>
     </Dependencies>
 </Package>

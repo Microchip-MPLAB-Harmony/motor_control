@@ -8,6 +8,30 @@ has_children: true
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+
+## Motor Control Release v3.10.0
+
+### New Features
+* Adding SMO, Overmodulation, and MTPA support in QSpin.
+* Adding ZS/MT Hybrid demo project for SAME54, PIC32MK MCF and PIC32MK MCM
+* MISRA-C Compliance for motor control application files
+
+### Known Issues
+* None
+
+### Required MPLAB Harmony v3 Modules
+* csp v3.17.0
+* bsp v3.16.1
+* x2c v1.4.0
+* harmony-services v1.3.1
+
+### Development Tools
+* [MPLAB X IDE v6.10](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB XC32 C/C++ Compiler v4.30](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Code Configurator (MCC) v5.3.7
+  * X2CScope v1.3.3.
+    
 ## Motor Control Release v3.9.0
 
 ### New Features

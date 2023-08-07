@@ -4,7 +4,7 @@ package:
   type: "api"
   status: "production"
   required: true
-  version: "3.9.0"
+  version: "3.10.0"
 
   dependencies:
     - name: "csp"
@@ -12,7 +12,10 @@ package:
       version: "3.17.0"
     - name: "x2c"
       type: "package"
-      version: "x2c_scope_update"
+      version: "v1.4.0"
     - name: "bsp"
       type: "package"
-      version: "bsp_fix" 
+      version: "v3.16.1" 
+    - name: "harmony-services"
+      type: "package"
+      version: "v1.3.1" 
