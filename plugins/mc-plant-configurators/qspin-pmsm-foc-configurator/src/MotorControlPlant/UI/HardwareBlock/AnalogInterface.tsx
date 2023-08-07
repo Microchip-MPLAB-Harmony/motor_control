@@ -32,21 +32,6 @@ let actionIds = ['ai_item1', 'ai_item2'];
 let defaultViewGlobal = actionIds[0];
 let screenChangeStatus = 'true';
 
-let Group1_A_ADC_Unit = 'MCPMSMFOC_PHASE_CURRENT_IA_UNIT';
-let Group1_B_ADC_Unit = 'MCPMSMFOC_PHASE_CURRENT_IB_UNIT';
-let Group2_A_ADC_Unit = 'MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT';
-let Group2_B_ADC_Unit = 'MCPMSMFOC_POTENTIOMETER_VPOT_UNIT';
-
-let GROUP1_A = ['MCPMSMFOC_PHASE_CURRENT_IA_NAME', Group1_A_ADC_Unit];
-let GROUP1_B = ['MCPMSMFOC_PHASE_CURRENT_IB_NAME', Group1_B_ADC_Unit];
-let GROUP2_A = ['MCPMSMFOC_BUS_VOLTAGE_VDC_NAME', Group2_A_ADC_Unit];
-let GROUP2_B = ['MCPMSMFOC_POTENTIOMETER_VPOT_NAME', Group2_B_ADC_Unit];
-
-GROUP1_A = AddDynamicSymbols(mc_component_id, Group1_A_ADC_Unit, 'PHASE_CURRENT_IA', GROUP1_A);
-GROUP1_B = AddDynamicSymbols(mc_component_id, Group1_B_ADC_Unit, 'PHASE_CURRENT_IB', GROUP1_B);
-GROUP2_A = AddDynamicSymbols(mc_component_id, Group2_A_ADC_Unit, 'BUS_VOLTAGE_VDC', GROUP2_A);
-GROUP2_B = AddDynamicSymbols(mc_component_id, Group2_B_ADC_Unit, 'POTENTIOMETER_VPOT', GROUP2_B);
-
 interface IProps {
   showToast: (arg0: any) => void;
 }
@@ -57,6 +42,10 @@ interface IState {
   hasRendered?: string;
 }
 let obj: AnalogInterface | null = null;
+let GROUP1_A: any[];
+let GROUP1_B: any[];
+let GROUP2_A: any[];
+let GROUP2_B: any[];
 
 class AnalogInterface extends React.Component<IProps, IState> {
   constructor(props: IProps) {
@@ -69,6 +58,42 @@ class AnalogInterface extends React.Component<IProps, IState> {
     this.currentViewChanged = this.currentViewChanged.bind(this);
     this.SymbolValueChanged = this.SymbolValueChanged.bind(this);
     obj = this;
+    let Group1_A_ADC_Unit = 'MCPMSMFOC_PHASE_CURRENT_IA_UNIT';
+    let Group1_B_ADC_Unit = 'MCPMSMFOC_PHASE_CURRENT_IB_UNIT';
+    let Group2_A_ADC_Unit = 'MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT';
+    let Group2_B_ADC_Unit = 'MCPMSMFOC_POTENTIOMETER_VPOT_UNIT';
+    let GROUP1_A_temp = ['MCPMSMFOC_PHASE_CURRENT_IA_NAME', Group1_A_ADC_Unit];
+    let GROUP1_B_temp = ['MCPMSMFOC_PHASE_CURRENT_IB_NAME', Group1_B_ADC_Unit];
+    let GROUP2_A_temp = ['MCPMSMFOC_BUS_VOLTAGE_VDC_NAME', Group2_A_ADC_Unit];
+    let GROUP2_B_temp = ['MCPMSMFOC_POTENTIOMETER_VPOT_NAME', Group2_B_ADC_Unit];
+    GROUP1_A = [];
+    GROUP1_B = [];
+    GROUP2_A = [];
+    GROUP2_B = [];
+    GROUP1_A = AddDynamicSymbols(
+      mc_component_id,
+      Group1_A_ADC_Unit,
+      'PHASE_CURRENT_IA',
+      GROUP1_A_temp
+    );
+    GROUP1_B = AddDynamicSymbols(
+      mc_component_id,
+      Group1_B_ADC_Unit,
+      'PHASE_CURRENT_IB',
+      GROUP1_B_temp
+    );
+    GROUP2_A = AddDynamicSymbols(
+      mc_component_id,
+      Group2_A_ADC_Unit,
+      'BUS_VOLTAGE_VDC',
+      GROUP2_A_temp
+    );
+    GROUP2_B = AddDynamicSymbols(
+      mc_component_id,
+      Group2_B_ADC_Unit,
+      'POTENTIOMETER_VPOT',
+      GROUP2_B_temp
+    );
   }
 
   currentViewChanged(newView: string) {

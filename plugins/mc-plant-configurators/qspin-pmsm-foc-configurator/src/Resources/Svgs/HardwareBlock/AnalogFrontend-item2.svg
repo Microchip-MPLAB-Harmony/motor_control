@@ -2,13 +2,18 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="284px" height="156px" viewBox="-0.5 -0.5 284 156">
   <defs/>
+  <style>
+    .boxColor { fill:#1565C0 }
+    .boxTextColor { fill:White }
+    .boxLineColor { stroke:White; }
+  </style>
   <g id="af_item2">
     <g id="background_af_item2">
       <path d="M 75 63 L 108.63 63" fill="none" stroke="black" pointer-events="stroke"/>
       <path d="M 113.88 63 L 106.88 66.5 L 108.63 63 L 106.88 59.5 Z" fill="black" stroke="black"/>
       <path d="M 172 90 L 208.63 90" fill="none" stroke="black" pointer-events="stroke"/>
       <path d="M 213.88 90 L 206.88 93.5 L 208.63 90 L 206.88 86.5 Z" fill="black" stroke="black"/>
-      <path d="M 115 50 L 175 90 L 115 130 Z" fill="#007fff" stroke="#001dbc"/>
+      <path d="M 115 50 L 175 90 L 115 130 Z" class="boxColor"/>
       <rect x="223" y="80" width="60" height="20" fill="none" stroke="none"/>
       <path d="M 75 120 L 108.63 120" fill="none" stroke="black" pointer-events="stroke"/>
       <path d="M 113.88 120 L 106.88 123.5 L 108.63 120 L 106.88 116.5 Z" fill="black" stroke="black"/>

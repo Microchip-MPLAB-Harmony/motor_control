@@ -2,6 +2,11 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="227px" height="130px" viewBox="-0.5 -0.5 227 130">
   <defs/>
+  <style>
+    .boxColor { fill:#1565C0 }
+    .boxTextColor { fill:White }
+    .boxLineColor { stroke:White; }
+  </style>
   <g id="af_item1" pointer-events="all">
     <g id="background_af_item1">
       <path d="M 40 13 L 73.63 13" fill="none" stroke="black" pointer-events="stroke"/>
@@ -9,7 +14,7 @@
       <path d="M 15 -12 L 35 -12 L 35 29.78 L 25 38 L 15 29.78 Z" fill="#e6e6e6" stroke="black" transform="rotate(270,25,13)"/>
       <path d="M 137 40 L 173.63 40" fill="none" stroke="black" pointer-events="stroke"/>
       <path d="M 178.88 40 L 171.88 43.5 L 173.63 40 L 171.88 36.5 Z" fill="black" stroke="black"/>
-      <path d="M 80 0 L 140 40 L 80 80 Z" fill="#007fff" stroke="#001dbc"/>
+      <path d="M 80 0 L 140 40 L 80 80 Z" class="boxColor" />
       <rect x="4" y="2" width="40" height="20" fill="none" stroke="none"/>
       <rect x="186" y="30" width="40" height="20" fill="none" stroke="none"/>
       <path d="M 56 119 L 56 70" fill="none" stroke="black"/>

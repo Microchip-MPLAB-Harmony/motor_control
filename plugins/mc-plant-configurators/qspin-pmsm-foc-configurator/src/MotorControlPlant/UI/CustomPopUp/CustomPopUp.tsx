@@ -14,7 +14,6 @@ import MotorParameters from '../HardwareBlock/MotorParameters';
 import PWMParameters from '../HardwareBlock/PWMParameters';
 import { Toast } from 'primereact/toast';
 import { useRef } from 'react';
-import PrimeReact from 'primereact/api';
 import VoltageMeasurementDiagnosis, {
   SetVoltageMeasurementDefaultWindowView
 } from '../ControlBlock/VoltageMeasurementDiagnosis';

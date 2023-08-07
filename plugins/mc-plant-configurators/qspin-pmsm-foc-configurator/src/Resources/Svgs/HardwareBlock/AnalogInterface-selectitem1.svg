@@ -2,6 +2,11 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="58px" height="53px" viewBox="-0.5 -0.5 58 53">
   <defs/>
+   <style>
+    .boxColor { fill:#1565C0 }
+    .boxTextColor { fill:White }
+    .boxLineColor { stroke:White; }
+  </style>
   <g id="ai_selectitem1" pointer-events="all">
     <path d="M 6.69 8.2 L 15.09 8.2" fill="none" stroke="black"/>
     <path d="M 20.34 8.2 L 13.34 11.7 L 15.09 8.2 L 13.34 4.7 Z" fill="black" stroke="black"/>
@@ -11,7 +16,7 @@
     <path d="M 47.88 8.91 L 40.86 12.37 L 42.63 8.88 L 40.9 5.37 Z" fill="black" stroke="black"/>
     <path d="M 34.23 28.99 L 42.63 28.84" fill="none" stroke="black"/>
     <path d="M 47.88 28.74 L 40.95 32.37 L 42.63 28.84 L 40.82 25.37 Z" fill="black" stroke="black"/>
-    <path d="M 16.85 10.62 L 40.85 10.62 L 46.85 15.42 L 46.85 25.38 L 10.85 25.38 L 10.85 15.42 Z" fill="#007fff" stroke="#001dbc" transform="rotate(90,28.85,18)"/>
+    <path d="M 16.85 10.62 L 40.85 10.62 L 46.85 15.42 L 46.85 25.38 L 10.85 25.38 L 10.85 15.42 Z" class="boxColor" transform="rotate(90,28.85,18)"/>
     
     <ellipse cx="45" cy="44" rx="8" ry="8" fill="#00dd00" stroke="none"/>
     <path d="M 45 39 v 10 M 40 44 h 10" style="fill:none;stroke:white;stroke-width:2"/>

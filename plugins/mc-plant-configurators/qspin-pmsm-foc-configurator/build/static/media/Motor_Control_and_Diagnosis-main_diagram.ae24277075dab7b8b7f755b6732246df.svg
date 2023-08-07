@@ -14,10 +14,11 @@
       <stop offset="0%" style="stop-color:#dae8fc"/>
       <stop offset="100%" style="stop-color:#ffffff"/>
     </linearGradient>
-    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-box">
-      <stop offset="0%" style="stop-color:#0050ef"/>
-      <stop offset="100%" style="stop-color:#ffffff"/>
-    </linearGradient>
+	<style>
+      .boxColor { fill:#1565C0 }
+      .boxTextColor { fill:White }
+      .boxLineColor { stroke:White; }
+    </style>
   </defs>
   <g>
     <g id="background" pointer-events="none">
@@ -148,67 +149,67 @@
       </g>
     </g>
     <g id="box-pwm-modulator" pointer-events="all" harmony-tooltip="Configure PWM Modulator">
-      <rect x="606.55" y="139.61" width="63.45" height="131.7" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <text x="637" y="203" fill="#000000" font-family="Verdana" font-size="11px" text-anchor="middle">PWM
+      <rect x="606.55" y="139.61" width="63.45" height="131.7" class="boxColor" />
+      <text x="637" y="203" class="boxTextColor" font-family="Verdana" font-size="11px" text-anchor="middle">PWM
         <tspan x="637" y="220">Modulator</tspan>
       </text>
     </g>
     <g id="box-decouple-network" pointer-events="all" harmony-tooltip="Configure Decoupling_Network">
-      <rect x="528.9" y="139.61" width="61.1" height="131.7" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <text x="560" y="203" fill="#000000" font-family="Verdana" font-size="11px" text-anchor="middle">Decouple
+      <rect x="528.9" y="139.61" width="61.1" height="131.7" class="boxColor" />
+      <text x="560" y="203" class="boxTextColor" font-family="Verdana" font-size="11px" text-anchor="middle">Decouple
         <tspan x="559" y="220">Network</tspan>
       </text>
     </g>
     <g id="box-dq-ab" pointer-events="all" harmony-tooltip="">
-      <rect x="451.96" y="328.39" width="55.96" height="61.68" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <path d="M 507.92 328.39 L 451.96 390.07" fill="none" stroke="#000000" stroke-miterlimit="10"/>
-      <text x="468" y="345" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">DQ</text>
-      <text x="490" y="376" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">α-β</text>
+      <rect x="451.96" y="328.39" width="55.96" height="61.68" class="boxColor" />
+      <path d="M 507.92 328.39 L 451.96 390.07" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
+      <text x="468" y="345" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">DQ</text>
+      <text x="490" y="376" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">α-β</text>
     </g>
     <g id="box-ab-uvw" pointer-events="all" harmony-tooltip="">
-      <rect x="528.9" y="328.39" width="55.96" height="61.68" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <path d="M 577.87 328.39 L 528.9 381.07" fill="none" stroke="#000000" stroke-miterlimit="10"/>
-      <text x="551" y="340" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">α-β</text>
-      <text x="564" y="376" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">ABC</text>
+      <rect x="528.9" y="328.39" width="55.96" height="61.68" class="boxColor" />
+      <path d="M 577.87 328.39 L 528.9 381.07" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
+      <text x="551" y="340" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">α-β</text>
+      <text x="564" y="376" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">ABC</text>
     </g>
     <g id="box-ramp-profiler" pointer-events="all" harmony-tooltip="Configure Ramp Profiler">
-      <rect x="41.78" y="39.51" width="56.52" height="52.68" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <text x="68" y="63" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Ramp
+      <rect x="41.78" y="39.51" width="56.52" height="52.68" class="boxColor" />
+      <text x="68" y="63" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Ramp
         <tspan x="68" y="80">Profiler</tspan>
       </text>
     </g>
     <g id="box-parkangle" pointer-events="all" harmony-tooltip="Configure Park Angle">
-      <rect x="312.72" y="378.44" width="48.96" height="52.68" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <text x="339" y="400" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Park
+      <rect x="312.72" y="378.44" width="48.96" height="52.68" class="boxColor" />
+      <text x="339" y="400" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Park
         <tspan x="339" y="420">Angle</tspan>
       </text>
     </g>
     <g id="box-fw-mtpa" pointer-events="all" harmony-tooltip="Configure Field Weakening and Max Torque Per Ampere">
-      <rect x="310" y="233.23" width="53.69" height="60.85" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <text x="337" y="255" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">FW
+      <rect x="310" y="233.23" width="53.69" height="60.85" class="boxColor" />
+      <text x="337" y="255" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">FW
         <tspan x="337" y="270">and</tspan>
         <tspan x="337" y="285">MTPA</tspan>
       </text>
     </g>
     <g id="box-pl-pid" pointer-events="all" harmony-tooltip="Configure Position PID Controller ">
-      <rect x="121.4" y="123.44" width="53.96" height="55.68" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <path d="M 121.4 160.58 L 175.36 137.36" fill="none" stroke="#000000" stroke-miterlimit="10"/>
-      <text x="146" y="172" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PID</text>
+      <rect x="121.4" y="123.44" width="53.96" height="55.68" class="boxColor" />
+      <path d="M 121.4 160.58 L 175.36 137.36" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
+      <text x="146" y="172" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">PID</text>
     </g>
     <g id="box-sl-pid" pointer-events="all" harmony-tooltip="Configure Speed PID Controller">
-      <rect x="244.61" y="120.44" width="55.96" height="57.68" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <path d="M 244.61 158.91 L 300.57 134.86" fill="none" stroke="#000000" stroke-miterlimit="10"/>
-      <text x="273" y="170" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PID</text>
+      <rect x="244.61" y="120.44" width="55.96" height="57.68" class="boxColor" />
+      <path d="M 244.61 158.91 L 300.57 134.86" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
+      <text x="273" y="170" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">PID</text>
     </g>
     <g id="box-foc-pid-quadrature" pointer-events="all" harmony-tooltip="Configure Quadrature axis current PID Controller">
-      <rect x="451.96" y="122.68" width="53.96" height="54.68" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <path d="M 451.96 159.16 L 505.92 136.35" fill="none" stroke="#000000" stroke-miterlimit="10"/>
-      <text x="476" y="170" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PID</text>
+      <rect x="451.96" y="122.68" width="53.96" height="54.68" class="boxColor" />
+      <path d="M 451.96 159.16 L 505.92 136.35" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
+      <text x="476" y="170" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">PID</text>
     </g>
     <g id="box-foc-pid-direct" pointer-events="all" harmony-tooltip="Configure Direct axis current PID controller">
-      <rect x="451.96" y="234.83" width="53.96" height="54.68" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <path d="M 451.96 271.3 L 505.92 248.5" fill="none" stroke="#000000" stroke-miterlimit="10"/>
-      <text x="476" y="282" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PID</text>
+      <rect x="451.96" y="234.83" width="53.96" height="54.68" class="boxColor" />
+      <path d="M 451.96 271.3 L 505.92 248.5" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
+      <text x="476" y="282" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">PID</text>
     </g>
 	<g id="tooltip" visibility="hidden">
     <rect width="80" height="24" fill="#FFFDD0" rx="2" ry="2" stroke="black" stroke-width="0.3"/>

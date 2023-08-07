@@ -2,6 +2,11 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="270px" height="82px" viewBox="-0.5 -0.5 270 82">
   <defs/>
+  <style>
+    .boxColor { fill:#1565C0 }
+    .boxTextColor { fill:White }
+    .boxLineColor { stroke:White; }
+  </style>
   <g pointer-events="none">
     <g id="axis" pointer-events="none">
       <path d="M 79.73 80 L 80.57 5" fill="none" stroke="#b3b3b3" stroke-miterlimit="10" stroke-dasharray="3 3"/>
@@ -25,16 +30,16 @@
       <path d="M 101.79 11 L 94.79 14.5 L 96.54 11 L 94.79 7.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
     </g>
     <g id="FOC1">
-      <rect x="102.91" y="6" width="18.09" height="10" fill="#0050ef" stroke="none"/>
-      <text x="112" y="14" fill="#FFFFFF" font-family="Helvetica" font-size="7px" text-anchor="middle">FOC</text>
+      <rect x="102.91" y="6" width="18.09" height="10" class="boxColor" stroke="none"/>
+      <text x="112" y="14" class="boxTextColor" font-family="Helvetica" font-size="7px" text-anchor="middle">FOC</text>
     </g>
     <g id="FOC2">
-      <rect x="177" y="6" width="18.09" height="10" fill="#0050ef" stroke="none"/>
-      <text x="186" y="14" fill="#FFFFFF" font-family="Helvetica" font-size="7px" text-anchor="middle">FOC</text>
+      <rect x="177" y="6" width="18.09" height="10" class="boxColor" stroke="none"/>
+      <text x="186" y="14" class="boxTextColor" font-family="Helvetica" font-size="7px" text-anchor="middle">FOC</text>
     </g>
     <g id="FOC3">
-      <rect x="250" y="6" width="18.09" height="10" fill="#0050ef" stroke="none"/>
-      <text x="259" y="14" fill="#FFFFFF" font-family="Helvetica" font-size="7px" text-anchor="middle">FOC</text>
+      <rect x="250" y="6" width="18.09" height="10" class="boxColor" stroke="none"/>
+      <text x="259" y="14" class="boxTextColor" font-family="Helvetica" font-size="7px" text-anchor="middle">FOC</text>
     </g>
   </g>
 </svg>

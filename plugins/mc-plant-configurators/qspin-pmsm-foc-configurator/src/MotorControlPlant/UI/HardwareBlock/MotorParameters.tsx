@@ -17,7 +17,7 @@ const MotorParameters = (props: { showToast: (arg0: any) => void }) => {
   ];
   DialogCommonInitilizeCode(props.showToast, SymbolsArray);
 
-  function SymbolValueChanged(onchange: Map<String, any>) {
+  function symbolValueChanged(onchange: Map<String, any>) {
     // do nothing
   }
 
@@ -27,7 +27,7 @@ const MotorParameters = (props: { showToast: (arg0: any) => void }) => {
         <AddMultipleUIComponentsWithLabel
           componentId={mc_component_id}
           symbolsArray={SymbolsArray}
-          onChange={SymbolValueChanged}
+          onChange={symbolValueChanged}
         />
       </div>
     </div>

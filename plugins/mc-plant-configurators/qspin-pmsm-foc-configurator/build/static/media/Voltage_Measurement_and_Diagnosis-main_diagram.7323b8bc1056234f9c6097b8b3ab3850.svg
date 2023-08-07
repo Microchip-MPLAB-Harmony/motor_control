@@ -2,14 +2,11 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="471px" height="251px" viewBox="-0.5 -0.5 471 251">
   <defs>
-    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-box">
-      <stop offset="0%" style="stop-color:#0050ef"/>
-      <stop offset="100%" style="stop-color:#ffffff"/>
-    </linearGradient>
-    <linearGradient x1="0%" y1="0%" x2="100%" y2="0%" id="gradient-box-vsens">
-      <stop offset="0%" style="stop-color:#0050ef"/>
-      <stop offset="100%" style="stop-color:#ffffff"/>
-    </linearGradient>
+	<style>
+      .boxColor { fill:#1565C0 }
+      .boxTextColor { fill:White }
+      .boxLineColor { stroke:White; }
+    </style>
   </defs>
   <g>
     <g id="lines" pointer-events="none">
@@ -32,20 +29,20 @@
       <text x="451" y="215" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Status</text>
     </g>
     <g id="box-voltagescaling" pointer-events="all">
-      <rect x="130" y="0" width="111" height="70" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <text x="186" y="38" fill="000000" font-family="Verdana" font-size="12px" text-anchor="middle">Voltage Scaling</text>
+      <rect x="130" y="0" width="111" height="70" class="boxColor" />
+      <text x="186" y="38" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Voltage Scaling</text>
     </g>
     <g id="box-vsens" pointer-events="all">
-      <path d="M 15.14 2.87 L 49.9 2.87 L 49.9 54.22 L 32.52 67.5 L 15.14 54.22 Z" fill="url(#gradient-box-vsens)" stroke="#001dbc" stroke-miterlimit="10" transform="rotate(270,32.52,35.19)"/>
-      <text x="30" y="39" fill="000000" font-family="Verdana" font-size="12px" text-anchor="middle">VSens</text>
+      <path d="M 15.14 2.87 L 49.9 2.87 L 49.9 54.22 L 32.52 67.5 L 15.14 54.22 Z" class="boxColor"  stroke-miterlimit="10" transform="rotate(270,32.52,35.19)"/>
+      <text x="30" y="39" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">VSens</text>
     </g>
     <g id="box-processing" pointer-events="all">
-      <rect x="297" y="78" width="108" height="70" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <text x="352" y="116" fill="000000" font-family="Verdana" font-size="12px" text-anchor="middle">Processing</text>
+      <rect x="297" y="78" width="108" height="70" class="boxColor" />
+      <text x="352" y="116" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Processing</text>
     </g>
     <g id="box-diagnosis" pointer-events="all">
-      <rect x="298" y="176" width="108" height="70" fill="url(#gradient-box)" stroke="#001dbc"/>
-      <text x="352" y="215" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Diagnosis</text>
+      <rect x="298" y="176" width="108" height="70" class="boxColor" />
+      <text x="352" y="215" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Diagnosis</text>
     </g>
 	<g id="tooltip" visibility="hidden">
     <rect width="80" height="24" fill="#FFFDD0" rx="2" ry="2" stroke="black" stroke-width="0.3"/>

@@ -2,10 +2,11 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="347px" height="142px" viewBox="-0.5 -0.5 347 142">
   <defs>
-    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient1">
-      <stop offset="0%" style="stop-color:#0050ef"/>
-      <stop offset="100%" style="stop-color:#ffffff"/>
-    </linearGradient>
+	<style>
+      .boxColor { fill:#1565C0 }
+      .boxTextColor { fill:White }
+      .boxLineColor { stroke:White; }
+    </style>
   </defs>
   <g>
     <g id="lines" pointer-events="none">
@@ -49,44 +50,44 @@
       <path d="M 276.57 93.61 L 272.28 93.61 L 275.34 90.24 L 272.28 86.87 L 276.57 86.87" fill="none" stroke="#000000" stroke-miterlimit="10"/>
     </g>
     <g id="box-sigma" pointer-events="all">
-      <rect x="149.33" y="75.72" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#gradient1)" stroke="#001dbc"/>
-      <text x="167" y="93" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">∫</text>
+      <rect x="149.33" y="75.72" width="35.95" height="26.42" rx="3.96" ry="3.96" class="boxColor" />
+      <text x="167" y="93" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">∫</text>
     </g>
     <g id="box-ddt" pointer-events="all">
-      <rect x="149.33" y="112.26" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#gradient1)" stroke="#001dbc"/>
-      <text x="167" y="127" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">d/dt</text>
+      <rect x="149.33" y="112.26" width="35.95" height="26.42" rx="3.96" ry="3.96" class="boxColor" />
+      <text x="167" y="127" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">d/dt</text>
     </g>
     <g id="box-ki" pointer-events="all">
-      <rect x="88.38" y="75.72" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#gradient1)" stroke="#001dbc"/>
-      <text x="108" y="93" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Ki</text>
+      <rect x="88.38" y="75.72" width="35.95" height="26.42" rx="3.96" ry="3.96" class="boxColor" />
+      <text x="108" y="93" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Ki</text>
     </g>
     <g id="box-kd" pointer-events="all">
-      <rect x="88.38" y="112.26" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#gradient1)" stroke="#001dbc"/>
-      <text x="106" y="129" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Kd</text>
+      <rect x="88.38" y="112.26" width="35.95" height="26.42" rx="3.96" ry="3.96" class="boxColor" />
+      <text x="106" y="129" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Kd</text>
     </g>
     <g id="box-kp" pointer-events="all">
-      <rect x="88.38" y="39.18" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#gradient1)" stroke="#001dbc"/>
-      <text x="108" y="55" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Kp</text>
+      <rect x="88.38" y="39.18" width="35.95" height="26.42" rx="3.96" ry="3.96" class="boxColor" />
+      <text x="108" y="55" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Kp</text>
     </g>
     <g id="box-kv" pointer-events="all">
-      <rect x="88.38" y="0" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#gradient1)" stroke="#001dbc"/>
-      <text x="106" y="17" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">Kv</text>
+      <rect x="88.38" y="0" width="35.95" height="26.42" rx="3.96" ry="3.96" class="boxColor" />
+      <text x="106" y="17" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Kv</text>
     </g>
     <g id="box-pt1" pointer-events="all">
-      <rect x="210.14" y="113.58" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#gradient1)" stroke="#001dbc"/>
-      <text x="228" y="130" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">PT1</text>
+      <rect x="210.14" y="113.58" width="35.95" height="26.42" rx="3.96" ry="3.96" class="boxColor" />
+      <text x="228" y="130" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">PT1</text>
     </g>
     <g id="box-ramp1" pointer-events="all">
-      <rect x="210.14" y="77.04" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#gradient1)" stroke="#001dbc"/>
-      <path d="M 227.22 97.52 L 227.22 83.15" fill="none" stroke="#000000" stroke-miterlimit="10"/>
-      <path d="M 227.22 83.05 L 234.88 83.15" fill="none" stroke="#000000" stroke-miterlimit="10"/>
-      <path d="M 219.57 97.45 L 227.22 97.55" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <rect x="210.14" y="77.04" width="35.95" height="26.42" rx="3.96" ry="3.96" class="boxColor" />
+      <path d="M 227.22 97.52 L 227.22 83.15" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
+      <path d="M 227.22 83.05 L 234.88 83.15" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
+      <path d="M 219.57 97.45 L 227.22 97.55" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
     </g>
     <g id="box-ramp2" pointer-events="all">
-      <rect x="289.28" y="76.71" width="35.95" height="26.42" rx="3.96" ry="3.96" fill="url(#gradient1)" stroke="#001dbc"/>
-      <path d="M 306.36 97.19 L 306.36 82.81" fill="none" stroke="#000000" stroke-miterlimit="10"/>
-      <path d="M 306.36 82.71 L 314.02 82.81" fill="none" stroke="#000000" stroke-miterlimit="10"/>
-      <path d="M 298.71 97.11 L 306.36 97.22" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <rect x="289.28" y="76.71" width="35.95" height="26.42" rx="3.96" ry="3.96" class="boxColor"/>
+      <path d="M 306.36 97.19 L 306.36 82.81" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
+      <path d="M 306.36 82.71 L 314.02 82.81" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
+      <path d="M 298.71 97.11 L 306.36 97.22" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
     </g>
   </g>
 </svg>

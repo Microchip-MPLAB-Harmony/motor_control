@@ -12,6 +12,7 @@ import {
 } from '@mplab_harmony/harmony-plugin-core-service/build/database-access/SymbolAccess';
 import { mc_component_id } from '../MainView/MainBlock';
 import { useWindowDimensions } from '@mplab_harmony/harmony-plugin-ui/build/utils/Dimension';
+import { convertToBoolean } from '@mplab_harmony/harmony-plugin-ui/build/utils/CommonUtil';
 import {
   AddMultipleUIComponentsWithLabel,
   GetUIComponentWithLabel,
@@ -60,7 +61,7 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
   }
 
   function FlyingStartCheckBoxChanged(onChangeData: Map<String, any>) {
-    flyingstartCheckBoxStatus = onChangeData.get('symbolValue');
+    flyingstartCheckBoxStatus = convertToBoolean(onChangeData.get('symbolValue'));
     update();
   }
 
@@ -130,7 +131,7 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
           onChange={FlyingStartCheckBoxChanged}
           symbolListeners={[FlyingStartCheckBox]}
         />
-        {flyingstartCheckBoxStatus === 'true' && AddFlyingStartChildren()}
+        {flyingstartCheckBoxStatus === true && AddFlyingStartChildren()}
       </div>
     );
   }

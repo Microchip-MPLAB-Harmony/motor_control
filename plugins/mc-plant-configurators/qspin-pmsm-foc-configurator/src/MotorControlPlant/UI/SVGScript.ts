@@ -214,7 +214,7 @@ function sendClickAction(evt: { target: any }) {
     callPopUp(DialogDemo, target.value, '45rem', '20rem');
     return;
   } else if (target.value === startupConfiguratorText) {
-    callPopUp(DialogDemo, target.value, '90rem', '70rem');
+    callPopUp(DialogDemo, target.value, '90rem', '60rem');
     return;
   } else if (target.value === quickSettingsText) {
     callPopUp(DialogDemo, target.value, '40rem', '25rem');

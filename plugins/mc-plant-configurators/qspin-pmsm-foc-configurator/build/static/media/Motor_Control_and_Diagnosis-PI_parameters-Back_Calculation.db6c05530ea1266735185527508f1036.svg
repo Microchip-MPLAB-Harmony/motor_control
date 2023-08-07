@@ -2,10 +2,11 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="336px" height="172px" viewBox="-0.5 -0.5 336 172">
   <defs>
-    <linearGradient id="gradient_box" x1="0%" y1="100%" x2="0%" y2="0%">
-      <stop offset="0%" style="stop-color:#0050ef"/>
-      <stop offset="100%" style="stop-color:#ffffff"/>
-    </linearGradient>
+	<style>
+      .boxColor { fill:#1565C0 }
+      .boxTextColor { fill:White }
+      .boxLineColor { stroke:White; }
+    </style>
   </defs>
   <g id="background" pointer-events="none">
     <path d="M 116.26 52.77 L 262.64 52.77" fill="none" stroke="#000000" stroke-miterlimit="10"/>
@@ -75,40 +76,40 @@
   </g>
   <g id="boxes" pointer-events="none">
     <g id="box-kc">
-      <rect x="234.75" y="143.77" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
-      <text x="252" y="161" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Kc</text>
+      <rect x="234.75" y="143.77" width="34.37" height="26.23" rx="3.94" ry="3.94" class="boxColor" />
+      <text x="252" y="161" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Kc</text>
     </g>
     <g id="box-ddt">
-      <rect x="143" y="75.21" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
-      <text x="160" y="92" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">d/dt</text>
+      <rect x="143" y="75.21" width="34.37" height="26.23" rx="3.94" ry="3.94" class="boxColor" />
+      <text x="160" y="92" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">d/dt</text>
     </g>
     <g id="box-kd">
-      <rect x="84.79" y="75.21" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
-      <text x="102" y="93" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Kd</text>
+      <rect x="84.79" y="75.21" width="34.37" height="26.23" rx="3.94" ry="3.94" class="boxColor" />
+      <text x="102" y="93" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Kd</text>
     </g>
     <g id="box-ki">
-      <rect x="84.79" y="111.5" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
-      <text x="102" y="128" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Ki</text>
+      <rect x="84.79" y="111.5" width="34.37" height="26.23" rx="3.94" ry="3.94" class="boxColor" />
+      <text x="102" y="128" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Ki</text>
     </g>
     <g id="box-kp">
-      <rect x="84.79" y="38.92" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
-      <text x="102" y="56" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Kp</text>
+      <rect x="84.79" y="38.92" width="34.37" height="26.23" rx="3.94" ry="3.94" class="boxColor" />
+      <text x="102" y="56" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Kp</text>
     </g>
     <g id="box-kv">
-      <rect x="84.79" y="0" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
-      <text x="102" y="17" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Kv</text>
+      <rect x="84.79" y="0" width="34.37" height="26.23" rx="3.94" ry="3.94" class="boxColor" />
+      <text x="102" y="17" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Kv</text>
     </g>
     <g id="box-pt1">
-      <rect x="201.19" y="76.52" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
-      <text x="218" y="93" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">PT1</text>
+      <rect x="201.19" y="76.52" width="34.37" height="26.23" rx="3.94" ry="3.94" class="boxColor" />
+      <text x="218" y="93" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">PT1</text>
     </g>
     <g id="box-integral">
-      <rect x="143" y="111.5" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
-      <text x="160" y="128" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">∫</text>
+      <rect x="143" y="111.5" width="34.37" height="26.23" rx="3.94" ry="3.94" class="boxColor" />
+      <text x="160" y="128" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">∫</text>
     </g>
     <g id="box-clamp">
-      <rect x="276.85" y="76.19" width="34.37" height="26.23" rx="3.94" ry="3.94" fill="url(#gradient_box)" stroke="#001dbc"/>
-      <path d="M 286 96 h 7 v -14 h7" fill="none" stroke="#000000" stroke-miterlimit="10"/>
+      <rect x="276.85" y="76.19" width="34.37" height="26.23" rx="3.94" ry="3.94" class="boxColor" />
+      <path d="M 286 96 h 7 v -14 h7" fill="none" class="boxLineColor" stroke-miterlimit="10"/>
     </g>
   </g>
 </svg>

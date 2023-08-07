@@ -3,12 +3,16 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
     width="780px" height="235px" viewBox="-0.5 -0.5 780 235" style="background-color: rgb(255, 255, 255);">
-
+<style>
+.boxColor { fill:#1565C0 }
+.boxTextColor { fill:White }
+.boxLineColor { stroke:White; stroke-width:2 }
+</style>
     <g>
         <g id= "box-current-observer">
-            <rect x="47" y="0" width="120" height="186" rx="7.2" ry="7.2" fill="#0050ef" stroke="#001dbc" pointer-events="all" />
-            <text x="107" y="97" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">Sliding Mode Current</text>
-            <text x="107" y="115" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">Observer</text>
+            <rect x="47" y="0" width="120" height="186" rx="7.2" ry="7.2" class="boxColor"  pointer-events="all" />
+            <text x="107" y="97" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Sliding Mode Current</text>
+            <text x="107" y="115" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Observer</text>
         </g>
 
         <g id= "box-subtractor">
@@ -18,28 +22,28 @@
         </g>
 
         <g id= "box-switching-function">
-            <rect x="283" y="11" width="130" height="176" rx="7.8" ry="7.8" fill="#0050ef" stroke="#001dbc" pointer-events="all" />
-            <text x="348" y="175" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">Switching Function</text>
+            <rect x="283" y="11" width="130" height="176" rx="7.8" ry="7.8" class="boxColor"  pointer-events="all" />
+            <text x="348" y="175" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Switching Function</text>
 
-            <path d="M 347 154 L 347 40.37" fill="none" stroke="#ffffff" stroke-miterlimit="10" pointer-events="stroke" />
-            <path d="M 347 35.12 L 350.5 42.12 L 347 40.37 L 343.5 42.12 Z" fill="#ffffff" stroke="#ffffff" stroke-miterlimit="10" pointer-events="all" />
-            <path d="M 317 94 L 380.63 94" fill="none" stroke="#ffffff" stroke-miterlimit="10" pointer-events="stroke" />
-            <path d="M 385.88 94 L 378.88 97.5 L 380.63 94 L 378.88 90.5 Z" fill="#ffffff" stroke="#ffffff" stroke-miterlimit="10" pointer-events="all" />
-            <path d="M 327 134 L 367 54" fill="none" stroke="#ffffff" stroke-miterlimit="10" pointer-events="stroke" />
-            <path d="M 367 54 L 387 54" fill="none" stroke="#ffffff" stroke-miterlimit="10" pointer-events="stroke" />
-            <path d="M 307 134 L 327 134" fill="none" stroke="#ffffff" stroke-miterlimit="10" pointer-events="stroke" />
+            <path d="M 347 154 L 347 40.37" fill="none" class="boxLineColor" stroke-miterlimit="10" pointer-events="stroke" />
+            <path d="M 347 35.12 L 350.5 42.12 L 347 40.37 L 343.5 42.12 Z" class="boxLineColor" stroke-miterlimit="10" pointer-events="all" />
+            <path d="M 317 94 L 380.63 94" fill="none" class="boxLineColor" stroke-miterlimit="10" pointer-events="stroke" />
+            <path d="M 385.88 94 L 378.88 97.5 L 380.63 94 L 378.88 90.5 Z"  class="boxLineColor boxTextColor" stroke-miterlimit="10" pointer-events="all" />
+            <path d="M 327 134 L 367 54" fill="none" class="boxLineColor" stroke-miterlimit="10" pointer-events="stroke" />
+            <path d="M 367 54 L 387 54" fill="none" class="boxLineColor" stroke-miterlimit="10" pointer-events="stroke" />
+            <path d="M 307 134 L 327 134" fill="none" class="boxLineColor" stroke-miterlimit="10" pointer-events="stroke" />
         </g>
 
         <g id= "box-bemf-observer">
-            <rect x="454" y="35" width="120" height="123" rx="7.2" ry="7.2" fill="#0050ef" stroke="#001dbc" pointer-events="all" />
-            <text x="514" y="100" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">Back EMF</text>
-            <text x="514" y="118" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">Observer</text>
+            <rect x="454" y="35" width="120" height="123" rx="7.2" ry="7.2" class="boxColor"  pointer-events="all" />
+            <text x="514" y="100" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Back EMF</text>
+            <text x="514" y="118" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Observer</text>
         </g>
 
         <g id= "box-flux-angle_calculator">
-            <rect x="612" y="31" width="120" height="123" rx="7.2" ry="7.2" fill="#0050ef" stroke="#001dbc" pointer-events="all" />
-            <text x="672" y="96" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">Flux Angle</text>
-            <text x="672" y="114" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">Calculation</text>
+            <rect x="612" y="31" width="120" height="123" rx="7.2" ry="7.2" class="boxColor"  pointer-events="all" />
+            <text x="672" y="96" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Flux Angle</text>
+            <text x="672" y="114" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Calculation</text>
         </g>
 
         <g id= "connectors">

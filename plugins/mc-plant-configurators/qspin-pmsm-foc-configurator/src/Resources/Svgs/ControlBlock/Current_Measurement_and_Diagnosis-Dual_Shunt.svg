@@ -1,13 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="611" height="312" viewBox="-0.5 -0.5 611 312" >
   <defs>
-    <linearGradient x1="0%" y1="0%" x2="100%" y2="0%" id="mx-gradient-0050ef-1-ffffff-1-e-0">
-      <stop offset="0%" style="stop-color:#0050ef"/>
-      <stop offset="100%" style="stop-color:#ffffff"/>
-    </linearGradient>
-    <linearGradient x1="0%" y1="100%" x2="0%" y2="0%" id="gradient-box">
-      <stop offset="0%" style="stop-color:#0050ef"/>
-      <stop offset="100%" style="stop-color:#ffffff"/>
-    </linearGradient>
+   	<style>
+      .boxColor { fill:#1565C0 }
+      .boxTextColor { fill:White }
+      .boxLineColor { stroke:White; }
+    </style>
   </defs>
   <g>
     <g id="background" pointer-events="none">
@@ -85,28 +82,28 @@
     </g>
     <g id="boxes" pointer-events="all">
       <g id="box-iusens">
-        <path d="M 14.94 -0.34 L 49.7 -0.34 L 49.7 51.01 L 32.32 64.29 L 14.94 51.01 Z" fill="url(#mx-gradient-0050ef-1-ffffff-1-e-0)" stroke="#001dbc" stroke-miterlimit="10" transform="rotate(270,32.32,31.98)"/>
-        <text x="28" y="36" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">IuSens</text>
+        <path d="M 14.94 -0.34 L 49.7 -0.34 L 49.7 51.01 L 32.32 64.29 L 14.94 51.01 Z" class="boxColor"  stroke-miterlimit="10" transform="rotate(270,32.32,31.98)"/>
+        <text x="28" y="36" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">IuSens</text>
       </g>
       <g id="box-ivsens">
-        <path d="M 14.94 162.09 L 49.7 162.09 L 49.7 213.44 L 32.32 226.72 L 14.94 213.44 Z" fill="url(#mx-gradient-0050ef-1-ffffff-1-e-0)" stroke="#001dbc" stroke-miterlimit="10" transform="rotate(270,32.32,194.41)"/>
-        <text x="28" y="198" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">IvSens</text>
+        <path d="M 14.94 162.09 L 49.7 162.09 L 49.7 213.44 L 32.32 226.72 L 14.94 213.44 Z" class="boxColor"  stroke-miterlimit="10" transform="rotate(270,32.32,194.41)"/>
+        <text x="28" y="198" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">IvSens</text>
       </g>
       <g id="box-diagnosis" pointer-events="all">
-        <rect x="428.42" y="240.5" width="110.8" height="69.52" fill="url(#gradient-box)" stroke="#001dbc"/>
-        <text x="484" y="279" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Diagnosis</text>
+        <rect x="428.42" y="240.5" width="110.8" height="69.52" class="boxColor" />
+        <text x="484" y="279" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Diagnosis</text>
       </g>
       <g id="box-current-scaling-top" pointer-events="all">
-        <rect x="283.46" y="163.38" width="110.8" height="69.52" fill="url(#gradient-box)" stroke="#001dbc"/>
-        <text x="339" y="202" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Current Scaling</text>
+        <rect x="283.46" y="163.38" width="110.8" height="69.52" class="boxColor" />
+        <text x="339" y="202" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Current Scaling</text>
       </g>
       <g id="box-offset-correction">
-        <rect x="109.87" y="77.63" width="108.03" height="69.52" fill="url(#gradient-box)" stroke="#001dbc" stroke-width="1"/>
-        <text x="164" y="116" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Offset Correction</text>
+        <rect x="109.87" y="77.63" width="108.03" height="69.52" class="boxColor"  stroke-width="1"/>
+        <text x="164" y="116" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Offset Correction</text>
       </g>
       <g id="box-current-scaling-bottom">
-        <rect x="283.46" y="0" width="110.8" height="69.52" fill="url(#gradient-box)" stroke="#001dbc"/>
-        <text x="339" y="38" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Current Scaling</text>
+        <rect x="283.46" y="0" width="110.8" height="69.52" class="boxColor" />
+        <text x="339" y="38" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">Current Scaling</text>
       </g>
     </g>
 	<g id="tooltip" visibility="hidden">
