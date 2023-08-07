@@ -35,14 +35,6 @@ notes and licensing information.
 | doc        | Demonstration user guide in .chm format                   |
 | docs       | Demonstration user guide in HTML format                   |
 
-
-# Motor Control Algorithms
-
-| Algorithm |  Description |
-|------------ | -------------- |
-| [PMSM FOC Algorithm](algorithms/pmsm_foc/readme.md) | To Control Permanent Magnet Synchronous Motors using Field Oriented Control (FOC) |
-|||
-
 # Motor Control Demo Applications Repositories
 
 | Repository Name | Description | Help Document | 
@@ -54,7 +46,6 @@ notes and licensing information.
 | [mc_apps_sam_e7x_s7x_v7x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_e7x_s7x_v7x) | Motor Control Applications for SAM E7x family | [mc_apps_sam_e7x_s7x_v7x help](https://microchip-mplab-harmony.github.io/mc_apps_sam_e7x_s7x_v7x/) |
 | [mc_apps_sam_rh71](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_rh71) | Motor Control Applications for SAM RH71 family | [mc_apps_sam_rh71 help](https://microchip-mplab-harmony.github.io/mc_apps_sam_rh71/) |
 [mc_apps_sam_rh707](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_rh707) | Motor Control Applications for SAM RH707 family | [mc_apps_sam_rh707 help](https://microchip-mplab-harmony.github.io/mc_apps_sam_rh707/) |
-|||||
 
 ____
 
