@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 91.7 35"
+   xml:space="preserve"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="Notice.svg"
+   width="91.699997"
+   height="35"><metadata
+     id="metadata51"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+     id="defs49" /><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="706"
+     id="namedview47"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="3.1406762"
+     inkscape:cx="45.849998"
+     inkscape:cy="17.5"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" /><style
+     type="text/css"
+     id="style3">
+	.st0{fill:#FFFF00;}
+	.st1{font-family:'sans-serif';}
+	.st2{font-size:12.964px;}
+</style>
+  <g id="g5">
+    <rect x="0.5" y="0.5" class="st0" width="90.699997" height="34" id="rect7" style="fill:#ffff00"/>
+    <path d="m 90.7,1 0,33 L 1,34 1,1 90.7,1 m 1,-1 -91.7,0 0,35 91.7,0 0,-35 0,0 z" id="path9" inkscape:connector-curvature="0"/>
+  </g>
+  <text class="st1 st2" id="text11" style="font-size: 13px; font-family: sans-serif; white-space: pre;" x="15.51" y="21.736">CAUTION</text>
+</svg>

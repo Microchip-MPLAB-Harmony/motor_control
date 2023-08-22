@@ -1,0 +1,151 @@
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Discard default rules from bootstrap.
+ *  
+ */
+
+/*
+ * Fix for: Default color is #212529.
+ */
+body {
+  color: #000;
+}
+
+/*
+ * Fix for: All the LIs as marked with position:relative, so you cannot position an
+ * li:after or a li:before absolutely to a parent of your choice.
+ */
+.wh_publication_toc .nav > li {
+  position: inherit;
+}
+
+/* 
+ * Fix for: Compacting the side-toc (WH-231).
+ */
+li.hide-after,
+li.hide-before {
+  display: none
+}
+.dots-before,
+.dots-after {
+  cursor: pointer;
+  text-indent: 1.1em;
+  color: #ccc;
+  font-size: .8em
+}
+.dots-before span,
+.dots-after span {
+  border: 1px solid #e1e1e1;
+  padding: 2px 7px;
+  border-radius: 14px;
+}
+.dots-before span:hover,
+.dots-after span:hover {
+  border: 1px solid #bbb;
+  background-color: #fff
+}
+
+/* Fix for: Default table width. */
+.table {
+  width: unset;
+}
+
+/* Fix for: Light gray color to the table caption. Use a darker color. */
+caption {
+  color: inherit;
+  padding-top: unset;
+  caption-side: top;
+  white-space: nowrap;
+}
+
+/*
+ * Fix for: Two pixels border bottom under the thead,
+ * with a light color and bottom alignement.
+ */
+.table > thead > tr > th,
+.table > thead > tr > td,
+.table > tfoot > tr > th,
+.table > tfoot > tr > td,
+.table > tbody > tr > th,
+.table > tbody > tr > td,
+.table > caption + thead > tr:first-child > td,
+.table > caption + thead > tr:first-child > th,
+.table > colgroup + thead > tr:first-child > td,
+.table > colgroup + thead > tr:first-child > th,
+.table > thead:first-child > tr:first-child > td,
+.table > thead:first-child > tr:first-child > th {
+  /*
+   * WH-1947 In order for the default alignment to apply as it is defined
+   * in elements.css we need not to override it from this very specific rule.
+   */
+  /*  vertical-align:inherit ;*/
+  border-color: inherit;
+}
+th {
+  text-align: center;
+}
+td,
+th {
+  padding: 0.5em;
+}
+/* 
+ * Fix for: Default valign for cells is top and override rules from commonltr.
+ */
+td.valign-top,
+th.valign-top {
+  vertical-align: top;
+}
+td.valign-bottom,
+th.valign-bottom {
+  vertical-align: bottom;
+}
+td.valign-middle,
+th.valign-middle {
+  vertical-align: middle;
+}
+
+/* Fix for: Dotted border-bottom for abbr elements rendered with a dotted underline in browsers. */
+abbr,
+abbr[title] {
+  text-decoration: none;
+  border-bottom: none;
+}
+
+/* Fix for: Line height on the titles and body. This is directly controlled from OSB or WH style-sheets. */
+body,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: inherit;
+}
+/* Fix for: Paddings on publication_toc, topic_body and topic_toc elements. */
+#wh_publication_toc {
+  padding: 0;
+}
+
+#wh_topic_body {
+  padding: 0;
+}
+
+#wh_topic_toc {
+  padding: 0;
+}
+
+.navbar-nav.nav-list {
+  display: block;
+}
+
+/* Fix for: Default bottom margin for paragraphs. */
+p {
+  margin-bottom: 1em;
+}

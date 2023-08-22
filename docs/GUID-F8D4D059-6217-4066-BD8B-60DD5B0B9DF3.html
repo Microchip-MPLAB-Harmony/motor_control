@@ -1,0 +1,362 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="copyright" content="(C) Copyright 2023"/><meta name="generator" content="DITA-OT"/><meta name="description" content="The generated code from the Harmony QSpin intends to achieve following goals:"/>        
+      <title>1.1.1.5 Field Oriented Control Implementation</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3-d282e85"/><meta name="wh-source-relpath" content="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3.xml"/><meta name="wh-out-relpath" content="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
+    
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+</head>
+
+    <body id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB Harmony Motor Control "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB Harmony Motor Control </a></div>
+                    
+                </div>
+                
+                
+            </div>
+
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div class="d-flex justify-contents-around"><div class="flex-grow-1"></div><div class="position-relative flex-grow-1"><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div><div class="align-self-center flex-grow-1 ml-2"></div></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
+</div>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C"><div class="title"><a href="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Microchip MPLAB® Harmony 3 Motor Control</a></div></div></li><li><div class="topicref" data-id="GUID-42876005-92C2-4CC0-81FC-71368462D294"><div class="title"><a href="GUID-42876005-92C2-4CC0-81FC-71368462D294.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Harmony QSpin Motor Control</a></div></div></li><li><div class="topicref" data-id="GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272"><div class="title"><a href="GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Software Design</a><div class="wh-tooltip"><p class="shortdesc">This section briefly describes the software design of the motor control firmware         generated from the <strong class="ph b">Harmony Qspin</strong>.</p></div></div></div></li><li class="active"><div class="topicref" data-id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3"><div class="title"><a href="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.5</ph>
+Field Oriented Control Implementation</a><div class="wh-tooltip"><p class="shortdesc">The generated code from the Harmony QSpin intends to achieve following goals:</p></div></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d282e11" class="topicref" data-id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d282e11-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C.html" id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d282e11-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Microchip MPLAB® Harmony 3 Motor Control</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-42876005-92C2-4CC0-81FC-71368462D294-d282e19" class="topicref" data-id="GUID-42876005-92C2-4CC0-81FC-71368462D294" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-42876005-92C2-4CC0-81FC-71368462D294-d282e19-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-42876005-92C2-4CC0-81FC-71368462D294.html" id="GUID-42876005-92C2-4CC0-81FC-71368462D294-d282e19-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Harmony QSpin Motor Control</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272-d282e27" class="topicref" data-id="GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272-d282e27-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272.html" id="GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272-d282e27-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Software Design</a><div class="wh-tooltip"><p class="shortdesc">This section briefly describes the software design of the motor control firmware         generated from the <strong class="ph b">Harmony Qspin</strong>.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E-d282e41" class="topicref" data-id="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E.html" id="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E-d282e41-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1</ph>
+Permanent Magnet Synchronous Motor</a><div class="wh-tooltip"><p class="shortdesc">The Permanent Magnet Synchronous Motor (PMSM) is the most preferred choice for motor         control applications. Due to their permanent magnet rotor, they also have higher torque with         smaller frame size and no rotor current, all of which are advantages over AC Induction         Motors (AICMs). With their high power-to-size ratio, PMSMs can help make the design smaller         without the loss of torque. These strengths enable the usage of PMSM in a broad range of         variable frequency drives (VFDs) applications..</p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d282e52" class="topicref" data-id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5CCF6974-52BB-4407-9796-20C86F178C71.html" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d282e52-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.2</ph>
+Field Oriented Control</a><div class="wh-tooltip"><p class="shortdesc">The Field Oriented Control (FOC) is the conventional control scheme for permanent-magnet         synchronous motors. It generally results in smoother torque, slightly higher efficiency, and         higher torque-speed curve, compared to six-step control, but requires a measurement or         estimate of rotor position, and is more computationally intensive.</p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F-d282e63" class="topicref" data-id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F.html" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F-d282e63-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.3</ph>
+Current Measurement</a><div class="wh-tooltip"><p class="shortdesc">The phase current information is crucial to control the torque of the motor of an         electric drive with Field Oriented Control. The following section describes different         current measurement principles in an electric drive, and how it can be configured with         Harmony Qspin..</p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7-d282e74" class="topicref" data-id="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7.html" id="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7-d282e74-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.4</ph>
+Rotor Position Sensing</a><div class="wh-tooltip"><p class="shortdesc">he rotor position information is crucial to control the torque of the motor of an         electric drive with Field Oriented Control. The following section describes different rotor         position measurement technique in an electric drive, and how it can be configured with         Harmony QSpin..</p></div></div></div></li><li role="treeitem" class="active"><div data-tocid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3-d282e85" class="topicref" data-id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3.html" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3-d282e85-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.5</ph>
+Field Oriented Control Implementation</a><div class="wh-tooltip"><p class="shortdesc">The generated code from the Harmony QSpin intends to achieve following goals:</p></div></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525-d282e96" class="topicref" data-id="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525-d282e96-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525.html" id="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525-d282e96-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2</ph>
+Getting Started</a><div class="wh-tooltip"><p class="shortdesc">This section briefly describes the basic steps to get started with the <strong class="ph b">Harmony             Qspin</strong>. It consists of following steps:</p></div></div></div></li></ul></li></ul></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-7 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        <button id="wh_close_topic_toc_button" class="close-toc-button d-none" aria-label="Toggle topic table of content" aria-controls="wh_topic_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-1BAF2B5C-FF6E-4513-829A-FCCDE7868546">
+<h1 class="- topic/title title topictitle1" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-1BAF2B5C-FF6E-4513-829A-FCCDE7868546" style="">1.1.1.5 Field Oriented Control Implementation</h1>
+
+<div class="- topic/body body"><p class="- topic/shortdesc shortdesc">The generated code from the Harmony QSpin intends to achieve following goals:</p>
+        <ul class="- topic/ul ul" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__UL_D52_R2Z_XXB" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__UL_D52_R2Z_XXB">
+            <li class="- topic/li li" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-93145DF9-42E1-4B7C-A2F3-31BD8FD5C27F" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-93145DF9-42E1-4B7C-A2F3-31BD8FD5C27F">
+                <p class="- topic/p p">to spin a motor based on simple user inputs</p>
+            </li>
+            <li class="- topic/li li" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-A580758B-CFF0-4C4B-8074-944BFBCAD6EB" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-A580758B-CFF0-4C4B-8074-944BFBCAD6EB">
+                <p class="- topic/p p">to be modular and maintainable</p>
+            </li>
+            <li class="- topic/li li" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-064289C7-5EFF-4E5B-915C-FCA1345A2C3D" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-064289C7-5EFF-4E5B-915C-FCA1345A2C3D">
+                <p class="- topic/p p">to be a clear example to Microchip customers for a motor control Application
+                    using Microchip's 32 bit MCU devices</p>
+            </li>
+        </ul>
+        <p class="- topic/p p">The following section describes an overview of control software architecture to meet the
+            above mentioned goals.</p>
+        <section class="- topic/section section" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__SECTION_RLQ_S2Z_XXB" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__SECTION_RLQ_S2Z_XXB"><h2 class="- topic/title title sectiontitle">Software Description</h2>
+            
+            <p class="- topic/p p">The software spins a motor using a velocity control loop, with an inner current loop
+                using field-oriented control (FOC) to manage motor current and torque. Sensorless
+                estimation techniques are used to estimate motor position for commutation and
+                velocity control. User input is provided with a potentiometer and buttons to start
+                and stop the motor, or to reverse direction. A state machine is used to control the
+                transitions between these different modes of operation.</p>
+            <p class="- topic/p p">The motor startup process involves so-called “open-loop” operation. When the motor is
+                at rest or moving very slowly, the sensorless estimator is not accurate enough;
+                instead, a special set of states is provided to manage startup, in which commutation
+                is forced at a desired acceleration rate, and the velocity control loop is
+                disabled.</p>
+        </section>
+        <section class="- topic/section section" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__SECTION_P51_FGZ_XXB" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__SECTION_P51_FGZ_XXB"><h2 class="- topic/title title sectiontitle">Software Architecture</h2>
+            
+            <p class="- topic/p p">The software performs following tasks:</p>
+            <ul class="- topic/ul ul" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__UL_SHH_HGZ_XXB" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__UL_SHH_HGZ_XXB">
+                <li class="- topic/li li" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-5AC0ACA4-93AB-4660-903C-B424519A8E52" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-5AC0ACA4-93AB-4660-903C-B424519A8E52">
+                    <p class="- topic/p p">Microcontroller and motor control peripheral initialization</p>
+                </li>
+                <li class="- topic/li li" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-EB9CCFEF-C9B9-45B1-873E-35FC04C48029" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-EB9CCFEF-C9B9-45B1-873E-35FC04C48029">
+                    <p class="- topic/p p">FOC State machine in ADC ISR</p>
+                </li>
+                <li class="- topic/li li" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-9A987977-3524-46F3-BAEC-ADA888A38B9B" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-9A987977-3524-46F3-BAEC-ADA888A38B9B">
+                    <p class="- topic/p p">Motor start and stop command by GPIO button</p>
+                </li>
+                <li class="- topic/li li" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-B505E890-7769-4F11-8835-919F58278C79" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-B505E890-7769-4F11-8835-919F58278C79">
+                    <p class="- topic/p p">Motor speed command from potentiometer</p>
+                </li>
+            </ul>
+            <div class="- topic/div div"><strong class="+ topic/ph hi-d/b ph b">Motor control peripheral initialization</strong><p class="- topic/p p">On power-on reset, the software
+                    initializes the microcontroller and motor control peripherals according to the
+                    user requirements.</p></div>
+            <div class="- topic/div div"><strong class="+ topic/ph hi-d/b ph b">Motor control state machine</strong><p class="- topic/p p">The software implements the motor control
+                    tasks in ADC ISR. The ADC ISR incorporates following states:</p><ul class="- topic/ul ul" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__UL_AJN_MGZ_XXB" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__UL_AJN_MGZ_XXB">
+                    <li class="- topic/li li" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-DA604C62-B303-41CA-9658-061FFB759253" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-DA604C62-B303-41CA-9658-061FFB759253">
+                        <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Idle</strong>. In this state, the motor does not spin. The software waits
+                            for a valid button press from the user to start the motor.</p>
+                    </li>
+                    <li class="- topic/li li" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-3FEFC1A5-CF0B-45B7-957A-5D2EBE00F2C2" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-3FEFC1A5-CF0B-45B7-957A-5D2EBE00F2C2">
+                        <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Start-up</strong>. In this state, the software executes the PMSM start-up
+                            procedure as described in <a class="- topic/xref xref" href="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076.html#GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_P1C_GVR_SXB"><span>Start-up Configurator</span></a>.</p>
+                    </li>
+                    <li class="- topic/li li" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-55C5ED69-E0B2-41FA-B6E6-A3649402794A" data-ofbid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__GUID-55C5ED69-E0B2-41FA-B6E6-A3649402794A">
+                        <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Close-loop speed control</strong>. In this state, Control switched to
+                            closed loop and rotor angle is obtained from the configured position
+                            feedback method.</p>
+                    </li>
+                </ul></div>
+            <div class="- topic/div div"><strong class="+ topic/ph hi-d/b ph b">Motor speed command from potentiometer</strong><p class="- topic/p p">The software calculates the speed
+                    reference from the measured from the potentiometer input.</p></div>
+            <div class="- topic/div div"><strong class="+ topic/ph hi-d/b ph b">Motor start and stop Command by GPIO</strong><p class="- topic/p p">The software polls the GPIO button
+                    every 10ms to check if the button has been pressed. If the button press is
+                    detected, the firmware changes the motor control state from “Idle” to “Start-up”
+                    to initiate the motor spin at the specified reference speed.</p></div>
+        </section>
+    </div>
+</article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                        <nav role="navigation" id="wh_topic_toc" aria-label="On this page" class="col-lg-2 d-none d-lg-block navbar d-print-none"> 
+                            <div id="wh_topic_toc_content">
+		                        
+	                            <div class=" wh_topic_toc "><div class="wh_topic_label">On this page</div><ul><li class="section-item"><div class="section-title"><a href="#GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__SECTION_RLQ_S2Z_XXB" data-tocid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__SECTION_RLQ_S2Z_XXB">Software Description</a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__SECTION_P51_FGZ_XXB" data-tocid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3__SECTION_P51_FGZ_XXB">Software Architecture</a></div></li></ul></div>
+	                        	
+                        	</div>
+                        </nav>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <div class="mchp_disclaimer"><p class="mchp_disclaimer_text">The online versions of the documents are provided as a courtesy. Verify all content and data in the device’s PDF documentation found on the device product page.</p></div><footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
+</div>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+    </body>
+</html>

@@ -1,0 +1,246 @@
+/*
+
+Oxygen WebHelp Plugin
+Copyright (c) 1998-2021 Syncro Soft SRL, Romania.  All rights reserved.
+
+*/
+/* Use the admonitions from the oXygen WebHelp resources. */
+div.note {
+  background-repeat:no-repeat;
+  background-image:url("../img/note.svg");
+}
+
+div.note > span.note__title {
+  font-weight: bold;
+}
+
+div.note,
+div.note[dir='ltr'],
+*[dir] div.note[dir='ltr'],
+*[dir] *[dir] div.note[dir='ltr'],
+*[dir] *[dir] *[dir] div.note[dir='ltr'],
+*[dir] *[dir] *[dir] *[dir] div.note[dir='ltr'],
+*[dir='ltr'] div.note,
+*[dir] *[dir='ltr'] div.note,
+*[dir] *[dir] *[dir='ltr'] div.note,
+*[dir] *[dir] *[dir] *[dir='ltr'] div.note,
+*[dir] *[dir] *[dir] *[dir] *[dir='ltr'] div.note {
+  padding: 0.75em 0.5em 0.75em 3em;
+  background-position: 0.5em 0.5em;
+}
+
+@media screen {
+  div.note[dir='rtl'],
+  *[dir='rtl'] div.note,
+  *[dir] div.note[dir='rtl'],
+  *[dir] *[dir] div.note[dir='rtl'],
+  *[dir] *[dir] *[dir] div.note[dir='rtl'],
+  *[dir] *[dir] *[dir] *[dir] div.note[dir='rtl'],
+  *[dir] *[dir='rtl'] div.note,
+  *[dir] *[dir] *[dir='rtl'] div.note,
+  *[dir] *[dir] *[dir] *[dir='rtl'] div.note,
+  *[dir] *[dir] *[dir] *[dir] *[dir='rtl'] div.note {
+    padding: 0.75em 3em 0.75em 0.5em;
+    background-position: top 0.5em right 0.5em;
+  }  
+}
+
+@media print {
+  /* Chemistry does not know 4 tokens expression, using only two. */
+  div.note[dir='rtl'],
+  *[dir='rtl'] div.note,
+  *[dir] div.note[dir='rtl'],
+  *[dir] *[dir] div.note[dir='rtl'],
+  *[dir] *[dir] *[dir] div.note[dir='rtl'],
+  *[dir] *[dir] *[dir] *[dir] div.note[dir='rtl'],
+  *[dir] *[dir='rtl'] div.note,
+  *[dir] *[dir] *[dir='rtl'] div.note,
+  *[dir] *[dir] *[dir] *[dir='rtl'] div.note,
+  *[dir] *[dir] *[dir] *[dir] *[dir='rtl'] div.note {
+    padding: 0.75em 3em 0.75em 0.5em;
+    background-position: 99% 0.5em;
+  }
+}
+
+/* WH-2033 - No icon for note with type="other" */
+div.note.note_other {
+    background-image: none;
+}
+
+
+div.warning {
+    background-image:url("../img/warning.svg");
+}
+
+div.caution {
+    background-image:url("../img/caution.svg");
+}
+
+div.trouble {
+    background-image:url("../img/troubleshooting.svg");
+}
+
+div.important {
+    background-image:url("../img/important.svg");
+}
+
+div.attention {
+    background-image:url("../img/attention.svg");
+}
+
+div.notice {
+    background-image:url("../img/notice.svg");
+}
+
+div.remember {
+    background-image:url("../img/remember.svg");
+}
+
+div.fastpath {
+    background-image:url("../img/fastpath.svg");
+}
+
+div.restriction {
+    background-image:url("../img/restriction.svg");
+}
+
+div.danger {
+    background-image:url("../img/danger.svg");
+}
+
+div.tip {
+    background-image:url("../img/tip.svg");
+}
+
+/*
+ * Make the programlisting/codeblock stand-up.
+ */
+pre {
+  padding: 0.5em;
+  background-color: #EEE;
+  overflow: auto;
+  max-height: 600px;
+  margin: .5em 0 .5em .5em;
+} 
+
+code {
+    background-color: #EEE;
+}
+
+/*  OXYGEN PATCH  EXM-31508  - window titles and UI controls should be bold. */
+.uicontrol, .wintitle { font-weight: bold; }
+
+
+/* OXYGEN PATCH START - EXM-18138 - Insert space between button image and button name. */
+span.uicontrol > img {
+  padding-right: 5px;
+}
+/* OXYGEN PATCH END - EXM-18138 */
+
+/* OXYGEN PATCH START EXM-17248 - Center figure captions. */
+div.fignone p.figcap {
+  display:block;
+  text-align:left;
+  font-weight:bold;
+  padding:2px 10px 5px 10px;
+}
+
+div.fignone p.figcapcenter {
+  display:block;
+  text-align:center;
+  font-weight:bold;
+  padding:2px 10px 5px 10px;
+}
+
+div.fignone p.figcapright {
+  display:block;
+  text-align:right;
+  font-weight:bold;
+  padding:2px 10px 5px 10px;
+}
+
+div.fignone p.figcapjustify {
+  display:block;
+  text-align:justify;
+  font-weight:bold;
+  padding:2px 10px 5px 10px;
+}
+
+div.fignone img {
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+/* OXYGEN PATCH END EXM-17248 */
+
+.italic {
+    font-style:italic;   
+}
+.small {font-size:0.9em;}
+.hide {display:none;}
+.show {display:block;}
+.highlight { 
+    background-color: #FFFF88;
+    color: #000000;
+}
+
+@media screen{
+    .booklibrary, .booktitlealt {
+        display:none;
+    }
+}
+
+@media print {
+    .booklibrary, .booktitlealt {
+        font-size: smaller;
+    }
+}
+
+
+div.rate_page{float:left; width:400px; margin:40px 0 0 0;}
+div.rate_response {color:#555; font-size:0.9em;}
+.stars {
+  position:absolute;
+  width:105px;
+  height:16px;
+  left:140px;
+  margin:-15px 0 0 0;
+  background:url("../img/dot.png") no-repeat 0 1px;
+  overflow:hidden;
+  padding:0;
+}
+
+ul.stars li{  margin:0; height:20px; width:21px;position:absolute;float:left;list-style-type:none;}
+ul.stars li a{ text-decoration:none; position:absolute; overflow:hidden; padding:0; margin:0;}
+ul.stars li a:hover, ul.stars li a.show_star {
+    text-decoration:none;
+    background:url("../img/star.png") no-repeat 0 0;
+    height:25px;
+}
+input {margin:14px 0 0 0;}
+textarea.text-input{margin:4px 0 0 0; width:225px; height:100px; border:1px solid #ccc;}
+
+a#star1 { width:18px; z-index:6;  }
+a#star2 { width:40px; z-index:5; }
+a#star3 { width:60px; z-index:4; }
+a#star4 { width:80px; z-index:3; }
+a#star5 { width:100px; z-index:2; }
+
+div#rate_comment {clear:both; margin:14px 0 0 0;}
+div.rate_response {margin:-14px 0 0 0; }
+
+/* Conforms to the DITA specs we need to use top instead of browser's user agent (middle). */
+.simpletable thead,
+.simpletable tbody,
+.table > tbody:not([class*="valign"]) > tr:not([class*="valign"]) > td:not([class*="valign"]) {
+  vertical-align: top;
+}
+
+caption.tablecap[data-caption-side="bottom"] {
+  caption-side: bottom;
+}
+
+img.break {
+  display: block;
+  margin-bottom: 1em;
+}

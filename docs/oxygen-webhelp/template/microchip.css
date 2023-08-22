@@ -1,0 +1,767 @@
+/***********************************************************
+ *                                                         *
+ * Microchip Webhelp skin customizations                   *
+ *                                                         *
+ * 20220105 RWS HL Initial setup                           *
+ *                                                         *
+ ***********************************************************/
+
+/* RWS HL: make room for the Microchip color bar */
+#wh_topic_container, .wh_content_flex_container {
+  margin-top: 15px;
+}
+
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Fonts.
+ *  
+ */
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Fight with bootstrap
+ *  
+ */
+.wh_header {
+  background-color: #fff;
+  padding: unset;
+}
+
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Publication titles
+ *  
+ */
+.wh_publication_title > a {
+  padding: 0.1em 0;
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 1em;
+  font-size: 1.8em;
+}
+@media only screen and (min-width: 768px) {
+  .wh_topic_page .wh_header {
+    padding: 0;
+  }
+}
+
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Tiles
+ *  
+ */
+.wh_tile {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.29);
+}
+.wh_tile_title {
+  font-size: 1.5em;
+  font-weight: 600;
+  border-bottom: 1px solid #b6b7b9;
+  padding-bottom: 5px;
+}
+.wh_tile_title a {
+  color: #1c355e;
+}
+.wh_tile_title a:hover {
+  color: #1c355e;
+  text-decoration: underline;
+}
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Search
+ *  
+ */
+.wh_search_input {
+  background-image: url("resources/images/Default-Banner-Background.png");
+}
+.wh_search_button {
+  background-color: #1c355e;
+  color: #fff;
+}
+
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Breadcrumbs
+ *  
+ */
+.wh_tools {
+  background-color: #fff;
+}
+
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Microchip Footer
+ *  
+ */
+.footer {
+  height: 135px;
+}
+.wh_footer {
+  margin-top: 2em;
+  font-size: 12px;
+  color: rgba(0,0,0,0.5);
+}
+.mchp-wh-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+.mchp-footer {
+  display: flex;
+  flex-direction: column;
+  line-height: 24px;
+}
+.mchp-footer-container {
+  max-width: 1400px;
+  display: flex;
+  flex: 10;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+}
+.mchp-footer .graphic, .mchp-footer .spacer {
+  flex: 1;
+}
+.mchp-footer .graphic img {
+  height: 100px;
+  width: auto !important;
+  float: right;
+}
+.mchp-footer div {
+  align-self: center;
+}
+.mchp-footer .mchp-footer-tier1 {
+  justify-content: center;
+  display: inherit;
+  background-color: #1c355e;
+  width: 100%;
+  height: 100px;
+  margin: 0;
+  margin-top: auto;
+  color: #fff;
+}
+.mchp-footer .mchp-footer-tier2 {
+  display: inherit;
+  justify-content: center;
+  background-color: #fff;
+  width: 100%;
+  margin: 10px 0;
+  font-size: 12px;
+}
+.mchp-footer .mchp-social-media-links * .mchp-component-item {
+  margin-right: 5px;
+  max-width: 25px;
+}
+.mchp-footer .mchp-social-media-links .mchp-component-items {
+  justify-content: space-between;
+}
+.mchp-footer .mchp-footer-links .mchp-component-items {
+  display: flex;
+  line-height: 2;
+}
+.mchp-footer .link {
+  white-space: nowrap;
+}
+.mchp-footer .link a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 13px;
+}
+.mchp-footer .link a:hover {
+    text-decoration: underline;
+}
+.mchp-footer .mchp-link__separator {
+  padding-left: 6px;
+  padding-right: 8px;
+}
+.mchp-footer .mchp-footer-tier1 .mchp-footer-newsletter p {
+  display: block;
+  font-size: 12px;
+  color: #fff;
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+.mchp-footer .mchp-footer-tier1 a {
+  font-size: 13px;
+}
+.mchp-footer .mchp-footer-newsletter .mchp-button-wrapper {
+  max-width: 250px;
+  width: 100%;
+}
+.mchp-footer .mchp-footer-newsletter .mchp-button-wrapper a {
+  width: 100%;
+  padding: 0;
+  background: #41b6e6;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  border-radius: 2px;
+}
+.mchp-footer .mchp-footer-newsletter .mchp-button-wrapper a:hover {
+  background-color: #fff;
+}
+.mchp-button-wrapper .solid {
+  background-color: #1c355e;
+  color: #fff !important;
+  border: 1px solid #1c355e;
+}
+.mchp-button-wrapper .solid:hover {
+  background-color: #41b6e6;
+  border: 1px solid #41b6e6;
+}
+.mchp-footer .mchp-footer-newsletter .mchp-button-wrapper a:hover span {
+  color: #41b6e6;
+}
+.mchp-footer .mchp-footer-newsletter .mchp-button-wrapper span {
+  transition: background .2s ease .15s,color .2s ease .15s,border .2s ease .15s;
+}
+.mchp-button-wrapper .mchp-button__span {
+  width: 100%;
+}
+.cmp-image__link {
+  font-weight: 600;
+  line-height: 24px;
+  color: #1c355e;
+  text-decoration: none;
+}
+.cmp-image__image {
+  width: 100%;
+}
+.mchp-button-wrapper .mchp-button {
+  display: flex;
+  width: fit-content;
+  cursor: pointer;
+  padding: 15px;
+  text-decoration: none;
+  transition: background .2s ease .15s,color .2s ease .15s,border .2s ease .15s;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 2px;
+}
+.mchp-footer .mchp-copyright {
+  margin: 10px;
+  line-height: 24px;
+}
+@media only screen and (max-width: 1199px) {
+  .footer {
+    height: 250px;
+  }
+  .mchp-footer .graphic, .mchp-footer .spacer {
+    flex: 0;
+  }
+  .mchp-footer .mchp-footer-tier1 {
+    height: auto;
+  }
+  .mchp-footer-container {
+    flex-direction:column;
+    z-index: 1;
+  }
+  .mchp-footer .mchp-footer-links {
+    padding-top: 20px;
+    padding-bottom: 7px;
+  }
+  .mchp-footer .mchp-footer-newsletter {
+    padding-top: 35px;
+    padding-bottom: 20px;
+  }
+  .mchp-footer .graphic {
+    position: absolute;
+    right: 0;
+    align-self: flex-end;
+  }
+  .mchp-footer .graphic img {
+    height: 205px;
+    width: 35% !important;
+    object-fit: cover;
+    object-position: 0;
+  }
+}
+
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Microchip html fragments
+ *  
+ */
+.mchp-color-stripe-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: ". . .";
+  grid-template-rows: 1fr;
+  gap: 0 3px;
+  margin-top: 45px;
+  position: absolute;
+  width: 100%;
+} 
+.mchp-main-bar {
+  height: 7px;
+}
+.mchp-orange-bar {
+  background-color: #f68d2e;
+}
+.mchp-blue-bar {
+  background-color: #41b6e6;
+}
+.mchp-green-bar {
+  background-color: #6cc24a;
+}
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Microchip topic contents
+ *  
+ */
+.figcap {
+  font-style: normal;
+  font-weight: bold;
+}
+.fig--title-label-number {
+  display: inline;
+}
+.fig--title-label::after {
+  content: ""
+}
+.tablecap {
+  width: 100%;
+  font-weight: bold;
+}
+p.compact {
+  margin-bottom: auto;
+}
+
+/* From atmel.css table styling */
+
+table.table,
+table.simpletable.dataTable.bitFieldValues {
+  border-color: #a7a9ab;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+table.table td > p, table.table th > p,
+table.simpletable.dataTable.bitFieldValues td > p,
+table.simpletable.dataTable.bitFieldValues th > p {
+  margin: 0;
+}
+
+table.table td span.rotate, table.table th span.rotate,
+table.simpletable.dataTable.bitFieldValues td span.rotate,
+table.simpletable.dataTable.bitFieldValues th span.rotate {
+  display: inline-block;
+  -webkit-writing-mode: tb-rl;
+      -ms-writing-mode: tb-rl;
+          writing-mode: tb-rl;
+  -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+  white-space: nowrap;
+}
+
+table.table th,
+table.simpletable.dataTable.bitFieldValues th {
+  background-color: #585858;
+  color: #fff;
+}
+
+table.table tbody tr:nth-child(odd),
+table.simpletable.dataTable.bitFieldValues tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+table.table tbody tr:nth-child(even),
+table.simpletable.dataTable.bitFieldValues tbody tr:nth-child(even) {
+  background-color: #d9d9d9;
+}
+
+.cellrowborder {
+  border-left: none;
+  border-top: none;
+  border-right: solid 1px #a7a9ab;
+  border-bottom: solid 1px #a7a9ab;
+}
+
+.nocellnorowborder {
+  border: none;
+  border-right: hidden;
+  border-bottom: hidden;
+}
+
+.row-nocellborder {
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-right: hidden;
+  border-bottom: solid 1px #a7a9ab;
+}
+
+.cell-norowborder {
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+  border-bottom: hidden;
+  border-right: solid 1px #a7a9ab;
+}
+
+table.nozebra tbody tr:nth-child(odd),
+table.nozebra tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table.nocolor tbody tr:nth-child(odd),
+table.nocolor tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+table.table.transparent-table.transparent-border-table {
+  width: 60%;
+}
+table.table.transparent-table.transparent-border-table td {
+  vertical-align: middle !important;
+}
+
+table.transparent-table tbody tr {
+  background-color: transparent !important;
+}
+
+table.transparent-border-table tbody tr {
+  border-left: hidden;
+  border-right: hidden;
+  border-top: hidden;
+  border-bottom: hidden;
+}
+
+table.table.registersummary tbody tr:nth-child(even),
+table.table.registersummary tbody tr:nth-child(odd) {
+  background-color: transparent;
+}
+
+.table.register {
+  position: relative;
+}
+
+.table.register tr {
+  height: 20px;
+}
+
+.table.register tbody tr:nth-child(even),
+.table.register tbody tr:nth-child(odd) {
+  background-color: transparent;
+}
+
+.table.register td {
+  min-width: 5em;
+  text-align: center;
+  width: calc(100%/8);
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.table.register .rowname {
+  left: -60px;
+  position: absolute;
+  text-align: right;
+  width: 50px;
+}
+
+.table.register tr:nth-child(2) td {
+  border: 1px solid #000;
+}
+
+.table.register tbody ~ tbody tr:first-child td {
+  padding-top: 2em;
+}
+
+.registersummary p {
+  margin: 0;
+}
+
+table.register td.reserved,
+table.registersummary td.reserved {
+  background-color: #dcdcdc;
+}
+
+table.bitFieldValues {
+  background-color: lightblue;
+}
+
+/* end: atmel.css table styling */
+
+table.bitFieldValues {
+  border: 1px solid #000;
+}
+
+table.table th {
+  text-align: left;
+}
+table.bitFieldValues th {
+  text-align: left;
+  border-bottom: 2px solid;
+  border-top: 1px solid;
+}
+table.table .vertical-left span, table.table .vertical-center span, table.table .vertical-right span, span.rotate {
+  writing-mode: tb;
+  transform: rotate(180deg);
+}
+.entry.rotate {
+  writing-mode: initial;
+}
+table.table .vertical-left {
+  vertical-align: bottom;
+  text-align: left;
+}
+table.table .vertical-center {
+  vertical-align: bottom;
+  text-align: center;
+}
+table.table .vertical-right {
+  vertical-align: bottom;
+  text-align: right;
+}
+table.table .valign-top {
+  vertical-align: top;
+}
+table.table .valign-middle {
+  vertical-align: middle;
+}
+table.table .valign-bottom {
+  vertical-align: bottom;
+}
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Microchip SIDSC elements
+ *  
+ */
+.registerBody {
+  display: none;
+}
+.register .table {
+  width: 100%;
+  text-align: center;
+}
+.register .table td {
+  border: none;
+  padding: 0.25rem;
+}
+.register .reserved {
+  background-color: #e0e0e0;
+}
+.register .table td:first-child {
+  text-align: end;
+}
+.register .table tr:nth-child(2) td {
+  border: 1px solid black;
+}
+.register .table tr:nth-child(2) td:first-child, .register .table tr:nth-child(2) td:last-child {
+  border: none;
+}
+.active-low {
+  text-decoration: overline;
+}
+.mchip-registerproperties td, .mchip-registerproperties th {
+  padding: 0;
+  vertical-align: top;
+}
+.mchip-registerproperties table {
+  margin: 0;
+}
+table.registersummary {
+  width: 100%;
+}
+table.registersummary th {
+  text-align: center;
+  background-color: #585858;
+}
+table.registersummary th, table.registersummary td {
+  border: 1px solid;
+  padding: 0.25rem;
+}
+
+table.register td.reserved,
+table.registersummary td.reserved {
+  background-color: #dcdcdc;
+}
+
+td.rowsep-0 {
+  border-top: 0;
+  border-bottom: 0;
+}
+
+table.headercolumn > tbody tr > td:first-child {
+    background: #585858;
+    color: #fff;
+    font-weight: bold;
+}
+
+ol.horizontal {
+  padding-left: 0;
+  margin-left: 0;
+  counter-reset: list-number;
+}
+
+ol.horizontal > li {
+  display: inline;
+  counter-increment: list-number;
+}
+
+ol.horizontal > li:before {
+ content: ' ' counter(list-number)'. ';
+ padding-left: 5pt;
+}
+
+/* Override default color for codeph */
+code {
+  color: inherit !important;
+  background-color: inherit !important;
+}
+
+ul.custom_list, .custom_list ul {
+  list-style: none !important;
+}
+
+/* Note icons override - using proper casing */
+
+/*notes-colors-colorful*/
+*[class~="topic/note"]:not([class~="hazard-d/hazardstatement"]) {
+}
+*[class~="topic/note"].note_attention {
+  background-image: url('resources/notes/Attention.svg') !important;  
+}
+*[class~="topic/note"].note_caution {
+  background-image: url('resources/notes/Caution.svg') !important;
+  background-size: 100px;
+  min-height: 62px;
+}
+*[class~="topic/note"].note_danger {
+  background-image: url('resources/notes/Danger.svg') !important;
+  background-size: 100px;
+  min-height: 62px;
+}
+*[class~="topic/note"].note_execute {
+  background-image: url('resources/notes/Execute.svg') !important;
+}
+*[class~="topic/note"].note_important {
+  background-image: url('resources/notes/Important.svg') !important;
+}
+*[class~="topic/note"].note_info {
+  background-image: url('resources/notes/Info.svg') !important;
+}
+*[class~="topic/note"].note_notype {
+  background-image: none;  
+  border-top: none;
+  border-bottom: none;
+  background-size: initial;
+  background-repeat: initial;
+  background-position: initial;
+  min-height: unset;
+  padding: initial;
+}
+*[class~="topic/note"].note_note {
+  background-image: url('resources/notes/Info.svg') !important;
+}
+*[class~="topic/note"].note_notice {
+  background-image: url('resources/notes/Notice.svg') !important;
+  background-size: 100px;
+  min-height: 62px;
+}
+*[class~="topic/note"].note_restriction {
+  background-image: url('resources/notes/Restriction.svg') !important;
+}
+*[class~="topic/note"].note_result {
+  background-image: url('resources/notes/Result.svg') !important;
+}
+*[class~="topic/note"].note_tip {
+  background-image: url('resources/notes/Tip.svg') !important;
+}
+*[class~="topic/note"].note_todo {
+  background-image: url('resources/notes/Todo.svg') !important;
+}
+*[class~="topic/note"].note_warning {
+  background-image: url('resources/notes/Warning.svg') !important;
+  background-size: 100px;
+  min-height: 62px;
+}
+
+/* Feedback Url styling from webhelp */
+.feedback {
+  display: inline;
+  font-size: 9pt;
+  margin-left: 0.5em;
+  color: #0000EE;
+  cursor: pointer;
+}
+
+/* options style */
+kbd {
+  padding: inherit;
+  font-size: 87.5%;
+  color: inherit;
+  background-color: inherit;
+  border-radius: inherit;
+}
+
+.keyword.option {
+  font-style: italic;
+}
+
+/* Styling for custom list */
+.custom_list li > p:nth-child(2) {
+    margin-left: 2.5em;
+    color: #555 !important;
+}
+
+/* Styling for noboldlist */
+
+dl.noboldlist dt {
+  float: left;
+  clear: left;
+  /* width: 100px; */
+  font-weight: normal;
+}
+dl.noboldlist dd {
+  margin: 0 0 0 100px;
+  padding: 0 0 0.5em 0;
+}
+
+/* Disclaimer */
+.mchp_disclaimer {
+  padding: 0 10px;
+  text-align: center;
+}
+.mchp_disclaimer > .mchp_disclaimer_text {
+  font-size: .8em;
+  margin: 0;
+  color: #000;
+}
+.wh_footer {
+  margin-top: 0 !important;
+}
+
+.table-container{
+  max-height: 500px;
+  overflow: auto !important;
+}
+
+.table-container tr:nth-child(1) th{
+  position: sticky;
+  top: 0;
+}
+
+.table-container tr:nth-child(2) th{
+  position: sticky;
+  top: 29px;
+}

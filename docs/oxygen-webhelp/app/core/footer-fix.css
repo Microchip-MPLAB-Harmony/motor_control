@@ -1,0 +1,16 @@
+/* WH-2759 Pushes footer at the bottom of the page.  */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.wh_main_page .wh_content_area {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#wh_topic_container,
+.wh_content_area {
+    flex-grow: 1;
+}

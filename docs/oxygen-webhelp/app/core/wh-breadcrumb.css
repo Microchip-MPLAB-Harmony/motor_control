@@ -1,0 +1,113 @@
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Breadcrumb
+ *  
+ */
+
+/* Place the right tools in line with the breadcrumb. */
+.wh_tools{
+	background-color: white;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex: 1 0;
+    margin-bottom: 1em;
+    align-items: center;
+    padding: 4px 15px;
+}
+
+@media only screen and (max-width: 767px) {
+    .wh_tools {
+        flex-wrap: wrap;
+    }
+}
+
+.wh_right_tools {
+    display: flex;
+    align-items: center;
+}
+
+.wh_right_tools > *:not(:last-child) {
+  margin-right: 8px;
+}
+/* When visible, the above style rule does apply to the Print Link because it has a hidden sibling, */
+.wh_right_tools > .wh_print_link {
+  margin-right:0;
+}
+
+.wh_breadcrumb {
+    display:inline-block;
+}
+
+/* Breadcrumb */
+.wh_breadcrumb ol {
+    margin:0;
+    border-radius: 0;
+    font-size: .9em;
+    padding: 0;
+    list-style: none;
+    background:none;
+}
+.wh_breadcrumb li{
+    display:inline-block;
+}
+.wh_breadcrumb li:not(:last-of-type):after {
+    content: "/";
+    padding: 0 5px;
+}
+
+/* WH-1520 */
+.webhelp_expand_collapse_sections:after{font-family: "oXygen WebHelp"; display:inline-block;}
+.webhelp_expand_collapse_sections[data-next-state='expanded']:after{content:'l'}
+.webhelp_expand_collapse_sections[data-next-state='collapsed']:after{content:'k'}
+
+.wh_hide_highlight, .webhelp_expand_collapse_sections{background: transparent; border:0; display: none;padding:0;}
+.wh_hide_highlight:after{font-family: "oXygen WebHelp"; content:'j'; display:inline-block; vertical-align: bottom;}
+.wh_hide_highlight:focus {outline: none}
+.wh_hide_highlight.hl-close:after{opacity:.7}
+
+@media screen {
+#printlink:before {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    padding: 0 3px 0 3px;
+    margin-right: 3px;
+    cursor: pointer;
+    content: "";
+}
+#printlink:before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAC1QTFRFAwQEAwQEAwQEgICAYGBggICAk5OT2tra3t7e5eXl7Ozs9PT0+/v7/f39////qdjBqAAAAAV0Uk5TAAsmTWgvFGPAAAAAWElEQVQI12NgYA4FAgMGBgbWd0AQQBzDNBTECA1miHsK0p73lCHmejkQ1BxliN4NBlsZolaBwVKGyKkgNZFTGSIguloZXCGMEAYhVZBUkCIDA5MSECgwAACPPj1sb0KIdAAAAABJRU5ErkJggg==');
+}
+
+#printlink:hover:before {
+    opacity: 0.5;
+}
+}
+
+#trigger.active {
+    transition: all 0.75s ease-in-out;
+}
+
+#trigger {
+    float:left;
+}
+
+#wh_publication_toc {
+    margin-bottom: 1em;
+}
+.wh_publication_toc ul{
+    list-style: none;
+    margin:0;
+    padding:0;
+    word-wrap: break-word;
+}
+.wh_publication_toc ul ul {
+    padding-left: 1em;
+}
+
+.current_node {
+    font-weight: 700;
+    text-decoration: underline;
+}

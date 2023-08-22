@@ -1,0 +1,386 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="copyright" content="(C) Copyright 2023"/><meta name="generator" content="DITA-OT"/><meta name="description" content="This section describes step by step process for creating a new Motor Control Project using MPLAB Code Configurator (MCC) from scratch."/>        
+      <title>1.1.2.1 Create a new MPLAB® Harmony v3 project using MCC</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8-d282e110"/><meta name="wh-source-relpath" content="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8.xml"/><meta name="wh-out-relpath" content="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
+    
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+</head>
+
+    <body id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB Harmony Motor Control "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB Harmony Motor Control </a></div>
+                    
+                </div>
+                
+                
+            </div>
+
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div class="d-flex justify-contents-around"><div class="flex-grow-1"></div><div class="position-relative flex-grow-1"><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div><div class="align-self-center flex-grow-1 ml-2"></div></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
+</div>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C"><div class="title"><a href="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Microchip MPLAB® Harmony 3 Motor Control</a></div></div></li><li><div class="topicref" data-id="GUID-42876005-92C2-4CC0-81FC-71368462D294"><div class="title"><a href="GUID-42876005-92C2-4CC0-81FC-71368462D294.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Harmony QSpin Motor Control</a></div></div></li><li><div class="topicref" data-id="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525"><div class="title"><a href="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2</ph>
+Getting Started</a><div class="wh-tooltip"><p class="shortdesc">This section briefly describes the basic steps to get started with the <strong class="ph b">Harmony             Qspin</strong>. It consists of following steps:</p></div></div></div></li><li class="active"><div class="topicref" data-id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8"><div class="title"><a href="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2.1</ph>
+Create a new MPLAB® Harmony v3 project using MCC</a><div class="wh-tooltip"><p class="shortdesc">This section describes step by step process for creating a new Motor Control Project         using MPLAB Code Configurator (MCC) from scratch.</p></div></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d282e11" class="topicref" data-id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d282e11-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C.html" id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d282e11-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Microchip MPLAB® Harmony 3 Motor Control</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-42876005-92C2-4CC0-81FC-71368462D294-d282e19" class="topicref" data-id="GUID-42876005-92C2-4CC0-81FC-71368462D294" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-42876005-92C2-4CC0-81FC-71368462D294-d282e19-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-42876005-92C2-4CC0-81FC-71368462D294.html" id="GUID-42876005-92C2-4CC0-81FC-71368462D294-d282e19-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Harmony QSpin Motor Control</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272-d282e27" class="topicref" data-id="GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272-d282e27-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272.html" id="GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272-d282e27-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Software Design</a><div class="wh-tooltip"><p class="shortdesc">This section briefly describes the software design of the motor control firmware         generated from the <strong class="ph b">Harmony Qspin</strong>.</p></div></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525-d282e96" class="topicref" data-id="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525-d282e96-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525.html" id="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525-d282e96-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2</ph>
+Getting Started</a><div class="wh-tooltip"><p class="shortdesc">This section briefly describes the basic steps to get started with the <strong class="ph b">Harmony             Qspin</strong>. It consists of following steps:</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" class="active"><div data-tocid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8-d282e110" class="topicref" data-id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8.html" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8-d282e110-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2.1</ph>
+Create a new MPLAB® Harmony v3 project using MCC</a><div class="wh-tooltip"><p class="shortdesc">This section describes step by step process for creating a new Motor Control Project         using MPLAB Code Configurator (MCC) from scratch.</p></div></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291-d282e121" class="topicref" data-id="GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291-d282e121-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291.html" id="GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291-d282e121-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2.2</ph>
+Qspin Motor Control Confiuration</a><div class="wh-tooltip"><p class="shortdesc">The Harmony Qspin Motor Control is an intuitive graphical tool for developing motor         control application software.</p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-4DD19DCE-B6EF-408C-8574-5B2258EAA616-d282e165" class="topicref" data-id="GUID-4DD19DCE-B6EF-408C-8574-5B2258EAA616" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4DD19DCE-B6EF-408C-8574-5B2258EAA616.html" id="GUID-4DD19DCE-B6EF-408C-8574-5B2258EAA616-d282e165-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2.3</ph>
+Generate code with MCC</a><div class="wh-tooltip"><p class="shortdesc">Click on the generate button to generate the code.</p></div></div></div></li></ul></li></ul></li></ul></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-9 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-511BC5B4-3138-45F0-8013-DE42F17B3EE3">
+<h1 class="- topic/title title topictitle1" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-511BC5B4-3138-45F0-8013-DE42F17B3EE3" style="">1.1.2.1 Create a new MPLAB® Harmony v3 project using
+        MCC</h1>
+
+<div class="- topic/body body"><p class="- topic/shortdesc shortdesc">This section describes step by step process for creating a new Motor Control Project
+        using MPLAB Code Configurator (MCC) from scratch.</p>
+        <section class="- topic/section section" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__SECTION_KHQ_LYZ_XXB" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__SECTION_KHQ_LYZ_XXB"><h2 class="- topic/title title sectiontitle">Procedure</h2>
+            
+            <p class="- topic/p p">The following section describes uses SAME70 microcontroller to illustrate the process
+                for creating a new motor control project with Harmony Qspin.</p>
+            <ol class="- topic/ol ol" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__OL_MVH_NYZ_XXB" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__OL_MVH_NYZ_XXB">
+                <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-DDD86816-8315-41BB-A8B5-231F238AC925" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-DDD86816-8315-41BB-A8B5-231F238AC925">
+                    <p class="- topic/p p">Clone and download the following <a class="- topic/xref xref" href="https://github.com/Microchip-MPLAB-Harmony" target="_blank" rel="external noopener">Harmony public repositories</a> to a local
+                        folder.</p>
+                    <ul class="- topic/ul ul" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__UL_VZT_TBF_YXB" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__UL_VZT_TBF_YXB">
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-445768FA-A9D7-449F-A220-904CC46F41ED" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-445768FA-A9D7-449F-A220-904CC46F41ED"><a class="- topic/xref xref" href="https://github.com/Microchip-MPLAB-Harmony/csp" target="_blank" rel="external noopener">csp</a></li>
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-EE202E99-EBB8-45AA-9043-6505D9EA035C" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-EE202E99-EBB8-45AA-9043-6505D9EA035C"><a class="- topic/xref xref" href="https://github.com/Microchip-MPLAB-Harmony/core" target="_blank" rel="external noopener">core</a></li>
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-D3999CEE-57D9-4794-83BE-7F1356987845" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-D3999CEE-57D9-4794-83BE-7F1356987845"><a class="- topic/xref xref" href="https://github.com/Microchip-MPLAB-Harmony/bsp" target="_blank" rel="external noopener">bsp</a></li>
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-E7D19972-AEB0-4310-8716-BCB60CEDEBDA" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-E7D19972-AEB0-4310-8716-BCB60CEDEBDA"><a class="- topic/xref xref" href="https://github.com/Microchip-MPLAB-Harmony/dev_packs" target="_blank" rel="external noopener">dev_packs</a></li>
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-668FCB3A-32F3-4F23-99DF-6FBF2DBFC7D4" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-668FCB3A-32F3-4F23-99DF-6FBF2DBFC7D4"><a class="- topic/xref xref" href="https://github.com/Microchip-MPLAB-Harmony/harmony-services" target="_blank" rel="external noopener">hormony_services</a></li>
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-63C379FE-DF01-43DB-985F-0D1D45B42526" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-63C379FE-DF01-43DB-985F-0D1D45B42526"><a class="- topic/xref xref" href="https://github.com/Microchip-MPLAB-Harmony/motor_control" target="_blank" rel="external noopener">motor_control</a></li>
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-9465E171-A21E-416D-B3DA-10538933F3A6" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-9465E171-A21E-416D-B3DA-10538933F3A6"><a class="- topic/xref xref" href="https://github.com/Microchip-MPLAB-Harmony/x2c" target="_blank" rel="external noopener">x2c</a></li>
+                    </ul>
+                </li>
+                <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-66606329-9247-48D1-830A-5DFAFF70E61E" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-66606329-9247-48D1-830A-5DFAFF70E61E">
+                    <p class="- topic/p p">Launch MPLAB® X IDE from the Microsoft Windows® Start menu.</p>
+                </li>
+                <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-55818E1C-5759-47EC-A7C6-9B7747B78E99" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-55818E1C-5759-47EC-A7C6-9B7747B78E99">
+                    <p class="- topic/p p">Go to the <strong class="+ topic/ph hi-d/b ph b">File</strong> option in the menu bar and select "<strong class="+ topic/ph hi-d/b ph b">New
+                        project</strong>"</p>
+                </li>
+                <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-8CAE626D-54FC-4084-91A0-52E56D30F58A" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-8CAE626D-54FC-4084-91A0-52E56D30F58A">
+                    <p class="- topic/p p">In the Categories pane of the New Project dialog, select Microchip Embedded.
+                        In the Projects pane, select 32-bit MCC Harmony Project, then click
+                        Next.</p>
+                </li>
+                <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-A86FBA5D-31D9-4B63-B585-4DEA159242D2" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-A86FBA5D-31D9-4B63-B585-4DEA159242D2">
+                    <p class="- topic/p p">In the Framework Path edit box, browse to the folder where you downloaded the
+                        framework.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__FIG_PKD_SZZ_XXB" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__FIG_PKD_SZZ_XXB">
+                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__IMAGE_QKD_SZZ_XXB" src="GUID-12177122-AC39-4D95-B076-0EDA72F4ABCC-low.jpg"/></div></div>
+                    </figure>
+                </li>
+                <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-1AB6959F-C7F6-4DFA-9F41-C245FC2D8E24" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-1AB6959F-C7F6-4DFA-9F41-C245FC2D8E24">
+                    <p class="- topic/p p">In the Project Settings window, apply the following settings:</p>
+                    <ul class="- topic/ul ul" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__UL_OVH_NYZ_XXB" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__UL_OVH_NYZ_XXB">
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-EF5007C8-6150-49FF-90B2-B5DA698FDD71" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-EF5007C8-6150-49FF-90B2-B5DA698FDD71">
+                            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Location</strong>: Indicates the path to the root folder of the new
+                                project. All project files will be placed inside this folder. The
+                                project location can be any valid path, for example:
+                                \mc_apps_sam_e7x_s7x_v7x\apps.</p>
+                        </li>
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-A6850ED3-5B7B-45BA-ABF1-BB1AC3C27760" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-A6850ED3-5B7B-45BA-ABF1-BB1AC3C27760">
+                            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Folder</strong>: Indicates the name of the MPLABX .X folder. Enter
+                                "mclv2_sam_e70" to create a mclv2_sam_e70.X folder.</p>
+                        </li>
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-E4AB9E06-0732-4271-83A6-19A9B805BB42" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-E4AB9E06-0732-4271-83A6-19A9B805BB42">
+                            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Name</strong>: Enter the project’s logical name as
+                                "mcp_pmsm_foc_pll_estimator_sam_e70". This is the name that will be
+                                shown from within MPLAB X IDE.</p>
+                        </li>
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-A4CAA0E5-212A-4328-B609-EE110BB973F5" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-A4CAA0E5-212A-4328-B609-EE110BB973F5">
+                            <p class="- topic/p p">Click Next to proceed to Configuration Settings.</p>
+                            <figure class="- topic/fig fig fignone" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__FIG_HF4_C11_YXB" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__FIG_HF4_C11_YXB">
+                                <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__IMAGE_IF4_C11_YXB" src="GUID-BFDE8E5B-FD99-499C-B52F-F46C2FAA2530-low.jpg"/></div></div>
+                            </figure>
+                        </li>
+                    </ul>
+                </li>
+                <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-460EC918-4C8E-472D-B21E-19BAD6193319" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-460EC918-4C8E-472D-B21E-19BAD6193319">
+                    <p class="- topic/p p">Follow the steps below to set the project’s Configuration Settings.</p>
+                    <ul class="- topic/ul ul" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__UL_QVH_NYZ_XXB" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__UL_QVH_NYZ_XXB">
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-6C9890DC-CE47-450D-A721-09A37971F42A" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-6C9890DC-CE47-450D-A721-09A37971F42A">
+                            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Name</strong>: Enter the configuration name as "mclv2_sam_e70_pim".</p>
+                        </li>
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-707B334C-81C3-4FFE-B5A6-3954D0748A18" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-707B334C-81C3-4FFE-B5A6-3954D0748A18">
+                            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Target Device</strong>: Select ATSAME70Q21B as the target device.</p>
+                            <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__IMAGE_CDZ_DB1_YXB" src="GUID-CCE5F0F7-C06B-408E-8092-19E3633066D2-low.jpg"/></div></div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-F93F60B4-D1E1-4EC1-A922-8CFBA85210C3" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-F93F60B4-D1E1-4EC1-A922-8CFBA85210C3">
+                    <p class="- topic/p p">In MCC Content Manager Wizard window, click on "<strong class="+ topic/ph hi-d/b ph b">Select MPLAB
+                        Harmony</strong>"</p>
+                    <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__IMAGE_PJV_FB1_YXB" src="GUID-01D51C18-A32C-43C6-A8A3-31D1CE62B30A-low.jpg"/></div></div>
+                </li>
+                <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-5E0CA0FF-F8BD-44A9-A762-3E2C92684BCA" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-5E0CA0FF-F8BD-44A9-A762-3E2C92684BCA">
+                    <p class="- topic/p p">In MCC Content Manager Wizard window, click on "<strong class="+ topic/ph hi-d/b ph b">Finish</strong>"</p>
+                    <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__IMAGE_VVV_HB1_YXB" src="GUID-A3EA4115-E9D1-400C-BE2F-6273B1BD4646-low.jpg"/></div></div>
+                </li>
+                <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-3461344F-6D8C-48D0-A3C1-D6B31FFBF0F8" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-3461344F-6D8C-48D0-A3C1-D6B31FFBF0F8">
+                    <p class="- topic/p p">Add MCC components from the ** Device Resources** to the <strong class="+ topic/ph hi-d/b ph b">Project
+                        Graph</strong></p>
+                    <ul class="- topic/ul ul" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__UL_UVH_NYZ_XXB" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__UL_UVH_NYZ_XXB">
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-F7EAB4E1-B04A-46E1-BDBE-3C70EA16090D" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-F7EAB4E1-B04A-46E1-BDBE-3C70EA16090D">
+                            <p class="- topic/p p">Add <strong class="+ topic/ph hi-d/b ph b">PMSM FOC</strong> component</p>
+                        </li>
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-E2D226DB-4982-4844-95B1-EF0E5EAFF571" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-E2D226DB-4982-4844-95B1-EF0E5EAFF571">
+                            <p class="- topic/p p">Add and connect <strong class="+ topic/ph hi-d/b ph b">ADC</strong>, <strong class="+ topic/ph hi-d/b ph b">PWM</strong>, <strong class="+ topic/ph hi-d/b ph b">QDEC</strong> and <strong class="+ topic/ph hi-d/b ph b">Data
+                                    Stream</strong> dependencies to <strong class="+ topic/ph hi-d/b ph b">PMSM FOC</strong></p>
+                        </li>
+                        <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-7CCEAB1A-6D05-424E-98EA-C9B7BF760F82" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-7CCEAB1A-6D05-424E-98EA-C9B7BF760F82">
+                            <p class="- topic/p p">Add <strong class="+ topic/ph hi-d/b ph b">SAM E70 PIM MC Board</strong> from the <strong class="+ topic/ph hi-d/b ph b">Board Support
+                                    Packages</strong></p>
+                        </li>
+                    </ul>
+                    <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__IMAGE_VM2_KB1_YXB" src="GUID-F4C0485F-93C0-4EF9-A692-4FE35A675DCD-low.jpg"/></div></div>
+                </li>
+                <li class="- topic/li li" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-361197B8-513C-4FCD-8BE7-D778824A5C27" data-ofbid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8__GUID-361197B8-513C-4FCD-8BE7-D778824A5C27">
+                    <p class="- topic/p p">Launch <strong class="+ topic/ph hi-d/b ph b">Qspin Motor Control Configuration</strong> plugin</p>
+                </li>
+            </ol>
+        </section>
+    </div>
+</article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <div class="mchp_disclaimer"><p class="mchp_disclaimer_text">The online versions of the documents are provided as a courtesy. Verify all content and data in the device’s PDF documentation found on the device product page.</p></div><footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
+</div>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+    </body>
+</html>

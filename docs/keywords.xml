@@ -6,7 +6,7 @@
           pubtype="Online Reference"
           pubsubtype=""
           pubuserguidesubtype=""
-          pubproductheirarchy=""
+          pubproducthierarchy=""
           devices=""
           revisiondate="14/12/2021 00:00:00"
           revisionletter="A"
@@ -14,6 +14,6 @@
           pubid=""
           reachid=""
           description=""
-          lastmodified="17/10/2022 08:18:39"
+          lastmodified="22/08/2023 05:07:22"
           covertitle="MPLAB Harmony Motor Control"
           frontcover=""/>

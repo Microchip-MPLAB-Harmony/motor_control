@@ -1,0 +1,42 @@
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Tools and navigation
+ * 
+ */
+.wh_print_link,
+.wh_navigation_links,
+.wh_navigation_links .navnext,
+.wh_navigation_links .navprev{
+    display:inline-block;
+}
+
+.wh_print_link button {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
+
+.pdf_link img {
+    width: 16px;
+    height: 16px;
+}
+
+.pdf_link {
+    display: flex;
+    align-items: center;
+}
+
+.oxy-icon-pdf-link:before {
+    content: "1";
+}
+
+/**
+ * Content area
+ */
+@media screen{
+	/* On media print it creates problems if there is a two column page layout: big spaces around the elements that span all columns. */
+	.wh_content_area {
+	    min-height: 500px;
+	}
+}

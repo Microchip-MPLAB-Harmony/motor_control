@@ -1,0 +1,244 @@
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Publication logo and title
+ *  
+ */
+
+.wh_header_flex_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    width:100%;
+}
+
+.wh_header {
+    padding: 1em;
+}
+
+.wh_logo_and_publication_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wh_top_menu_and_indexterms_link {
+    padding: 0;
+}
+
+#topic_navigation_links {
+    white-space: nowrap;
+}
+
+@media only screen and (max-width: 767px) {
+    .wh_header_flex_container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .wh_logo_and_publication_title_container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-content: center;
+        flex-wrap: wrap;
+        align-self: stretch;
+        width: 100%;
+    }
+
+    .wh_indexterms_link a:before {
+        padding-left: .5em !important;
+    }
+}
+
+.wh_publication_title a {
+    display: inline-block;
+    margin: 1em 0;
+}
+
+@media only screen and (min-width: 768px) {
+    .wh_top_menu_and_indexterms_link.navbar-collapse {
+        float: none;
+        display: inline-block !important;
+        vertical-align: middle;
+    }
+
+    .wh_top_menu {
+        line-height: 1em;
+        vertical-align: middle;
+
+    }
+
+    .wh_header {
+        text-align: right;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .wh_toggle_button {
+        float: none;
+        line-height: 1em;
+        margin: 0;
+    }
+
+    .wh_header {
+        text-align: left;
+    }
+}
+
+/*------------------------------------------------------*/
+
+.wh_logo{
+    display:inline-block;
+    vertical-align:baseline;
+}
+.wh_publication_title {
+    display:inline-block;
+}
+.wh_logo + .wh_publication_title {
+    margin-left: 1.5em;
+}
+
+.wh_logo_and_publication_title.navbar-brand {
+    font-size: 1em;
+    line-height: 1em;
+}
+
+
+
+/* Generic top_menu styles*/
+.wh_top_menu ul {
+    list-style: none;
+    padding-left:0;
+}
+
+/* Render top_menu for devices larger than 767px */
+@media only screen and (min-width: 768px) {
+    .wh_top_menu {
+        display: inline-block;
+    }
+
+    /* Menu activated on :HOVER */
+    .wh_top_menu:not(.activated-on-click) ul ul {
+        display: block;
+        visibility: hidden;
+        transition: visibility 0.2s 1s; /* WH-2521 Delay menu hiding with 1 second on hover off */
+    }
+
+    .wh_top_menu:not(.activated-on-click) ul:hover li:not(:hover) > ul {
+        /* WH-2521 Imedaitelly hide submenus that are not hovered when at least one menu item (li) is hovered. */
+        visibility: hidden;
+        transition: none;
+    }
+
+    .wh_top_menu:not(.activated-on-click) ul li:hover > ul {
+        display: block;
+        visibility: visible;
+        transition: visibility 0.2s 1s;
+    }
+
+    /* Menu activated on CLICK */
+    .wh_top_menu.activated-on-click ul ul {
+        display: none;
+    }
+
+    .wh_top_menu.activated-on-click ul li.active > ul{
+        display: block;
+    }
+
+    /* Common menu rules */
+
+    .wh_top_menu ul {
+        position: relative;
+        display: inline-table;
+        z-index: 999;
+        margin-bottom:0;
+    }
+
+    .wh_top_menu ul:after {
+        content: "";
+        clear: both;
+        display: block;
+    }
+
+    .wh_top_menu > ul > li {
+        display: inline-block;
+    }
+
+
+    .wh_top_menu ul li a {
+        display: block;
+        padding: 0.5em 1em;
+        text-decoration: none;
+    }
+
+    .wh_top_menu ul ul {
+        padding: 0;
+        position: absolute;
+        text-align: left;
+    }
+
+    .wh_top_menu ul ul li {
+        float: none;
+        position: relative;
+        border-top: 1px solid;
+        min-width:210px;
+    }
+
+
+    .wh_top_menu ul ul ul {
+        position: absolute;
+        left: 100%;
+        top: 0;
+    }
+
+    /* Mark the items that have a submenu with a small double arrow. */
+    .wh_top_menu ul ul li.has-children{
+        position:relative;
+    }
+    .wh_top_menu ul ul li.has-children > span > a{
+        padding-right: 1em;
+    }
+    .wh_top_menu ul ul li.has-children:after{
+        display:block;
+        content: "\00BB";
+        color:silver;
+        position:absolute;
+        right:5px;
+        top:0;
+        line-height: 2.5em;
+    }
+
+    .wh_top_menu ul ul {
+        background-color: #e6e6e6; /* OSB-273 - Fix default colors for menu items */
+    }
+    .wh_top_menu ul ul li {
+        border-top-color: #ffffff; /* OSB-273 - Fix default colors for menu items */
+    }
+    .wh_top_menu ul ul li.has-children:after{
+        color:silver;
+    }
+
+}
+
+/* Render top_menu for devices smaller than 767px */
+@media only screen and (max-width: 767px) {
+
+    .wh_top_menu ul {
+        margin-bottom: 0;
+    }
+    .wh_top_menu ul ul {
+        display: none;
+    }
+    .wh_top_menu ul li a {
+        display:block;
+        padding: .5em;
+        text-decoration: none;
+    }
+    .wh_top_menu ul li.active > ul {
+        display: block;
+        padding-left: .5em;
+    }
+}
