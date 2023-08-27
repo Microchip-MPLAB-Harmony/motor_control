@@ -19,10 +19,25 @@ import {
   LoadImage,
   getIndex
 } from '@mplab_harmony/harmony-plugin-ui';
+import { DialogCommonInitilizeCode } from '../CustomPopUp/CustomPopUp';
 
 const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
   let rotor_rotation_symbolID = 'MCPMSMFOC_ALIGN_OR_DETECT_AXIS';
   let rotor_rotation_SymbolArray = GetSymbolArray(mc_component_id, rotor_rotation_symbolID);
+
+  let filedDetectSymbolArray = [
+    'MCPMSMFOC_ENABLE_ALIGN_OR_DETECT',
+    'MCPMSMFOC_ALIGN_OR_DETECT_ALGORITHM'
+  ];
+
+  let fieldDetectSymbolArray2 = ['MCPMSMFOC_STARTUP_CURRENT', 'MCPMSMFOC_STARTUP_TIME'];
+
+  let openLoopSpeedRampSymbolArray = [
+    'MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP',
+    'MCPMSMFOC_OPEN_LOOP_END_SPEED',
+    'MCPMSMFOC_OPEN_LOOP_RAMP_TIME',
+    'MCPMSMFOC_OPEN_LOOP_STAB_TIME'
+  ];
 
   let FlyingStartCheckBox = 'MCPMSMFOC_ENABLE_FLYING_START';
   let FlyingStartSymbolsArray = [
@@ -49,7 +64,9 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
   ];
 
   let selectedRotationAxis = GetSymbolValue(mc_component_id, rotor_rotation_symbolID);
-  let flyingstartCheckBoxStatus = GetSymbolValue(mc_component_id, FlyingStartCheckBox);
+  let flyingstartCheckBoxStatus = convertToBoolean(
+    GetSymbolValue(mc_component_id, FlyingStartCheckBox)
+  );
 
   const update = useForceUpdate();
 
@@ -70,6 +87,14 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
   }
 
   function GetFiledAlignMentAndDetection() {
+    DialogCommonInitilizeCode(
+      props.showToast,
+      filedDetectSymbolArray.concat(
+        [rotor_rotation_symbolID],
+        fieldDetectSymbolArray2,
+        openLoopSpeedRampSymbolArray
+      )
+    );
     return (
       <div className='p-fluid'>
         <div>
@@ -77,10 +102,7 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
           <br></br>
           <AddMultipleUIComponentsWithLabel
             componentId={mc_component_id}
-            symbolsArray={[
-              'MCPMSMFOC_ENABLE_ALIGN_OR_DETECT',
-              'MCPMSMFOC_ALIGN_OR_DETECT_ALGORITHM'
-            ]}
+            symbolsArray={filedDetectSymbolArray}
             onChange={SymbolValueChanged}
           />
           <GetUIComponentWithLabel
@@ -91,7 +113,7 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
           />
           <AddMultipleUIComponentsWithLabel
             componentId={mc_component_id}
-            symbolsArray={['MCPMSMFOC_STARTUP_CURRENT', 'MCPMSMFOC_STARTUP_TIME']}
+            symbolsArray={fieldDetectSymbolArray2}
             onChange={SymbolValueChanged}
           />
         </div>
@@ -108,12 +130,7 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
           </div>
           <AddMultipleUIComponentsWithLabel
             componentId={mc_component_id}
-            symbolsArray={[
-              'MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP',
-              'MCPMSMFOC_OPEN_LOOP_END_SPEED',
-              'MCPMSMFOC_OPEN_LOOP_RAMP_TIME',
-              'MCPMSMFOC_OPEN_LOOP_STAB_TIME'
-            ]}
+            symbolsArray={openLoopSpeedRampSymbolArray}
             onChange={SymbolValueChanged}
           />
         </div>
@@ -122,6 +139,15 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
   }
 
   function ShowFlyingStarttParameters() {
+    DialogCommonInitilizeCode(
+      props.showToast,
+      [FlyingStartCheckBox].concat(
+        FlyingStartSymbolsArray,
+        DAxisControllerSymbolArray,
+        QAxisControllerSymbolArray,
+        AdvancedConfiguration
+      )
+    );
     return (
       <div className='p-fluid'>
         {GetHeadder('Flying Start')}

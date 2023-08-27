@@ -19,10 +19,7 @@ import {
   GetSymbolReadOnlyStatus,
   GetSymbolValue
 } from '@mplab_harmony/harmony-plugin-core-service/build/database-access/SymbolAccess';
-import {
-  getIndex,
-  convertToBoolean
-} from '@mplab_harmony/harmony-plugin-ui/build/utils/CommonUtil';
+import { getIndex } from '@mplab_harmony/harmony-plugin-ui/build/utils/CommonUtil';
 import {
   AddImageAndParameters,
   LoadImage
@@ -166,10 +163,7 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
   }
 
   ramProfilerData() {
-    DialogCommonInitilizeCode(
-      this.props.showToast,
-      ramProfilerSymbolCollection.concat([motorControlModeSymbol])
-    );
+    DialogCommonInitilizeCode(this.props.showToast, ramProfilerSymbolCollection);
     return (
       <div>
         {getIndex(this.state.ramProfilerSelectedValue, this.ramProfilerSelectArray) === 0 &&
@@ -195,10 +189,7 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
   }
 
   speedPIParameters() {
-    DialogCommonInitilizeCode(
-      this.props.showToast,
-      speedPIParametersArray.concat([motorControlModeSymbol])
-    );
+    DialogCommonInitilizeCode(this.props.showToast, speedPIParametersArray);
     return (
       <div>
         {}
@@ -214,10 +205,7 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
   }
 
   QuadratureAxisCurrentPIController() {
-    DialogCommonInitilizeCode(
-      this.props.showToast,
-      quadratureAxisCurrentPISymbols.concat([motorControlModeSymbol])
-    );
+    DialogCommonInitilizeCode(this.props.showToast, quadratureAxisCurrentPISymbols);
     return (
       <div>
         <AddImageAndParameters
@@ -232,10 +220,7 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
   }
 
   DirectAxisCurrentPIParameters() {
-    DialogCommonInitilizeCode(
-      this.props.showToast,
-      directAxisCurrentPIParametersSymbols.concat([motorControlModeSymbol])
-    );
+    DialogCommonInitilizeCode(this.props.showToast, directAxisCurrentPIParametersSymbols);
     return (
       <div>
         <AddImageAndParameters
@@ -250,10 +235,7 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
   }
 
   PositionControllerPIParameters() {
-    DialogCommonInitilizeCode(
-      this.props.showToast,
-      positionControlPIParametersSymbols.concat([motorControlModeSymbol])
-    );
+    DialogCommonInitilizeCode(this.props.showToast, positionControlPIParametersSymbols);
     return (
       <div>
         <AddImageAndParameters
@@ -268,10 +250,7 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
   }
 
   FWAndMTPA() {
-    DialogCommonInitilizeCode(
-      this.props.showToast,
-      fieldWeakeningSymbols.concat([motorControlModeSymbol])
-    );
+    DialogCommonInitilizeCode(this.props.showToast, fieldWeakeningSymbols);
     return (
       <div>
         <AddImageAndParameters
@@ -286,10 +265,7 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
   }
 
   PWMModulator() {
-    DialogCommonInitilizeCode(
-      this.props.showToast,
-      pwmModulatorSymbols.concat([motorControlModeSymbol])
-    );
+    DialogCommonInitilizeCode(this.props.showToast, pwmModulatorSymbols);
     return (
       <div>
         {}
@@ -305,10 +281,7 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
   }
 
   DecoupleNetwork() {
-    DialogCommonInitilizeCode(
-      this.props.showToast,
-      decoupleNetworkSymbols.concat([motorControlModeSymbol])
-    );
+    DialogCommonInitilizeCode(this.props.showToast, decoupleNetworkSymbols);
     return (
       <div>
         {}
@@ -365,7 +338,7 @@ class MotorControlandDiagnosis extends React.Component<IProps, IState> {
                     htmlFor='ingredient1'
                     className='ml-2'
                     style={{ fontWeight: 'bold' }}>
-                    Motor Based Design
+                    Model based design
                   </label>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 import { Dialog } from 'primereact/dialog';
-import { confirmDialog } from 'primereact/confirmdialog';
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Button } from 'primereact/button';
 import StartUpConfigurator from '../ControlBlock/StartUpConfigurator';
 import useForceUpdate from 'use-force-update';
@@ -233,6 +233,7 @@ const GenericPopUp = () => {
 
   return (
     <div className='dialog-demo'>
+      <ConfirmDialog />
       <Toast
         ref={toastRef}
         position='bottom-right'></Toast>

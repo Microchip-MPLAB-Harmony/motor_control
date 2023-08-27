@@ -243,7 +243,7 @@ class PositionMesurementAndDiagnosis extends React.Component<IProps, IState> {
   }
 
   showConfigProps(title: string, symbolsArray: string[]) {
-    DialogCommonInitilizeCode(this.props.showToast, symbolsArray.concat([positionMesurementModel]));
+    DialogCommonInitilizeCode(this.props.showToast, symbolsArray);
     return (
       <div>
         {}
@@ -258,7 +258,7 @@ class PositionMesurementAndDiagnosis extends React.Component<IProps, IState> {
   }
 
   showConfigPropsWithImage(title: string, symbolsArray: string[], image: any) {
-    DialogCommonInitilizeCode(this.props.showToast, symbolsArray.concat([positionMesurementModel]));
+    DialogCommonInitilizeCode(this.props.showToast, symbolsArray);
     return (
       <div>
         {}
