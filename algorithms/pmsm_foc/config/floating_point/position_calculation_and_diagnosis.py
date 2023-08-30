@@ -68,8 +68,8 @@ class mcRpoI_PositionCalculationAndDiagnosis:
             self.sym_ALGORITHM.addKey("SENSORLESS_PLL", "0", "Equation based PLL")
             self.sym_ALGORITHM.addKey("SENSORED_ENCODER", "1", "Quadrature Encoder")
             self.sym_ALGORITHM.addKey("SENSORLESS_ROLO", "2", "Reduced Order Luenberger Observer (Beta)")
-            self.sym_ALGORITHM.addKey("SENSORLESS_SMO", "3", "Sliding Mode Observer (Beta)")
-            self.sym_ALGORITHM.addKey("SENSORLESS_ZSMT_HYBRID", "4", "ZSMT Hybrid (Beta)")
+            self.sym_ALGORITHM.addKey("SENSORLESS_SMO", "3", "Sliding Mode Observer ")
+            self.sym_ALGORITHM.addKey("SENSORLESS_ZSMT_HYBRID", "4", "ZSMT Hybrid ")
 
         self.sym_ALGORITHM.setOutputMode("Key")
         self.sym_ALGORITHM.setDisplayMode("Description")
