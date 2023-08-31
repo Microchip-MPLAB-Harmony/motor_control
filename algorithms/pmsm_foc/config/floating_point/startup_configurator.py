@@ -171,7 +171,6 @@ class mcSupI_StartupConfigurator:
             self.sym_PULSE_PERIOD.setVisible(False)
 
     def showThisSymbol(self, symbol, event):
-        print( "Check point", event['value'])
         if True == event["value"]:
             symbol.setVisible(True)
         else:

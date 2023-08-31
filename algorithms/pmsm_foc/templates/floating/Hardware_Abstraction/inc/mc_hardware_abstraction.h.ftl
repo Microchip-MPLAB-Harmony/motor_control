@@ -77,11 +77,11 @@ extern int16_t mcPwmI_Duty_gau16[3u];
  */
 __STATIC_INLINE uint16_t mcHalI_PwmPeriodGet( void )
 {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
     return (uint16_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitPeriodGet();
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
     return (uint16_t)${MCPMSMFOC_PWM_INSTANCE}_ChannelPeriodGet(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL});
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     return (uint16_t)${MCPMSMFOC_PWM_INSTANCE}_PrimaryPeriodGet();
 </#if>
 }
@@ -98,7 +98,7 @@ __STATIC_INLINE uint16_t mcHalI_PwmPeriodGet( void )
  */
 __STATIC_FORCEINLINE void mcHalI_InverterPwmSet( const int16_t * const dutyCycle )
 {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
 <#if MCPMSMFOC_FOC_X2C_ENABLE == true>
     uint8_t status;
         
@@ -129,7 +129,7 @@ __STATIC_FORCEINLINE void mcHalI_InverterPwmSet( const int16_t * const dutyCycle
       /** ToDO: Log error */
     }
 </#if>
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
     uint16_t period;
     uint16_t duty[3u] = {0u};
     
@@ -142,7 +142,7 @@ __STATIC_FORCEINLINE void mcHalI_InverterPwmSet( const int16_t * const dutyCycle
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelDutySet(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}, duty[1u] );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelDutySet(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}, duty[2u] );
     
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPrimaryDutySet(${MCPMSMFOC_PWM_INSTANCE}_CH_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}, (uint16_t)dutyCycle[0] );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPrimaryDutySet(${MCPMSMFOC_PWM_INSTANCE}_CH_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}, (uint16_t)dutyCycle[1] );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPrimaryDutySet(${MCPMSMFOC_PWM_INSTANCE}_CH_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}, (uint16_t)dutyCycle[2] );
@@ -161,11 +161,11 @@ __STATIC_FORCEINLINE void mcHalI_InverterPwmSet( const int16_t * const dutyCycle
  */
 __STATIC_FORCEINLINE void mcHalI_PhaseACurrentGet( void )
 {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ConversionResultGet();
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_UNIT_PHASE_CURRENT_IA_FINAL});
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
   <#if MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC7" >
     mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_UNIT_PHASE_CURRENT_IA_FINAL});
   <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC0"> 
@@ -196,11 +196,11 @@ __STATIC_FORCEINLINE void mcHalI_PhaseACurrentGet( void )
  */
 __STATIC_FORCEINLINE void mcHalI_PhaseBCurrentGet( void )
 {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     mcHalI_IbAdcInput_gdu16 =  ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ConversionResultGet();   
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     mcHalI_IbAdcInput_gdu16 =  ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IB_UNIT_PHASE_CURRENT_IB_FINAL});
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
   <#if MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC7" >
     mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_PHASE_CURRENT_IB_UNIT_PHASE_CURRENT_IB_FINAL});
   <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC0"> 
@@ -233,11 +233,11 @@ __STATIC_FORCEINLINE void mcHalI_PhaseBCurrentGet( void )
 __STATIC_FORCEINLINE void mcHalI_DcLinkVoltageGet( void )
 {
     /** Get ADC value for DC bus voltage */
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     mcHalI_UbusAdcInput_gdu16 = ADC1_ConversionResultGet();
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     mcHalI_UbusAdcInput_gdu16 = AFEC0_ChannelResultGet(AFEC_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL});
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>  
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
   <#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC7" >
     mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL});
   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC0"> 
@@ -269,11 +269,11 @@ __STATIC_FORCEINLINE void mcHalI_DcLinkVoltageGet( void )
 __STATIC_FORCEINLINE void mcHalI_PotentiometerInputGet( void )
 {
     /** Get ADC value for DC bus voltage */
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     mcHalI_Potentiometer_gdu16 = ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ConversionResultGet();
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     mcHalI_Potentiometer_gdu16 = ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT_POTENTIOMETER_VPOT_FINAL});
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
   <#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC7" >
     mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT_POTENTIOMETER_VPOT_FINAL});
   <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC0"> 
@@ -292,8 +292,7 @@ __STATIC_FORCEINLINE void mcHalI_PotentiometerInputGet( void )
 </#if>
 }
 
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
-
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
 /*! \brief Potentiometer input software trigger 
  * 
  * Details.
@@ -383,11 +382,11 @@ __STATIC_FORCEINLINE void mcHalI_AdcHardwareTriggerRenable( void )
  */
 __STATIC_FORCEINLINE void mcHalI_AdcInterruptClear( void )
 {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     ADC0_InterruptsClear(ADC_STATUS_MASK);
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     NVIC_ClearPendingIRQ(AFEC0_IRQn);
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
     EVIC_SourceStatusClear(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].INTERRUPT_ADC_RESULT});
 </#if>
 }
@@ -404,11 +403,11 @@ __STATIC_FORCEINLINE void mcHalI_AdcInterruptClear( void )
  */
 __STATIC_FORCEINLINE void mcHalI_AdcInterruptDisable( void )
 {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     ADC0_InterruptsDisable( ADC_STATUS_RESRDY );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     NVIC_DisableIRQ(AFEC0_IRQn);
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
     EVIC_SourceDisable(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].INTERRUPT_ADC_RESULT});
 </#if>
 }
@@ -425,11 +424,11 @@ __STATIC_FORCEINLINE void mcHalI_AdcInterruptDisable( void )
  */
 __STATIC_FORCEINLINE void mcHalI_AdcInterruptEnable( void )
 {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     ADC0_InterruptsEnable( ADC_STATUS_RESRDY );  
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     NVIC_EnableIRQ(AFEC0_IRQn); 
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
     EVIC_SourceEnable(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].INTERRUPT_ADC_RESULT});
 </#if>
 }
@@ -447,16 +446,16 @@ __STATIC_FORCEINLINE void mcHalI_AdcInterruptEnable( void )
  */
 __STATIC_FORCEINLINE uint16_t mcHalI_EncoderPositionGet( void  )
 {
-    <#if __PROCESSOR?matches(".*SAME54.*") == true>
-        return (uint16_t)${MCPMSMFOC_ENCODER_PERIPHERAL}_QDECPositionGet();
-    <#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#if "PDEC_U2263" == MCPMSMFOC_QEI_IP>
+    return (uint16_t)${MCPMSMFOC_ENCODER_PERIPHERAL}_QDECPositionGet();
+<#elseif "TC_6082" == MCPMSMFOC_QEI_IP>
         return (uint16_t)${MCPMSMFOC_ENCODER_PERIPHERAL}_QuadraturePositionGet();
-    <#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "QEI_01494" == MCPMSMFOC_QEI_IP>
         return (uint16_t)${MCPMSMFOC_ENCODER_PERIPHERAL}_PositionGet();
-    </#if>
+</#if>
 }
 
-<#if __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#if "QEI_01494" == MCPMSMFOC_QEI_IP>
 /*! \brief Get the encoder velocity count
  *
  * Details.
@@ -585,11 +584,11 @@ void mcHalI_PwmTimerStart( void );
  * @param[out]:
  * @return:
  */
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
 void mcHalI_AdcCallBackRegister( ADC_CALLBACK callback, uintptr_t context );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "TC_6082" == MCPMSMFOC_QEI_IP>
 void mcHalI_AdcCallBackRegister( AFEC_CALLBACK callback, uintptr_t context );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "QEI_01494" == MCPMSMFOC_QEI_IP>
 void mcHalI_AdcCallBackRegister( ADCHS_CALLBACK callback, uintptr_t context );
 </#if>
 
@@ -603,11 +602,11 @@ void mcHalI_AdcCallBackRegister( ADCHS_CALLBACK callback, uintptr_t context );
  * @param[out]:
  * @return:
  */
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
 void mcHalI_PwmCallbackRegister( TCC_CALLBACK callback, uintptr_t context );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
 void mcHalI_PwmCallbackRegister( PWM_CALLBACK callback, uintptr_t context );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
 void mcHalI_PwmCallbackRegister( MCPWM_CH_CALLBACK callback, uintptr_t context );
 </#if>
 

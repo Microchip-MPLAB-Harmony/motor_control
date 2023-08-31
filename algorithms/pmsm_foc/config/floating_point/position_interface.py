@@ -28,6 +28,24 @@
 import os.path
 
 #---------------------------------------------------------------------------------------#
+#                                 Suppoted IPs                                          #
+#---------------------------------------------------------------------------------------#
+SupportedQEIIps = {
+    "QDEC" : [
+                { "name": "PDEC", "id": "U2263"},
+                { "name": "TC", "id": "6082"},
+                { "name": "QEI", "id": "01494"}
+             ]
+}
+
+def getQEIIP(modules):
+    for module in modules:
+        for entry in SupportedQEIIps.get("QDEC", []):
+            if ( entry["name"] == module.getAttribute("name") and entry["id"] == module.getAttribute("id") ):
+                return entry["name"], entry["id"]
+    return "",""
+
+#---------------------------------------------------------------------------------------#
 #                                 GLOBAL VARIABLES                                      #
 #---------------------------------------------------------------------------------------#
 class mcFocI_PositionInterfaceClass:
@@ -39,7 +57,19 @@ class mcFocI_PositionInterfaceClass:
         self.mapForQea = dict()
         self.mapForQeb = dict()
 
-        if "SAME70" in MCU:
+        # Get ADC IP from the ATDF file
+        periphNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
+        modules = periphNode.getChildren()
+        name, id = getQEIIP(modules)
+
+        # Create a symbol for ADC IP
+        self.IP  = self.component.createStringSymbol("MCPMSMFOC_QEI_IP", None )
+        self.IP.setLabel("QEI IP")
+        self.IP.setValue( name + "_" + id)
+        self.IP.setVisible(False)
+
+
+        if ( name == "TC" ) and ( id == "6082"):
             module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"TC\"]"
             modules = ATDF.getNode(module_Path).getChildren()
 
@@ -65,7 +95,7 @@ class mcFocI_PositionInterfaceClass:
 
             self.instance_List.sort()
 
-        elif "SAME54" in MCU:
+        elif ( name == "PDEC" ) and ( id == "U2263"):
             module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"PDEC\"]"
             modules = ATDF.getNode(module_Path).getChildren()
 
@@ -90,7 +120,7 @@ class mcFocI_PositionInterfaceClass:
 
             self.instance_List.sort()
 
-        elif "PIC32MK" in MCU:
+        elif ( name == "QEI" ) and ( id == "01494"):
             # Pin to quadrature decoder mapping
             currentPath = Variables.get("__CSP_DIR") + "/peripheral/gpio_02467"
             deviceXmlPath = os.path.join(currentPath, "plugin/pin_xml/components/" + Variables.get("__PROCESSOR") + ".xml")

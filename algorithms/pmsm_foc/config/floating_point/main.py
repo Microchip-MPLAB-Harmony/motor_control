@@ -173,7 +173,7 @@ def instantiateComponent(mcPmsmFocComponent):
     pwm_Interface()
 
     global event_System
-    event_System = mcEvtI_EventSystemClass()
+    event_System = mcEvtI_EventSystemClass(mcPmsmFocComponent)
     event_System()
 
     global data_Monitoring

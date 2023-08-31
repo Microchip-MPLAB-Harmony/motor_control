@@ -99,11 +99,11 @@ void mcAppI_ApplicationInit( void );
  * @return:
  */
 
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
 void mcAppI_OverCurrentReactionIsr( uint32_t status,  uintptr_t context );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
 void mcAppI_OverCurrentReactionIsr( uint32_t status,  uintptr_t context );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
 void mcAppI_OverCurrentReactionIsr( MCPWM_CH_STATUS status, uintptr_t context );
 </#if>
 
@@ -118,11 +118,11 @@ void mcAppI_OverCurrentReactionIsr( MCPWM_CH_STATUS status, uintptr_t context );
  * @param[out]:
  * @return:
  */
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcCalibrationIsr(ADC_STATUS status, uintptr_t context );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcCalibrationIsr( uint32_t status, uintptr_t context );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context );
 </#if>
 
@@ -138,11 +138,11 @@ void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context );
  * @param[out]:
  * @return:
  */
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
 void mcAppI_InitialPositionDetectIsr(ADC_STATUS status, uintptr_t context );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
 void mcAppI_InitialPositionDetectIsr( uint32_t status, uintptr_t context );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context );
 </#if>
 </#if>
@@ -158,11 +158,11 @@ void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t conte
  * @param[out]:
  * @return:
  */
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcFinishedIsr(ADC_STATUS status, uintptr_t context );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcFinishedIsr( uint32_t status, uintptr_t context );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcFinishedIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context );
 </#if>
 

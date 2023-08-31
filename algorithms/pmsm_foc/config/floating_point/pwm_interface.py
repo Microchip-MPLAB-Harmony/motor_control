@@ -28,6 +28,24 @@
 import os.path
 
 #---------------------------------------------------------------------------------------#
+#                                 Suppoted IPs                                          #
+#---------------------------------------------------------------------------------------#
+SupportedPWMIps = {
+    "PWM" : [
+              { "name": "TCC", "id": "U2213"},
+              { "name": "PWM", "id": "6343"},
+              { "name": "MCPWM", "id": "01477"}
+            ]
+}
+
+def getPWMIP(modules):
+    for module in modules:
+        for entry in SupportedPWMIps.get("PWM", []):
+            if ( entry["name"] == module.getAttribute("name") and entry["id"] == module.getAttribute("id") ):
+                return entry["name"], entry["id"]
+    return "",""
+
+#---------------------------------------------------------------------------------------#
 #                                 Global variables                                      #
 #---------------------------------------------------------------------------------------#
 
@@ -43,7 +61,18 @@ class mcPwmI_PwmInterfaceClass:
         self.algorithm = algorithm
         self.component = component
 
-        if "SAME70" in MCU:
+        # Get ADC IP from the ATDF file
+        periphNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
+        modules = periphNode.getChildren()
+        self.name, self.id = getPWMIP(modules)
+
+        # Create a symbol for ADC IP
+        self.IP  = self.component.createStringSymbol("MCPMSMFOC_PWM_IP", None )
+        self.IP.setLabel("PWM IP")
+        self.IP.setValue( self.name + "_" + self.id)
+        self.IP.setVisible(False)
+
+        if ( self.name == "PWM" ) and ( self.id == "6343"):
             module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"PWM\"]"
             node = ATDF.getNode(module_Path)
             inst = node.getChildren()
@@ -63,27 +92,8 @@ class mcPwmI_PwmInterfaceClass:
             global global_PWM_FAULT
             global_PWM_FAULT = "FAULT_PWM_ID2"
 
-        if "SAME70" in MCU:
-            module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"PWM\"]"
-            node = ATDF.getNode(module_Path)
-            inst = node.getChildren()
 
-            self.function_Map = dict()
-            for ins in inst:
-                key = ins.getAttribute("name")
-                self.function_Map[key] = set()
-                inst_Path = module_Path + "/instance@[name=\"" + key + "\"]/signals"
-
-                channels =  ATDF.getNode(inst_Path).getChildren()
-                for channel in channels:
-                    self.function_Map[key].add("Channel" + " " + channel.getAttribute("index"))
-
-                self.function_Map[key] = sorted(list(self.function_Map[key]))
-
-            global global_PWM_FAULT
-            global_PWM_FAULT = "FAULT_PWM_ID2"
-
-        elif "SAME54" in MCU:
+        elif ( self.name == "TCC" ) and ( self.id == "U2213"):
             module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]"
             node = ATDF.getNode(module_Path)
             inst = node.getChildren()
@@ -104,7 +114,7 @@ class mcPwmI_PwmInterfaceClass:
             global global_PWM_FAULT
             global_PWM_FAULT = "EIC_CHANNEL_2"
 
-        elif "PIC32MK" in MCU:
+        elif ( self.name == "MCPWM" ) and ( self.id == "01477"):
             # currentPath = os.path.dirname(os.path.abspath(inspect.stack()[0][1]))
             currentPath = Variables.get("__CSP_DIR") + "/peripheral/gpio_02467"
             deviceXmlPath = os.path.join(currentPath, "plugin/pin_xml/components/" + Variables.get("__PROCESSOR") + ".xml")
@@ -205,7 +215,7 @@ class mcPwmI_PwmInterfaceClass:
         global global_ADC_TRIGGER
         self.sym_PWMA = mcFun_AdvancedComboSymbol( "PWM A", "PWM_A", self.component)
         self.sym_PWMA.createComboSymbol(self.sym_INSTANCE, self.sym_PWM, self.function_Map)
-        if "PIC32MK" in MCU:
+        if ( self.name == "MCPWM" ) and ( self.id == "01477"):
             self.sym_PWMA.setDefaultValue("Channel 1")
         else:
             self.sym_PWMA.setDefaultValue("Channel 0")
@@ -216,7 +226,7 @@ class mcPwmI_PwmInterfaceClass:
         self.sym_PWMB = mcFun_AdvancedComboSymbol( "PWM B", "PWM_B", self.component)
         self.sym_PWMB.createComboSymbol(self.sym_INSTANCE, self.sym_PWM, self.function_Map)
         self.sym_PWMB.setDefaultValue("Channel 1")
-        if "PIC32MK" in MCU:
+        if ( self.name == "MCPWM" ) and ( self.id == "01477"):
             self.sym_PWMB.setDefaultValue("Channel 2")
         else:
             self.sym_PWMB.setDefaultValue("Channel 1")
@@ -224,7 +234,7 @@ class mcPwmI_PwmInterfaceClass:
         # PWM Channel C
         self.sym_PWMC = mcFun_AdvancedComboSymbol( "PWM C", "PWM_C", self.component)
         self.sym_PWMC.createComboSymbol(self.sym_INSTANCE, self.sym_PWM, self.function_Map)
-        if "PIC32MK" in MCU:
+        if ( self.name == "MCPWM" ) and ( self.id == "01477"):
             self.sym_PWMC.setDefaultValue("Channel 3")
         else:
             self.sym_PWMC.setDefaultValue("Channel 2")

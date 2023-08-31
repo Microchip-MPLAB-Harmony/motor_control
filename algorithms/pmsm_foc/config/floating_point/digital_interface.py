@@ -29,6 +29,7 @@
 import inspect
 import xml.etree.ElementTree as ET
 import os.path
+
 #---------------------------------------------------------------------------------------#
 #                              Global variables                                         #
 #---------------------------------------------------------------------------------------#
@@ -41,26 +42,32 @@ class mcFocI_DigitalInterfaceClass:
         self.algorithm = algorithm
         self.component = component
 
+        # Get pin package details
+        packageName = str(Database.getSymbolValue("core", "COMPONENT_PACKAGE"))
+
+        print("What is the package name", packageName)
+
         # Get list of function_Maps
         self.function_Map = list()
-        if "SAME54" in MCU:
-            pins =  ATDF.getNode("/avr-tools-device-file/pinouts/pinout@[name=\"SAMD51P\"]").getChildren()
-            for pin in pins:
-                pad = pin.getAttribute("pad")
-                if pad.startswith("P"):
-                    self.function_Map.append(pad)
 
-        elif "SAME70" in MCU:
-            pins =  ATDF.getNode("/avr-tools-device-file/pinouts/pinout@[name=\"LQFP144\"]").getChildren()
+        architecture = ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("architecture")
+
+        if "MIPS" != architecture:
+
+            pins = ATDF.getNode("/avr-tools-device-file/pinouts/pinout@[name=\"" + packageName + "\"]").getChildren()
 
             for pin in pins:
                 pad = pin.getAttribute("pad")
                 if pad.startswith("P"):
                     self.function_Map.append(pad)
 
-        elif "PIC32MK" in MCU:
-            # currentPath = os.path.dirname(os.path.abspath(inspect.stack()[0][1]))
-            currentPath = Variables.get("__CSP_DIR") + "/peripheral/gpio_02467"
+        else:
+            for module in ATDF.getNode("/avr-tools-device-file/modules").getChildren():
+                if module.getAttribute("name") == "GPIO":
+                    GPIO = module.getAttribute("name").lower() + "_" + module.getAttribute("id").lower()
+                    break
+
+            currentPath = Variables.get("__CSP_DIR") + "/peripheral/" + GPIO
             deviceXmlPath = os.path.join(currentPath, "plugin/pin_xml/components/" + Variables.get("__PROCESSOR") + ".xml")
             deviceXmlTree = ET.parse(deviceXmlPath)
             deviceXmlRoot = deviceXmlTree.getroot()
@@ -77,7 +84,6 @@ class mcFocI_DigitalInterfaceClass:
 
     def setSymbolValues(self):
         information = Database.sendMessage("bsp", "MCPMSMFOC_DIGITAL_INTERFACE", {})
-        print("Debug, Digital Interface**", information)
         if (None != information):
             index = 0
             for key, value in information["BUTTONS"].items():
@@ -171,7 +177,6 @@ class mcFocI_DigitalInterfaceClass:
 
 
     def handleMessage(self, ID, information):
-        print("Debug, Digital Interface", information)
         if ("BSP_DIGITAL_INTERFACE" == ID) and (None != information):
             index = 0
             for key, value in information["BUTTONS"].items():

@@ -31,4 +31,3 @@ else:
     # General Purpose function classes
     execfile(Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/main.py")
 
-    

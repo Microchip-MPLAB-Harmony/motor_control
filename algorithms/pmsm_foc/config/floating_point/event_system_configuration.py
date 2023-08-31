@@ -26,6 +26,24 @@
 #                                 Imports                                               #
 #---------------------------------------------------------------------------------------#
 
+#---------------------------------------------------------------------------------------#
+#                                Global Variables                                       #
+#---------------------------------------------------------------------------------------#
+autoConnectTable = []
+
+#---------------------------------------------------------------------------------------#
+#                                 Suppoted IPs                                          #
+#---------------------------------------------------------------------------------------#
+SupportedEVSYSIps = {
+    "EVSYS" : [{ "name": "EVSYS", "id": "U2504"}]
+}
+
+def getEVSYSIP(modules):
+    for module in modules:
+        for entry in SupportedEVSYSIps.get("EVSYS", []):
+            if ( entry["name"] == module.getAttribute("name") and entry["id"] == module.getAttribute("id") ):
+                return entry["name"], entry["id"]
+    return "",""
 
 #---------------------------------------------------------------------------------------#
 #                               Global Variables                                        #
@@ -35,15 +53,27 @@
 #                                     Class                                             #
 #---------------------------------------------------------------------------------------#
 class mcEvtI_EventSystemClass:
-    def __init__(self ):
+    def __init__(self, component ):
+        self.component = component
+
+        # Get ADC IP from the ATDF file
+        periphNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
+        modules = periphNode.getChildren()
+
+        self.name, self.id = getEVSYSIP(modules)
+
+        # Create a symbol for ADC IP
+        self.IP  = self.component.createStringSymbol("MCPMSMFOC_EVSYS_IP", None )
+        self.IP.setLabel("EVSYS IP")
+        self.IP.setValue( name + "_" + id)
+
         self.setConfiguration()
 
     def createSymbols( self ):
-       pass
-
+        pass
 
     def setConfiguration(self):
-        if "SAME54" in MCU:
+        if ( self.name == "EVSYS" ) and ( self.id == "U2504"):
             pwmInstance = global_PWM_MODULE.getValue().upper()
             adcInstance = global_ADC_MODULE.getValue().upper()
             eic = filter(str.isdigit, str( global_PWM_FAULT))

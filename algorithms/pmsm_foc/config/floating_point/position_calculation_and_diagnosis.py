@@ -356,9 +356,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
 
 
     def getDependentLibrary(self, symbol, event):
-        print("Check point", symbol.getSelectedKey())
         if "SENSORED_ENCODER" == symbol.getSelectedKey():
-            print("Check point**", symbol.getSelectedKey())
             symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", True)
             # Activate and connect the default  peripheral for quadrature decoder
             module = str( Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_ENCODER_PERIPHERAL_ID"))
@@ -375,7 +373,6 @@ class mcRpoI_PositionCalculationAndDiagnosis:
             res = Database.deactivateComponents(autoConnectTable)
 
             symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", False)
-            print("Check point****", symbol.getSelectedKey(), module)
 
     def symbolUpdate( self, symbol, event ):
         motor = event["symbol"].getValue()

@@ -116,11 +116,11 @@ __STATIC_INLINE void mcAppI_MotorStartStop(void)
         /** Enable initial position detection  */
         mcIpdI_InitialPositionDetectEnable(&mcIpdI_ModuleData_gds);
 
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (AFEC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
 </#if>
 </#if>
@@ -268,34 +268,34 @@ void mcAppI_ApplicationInit( void )
     mcHalI_AdcInterruptDisable();
     mcHalI_AdcInterruptClear();
 
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     /** Enable ADC interrupt for field oriented control */
     mcHalI_AdcCallBackRegister(  (ADC_CALLBACK)mcAppI_AdcCalibrationIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     /** Enable ADC interrupt for field oriented control */
     mcHalI_AdcCallBackRegister(  (AFEC_CALLBACK)mcAppI_AdcCalibrationIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
     /** Enable ADC interrupt for field oriented control */
     mcHalI_AdcCallBackRegister(  (ADCHS_CALLBACK)mcAppI_AdcCalibrationIsr, (uintptr_t)dummyForMisra );
 </#if>
     mcHalI_AdcInterruptEnable( );
 
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     /** Enable ADC module */
     mcHalI_AdcEnable();
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     /** Enable ADC module */
     mcHalI_AdcEnable();
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 </#if>
 
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
     /** Enable interrupt for fault detection */
     mcHalI_PwmCallbackRegister( (TCC_CALLBACK)mcAppI_OverCurrentReactionIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
     /** Enable interrupt for fault detection */
     mcHalI_PwmCallbackRegister( (PWM_CALLBACK)mcAppI_OverCurrentReactionIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     /** Enable interrupt for fault detection */
     mcHalI_PwmCallbackRegister( (MCPWM_CH_CALLBACK)mcAppI_OverCurrentReactionIsr, (uintptr_t)dummyForMisra );
 </#if>
@@ -352,11 +352,11 @@ void mcAppI_ApplicationInit( void )
  * @param[out]:
  * @return:
  */
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
 void mcAppI_OverCurrentReactionIsr( uint32_t status,  uintptr_t context )
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
 void mcAppI_OverCurrentReactionIsr( uint32_t status,  uintptr_t context )
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
 void mcAppI_OverCurrentReactionIsr( MCPWM_CH_STATUS status, uintptr_t context )
 </#if>
 {
@@ -396,11 +396,11 @@ void mcAppI_OverCurrentReactionIsr( MCPWM_CH_STATUS status, uintptr_t context )
  * @param[out]:
  * @return:
  */
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcCalibrationIsr(ADC_STATUS status, uintptr_t context)
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcCalibrationIsr( uint32_t status, uintptr_t context )
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
 </#if>
 {    
@@ -421,28 +421,28 @@ void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
     if( StdReturn_Complete == returnStatus )
     {
 <#if MCPMSMFOC_FOC_X2C_ENABLE == true>
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (AFEC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 </#if>
 <#else>
  <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >    
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (AFEC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
 </#if>
 <#else>
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (AFEC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 </#if>
 </#if>
@@ -475,11 +475,11 @@ void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
  * @param[out]:
  * @return:
  */
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
 void mcAppI_InitialPositionDetectIsr(ADC_STATUS status, uintptr_t context )
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
 void mcAppI_InitialPositionDetectIsr( uint32_t status, uintptr_t context )
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
 </#if>
 {
@@ -511,11 +511,11 @@ void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t conte
     }
     else
     {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (AFEC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 </#if>
         
@@ -550,11 +550,11 @@ void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t conte
  * @param[out]:
  * @return:
  */
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcFinishedIsr(ADC_STATUS status, uintptr_t context )
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcFinishedIsr( uint32_t status, uintptr_t context )
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcFinishedIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
 </#if>
 {
@@ -598,7 +598,7 @@ void mcAppI_AdcFinishedIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
     /** Read potentiometer input */
     mcHalI_PotentiometerInputGet();
 
-<#if __PROCESSOR?matches(".*SAME54.*") == true>   
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     /** Set phase A and phase B current channels */ 
     mcHalI_PhaseACurrentChannelSelect();
     mcHalI_PhaseBCurrentChannelSelect();

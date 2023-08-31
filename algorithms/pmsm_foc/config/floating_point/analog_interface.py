@@ -33,6 +33,22 @@
 autoConnectTable = []
 
 #---------------------------------------------------------------------------------------#
+#                                 Suppoted IPs                                          #
+#---------------------------------------------------------------------------------------#
+SupportedADCIps = {
+    "ADC" : [{ "name": "ADC", "id": "U2500"},
+             { "name": "AFEC", "id": "11147"},
+             { "name": "ADCHS", "id": "02508"}]
+}
+
+def getADCIP(modules):
+    for module in modules:
+        for entry in SupportedADCIps.get("ADC", []):
+            if ( entry["name"] == module.getAttribute("name") and entry["id"] == module.getAttribute("id") ):
+                return entry["name"], entry["id"]
+    return "",""
+
+#---------------------------------------------------------------------------------------#
 #                                   Classes                                             #
 #---------------------------------------------------------------------------------------#
 class mcAniI_AnalogInterfaceClass:
@@ -40,8 +56,19 @@ class mcAniI_AnalogInterfaceClass:
         self.algorithm = algorithm
         self.component = component
 
+        # Get ADC IP from the ATDF file
+        periphNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
+        modules = periphNode.getChildren()
+        global name, id
+        name, id = getADCIP(modules)
+
+        # Create a symbol for ADC IP
+        self.IP  = self.component.createStringSymbol("MCPMSMFOC_ADC_IP", None )
+        self.IP.setLabel("ADC IP")
+        self.IP.setValue( name + "_" + id)
+
         self.function_Map  = dict()
-        if "PIC32MK" in MCU:
+        if ( name == "ADCHS" ) and ( id == "02508"):
             # Dedicated channels
             channelList = []
             self.function_Map = dict()
@@ -86,7 +113,7 @@ class mcAniI_AnalogInterfaceClass:
                     except:
                         self.function_Map["ADC7"] = ["Channel" +" " + str(SignalNumber)]
 
-        elif "SAME70" in MCU:
+        elif ( name == "AFEC" ) and ( id == "11147"):
             unit_path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"AFEC\"]"
             units = ATDF.getNode(unit_path).getChildren()
 
@@ -99,7 +126,7 @@ class mcAniI_AnalogInterfaceClass:
                     if( (None != channel.getAttribute("index")) and ("AD" == channel.getAttribute("group"))):
                         self.function_Map[key].append( "Channel" + " " + str(channel.getAttribute("index")))
 
-        elif "SAME54" in MCU:
+        elif ( name == "ADC" ) and ( id == "U2500"):
             unit_path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]"
             units = ATDF.getNode(unit_path).getChildren()
 
@@ -160,13 +187,12 @@ class mcAniI_AnalogInterfaceClass:
         self.sym_ANALOG_MODULE_02.setVisible(False)
         self.sym_ANALOG_MODULE_02.setDefaultValue("None")
 
-        if ("PIC32MK" == MCU ):
+        # ToDO: Remove once the query and publish ADC features architecture is established
+        if ( name == "ADCHS" ) and ( id == "02508"):
             resolution = ["12", "10", "8", "6"]
-        elif ("SAME70" == MCU ):
+        elif ( name == "AFEC" ) and ( id == "11147"):
             resolution = ["12", "13", "14", "15", "16"]
-        elif ("SAME54" == MCU ):
-            resolution = ["12", "16", "10", "8"]
-        else:
+        elif ( name == "ADC" ) and ( id == "U2500"):
             resolution = ["12", "16", "10", "8"]
 
         self.sym_RESOLUTION = self.component.createComboSymbol( "MCPMSMFOC_ADC_RESOLUTION", None, resolution )
@@ -193,7 +219,7 @@ class mcAniI_AnalogInterfaceClass:
         self.sym_IA_UNIT_ID.setLabel("Peripheral ID")
         # self.sym_IA_UNIT_ID.setVisible(False)
 
-        if "PIC32MK" in MCU:
+        if ( name == "ADCHS" ) and ( id == "02508"):
             self.sym_IA_UNIT_ID.setDefaultValue("adchs")
         else:
             self.sym_IA_UNIT_ID.setDefaultValue((self.sym_IA_UNIT.getValue()).lower())
@@ -218,7 +244,7 @@ class mcAniI_AnalogInterfaceClass:
         self.sym_IB_UNIT_ID = self.component.createStringSymbol("MCPMSMFOC_IB_ADC_PERIPHERAL_ID", None)
         self.sym_IB_UNIT_ID.setLabel("Peripheral ID")
         self.sym_IB_UNIT_ID.setVisible(False)
-        if "PIC32MK" in MCU:
+        if ( name == "ADCHS" ) and ( id == "02508"):
             self.sym_IB_UNIT_ID.setDefaultValue("adchs")
         else:
             self.sym_IB_UNIT_ID.setDefaultValue((self.sym_IB_UNIT.getValue()).lower())

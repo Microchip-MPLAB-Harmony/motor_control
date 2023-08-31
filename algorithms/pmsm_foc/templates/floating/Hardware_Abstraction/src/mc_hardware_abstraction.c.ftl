@@ -76,18 +76,18 @@ int16_t mcPwmI_Duty_gau16[3u];
  */
 void mcHalI_InverterPwmEnable( void )
 {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
     /*Disable PWM override*/
     while ((${MCPMSMFOC_PWM_INSTANCE}_REGS->TCC_SYNCBUSY & (TCC_SYNCBUSY_PATT_Msk)) == TCC_SYNCBUSY_PATT_Msk)
     {
         __NOP();
     }
     ${MCPMSMFOC_PWM_INSTANCE}_REGS->TCC_PATT = 0x0000;
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL} );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL} );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL} );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipEnable( ${MCPMSMFOC_PWM_INSTANCE}_CH_1 );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipEnable( ${MCPMSMFOC_PWM_INSTANCE}_CH_2 );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipEnable( ${MCPMSMFOC_PWM_INSTANCE}_CH_3 );
@@ -107,18 +107,18 @@ void mcHalI_InverterPwmEnable( void )
 void mcHalI_InverterPwmDisable( void )
 {
 /** Disable PWM override*/
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
    /*Override all PWM outputs to low*/
     while ((${MCPMSMFOC_PWM_INSTANCE}_REGS->TCC_SYNCBUSY & (TCC_SYNCBUSY_PATT_Msk)) == TCC_SYNCBUSY_PATT_Msk)
     {
        __NOP();
     }
     ${MCPMSMFOC_PWM_INSTANCE}_REGS->TCC_PATT = 0x00FF;
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL} );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL} );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL} );
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipDisable( ${MCPMSMFOC_PWM_INSTANCE}_CH_1 );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipDisable( ${MCPMSMFOC_PWM_INSTANCE}_CH_2 );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipDisable( ${MCPMSMFOC_PWM_INSTANCE}_CH_3 );
@@ -203,13 +203,12 @@ void mcHal_FaultIndicationSet( void )
  */
 void mcHalI_AdcEnable( void )
 {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     ADC0_Enable();
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     /** Nothing to do */
     __NOP();
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
-
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 </#if>
 }
 
@@ -225,11 +224,11 @@ void mcHalI_AdcEnable( void )
  */
 void mcHalI_PwmInterruptEnable( void )
 {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     NVIC_EnableIRQ(${MCPMSMFOC_PWM_INSTANCE}_OTHER_IRQn);
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     NVIC_EnableIRQ(${MCPMSMFOC_PWM_INSTANCE}_IRQn);
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
     EVIC_SourceEnable( INT_SOURCE_PWM1 );
 </#if>
 }
@@ -246,13 +245,13 @@ void mcHalI_PwmInterruptEnable( void )
  */
 void mcHalI_PwmTimerStart( void )
 {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_PWMStart( );
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}_MASK);
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}_MASK);
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}_MASK);
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_Start();
 </#if>
 }
@@ -268,17 +267,17 @@ void mcHalI_PwmTimerStart( void )
  * @return:
  */
 
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
 void mcHalI_AdcCallBackRegister( ADC_CALLBACK callback, uintptr_t context )
 {
     ADC0_CallbackRegister( callback, context);
 }
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
 void mcHalI_AdcCallBackRegister( AFEC_CALLBACK callback, uintptr_t context )
 {
     AFEC0_CallbackRegister( callback, context);
 }
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcHalI_AdcCallBackRegister( ADCHS_CALLBACK callback, uintptr_t context )
 {
     ADCHS_CallbackRegister(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].ADC_CH_PHASE_U}, callback, context);
@@ -295,18 +294,18 @@ void mcHalI_AdcCallBackRegister( ADCHS_CALLBACK callback, uintptr_t context )
  * @param[out]:
  * @return:
  */
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
 void mcHalI_PwmCallbackRegister( TCC_CALLBACK callback, uintptr_t context )
 {
     ${MCPMSMFOC_PWM_INSTANCE}_PWMCallbackRegister( callback, (uintptr_t)context);
 }
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
 void mcHalI_PwmCallbackRegister( PWM_CALLBACK callback, uintptr_t context )
 {
     ${MCPMSMFOC_PWM_INSTANCE}_CallbackRegister( callback, (uintptr_t)context);
 }
 
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
 void mcHalI_PwmCallbackRegister( MCPWM_CH_CALLBACK callback, uintptr_t context )
 {
     ${MCPMSMFOC_PWM_INSTANCE}_CallbackRegister(${MCPMSMFOC_PWM_INSTANCE}_CH_1, callback, (uintptr_t)context);
@@ -373,11 +372,11 @@ bool mcHalI_DirectionButtonState( void )
  */
 void mcHalI_EncoderStart( void  )
 {
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+<#if "PDEC_U2263" == MCPMSMFOC_QEI_IP>
     ${MCPMSMFOC_ENCODER_PERIPHERAL}_QDECStart();
-<#elseif __PROCESSOR?matches(".*SAME70.*") == true>
+<#elseif "TC_6082" == MCPMSMFOC_QEI_IP>
    ${MCPMSMFOC_ENCODER_PERIPHERAL}_QuadratureStart();
-<#elseif __PROCESSOR?matches(".*PIC32MK.*") == true>
+<#elseif "QEI_01494" == MCPMSMFOC_QEI_IP>
     ${MCPMSMFOC_ENCODER_PERIPHERAL}_Start();
 </#if>
 }
