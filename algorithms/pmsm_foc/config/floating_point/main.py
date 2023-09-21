@@ -303,72 +303,77 @@ def handleMessage( ID, message):
 
 def finalizeComponent(mcPmsmFocComponent):
 
-     value = Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_FOC_X2C_ENABLE")
-     Database.setSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_FOC_X2C_ENABLE", value)
+    value = Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_FOC_X2C_ENABLE")
+    Database.setSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_FOC_X2C_ENABLE", value)
 
     # Activate and connect the default  module for data control and monitoring
-     module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_FOC_X2C_ID"))
-     autoConnectTable = [ module]
-     res = Database.activateComponents(autoConnectTable)
+    status = Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_DATA_MONITOR_ENABLE")
 
-     autoComponentIDTable = [[ mcPmsmFocComponent.getID(), "pmsmfoc_X2CSCOPE","X2CScope", "x2cScope_Scope"]]
-     res = Database.connectDependencies(autoComponentIDTable)
+    if( status == True ):
+        module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_FOC_X2C_ID"))
+        autoConnectTable = [ module]
+        res = Database.activateComponents(autoConnectTable)
+    else:
+        mcPmsmFocComponent.setDependencyEnabled("pmsmfoc_X2CSCOPE", False)
+
+    autoComponentIDTable = [[ mcPmsmFocComponent.getID(), "pmsmfoc_X2CSCOPE","X2CScope", "x2cScope_Scope"]]
+    res = Database.connectDependencies(autoComponentIDTable)
     # Activate and connect the default PWM peripheral
-     module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_BSP_ID"))
-     autoConnectTable = [ module]
-     res = Database.activateComponents(autoConnectTable)
+    module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_BSP_ID"))
+    autoConnectTable = [ module]
+    res = Database.activateComponents(autoConnectTable)
 
-     # Activate and connect the default PWM peripheral
-     module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_PWM_PERIPHERAL_ID"))
-     autoConnectTable = [ module]
-     res = Database.activateComponents(autoConnectTable)
+    # Activate and connect the default PWM peripheral
+    module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_PWM_PERIPHERAL_ID"))
+    autoConnectTable = [ module]
+    res = Database.activateComponents(autoConnectTable)
 
-     autoComponentIDTable = [[ mcPmsmFocComponent.getID(), "pmsmfoc_PWM", module.lower(), module.upper() + "_PWM"]]
-     res = Database.connectDependencies(autoComponentIDTable)
+    autoComponentIDTable = [[ mcPmsmFocComponent.getID(), "pmsmfoc_PWM", module.lower(), module.upper() + "_PWM"]]
+    res = Database.connectDependencies(autoComponentIDTable)
 
     # Activate and connect the default ADC peripheral for phase A current
-     module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_IA_ADC_PERIPHERAL_ID"))
+    module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_IA_ADC_PERIPHERAL_ID"))
 
-     autoConnectTable = [ module]
-     res = Database.activateComponents(autoConnectTable)
+    autoConnectTable = [ module]
+    res = Database.activateComponents(autoConnectTable)
 
-     autoComponentIDTable = [[ mcPmsmFocComponent.getID(), "pmsmfoc_ADC", module.lower(), module.upper() + "_ADC"]]
-     res = Database.connectDependencies(autoComponentIDTable)
+    autoComponentIDTable = [[ mcPmsmFocComponent.getID(), "pmsmfoc_ADC", module.lower(), module.upper() + "_ADC"]]
+    res = Database.connectDependencies(autoComponentIDTable)
 
-     # Activate and connect the default ADC peripheral for phase B current
-     module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_IB_ADC_PERIPHERAL_ID"))
-     autoConnectTable = [ module]
-     res = Database.activateComponents(autoConnectTable)
+    # Activate and connect the default ADC peripheral for phase B current
+    module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_IB_ADC_PERIPHERAL_ID"))
+    autoConnectTable = [ module]
+    res = Database.activateComponents(autoConnectTable)
 
-     autoComponentIDTable = [[ mcPmsmFocComponent.getID(), "pmsmfoc_ADC", module.lower(), module.upper() + "_ADC"]]
-     res = Database.connectDependencies(autoComponentIDTable)
+    autoComponentIDTable = [[ mcPmsmFocComponent.getID(), "pmsmfoc_ADC", module.lower(), module.upper() + "_ADC"]]
+    res = Database.connectDependencies(autoComponentIDTable)
 
     # Activate and connect the default ADC peripheral for DC Bus voltage
-     module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_VDC_ADC_PERIPHERAL_ID"))
-     autoConnectTable = [ module]
-     res = Database.activateComponents(autoConnectTable)
+    module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_VDC_ADC_PERIPHERAL_ID"))
+    autoConnectTable = [ module]
+    res = Database.activateComponents(autoConnectTable)
 
-     autoComponentIDTable = [[ mcPmsmFocComponent.getID(), "pmsmfoc_ADC", module.lower(), module.upper() + "_ADC"]]
-     res = Database.connectDependencies(autoComponentIDTable)
+    autoComponentIDTable = [[ mcPmsmFocComponent.getID(), "pmsmfoc_ADC", module.lower(), module.upper() + "_ADC"]]
+    res = Database.connectDependencies(autoComponentIDTable)
 
-     # Activate and connect the default ADC peripheral for potentiometer
-     module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_VPOT_ADC_PERIPHERAL_ID"))
-     autoConnectTable = [ module]
-     res = Database.activateComponents(autoConnectTable)
+    # Activate and connect the default ADC peripheral for potentiometer
+    module = str( Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_VPOT_ADC_PERIPHERAL_ID"))
+    autoConnectTable = [ module]
+    res = Database.activateComponents(autoConnectTable)
 
-     autoComponentIDTable = [[ mcPmsmFocComponent.getID(), "pmsmfoc_ADC", module.lower(), module.upper() + "_ADC"]]
-     res = Database.connectDependencies(autoComponentIDTable)
+    autoComponentIDTable = [[ mcPmsmFocComponent.getID(), "pmsmfoc_ADC", module.lower(), module.upper() + "_ADC"]]
+    res = Database.connectDependencies(autoComponentIDTable)
 
 
     # Set default algorithms
-     value = Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_POSITION_CALC_ALGORITHM")
-     Database.setSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_POSITION_CALC_ALGORITHM", value)
+    value = Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_POSITION_CALC_ALGORITHM")
+    Database.setSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_POSITION_CALC_ALGORITHM", value)
 
     # Set default motor
-     value = Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_MOTOR_SEL")
-     Database.setSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_MOTOR_SEL", value)
+    value = Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_MOTOR_SEL")
+    Database.setSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_MOTOR_SEL", value)
 
     # Set default board
-     value = Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_BOARD_SEL")
-     Database.setSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_BOARD_SEL", value)
+    value = Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_BOARD_SEL")
+    Database.setSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_BOARD_SEL", value)
 

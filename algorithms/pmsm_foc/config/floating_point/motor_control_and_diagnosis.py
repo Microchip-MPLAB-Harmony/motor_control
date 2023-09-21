@@ -64,7 +64,7 @@ class mcMocI_MotorControlAndDiagnosis:
 
         self.sym_X2C_ID = self.component.createStringSymbol("MCPMSMFOC_FOC_X2C_ID", None)
         self.sym_X2C_ID.setLabel("Peripheral ID")
-        # self.sym_X2C_ID.setVisible(False)
+        self.sym_X2C_ID.setVisible(False)
         self.sym_X2C_ID.setDefaultValue("X2CScope")
         self.sym_X2C_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_FOC_X2C_ENABLE"] )
 
@@ -509,27 +509,36 @@ class mcMocI_MotorControlAndDiagnosis:
                 Database.activateComponents(["X2C Model"])
 
     def updatePeripheralInstance(self, symbol, event):
-        # Determine peripheral ID.
-        if( True == event["value"]):
-            autoComponentIDTable = [symbol.getValue()]
-            res = Database.deactivateComponents(autoComponentIDTable)
+        status = Database.getSymbolValue(self.component.getID(), "MCPMSMFOC_DATA_MONITOR_ENABLE")
 
-            symbol.setValue("X2C Model")
+        if status == True:
+            # Determine peripheral ID.
+            if( True == event["value"]):
+                autoComponentIDTable = [symbol.getValue()]
+                res = Database.deactivateComponents(autoComponentIDTable)
 
-            # Activate and connect the default PWM peripheral
-            res = Database.activateComponents(["X2C Model"])
-            autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE", "X2C Model", "x2cModel" ]]
-            res = Database.connectDependencies(autoComponentIDTable)
-        else:
-            autoComponentIDTable = [symbol.getValue()]
-            res = Database.deactivateComponents(autoComponentIDTable)
+                symbol.setValue("X2C Model")
 
-            symbol.setValue("X2CScope")
+                # Activate and connect the default PWM peripheral
+                res = Database.activateComponents(["X2C Model"])
+                autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE", "X2C Model", "x2cModel" ]]
+                res = Database.connectDependencies(autoComponentIDTable)
 
-            # Activate and connect the default PWM peripheral
-            res = Database.activateComponents(["X2CScope"])
-            autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE", "X2CScope", "x2cScope_Scope" ]]
-            res = Database.connectDependencies(autoComponentIDTable)
+                event["source"].setSymbolValue("MCPMSMFOC_DATA_MONITOR_PROTOCOL", "X2C Model")
+            else:
+                autoComponentIDTable = [symbol.getValue()]
+                res = Database.deactivateComponents(autoComponentIDTable)
+
+                symbol.setValue("X2CScope")
+
+                # Activate and connect the default PWM peripheral
+                res = Database.activateComponents(["X2CScope"])
+                autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE", "X2CScope", "x2cScope_Scope" ]]
+                res = Database.connectDependencies(autoComponentIDTable)
+
+                event["source"].setSymbolValue("MCPMSMFOC_DATA_MONITOR_PROTOCOL", "X2C Scope")
+
+
 
     def __call__(self):
         self.detPositionPIParameters()

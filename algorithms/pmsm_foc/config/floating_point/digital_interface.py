@@ -45,7 +45,14 @@ class mcFocI_DigitalInterfaceClass:
         # Get pin package details
         packageName = str(Database.getSymbolValue("core", "COMPONENT_PACKAGE"))
 
-        print("What is the package name", packageName)
+        # Get pin package details
+        packageName = str(Database.getSymbolValue("core", "COMPONENT_PACKAGE"))
+
+        pinout = ""
+        children = (ATDF.getNode("/avr-tools-device-file/variants")).getChildren()
+        for index in range(0, len(children)):
+            if packageName in children[index].getAttribute("package"):
+                pinout = children[index].getAttribute("pinout")
 
         # Get list of function_Maps
         self.function_Map = list()
@@ -54,7 +61,7 @@ class mcFocI_DigitalInterfaceClass:
 
         if "MIPS" != architecture:
 
-            pins = ATDF.getNode("/avr-tools-device-file/pinouts/pinout@[name=\"" + packageName + "\"]").getChildren()
+            pins = ATDF.getNode("/avr-tools-device-file/pinouts/pinout@[name=\"" + pinout + "\"]").getChildren()
 
             for pin in pins:
                 pad = pin.getAttribute("pad")

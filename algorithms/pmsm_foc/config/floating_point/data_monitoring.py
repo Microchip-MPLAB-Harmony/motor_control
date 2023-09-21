@@ -29,6 +29,11 @@
 #---------------------------------------------------------------------------------------#
 #                                 GLOBAL VARIABLES                                      #
 #---------------------------------------------------------------------------------------#
+
+
+#---------------------------------------------------------------------------------------#
+#                                 CLASSES                                               #
+#---------------------------------------------------------------------------------------#
 class mcFocI_DataMonitoringClass:
     def __init__(self, algorithm, component):
         self.algorithm = algorithm
@@ -42,23 +47,57 @@ class mcFocI_DataMonitoringClass:
         # Data communication Enable
         self.sym_PROTOCOL = self.component.createBooleanSymbol("MCPMSMFOC_DATA_MONITOR_ENABLE", self.sym_NODE)
         self.sym_PROTOCOL.setLabel("Enable data monitoring")
+        self.sym_PROTOCOL.setDefaultValue(True)
+        self.sym_PROTOCOL.setDependencies(self.updateInstance, ["MCPMSMFOC_DATA_MONITOR_ENABLE"])
 
         #
         # protocols = ['X2C Scope', 'XCP' ]
-        protocols = ['X2C Scope']
+        protocols = ['X2C Scope', 'X2C Model']
         self.sym_PROTOCOL = self.component.createComboSymbol("MCPMSMFOC_DATA_MONITOR_PROTOCOL", self.sym_NODE, protocols)
         self.sym_PROTOCOL.setLabel("Protocol")
         self.sym_PROTOCOL.setVisible(False)
+        self.sym_PROTOCOL.setReadOnly(True)
         self.sym_PROTOCOL.setDependencies( self.showThisSymbol, ['MCPMSMFOC_DATA_MONITOR_ENABLE'])
+
 
         self.sym_X2CSCOPE = self.component.createStringSymbol("MCPMSMFOC_X2CScope", None)
         self.sym_X2CSCOPE.setVisible(False)
+
+
+    def updateInstance(self, symbol, event):
+        if symbol.getValue() == True:
+            # Make X2C enable as readonly
+            event["source"].getSymbolByID("MCPMSMFOC_FOC_X2C_ENABLE").setReadOnly(False)
+            symbol.getComponent().setDependencyEnabled("pmsmfoc_X2CSCOPE", True)
+
+            # Activate and connect the default  module for data control and monitoring
+            module = str( Database.getSymbolValue(self.component.getID(), "MCPMSMFOC_FOC_X2C_ID"))
+            autoConnectTable = [ module]
+            res = Database.activateComponents(autoConnectTable)
+
+            autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE","X2CScope", "x2cScope_Scope"]]
+            res = Database.connectDependencies(autoComponentIDTable)
+        else:
+            # Make X2C enable as readonly
+            event["source"].getSymbolByID("MCPMSMFOC_FOC_X2C_ENABLE").setReadOnly(True)
+            symbol.getComponent().setDependencyEnabled("pmsmfoc_X2CSCOPE", False)
+
+            # Deactivate and connect the default  module for data control and monitoring
+            module = str( Database.getSymbolValue(self.component.getID(), "MCPMSMFOC_FOC_X2C_ID"))
+            autoConnectTable = [ module]
+            res = Database.deactivateComponents(autoConnectTable)
 
     def showThisSymbol(self, symbol, event):
         if True == (event["symbol"]).getValue():
             symbol.setVisible(True)
         else:
             symbol.setVisible(False)
+
+    def showThisSymbol_(self, symbol, event):
+        if "Not selected" != (event["symbol"]).getValue():
+            symbol.setVisible(True)
+        else:
+            symbol.setVisible(True)
 
     def handleMessage(self, ID, information):
         if( ID == "BSP_DATA_MONITORING"):
