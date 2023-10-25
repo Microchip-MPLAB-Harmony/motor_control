@@ -82,11 +82,11 @@ void mcUtils_PiControlInit( float32_t Kp, float32_t Ki, float32_t dt,  tmcUtils_
 }
 
 /*! \brief
- * 
- * Details
- * 
  *
- * @param[in]: 
+ * Details
+ *
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -140,9 +140,13 @@ void mcUtils_PiControl(const int16_t error, tmcUtils_PiControl_s  * const pContr
 #endif
 {
      int32_t y, yp;
+     
+     /** Update error */
+     pControl->error = error;
 
      /** Proportional term */
      yp  = ((int32_t)pControl->KpVal * (int32_t) error);
+     pControl->Yp = yp;
 
      /** Sum */
      y = mcUtils_RightShiftS32(( yp +  pControl->Yint ), pControl->KpShift );
@@ -191,8 +195,8 @@ void mcUtils_PiControl(const int16_t error, tmcUtils_PiControl_s  * const pContr
  * @param[out]:
  * @return:
  */
-void mcUtils_PiControlReset(const int32_t integral, tmcUtils_PiControl_s  * const pControl)
+void mcUtils_PiControlReset(const int32_t out, tmcUtils_PiControl_s  * const pControl)
 {
-    pControl->Yint = mcUtils_LeftShiftS32(integral, ( 15u - pControl->KpShift ));
+    pControl->Yint = mcUtils_LeftShiftS32( out, pControl->KpShift );
 }
 

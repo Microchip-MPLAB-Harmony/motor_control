@@ -84,9 +84,9 @@ void mcHalI_InverterPwmEnable( void )
     }
     ${MCPMSMFOC_PWM_INSTANCE}_REGS->TCC_PATT = 0x0000;
 <#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL} );
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL} );
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL} );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_A_CHANNEL} );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_B_CHANNEL} );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_C_CHANNEL} );
 <#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipEnable( ${MCPMSMFOC_PWM_INSTANCE}_CH_1 );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipEnable( ${MCPMSMFOC_PWM_INSTANCE}_CH_2 );
@@ -115,9 +115,9 @@ void mcHalI_InverterPwmDisable( void )
     }
     ${MCPMSMFOC_PWM_INSTANCE}_REGS->TCC_PATT = 0x00FF;
 <#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL} );
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL} );
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL} );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_A_CHANNEL} );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_B_CHANNEL} );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_C_CHANNEL} );
 <#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipDisable( ${MCPMSMFOC_PWM_INSTANCE}_CH_1 );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipDisable( ${MCPMSMFOC_PWM_INSTANCE}_CH_2 );
@@ -224,11 +224,11 @@ void mcHalI_AdcEnable( void )
  */
 void mcHalI_PwmInterruptEnable( void )
 {
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
     NVIC_EnableIRQ(${MCPMSMFOC_PWM_INSTANCE}_OTHER_IRQn);
-<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
+<#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
     NVIC_EnableIRQ(${MCPMSMFOC_PWM_INSTANCE}_IRQn);
-<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
+<#elseif "MCPWM_01477" == MCPMSMFOC_ADC_IP>
     EVIC_SourceEnable( INT_SOURCE_PWM1 );
 </#if>
 }
@@ -248,9 +248,9 @@ void mcHalI_PwmTimerStart( void )
 <#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_PWMStart( );
 <#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}_MASK);
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}_MASK);
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}_MASK);
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_A_CHANNEL}_MASK);
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_B_CHANNEL}_MASK);
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_C_CHANNEL}_MASK);
 <#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_Start();
 </#if>
@@ -281,6 +281,12 @@ void mcHalI_AdcCallBackRegister( AFEC_CALLBACK callback, uintptr_t context )
 void mcHalI_AdcCallBackRegister( ADCHS_CALLBACK callback, uintptr_t context )
 {
     ADCHS_CallbackRegister(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].ADC_CH_PHASE_U}, callback, context);
+}
+
+<#elseif "ADCHS_44073" == MCPMSMFOC_ADC_IP>
+void mcHalI_AdcCallBackRegister( ADC_CALLBACK callback, uintptr_t context )
+{
+    ADC_CallbackRegister(callback, context);
 }
 </#if>
 

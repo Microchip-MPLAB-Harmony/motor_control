@@ -46,9 +46,11 @@ mcMotC_SpeedPiPararameterDictFloating =  {    'dsPICDEM MCLV-2' :   { 'KP' : 0.0
 #                                 GLOBAL VARIABLES                                      #
 #---------------------------------------------------------------------------------------#
 class mcMocI_MotorControlAndDiagnosis:
-    def __init__(self, algorithm, component):
-        self.algorithm = algorithm
+    def __init__(self, component):
         self.component = component
+
+        self.architecture = ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("architecture")
+
 
     def createSymbols(self):
 
@@ -286,6 +288,9 @@ class mcMocI_MotorControlAndDiagnosis:
 
         self.sym_FW = self.component.createBooleanSymbol("MCPMSMFOC_ENABLE_FW", self.sym_FW_AND_MTPA)
         self.sym_FW.setLabel("Enable field weakening")
+        if self.architecture == "CORTEX-M0PLUS":
+            self.sym_FW.setReadOnly(True)
+
 
         self.sym_FW_IMAX = self.component.createFloatSymbol("MCPMSMFOC_FW_MAX_NEGATIVE_ID", self.sym_FW)
         self.sym_FW_IMAX.setLabel("Max Negative Current")
@@ -304,6 +309,7 @@ class mcMocI_MotorControlAndDiagnosis:
 
         self.sym_MTPA = self.component.createBooleanSymbol("MCPMSMFOC_ENABLE_MTPA", self.sym_FW_AND_MTPA)
         self.sym_MTPA.setLabel("Enable MTPA")
+
         #
         # self.sym_MTPA_TUNING = self.component.createFloatSymbol("MCPMSMFOC_MTPA_TUNING_PARAMETER", self.sym_MTPA)
         # self.sym_MTPA_TUNING.setLabel("Tuning Parameter")
@@ -320,6 +326,9 @@ class mcMocI_MotorControlAndDiagnosis:
         # Over-modulation enable
         self.sym_OVER_MODULATION = self.component.createBooleanSymbol("MCPMSMFOC_OVER_MODULATION", self.sym_PWM_MODULATOR)
         self.sym_OVER_MODULATION.setLabel("Enable over modulation")
+        if self.architecture == "CORTEX-M0PLUS":
+            self.sym_OVER_MODULATION.setReadOnly(True)
+
 
         # Modulation technique
         # pwm_Techniques = ["Normal SVPWM", "Bus Clamped SVPWM"]
@@ -519,12 +528,11 @@ class mcMocI_MotorControlAndDiagnosis:
 
                 symbol.setValue("X2C Model")
 
+
                 # Activate and connect the default PWM peripheral
                 res = Database.activateComponents(["X2C Model"])
                 autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE", "X2C Model", "x2cModel" ]]
                 res = Database.connectDependencies(autoComponentIDTable)
-
-                event["source"].setSymbolValue("MCPMSMFOC_DATA_MONITOR_PROTOCOL", "X2C Model")
             else:
                 autoComponentIDTable = [symbol.getValue()]
                 res = Database.deactivateComponents(autoComponentIDTable)
@@ -535,10 +543,6 @@ class mcMocI_MotorControlAndDiagnosis:
                 res = Database.activateComponents(["X2CScope"])
                 autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE", "X2CScope", "x2cScope_Scope" ]]
                 res = Database.connectDependencies(autoComponentIDTable)
-
-                event["source"].setSymbolValue("MCPMSMFOC_DATA_MONITOR_PROTOCOL", "X2C Scope")
-
-
 
     def __call__(self):
         self.detPositionPIParameters()

@@ -25,7 +25,7 @@
 #---------------------------------------------------------------------------------------#
 #                                 Imports                                               #
 #---------------------------------------------------------------------------------------#
-
+import os.path
 
 #---------------------------------------------------------------------------------------#
 #                                Global Variables                                       #
@@ -33,440 +33,285 @@
 autoConnectTable = []
 
 #---------------------------------------------------------------------------------------#
-#                                 Suppoted IPs                                          #
-#---------------------------------------------------------------------------------------#
-SupportedADCIps = {
-    "ADC" : [{ "name": "ADC", "id": "U2500"},
-             { "name": "AFEC", "id": "11147"},
-             { "name": "ADCHS", "id": "02508"}]
-}
-
-def getADCIP(modules):
-    for module in modules:
-        for entry in SupportedADCIps.get("ADC", []):
-            if ( entry["name"] == module.getAttribute("name") and entry["id"] == module.getAttribute("id") ):
-                return entry["name"], entry["id"]
-    return "",""
-
-#---------------------------------------------------------------------------------------#
 #                                   Classes                                             #
 #---------------------------------------------------------------------------------------#
 class mcAniI_AnalogInterfaceClass:
-    def __init__(self, algorithm, component ):
-        self.algorithm = algorithm
+    def __init__(self, component, pin_manager ):
         self.component = component
+        self.pin_manager = pin_manager
 
-        # Get ADC IP from the ATDF file
-        periphNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
-        modules = periphNode.getChildren()
-        global name, id
-        name, id = getADCIP(modules)
+        # Instantiate analog interface class
+        self.device = mcDevI_AnalogInterfaceClass(component)
+        self.information = self.device.information
+        self.name = self.device.name
+        self.id = self.device.id
 
-        # Create a symbol for ADC IP
-        self.IP  = self.component.createStringSymbol("MCPMSMFOC_ADC_IP", None )
-        self.IP.setLabel("ADC IP")
-        self.IP.setValue( name + "_" + id)
+    def numericFilter( self, input_String ):
+        numeric_filter = filter(str.isdigit, str(input_String))
+        return "".join(numeric_filter)
 
-        self.function_Map  = dict()
-        if ( name == "ADCHS" ) and ( id == "02508"):
-            # Dedicated channels
-            channelList = []
-            self.function_Map = dict()
-            ADC_Max_DedicatedChannels = 0
-            registerPath = ATDF.getNode(self.adchsATDFRegisterPath("ADCHS", "ADCCON3"))
-            bitfields = registerPath.getChildren()
-            for ii in bitfields:
-                if(("DIGEN" in ii.getAttribute("name")) and (ii.getAttribute("values")!=None)):
-                    if(ii.getAttribute("values")[-1] != '7'):  # channel 7 is shared - do not include in channelList
-                        channelList.append(ii.getAttribute("values")[-1]) # the last char is a digit
+    def createAnalogGroup(self, identifier, description, signal_name, group):
+        # Internal function to update pin interface
+        def updateInterface(symbol, event):
 
-            for ChannelNumber in channelList:
-                labelPath = self.adchsATDFRegisterBitfieldPath("ADCHS", "ADCCON3", "DIGEN" + str(ChannelNumber))
-                labelNode = ATDF.getNode(labelPath).getAttribute("values")
-                if labelNode is not None:
-                    ADC_Max_DedicatedChannels += 1
-                    RegisterName = "ADCTRGMODE__SH" + str(ChannelNumber) + "ALT"
-                    labelPath = self.adchsATDFValueGroupPath("ADCHS", RegisterName)
-                    channels = ATDF.getNode(labelPath).getChildren()
-                    key = "ADC"+str(ChannelNumber)
-                    for channel in channels:
-                        cha = "Channel" + " " + self.numericFilter(channel.getAttribute("caption"))
-                        try:
-                            # key = channel.getAttribute("caption")
-                            # self.function_Map[key].append(("ADC"+str(ChannelNumber), key))
-                            self.function_Map[key].append(cha)
-                        except:
-                            self.function_Map[key] = [cha]
+            # Update the message to be sent
+            if unit.getValue() != "** Select **" and channel.getValue() != "** Select **" and pad.getValue() != "** Select **":
 
-            # Shared channels
+                # Remove old pad from the list
+                self.pin_manager.removePinFromList(old_pad.getValue())
+                old_pad.setValue(pad.getValue())
 
-            # For PIC32M devices: Each Analog channel on the part must have a Data Register.  Each existing
-            # Data register should indicate that there is an Analog pin for that signal.
-            SignalNumber = 0
-            MAX_AVAILABLE_SIGNALS = 64
-            for SignalNumber in range (ADC_Max_DedicatedChannels, MAX_AVAILABLE_SIGNALS):
-                labelPath = self.adchsATDFRegisterPath("ADCHS", "ADCDATA" + str(SignalNumber))
-                labelNode = ATDF.getNode(labelPath)
-                if labelNode is not None:
-                    try:
-                        self.function_Map["ADC7"].append("Channel" +" " + str(SignalNumber))
-                    except:
-                        self.function_Map["ADC7"] = ["Channel" +" " + str(SignalNumber)]
+                # Add new pad to the list
+                self.pin_manager.addPinToList(pad.getValue())
 
-        elif ( name == "AFEC" ) and ( id == "11147"):
-            unit_path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"AFEC\"]"
-            units = ATDF.getNode(unit_path).getChildren()
+                args = {
+                        "ID": name.getValue(),
+                        "UNIT": unit.getValue(),
+                        "CHANNEL": channel.getValue(),
+                        "PAD": pad.getValue()
+                        }
 
-            for unit in units:
-                key = unit.getAttribute("name")
-                channel_Path = unit_path + "/instance@[name=\"" + key + "\"]/signals"
-                channels = ATDF.getNode(channel_Path).getChildren()
-                self.function_Map[key] = list()
-                for channel in channels:
-                    if( (None != channel.getAttribute("index")) and ("AD" == channel.getAttribute("group"))):
-                        self.function_Map[key].append( "Channel" + " " + str(channel.getAttribute("index")))
+                # Send the message to custom BSP
+                status = Database.sendMessage("cstom_mc_bsp", "MCPMSMFOC_ANALOG_PAD_SET", args)
 
-        elif ( name == "ADC" ) and ( id == "U2500"):
-            unit_path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]"
-            units = ATDF.getNode(unit_path).getChildren()
+        # Internal function to update pad list based on ADC unit and channel
+        def updatePadList(symbol, event):
+            if unit.getValue() != "** Select **" and channel.getValue() != "** Select **":
+                new_list = sorted(self.information[unit.getValue()][channel.getValue()])
 
-            for unit in units:
-                key = unit.getAttribute("name")
-                channel_Path = unit_path + "/instance@[name=\"" + key + "\"]/signals"
-                channels = ATDF.getNode(channel_Path).getChildren()
-                function_Set = set()
-                self.function_Map[key] = list()
-                for channel in channels:
-                    if( "AIN" in channel.getAttribute("group")):
-                        function_Set.add(int(channel.getAttribute("index")))
+                for entry in new_list:
+                    if entry in self.pin_manager.getUsedPinList() and entry != pad.getValue():
+                        new_list.remove(entry)
 
-                function_Set = sorted(function_Set)
-                self.function_Map[key] = ["Channel" + " " + str(element) for element in list(function_Set)]
+                symbol.setRange(["** Select **"] + new_list )
+
+        # Internal function to update channel list based on ADC unit
+        def updateChannelList(symbol, event):
+            if unit.getValue() != "** Select **":
+                channel_list = sorted([int(x) for x in self.information[event["value"]].keys()])
+                channel_list = ["** Select **"] + [str(x) for x in channel_list]
+
+                symbol.setRange( channel_list)
+
+        # Update ADC PLIBs based on unit, channels and other default configuration information
+        def updatePLIB(symbol, event):
+            if (
+                unit.getValue() != "** Select **" and channel.getValue() != "** Select **"
+               ):
+
+                if ( 
+                     unit.getValue() == Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT")  and
+                     channel.getValue() == Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL")
+                   ):
+                    enable_eoc_interrupt = True
+                    enable_slave_mode = False
+                else:
+                    enable_eoc_interrupt = False
+                    enable_slave_mode = True
+
+                # Update configuration data for the analog interface
+                trigger = self.numericFilter(global_ADC_TRIGGER.getValue())
+
+                args = {
+                        "id" : name.getValue(),
+                        "instance" : unit.getValue(),
+                        "channel"  : channel.getValue(),
+                        "resolution" : self.device.resolution[0],
+                        "mode": "default",
+                        "reference": "default",
+                        "conversion_time" : 1,
+                        "trigger" : trigger,
+                        "result_alignment" : "default",
+                        "enable_eoc_event" : False,
+                        "enable_eoc_interrupt" : enable_eoc_interrupt,
+                        "enable_slave_mode" : enable_slave_mode,
+                        "enable_dma_sequence" :False
+                    }
+
+                Database.sendMessage( ( id.getValue()).lower(), "PMSM_FOC_ADC_CH_CONF_", args)
+
+        # Update connected PLIBs
+        def updateConnectedPLibs(symbol, event):
+            if ( self.name == "ADCHS" ) and ( self.id == "02508"):
+                # Activate and connect
+                res = Database.activateComponents(["adchs"])
+
+                autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_ADC", "adchs", "ADCHS_ADC"]]
+                res = Database.connectDependencies(autoComponentIDTable)
+
+            else:
+                # Remove old peripheral from the list
+                if len(self.connectedPLibs) == 4 and symbol.getValue() != event["value"]:
+                    self.connectedPLibs.remove(symbol.getValue().lower())
+
+                    # De-activate the peripheral if no analog channel uses it
+                    if symbol.getValue().lower() not in self.connectedPLibs:
+                        res = Database.deactivateComponents([symbol.getValue().lower()])
+
+                # Update ADC peripherals being used
+                symbol.setValue(event["value"].lower())
+                self.connectedPLibs.append(event["value"].lower())
+
+                # Activate and connect
+                res = Database.activateComponents([event["value"].lower()])
+
+                autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_ADC", event["value"].lower(), str(event["value"].upper()) + "_ADC"]]
+                res = Database.connectDependencies(autoComponentIDTable)
+
+        # Node symbol
+        node_symbol = identifier + "_" + "NODE"
+        node = self.component.createMenuSymbol(node_symbol, group)
+        node.setLabel(description)
+
+        # Signal name
+        name_symbol = identifier + "_" + "NAME"
+        name =  self.component.createStringSymbol(name_symbol, node )
+        name.setLabel("Signal Name")
+        name.setDefaultValue(signal_name)
+        name.setReadOnly(True)
+
+        # Signal unit
+        unit_symbol = identifier + "_" + "UNIT"
+        units = ["** Select **"] + sorted(self.information.keys())
+        unit = self.component.createComboSymbol(unit_symbol, node, units)
+        unit.setLabel("ADC unit")
+        unit.setDefaultValue("** Select **")
+
+        # Signal id
+        id_symbol = identifier + "_" + "PERIPHERAL_ID"
+        id = self.component.createStringSymbol(id_symbol, None)
+        id.setLabel("Peripheral ID")
+        id.setVisible(False)
+        id.setDependencies(updateConnectedPLibs, [unit_symbol])
+
+        if ( self.name == "ADCHS" ) and ( self.id == "02508"):
+            id.setDefaultValue("adchs")
+        else:
+            id.setDefaultValue((unit.getValue()).lower())
+
+        channel_map = {}
+        for key, value in self.information.items():
+            int_list = sorted([int(x) for x in value.keys()])
+            channel_map[key] = ["** Select **"] + [str(x) for x in int_list]
+
+        # Signal channel
+        channel_symbol = identifier + "_" + "CHANNEL"
+        channels = ["** Select **"]
+        channel = self.component.createComboSymbol(channel_symbol, node, channels)
+        channel.setLabel("ADC channel")
+        channel.setDefaultValue("** Select **")
+        channel.setDependencies(updateChannelList, [unit_symbol])
+
+        # Signal pad
+        pad_symbol = identifier + "_" + "PAD"
+        pad = self.component.createComboSymbol(pad_symbol, node, ["** Select **"])
+        pad.setLabel("Pad")
+        pad.setDefaultValue("** Select **")
+        pad.setDependencies(updatePadList, [unit_symbol, channel_symbol, "MCPMSMFOC_USED_PIN_LIST"])
+
+        old_pad_symbol = identifier + "_" + "OLD_PAD"
+        old_pad = self.component.createStringSymbol(old_pad_symbol, node)
+        old_pad.setLabel("Old Pad")
+        old_pad.setDefaultValue("** Select **")
+        old_pad.setVisible(False)
 
 
-    def adchsATDFRegisterPath(self, ModuleName, RegisterName):
-        labelPath = str('/avr-tools-device-file/modules/module@[name="'
-                       + ModuleName + '"]/register-group@[name="'
-                       + ModuleName + '"]/register@[name="'
-                       + RegisterName + '"]')
-        return labelPath
+        # Signal callback
+        callback_symbol = identifier + "_" + "PIN_UPDATE_CALLBACK"
+        callback = self.component.createMenuSymbol(callback_symbol, None)
+        callback.setLabel("Pin manager update callback function")
+        callback.setDependencies(updateInterface, [pad_symbol])
+        callback.setVisible(False)
 
-    def adchsATDFRegisterBitfieldPath(self, ModuleName, RegisterName, BitfieldName):
-        labelPath = str('/avr-tools-device-file/modules/module@[name="' +
-            ModuleName + '"]/register-group@[name="' + ModuleName +
-            '"]/register@[name="' + RegisterName + '"]/bitfield@[name="'
-            + BitfieldName +'"]')
-        return labelPath
+        # Signal callback
+        callback_symbol = identifier + "_" + "PLIB_UPDATE_CALLBACK"
+        callback = self.component.createMenuSymbol(callback_symbol, None)
+        callback.setLabel("PLIB update interface function")
+        callback.setDependencies(updatePLIB, [unit_symbol, channel_symbol])
+        callback.setVisible(False)
 
-    def adchsATDFValueGroupPath(self, ModuleName, ValueGroupName):
-        value_groupPath = str('/avr-tools-device-file/modules/module@[name="'
-            + ModuleName + '"]/value-group@[name="' + ValueGroupName + '"]')
-        return value_groupPath
+        # Interrupt symbol
+        interrupt_symbol = identifier + "_" + "EOC_INTERRUPT_ENABLE"
+        interrupt_enable = self.component.createBooleanSymbol( interrupt_symbol, node )
+        interrupt_enable.setLabel("Enable EOC interrupt")
+        interrupt_enable.setVisible(False)
+        if unit.getValue() == Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT"):
+            interrupt_enable.setDefaultValue(True)
+        else:
+            interrupt_enable.setDefaultValue(False)
 
-    def adchsATDFValueGroupValuePath(self, ModuleName, ValueGroupName, ValueString):
-        valuePath = str('/avr-tools-device-file/modules/module@[name="' + ModuleName
-            + '"]/value-group@[name="' + ValueGroupName + '"]/value@[value="' +
-            ValueString + '"]')
-        return valuePath
+        # Slave mode symbol
+        slave_mode_symbol = identifier + "_" + "SLAVE_MODE_ENABLE"
+        slave_mode_enable = self.component.createBooleanSymbol( slave_mode_symbol, node )
+        slave_mode_enable.setLabel("Slave mode enable")
+        slave_mode_enable.setVisible(False)
+        if not unit.getValue() == Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT"):
+            slave_mode_enable.setDefaultValue(True)
+        else:
+            slave_mode_enable.setDefaultValue(False)
 
     def createSymbols( self ):
         # Root node
         self.sym_NODE = self.component.createMenuSymbol(None, None )
         self.sym_NODE.setLabel("Analog Interface")
 
-        #________________________________________ Peripheral Libraries_____________________________________________#
-        self.sym_ANALOG_MODULE_01 = self.component.createStringSymbol("MCPMSMFOC_ADC_MODULE_01", None)
-        self.sym_ANALOG_MODULE_01.setVisible(False)
-        self.sym_ANALOG_MODULE_01.setDefaultValue("None")
-
-        global global_ADC_MODULE
-        global_ADC_MODULE = self.sym_ANALOG_MODULE_01
-
-
-        self.sym_ANALOG_MODULE_02 = self.component.createStringSymbol("MCPMSMFOC_ADC_MODULE_02", None)
-        self.sym_ANALOG_MODULE_02.setVisible(False)
-        self.sym_ANALOG_MODULE_02.setDefaultValue("None")
-
-        # ToDO: Remove once the query and publish ADC features architecture is established
-        if ( name == "ADCHS" ) and ( id == "02508"):
-            resolution = ["12", "10", "8", "6"]
-        elif ( name == "AFEC" ) and ( id == "11147"):
-            resolution = ["12", "13", "14", "15", "16"]
-        elif ( name == "ADC" ) and ( id == "U2500"):
-            resolution = ["12", "16", "10", "8"]
-
-        self.sym_RESOLUTION = self.component.createComboSymbol( "MCPMSMFOC_ADC_RESOLUTION", None, resolution )
-        self.sym_RESOLUTION.setLabel("Resolution")
-        self.sym_RESOLUTION.setVisible(False)
-
         # ____________________________________________ Group 01 ___________________________________________________#
         self.sym_GROUP_01 = self.component.createMenuSymbol(None, self.sym_NODE )
         self.sym_GROUP_01.setLabel("Group 01 Signals")
 
-        # Phase A current
-        self.sym_IA = self.component.createMenuSymbol("MCPMSMFOC_PHASE_CURRENT_IA_NODE", self.sym_GROUP_01)
-        self.sym_IA.setLabel("Signal A Configuration")
+        self.createAnalogGroup("MCPMSMFOC_PHASE_CURRENT_IA", "Phase A Current", "IA", self.sym_GROUP_01)
+        self.createAnalogGroup("MCPMSMFOC_PHASE_CURRENT_IB", "Phase B Current", "IB", self.sym_GROUP_01)
 
-        self.sym_IA_NAME =  self.component.createStringSymbol("MCPMSMFOC_PHASE_CURRENT_IA_NAME", self.sym_IA )
-        self.sym_IA_NAME.setLabel("Signal Name")
-        self.sym_IA_NAME.setDefaultValue("IaSens")
-        self.sym_IA_NAME.setReadOnly(True)
-
-        self.sym_IA_UNIT = self.component.createComboSymbol("MCPMSMFOC_PHASE_CURRENT_IA_UNIT", self.sym_IA, sorted(self.function_Map.keys()))
-        self.sym_IA_UNIT.setLabel("ADC unit")
-
-        self.sym_IA_UNIT_ID = self.component.createStringSymbol("MCPMSMFOC_IA_ADC_PERIPHERAL_ID", None)
-        self.sym_IA_UNIT_ID.setLabel("Peripheral ID")
-        # self.sym_IA_UNIT_ID.setVisible(False)
-
-        if ( name == "ADCHS" ) and ( id == "02508"):
-            self.sym_IA_UNIT_ID.setDefaultValue("adchs")
-        else:
-            self.sym_IA_UNIT_ID.setDefaultValue((self.sym_IA_UNIT.getValue()).lower())
-            self.sym_IA_UNIT_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_PHASE_CURRENT_IA_UNIT"] )
-
-        self.sym_IA_CHANNEL = mcFun_AdvancedComboSymbol("ADC channel", "PHASE_CURRENT_IA", self.component)
-        self.sym_IA_CHANNEL.createComboSymbol( self.sym_IA_UNIT, self.sym_IA, self.function_Map )
-        self.sym_IA_CHANNEL.setDefaultValue("Channel 0")
-
-        # Phase B current
-        self.sym_IB = self.component.createMenuSymbol("MCPMSMFOC_PHASE_CURRENT_IB_NODE", self.sym_GROUP_01)
-        self.sym_IB.setLabel("Signal B Configuration")
-
-        self.sym_IB_NAME =  self.component.createStringSymbol("MCPMSMFOC_PHASE_CURRENT_IB_NAME", self.sym_IB)
-        self.sym_IB_NAME.setLabel("Signal Name")
-        self.sym_IB_NAME.setDefaultValue("IbSens")
-        self.sym_IB_NAME.setReadOnly(True)
-
-        self.sym_IB_UNIT = self.component.createComboSymbol("MCPMSMFOC_PHASE_CURRENT_IB_UNIT", self.sym_IB,  sorted(self.function_Map.keys()))
-        self.sym_IB_UNIT.setLabel("ADC unit")
-
-        self.sym_IB_UNIT_ID = self.component.createStringSymbol("MCPMSMFOC_IB_ADC_PERIPHERAL_ID", None)
-        self.sym_IB_UNIT_ID.setLabel("Peripheral ID")
-        self.sym_IB_UNIT_ID.setVisible(False)
-        if ( name == "ADCHS" ) and ( id == "02508"):
-            self.sym_IB_UNIT_ID.setDefaultValue("adchs")
-        else:
-            self.sym_IB_UNIT_ID.setDefaultValue((self.sym_IB_UNIT.getValue()).lower())
-            self.sym_IB_UNIT_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_PHASE_CURRENT_IB_UNIT"] )
-
-        self.sym_IB_CHANNEL = mcFun_AdvancedComboSymbol("ADC channel", "PHASE_CURRENT_IB", self.component)
-        self.sym_IB_CHANNEL.createComboSymbol( self.sym_IB_UNIT, self.sym_IB, self.function_Map )
-        self.sym_IB_CHANNEL.setDefaultValue("Channel 0")
-
-        # ____________________________________________ Group 02 ___________________________________________________#
-
+        # ____________________________________________ Group 01 ___________________________________________________#
         self.sym_GROUP_02 = self.component.createMenuSymbol(None, self.sym_NODE )
         self.sym_GROUP_02.setLabel("Group 02 Signals")
 
-        # Phase A current
-        self.sym_VDC = self.component.createMenuSymbol("MCPMSMFOC_BUS_VOLTAGE_VDC_NODE", self.sym_GROUP_02)
-        self.sym_VDC.setLabel("Signal A Configuration")
+        self.createAnalogGroup("MCPMSMFOC_BUS_VOLTAGE_VDC", "DC Bus Voltage", "VDC", self.sym_GROUP_02)
+        self.createAnalogGroup("MCPMSMFOC_POTENTIOMETER_VPOT", "Potentiometer", "VPOT", self.sym_GROUP_02)
 
-        self.sym_VDC_NAME =  self.component.createStringSymbol("MCPMSMFOC_BUS_VOLTAGE_VDC_NAME", self.sym_VDC )
-        self.sym_VDC_NAME.setLabel("Signal Name")
-        self.sym_VDC_NAME.setDefaultValue("VdcSens")
-        self.sym_VDC_NAME.setReadOnly(True)
+    def setDatabaseSymbol(self, namespace, id, value):
+        status = Database.setSymbolValue(namespace, id, value)
 
-        self.sym_VDC_UNIT = self.component.createComboSymbol("MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT", self.sym_VDC,  sorted(self.function_Map.keys()))
-        self.sym_VDC_UNIT.setLabel("ADC unit")
+        if( status == False):
+            print("Checkpoint. The symbol " + id + " could not be updated")
 
-        self.sym_VDC_UNIT_ID = self.component.createStringSymbol("MCPMSMFOC_VDC_ADC_PERIPHERAL_ID", None)
-        self.sym_VDC_UNIT_ID.setLabel("Peripheral ID")
-        self.sym_VDC_UNIT_ID.setVisible(False)
-        self.sym_VDC_UNIT_ID.setDefaultValue((self.sym_VDC_UNIT.getValue()).lower())
-        self.sym_VDC_UNIT_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT"] )
+    def onAttachmentConnected(self, source, target):
+        pass
 
-        self.sym_VDC_CHANNEL = mcFun_AdvancedComboSymbol("ADC channel", "BUS_VOLTAGE_VDC", self.component)
-        self.sym_VDC_CHANNEL.createComboSymbol( self.sym_VDC_UNIT, self.sym_VDC, self.function_Map )
-        self.sym_VDC_CHANNEL.setDefaultValue("Channel 0")
-
-        # Potentiometer
-        self.sym_VPOT = self.component.createMenuSymbol("MCPMSMFOC_POTENTIOMETER_VPOT_NODE", self.sym_GROUP_02)
-        self.sym_VPOT.setLabel("Signal B Configuration")
-
-        self.sym_VPOT_NAME =  self.component.createStringSymbol("MCPMSMFOC_POTENTIOMETER_VPOT_NAME", self.sym_VPOT)
-        self.sym_VPOT_NAME.setLabel("Signal Name")
-        self.sym_VPOT_NAME.setDefaultValue("VpotSens")
-        self.sym_VPOT_NAME.setReadOnly(True)
-
-        self.sym_VPOT_UNIT = self.component.createComboSymbol("MCPMSMFOC_POTENTIOMETER_VPOT_UNIT", self.sym_VPOT,  sorted(self.function_Map.keys()))
-        self.sym_VPOT_UNIT.setLabel("ADC unit")
-
-        self.sym_VPOT_UNIT_ID = self.component.createStringSymbol("MCPMSMFOC_VPOT_ADC_PERIPHERAL_ID", None)
-        self.sym_VPOT_UNIT_ID.setLabel("Peripheral ID")
-        self.sym_VPOT_UNIT_ID.setVisible(False)
-        self.sym_VPOT_UNIT_ID.setDefaultValue((self.sym_VPOT_UNIT.getValue()).lower())
-        self.sym_VPOT_UNIT_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_POTENTIOMETER_VPOT_UNIT"] )
-
-        self.sym_VPOT_CHANNEL = mcFun_AdvancedComboSymbol("ADC channel", "POTENTIOMETER_VPOT", self.component)
-        self.sym_VPOT_CHANNEL.createComboSymbol( self.sym_VPOT_UNIT, self.sym_VPOT, self.function_Map )
-        self.sym_VPOT_CHANNEL.setDefaultValue("Channel 0")
-
-        # PLIB update symbol
-        self.sym_PLIB_UPDATE = self.component.createMenuSymbol( None, None)
-        self.sym_PLIB_UPDATE.setLabel("Signal B Configuration")
-        self.sym_PLIB_UPDATE.setVisible(False)
-        self.sym_PLIB_UPDATE.setDependencies(self.updateAbstractionLayer, ["MCPMSMFOC_PHASE_CURRENT_IA_UNIT",
-                                                               "MCPMSMFOC_PHASE_CURRENT_IB_UNIT",
-                                                               "MCPMSMFOC_DC_BUS_CURRENT_UNIT",
-                                                               "MCPMSMFOC_BUS_VOLTAGE_VDC_NAME",
-                                                               "MCPMSMFOC_POTENTIOMETER_VPOT_UNIT",
-                                                               self.sym_IA_CHANNEL.getSymbolID(),
-                                                               self.sym_IB_CHANNEL.getSymbolID(),
-                                                            #    self.sym_IDC_CHANNEL.getSymbolID(),
-                                                               self.sym_VDC_CHANNEL.getSymbolID(),
-                                                               self.sym_VPOT_CHANNEL.getSymbolID()
-                                                               ])
-
-
-    def setSymbolValues(self):
-
-        information = Database.sendMessage("bsp", "MCPMSMFOC_ANALOG_INTERFACE", {})
-
-        if( None != information):
-            # Phase A current
-            self.sym_IA_UNIT.setValue(information["IA"]["FUNCTION"][0][0])
-            self.sym_IA_CHANNEL.setValue("Channel" + " " + information["IA"]["FUNCTION"][0][1])
-
-            # Phase B current
-            self.sym_IB_UNIT.setValue(information["IB"]["FUNCTION"][0][0])
-            self.sym_IB_CHANNEL.setValue("Channel" + " " + information["IB"]["FUNCTION"][0][1])
-
-            # DC bus current
-            # self.sym_IDC_UNIT.setValue(information["IDC"]["FUNCTION"][0][0])
-            # self.sym_IDC_CHANNEL.setValue("Channel" + " " + information["IDC"]["FUNCTION"][0][1])
-
-            # DC bus voltage
-            self.sym_VDC_UNIT.setValue(information["VDC"]["FUNCTION"][0][0])
-            self.sym_VDC_CHANNEL.setValue("Channel" + " " + information["VDC"]["FUNCTION"][0][1])
-
-            # Get the possible analog interfaces for Vpot
-            self.sym_VPOT_UNIT.setValue(information["VPOT"]["FUNCTION"][0][0])
-            self.sym_VPOT_CHANNEL.setValue("Channel" + " " + information["VPOT"]["FUNCTION"][0][1])
+    def onAttachmentDisconnected(self, source, target):
+        pass
 
     def handleMessage(self, ID, information ):
         if( "BSP_ANALOG_INTERFACE" == ID ) and ( None != information):
-            # Phase A current
-            self.sym_IA_UNIT.setValue(information["IA"]["FUNCTION"][0][0])
-            self.sym_IA_CHANNEL.setValue("Channel" + " " + information["IA"]["FUNCTION"][0][1])
 
-            # Phase B current
-            self.sym_IB_UNIT.setValue(information["IB"]["FUNCTION"][0][0])
-            self.sym_IB_CHANNEL.setValue("Channel" + " " + information["IB"]["FUNCTION"][0][1])
+            # Set unit and channel symbol for phase A current
+            value = information["IA"]["FUNCTION"][0][0]
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT", value)
 
-            # DC bus current
-            # self.sym_IDC_UNIT.setValue(information["IDC"]["FUNCTION"][0][0])
-            # self.sym_IDC_CHANNEL.setValue("Channel" + " " + information["IDC"]["FUNCTION"][0][1])
+            value = information["IA"]["FUNCTION"][0][1]
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL", value)
 
-            # DC bus voltage
-            self.sym_VDC_UNIT.setValue(information["VDC"]["FUNCTION"][0][0])
-            self.sym_VDC_CHANNEL.setValue("Channel" + " " + information["VDC"]["FUNCTION"][0][1])
+            # Set unit and channel symbol for phase B current
+            value = information["IB"]["FUNCTION"][0][0]
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IB_UNIT", value)
 
-            # Get the possible analog interfaces for Vpot
-            self.sym_VPOT_UNIT.setValue(information["VPOT"]["FUNCTION"][0][0])
-            self.sym_VPOT_CHANNEL.setValue("Channel" + " " + information["VPOT"]["FUNCTION"][0][1])
+            value = information["IB"]["FUNCTION"][0][1]
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IB_CHANNEL", value)
 
-    def numericFilter( self, input_String ):
-        numeric_filter = filter(str.isdigit, str(input_String))
-        return "".join(numeric_filter)
+            # Set unit and channel symbol for DC bus voltage
+            value = information["VDC"]["FUNCTION"][0][0]
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT", value)
 
-    def updateAbstractionLayer(self, symbol, event):
-        message = {}
+            value = information["VDC"]["FUNCTION"][0][1]
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL", value)
 
-        trigger = global_ADC_TRIGGER.getValue()
+            # Set unit and channel symbol for potentiometer
+            value = information["VPOT"]["FUNCTION"][0][0]
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_POTENTIOMETER_VPOT_UNIT", value)
 
-        message['PHASE_U'   ] = int(self.numericFilter(self.sym_IA_UNIT.getValue()      ))
-        message['PHASE_U_CH'] = int(self.numericFilter(self.sym_IA_CHANNEL.getValue()   ))
-        message['PHASE_V'   ] = int(self.numericFilter(self.sym_IB_UNIT.getValue()      ))
-        message['PHASE_V_CH'] = int(self.numericFilter(self.sym_IB_CHANNEL.getValue()   ))
-        message['POT'       ] = int(self.numericFilter(self.sym_VPOT_UNIT.getValue()    ))
-        message['POT_CH'    ] = int(self.numericFilter(self.sym_VPOT_CHANNEL.getValue() ))
-        message['VDC'       ] = int(self.numericFilter(self.sym_VDC_UNIT.getValue()     ))
-        message['VDC_CH'    ] = int(self.numericFilter(self.sym_VDC_CHANNEL.getValue()  ))
-        message['RESOLUTION'] = int(self.numericFilter(self.sym_RESOLUTION.getValue()   ))
-        message['TRIGGER'   ] = self.numericFilter(trigger                          )
-
-        plib01_Id = self.sym_ANALOG_MODULE_01.getValue()
-        if(plib01_Id != "None" ):
-            Database.sendMessage( plib01_Id, "PMSM_FOC_ADC_CH_CONF", message)
-
-        plib02_Id = self.sym_ANALOG_MODULE_02.getValue()
-        if(plib02_Id != "None" ):
-            Database.sendMessage( plib02_Id, "PMSM_FOC_ADC_CH_CONF", message)
-
-    def updatePeripheralInstance(self, symbol, event):
-        # Disconnect existing dependencies
-        # autoDisconnectTable = [[self.component.getID(), "pmsmfoc_PWM"]]
-        # res = Database.disconnectDependencies(autoDisconnectTable)
-        global autoConnectTable
-
-        # Remove old peripheral from the list
-        if len(autoConnectTable) == 4:
-            autoConnectTable.remove(symbol.getValue().lower())
-
-            # De-activate the peripheral if no analog channel uses it
-            if symbol.getValue().lower() not in autoConnectTable:
-                res = Database.deactivateComponents([symbol.getValue().lower()])
-
-        # Update ADC peripherals being used
-        symbol.setValue(event["value"].lower())
-        autoConnectTable.append(event["value"].lower())
-
-        # Activate and connect
-        res = Database.activateComponents([event["value"].lower()])
-
-        autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_ADC", event["value"].lower(), str(event["value"].upper()) + "_ADC"]]
-        res = Database.connectDependencies(autoComponentIDTable)
-
-    def onAttachmentConnected(self, source, target):
-        message = {}
-
-        localComponent = source["component"]
-        remoteComponent = target["component"]
-        remoteID = remoteComponent.getID()
-        connectID = source["id"]
-        targetID = target["id"]
-
-        trigger = localComponent.getSymbolValue("MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL")
-
-        message['PHASE_U'   ] = int(self.numericFilter(self.sym_IA_UNIT.getValue()      ))
-        message['PHASE_U_CH'] = int(self.numericFilter(self.sym_IA_CHANNEL.getValue()   ))
-        message['PHASE_V'   ] = int(self.numericFilter(self.sym_IB_UNIT.getValue()      ))
-        message['PHASE_V_CH'] = int(self.numericFilter(self.sym_IB_CHANNEL.getValue()   ))
-        message['POT'       ] = int(self.numericFilter(self.sym_VPOT_UNIT.getValue()    ))
-        message['POT_CH'    ] = int(self.numericFilter(self.sym_VPOT_CHANNEL.getValue() ))
-        message['VDC'       ] = int(self.numericFilter(self.sym_VDC_UNIT.getValue()     ))
-        message['VDC_CH'    ] = int(self.numericFilter(self.sym_VDC_CHANNEL.getValue()  ))
-        message['RESOLUTION'] = int(self.numericFilter(self.sym_RESOLUTION.getValue()   ))
-        message['TRIGGER'   ] = self.numericFilter(trigger                          )
-
-        if ( connectID == "pmsmfoc_ADC" ):
-            instanceNum = (filter(str.isdigit,str(remoteID)))
-            if (instanceNum == str(0) or instanceNum == ""):
-                self.sym_ANALOG_MODULE_01.setValue(remoteID)
-            else:
-                self.sym_ANALOG_MODULE_02.setValue(remoteID)
-
-            Database.sendMessage(remoteID, "PMSM_FOC_ADC_CH_CONF", message)
-
-    """
-    Description:
-    This function performs tasks on ADC modules de-attachment
-
-    """
-    def onAttachmentDisconnected( self, source, target):
-        if ( source["id"] == "pmsmfoc_ADC"):
-            self.sym_ANALOG_MODULE_01.setValue("None")
-            self.sym_ANALOG_MODULE_02.setValue("None")
+            value = information["VPOT"]["FUNCTION"][0][1]
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_POTENTIOMETER_VPOT_CHANNEL", value)
 
     def __call__(self):
         self.createSymbols()
-        self.setSymbolValues()
-
-
-
-
-
-
-
+        self.connectedPLibs = []

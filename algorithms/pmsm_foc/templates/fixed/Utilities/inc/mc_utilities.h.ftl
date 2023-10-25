@@ -6,9 +6,9 @@
 
   Summary:
     Header file which contains variables and function prototypes of  generic library functions.
- 
+
   Description:
-    This file contains variables and function prototypes of generic library functions 
+    This file contains variables and function prototypes of generic library functions
     which are generally used in Motor Control. Implemented in Q2.14 Fixed Point Arithmetic.
  *******************************************************************************/
 
@@ -43,26 +43,27 @@
 #include "mc_types.h"
 
 /******************************************************************************
- * Constants 
+ * Constants
 ******************************************************************************/
 
-#define  BASE_VALUE                   ( 1 << 14u )
-#define   BASE_VALUE_FL             (float32_t)( BASE_VALUE   )
-#define   FLOAT_PI	                ( 3.141592654f )
-#define   K_ANGLE		      (float32_t)(TWOPI / (2.0 * FLOAT_PI))
+#define   BASE_VALUE               ( 1 << 14u )
+#define   BASE_VALUE_FL            (float32_t)( BASE_VALUE   )
+#define   FLOAT_PI	               ( 3.141592654f )
+#define   K_ANGLE		           (float32_t)(TWOPI / (2.0 * FLOAT_PI))
 
 /* Angle definitions [0, 65535 ] */
-#define   PIFOURTHS		      (  8192U    )		
-#define   PIHALVES		      ( 16384U   )		
-#define   THREEPIFOURTHS	      ( 24576U  )		
-#define   PI				      ( 32768U  )		
-#define   FIVEPIFOURTHS	      ( 40960U  )		
+#define   PIFOURTHS		           (  8192U  )
+#define   PIHALVES		           ( 16384U  )
+#define   THREEPIFOURTHS	       ( 24576U  )
+#define   PI				       ( 32768U  )
+#define   FIVEPIFOURTHS	           ( 40960U  )
+#define   THREEPIHALVES            ( 49152U  )
 
-#define ENABLE_SIGN_INTEGER_SHIFT
-#define ENABLE_FLOAT_IN_WHILE
+#define   ENABLE_SIGN_INTEGER_SHIFT
+#define   ENABLE_FLOAT_IN_WHILE
 
 /******************************************************************************
- * User-defined data structure  
+ * User-defined data structure
 ******************************************************************************/
 typedef struct
 {
@@ -73,11 +74,11 @@ typedef struct
 
 
 /******************************************************************************
- * Interface variables 
+ * Interface variables
 ******************************************************************************/
 
 /******************************************************************************
- * Interface functions  
+ * Interface functions
 ******************************************************************************/
 /*! \brief Calculate sine and cosine value
  *
@@ -315,5 +316,47 @@ __STATIC_FORCEINLINE int16_t mcUtils_MultAndRightShiftS16(int16_t operand1, int1
     return (int16_t)mcUtils_RightShiftS32((int32_t)((int32_t)operand1 * (int32_t)operand2 ), shift );
 #endif
 }
+
+__STATIC_FORCEINLINE void UTILS_LinearRamp( int16_t * pValue, int16_t step, int16_t final)
+{
+    if( *pValue > step )
+    {
+        *pValue -= step;
+    }
+    else if (*pValue < -step )
+    {
+        *pValue += step;
+    }
+    else
+    {
+        *pValue = 0u;
+    }
+}
+
+__STATIC_INLINE int16_t UTIL_AngleDifferenceGet(const uint16_t angle1, const uint16_t angle2)
+{
+    /** Calculate the signed difference between the angles */
+    int32_t delAngle = (int32_t)angle1 - (int32_t)angle2;
+
+    /** Handle wrap-around case if the difference is greater than 32767 */
+    if ( delAngle > 32767 )
+    {
+        delAngle -= 65535;
+    }
+
+    /** Return angle difference */
+    return delAngle;
+}
+
+__STATIC_INLINE bool UTIL_AbsGreaterThanEqual(int16_t x, int16_t limit)
+{
+    return (x <= -limit) || (x >= limit);
+}
+
+__STATIC_INLINE bool UTIL_AbsLessThanEqual(int16_t x, int16_t limit)
+{
+    return (x >= -limit) && (x <= limit);
+}
+
 
 #endif // MC_UTILS

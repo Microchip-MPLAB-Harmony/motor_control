@@ -35,7 +35,10 @@ autoConnectTable = []
 #                                 Suppoted IPs                                          #
 #---------------------------------------------------------------------------------------#
 SupportedEVSYSIps = {
-    "EVSYS" : [{ "name": "EVSYS", "id": "U2504"}]
+    "EVSYS" : [
+                 { "name": "EVSYS", "id": "U2504"},
+                 { "name": "EVSYS", "id": "U2256"}
+              ]
 }
 
 def getEVSYSIP(modules):
@@ -65,19 +68,54 @@ class mcEvtI_EventSystemClass:
         # Create a symbol for ADC IP
         self.IP  = self.component.createStringSymbol("MCPMSMFOC_EVSYS_IP", None )
         self.IP.setLabel("EVSYS IP")
-        self.IP.setValue( name + "_" + id)
 
-        self.setConfiguration()
+        self.IP.setVisible(False)
+        self.IP.setValue( self.name + "_" + self.id)
+
+        self.eic_channel = ""
+        self.eic_eo_symbol = ""
+        self.eic_config_sense = ""
 
     def createSymbols( self ):
         pass
 
     def setConfiguration(self):
-        if ( self.name == "EVSYS" ) and ( self.id == "U2504"):
-            pwmInstance = global_PWM_MODULE.getValue().upper()
-            adcInstance = global_ADC_MODULE.getValue().upper()
+        if ( self.name == "EVSYS" ) and (( self.id == "U2504") or ( self.id == "U2256" )):
+            pwmInstance = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_INSTANCE")
+            adcInstance = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT")
             eic = filter(str.isdigit, str( global_PWM_FAULT))
             generator0 = generator1 = user0 = user1 = 0
+
+            if( fault_source != "** Not Selected **"):
+                if "eic" not in Database.getActiveComponentIDs():
+                    # Activate EIC component
+                    res = Database.activateComponents(["eic"])
+                else:
+                    res = True
+
+            if res == True:
+                # Disable old EIC channels
+                Database.setSymbolValue("eic", self.eic_channel, False)
+                Database.setSymbolValue("eic", self.eic_eo_symbol, False)
+                Database.setSymbolValue("eic", self.eic_config_sense, 0)
+
+                # Enable the EIC channel
+                self.eic_channel = "EIC_CHAN_" + eic
+                Database.setSymbolValue("eic", self.eic_channel, True)
+
+                # Enable event output
+                self.eic_eo_symbol = "EIC_EXTINTEO_" + eic
+                Database.setSymbolValue("eic", self.eic_eo_symbol, True)
+
+                #
+                self.eic_config_sense = "EIC_CONFIG_SENSE_" + eic
+                Database.setSymbolValue("eic", self.eic_config_sense, 2)
+
+                print("Symbols Changed", self.eic_channel, self.eic_eo_symbol, self.eic_config_sense )
+
+            else:
+                print("EIC Component could not be activated")
+
 
             if (pwmInstance != "NONE") and (adcInstance != "NONE"):
                 #EVSYS channel 0 = TCC overflow to ADC Start

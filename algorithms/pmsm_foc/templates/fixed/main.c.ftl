@@ -63,7 +63,7 @@ int main ( void )
 {
     /* Initialize all modules */
     SYS_Initialize ( NULL );
-    
+
     /* Initialize application */
     mcAppI_ApplicationInit();
 
@@ -71,12 +71,13 @@ int main ( void )
     {
         /* Maintain state machines of all polled MPLAB Harmony modules. */
         SYS_Tasks ( );
-        
+
         /* Motor control main loop tasks */
         mcAppI_NonISRTasks();
-        
-       /* X2C Communication */
-        X2C_Communicate();
+
+        /* X2C Communication */
+        X2CScope_Communicate();
+
     }
 
     /* Execution should not come here during normal operation */

@@ -42,7 +42,7 @@
 
 
 /*******************************************************************************
-  Header inclusions  
+  Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
 #include "definitions.h"
@@ -58,7 +58,7 @@ extern uint16_t mcHalI_Potentiometer_gdu16;
 extern int16_t mcPwmI_Duty_gau16[3u];
 
 /*******************************************************************************
- * User defined data structure 
+ * User defined data structure
 *******************************************************************************/
 
 /*******************************************************************************
@@ -80,18 +80,18 @@ __STATIC_INLINE uint16_t mcHalI_PwmPeriodGet( void )
 <#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
     return (uint16_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitPeriodGet();
 <#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
-    return (uint16_t)${MCPMSMFOC_PWM_INSTANCE}_ChannelPeriodGet(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL});
+    return (uint16_t)${MCPMSMFOC_PWM_INSTANCE}_ChannelPeriodGet(PWM_CHANNEL_${MCPMSMFOC_PWM_A_CHANNEL});
 <#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     return (uint16_t)${MCPMSMFOC_PWM_INSTANCE}_PrimaryPeriodGet();
 </#if>
 }
 
 /*! \brief Inverter Duty Set
- * 
+ *
  * Details.
  * Sets the PWM inverter duty
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -101,10 +101,10 @@ __STATIC_FORCEINLINE void mcHalI_InverterPwmSet( const int16_t * const dutyCycle
 <#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
 <#if MCPMSMFOC_FOC_X2C_ENABLE == true>
     uint8_t status;
-        
-    status = (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}, dutyCycle[0u] );
-    status &= (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}, dutyCycle[1u] );
-    status &= (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}, dutyCycle[2u] );
+
+    status = (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_A_CHANNEL}, dutyCycle[0u] );
+    status &= (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_B_CHANNEL}, dutyCycle[1u] );
+    status &= (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_C_CHANNEL}, dutyCycle[2u] );
 
     if( 0u == status )
     {
@@ -114,15 +114,15 @@ __STATIC_FORCEINLINE void mcHalI_InverterPwmSet( const int16_t * const dutyCycle
     uint8_t status;
     uint16_t period;
     uint16_t duty[3u] = {0u};
-    
+
     period = (uint16_t)mcHalI_PwmPeriodGet();
     duty[0u] = period - (uint16_t)dutyCycle[0u];
     duty[1u] = period - (uint16_t)dutyCycle[1u];
     duty[2u] = period - (uint16_t)dutyCycle[2u];
-    
-    status = (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}, duty[0u] );
-    status &= (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}, duty[1u] );
-    status &= (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}, duty[2u] );
+
+    status = (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_A_CHANNEL}, duty[0u] );
+    status &= (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_B_CHANNEL}, duty[1u] );
+    status &= (uint8_t)${MCPMSMFOC_PWM_INSTANCE}_PWM24bitDutySet(${MCPMSMFOC_PWM_INSTANCE}_CHANNEL${MCPMSMFOC_PWM_C_CHANNEL}, duty[2u] );
 
     if( 0u == status )
     {
@@ -132,29 +132,29 @@ __STATIC_FORCEINLINE void mcHalI_InverterPwmSet( const int16_t * const dutyCycle
 <#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
     uint16_t period;
     uint16_t duty[3u] = {0u};
-    
+
     period = (uint16_t)mcHalI_PwmPeriodGet();
     duty[0u] = period - (uint16_t)dutyCycle[0u];
     duty[1u] = period - (uint16_t)dutyCycle[1u];
     duty[2u] = period - (uint16_t)dutyCycle[2u];
 
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelDutySet(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}, duty[0u] );
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelDutySet(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}, duty[1u] );
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelDutySet(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}, duty[2u] );
-    
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelDutySet(PWM_CHANNEL_${MCPMSMFOC_PWM_A_CHANNEL}, duty[0u] );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelDutySet(PWM_CHANNEL_${MCPMSMFOC_PWM_B_CHANNEL}, duty[1u] );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelDutySet(PWM_CHANNEL_${MCPMSMFOC_PWM_C_CHANNEL}, duty[2u] );
+
 <#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelPrimaryDutySet(${MCPMSMFOC_PWM_INSTANCE}_CH_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}, (uint16_t)dutyCycle[0] );
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelPrimaryDutySet(${MCPMSMFOC_PWM_INSTANCE}_CH_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}, (uint16_t)dutyCycle[1] );
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelPrimaryDutySet(${MCPMSMFOC_PWM_INSTANCE}_CH_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}, (uint16_t)dutyCycle[2] );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelPrimaryDutySet(${MCPMSMFOC_PWM_INSTANCE}_CH_${MCPMSMFOC_PWM_A_CHANNEL}, (uint16_t)dutyCycle[0] );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelPrimaryDutySet(${MCPMSMFOC_PWM_INSTANCE}_CH_${MCPMSMFOC_PWM_B_CHANNEL}, (uint16_t)dutyCycle[1] );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelPrimaryDutySet(${MCPMSMFOC_PWM_INSTANCE}_CH_${MCPMSMFOC_PWM_C_CHANNEL}, (uint16_t)dutyCycle[2] );
 </#if>
 }
 
 /*! \brief Get analog signals from ADC peripheral
- * 
+ *
  * Details.
  * Get analog signals from ADC peripheral
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -164,32 +164,34 @@ __STATIC_FORCEINLINE void mcHalI_PhaseACurrentGet( void )
 <#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ConversionResultGet();
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
-    mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_UNIT_PHASE_CURRENT_IA_FINAL});
+    mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
   <#if MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC7" >
-    mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_UNIT_PHASE_CURRENT_IA_FINAL});
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC0"> 
+    mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC0">
     mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH0);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC1"> 
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC1">
     mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH1);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC2"> 
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC2">
     mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH2);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC3"> 
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC3">
     mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH3);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC4"> 
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC4">
     mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH4);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC5"> 
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC5">
     mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH5);
-  </#if> 
-</#if>    
+  </#if>
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+    mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(ADC_CH${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
+</#if>
 }
 
 /*! \brief Get analog signals from ADC peripheral
- * 
+ *
  * Details.
  * Get analog signals from ADC peripheral
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -197,35 +199,37 @@ __STATIC_FORCEINLINE void mcHalI_PhaseACurrentGet( void )
 __STATIC_FORCEINLINE void mcHalI_PhaseBCurrentGet( void )
 {
 <#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
-    mcHalI_IbAdcInput_gdu16 =  ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ConversionResultGet();   
+    mcHalI_IbAdcInput_gdu16 =  ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ConversionResultGet();
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
-    mcHalI_IbAdcInput_gdu16 =  ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IB_UNIT_PHASE_CURRENT_IB_FINAL});
+    mcHalI_IbAdcInput_gdu16 =  ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IB_CHANNEL});
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
   <#if MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC7" >
-    mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_PHASE_CURRENT_IB_UNIT_PHASE_CURRENT_IB_FINAL});
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC0"> 
+    mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_PHASE_CURRENT_IB_CHANNEL});
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC0">
     mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH0);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC1"> 
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC1">
     mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH1);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC2"> 
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC2">
     mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH2);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC3"> 
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC3">
     mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH3);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC4"> 
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC4">
     mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH4);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC5"> 
+  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC5">
     mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH5);
   </#if>
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+    mcHalI_IbAdcInput_gdu16 =  ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ChannelResultGet(ADC_CH${MCPMSMFOC_PHASE_CURRENT_IB_CHANNEL});
 </#if>
 }
 
 
 /*! \brief Get analog signals from ADC peripheral
- * 
+ *
  * Details.
  * Get analog signals from ADC peripheral
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -234,34 +238,36 @@ __STATIC_FORCEINLINE void mcHalI_DcLinkVoltageGet( void )
 {
     /** Get ADC value for DC bus voltage */
 <#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
-    mcHalI_UbusAdcInput_gdu16 = ADC1_ConversionResultGet();
+    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ConversionResultGet();
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
-    mcHalI_UbusAdcInput_gdu16 = AFEC0_ChannelResultGet(AFEC_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL});
+    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
   <#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC7" >
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL});
-  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC0"> 
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH0);
-  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC1"> 
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH1);
-  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC2"> 
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH2);
-  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC3"> 
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH3);
-  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC4"> 
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH4);
-  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC5"> 
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH5);
-  </#if> 
+    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC0">
+    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH0);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC1">
+    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH1);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC2">
+    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH2);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC3">
+    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH3);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC4">
+    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH4);
+  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC5">
+    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH5);
+  </#if>
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADC_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});
 </#if>
 }
 
 /*! \brief Get analog signals from ADC peripheral
- * 
+ *
  * Details.
  * Get analog signals from ADC peripheral
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -272,55 +278,57 @@ __STATIC_FORCEINLINE void mcHalI_PotentiometerInputGet( void )
 <#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     mcHalI_Potentiometer_gdu16 = ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ConversionResultGet();
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
-    mcHalI_Potentiometer_gdu16 = ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT_POTENTIOMETER_VPOT_FINAL});
+    mcHalI_Potentiometer_gdu16 = ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_POTENTIOMETER_VPOT_CHANNEL});
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
   <#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC7" >
-    mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT_POTENTIOMETER_VPOT_FINAL});
-  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC0"> 
+    mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_POTENTIOMETER_VPOT_CHANNEL});
+  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC0">
     mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH0);
-  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC1"> 
+  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC1">
     mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH1);
-  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC2"> 
+  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC2">
     mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH2);
-  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC3"> 
+  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC3">
     mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH3);
-  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC4"> 
+  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC4">
     mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH4);
-  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC5"> 
+  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC5">
     mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH5);
-  </#if> 
+  </#if>
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+    mcHalI_Potentiometer_gdu16 = ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ChannelResultGet(ADC_CH${MCPMSMFOC_POTENTIOMETER_VPOT_CHANNEL});
 </#if>
 }
 
 <#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
-/*! \brief Potentiometer input software trigger 
- * 
+/*! \brief Potentiometer input software trigger
+ *
  * Details.
- *  Potentiometer input software trigger 
- * 
- * @param[in]: 
+ *  Potentiometer input software trigger
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 __STATIC_FORCEINLINE void mcHalI_PotentiometerChannelSelect( void )
 {
-    ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ChannelSelect( ADC_POSINPUT_AIN${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT_POTENTIOMETER_VPOT_FINAL}, ADC_NEGINPUT_GND);
+    ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ChannelSelect( ADC_POSINPUT_AIN${MCPMSMFOC_POTENTIOMETER_VPOT_CHANNEL}, ADC_NEGINPUT_GND);
 }
 
-/*! \brief DC bus input software trigger 
- * 
+/*! \brief DC bus input software trigger
+ *
  * Details.
- *  DC bus input software trigger 
- * 
- * @param[in]: 
+ *  DC bus input software trigger
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 __STATIC_FORCEINLINE void mcHalI_DcLinkVoltageChannelSelect( void  )
 {
-    ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelSelect( ADC_POSINPUT_AIN${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT_BUS_VOLTAGE_VDC_FINAL}, ADC_NEGINPUT_GND);
+    ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelSelect( ADC_POSINPUT_AIN${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL}, ADC_NEGINPUT_GND);
 }
 
 
@@ -329,37 +337,37 @@ __STATIC_FORCEINLINE void mcHalI_AdcSoftwareConversionStart( void )
     /* Enable software  trigger */
     ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_InterruptsClear(ADC_STATUS_MASK);
     ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_InterruptsDisable( ADC_STATUS_RESRDY );
-    ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ConversionStart(); 
+    ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ConversionStart();
 }
 
-/*! \brief Phase A current input hardware trigger 
- * 
+/*! \brief Phase A current input hardware trigger
+ *
  * Details.
- *  Phase A current input hardware trigger 
- * 
- * @param[in]: 
+ *  Phase A current input hardware trigger
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 __STATIC_FORCEINLINE void mcHalI_PhaseACurrentChannelSelect( void  )
 {
-    ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelSelect( ADC_POSINPUT_AIN${MCPMSMFOC_PHASE_CURRENT_IA_UNIT_PHASE_CURRENT_IA_FINAL}, ADC_NEGINPUT_GND);
+    ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelSelect( ADC_POSINPUT_AIN${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL}, ADC_NEGINPUT_GND);
 }
 
-/*! \brief Phase B current input hardware trigger 
- * 
+/*! \brief Phase B current input hardware trigger
+ *
  * Details.
- *  Phase B current input hardware trigger 
- * 
- * @param[in]: 
+ *  Phase B current input hardware trigger
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 __STATIC_FORCEINLINE void mcHalI_PhaseBCurrentChannelSelect( void  )
 {
-    ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ChannelSelect( ADC_POSINPUT_AIN${MCPMSMFOC_PHASE_CURRENT_IB_UNIT_PHASE_CURRENT_IB_FINAL}, ADC_NEGINPUT_GND);   
+    ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ChannelSelect( ADC_POSINPUT_AIN${MCPMSMFOC_PHASE_CURRENT_IB_CHANNEL}, ADC_NEGINPUT_GND);
 }
 
 __STATIC_FORCEINLINE void mcHalI_AdcHardwareTriggerRenable( void )
@@ -371,11 +379,11 @@ __STATIC_FORCEINLINE void mcHalI_AdcHardwareTriggerRenable( void )
 </#if>
 
 /*! \brief Get analog signals from ADC peripheral
- * 
+ *
  * Details.
  * Get analog signals from ADC peripheral
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -388,15 +396,17 @@ __STATIC_FORCEINLINE void mcHalI_AdcInterruptClear( void )
     NVIC_ClearPendingIRQ(AFEC0_IRQn);
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
     EVIC_SourceStatusClear(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].INTERRUPT_ADC_RESULT});
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+    NVIC_ClearPendingIRQ(ADC_IRQn);
 </#if>
 }
 
 /*! \brief Get analog signals from ADC peripheral
- * 
+ *
  * Details.
  * Get analog signals from ADC peripheral
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -409,15 +419,17 @@ __STATIC_FORCEINLINE void mcHalI_AdcInterruptDisable( void )
     NVIC_DisableIRQ(AFEC0_IRQn);
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
     EVIC_SourceDisable(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].INTERRUPT_ADC_RESULT});
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+    NVIC_DisableIRQ(ADC_IRQn);
 </#if>
 }
 
 /*! \brief Get analog signals from ADC peripheral
- * 
+ *
  * Details.
  * Get analog signals from ADC peripheral
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -425,11 +437,13 @@ __STATIC_FORCEINLINE void mcHalI_AdcInterruptDisable( void )
 __STATIC_FORCEINLINE void mcHalI_AdcInterruptEnable( void )
 {
 <#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
-    ADC0_InterruptsEnable( ADC_STATUS_RESRDY );  
+    ADC0_InterruptsEnable( ADC_STATUS_RESRDY );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
-    NVIC_EnableIRQ(AFEC0_IRQn); 
+    NVIC_EnableIRQ(AFEC0_IRQn);
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
     EVIC_SourceEnable(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].INTERRUPT_ADC_RESULT});
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+    NVIC_EnableIRQ(ADC_IRQn);
 </#if>
 }
 
@@ -449,9 +463,9 @@ __STATIC_FORCEINLINE uint16_t mcHalI_EncoderPositionGet( void  )
 <#if "PDEC_U2263" == MCPMSMFOC_QEI_IP>
     return (uint16_t)${MCPMSMFOC_ENCODER_PERIPHERAL}_QDECPositionGet();
 <#elseif "TC_6082" == MCPMSMFOC_QEI_IP>
-        return (uint16_t)${MCPMSMFOC_ENCODER_PERIPHERAL}_QuadraturePositionGet();
+    return (uint16_t)${MCPMSMFOC_ENCODER_PERIPHERAL}_QuadraturePositionGet();
 <#elseif "QEI_01494" == MCPMSMFOC_QEI_IP>
-        return (uint16_t)${MCPMSMFOC_ENCODER_PERIPHERAL}_PositionGet();
+    return (uint16_t)${MCPMSMFOC_ENCODER_PERIPHERAL}_PositionGet();
 </#if>
 }
 
@@ -478,11 +492,11 @@ __STATIC_FORCEINLINE int16_t mcHalI_EncoderVelocityGet( void  )
 *******************************************************************************/
 
 /*! \brief Enable PWM inverter
- * 
+ *
  * Details.
  * Enable PWM inverter
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -490,11 +504,11 @@ __STATIC_FORCEINLINE int16_t mcHalI_EncoderVelocityGet( void  )
 void mcHalI_InverterPwmEnable( void );
 
 /*! \brief Disable PWM inverter
- * 
+ *
  * Details.
  * Disable PWM inverter
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -515,33 +529,33 @@ void mcHalI_InverterPwmDisable( void );
 <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
     <#list 0..10 as index>
         <#if "Direction indication" == ledFunction(index)>
-         /*! \brief Set direction indicator
-         * 
-         * Details.
-         * Set direction indicator
-         * 
-         * @param[in]: 
-         * @param[in/out]:
-         * @param[out]:
-         * @return:
-         */
-         void mcHal_DirectionIndication( void );
-         
-         <#elseif "Fault indication" == ledFunction(index)>
-        /*! \brief Set fault indicator
-         * 
-         * Details.
-         * Set fault indicator
-         * 
-         * @param[in]: 
-         * @param[in/out]:
-         * @param[out]:
-         * @return:
-         */
-        void mcHal_FaultIndicationSet( void );
-        
+/*! \brief Set direction indicator
+*
+* Details.
+* Set direction indicator
+*
+* @param[in]:
+* @param[in/out]:
+* @param[out]:
+* @return:
+*/
+void mcHal_DirectionIndication( void );
+
+<#elseif "Fault indication" == ledFunction(index)>
+/*! \brief Set fault indicator
+*
+* Details.
+* Set fault indicator
+*
+* @param[in]:
+* @param[in/out]:
+* @param[out]:
+* @return:
+*/
+void mcHal_FaultIndicationSet( void );
+
         </#if>
-       
+
         <#if index == ( MCPMSMFOC_LEDS_AVAILABLE -1 )>
             <#break>
         </#if>
@@ -550,11 +564,11 @@ void mcHalI_InverterPwmDisable( void );
 
 
 /*! \brief ADC Enable
- * 
+ *
  * Details.
  * ADC Enable
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -563,11 +577,11 @@ void mcHalI_AdcEnable( void );
 
 
 /*! \brief PWM timer Start
- * 
+ *
  * Details.
  * PWM timer Start
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -575,29 +589,31 @@ void mcHalI_AdcEnable( void );
 void mcHalI_PwmTimerStart( void );
 
 /*! \brief ADC callback function
- * 
+ *
  * Details.
  * ADC callback function
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 <#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
 void mcHalI_AdcCallBackRegister( ADC_CALLBACK callback, uintptr_t context );
-<#elseif "TC_6082" == MCPMSMFOC_QEI_IP>
+<#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
 void mcHalI_AdcCallBackRegister( AFEC_CALLBACK callback, uintptr_t context );
-<#elseif "QEI_01494" == MCPMSMFOC_QEI_IP>
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcHalI_AdcCallBackRegister( ADCHS_CALLBACK callback, uintptr_t context );
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+void mcHalI_AdcCallBackRegister( ADC_CALLBACK callback, uintptr_t context );
 </#if>
 
 /*! \brief PWM fault callback function
- * 
+ *
  * Details.
  * PWM fault callback function
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -651,15 +667,15 @@ bool mcHalI_DirectionButtonState( void );
 <#break>
 </#if>
 </#list>
-</#if>  
+</#if>
 
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
 /*! \brief Start the encoder peripheral
- * 
+ *
  * Details.
  * Start the encoder peripheral
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:

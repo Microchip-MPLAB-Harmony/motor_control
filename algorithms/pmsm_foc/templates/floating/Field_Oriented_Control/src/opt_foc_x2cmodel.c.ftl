@@ -60,7 +60,6 @@
 /*******************************************************************************
  Interface Variables
  *******************************************************************************/
-extern void X2C_Update(void);
 
 /*******************************************************************************
  Private functions
@@ -82,9 +81,7 @@ extern void X2C_Update(void);
  */
 void mcFocI_FieldOrientedControlEnable( void )
 {
-    /** User code - Begin */
-
-   /** User code - End */
+    x2cModel.inports.bS2 = 1U;
 }
 
 /*! \brief  Field oriented control disable
@@ -99,9 +96,7 @@ void mcFocI_FieldOrientedControlEnable( void )
  */
 void mcFocI_FieldOrientedControlDisable( void )
 {
-   /** User code - Begin */
-
-   /** User code - End */
+    x2cModel.inports.bS2 = 1U;
 }
 
 /*! \brief  Field oriented control initialization
@@ -172,9 +167,7 @@ void mcFocI_FieldOrientedControlSlow( void  )
  */
 void mcFocI_MotorDirectionChange( void )
 {
-   /** User code - Begin */
-
-   /** User code - End */
+    x2cModel.inports.bS3 = x2cModel.inports.bS3 ^ 0U;
 }
 
 /*! \brief  Field oriented control reset
@@ -189,7 +182,5 @@ void mcFocI_MotorDirectionChange( void )
  */
 void mcFocI_FieldOrientedControlReset(  void   )
 {
-   /** User code - Begin */
 
-   /** User code - End */
 }

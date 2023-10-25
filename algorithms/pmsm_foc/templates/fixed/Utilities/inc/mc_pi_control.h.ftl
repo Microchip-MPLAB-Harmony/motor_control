@@ -6,9 +6,9 @@
 
   Summary:
     Header file which contains variables and function prototypes of  generic library functions.
- 
+
   Description:
-    This file contains variables and function prototypes of generic library functions 
+    This file contains variables and function prototypes of generic library functions
     which are generally used in Motor Control. Implemented in Q2.14 Fixed Point Arithmetic.
  *******************************************************************************/
 
@@ -44,11 +44,11 @@
 #include "mc_utilities.h"
 
 /******************************************************************************
- * Constants 
+ * Constants
 ******************************************************************************/
 
 /******************************************************************************
- * User-defined data structure  
+ * User-defined data structure
 ******************************************************************************/
 typedef struct
 {
@@ -57,6 +57,7 @@ typedef struct
     uint16_t KpShift;
     int16_t KiVal;
     uint16_t KiShift;
+    int16_t Yp;
     int32_t Yint;
     int16_t Ymin;
     int16_t Ymax;
@@ -64,11 +65,11 @@ typedef struct
 }tmcUtils_PiControl_s;
 
 /******************************************************************************
- * Interface variables 
+ * Interface variables
 ******************************************************************************/
 
 /******************************************************************************
- * Interface functions  
+ * Interface functions
 ******************************************************************************/
 /*! \brief
  *
@@ -83,11 +84,11 @@ typedef struct
 void mcUtils_PiControlInit( float32_t Kp, float32_t Ki, float32_t dt,  tmcUtils_PiControl_s  * const pControl);
 
 /*! \brief
- * 
- * Details
- * 
  *
- * @param[in]: 
+ * Details
+ *
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:

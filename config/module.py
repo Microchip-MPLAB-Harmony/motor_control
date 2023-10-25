@@ -41,9 +41,11 @@ SupportedIps = {
               { "name": "MCPWM", "id": "01477"}
             ],
     "ADC" : [
-              { "name": "ADC", "id": "U2500"},
-              { "name": "AFEC", "id": "11147"},
-              { "name": "ADCHS", "id": "02508"}
+              { "name": "ADC",   "id": "U2500"},
+              { "name": "ADC",   "id": "U2247"},
+              { "name": "AFEC",  "id": "11147"},
+              { "name": "ADCHS", "id": "02508"},
+              { "name": "ADC",   "id": "44073"}
             ],
     "QDEC": [
               { "name": "PDEC", "id": "U2263"},
@@ -75,7 +77,7 @@ def loadModule():
         if checkIpSupport(module, "QDEC"):
             encoderPresent = True
 
-    if (pwmPresent and adcPresent ):
+    if (pwmPresent and adcPresent):
 
         mcPmsmFocComponent = Module.CreateComponent("pmsm_foc", "PMSM FOC", "Motor Control/", "algorithms/pmsm_foc/config/pmsm_foc.py")
 
@@ -92,3 +94,5 @@ def loadModule():
 
         # Add dependency symbol for DSCI peripheral
         mcPmsmFocComponent.addDependency("pmsmfoc_X2CSCOPE", "DSCI", False, True)
+
+        mcPmsmFocComponent = Module.CreateComponent("cstom_mc_bsp", "Custom MC Board","/Motor Control/", "board/board.py")

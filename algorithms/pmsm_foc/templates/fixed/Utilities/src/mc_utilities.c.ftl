@@ -130,17 +130,17 @@ static const int16_t sineTable[ TRIG_TABLE_DIMENSION + 1u ] =
   16384
 };
 
-	
+
 /*******************************************************************************
- *  Functions 
+ *  Functions
  *******************************************************************************/
 
 /*! \brief Calculate sine and cosine value
- * 
+ *
  * Details
- * Calculate sine value 
- * 
- * @param[in]: 
+ * Calculate sine value
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -185,12 +185,12 @@ void mcUtils_SineCosineCalculation(const uint16_t ang,
 }
 
 
-/*! \brief Calculate square root value   
- * 
+/*! \brief Calculate square root value
+ *
  * Details
- * Calculate square root value  
- * 
- * @param[in]: 
+ * Calculate square root value
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -199,17 +199,17 @@ void mcUtils_SineCosineCalculation(const uint16_t ang,
 uint32_t  __ramfunc__ mcUtils_SquareRoot(uint32_t number)
 #else
 uint32_t mcUtils_SquareRoot(uint32_t number )
-#endif 
+#endif
 {
     return DIVAS_SquareRoot( number );
 }
 
 /*! \brief Linear ramp
- * 
+ *
  * Details
  * Linear ramp
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -235,11 +235,11 @@ void mcUtils_LinearRamp(int32_t * const input, const int32_t stepSize, const int
 }
 
 /*! \brief Button response Function
- * 
+ *
  * Details
- * Button response function 
- * 
- * @param[in]: 
+ * Button response function
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:

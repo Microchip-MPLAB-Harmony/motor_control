@@ -11,7 +11,7 @@
  Application
 
   Description:
-   Application 
+   Application
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -55,32 +55,32 @@
  *******************************************************************************/
 
 /*******************************************************************************
- * Interface variables 
+ * Interface variables
  *******************************************************************************/
 
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
  *******************************************************************************/
 
  /*! \brief General flags initialization
- * 
+ *
  * Details.
  * General flags initialization
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 void mcAppI_GeneralFlagsInit(void);
 
-/*! \brief Application initialization 
- * 
+/*! \brief Application initialization
+ *
  * Details.
- * Application initialization 
- * 
- * @param[in]: 
+ * Application initialization
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -100,11 +100,11 @@ void mcAppI_ApplicationInit( void );
 void mcAppI_OverCurrentReactionIsr( uint32_t status,  uintptr_t context );
 
 /*! \brief Motor control application calibration
- * 
+ *
  * Details.
- *  Motor Control application calibration 
- * 
- * @param[in]: 
+ *  Motor Control application calibration
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -139,12 +139,12 @@ void  mcAppI_AdcFinishedIsr( ADC_STATUS status, uintptr_t context );
  */
 void mcAppI_NonISRTasks( void );
 
-/*! \brief Application reset 
- * 
+/*! \brief Application reset
+ *
  * Details.
- * Application reset 
- * 
- * @param[in]: 
+ * Application reset
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:

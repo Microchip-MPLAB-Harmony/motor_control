@@ -42,8 +42,7 @@ import os
 #                             MOTOR CLASS  FUNCTIONS                               #
 #----------------------------------------------------------------------------------#
 class mcMotI_MotorParametersClass:
-    def __init__(self, algorithm, component):
-        self.algorithm = algorithm
+    def __init__(self, component):
         self.component = component
 
         # Read motor parameters from motor.xml

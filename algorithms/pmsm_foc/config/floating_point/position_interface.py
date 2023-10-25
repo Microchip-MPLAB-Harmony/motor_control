@@ -30,153 +30,18 @@ import os.path
 #---------------------------------------------------------------------------------------#
 #                                 Suppoted IPs                                          #
 #---------------------------------------------------------------------------------------#
-SupportedQEIIps = {
-    "QDEC" : [
-                { "name": "PDEC", "id": "U2263"},
-                { "name": "TC", "id": "6082"},
-                { "name": "QEI", "id": "01494"}
-             ]
-}
-
-def getQEIIP(modules):
-    for module in modules:
-        for entry in SupportedQEIIps.get("QDEC", []):
-            if ( entry["name"] == module.getAttribute("name") and entry["id"] == module.getAttribute("id") ):
-                return entry["name"], entry["id"]
-    return "",""
 
 #---------------------------------------------------------------------------------------#
 #                                 GLOBAL VARIABLES                                      #
 #---------------------------------------------------------------------------------------#
 class mcFocI_PositionInterfaceClass:
-    def __init__(self, algorithm, component):
-        self.algorithm = algorithm
+    def __init__(self, component, pin_manager):
         self.component = component
+        self.pin_manager = pin_manager
 
-        # Read position interfaces from ATDF file
-        self.mapForQea = dict()
-        self.mapForQeb = dict()
-
-        # Get ADC IP from the ATDF file
-        periphNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
-        modules = periphNode.getChildren()
-        name, id = getQEIIP(modules)
-
-        # Create a symbol for ADC IP
-        self.IP  = self.component.createStringSymbol("MCPMSMFOC_QEI_IP", None )
-        self.IP.setLabel("QEI IP")
-        self.IP.setValue( name + "_" + id)
-        self.IP.setVisible(False)
-
-
-        if ( name == "TC" ) and ( id == "6082"):
-            module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"TC\"]"
-            modules = ATDF.getNode(module_Path).getChildren()
-
-            self.instance_List = list()
-            self.function_Map = dict()
-            self.function_Map["QEA"] = dict()
-            self.function_Map["QEB"] = dict()
-
-            for module in modules:
-                key = module.getAttribute("name")
-                self.instance_List.append(key)
-                channel_Path = module_Path + "/instance@[name=\"" + key + "\"]/signals"
-                channels = ATDF.getNode(channel_Path).getChildren()
-
-                self.function_Map["QEA"][key] = list()
-                self.function_Map["QEB"][key] = list()
-
-                for channel in channels:
-                    if "TIOA" == channel.getAttribute("group"):
-                        self.function_Map["QEA"][key].append(str(channel.getAttribute("pad")))
-                    if "TIOB" == channel.getAttribute("group"):
-                        self.function_Map["QEB"][key].append(str(channel.getAttribute("pad")))
-
-            self.instance_List.sort()
-
-        elif ( name == "PDEC" ) and ( id == "U2263"):
-            module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"PDEC\"]"
-            modules = ATDF.getNode(module_Path).getChildren()
-
-            self.instance_List = list()
-            self.function_Map = dict()
-            self.function_Map["QEA"] = dict()
-            self.function_Map["QEB"] = dict()
-
-            for module in modules:
-                key = module.getAttribute("name")
-                self.instance_List.append(key)
-                channel_Path = module_Path + "/instance@[name=\"" + key + "\"]/signals"
-                channels = ATDF.getNode(channel_Path).getChildren()
-                self.function_Map["QEA"][key] = list()
-                self.function_Map["QEB"][key] = list()
-
-                for channel in channels:
-                    if "0" == channel.getAttribute("index"):
-                        self.function_Map["QEA"][key].append(str(channel.getAttribute("pad")))
-                    if "1" == channel.getAttribute("index"):
-                        self.function_Map["QEB"][key].append(str(channel.getAttribute("pad")))
-
-            self.instance_List.sort()
-
-        elif ( name == "QEI" ) and ( id == "01494"):
-            # Pin to quadrature decoder mapping
-            currentPath = Variables.get("__CSP_DIR") + "/peripheral/gpio_02467"
-            deviceXmlPath = os.path.join(currentPath, "plugin/pin_xml/components/" + Variables.get("__PROCESSOR") + ".xml")
-            deviceXmlTree = ET.parse(deviceXmlPath)
-            deviceXmlRoot = deviceXmlTree.getroot()
-            pinoutXmlName = deviceXmlRoot.get("pins")
-            pinoutXmlPath = os.path.join(currentPath, "plugin/pin_xml/pins/" + pinoutXmlName + ".xml")
-            pinoutXmlPath = os.path.normpath(pinoutXmlPath)
-
-            familiesXmlName = deviceXmlRoot.get("families")
-            familiesXmlPath = os.path.join(currentPath, "plugin/pin_xml/families/" + familiesXmlName + ".xml")
-            familiesXmlPath = os.path.normpath(familiesXmlPath)
-
-            pinFileContent = ET.fromstring((open(familiesXmlPath, "r")).read())
-
-            self.function_Map = {'QEA': {}, 'QEB':{}}
-            self.instance_List = set()
-            for group in pinFileContent.findall("groups/group"):
-                for function in group.findall("function"):
-                    if function.attrib["name"].startswith("QEA"):
-                        for pin in group.findall("pin"):
-                            channel = self.numericFilter(function.attrib["name"])
-                            unit = "QEI" + channel
-                            pad = self.stringReplace(pin.attrib["name"])
-
-                            try:
-                                self.function_Map["QEA"][unit].append( pad )
-                            except:
-                                self.function_Map["QEA"][unit] = list()
-                                self.function_Map["QEA"][unit] = [pad]
-
-                            self.instance_List.add(unit)
-
-                    if function.attrib["name"].startswith("QEB"):
-                        for pin in group.findall("pin"):
-                            channel = self.numericFilter(function.attrib["name"])
-                            unit = "QEI" + channel
-                            pad = self.stringReplace(pin.attrib["name"])
-
-                            try:
-                                self.function_Map["QEB"][unit].append(pad)
-                            except:
-                                self.function_Map["QEB"][unit] = list()
-                                self.function_Map["QEB"][unit] = [pad]
-
-                            self.instance_List.add(unit)
-
-            self.instance_List = list(self.instance_List)
-
-    def numericFilter( self, input_String ):
-        numeric_filter = filter(str.isdigit, str(input_String))
-        return "".join(numeric_filter)
-
-    def stringReplace( self, my_String ):
-        my_String = my_String.replace("RP","R")
-        return my_String
+        # Instantiate analog interface class
+        device = mcDevI_PositionInterfaceClass(component)
+        self.information = device.information
 
     def createSymbols(self):
         # Root node
@@ -190,8 +55,10 @@ class mcFocI_PositionInterfaceClass:
         self.sym_ENCODER.setLabel("Encoder Connections")
 
         # Peripheral selection
-        self.sym_PERIPHERAL = self.component.createComboSymbol("MCPMSMFOC_ENCODER_PERIPHERAL", self.sym_ENCODER, self.instance_List)
+        units = ["** Select **"] + sorted(self.information.keys())
+        self.sym_PERIPHERAL = self.component.createComboSymbol("MCPMSMFOC_ENCODER_PERIPHERAL", self.sym_ENCODER, units )
         self.sym_PERIPHERAL.setLabel("Select instance")
+        self.sym_PERIPHERAL.setDefaultValue("** Select **")
 
         self.sym_PERIPHERAL_ID = self.component.createStringSymbol("MCPMSMFOC_ENCODER_PERIPHERAL_ID", None)
         self.sym_PERIPHERAL_ID.setLabel("Peripheral ID")
@@ -199,12 +66,21 @@ class mcFocI_PositionInterfaceClass:
         self.sym_PERIPHERAL_ID.setDefaultValue((self.sym_PERIPHERAL.getValue()).lower())
         self.sym_PERIPHERAL_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_ENCODER_PERIPHERAL"] )
 
-        # QEA
-        self.sym_QEA = mcFun_AdvancedComboSymbol("QEA", "QEA", self.component)
-        self.sym_QEA.createComboSymbol(self.sym_PERIPHERAL, self.sym_ENCODER, self.function_Map["QEA"])
+        self.sym_OLD_QEA_PAD = self.component.createStringSymbol("MCPMSMFOC_ENCODER_OLD_QEA_PAD", self.sym_PERIPHERAL)
+        self.sym_OLD_QEA_PAD.setLabel("Old QEA Pad")
+        self.sym_OLD_QEA_PAD.setVisible(False)
 
-        self.sym_QEB = mcFun_AdvancedComboSymbol("QEB", "QEB", self.component)
-        self.sym_QEB.createComboSymbol(self.sym_PERIPHERAL, self.sym_ENCODER, self.function_Map["QEB"])
+        self.sym_QEA_PAD = self.component.createComboSymbol("MCPMSMFOC_ENCODER_QEA_PAD", self.sym_PERIPHERAL, ["** Select **"])
+        self.sym_QEA_PAD.setLabel("QEA Pad")
+        self.sym_QEA_PAD.setDependencies(self.updateQEAPadList, ["MCPMSMFOC_ENCODER_PERIPHERAL", "MCPMSMFOC_ENCODER_QEA_PAD", "MCPMSMFOC_USED_PIN_LIST"])
+
+        self.sym_OLD_QEB_PAD = self.component.createStringSymbol("MCPMSMFOC_ENCODER_OLD_QEB_PAD", self.sym_PERIPHERAL)
+        self.sym_OLD_QEB_PAD.setLabel("Old QEB Pad")
+        self.sym_OLD_QEB_PAD.setVisible(False)
+
+        self.sym_QEB_PAD = self.component.createComboSymbol("MCPMSMFOC_ENCODER_QEB_PAD", self.sym_PERIPHERAL,  ["** Select **"])
+        self.sym_QEB_PAD.setLabel("QEB Pad")
+        self.sym_QEB_PAD.setDependencies(self.updateQEBPadList, ["MCPMSMFOC_ENCODER_PERIPHERAL", "MCPMSMFOC_ENCODER_QEB_PAD", "MCPMSMFOC_USED_PIN_LIST"])
 
         self.sym_ENCODER_MODULE = self.component.createStringSymbol("MCPMSMFOC_ENCODERPLIB", None)
         self.sym_ENCODER_MODULE.setVisible(False)
@@ -216,26 +92,41 @@ class mcFocI_PositionInterfaceClass:
         self.sym_PLIB_UPDATE.setVisible(False)
         self.sym_PLIB_UPDATE.setDependencies(self.updatePLIB, ["MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV",
                                                                "MCPMSMFOC_ENCODER_PERIPHERAL",
-                                                               self.sym_QEA.getSymbolID(),
-                                                               self.sym_QEB.getSymbolID()
+                                                               'MCPMSMFOC_ENCODER_QEA_PAD',
+                                                               'MCPMSMFOC_ENCODER_QEB_PAD',
+                                                               "MCPMSMFOC_QEA_CHANNEL",
+                                                               "MCPMSMFOC_QEB_CHANNEL"
                                                                ])
 
-    def setSymbolValues(self):
-        information = Database.sendMessage("bsp", "MCPMSMFOC_POSITION_INTERFACE", {})
-        if( None != information ):
-            if information["QEA"]["FUNCTION"][0][0] == information["QEB"]["FUNCTION"][0][0]:
-                self.sym_PERIPHERAL.setValue(information["QEA"]["FUNCTION"][0][0])
+        # Pad update callback
+        self.sym_ENCODER_CALLBACK = self.component.createMenuSymbol(None, None)
+        self.sym_ENCODER_CALLBACK.setLabel("Position interface update callback")
+        self.sym_ENCODER_CALLBACK.setDependencies(self.updateEncoderInterface, ["MCPMSMFOC_ENCODER_PERIPHERAL",
+                                                               'MCPMSMFOC_ENCODER_QEA_PAD',
+                                                               'MCPMSMFOC_ENCODER_QEB_PAD'])
+        self.sym_ENCODER_CALLBACK.setVisible(False)
 
-            self.sym_QEA.setValue(information["QEA"]["FUNCTION"][0][1])
-            self.sym_QEB.setValue(information["QEB"]["FUNCTION"][0][1])
+    def updateEncoderInterface(self, symbol, event):
+        # Update custom bsp message
+        unit = self.sym_PERIPHERAL.getValue()
+        QEA = self.sym_QEA_PAD.getValue()
+        QEB = self.sym_QEB_PAD.getValue()
 
-    def updateSymbolValues(self, information):
-        if( None != information ):
-            if information["QEA"]["FUNCTION"][0][0] == information["QEB"]["FUNCTION"][0][0]:
-                self.sym_PERIPHERAL.setValue(information["QEA"]["FUNCTION"][0][0])
+        # Get the index
+        index = ""
+        if unit != "** Select **" and QEA != "** Select **" and QEB != "** Select **":
+            for key, pad_list in self.information[unit]["QEA"].items():
+                if QEA in pad_list:
+                    index = key
 
-            self.sym_QEA.setValue(information["QEA"]["FUNCTION"][0][1])
-            self.sym_QEB.setValue(information["QEB"]["FUNCTION"][0][1])
+
+        if unit != "** Select **" and QEA != "** Select **" and QEB != "** Select **":
+            args = {
+                    "UNIT": unit,
+                    "QEA": {"CHANNEL": index, "PAD": QEA },
+                    "QEB": {"CHANNEL": index, "PAD": QEB }
+                }
+            Database.sendMessage("cstom_mc_bsp", "MCPMSMFOC_POSITION_INTERFACE_SET", args)
 
     def showThisSymbol(self, symbol, event):
         if True == (event["symbol"]).getValue():
@@ -283,17 +174,65 @@ class mcFocI_PositionInterfaceClass:
             # symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", False)
             symbol.setVisible(False)
 
+    def updateQEAPadList(self, symbol, event):
+        if self.sym_PERIPHERAL != "** Select **":
+            # Remove old pin from used pin list
+            self.pin_manager.removePinFromList(self.sym_OLD_QEA_PAD.getValue())
+            self.sym_OLD_QEA_PAD.setValue(self.sym_QEA_PAD.getValue())
+
+            # Add new used pi to the list
+            self.pin_manager.addPinToList(self.sym_QEA_PAD.getValue())
+
+            combined_pad_list = []
+
+            if self.sym_PERIPHERAL.getValue() != "** Select **":
+                for pad_list in self.information[self.sym_PERIPHERAL.getValue()]["QEA"].values():
+                    combined_pad_list.extend(pad_list)
+
+            combined_pad_list = sorted(combined_pad_list)
+
+            # Use list comprehension to create a new list that filters elements
+            combined_pad_list = [entry for entry in combined_pad_list if entry not in self.pin_manager.getUsedPinList() or entry == self.sym_QEA_PAD.getValue()]
+
+            value = symbol.getValue()
+            symbol.setRange(["** Select **"] + combined_pad_list)
+            symbol.setValue(value)
+
+
+
+    def updateQEBPadList(self, symbol, event):
+        if self.sym_PERIPHERAL != "** Select **":
+            # Remove old pin from used pin list
+            self.pin_manager.removePinFromList(self.sym_OLD_QEB_PAD.getValue())
+            self.sym_OLD_QEB_PAD.setValue(self.sym_QEB_PAD.getValue())
+
+            # Add new used pi to the list
+            self.pin_manager.addPinToList(self.sym_QEB_PAD.getValue())
+
+            combined_pad_list = []
+
+            if self.sym_PERIPHERAL.getValue() != "** Select **":
+                for pad_list in self.information[self.sym_PERIPHERAL.getValue()]["QEB"].values():
+                    combined_pad_list.extend(pad_list)
+
+            combined_pad_list = sorted(combined_pad_list)
+
+            # Use list comprehension to create a new list that filters elements
+            combined_pad_list = [entry for entry in combined_pad_list if entry not in self.pin_manager.getUsedPinList() or entry == self.sym_QEB_PAD.getValue()]
+
+            value = symbol.getValue()
+            symbol.setRange(["** Select **"] + combined_pad_list)
+            symbol.setValue(value)
+
+
     def handleMessage(self, ID, information ):
         if( "BSP_POSITION_INTERFACE" == ID ):
-             if( None != information ):
+            if( None != information ):
                 if information["QEA"]["FUNCTION"][0][0] == information["QEB"]["FUNCTION"][0][0]:
                     self.sym_PERIPHERAL.setValue(information["QEA"]["FUNCTION"][0][0])
 
-                self.sym_QEA.setValue(information["QEA"]["FUNCTION"][0][1])
-                self.sym_QEB.setValue(information["QEB"]["FUNCTION"][0][1])
-
-
-
+                self.sym_QEA_PAD.setValue(information["QEA"]["FUNCTION"][0][1])
+                self.sym_QEB_PAD.setValue(information["QEB"]["FUNCTION"][0][1])
 
     def onAttachmentConnected(self, source, target):
         message = dict()
@@ -314,6 +253,6 @@ class mcFocI_PositionInterfaceClass:
             self.sym_ENCODER_MODULE.setValue("None")
 
     def __call__(self):
-        self.createSymbols()
-        self.setSymbolValues()
+        if self.information:
+            self.createSymbols()
 

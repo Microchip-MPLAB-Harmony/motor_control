@@ -36,8 +36,7 @@
 #                                 GLOBAL VARIABLES                                      #
 #---------------------------------------------------------------------------------------#
 class mcSrcI_VoltageSourceClass:
-    def __init__( self, algorithm, component):
-        self.algorithm = algorithm
+    def __init__( self, component):
         self.component = component
 
     def setValues(self):

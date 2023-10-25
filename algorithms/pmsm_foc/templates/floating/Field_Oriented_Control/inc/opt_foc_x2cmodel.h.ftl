@@ -47,10 +47,12 @@
  Header files inclusions
  *******************************************************************************/
 #include "mc_types.h"
-#include "X2C_Utilities.h"
 #include "mc_current_calculation.h"
 #include "mc_voltage_measurement.h"
-#include "X2C.h"
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
+#include "mc_rotor_position_calculation.h"
+</#if>
+#include "X2C_Model.h"
 
 /*******************************************************************************
  User defined data-types
@@ -65,17 +67,36 @@
  *******************************************************************************/
 static inline void mcFoc_InputPortsRead( void  )
 {
-   /** User code - Begin */
-
-   /** User code - End */
+    x2cModel.inports.bI_a = (float32_t)mcCurI_ModuleData_gds.dOutput.iABC.a;
+    x2cModel.inports.bI_b = (float32_t)mcCurI_ModuleData_gds.dOutput.iABC.b;
+    x2cModel.inports.bV_POT = mcHalI_Potentiometer_gdu16 - 2048;
+    x2cModel.inports.bV_DCLINK = (float32_t)mcVolI_ModuleData_gds.dOutput.uBus;
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
+    x2cModel.inports.bQEI_POS = (float32_t)mcRpcI_ModuleData_gds.dOutput.elecAngle;
+    x2cModel.inports.bQEI_VEL = (float32_t)mcRpcI_ModuleData_gds.dOutput.elecSpeed;
+</#if>
 }
-
 
 static inline void mcFoc_OutputPortsWrite( void  )
 {
-   /** User code - Begin */
+    float32_t dutyCycleFactor;
+    int16_t   periodCount;
+    int16_t   halfPeriodCount;
 
-    /** User code - End */
+    /* Get the period count from mcHalI_PwmPeriodGet() */
+    periodCount = mcHalI_PwmPeriodGet();
+
+    /* Calculate half of the period count */
+    halfPeriodCount = periodCount >> 1U;
+
+    /* Calculate the duty cycle factor */
+    dutyCycleFactor = (float)periodCount / mcVolI_ModuleData_gds.dOutput.uBus;
+
+    /* Update PWM duty cycles for three channels */
+    mcPwmI_Duty_gau16[0] = periodCount - (halfPeriodCount + *x2cModel.outports.bPWM1 * dutyCycleFactor);
+    mcPwmI_Duty_gau16[1] = periodCount - (halfPeriodCount + *x2cModel.outports.bPWM2 * dutyCycleFactor);
+    mcPwmI_Duty_gau16[2] = periodCount - (halfPeriodCount + *x2cModel.outports.bPWM3 * dutyCycleFactor);
+
 }
 
 /*******************************************************************************
@@ -109,7 +130,7 @@ void mcFocI_FieldOrientedControlDisable( void );
 /*! \brief  Field oriented control initialization
  *
  * Details.
- *   Field oriented control initialization
+ * Field oriented control initialization
  *
  * @param[in]:
  * @param[in/out]:
@@ -121,7 +142,7 @@ void mcFocI_FieldOrientedControlInit( void  );
 /*! \brief Field oriented control
  *
  * Details.
- *   Field oriented control
+ * Field oriented control
  *
  * @param[in]:
  * @param[in/out]:
@@ -134,7 +155,7 @@ void mcFocI_FieldOrientedControlFast( void  );
 /*! \brief Field oriented control
  *
  * Details.
- *   Field oriented control
+ * Field oriented control
  *
  * @param[in]:
  * @param[in/out]:

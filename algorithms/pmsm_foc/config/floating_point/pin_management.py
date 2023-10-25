@@ -1,0 +1,78 @@
+# coding: utf-8
+"""*****************************************************************************
+* Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+*****************************************************************************"""
+
+#---------------------------------------------------------------------------------------#
+#                                 Imports                                               #
+#---------------------------------------------------------------------------------------#
+import os.path
+import xml.etree.ElementTree as ET
+
+
+#---------------------------------------------------------------------------------------#
+#                                Global Variables                                       #
+#---------------------------------------------------------------------------------------#
+
+#---------------------------------------------------------------------------------------#
+#                                 Suppoted IPs                                          #
+#---------------------------------------------------------------------------------------#
+
+#---------------------------------------------------------------------------------------#
+#                                   Classes                                             #
+#---------------------------------------------------------------------------------------#
+class mcPmaI_PinManagementClass:
+    def __init__(self, component ):
+        self.component = component
+        self.usedPinList = []
+
+    def createSymbols( self ):
+        self.pin_manager = self.component.createComboSymbol("MCPMSMFOC_USED_PIN_LIST", None, ["None"])
+        self.pin_manager.setLabel("Used pin list")
+        self.pin_manager.setVisible(False)
+
+    def removePinFromList(self, pin):
+        if pin in self.usedPinList and pin != "** Select **":
+            self.usedPinList.remove(pin)
+
+            # Update pin list symbol
+            self.pin_manager.setRange(self.usedPinList)
+
+    def addPinToList(self, pin):
+        if pin not in self.usedPinList and pin != "** Select **":
+            self.usedPinList.append(pin)
+
+            # Update pin list symbol
+            self.pin_manager.setRange(self.usedPinList)
+
+    def getUsedPinList(self):
+        return self.usedPinList
+
+    def __call__(self):
+        self.createSymbols()
+
+
+
+
+
+
+

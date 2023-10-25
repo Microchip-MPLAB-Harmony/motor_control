@@ -36,8 +36,7 @@
 #                                 GLOBAL VARIABLES                                      #
 #---------------------------------------------------------------------------------------#
 class mcPid_PiControllerParameters:
-    def __init__( self, algorithm, component):
-        self.algorithm = algorithm
+    def __init__( self, component):
         self.component = component
 
     def determineCurrentParameters(self):

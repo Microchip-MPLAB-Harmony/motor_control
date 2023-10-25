@@ -12,7 +12,7 @@
 
   Description:
   Application source file
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -44,18 +44,18 @@
 /*******************************************************************************
 Headers inclusions
  *******************************************************************************/
-#include "mc_application.h" 
+#include "mc_application.h"
 
 /*******************************************************************************
- * Constants 
+ * Constants
  *******************************************************************************/
 
 /*******************************************************************************
- Private data-types 
+ Private data-types
  *******************************************************************************/
-   
+
 /*******************************************************************************
- Private variables 
+ Private variables
  *******************************************************************************/
  <#--  Get button function  -->
 <#function buttonFunction index>
@@ -82,13 +82,13 @@ static uintptr_t dummyForMisra;
 static uint8_t runStatus = 0u;
 
 /*******************************************************************************
- Interface variables 
+ Interface variables
  *******************************************************************************/
 
 /*******************************************************************************
- Private Functions 
+ Private Functions
  *******************************************************************************/
- 
+
 /*! \brief Start stop button scan
  *
  * Details.
@@ -111,12 +111,12 @@ __STATIC_INLINE void mcAppI_MotorStartStop(void)
         mcFocI_FieldOrientedControlEnable( &mcFocI_ModuleData_gds );
 </#if>
 
-<#if MCPMSMFOC_FOC_X2C_ENABLE == false>        
+<#if MCPMSMFOC_FOC_X2C_ENABLE == false>
 <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
         /** Enable initial position detection  */
         mcIpdI_InitialPositionDetectEnable(&mcIpdI_ModuleData_gds);
 
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
         mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (AFEC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
@@ -140,8 +140,8 @@ __STATIC_INLINE void mcAppI_MotorStartStop(void)
         /** Start motor  */
         mcFocI_FieldOrientedControlDisable( &mcFocI_ModuleData_gds );
 </#if>
-   
-<#if MCPMSMFOC_FOC_X2C_ENABLE == false>     
+
+<#if MCPMSMFOC_FOC_X2C_ENABLE == false>
  <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
         /** Disable initial position detection  */
         mcIpdI_InitialPositionDetectDisable(&mcIpdI_ModuleData_gds);
@@ -156,11 +156,11 @@ __STATIC_INLINE void mcAppI_MotorStartStop(void)
 }
 
 /*! \brief Start stop button scan
- * 
+ *
  * Details.
  * Start stop button scan
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -175,7 +175,7 @@ __STATIC_INLINE void mcAppI_MotorStartStop(void)
   <#else>
     <#return "Error">
   </#if>
-</#function> 
+</#function>
 __STATIC_INLINE void mcAppI_DirectionReverse(void)
 {
     if( 0u == runStatus )
@@ -188,7 +188,7 @@ __STATIC_INLINE void mcAppI_DirectionReverse(void)
        mcFocI_MotorDirectionChange(&mcFocI_ModuleData_gds);
 </#if>
 
-   
+
 <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
 <#list 0..10 as index>
 <#if "Direction indication" == ledFunction(index)>
@@ -230,17 +230,17 @@ __STATIC_INLINE void mcAppI_1msTasksHandler( void )
     /** Start-stop button scan  */
     mcAppI_StartStopButton_gds.inputVal = mcHalI_StartStopButtonState();
     mcUtils_ButtonResponse(&mcAppI_StartStopButton_gds, &mcAppI_MotorStartStop);
-    
+
 <#elseif "Direction Toggle" == buttonFunction(index)>
     /** Direction button scan  */
     mcAppI_DirectionButton_gds.inputVal = mcHalI_DirectionButtonState();
     mcUtils_ButtonResponse(&mcAppI_DirectionButton_gds, &mcAppI_DirectionReverse);
 </#if>
 </#list>
-</#if>  
-   
+</#if>
+
 <#if true == MCPMSMFOC_FOC_X2C_ENABLE>
-       
+
 <#else>
     /** Field Oriented control - Slow Tasks */
     mcFocI_FieldOrientedControlSlow(&mcFocI_ModuleData_gds);
@@ -249,26 +249,26 @@ __STATIC_INLINE void mcAppI_1msTasksHandler( void )
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
  *******************************************************************************/
 
-/*! \brief Application initialization 
- * 
+/*! \brief Application initialization
+ *
  * Details.
- * Application initialization 
- * 
- * @param[in]: 
+ * Application initialization
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 void mcAppI_ApplicationInit( void )
-{   
+{
     /** ADC end of conversion interrupt generation for FOC control */
     mcHalI_AdcInterruptDisable();
     mcHalI_AdcInterruptClear();
 
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
     /** Enable ADC interrupt for field oriented control */
     mcHalI_AdcCallBackRegister(  (ADC_CALLBACK)mcAppI_AdcCalibrationIsr, (uintptr_t)dummyForMisra );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
@@ -280,7 +280,7 @@ void mcAppI_ApplicationInit( void )
 </#if>
     mcHalI_AdcInterruptEnable( );
 
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
     /** Enable ADC module */
     mcHalI_AdcEnable();
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
@@ -313,15 +313,20 @@ void mcAppI_ApplicationInit( void )
     /** Set motor parameters */
     mcMotI_MotorParametersInit( &mcMotI_PMSM_gds);
 </#if>
-        
+
     /** Initialize Current calculation */
     mcCurI_CurrentCalculationInit(&mcCurI_ModuleData_gds);
 
     /** Initialize Voltage measurement  */
     mcVolI_VoltageCalculationInit( &mcVolI_ModuleData_gds );
-   
+
+<#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER' )>
+    /** Initialize rotor position calculation  */
+    mcRpcI_RotorPositionCalcInit( &mcRpcI_ModuleData_gds );
+</#if>
+
 <#if MCPMSMFOC_FOC_X2C_ENABLE == false>
- <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS > 
+<#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
     /** Initialize Initial position detection */
     mcIpdI_InitialPositionDetectInit(&mcIpdI_ModuleData_gds);
 </#if>
@@ -335,9 +340,15 @@ void mcAppI_ApplicationInit( void )
     mcFocI_FieldOrientedControlInit( &mcFocI_ModuleData_gds);
 </#if>
 
- <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS > 
+ <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
     /** Initialize key manager */
     mcKeyI_KeyManagerInit();
+</#if>
+
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
+    /** Set phase A and phase B current channels */
+    mcHalI_PhaseACurrentChannelSelect();
+    mcHalI_PhaseBCurrentChannelSelect();
 </#if>
 
 }
@@ -387,23 +398,25 @@ void mcAppI_OverCurrentReactionIsr( MCPWM_CH_STATUS status, uintptr_t context )
 }
 
 /*! \brief Motor control application calibration
- * 
+ *
  * Details.
- *  Motor Control application calibration 
- * 
- * @param[in]: 
+ *  Motor Control application calibration
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
 void mcAppI_AdcCalibrationIsr(ADC_STATUS status, uintptr_t context)
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
+void mcAppI_AdcCalibrationIsr( uint32_t status, uintptr_t context )
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcCalibrationIsr( uint32_t status, uintptr_t context )
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
 </#if>
-{    
+{
     tmcTypes_StdReturn_e returnStatus;
 
     /** ADC end of conversion interrupt generation for FOC control */
@@ -421,27 +434,33 @@ void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
     if( StdReturn_Complete == returnStatus )
     {
 <#if MCPMSMFOC_FOC_X2C_ENABLE == true>
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
         mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (AFEC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+        mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 </#if>
 <#else>
- <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >    
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
         mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (AFEC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+        mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
 </#if>
 <#else>
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
         mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (AFEC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+        mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 </#if>
@@ -468,16 +487,18 @@ void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
 /*! \brief Initial position detection
  *
  * Details.
- *  Initial position detection 
+ *  Initial position detection
  *
  * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
 void mcAppI_InitialPositionDetectIsr(ADC_STATUS status, uintptr_t context )
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
+void mcAppI_InitialPositionDetectIsr( uint32_t status, uintptr_t context )
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
 void mcAppI_InitialPositionDetectIsr( uint32_t status, uintptr_t context )
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
@@ -493,32 +514,34 @@ void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t conte
 
     if (false == mcIpdI_ModuleData_gds.dOutput.ready )
     {
-         /** Current measurement  */
-         mcCurI_CurrentCalculation( &mcCurI_ModuleData_gds );
+        /** Current measurement  */
+        mcCurI_CurrentCalculation( &mcCurI_ModuleData_gds );
 
-         /** Initial position detection  */
-         mcIpdI_InitialPositionDetect(&mcIpdI_ModuleData_gds);
+        /** Initial position detection  */
+        mcIpdI_InitialPositionDetect(&mcIpdI_ModuleData_gds);
 
-         /** Bus voltage calculation */
-         mcVolI_VoltageCalculation( &mcVolI_ModuleData_gds );
+        /** Bus voltage calculation */
+        mcVolI_VoltageCalculation( &mcVolI_ModuleData_gds );
 
-         /** Set duty */
-         mcHalI_InverterPwmSet(mcPwmI_Duty_gau16);
+        /** Set duty */
+        mcHalI_InverterPwmSet(mcPwmI_Duty_gau16);
 
-         /** Bus voltage calculation */
-         mcVolI_VoltageCalculation( &mcVolI_ModuleData_gds );
+        /** Bus voltage calculation */
+        mcVolI_VoltageCalculation( &mcVolI_ModuleData_gds );
 
     }
     else
     {
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
         mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (AFEC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+        mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
 </#if>
-        
+
     }
 
     /** Read DC bus voltage */
@@ -531,7 +554,7 @@ void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t conte
     /** Calibration and monitoring update */
     X2CScope_Update();
 </#if>
-  
+
     /** ADC end of conversion interrupt generation for FOC control */
     mcHalI_AdcInterruptClear();
     mcHalI_AdcInterruptEnable();
@@ -540,19 +563,21 @@ void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t conte
 </#if>
 </#if>
 
-/*! \brief Interrupt tasks execution 
- * 
+/*! \brief Interrupt tasks execution
+ *
  * Details.
- *  Interrupt tasks execution 
- * 
- * @param[in]: 
+ *  Interrupt tasks execution
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
 void mcAppI_AdcFinishedIsr(ADC_STATUS status, uintptr_t context )
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
+void mcAppI_AdcFinishedIsr( uint32_t status, uintptr_t context )
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcFinishedIsr( uint32_t status, uintptr_t context )
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcFinishedIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
@@ -565,18 +590,23 @@ void mcAppI_AdcFinishedIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
     /** Read phase currents  */
     mcHalI_PhaseACurrentGet();
     mcHalI_PhaseBCurrentGet();
-    
-<#if __PROCESSOR?matches(".*SAME54.*") == true>
+
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
     /** Set Potentiometer and bus voltage channels */
     mcHalI_PotentiometerChannelSelect();
     mcHalI_DcLinkVoltageChannelSelect();
-    
+
     /** Start software conversion */
     mcHalI_AdcSoftwareConversionStart();
 </#if>
 
     /** Current calculation */
     mcCurI_CurrentCalculation(&mcCurI_ModuleData_gds);
+
+<#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER' )>
+    /** Rotor position calculation  */
+    mcRpcI_RotorPositionCalc( &mcRpcI_ModuleData_gds );
+</#if>
 
 <#if true == MCPMSMFOC_FOC_X2C_ENABLE>
     /** Initialize PMSM motor control */
@@ -598,12 +628,12 @@ void mcAppI_AdcFinishedIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
     /** Read potentiometer input */
     mcHalI_PotentiometerInputGet();
 
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
-    /** Set phase A and phase B current channels */ 
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
+    /** Set phase A and phase B current channels */
     mcHalI_PhaseACurrentChannelSelect();
     mcHalI_PhaseBCurrentChannelSelect();
-    
-    /** Re-enable hardware trigger for ADC channels */ 
+
+    /** Re-enable hardware trigger for ADC channels */
     mcHalI_AdcHardwareTriggerRenable();
 </#if>
 
@@ -640,12 +670,12 @@ void mcAppI_NonISRTasks( void )
     }
 }
 
-/*! \brief Application reset 
- * 
+/*! \brief Application reset
+ *
  * Details.
- * Application reset 
- * 
- * @param[in]: 
+ * Application reset
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:

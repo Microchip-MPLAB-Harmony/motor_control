@@ -12,7 +12,7 @@
 
   Description:
   Application source file
- 
+
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -45,7 +45,7 @@
 Headers inclusions
  *******************************************************************************/
 #include "mc_types.h" /** ToDO: Move it to header files */
-#include "application.h" 
+#include "mc_application.h"
 #include "mc_hardware_abstraction.h"  /** ToDO: Move it to header files */
 #include "definitions.h"
 #include "mc_utilities.h"
@@ -53,21 +53,15 @@ Headers inclusions
 #include "mc_motor.h"
 
 /*******************************************************************************
- * Constants 
+ * Constants
  *******************************************************************************/
 
 /*******************************************************************************
- Private data-types 
+ Private data-types
  *******************************************************************************/
-typedef struct
-{
-    bool referenceFromPot;
-    bool startFromButton;
-    bool directionFromButton;
-}tmcApp_GeneralFlags_s;
-   
+
 /*******************************************************************************
- Private variables 
+ Private variables
  *******************************************************************************/
 static button_response_t  mcAppI_DirectionButton_gds;
 static button_response_t  mcAppI_StartStopButton_gds;
@@ -75,31 +69,12 @@ static uint32_t mcAppI_1msSyncCounter_gdu32;
 static uintptr_t dummyForMisra;
 
 /*******************************************************************************
- Interface variables 
+ Interface variables
  *******************************************************************************/
-static tmcApp_GeneralFlags_s mcAppI_GeneralFlags_gds;
 
 /*******************************************************************************
- Private Functions 
+ Private Functions
  *******************************************************************************/
-
- /*! \brief General flags initialization
- * 
- * Details.
- * General flags initialization
- * 
- * @param[in]: 
- * @param[in/out]:
- * @param[out]:
- * @return:
- */
-void mcAppI_GeneralFlagsInit(void)
-{
-    mcAppI_GeneralFlags_gds.referenceFromPot = true;
-    mcAppI_GeneralFlags_gds.startFromButton = true;
-    mcAppI_GeneralFlags_gds.directionFromButton = true;
-}
-
 
 /*! \brief Start stop button scan
  *
@@ -115,34 +90,34 @@ void mcAppI_GeneralFlagsInit(void)
 static uint8_t runStatus = 0u;
 __STATIC_INLINE void mcAppI_MotorStartStop(void)
 {
-     if( 0u == runStatus )
-     {
-         /** Start motor  */
-         mcFocI_FieldOrientedControlEnable( &mcFocI_ModuleData_gds );
+    if( 0u == runStatus )
+    {
+        /** Start motor  */
+        mcFocI_FieldOrientedControlEnable( &mcFocI_ModuleData_gds );
 
-         /** Enable voltage source inverter */
-         mcHalI_InverterPwmEnable();
+        /** Enable voltage source inverter */
+        mcHalI_InverterPwmEnable();
 
-         runStatus = 1u;
-     }
-     else
-     {
-          /** Stop motor  */
-          mcFocI_FieldOrientedControlDisable( &mcFocI_ModuleData_gds );
+        runStatus = 1u;
+    }
+    else
+    {
+        /** Stop motor  */
+        mcFocI_FieldOrientedControlDisable( &mcFocI_ModuleData_gds );
 
-          /** Enable voltage source inverter */
-          mcHalI_InverterPwmDisable();
+        /** Enable voltage source inverter */
+        mcHalI_InverterPwmDisable();
 
-          runStatus = 0u;
-      }
+        runStatus = 0u;
+    }
 }
 
 /*! \brief Start stop button scan
- * 
+ *
  * Details.
  * Start stop button scan
- * 
- * @param[in]: 
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -150,34 +125,14 @@ __STATIC_INLINE void mcAppI_MotorStartStop(void)
 
 __STATIC_INLINE void mcAppI_DirectionReverse(void)
 {
-     /** ToDO: Change state variable to toggle motor spin direction  */
-//     mcFocI_MotorDirectionChange(&mcFocI_ModuleData_gds);
+    /** ToDO: Change state variable to toggle motor spin direction  */
+    if( 0u == runStatus )
+    {
+        mcFocI_MotorDirectionChange(&mcFocI_ModuleData_gds);
 
-     GPIO_PB12_Toggle();
-}
-
-/*! \brief Read phase currents ADC input
- *
- * Details.
- * Read phase currents ADC input
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
- */
-__STATIC_INLINE void mcAppI_PhaseCurrentInputRead( void )
-{
-#if defined USE_THREE_SHUNT
-    mcHalI_IaAdcInput_gdu16 = mcHalI_IaInputGet();
-    mcHalI_IbAdcInput_gdu16 = mcHalI_IbInputGet();
-    mcHalI_IcAdcInput_gdu16 = mcHalI_IcInputGet();
-#elif defined USE_DUAL_SHUNT
-    mcHalI_IaAdcInput_gdu16 = mcHalI_IaInputGet();
-    mcHalI_IbAdcInput_gdu16 = mcHalI_IbInputGet();
-#elif defined USE_SINGLE_SHUNT
-    /** ToDO: */
-#endif
+        /** Direction indication */
+        mcHal_DirectionIndication();
+    }
 }
 
 /*! \brief 1 ms tasks handler
@@ -205,58 +160,61 @@ __STATIC_INLINE void mcAppI_1msTasksHandler( void )
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
  *******************************************************************************/
 
-/*! \brief Application initialization 
- * 
+/*! \brief Application initialization
+ *
  * Details.
- * Application initialization 
- * 
- * @param[in]: 
+ * Application initialization
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 void mcAppI_ApplicationInit( void )
-{   
-     /** ADC end of conversion interrupt generation for FOC control */
-      mcHalI_AdcInterruptDisable();
-      mcHalI_AdcInterruptClear();
+{
+    /** ADC end of conversion interrupt generation for FOC control */
+    mcHalI_AdcInterruptDisable();
+    mcHalI_AdcInterruptClear();
 
-      /** Enable ADC interrupt for field oriented control */
-      mcHalI_AdcCallBackRegister(  (ADC_CALLBACK)mcAppI_AdcCalibrationIsr, (uintptr_t)dummyForMisra );
-      mcHalI_AdcInterruptEnable( );
+    /** Enable ADC interrupt for field oriented control */
+    mcHalI_AdcCallBackRegister(  (ADC_CALLBACK)mcAppI_AdcCalibrationIsr, (uintptr_t)dummyForMisra );
+    mcHalI_AdcInterruptEnable( );
 
-      /** Enable ADC module */
-      mcHalI_AdcEnable();
+    /** Enable ADC module */
+    mcHalI_AdcEnable();
 
-      /** Enable interrupt for fault detection */
-      mcHalI_PwmCallbackRegister( (TCC_CALLBACK)mcAppI_OverCurrentReactionIsr, (uintptr_t)dummyForMisra );
+    /** Enable interrupt for fault detection */
+    mcHalI_PwmCallbackRegister( (TCC_CALLBACK)mcAppI_OverCurrentReactionIsr, (uintptr_t)dummyForMisra );
 
-      /** ToDO: Check if it is needed */
-      // mcHalI_PwmInterruptEnable( );
+    /** ToDO: Check if it is needed */
+    // mcHalI_PwmInterruptEnable( );
 
-      /** Enables PWM channels. */
-      mcHalI_PwmTimerStart( );
+    /** Enables PWM channels. */
+    mcHalI_PwmTimerStart( );
 
-      /** Disable PWM output */
-      mcHalI_InverterPwmDisable();
+    /** Disable PWM output */
+    mcHalI_InverterPwmDisable();
 
-      /** Initialize general flags */
-      mcAppI_GeneralFlagsInit();
+    /** Set motor parameters */
+    mcMotI_MotorParametersInit( &mcMotI_PMSM_gds);
 
-      /** Set motor parameters */
-      mcMotorI_MotorParametersInit( &mcMotor_MotorParameters_gds);
+    /** Initialize Current measurement  */
+    mcCurI_CurrentCalculationInit( &mcCurI_ModuleData_gds );
 
-      /** Initialize Current measurement  */
-      mcCurI_CurrentCalculationInit( &mcCurI_ModuleData_gds );
+    /** Initialize Voltage measurement  */
+    mcVolI_VoltageCalculationInit( &mcVolI_ModuleData_gds );
 
-      /** Initialize Voltage measurement  */
-      mcVolI_VoltageCalculationInit( &mcVolI_ModuleData_gds );
+    /** Initialize PMSM motor control */
+    mcFocI_FieldOrientedControlInit( &mcFocI_ModuleData_gds);
 
-      /** Initialize PMSM motor control */
-      mcFocI_FieldOrientedControlInit( &mcFocI_ModuleData_gds);
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
+    /** Set phase A and phase B current channels */
+    mcHalI_PhaseACurrentChannelSelect();
+    mcHalI_PhaseBCurrentChannelSelect();
+</#if>
 }
 
 /*! \brief Over current reaction ISR
@@ -283,17 +241,17 @@ void mcAppI_OverCurrentReactionIsr( uint32_t status,  uintptr_t context )
 }
 
 /*! \brief Motor control application calibration
- * 
+ *
  * Details.
- *  Motor Control application calibration 
- * 
- * @param[in]: 
+ *  Motor Control application calibration
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
  */
 void mcAppI_AdcCalibrationIsr( ADC_STATUS status, uintptr_t context )
-{    
+{
     /** ADC end of conversion interrupt generation for FOC control */
     mcHalI_AdcInterruptDisable();
     mcHalI_AdcInterruptClear();
@@ -320,12 +278,12 @@ void mcAppI_AdcCalibrationIsr( ADC_STATUS status, uintptr_t context )
     mcHalI_AdcInterruptEnable();
 }
 
-/*! \brief Interrupt tasks execution 
- * 
+/*! \brief Interrupt tasks execution
+ *
  * Details.
- *  Interrupt tasks execution 
- * 
- * @param[in]: 
+ *  Interrupt tasks execution
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:
@@ -336,28 +294,38 @@ void __ramfunc__  mcAppI_AdcFinishedIsr( ADC_STATUS status, uintptr_t context )
 void  mcAppI_AdcFinishedIsr( ADC_STATUS status, uintptr_t context )
 #endif
 {
-
-  /** Band-width calculation ( determined by using LED toggling ):
-   *            Motor control:  microsecond
-   *            Total:   microsecond
-   */
-
-    GPIO_PB13_Set();
-    
     /** ADC interrupt disable  */
     mcHalI_AdcInterruptDisable();
     mcHalI_AdcInterruptClear();
 
     /** Read phase currents  */
     mcHalI_PhaseACurrentGet();
+
+<#if MCPMSMFOC_PHASE_CURRENT_IA_UNIT == MCPMSMFOC_PHASE_CURRENT_IB_UNIT>
+    /** Update channel for phase B current measurement */
+    mcHalI_PhaseBCurrentChannelSelect();
+
+    /** Start ADC conversion  */
+    mcHalI_AdcSoftwareConversionStart();
+
+    /** Wait for ADC conversion to complete */
+    mcHalI_AdcConversionWait();
+
     mcHalI_PhaseBCurrentGet();
 
+<#else>
+    mcHalI_PhaseBCurrentGet();
+</#if>
+
     /** Re-assign ADC channels for DC link voltage and potentiometer input */
-    mcHalI_DcLinkVoltageChannelSet();
-    mcHalI_PotentiometerChannelSet();
+    mcHalI_DcLinkVoltageChannelSelect();
+
+<#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT != MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT>
+    mcHalI_PotentiometerChannelSelect();
+</#if>
 
     /** Trigger ADC channel conversion */
-    mcHalI_AdcConversionTrigger();
+    mcHalI_AdcSoftwareConversionStart();
 
     /** Current measurement  */
     mcCurI_CurrentCalculation( &mcCurI_ModuleData_gds );
@@ -368,24 +336,47 @@ void  mcAppI_AdcFinishedIsr( ADC_STATUS status, uintptr_t context )
     /** Set duty */
     mcHalI_InverterPwmSet(mcPwmI_Duty_gau16);
 
-    /** Bus voltage calculation */
-    mcVolI_VoltageCalculation( &mcVolI_ModuleData_gds );
-
+<#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT != MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT>
     /** Wait for ADC conversion to complete */
     mcHalI_AdcConversionWait();
 
-    /** Read DC bus voltage */
+    /** Read DC bus input */
     mcHalI_DcLinkVoltageGet();
 
     /** Read potentiometer input */
     mcHalI_PotentiometerInputGet();
 
+<#else>
+    /** Wait for ADC conversion to complete */
+    mcHalI_AdcConversionWait();
+
+    /** Read DC bus input */
+    mcHalI_DcLinkVoltageGet();
+
+    /** Select potentiometer channel */
+    mcHalI_PotentiometerChannelSelect();
+
+    /** Start ADC conversion  */
+    mcHalI_AdcSoftwareConversionStart();
+
+    /** Wait for ADC conversion to complete */
+    mcHalI_AdcConversionWait();
+
+    /** Read potentiometer input */
+    mcHalI_PotentiometerInputGet();
+</#if>
+
+    /** Bus voltage calculation */
+    mcVolI_VoltageCalculation( &mcVolI_ModuleData_gds );
+
+<#if MCPMSMFOC_PHASE_CURRENT_IA_UNIT == MCPMSMFOC_PHASE_CURRENT_IB_UNIT>
     /** Re-assign ADC Channels for phase current measurement at next PWM trigger */
-    mcHalI_PhaseACurrentChannelSet();
-    mcHalI_PhaseBCurrentChannelSet();
-
-    /** Re-enable ADC hardware trigger */
-
+    mcHalI_PhaseACurrentChannelSelect();
+<#else>
+    /** Re-assign ADC Channels for phase current measurement at next PWM trigger */
+    mcHalI_PhaseACurrentChannelSelect();
+    mcHalI_PhaseBCurrentChannelSelect();
+</#if>
     /** Calibration and monitoring update */
     X2CScope_Update();
 
@@ -395,8 +386,6 @@ void  mcAppI_AdcFinishedIsr( ADC_STATUS status, uintptr_t context )
     /** ADC interrupt clear  */
     mcHalI_AdcInterruptClear();
     mcHalI_AdcInterruptEnable();
-    
-    GPIO_PB13_Clear();
 }
 
 /*! \brief Non-ISR tasks
@@ -411,7 +400,7 @@ void  mcAppI_AdcFinishedIsr( ADC_STATUS status, uintptr_t context )
  */
 void mcAppI_NonISRTasks( void )
 {
-    float32_t loopCount = 0.001f * (float32_t)PWM_FREQUENCY;
+    float32_t loopCount = 0.001f * (float32_t)${MCPMSMFOC_PWM_FREQUENCY};
     if( mcAppI_1msSyncCounter_gdu32 >= (uint32_t)loopCount )
     {
         mcAppI_1msSyncCounter_gdu32 = 0u;
@@ -419,12 +408,12 @@ void mcAppI_NonISRTasks( void )
     }
 }
 
-/*! \brief Application reset 
- * 
+/*! \brief Application reset
+ *
  * Details.
- * Application reset 
- * 
- * @param[in]: 
+ * Application reset
+ *
+ * @param[in]:
  * @param[in/out]:
  * @param[out]:
  * @return:

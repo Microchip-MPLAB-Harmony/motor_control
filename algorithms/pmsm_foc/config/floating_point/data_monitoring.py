@@ -25,19 +25,25 @@
 #---------------------------------------------------------------------------------------#
 #                                     IMPORT                                            #
 #---------------------------------------------------------------------------------------#
+import os.path
+import xml.etree.ElementTree as ET
 
 #---------------------------------------------------------------------------------------#
 #                                 GLOBAL VARIABLES                                      #
 #---------------------------------------------------------------------------------------#
 
-
 #---------------------------------------------------------------------------------------#
 #                                 CLASSES                                               #
 #---------------------------------------------------------------------------------------#
 class mcFocI_DataMonitoringClass:
-    def __init__(self, algorithm, component):
-        self.algorithm = algorithm
+    def __init__(self, component, pin_manager):
         self.component = component
+        self.pin_manager = pin_manager
+
+        # Instantiate analog interface class
+        device = mcDevI_DataMonitorClass(component)
+        self.information = device.information
+        self.physical_ports = device.physical_ports
 
     def createSymbols(self):
         # Root node
@@ -47,7 +53,9 @@ class mcFocI_DataMonitoringClass:
         # Data communication Enable
         self.sym_PROTOCOL = self.component.createBooleanSymbol("MCPMSMFOC_DATA_MONITOR_ENABLE", self.sym_NODE)
         self.sym_PROTOCOL.setLabel("Enable data monitoring")
-        self.sym_PROTOCOL.setDefaultValue(True)
+
+        self.sym_PROTOCOL.setDefaultValue(False)
+
         self.sym_PROTOCOL.setDependencies(self.updateInstance, ["MCPMSMFOC_DATA_MONITOR_ENABLE"])
 
         #
@@ -59,16 +67,127 @@ class mcFocI_DataMonitoringClass:
         self.sym_PROTOCOL.setReadOnly(True)
         self.sym_PROTOCOL.setDependencies( self.showThisSymbol, ['MCPMSMFOC_DATA_MONITOR_ENABLE'])
 
+        self.sym_PHYSICAL_PORT = self.component.createComboSymbol("MCPMSMFOC_DATA_MONITOR_PHYSICAL_PORT", self.sym_PROTOCOL, self.physical_ports)
+        self.sym_PHYSICAL_PORT.setLabel("Physical Port")
+        self.sym_PHYSICAL_PORT.setVisible(False)
+
+        units = ["** Select **"] + sorted(self.information.keys())
+        self.sym_PERIPHERAL = self.component.createComboSymbol("MCPMSMFOC_DATA_MONITOR_PERIPHERAL", self.sym_PROTOCOL, units)
+        self.sym_PERIPHERAL.setLabel("Peripheral")
+
+        channel_map = {}
+        for unit in self.information.keys():
+            channels = []
+            for group in ["TRANSMIT", "RECEIVE"]:
+                channels = self.information.get(unit, {}).get(group, {})
+            channel_map[unit] = ["** Select **"] + channels.keys()
+
+        self.sym_RECEIVE_CHANNEL = self.component.createComboSymbol("MCPMSMFOC_DEBUG_RX_CHANNEL", self.sym_PERIPHERAL, ["** Select **"])
+        self.sym_RECEIVE_CHANNEL.setLabel( "Receive Channel")
+        self.sym_RECEIVE_CHANNEL.setVisible(False)
+        self.sym_RECEIVE_CHANNEL.setDefaultValue("** Select **")
+
+        self.sym_OLD_RECEIVE_PAD = self.component.createStringSymbol("MCPMSMFOC_DATA_MONITOR_OLD_RECEIVE_PAD", self.sym_PERIPHERAL)
+        self.sym_OLD_RECEIVE_PAD.setLabel("Old Receive pad")
+        self.sym_OLD_RECEIVE_PAD.setVisible(False)
+
+        self.sym_RECEIVE_PAD = self.component.createComboSymbol("MCPMSMFOC_DATA_MONITOR_RECEIVE_PAD", self.sym_PERIPHERAL, ["** Select **"])
+        self.sym_RECEIVE_PAD.setLabel("Receive pad")
+        self.sym_RECEIVE_PAD.setDependencies(self.updateRxPadList, ["MCPMSMFOC_DATA_MONITOR_PERIPHERAL", "MCPMSMFOC_DATA_MONITOR_RECEIVE_PAD", "MCPMSMFOC_USED_PIN_LIST"])
+
+        self.sym_TRANSMIT_CHANNEL = self.component.createComboSymbol("MCPMSMFOC_DEBUG_X_CHANNEL", self.sym_PERIPHERAL, ["** Select **"])
+        self.sym_TRANSMIT_CHANNEL.setLabel( "Receive Channel")
+        self.sym_TRANSMIT_CHANNEL.setVisible(False)
+        self.sym_TRANSMIT_CHANNEL.setDefaultValue("** Select **")
+
+        self.sym_OLD_TRANSMIT_PAD = self.component.createStringSymbol("MCPMSMFOC_DATA_MONITOR_OLD_TRANSMIT_PAD", self.sym_PERIPHERAL)
+        self.sym_OLD_TRANSMIT_PAD.setLabel("Old Transmit pad")
+        self.sym_OLD_TRANSMIT_PAD.setVisible(False)
+
+        self.sym_TRANSMIT_PAD = self.component.createComboSymbol("MCPMSMFOC_DATA_MONITOR_TRANSMIT_PAD", self.sym_PERIPHERAL, ["** Select **"])
+        self.sym_TRANSMIT_PAD.setLabel("Transmit pad")
+        self.sym_TRANSMIT_PAD.setDependencies(self.updateTxPadList, ["MCPMSMFOC_DATA_MONITOR_PERIPHERAL", "MCPMSMFOC_DATA_MONITOR_TRANSMIT_PAD", "MCPMSMFOC_USED_PIN_LIST"])
+
+        self.sym_DATA_MONITOR_CALLBACK = self.component.createMenuSymbol(None, None)
+        self.sym_DATA_MONITOR_CALLBACK.setLabel("Data monitoring callback")
+        self.sym_DATA_MONITOR_CALLBACK.setDependencies(self.updateCommInterface, ["MCPMSMFOC_DATA_MONITOR_PERIPHERAL",
+                                                                      "MCPMSMFOC_DEBUG_TX_CHANNEL",
+                                                                      "MCPMSMFOC_DEBUG_RX_CHANNEL",
+                                                                      "MCPMSMFOC_DATA_MONITOR_RECEIVE_PAD",
+                                                                      "MCPMSMFOC_DATA_MONITOR_TRANSMIT_PAD"])
+        self.sym_DATA_MONITOR_CALLBACK.setVisible(False)
+
 
         self.sym_X2CSCOPE = self.component.createStringSymbol("MCPMSMFOC_X2CScope", None)
         self.sym_X2CSCOPE.setVisible(False)
 
+
+    def updateTxPadList(self, symbol, event):
+        if("** Select **" != self.sym_PERIPHERAL.getValue()):
+            # Remove old pin from used pin list
+            self.pin_manager.removePinFromList(self.sym_OLD_TRANSMIT_PAD.getValue())
+            self.sym_OLD_TRANSMIT_PAD.setValue(self.sym_TRANSMIT_PAD.getValue())
+
+            # Add new used pi to the list
+            self.pin_manager.addPinToList(self.sym_TRANSMIT_PAD.getValue())
+
+            pad_list = sorted(self.information[self.sym_PERIPHERAL.getValue()]["TRANSMIT"]["CHANNEL"])
+
+            # Use list comprehension to create a new list that filters elements
+            pad_list = [entry for entry in pad_list if entry not in self.pin_manager.getUsedPinList() or entry == self.sym_TRANSMIT_PAD.getValue()]
+
+            symbol.setRange(["** Select **"] + pad_list)
+
+
+    def updateRxPadList(self, symbol, event):
+        if("** Select **" != self.sym_PERIPHERAL.getValue()):
+            # Remove old pin from used pin list
+            self.pin_manager.removePinFromList(self.sym_OLD_RECEIVE_PAD.getValue())
+            self.sym_OLD_RECEIVE_PAD.setValue(self.sym_RECEIVE_PAD.getValue())
+
+            # Add new used pi to the list
+            self.pin_manager.addPinToList(self.sym_RECEIVE_PAD.getValue())
+
+            pad_list = sorted(self.information[self.sym_PERIPHERAL.getValue()]["RECEIVE"]["CHANNEL"])
+
+            # Use list comprehension to create a new list that filters elements
+            pad_list = [entry for entry in pad_list if entry not in self.pin_manager.getUsedPinList() or entry == self.sym_RECEIVE_PAD.getValue()]
+
+            symbol.setRange(["** Select **"] + pad_list)
+
+
+    def numericFilter( self, input_String ):
+        numeric_filter = filter(str.isdigit, str(input_String))
+        return "".join(numeric_filter)
+
+    def stringReplace( self, my_String ):
+        # my_String = my_String.replace("RP","R")
+        return my_String
+
+    def updateCommInterface(self, symbol, event):
+        # Update the message to be sent
+        unit = self.sym_PERIPHERAL.getValue()
+        receive = self.stringReplace(self.sym_RECEIVE_PAD.getValue())
+        transmit = self.stringReplace(self.sym_TRANSMIT_PAD.getValue())
+
+        if unit != "** Select **" and receive != "** Select **" and transmit != "** Select **":
+            args = {
+                        "UNIT": unit,
+                        "RECEIVE": { "PAD": receive },
+                        "TRANSMIT": { "PAD":  transmit }
+                    }
+
+            # Send the message to custom BSP
+            module = str( Database.getSymbolValue(self.component.getID(), "MCPMSMFOC_FOC_X2C_ID"))
+            Database.sendMessage(module, "X2CSCOPE_CONFIGURATION", args)
+            Database.sendMessage("cstom_mc_bsp", "MCPMSMFOC_DEBUG_PAD_SET", args)
 
     def updateInstance(self, symbol, event):
         if symbol.getValue() == True:
             # Make X2C enable as readonly
             event["source"].getSymbolByID("MCPMSMFOC_FOC_X2C_ENABLE").setReadOnly(False)
             symbol.getComponent().setDependencyEnabled("pmsmfoc_X2CSCOPE", True)
+
 
             # Activate and connect the default  module for data control and monitoring
             module = str( Database.getSymbolValue(self.component.getID(), "MCPMSMFOC_FOC_X2C_ID"))
@@ -78,9 +197,11 @@ class mcFocI_DataMonitoringClass:
             autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE","X2CScope", "x2cScope_Scope"]]
             res = Database.connectDependencies(autoComponentIDTable)
         else:
+
             # Make X2C enable as readonly
             event["source"].getSymbolByID("MCPMSMFOC_FOC_X2C_ENABLE").setReadOnly(True)
             symbol.getComponent().setDependencyEnabled("pmsmfoc_X2CSCOPE", False)
+
 
             # Deactivate and connect the default  module for data control and monitoring
             module = str( Database.getSymbolValue(self.component.getID(), "MCPMSMFOC_FOC_X2C_ID"))
@@ -92,12 +213,6 @@ class mcFocI_DataMonitoringClass:
             symbol.setVisible(True)
         else:
             symbol.setVisible(False)
-
-    def showThisSymbol_(self, symbol, event):
-        if "Not selected" != (event["symbol"]).getValue():
-            symbol.setVisible(True)
-        else:
-            symbol.setVisible(True)
 
     def handleMessage(self, ID, information):
         if( ID == "BSP_DATA_MONITORING"):

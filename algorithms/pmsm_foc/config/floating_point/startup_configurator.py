@@ -30,9 +30,11 @@
 #                                 GLOBAL VARIABLES                                      #
 #---------------------------------------------------------------------------------------#
 class mcSupI_StartupConfigurator:
-    def __init__(self, algorithm, component):
-        self.algorithm = algorithm
+    def __init__(self, component):
         self.component = component
+
+        self.architecture = ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("architecture")
+
 
     def createSymbols(self):
         #Root node
@@ -110,6 +112,8 @@ class mcSupI_StartupConfigurator:
         self.sym_FLYING = self.component.createBooleanSymbol( "MCPMSMFOC_ENABLE_FLYING_START", self.sym_NODE )
         self.sym_FLYING.setLabel("Flying Start")
         self.sym_FLYING.setDefaultValue(False)
+        if self.architecture == "CORTEX-M0PLUS":
+            self.sym_FLYING.setReadOnly(True)
 
         # Enable flying start after functional test
         self.sym_FLYING.setReadOnly(False)

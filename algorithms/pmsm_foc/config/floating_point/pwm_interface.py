@@ -30,20 +30,6 @@ import os.path
 #---------------------------------------------------------------------------------------#
 #                                 Suppoted IPs                                          #
 #---------------------------------------------------------------------------------------#
-SupportedPWMIps = {
-    "PWM" : [
-              { "name": "TCC", "id": "U2213"},
-              { "name": "PWM", "id": "6343"},
-              { "name": "MCPWM", "id": "01477"}
-            ]
-}
-
-def getPWMIP(modules):
-    for module in modules:
-        for entry in SupportedPWMIps.get("PWM", []):
-            if ( entry["name"] == module.getAttribute("name") and entry["id"] == module.getAttribute("id") ):
-                return entry["name"], entry["id"]
-    return "",""
 
 #---------------------------------------------------------------------------------------#
 #                                 Global variables                                      #
@@ -57,107 +43,110 @@ class mcPwmI_PwmInterfaceClass:
     Description:
     This is initilaization function
     """
-    def __init__(self, algorithm, component):
-        self.algorithm = algorithm
+    def __init__(self, component, pin_manager):
         self.component = component
+        self.pin_manager = pin_manager
 
-        # Get ADC IP from the ATDF file
-        periphNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
-        modules = periphNode.getChildren()
-        self.name, self.id = getPWMIP(modules)
-
-        # Create a symbol for ADC IP
-        self.IP  = self.component.createStringSymbol("MCPMSMFOC_PWM_IP", None )
-        self.IP.setLabel("PWM IP")
-        self.IP.setValue( self.name + "_" + self.id)
-        self.IP.setVisible(False)
+        # Instantiate analog interface class
+        device = mcDevI_PwmInterfaceClass(component)
+        self.information = device.information
+        self.name = device.name
+        self.id = device.id
 
         if ( self.name == "PWM" ) and ( self.id == "6343"):
-            module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"PWM\"]"
-            node = ATDF.getNode(module_Path)
-            inst = node.getChildren()
-
-            self.function_Map = dict()
-            for ins in inst:
-                key = ins.getAttribute("name")
-                self.function_Map[key] = set()
-                inst_Path = module_Path + "/instance@[name=\"" + key + "\"]/signals"
-
-                channels =  ATDF.getNode(inst_Path).getChildren()
-                for channel in channels:
-                    self.function_Map[key].add("Channel" + " " + channel.getAttribute("index"))
-
-                self.function_Map[key] = sorted(list(self.function_Map[key]))
-
             global global_PWM_FAULT
             global_PWM_FAULT = "FAULT_PWM_ID2"
-
-
         elif ( self.name == "TCC" ) and ( self.id == "U2213"):
-            module_Path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]"
-            node = ATDF.getNode(module_Path)
-            inst = node.getChildren()
-
-            self.function_Map = dict()
-            for ins in inst:
-                key = ins.getAttribute("name")
-                self.function_Map[key] = set()
-                inst_Path = module_Path + "/instance@[name=\"" + key + "\"]/signals"
-
-                channels =  ATDF.getNode(inst_Path).getChildren()
-                for channel in channels:
-                    self.function_Map[key].add("Channel" + " " + channel.getAttribute("index"))
-
-                self.function_Map[key] = sorted(list(self.function_Map[key]))
-
             # PWM fault management
             global global_PWM_FAULT
             global_PWM_FAULT = "EIC_CHANNEL_2"
-
         elif ( self.name == "MCPWM" ) and ( self.id == "01477"):
-            # currentPath = os.path.dirname(os.path.abspath(inspect.stack()[0][1]))
-            currentPath = Variables.get("__CSP_DIR") + "/peripheral/gpio_02467"
-            deviceXmlPath = os.path.join(currentPath, "plugin/pin_xml/components/" + Variables.get("__PROCESSOR") + ".xml")
-            deviceXmlTree = ET.parse(deviceXmlPath)
-            deviceXmlRoot = deviceXmlTree.getroot()
-            pinoutXmlName = deviceXmlRoot.get("pins")
-            pinoutXmlPath = os.path.join(currentPath, "plugin/pin_xml/pins/" + pinoutXmlName + ".xml")
-            pinoutXmlPath = os.path.normpath(pinoutXmlPath)
-
-
-            pinFileContent = ET.fromstring((open(pinoutXmlPath, "r")).read())
-            self.function_Map = dict()
-            function_Set = set()
-            for item in pinFileContent.findall("pins/pin"):
-                for function in item.findall("function"):
-                    if function.attrib["name"].startswith("PWM"):
-                        unit = "MCPWM"
-                        channel = self.numericFilter(function.attrib["name"])
-                        try:
-                            function_Set.add( int(channel) )
-                        except:
-                            function_Set = set([int(channel)])
-
-            function_List = list(sorted(function_Set))
-            self.function_Map[unit] = ["Channel" + " " + str(element) for element in function_List]
-
-
             # PWM fault management
             global global_PWM_FAULT
             global_PWM_FAULT = "FLT15"
 
-
     """
     Description:
-    This function discards alphabets and returns the numbers only
+    Create pin symbols for PWM
     """
-    def numericFilter( self, input_String ):
-        numeric_filter = filter(str.isdigit, str(input_String))
-        return "".join(numeric_filter)
+    def createPwmGroupSymbols(self, channel_name, channel_label):
+        def updateChannelList( symbol, event):
+            if self.sym_INSTANCE.getValue() != "** Select **":
+                channel_list = ["** Select **"] + sorted(self.information[event["value"]].keys())
+                symbol.setRange(channel_list)
 
-    def stringReplace( self, my_String ):
-        my_String = my_String.replace("RP","R")
-        return my_String
+        def updateHighSidePadList(symbol, event):
+            if self.sym_INSTANCE.getValue() != "** Select **" and event["value"] != "** Select **":
+
+                # Remove old pad from the list
+                self.pin_manager.removePinFromList(old_hs_pad.getValue())
+                old_hs_pad.setValue(hs_pad.getValue())
+
+                # Add new pad to the list
+                self.pin_manager.addPinToList(hs_pad.getValue())
+                pad_list = ["** Select **"] + sorted(self.information[self.sym_INSTANCE.getValue()][channel.getValue()]["high"])
+
+                # Use list comprehension to create a new list that filters elements
+                pad_list = [entry for entry in pad_list if entry not in self.pin_manager.getUsedPinList() or entry == hs_pad.getValue()]
+
+                value = symbol.getValue()
+                symbol.setRange(pad_list)
+                symbol.setValue(value)
+
+
+        def updateLowSidePadList(symbol, event):
+            if self.sym_INSTANCE.getValue() != "** Select **" and  event["value"] != "** Select **":
+                # Remove old pad from the list
+                self.pin_manager.removePinFromList(old_ls_pad.getValue())
+                old_ls_pad.setValue(ls_pad.getValue())
+
+                # Add new pad to the list
+                self.pin_manager.addPinToList(ls_pad.getValue())
+                pad_list = ["** Select **"] + sorted(self.information[self.sym_INSTANCE.getValue()][channel.getValue()]["low"])
+
+                # Use list comprehension to create a new list that filters elements
+                pad_list = [entry for entry in pad_list if entry not in self.pin_manager.getUsedPinList() or entry == ls_pad.getValue()]
+
+                value = symbol.getValue()
+                symbol.setRange(pad_list)
+                symbol.setValue(value)
+
+
+        # Create the PWM channel symbol
+        channel_symbol_id = "MCPMSMFOC_PWM_" + channel_name + "_CHANNEL"
+        channel = self.component.createComboSymbol( channel_symbol_id, self.sym_PWM, ["** Select **"])
+        channel.setLabel(channel_label + " Channel")
+        channel.setDefaultValue("** Select **")
+        channel.setDependencies(updateChannelList, ["MCPMSMFOC_PWM_INSTANCE"])
+
+        # Create the old PWM symbols
+        old_hs_pad_symbol = "MCPMSMFOC_OLD_PWM_" + channel_name + "H_PAD"
+        old_hs_pad = self.component.createStringSymbol(old_hs_pad_symbol, channel)
+        old_hs_pad.setLabel("Old PWM" + channel_name + "H")
+        old_hs_pad.setDefaultValue("** Select **")
+        old_hs_pad.setVisible(False)
+
+        # Create the PWMH symbol
+        hs_pad_symbol = "MCPMSMFOC_PWM_" + channel_name + "H_PAD"
+        hs_pad = self.component.createComboSymbol(hs_pad_symbol, channel, ["** Select **"])
+        hs_pad.setLabel("PWM" + channel_name + "H")
+        hs_pad.setDefaultValue("** Select **")
+        hs_pad.setDependencies(updateHighSidePadList, [channel_symbol_id, hs_pad_symbol, "MCPMSMFOC_USED_PIN_LIST"])
+
+        old_ls_pad_symbol = "MCPMSMFOC_OLD_PWM_" + channel_name + "L_PAD"
+        old_ls_pad = self.component.createStringSymbol(old_ls_pad_symbol, channel)
+        old_ls_pad.setLabel("Old PWM" + channel_name + "L")
+        old_ls_pad.setDefaultValue("** Select **")
+        old_ls_pad.setVisible(False)
+
+        # Create the PWML symbol
+        ls_pad_symbol = "MCPMSMFOC_PWM_" + channel_name + "L_PAD"
+        ls_pad = self.component.createComboSymbol( ls_pad_symbol, channel, ["** Select **"])
+        ls_pad.setLabel("PWM" + channel_name + "L")
+        ls_pad.setDefaultValue("** Select **")
+        ls_pad.setDependencies(updateLowSidePadList, [channel_symbol_id, ls_pad_symbol, "MCPMSMFOC_USED_PIN_LIST"])
+
+        return channel
 
     """
     Description:
@@ -183,10 +172,10 @@ class mcPwmI_PwmInterfaceClass:
         self.sym_PWM.setLabel("Channel Configuration")
 
         # PWM instance
-        available = sorted(self.function_Map.keys())
-        self.sym_INSTANCE = self.component.createComboSymbol("MCPMSMFOC_PWM_INSTANCE", self.sym_PWM, available )
+        units = ["** Select **"] + sorted(self.information.keys())
+        self.sym_INSTANCE = self.component.createComboSymbol("MCPMSMFOC_PWM_INSTANCE", self.sym_PWM, units )
         self.sym_INSTANCE.setLabel("Select Instance")
-        self.sym_INSTANCE.setDefaultValue(available[0])
+        self.sym_INSTANCE.setDefaultValue("** Select **")
 
         self.sym_INSTANCE_ID = self.component.createStringSymbol("MCPMSMFOC_PWM_PERIPHERAL_ID", None)
         self.sym_INSTANCE_ID.setLabel("Peripheral ID")
@@ -211,33 +200,23 @@ class mcPwmI_PwmInterfaceClass:
         self.sym_DEAD_TIME.setLabel("Dead time (uS)")
         self.sym_DEAD_TIME.setDefaultValue(0.64)
 
+        # Channel map
+        channel_map = {}
+        for key, value in self.information.items():
+            int_list = sorted([int(x) for x in value.keys()])
+            channel_map[key] = ["** Select **"] + [str(x) for x in int_list]
+
         # PWM Channel A
         global global_ADC_TRIGGER
-        self.sym_PWMA = mcFun_AdvancedComboSymbol( "PWM A", "PWM_A", self.component)
-        self.sym_PWMA.createComboSymbol(self.sym_INSTANCE, self.sym_PWM, self.function_Map)
-        if ( self.name == "MCPWM" ) and ( self.id == "01477"):
-            self.sym_PWMA.setDefaultValue("Channel 1")
-        else:
-            self.sym_PWMA.setDefaultValue("Channel 0")
 
-        global_ADC_TRIGGER = self.sym_PWMA.getFinalSymbol()
+        # Create symbols for PWM Channel A
+        global_ADC_TRIGGER = self.createPwmGroupSymbols("A", "Phase A")
 
-        # PWM Channel B
-        self.sym_PWMB = mcFun_AdvancedComboSymbol( "PWM B", "PWM_B", self.component)
-        self.sym_PWMB.createComboSymbol(self.sym_INSTANCE, self.sym_PWM, self.function_Map)
-        self.sym_PWMB.setDefaultValue("Channel 1")
-        if ( self.name == "MCPWM" ) and ( self.id == "01477"):
-            self.sym_PWMB.setDefaultValue("Channel 2")
-        else:
-            self.sym_PWMB.setDefaultValue("Channel 1")
+        # Create symbols for PWM Channel B
+        self.createPwmGroupSymbols("B", "Phase B")
 
-        # PWM Channel C
-        self.sym_PWMC = mcFun_AdvancedComboSymbol( "PWM C", "PWM_C", self.component)
-        self.sym_PWMC.createComboSymbol(self.sym_INSTANCE, self.sym_PWM, self.function_Map)
-        if ( self.name == "MCPWM" ) and ( self.id == "01477"):
-            self.sym_PWMC.setDefaultValue("Channel 3")
-        else:
-            self.sym_PWMC.setDefaultValue("Channel 2")
+        # Create symbols for PWM Channel C
+        self.createPwmGroupSymbols("C", "Phase C")
 
 
         #------------------------------------ Fault Configuration -----------------------------------------#
@@ -248,7 +227,6 @@ class mcPwmI_PwmInterfaceClass:
         fault = ['External Pin']
         self.sym_FAULT_SELECT = self.component.createComboSymbol("MCPMSMFOC_PWM_FAULT_SELECT", self.sym_FAULT, fault )
         self.sym_FAULT_SELECT.setLabel("Fault Input")
-
 
         # Fault polarity
         state = ['Active Low', 'Active High']
@@ -279,54 +257,136 @@ class mcPwmI_PwmInterfaceClass:
                                                                "MCPMSMFOC_PWM_FAULT_STATE",
                                                                "MCPMSMFOC_PWM_FAULT_TYPE",
                                                                "MCPMSMFOC_PWM_FAULT_FILTER",
-                                                               self.sym_PWMA.getSymbolID(),
-                                                               self.sym_PWMB.getSymbolID(),
-                                                               self.sym_PWMC.getSymbolID(),
+                                                               "MCPMSMFOC_PWM_A_CHANNEL",
+                                                               "MCPMSMFOC_PWM_B_CHANNEL",
+                                                               "MCPMSMFOC_PWM_C_CHANNEL",
                                                                ])
 
-               # Activate and connect the default PWM peripheral
+        # PLIB update symbol
+        self.sym_INTERFACE_CALLBACK = self.component.createMenuSymbol( None, None)
+        self.sym_INTERFACE_CALLBACK.setLabel("Interface update callback")
+        self.sym_INTERFACE_CALLBACK.setVisible(False)
+        self.sym_INTERFACE_CALLBACK.setDependencies(self.updateInverterInterface, ["MCPMSMFOC_PWM_INSTANCE",
+                                                               "MCPMSMFOC_PWM_AH_PAD",
+                                                               "MCPMSMFOC_PWM_BH_PAD",
+                                                               "MCPMSMFOC_PWM_CH_PAD",
+                                                               "MCPMSMFOC_PWM_AL_PAD",
+                                                               "MCPMSMFOC_PWM_BL_PAD",
+                                                               "MCPMSMFOC_PWM_CL_PAD",
+                                                               "MCPMSMFOC_PWM_A_CHANNEL",
+                                                               "MCPMSMFOC_PWM_B_CHANNEL",
+                                                               "MCPMSMFOC_PWM_C_CHANNEL",
+                                                               ])
+
+    def updateInverterInterface(self, symbol, event):
+
+        # Update the message to BSP
+        unit = self.sym_INSTANCE.getValue()
+        channel_a = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_A_CHANNEL")
+        pad_ah = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_AH_PAD")
+        pad_al = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_AL_PAD")
+
+        channel_b = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_B_CHANNEL")
+        pad_bh = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_BH_PAD")
+        pad_bl = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_BL_PAD")
+
+        channel_c = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_C_CHANNEL")
+        pad_ch = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_CH_PAD")
+        pad_cl = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_CL_PAD")
+
+        PWMAH = {"CHANNEL": channel_a, "PAD": pad_ah }
+        PWMAL = {"CHANNEL": channel_a, "PAD": pad_al }
+        PWMBH = {"CHANNEL": channel_b, "PAD": pad_bh }
+        PWMBL = {"CHANNEL": channel_b, "PAD": pad_bl }
+        PWMCH = {"CHANNEL": channel_c, "PAD": pad_ch }
+        PWMCL = {"CHANNEL": channel_c, "PAD": pad_cl }
+
+        if (
+            unit != "** Select **"
+            and all( pwm["CHANNEL"] != "** Select **" for pwm in [PWMAH, PWMAL, PWMBH, PWMBL, PWMCH, PWMCL])
+            and all( pwm["PAD"] != "** Select **" for pwm in [PWMAH, PWMAL, PWMBH, PWMBL, PWMCH, PWMCL])
+        ):
+            args = {
+                "UNIT": unit,
+                "PWMAH": PWMAH,
+                "PWMAL": PWMAL,
+                "PWMBH": PWMBH,
+                "PWMBL": PWMBL,
+                "PWMCH": PWMCH,
+                "PWMCL": PWMCL,
+            }
+
+            Database.sendMessage("cstom_mc_bsp", "MCPMSMFOC_PWM_INTERFACE_SET", args)
 
 
-    def setSymbolValues(self):
-        information = Database.sendMessage("bsp", "MCPMSMFOC_PWM_INTERFACE", {})
-        if( None != information ):
-            self.sym_INSTANCE.setValue(str(information["PWM_AH"]["FUNCTION"][0][0]))
-            self.sym_PWMA.setValue("Channel" + " " + str(information["PWM_AH"]["FUNCTION"][0][1]))
-            self.sym_PWMB.setValue("Channel" + " " + str(information["PWM_BH"]["FUNCTION"][0][1]))
-            self.sym_PWMC.setValue("Channel" + " " + str(information["PWM_CH"]["FUNCTION"][0][1]))
+    def setDatabaseSymbol(self, namespace, id, value):
+        status = Database.setSymbolValue(namespace, id, value)
 
-    def updateSymbolValues(self, information):
-        if( None != information ):
-            self.sym_INSTANCE.setValue(str(information["PWM_AH"]["FUNCTION"][0][0]))
-            self.sym_PWMA.setValue("Channel" + " " + str(information["PWM_AH"]["FUNCTION"][0][1]))
-            self.sym_PWMB.setValue("Channel" + " " + str(information["PWM_BH"]["FUNCTION"][0][1]))
-            self.sym_PWMC.setValue("Channel" + " " + str(information["PWM_CH"]["FUNCTION"][0][1]))
+        if( status == False):
+            print("Checkpoint. The symbol " + id + " could not be updated")
 
     def handleMessage(self, ID, information ):
         if( "BSP_PWM_INTERFACE" == ID ):
-            if( None != information ):
-                self.sym_INSTANCE.setValue(str(information["PWM_AH"]["FUNCTION"][0][0]))
-                self.sym_PWMA.setValue("Channel" + " " + str(information["PWM_AH"]["FUNCTION"][0][1]))
-                self.sym_PWMB.setValue("Channel" + " " + str(information["PWM_BH"]["FUNCTION"][0][1]))
-                self.sym_PWMC.setValue("Channel" + " " + str(information["PWM_CH"]["FUNCTION"][0][1]))
+            if( None != information ):                # Set PWM peripheral
+                value = str(information["PWM_AH"]["FUNCTION"][0][0])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_INSTANCE", value)
 
-    def updatePwmPeriod(self, event, symbol):
-        symbol.setValue( event["symbol"].getValue())
+                # Set channel and pad values for PWM phase A
+                value = str(information["PWM_AH"]["FUNCTION"][0][1])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_A_CHANNEL", value)
+
+                value = str(information["PWM_AH"]["PAD"] )
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_AH_PAD", value)
+
+                value = str(information["PWM_AL"]["PAD"] )
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_AL_PAD", value)
+
+                # Set channel and pad values for PWM phase A
+                value = str(information["PWM_BH"]["FUNCTION"][0][1])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_B_CHANNEL", value)
+
+                value = str(information["PWM_BH"]["PAD"] )
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_BH_PAD", value)
+
+                value = str(information["PWM_BL"]["PAD"] )
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_BL_PAD", value)
+
+                # Set channel and pad values for PWM phase A
+                value = str(information["PWM_CH"]["FUNCTION"][0][1])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_C_CHANNEL", value)
+
+                value = str(information["PWM_CH"]["PAD"] )
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_CH_PAD", value)
+
+                value = str(information["PWM_CL"]["PAD"] )
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_CL_PAD", value)
+
+
+    def updatePwmPeriod(self, symbol, event):
+        period = 1.0 / event["value"]
+        symbol.setValue( period )
 
     def updatePLIB(self, event, symbol):
-        message = dict()
-        message['PWM_FREQ'     ]  =  self.sym_PWM_FREQ.getValue()
-        message['PWM_PH_U'     ]  =  int(self.numericFilter(self.sym_PWMA.getValue()))
-        message['PWM_PH_V'     ]  =  int(self.numericFilter(self.sym_PWMB.getValue()))
-        message['PWM_PH_W'     ]  =  int(self.numericFilter(self.sym_PWMC.getValue()))
-        message['PWM_DEAD_TIME']  =  self.sym_DEAD_TIME.getValue()
-        message['PWM_FAULT'    ]  =  global_PWM_FAULT #self.sym_FAULT_SELECT.getValue()
+        channel_a = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_A_CHANNEL")
+        channel_b = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_B_CHANNEL")
+        channel_c = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_C_CHANNEL")
+
+        if (    "** Select **" != channel_a
+            and "** Select **" != channel_b
+            and "Not selected" != channel_c
+           ):
+                message = dict()
+                message['PWM_FREQ'     ]  =  self.sym_PWM_FREQ.getValue()
+                message['PWM_PH_U'     ]  =  int(self.numericFilter(channel_a))
+                message['PWM_PH_V'     ]  =  int(self.numericFilter(channel_b))
+                message['PWM_PH_W'     ]  =  int(self.numericFilter(channel_c))
+                message['PWM_DEAD_TIME']  =  self.sym_DEAD_TIME.getValue()
+                message['PWM_FAULT'    ]  =  global_PWM_FAULT #self.sym_FAULT_SELECT.getValue()
 
 
-        # Get PLIB id
-        plib_Id = self.sym_PWM_MODULE.getValue()
-        if ( "None" != plib_Id ):
-            Database.sendMessage(plib_Id, "PMSM_FOC_PWM_CONF", message)
+                # Get PLIB id
+                plib_Id = (self.sym_INSTANCE.getValue()).lower()
+                Database.sendMessage(plib_Id, "PMSM_FOC_PWM_CONF", message)
 
     def updatePeripheralInstance(self, symbol, event):
         if( (symbol.getValue()).lower() != event["value"].lower()):
@@ -349,43 +409,19 @@ class mcPwmI_PwmInterfaceClass:
     This function performs tasks when PWM module is connected
     """
     def onAttachmentConnected(self, source, target):
-        message = dict()
+        pass
 
-        localComponent = source["component"]
-        remoteComponent = target["component"]
-        remoteID = remoteComponent.getID()
-        connectID = source["id"]
-        targetID = target["id"]
-
-        message['PWM_FREQ'     ]  =  self.sym_PWM_FREQ.getValue()
-        message['PWM_PH_U'     ]  =  int(self.numericFilter(self.sym_PWMA.getValue()))
-        message['PWM_PH_V'     ]  =  int(self.numericFilter(self.sym_PWMB.getValue()))
-        message['PWM_PH_W'     ]  =  int(self.numericFilter(self.sym_PWMC.getValue()))
-        message['PWM_DEAD_TIME']  =  self.sym_DEAD_TIME.getValue()
-        message['PWM_FAULT'    ]  =  global_PWM_FAULT #self.sym_FAULT_SELECT.getValue()
-
-        if (connectID == "pmsmfoc_PWM"):
-            self.sym_PWM_MODULE.setValue(remoteID)
-            Database.sendMessage(remoteID, "PMSM_FOC_PWM_CONF", message)
-
+    def numericFilter( self, input_String ):
+        numeric_filter = filter(str.isdigit, str(input_String))
+        return "".join(numeric_filter)
 
     """
     Description:
     This function performs tasks when PWM module is disconnected
     """
     def onAttachmentDisconnected( self, source, target):
-        if ( source["id"] == "pmsmfoc_PWM"):
-            self.sym_PWM_MODULE.setValue("None")
+        pass
 
 
     def __call__(self):
         self.createSymbols()
-        self.setSymbolValues()
-
-
-
-
-
-
-
-

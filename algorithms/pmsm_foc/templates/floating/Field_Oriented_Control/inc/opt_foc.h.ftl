@@ -75,6 +75,10 @@ Type Definition
 typedef struct
 {
     tmcTypes_ABC_s iABC;
+<#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER' )>
+    float32_t elecAngle;
+    float32_t elecSpeed;
+</#if>
     float32_t uBus;
     float32_t reference;
 <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
@@ -130,6 +134,11 @@ __STATIC_INLINE void mcFocI_InputsRead( tmcFocI_ModuleData_s * const pModule )
 
     pInput->iABC.a = (float32_t)mcCurI_ModuleData_gds.dOutput.iABC.a;
     pInput->iABC.b = (float32_t)mcCurI_ModuleData_gds.dOutput.iABC.b;
+
+<#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER' )>
+    pInput->elecAngle = (float32_t)mcRpcI_ModuleData_gds.dOutput.elecAngle;
+    pInput->elecSpeed = (float32_t)mcRpcI_ModuleData_gds.dOutput.elecSpeed;
+</#if>
 
     pInput->uBus = (float32_t)mcVolI_ModuleData_gds.dOutput.uBus;
 

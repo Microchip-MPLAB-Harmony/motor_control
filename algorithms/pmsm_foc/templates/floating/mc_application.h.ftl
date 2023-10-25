@@ -62,6 +62,9 @@
 <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
 #include "mc_key_manager.h"
 </#if>
+<#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER' )>
+#include "mc_rotor_position_calculation.h"
+</#if>
 
 /*******************************************************************************
  Private data-types
@@ -118,8 +121,10 @@ void mcAppI_OverCurrentReactionIsr( MCPWM_CH_STATUS status, uintptr_t context );
  * @param[out]:
  * @return:
  */
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
 void mcAppI_AdcCalibrationIsr(ADC_STATUS status, uintptr_t context );
+<#elseif ("ADC_44073" == MCPMSMFOC_ADC_IP )>
+void mcAppI_AdcCalibrationIsr(uint32_t status, uintptr_t context );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcCalibrationIsr( uint32_t status, uintptr_t context );
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
@@ -138,10 +143,12 @@ void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context );
  * @param[out]:
  * @return:
  */
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
 void mcAppI_InitialPositionDetectIsr(ADC_STATUS status, uintptr_t context );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
 void mcAppI_InitialPositionDetectIsr( uint32_t status, uintptr_t context );
+<#elseif ("ADC_44073" == MCPMSMFOC_ADC_IP )>
+void mcAppI_InitialPositionDetectIsr(uint32_t status, uintptr_t context );
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context );
 </#if>
@@ -158,8 +165,10 @@ void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t conte
  * @param[out]:
  * @return:
  */
-<#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
 void mcAppI_AdcFinishedIsr(ADC_STATUS status, uintptr_t context );
+<#elseif ("ADC_44073" == MCPMSMFOC_ADC_IP )>
+void mcAppI_AdcFinishedIsr(uint32_t status, uintptr_t context );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
 void mcAppI_AdcFinishedIsr( uint32_t status, uintptr_t context );
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>

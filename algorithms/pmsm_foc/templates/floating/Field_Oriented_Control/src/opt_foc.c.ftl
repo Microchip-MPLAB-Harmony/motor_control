@@ -66,48 +66,46 @@ typedef enum
 
 typedef struct
  {
-     bool enable;
-     bool initDone;
+    bool enable;
+    bool initDone;
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
-     tmcFoc_FocState_e FocState;
+    tmcFoc_FocState_e FocState;
 </#if>
-     tmcTypes_DQ_s uDQ;
+    tmcTypes_DQ_s uDQ;
 <#if !(( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_ZSMT_HYBRID' ) && ( MCPMSMFOC_CONTROL_TYPE != 'OPEN_LOOP' )) >
-     float32_t openLoopAngle;
-     float32_t openLoopSpeed;
+    float32_t openLoopAngle;
+    float32_t openLoopSpeed;
 </#if>
-     float32_t iQref;
-     float32_t iDref;
-     float32_t nRef;
+    float32_t iQref;
+    float32_t iDref;
+    float32_t nRef;
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
-     float32_t angleDifference;
+    float32_t angleDifference;
 </#if>
 </#if>
-     float32_t commandDirection;
-     float32_t ratedSpeedInRpm;
+    float32_t commandDirection;
+    float32_t ratedSpeedInRpm;
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
-     tmcFly_Parameters_s bFlyingStart;
+    tmcFly_Parameters_s bFlyingStart;
 </#if>
 </#if>
 
 <#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >
-     tmcSup_Parameters_s bOpenLoopStartup;
+    tmcSup_Parameters_s bOpenLoopStartup;
 </#if>
-     tmcPwm_Parameters_s bPwmModulator;
-     tmcFlx_Parameters_s bFluxController;
-     tmcTor_Parameters_s bTorqueController;
-     tmcSpe_Parameters_s bSpeedController;
-     tmcRef_Parameters_s bReferenceController;
+    tmcPwm_Parameters_s bPwmModulator;
+    tmcFlx_Parameters_s bFluxController;
+    tmcTor_Parameters_s bTorqueController;
+    tmcSpe_Parameters_s bSpeedController;
+    tmcRef_Parameters_s bReferenceController;
 
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-     tmcRpc_Parameters_s bPositionCalculation;
-<#else>
-     tmcRpe_Parameters_s bPositionEstimation;
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
+    tmcRpe_Parameters_s bPositionEstimation;
 </#if>
 
-     uint16_t duty[3u];
+    uint16_t duty[3u];
  }tmcFoc_State_s;
 
 /*******************************************************************************
@@ -145,6 +143,8 @@ Macro Functions
 #define ROTOR_ANGLE_RAMP_RATE     (float32_t)( 1.0e-5 )
 <#elseif MCPMSMFOC_BOARD_SEL == "dsPICDEM MCHV-3">
 #define ROTOR_ANGLE_RAMP_RATE     (float32_t)( 2.0e-5 )
+<#else>
+#define ROTOR_ANGLE_RAMP_RATE     (float32_t)( 1.0e-5 )
 </#if>
 
 /*******************************************************************************
@@ -263,10 +263,7 @@ void  mcFocI_FieldOrientedControlInit( tmcFocI_ModuleData_s * const pModule )
     mcFlxI_MTPAInit(  &mcFoc_State_mds.bFluxController );
 </#if>
 
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-    /** Initialize rotor position calculation  */
-    mcRpcI_RotorPositionCalcInit( &mcFoc_State_mds.bPositionCalculation);
-<#else>
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
     /** Initialize rotor position estimation  */
     mcRpeI_RotorPositionEstimInit( &mcFoc_State_mds.bPositionEstimation);
 </#if>
@@ -339,10 +336,7 @@ void  mcFocI_FieldOrientedControlEnable( tmcFocI_ModuleData_s * const pParameter
     mcFlxI_FluxWeakeningEnable(  &pState->bFluxController );
 </#if>
 
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-    /** Enable rotor position calculation  */
-    mcRpcI_RotorPositionCalcEnable( &mcFoc_State_mds.bPositionCalculation);
-<#else>
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
     /** Enable rotor position estimation  */
     mcRpeI_RotorPositionEstimEnable( &mcFoc_State_mds.bPositionEstimation);
 </#if>
@@ -423,10 +417,8 @@ void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParamete
     mcFlxI_FluxWeakeningDisable(  &pState->bFluxController );
 </#if>
 
- <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-
-<#else>
-   /** Disable rotor position estimation  */
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
+    /** Disable rotor position estimation  */
     mcRpeI_RotorPositionEstimDisable( &mcFoc_State_mds.bPositionEstimation);
 </#if>
 
@@ -465,6 +457,10 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     pState = (tmcFoc_State_s *)pModule->pStatePointer;
 
     /** Get the output structure pointer */
+    tmcFoc_Input_s * pInput;
+    pInput = &pModule->dInput;
+
+    /** Get the output structure pointer */
     tmcFoc_Output_s * pOutput;
     pOutput = &pModule->dOutput;
 
@@ -472,25 +468,25 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     mcFocI_InputsRead( pModule );
 
     /** Clarke transformation */
-    mcFoc_ClarkeTransformation( &pModule->dInput.iABC, &pOutput->iAlphaBeta);
+    mcFoc_ClarkeTransformation( &pInput->iABC, &pOutput->iAlphaBeta);
 
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-    mcRpcI_RotorPositionCalc(&pState->bPositionCalculation, &pOutput->elecAngle, &pOutput->elecSpeed );
-<#elseif MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_SMO'>
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_SMO'>
     /** Rotor position estimation */
     tmcTypes_AlphaBeta_s eAlphaBeta;
-    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, pState->nRef, &pOutput->iAlphaBeta, &pOutput->uAlphaBeta,
-                                            &eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
+    mcRpeI_RotorPositionEstim( &pState->bPositionEstimation, pState->nRef, &pOutput->iAlphaBeta, &pOutput->uAlphaBeta,
+                               &eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
 <#elseif MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_ROLO'>
     /** Rotor position estimation */
     tmcTypes_AlphaBeta_s eAlphaBeta;
-    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, pState->nRef, &pOutput->iAlphaBeta, &pOutput->uAlphaBeta,
-                                            &eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
+    mcRpeI_RotorPositionEstim( &pState->bPositionEstimation, pState->nRef, &pOutput->iAlphaBeta, &pOutput->uAlphaBeta,
+                               &eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
 <#else>
     /** Rotor position estimation */
     tmcTypes_AlphaBeta_s eAlphaBeta;
-    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, &pOutput->iAlphaBeta, &pOutput->uAlphaBeta,
-                                            &eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
+    mcRpeI_RotorPositionEstim( &pState->bPositionEstimation, &pOutput->iAlphaBeta, &pOutput->uAlphaBeta,
+                               &eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
+</#if>
 </#if>
 
     switch(pState->FocState )
@@ -500,7 +496,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
         {
             tmcTypes_StdReturn_e flyingStartStatus;
             flyingStartStatus = mcFlyI_FlyingStart( &pState->bFlyingStart, pOutput->elecSpeed, pState->commandDirection,
-                                                                            &pState->iDref, &pState->iQref, &dutyOverride, mcPwmI_Duty_gau16 );
+                                                    &pState->iDref, &pState->iQref, &dutyOverride, mcPwmI_Duty_gau16 );
 
             if( StdReturn_Success == flyingStartStatus )
             {
@@ -625,8 +621,13 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 <#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
                 /** Execute speed controller */
                 pState->nRef *=  pState->commandDirection;
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
+                mcSpeI_SpeedControlAuto( &pState->bSpeedController, pState->nRef, pInput->elecSpeed,
+                                         &pState->iQref );
+<#else>
                 mcSpeI_SpeedControlAuto( &pState->bSpeedController, pState->nRef, pOutput->elecSpeed,
-                                                           &pState->iQref );
+                                         &pState->iQref );
+</#if>
 
 <#elseif ( MCPMSMFOC_CONTROL_TYPE == 'TORQUE_LOOP' ) >
                 /**
@@ -652,8 +653,13 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
                 mcUtils_SineCosineCalculation( mcFoc_FocOverrideAngle_gdf32, &sine, &cosine );
 #else
 </#if>
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
+                /** Sine-cosine calculation */
+                mcUtils_SineCosineCalculation( pInput->elecAngle, &sine, &cosine );
+<#else>
                 /** Sine-cosine calculation */
                 mcUtils_SineCosineCalculation( pOutput->elecAngle, &sine, &cosine );
+</#if>
 <#if MCPMSMFOC_DEVELOPER_MODE == true>
 #endif
 </#if>
@@ -669,7 +675,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
                 /** Execute flux weakening  */
                 mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,
-                                        pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &idrefFW );
+                                        pModule->dInput.uBus, pInput->elecSpeed, &pOutput->iDQ, &idrefFW );
 <#else>
                 /** Execute flux weakening  */
                 mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,  &eAlphaBeta,
@@ -693,7 +699,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 
                 /** Execute flux weakening  */
                 mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,
-                                        pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &pState->iDref );
+                                        pModule->dInput.uBus, pInput->elecSpeed, &pOutput->iDQ, &pState->iDref );
 <#else>
                 /** Execute flux weakening  */
                 mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,  &eAlphaBeta,
@@ -704,8 +710,13 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 <#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
                 /** Execute speed controller */
                 pState->nRef *=  pState->commandDirection;
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
+                mcSpeI_SpeedControlAuto(&pState->bSpeedController,  pState->nRef, pInput->elecSpeed,
+                                        &pState->iQref );
+<#else>
                 mcSpeI_SpeedControlAuto(&pState->bSpeedController,  pState->nRef, pOutput->elecSpeed,
-                                                          &pState->iQref );
+                                        &pState->iQref );
+</#if>
 
 <#elseif ( MCPMSMFOC_CONTROL_TYPE == 'TORQUE_LOOP' ) >
                 /**
@@ -775,7 +786,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     mcFocI_InputsRead( pModule );
 
     /** Clarke transformation */
-    mcFoc_ClarkeTransformation( &pModule->dInput.iABC, &pOutput->iAlphaBeta);
+    mcFoc_ClarkeTransformation( pInput->iABC, &pOutput->iAlphaBeta);
 
     <#if ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' ) >
     mcSupI_OpenLoopStartup( &pState->bOpenLoopStartup, pState->commandDirection, &pState->iQref,
@@ -895,9 +906,8 @@ void mcFocI_FieldOrientedControlReset( const tmcFocI_ModuleData_s * const pParam
     /** Reset flux control module */
     mcFlxI_FluxControlReset( &mcFoc_State_mds.bFluxController);
 
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-<#else>
-   /** Reset rotor position estimation  */
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
+    /** Reset rotor position estimation  */
     mcRpeI_RotorPositionEstimReset( &mcFoc_State_mds.bPositionEstimation);
 </#if>
 

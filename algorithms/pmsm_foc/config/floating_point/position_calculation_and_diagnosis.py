@@ -32,8 +32,7 @@ import os
 #                                 GLOBAL VARIABLES                                      #
 #---------------------------------------------------------------------------------------#
 class mcRpoI_PositionCalculationAndDiagnosis:
-    def __init__(self, algorithm, component):
-        self.algorithm = algorithm
+    def __init__(self, component):
         self.component = component
 
         # Read motor parameters from motor.xml
@@ -62,8 +61,8 @@ class mcRpoI_PositionCalculationAndDiagnosis:
 
         self.sym_ALGORITHM = self.component.createKeyValueSetSymbol("MCPMSMFOC_POSITION_CALC_ALGORITHM", self.sym_NODE)
         self.sym_ALGORITHM.setLabel("Select Position Feedback")
-        if (("SAMC21" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
-            self.sym_ALGORITHM.addKey("SENSORLESS_ROLO", "0", "Reduced Order Luenberger Observer")
+        if (("SAMC2" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
+            self.sym_ALGORITHM.addKey("SENSORLESS_PLL", "0", "Equation based PLL")
         else:
             self.sym_ALGORITHM.addKey("SENSORLESS_PLL", "0", "Equation based PLL")
             self.sym_ALGORITHM.addKey("SENSORED_ENCODER", "1", "Quadrature Encoder")
@@ -358,6 +357,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
     def getDependentLibrary(self, symbol, event):
         if "SENSORED_ENCODER" == symbol.getSelectedKey():
             symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", True)
+
             # Activate and connect the default  peripheral for quadrature decoder
             module = str( Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_ENCODER_PERIPHERAL_ID"))
             autoConnectTable = [ module]

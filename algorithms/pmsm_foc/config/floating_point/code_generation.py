@@ -25,7 +25,12 @@
 import os
 
 global templatePath
-templatePath = "/algorithms/pmsm_foc/templates/floating/"
+
+processor = Variables.get("__PROCESSOR")
+if (("SAMC2" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
+    templatePath = "/algorithms/pmsm_foc/templates/fixed/"
+else:
+    templatePath = "/algorithms/pmsm_foc/templates/floating/"
 
 global zsmtLibraryPath
 zsmtLibraryPath = Module.getPath()+"../mc_zsmt_libraries/"
@@ -62,6 +67,25 @@ def mcGen_GenerateCodeUpdate(symbol, event):
                         component.getSymbolByID(filename).setEnabled(True)
                     else:
                         component.getSymbolByID(filename).setEnabled(False)
+
+        modulePath = templatePath + "Rotor_Position_Calculation/"
+
+        for root, dirs, files in os.walk(Module.getPath() + modulePath + "inc"):
+            for filename in files:
+                if (filename.startswith("opt_rpo_sensored")):
+                    if key in filename:
+                        component.getSymbolByID(filename).setEnabled(True)
+                    else:
+                        component.getSymbolByID(filename).setEnabled(False)
+
+        for root, dirs, files in os.walk(Module.getPath() + modulePath + "src"):
+            for filename in files:
+                if (filename.startswith("opt_rpo_sensored")):
+                    if key in filename:
+                        component.getSymbolByID(filename).setEnabled(True)
+                    else:
+                        component.getSymbolByID(filename).setEnabled(False)
+
 
         if "sensorless_smo" in key:
             component.getSymbolByID("MCPMSMFOC_SMO_LIB_A").setEnabled(True)
@@ -105,6 +129,11 @@ def mcGen_GenerateCodeUpdate(symbol, event):
             component.getSymbolByID(str("opt_foc.c.ftl")).setEnabled(False)
             component.getSymbolByID(str("opt_foc_x2cmodel.h.ftl")).setEnabled(True)
             component.getSymbolByID(str("opt_foc_x2cmodel.c.ftl")).setEnabled(True)
+
+            # Enable mc_motor.c and mc_motor.h files
+            component.getSymbolByID(str("mc_motor.h.ftl")).setEnabled(True)
+            component.getSymbolByID(str("mc_motor.c.ftl")).setEnabled(True)
+
         else:
             symObj = component.getSymbolByID("MCPMSMFOC_POSITION_CALC_ALGORITHM")
             key = (symObj.getSelectedKey()).lower()
@@ -189,6 +218,18 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
     appSourceFile.setMarkup(True)
 
     filename = "mc_application.h.ftl"
+    projectPath = "config/" + configName + "/QSpin"
+    appHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+    appHeaderFile.setSourcePath(templatePath + filename)
+    if (filename.endswith(".ftl")):
+        filename = filename[:-4]
+    appHeaderFile.setOutputName(filename)
+    appHeaderFile.setDestPath("QSpin")
+    appHeaderFile.setProjectPath(projectPath)
+    appHeaderFile.setType("HEADER")
+    appHeaderFile.setMarkup(True)
+
+    filename = "mc_userparams.h.ftl"
     projectPath = "config/" + configName + "/QSpin"
     appHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
     appHeaderFile.setSourcePath(templatePath + filename)
@@ -526,6 +567,66 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
                 mcPmsmFocHeaderFile.setProjectPath(projectPath)
                 mcPmsmFocHeaderFile.setType("HEADER")
                 mcPmsmFocHeaderFile.setMarkup(True)
+
+    #-----------------------------------------------------------------------------------------------------------------------
+    #     Rotor Position Calculation module code generation
+    #-----------------------------------------------------------------------------------------------------------------------
+    modulePath = templatePath + "Rotor_Position_Calculation/"
+    projectPath = "config/" + configName + "/QSpin/Rotor_Position_Calculation/"
+
+    rpcIncludeDirectory = mcPmsmFocComponent.createSettingSymbol(None, None)
+    rpcIncludeDirectory.setCategory("C32")
+    rpcIncludeDirectory.setKey("extra-include-directories")
+    rpcIncludeDirectory.setValue("../src/" + projectPath )
+    rpcIncludeDirectory.setAppend(True, ";")
+
+
+    for root, dirs, files in os.walk(Module.getPath() + modulePath + "src"):
+        for filename in files:
+            if (".c" in filename and filename.startswith("mc_")):
+                mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                mcPmsmFocSourceFile.setSourcePath(modulePath + "src/" + filename)
+                if (filename.endswith(".ftl")):
+                    filename = filename[:-4]
+                mcPmsmFocSourceFile.setOutputName(filename)
+                mcPmsmFocSourceFile.setDestPath("QSpin/Rotor_Position_Calculation")
+                mcPmsmFocSourceFile.setProjectPath(projectPath )
+                mcPmsmFocSourceFile.setType("SOURCE")
+                mcPmsmFocSourceFile.setMarkup(True)
+
+            if (".c" in filename and filename.startswith("opt_rpo_sensored")):
+                mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                mcPmsmFocSourceFile.setSourcePath(modulePath + "src/" + filename)
+                mcPmsmFocSourceFile.setOutputName("mc_rotor_position_calculation.c")
+                mcPmsmFocSourceFile.setDestPath("QSpin/Rotor_Position_Calculation")
+                mcPmsmFocSourceFile.setProjectPath(projectPath)
+                mcPmsmFocSourceFile.setType("SOURCE")
+                mcPmsmFocSourceFile.setMarkup(True)
+                mcPmsmFocSourceFile.setEnabled(False)
+
+    for root, dirs, files in os.walk(Module.getPath() + modulePath + "inc"):
+        for filename in files:
+
+            if (".h" in filename and filename.startswith("mc_")):
+                mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                mcPmsmFocHeaderFile.setSourcePath(modulePath + "inc/" + filename)
+                if (filename.endswith(".ftl")):
+                    filename = filename[:-4]
+                mcPmsmFocHeaderFile.setOutputName(filename)
+                mcPmsmFocHeaderFile.setDestPath("QSpin/Rotor_Position_Calculation/")
+                mcPmsmFocHeaderFile.setProjectPath(projectPath)
+                mcPmsmFocHeaderFile.setType("HEADER")
+                mcPmsmFocHeaderFile.setMarkup(True)
+
+            if (".h" in filename and filename.startswith("opt_rpo_sensored")):
+                mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+                mcPmsmFocSourceFile.setSourcePath(modulePath + "inc/" + filename)
+                mcPmsmFocSourceFile.setOutputName("mc_rotor_position_calculation.h")
+                mcPmsmFocSourceFile.setDestPath("QSpin/Rotor_Position_Calculation")
+                mcPmsmFocSourceFile.setProjectPath(projectPath)
+                mcPmsmFocSourceFile.setType("HEADER")
+                mcPmsmFocSourceFile.setMarkup(True)
+                mcPmsmFocSourceFile.setEnabled(False)
 
     #-----------------------------------------------------------------------------------------------------------------------
     #     Utilities module code generation
