@@ -99,7 +99,20 @@ class mcAniI_AnalogInterfaceClass:
                 unit.getValue() != "** Select **" and channel.getValue() != "** Select **"
                ):
 
-                if ( 
+                # Disable old interface
+                if (
+                     old_unit.getValue() != "** Select **" and old_channel.getValue() != "** Select **"
+                   ):
+                    args = {
+                        "enable": False,
+                        "id" : name.getValue(),
+                        "instance" : old_unit.getValue(),
+                        "channel"  : old_channel.getValue(),
+                    }
+                    Database.sendMessage( ( id.getValue()).lower(), "PMSM_FOC_ADC_CH_CONF_", args)
+
+                # Configure new channel
+                if (
                      unit.getValue() == Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT")  and
                      channel.getValue() == Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL")
                    ):
@@ -113,6 +126,7 @@ class mcAniI_AnalogInterfaceClass:
                 trigger = self.numericFilter(global_ADC_TRIGGER.getValue())
 
                 args = {
+                        "enable": True,
                         "id" : name.getValue(),
                         "instance" : unit.getValue(),
                         "channel"  : channel.getValue(),
@@ -129,6 +143,9 @@ class mcAniI_AnalogInterfaceClass:
                     }
 
                 Database.sendMessage( ( id.getValue()).lower(), "PMSM_FOC_ADC_CH_CONF_", args)
+
+                old_unit.setValue(unit.getValue())
+                old_channel.setValue(channel.getValue())
 
         # Update connected PLIBs
         def updateConnectedPLibs(symbol, event):
@@ -177,6 +194,12 @@ class mcAniI_AnalogInterfaceClass:
         unit.setLabel("ADC unit")
         unit.setDefaultValue("** Select **")
 
+        old_unit_symbol = identifier + "_OLD_" + "UNIT"
+        old_unit = self.component.createStringSymbol(old_unit_symbol, node)
+        old_unit.setLabel("Old ADC unit")
+        # old_unit.setVisible(False)
+        old_unit.setDefaultValue("** Select **")
+
         # Signal id
         id_symbol = identifier + "_" + "PERIPHERAL_ID"
         id = self.component.createStringSymbol(id_symbol, None)
@@ -201,6 +224,12 @@ class mcAniI_AnalogInterfaceClass:
         channel.setLabel("ADC channel")
         channel.setDefaultValue("** Select **")
         channel.setDependencies(updateChannelList, [unit_symbol])
+
+        old_channel_symbol = identifier + "_OLD_" + "CHANNEL"
+        old_channel = self.component.createStringSymbol(old_channel_symbol, node)
+        old_channel.setLabel("Old ADC channel")
+        # old_channel.setVisible(False)
+        old_channel.setDefaultValue("** Select **")
 
         # Signal pad
         pad_symbol = identifier + "_" + "PAD"
