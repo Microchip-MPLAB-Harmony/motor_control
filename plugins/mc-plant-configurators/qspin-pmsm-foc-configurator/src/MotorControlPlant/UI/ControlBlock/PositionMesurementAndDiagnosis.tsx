@@ -78,6 +78,13 @@ let showslidingModeCurrentObserverSymbols = [
   'MCPMSMFOC_LQ',
   'MCPMSMFOC_POLE_PAIRS'
 ];
+
+let showReducedOrderLuenbergerObserver = [
+  'MCPMSMFOC_BEMF_OBSERVER_ROLO_POLE',
+  'MCPMSMFOC_ROLO_PHASE_DETECTION_ALGORITHAM',
+  'MCPMSMFOC_ROLO_PHASE_DETECTION_F0'
+];
+
 let showSwitchingFunctionSymbols = [
   'MCPMSMFOC_SWITCHING_FUNCTION_BOUNDARY',
   'MCPMSMFOC_SWITCHING_FUNCTION_GAIN'
@@ -298,13 +305,20 @@ class PositionMesurementAndDiagnosis extends React.Component<IProps, IState> {
     );
   }
 
-  showUnderDevlopMent() {
+  showReducedOrderLuenberger() {
+    DialogCommonInitilizeCode(this.props.showToast, showReducedOrderLuenbergerObserver);
     return (
       <div className='flex'>
-        <div className='flex flex-column'>
+        <div className='flex-column'>
           {this.GetPositonControlElement()}
-          <h2> Under Implementation... </h2>
+          <div className='m-4'></div>
         </div>
+        <Divider layout='vertical' />
+
+        {this.showConfigProps(
+          'Reduced order luenberger observer',
+          showReducedOrderLuenbergerObserver
+        )}
       </div>
     );
   }
@@ -315,7 +329,7 @@ class PositionMesurementAndDiagnosis extends React.Component<IProps, IState> {
         <div className='flex'>
           {GetSelectedPositionControlIndex() === 0 && this.showEB()}
           {GetSelectedPositionControlIndex() === 1 && this.showQD()}
-          {GetSelectedPositionControlIndex() === 2 && this.showUnderDevlopMent()}
+          {GetSelectedPositionControlIndex() === 2 && this.showReducedOrderLuenberger()}
           {GetSelectedPositionControlIndex() === 3 && this.showSMO()}
           {GetSelectedPositionControlIndex() === 4 && this.showZSMT_Hybrid()}
         </div>

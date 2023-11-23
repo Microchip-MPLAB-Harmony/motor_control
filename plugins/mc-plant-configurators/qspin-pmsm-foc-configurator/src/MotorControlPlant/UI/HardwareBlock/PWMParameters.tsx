@@ -1,4 +1,3 @@
-import { AddDynamicSymbols } from '@mplab_harmony/harmony-plugin-core-service/build/database-access/SymbolUtils';
 import { DialogCommonInitilizeCode } from '../CustomPopUp/CustomPopUp';
 import { Divider } from 'primereact/divider';
 import { mc_component_id } from '../MainView/MainBlock';
@@ -9,27 +8,17 @@ const PWMParameters = (props: { showToast: (arg0: any) => void }) => {
     channelConfigurationn_instance,
     'MCPMSMFOC_PWM_FREQUENCY',
     'MCPMSMFOC_PWM_PERIOD',
-    'MCPMSMFOC_PWM_DEAD_TIME'
+    'MCPMSMFOC_PWM_DEAD_TIME',
+    'MCPMSMFOC_PWM_A_CHANNEL',
+    'MCPMSMFOC_PWM_AH_PAD',
+    'MCPMSMFOC_PWM_AL_PAD',
+    'MCPMSMFOC_PWM_B_CHANNEL',
+    'MCPMSMFOC_PWM_BH_PAD',
+    'MCPMSMFOC_PWM_BL_PAD',
+    'MCPMSMFOC_PWM_C_CHANNEL',
+    'MCPMSMFOC_PWM_CH_PAD',
+    'MCPMSMFOC_PWM_CL_PAD'
   ];
-
-  channelConfiguration = AddDynamicSymbols(
-    mc_component_id,
-    channelConfigurationn_instance,
-    'PWM_A',
-    channelConfiguration
-  );
-  channelConfiguration = AddDynamicSymbols(
-    mc_component_id,
-    channelConfigurationn_instance,
-    'PWM_B',
-    channelConfiguration
-  );
-  channelConfiguration = AddDynamicSymbols(
-    mc_component_id,
-    channelConfigurationn_instance,
-    'PWM_C',
-    channelConfiguration
-  );
 
   let faultConfiguration = [
     'MCPMSMFOC_PWM_FAULT_SELECT',

@@ -1,0 +1,19 @@
+/* div {
+  font-size: 1.1rem;
+} */
+.pannable-container {
+  overflow: auto;
+  /* background-color: lightgreen; */
+  /* background-color: green; */
+  /* border: 2px dotted red; */
+  /* padding: 5px; */
+  position: relative;
+}
+
+.svg-container {
+  width: 95vw;
+  height: 95vh;
+  font-size: 14px;
+  background-color: white;
+  position: relative;
+}

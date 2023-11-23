@@ -187,20 +187,22 @@ export function RegisterAnalogFrontEndSVGActions() {
 }
 
 function ChangeIcon1_2_Data(group: any) {
-  for (let i = 0; i < group.childNodes.length; i++) {
-    let childElement = group.childNodes[i];
-    if (childElement.getAttribute('id') === 'labels_af_item1') {
-      ChangeIcon1_2_Data(childElement);
-      return;
+  try {
+    for (let i = 0; i < group.childNodes.length; i++) {
+      let childElement = group.childNodes[i];
+      if (childElement.getAttribute('id') === 'labels_af_item1') {
+        ChangeIcon1_2_Data(childElement);
+        return;
+      }
+      if (childElement.getAttribute('id') === 'label_input1_af_item1') {
+        childElement.textContent = 'Iu (+)';
+      } else if (childElement.getAttribute('id') === 'label_input2_af_item1') {
+        childElement.textContent = 'Iu (-)';
+      } else if (childElement.getAttribute('id') === 'label_output_af_item1') {
+        childElement.textContent = 'IuSens';
+      }
     }
-    if (childElement.getAttribute('id') === 'label_input1_af_item1') {
-      childElement.textContent = 'Iu (+)';
-    } else if (childElement.getAttribute('id') === 'label_input2_af_item1') {
-      childElement.textContent = 'Iu (-)';
-    } else if (childElement.getAttribute('id') === 'label_output_af_item1') {
-      childElement.textContent = 'IuSens';
-    }
-  }
+  } catch {}
 }
 
 function sendClickAction(evt: { target: any }) {
@@ -225,20 +227,22 @@ function IterateSVGelements(
   dialogHeading: string,
   popupType: boolean
 ) {
-  for (let i = 0; i < group.childNodes.length; i++) {
-    let childElement = group.childNodes[i];
-    childElement.addEventListener('click', sendClickAction, false);
-    childElement.addEventListener('mousemove', mouseMove);
-    childElement.addEventListener('mouseleave', mouseLeave);
-    childAndParent.set(childElement, svg);
-    if (popupType) {
-      childElement.value = groupid;
+  try {
+    for (let i = 0; i < group.childNodes.length; i++) {
+      let childElement = group.childNodes[i];
+      childElement.addEventListener('click', sendClickAction, false);
+      childElement.addEventListener('mousemove', mouseMove);
+      childElement.addEventListener('mouseleave', mouseLeave);
+      childAndParent.set(childElement, svg);
+      if (popupType) {
+        childElement.value = groupid;
+      }
+      childElement.toolTip = dialogHeading;
+      if (childElement.childNodes.length > 0) {
+        IterateSVGelements(svg, childElement, groupid, dialogHeading, popupType);
+      }
     }
-    childElement.toolTip = dialogHeading;
-    if (childElement.childNodes.length > 0) {
-      IterateSVGelements(svg, childElement, groupid, dialogHeading, popupType);
-    }
-  }
+  } catch {}
 }
 
 function mouseMove(evt: { target: any }) {

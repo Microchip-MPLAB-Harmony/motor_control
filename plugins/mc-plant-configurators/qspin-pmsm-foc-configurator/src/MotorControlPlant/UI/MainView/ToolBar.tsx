@@ -3,17 +3,13 @@ import { Button } from 'primereact/button';
 import { Toolbar } from 'primereact/toolbar';
 
 import '../../../Styles/Headder.css';
-import {
-  ZoomInReact,
-  ZoomOutReact
-} from '@mplab_harmony/harmony-plugin-core-service/build/project-service/ProjectService';
 import ReactDOM from 'react-dom';
 import PopUpWithoutFooter, { PopupWithoutFooterInput } from '../CustomPopUp/PopUpWithoutFooter';
 import { SummaryPageHeading } from './MainBlock';
 
 let portNumber = (window as any).javaConnector.getPortNumber();
 
-const Headder = () => {
+const Headder = (props: { zoom: any }) => {
   const leftContents = (
     <React.Fragment>
       <label style={{ fontSize: '18px', fontWeight: 'bolder' }}> Harmony QSpin PMSM FOC </label>
@@ -54,6 +50,13 @@ const Headder = () => {
         className='p-button-rounded p-button-text p-button-lg p-button-plain'
         onClick={() => ZoomOut()}
       />
+      <Button
+        tooltip='click here to reset zoom'
+        tooltipOptions={{ position: 'left' }}
+        icon='pi pi-fw pi-refresh'
+        className='p-button-rounded p-button-text p-button-lg p-button-plain'
+        onClick={() => ResetZoom()}
+      />
     </React.Fragment>
   );
 
@@ -76,11 +79,15 @@ const Headder = () => {
   };
 
   function ZoomIn() {
-    ZoomInReact();
+    props.zoom.zoomIn();
   }
 
   function ZoomOut() {
-    ZoomOutReact();
+    props.zoom.zoomOut();
+  }
+
+  function ResetZoom() {
+    props.zoom.resetZoom();
   }
 
   return (

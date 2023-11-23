@@ -32,6 +32,12 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
 
   let fieldDetectSymbolArray2 = ['MCPMSMFOC_STARTUP_CURRENT', 'MCPMSMFOC_STARTUP_TIME'];
 
+  let initialPositionDetectionChildArray = [
+    'MCPMSMFOC_IPD_PULSE_AMPLITUDE',
+    'MCPMSMFOC_IPD_PULSE_DURATION',
+    'MCPMSMFOC_IPD_PULSE_PERIOD'
+  ];
+
   let openLoopSpeedRampSymbolArray = [
     'MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP',
     'MCPMSMFOC_OPEN_LOOP_END_SPEED',
@@ -43,7 +49,9 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
   let FlyingStartSymbolsArray = [
     'MCPMSMFOC_FLY_START_DETECTION_TIME',
     'MCPMSMFOC_FLY_START_MINIMUM_SPEED',
-    'MCPMSMFOC_FLY_START_CURRENT'
+    'MCPMSMFOC_FLY_START_CURRENT',
+    'MCPMSMFOC_FLY_START_FADEOUT_TIME',
+    'MCPMSMFOC_FLY_START_FADEOUT_BURST_PERIOD'
   ];
 
   let DAxisControllerSymbolArray = [
@@ -92,6 +100,7 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
       filedDetectSymbolArray.concat(
         [rotor_rotation_symbolID],
         fieldDetectSymbolArray2,
+        initialPositionDetectionChildArray,
         openLoopSpeedRampSymbolArray
       )
     );
@@ -114,6 +123,11 @@ const StartUpConfigurator = (props: { showToast: (arg0: any) => void }) => {
           <AddMultipleUIComponentsWithLabel
             componentId={mc_component_id}
             symbolsArray={fieldDetectSymbolArray2}
+            onChange={SymbolValueChanged}
+          />
+          <AddMultipleUIComponentsWithLabel
+            componentId={mc_component_id}
+            symbolsArray={initialPositionDetectionChildArray}
             onChange={SymbolValueChanged}
           />
         </div>

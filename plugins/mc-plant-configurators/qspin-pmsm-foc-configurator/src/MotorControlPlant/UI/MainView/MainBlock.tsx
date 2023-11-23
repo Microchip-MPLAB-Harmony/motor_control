@@ -9,11 +9,14 @@ import {
   ChangeStateLabelVisibleStatus
 } from '@mplab_harmony/harmony-plugin-ui/build/utils/ComponentStateChangeUtils';
 import { convertToBoolean } from '@mplab_harmony/harmony-plugin-ui/build/utils/CommonUtil';
+import useZoomableContainer from './useZoomableContainer';
+import './MainBlock.css';
 
 export let mc_component_id = 'pmsm_foc';
 export let core_id = 'core';
 export let SummaryPageHeading = 'QSpin PMSM FOC Summary';
 const MainBlock = () => {
+  const zoomableContainer = useZoomableContainer();
   useEffect(() => {
     newInit();
   }, []);
@@ -24,16 +27,17 @@ const MainBlock = () => {
 
   return (
     <div>
-      <Headder />
-      <div className='card'>
+      <Headder zoom={zoomableContainer} />
+      <div
+        className='pannable-container'
+        ref={zoomableContainer.ref}
+        {...zoomableContainer.props}>
         <MotorControlPlant
           id='motor'
-          height={(window as any).javaConnector.getScreenHeight()}
-          width={(window as any).javaConnector.getScreenWidth()}
+          className='svg-container'
           onContextMenu={(e) => ShowAll()}
         />
       </div>
-
       <div
         id='tooltip_object'
         style={{ display: 'none' }}>

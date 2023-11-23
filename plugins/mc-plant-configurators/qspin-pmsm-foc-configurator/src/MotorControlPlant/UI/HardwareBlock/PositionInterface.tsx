@@ -1,14 +1,10 @@
-import { AddDynamicSymbols } from '@mplab_harmony/harmony-plugin-core-service/build/database-access/SymbolUtils';
 import { DialogCommonInitilizeCode } from '../CustomPopUp/CustomPopUp';
 import { mc_component_id } from '../MainView/MainBlock';
 import { AddMultipleUIComponentsWithLabel } from '@mplab_harmony/harmony-plugin-ui';
 
 const PositionInterface = (props: { parentUpdate: () => void; showToast: (arg0: any) => void }) => {
   let selectInstance = 'MCPMSMFOC_ENCODER_PERIPHERAL';
-  let SymbolsArray = [selectInstance];
-
-  SymbolsArray = AddDynamicSymbols(mc_component_id, selectInstance, 'QEA', SymbolsArray);
-  SymbolsArray = AddDynamicSymbols(mc_component_id, selectInstance, 'QEB', SymbolsArray);
+  let SymbolsArray = [selectInstance, 'MCPMSMFOC_ENCODER_QEA_PAD', 'MCPMSMFOC_ENCODER_QEB_PAD'];
 
   DialogCommonInitilizeCode(props.showToast, SymbolsArray);
 

@@ -6,7 +6,10 @@ const DataMonitoring = (props: { showToast: (arg0: any) => void }) => {
   let SymbolsArray = [
     'MCPMSMFOC_DATA_MONITOR_ENABLE',
     'MCPMSMFOC_DATA_MONITOR_PROTOCOL',
-    'MCPMSMFOC_X2CScope'
+    'MCPMSMFOC_X2CScope',
+    'MCPMSMFOC_DATA_MONITOR_PERIPHERAL',
+    'MCPMSMFOC_DATA_MONITOR_RECEIVE_PAD',
+    'MCPMSMFOC_DATA_MONITOR_TRANSMIT_PAD'
   ];
   DialogCommonInitilizeCode(props.showToast, SymbolsArray);
 

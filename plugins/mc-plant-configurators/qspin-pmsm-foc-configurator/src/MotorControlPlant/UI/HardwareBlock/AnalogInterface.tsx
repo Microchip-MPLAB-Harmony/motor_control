@@ -8,7 +8,6 @@ import {
   GetResetToDefaultStatus,
   ResetDialogSettings
 } from '../CustomPopUp/CustomPopUp';
-import { AddDynamicSymbols } from '@mplab_harmony/harmony-plugin-core-service/build/database-access/SymbolUtils';
 import {
   AddImageAndParameters,
   AddTitileOnly
@@ -18,7 +17,6 @@ import {
   CallMouseLeave,
   CallMouseMove
 } from '@mplab_harmony/harmony-plugin-ui/build/svg/MouseEvent';
-import { GetSymbolValue } from '@mplab_harmony/harmony-plugin-core-service/build/database-access/SymbolAccess';
 
 let svgGroup1: any = null;
 let svgGroup2: any = null;
@@ -42,10 +40,10 @@ interface IState {
   hasRendered?: string;
 }
 let obj: AnalogInterface | null = null;
-let GROUP1_A: any[];
-let GROUP1_B: any[];
-let GROUP2_A: any[];
-let GROUP2_B: any[];
+let Group1PhaseA: any[];
+let Group1PhaseB: any[];
+let Group2PhaseA: any[];
+let Group2PhaseB: any[];
 
 class AnalogInterface extends React.Component<IProps, IState> {
   constructor(props: IProps) {
@@ -58,42 +56,30 @@ class AnalogInterface extends React.Component<IProps, IState> {
     this.currentViewChanged = this.currentViewChanged.bind(this);
     this.SymbolValueChanged = this.SymbolValueChanged.bind(this);
     obj = this;
-    let Group1_A_ADC_Unit = 'MCPMSMFOC_PHASE_CURRENT_IA_UNIT';
-    let Group1_B_ADC_Unit = 'MCPMSMFOC_PHASE_CURRENT_IB_UNIT';
-    let Group2_A_ADC_Unit = 'MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT';
-    let Group2_B_ADC_Unit = 'MCPMSMFOC_POTENTIOMETER_VPOT_UNIT';
-    let GROUP1_A_temp = ['MCPMSMFOC_PHASE_CURRENT_IA_NAME', Group1_A_ADC_Unit];
-    let GROUP1_B_temp = ['MCPMSMFOC_PHASE_CURRENT_IB_NAME', Group1_B_ADC_Unit];
-    let GROUP2_A_temp = ['MCPMSMFOC_BUS_VOLTAGE_VDC_NAME', Group2_A_ADC_Unit];
-    let GROUP2_B_temp = ['MCPMSMFOC_POTENTIOMETER_VPOT_NAME', Group2_B_ADC_Unit];
-    GROUP1_A = [];
-    GROUP1_B = [];
-    GROUP2_A = [];
-    GROUP2_B = [];
-    GROUP1_A = AddDynamicSymbols(
-      mc_component_id,
-      Group1_A_ADC_Unit,
-      'PHASE_CURRENT_IA',
-      GROUP1_A_temp
-    );
-    GROUP1_B = AddDynamicSymbols(
-      mc_component_id,
-      Group1_B_ADC_Unit,
-      'PHASE_CURRENT_IB',
-      GROUP1_B_temp
-    );
-    GROUP2_A = AddDynamicSymbols(
-      mc_component_id,
-      Group2_A_ADC_Unit,
-      'BUS_VOLTAGE_VDC',
-      GROUP2_A_temp
-    );
-    GROUP2_B = AddDynamicSymbols(
-      mc_component_id,
-      Group2_B_ADC_Unit,
-      'POTENTIOMETER_VPOT',
-      GROUP2_B_temp
-    );
+    Group1PhaseA = [
+      'MCPMSMFOC_PHASE_CURRENT_IA_NAME',
+      'MCPMSMFOC_PHASE_CURRENT_IA_UNIT',
+      'MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL',
+      'MCPMSMFOC_PHASE_CURRENT_IA_PAD'
+    ];
+    Group1PhaseB = [
+      'MCPMSMFOC_PHASE_CURRENT_IB_NAME',
+      'MCPMSMFOC_PHASE_CURRENT_IB_UNIT',
+      'MCPMSMFOC_PHASE_CURRENT_IB_CHANNEL',
+      'MCPMSMFOC_PHASE_CURRENT_IB_PAD'
+    ];
+    Group2PhaseA = [
+      'MCPMSMFOC_BUS_VOLTAGE_VDC_NAME',
+      'MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT',
+      'MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL',
+      'MCPMSMFOC_BUS_VOLTAGE_VDC_PAD'
+    ];
+    Group2PhaseB = [
+      'MCPMSMFOC_POTENTIOMETER_VPOT_NAME',
+      'MCPMSMFOC_POTENTIOMETER_VPOT_UNIT',
+      'MCPMSMFOC_POTENTIOMETER_VPOT_CHANNEL',
+      'MCPMSMFOC_POTENTIOMETER_VPOT_PAD'
+    ];
   }
 
   currentViewChanged(newView: string) {
@@ -104,20 +90,15 @@ class AnalogInterface extends React.Component<IProps, IState> {
     //do nothing
   }
 
-  GetDynamicSymbolId(component_id: string, symbol: string, apend: string) {
-    let symbolValue = GetSymbolValue(component_id, symbol);
-    return symbol + '_' + apend + '_' + symbolValue;
-  }
-
   Default_ICON1_1() {
-    DialogCommonInitilizeCode(this.props.showToast, GROUP1_A.concat(GROUP1_B));
+    DialogCommonInitilizeCode(this.props.showToast, Group1PhaseA.concat(Group1PhaseB));
     return (
       <div>
         <AddTitileOnly Headding='Group 01 Signals' />
         <AddImageAndParameters
           Image={null}
           Headding='Signal A Configuration'
-          SymbolsArray={GROUP1_A}
+          SymbolsArray={Group1PhaseA}
           onChange={this.SymbolValueChanged}
           component_id={mc_component_id}
         />
@@ -126,28 +107,28 @@ class AnalogInterface extends React.Component<IProps, IState> {
           Headding='Signal B Configuration'
           onChange={this.SymbolValueChanged}
           component_id={mc_component_id}
-          SymbolsArray={GROUP1_B}
+          SymbolsArray={Group1PhaseB}
         />
       </div>
     );
   }
 
   Default_ICON1_2() {
-    DialogCommonInitilizeCode(this.props.showToast, GROUP2_A.concat(GROUP2_B));
+    DialogCommonInitilizeCode(this.props.showToast, Group2PhaseA.concat(Group2PhaseB));
     return (
       <div>
         <AddTitileOnly Headding='Group 02 Signals' />
         <AddImageAndParameters
           Image={null}
           Headding='Signal A Configuration'
-          SymbolsArray={GROUP2_A}
+          SymbolsArray={Group2PhaseA}
           onChange={this.SymbolValueChanged}
           component_id={mc_component_id}
         />
         <AddImageAndParameters
           Image={null}
           Headding='Signal B Configuration'
-          SymbolsArray={GROUP2_B}
+          SymbolsArray={Group2PhaseB}
           onChange={this.SymbolValueChanged}
           component_id={mc_component_id}
         />
@@ -221,37 +202,41 @@ function IterateSVGelements(
   dialogHeading: string,
   popupType: boolean
 ) {
-  for (let i = 0; i < group.childNodes.length; i++) {
-    let childElement = group.childNodes[i];
-    childElement.addEventListener('click', sendClickAction, false);
-    childElement.addEventListener('mousemove', mouseMove);
-    childElement.addEventListener('mouseleave', mouseLeave);
-    childAndParent.set(childElement, svg);
-    if (popupType) {
-      childElement.value = groupid;
+  try {
+    for (let i = 0; i < group.childNodes.length; i++) {
+      let childElement = group.childNodes[i];
+      childElement.addEventListener('click', sendClickAction, false);
+      childElement.addEventListener('mousemove', mouseMove);
+      childElement.addEventListener('mouseleave', mouseLeave);
+      childAndParent.set(childElement, svg);
+      if (popupType) {
+        childElement.value = groupid;
+      }
+      childElement.toolTip = dialogHeading;
+      if (childElement.childNodes.length > 0) {
+        IterateSVGelements(svg, childElement, groupid, dialogHeading, popupType);
+      }
     }
-    childElement.toolTip = dialogHeading;
-    if (childElement.childNodes.length > 0) {
-      IterateSVGelements(svg, childElement, groupid, dialogHeading, popupType);
-    }
-  }
+  } catch {}
 }
 
 function ChangeGroup2_Data(group: any) {
-  for (let i = 0; i < group.childNodes.length; i++) {
-    let childElement = group.childNodes[i];
-    if (childElement.getAttribute('id') === 'labels_ai_item1') {
-      ChangeGroup2_Data(childElement);
-      return;
+  try {
+    for (let i = 0; i < group.childNodes.length; i++) {
+      let childElement = group.childNodes[i];
+      if (childElement.getAttribute('id') === 'labels_ai_item1') {
+        ChangeGroup2_Data(childElement);
+        return;
+      }
+      if (childElement.getAttribute('id') === 'label_input1_ai_item1') {
+        childElement.textContent = 'VdcSens';
+      } else if (childElement.getAttribute('id') === 'label_input2_ai_item1') {
+        childElement.textContent = 'VpotSens';
+      } else if (childElement.getAttribute('id') === 'label_group_ai_item1') {
+        childElement.textContent = 'Group 02 Signals';
+      }
     }
-    if (childElement.getAttribute('id') === 'label_input1_ai_item1') {
-      childElement.textContent = 'VdcSens';
-    } else if (childElement.getAttribute('id') === 'label_input2_ai_item1') {
-      childElement.textContent = 'VpotSens';
-    } else if (childElement.getAttribute('id') === 'label_group_ai_item1') {
-      childElement.textContent = 'Group 02 Signals';
-    }
-  }
+  } catch {}
 }
 
 function mouseMove(evt: { target: any }) {
