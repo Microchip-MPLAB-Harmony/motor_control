@@ -149,7 +149,7 @@ void mcHalI_InverterPwmDisable( void )
 
 <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
 <#list 0..10 as index>
-<#if "Direction indication" == ledFunction(index)>
+<#if "Direction Indication" == ledFunction(index)>
 /*! \brief Set direction indicator
  *
  * Details.
@@ -171,7 +171,7 @@ void mcHal_DirectionIndication( void )
 
 <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
 <#list 0..10 as index>
-<#if "Fault indication" == ledFunction(index)>
+<#if "Fault Indication" == ledFunction(index)>
 /*! \brief Set fault indicator
  *
  * Details.
@@ -206,6 +206,9 @@ void mcHalI_AdcEnable( void )
 <#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
     ADC0_Enable();
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
+    /** Nothing to do */
+    __NOP();
+<#elseif "ADC_44703" == MCPMSMFOC_ADC_IP>
     /** Nothing to do */
     __NOP();
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
@@ -277,10 +280,21 @@ void mcHalI_AdcCallBackRegister( AFEC_CALLBACK callback, uintptr_t context )
 {
     AFEC0_CallbackRegister( callback, context);
 }
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+void mcHalI_AdcCallBackRegister( ADC_CALLBACK callback, uintptr_t context )
+{
+    ADC_CallbackRegister( callback, context);
+}
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
 void mcHalI_AdcCallBackRegister( ADCHS_CALLBACK callback, uintptr_t context )
 {
-    ADCHS_CallbackRegister(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].ADC_CH_PHASE_U}, callback, context);
+<#assign inputString = MCPMSMFOC_PHASE_CURRENT_IA_UNIT>
+<#assign extractedNumber = inputString?replace("[^0-9]", "", "r")?number>
+<#if 6 gt extractedNumber>
+    ADCHS_CallbackRegister(ADCHS_CH${extractedNumber?c}, callback, context);
+<#else>
+    ADCHS_CallbackRegister(ADCHS_CH${extractedNumber?c}, callback, context);
+</#if>
 }
 
 <#elseif "ADCHS_44073" == MCPMSMFOC_ADC_IP>

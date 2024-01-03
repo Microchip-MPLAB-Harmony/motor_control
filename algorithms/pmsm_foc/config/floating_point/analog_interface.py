@@ -112,15 +112,26 @@ class mcAniI_AnalogInterfaceClass:
                     Database.sendMessage( ( id.getValue()).lower(), "PMSM_FOC_ADC_CH_CONF_", args)
 
                 # Configure new channel
-                if (
-                     unit.getValue() == Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT")  and
-                     channel.getValue() == Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL")
-                   ):
-                    enable_eoc_interrupt = True
-                    enable_slave_mode = False
+                if self.name == "ADC" and ( self.id == "U2500" or self.id == "U2247"):
+                    if (
+                        unit.getValue() == Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT")
+                    ):
+                        enable_eoc_interrupt = True
+                        enable_slave_mode = False
+                    else:
+                        enable_eoc_interrupt = False
+                        enable_slave_mode = True
+
                 else:
-                    enable_eoc_interrupt = False
-                    enable_slave_mode = True
+                    if (
+                        unit.getValue() == Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT")  and
+                        channel.getValue() == Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL")
+                    ):
+                        enable_eoc_interrupt = True
+                        enable_slave_mode = False
+                    else:
+                        enable_eoc_interrupt = False
+                        enable_slave_mode = True
 
                 # Update configuration data for the analog interface
                 trigger = self.numericFilter(global_ADC_TRIGGER.getValue())
@@ -197,7 +208,7 @@ class mcAniI_AnalogInterfaceClass:
         old_unit_symbol = identifier + "_OLD_" + "UNIT"
         old_unit = self.component.createStringSymbol(old_unit_symbol, node)
         old_unit.setLabel("Old ADC unit")
-        # old_unit.setVisible(False)
+        old_unit.setVisible(False)
         old_unit.setDefaultValue("** Select **")
 
         # Signal id
@@ -228,7 +239,7 @@ class mcAniI_AnalogInterfaceClass:
         old_channel_symbol = identifier + "_OLD_" + "CHANNEL"
         old_channel = self.component.createStringSymbol(old_channel_symbol, node)
         old_channel.setLabel("Old ADC channel")
-        # old_channel.setVisible(False)
+        old_channel.setVisible(False)
         old_channel.setDefaultValue("** Select **")
 
         # Signal pad

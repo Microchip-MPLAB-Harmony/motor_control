@@ -184,7 +184,7 @@ class mcFocI_DigitalInterfaceClass:
         old_pad.setDefaultValue("** Select **")
         old_pad.setVisible(False)
 
-        actions = ["Start/Stop", "Direction Toggle", "Custom"]
+        actions = ["Fault Indication", "Direction Indication", "Custom"]
         actions_id = "MCPMSMFOC_LED_"+ str(index)+ "_FUNCTION"
         action  = self.component.createComboSymbol( actions_id, node, actions)
         action.setLabel("Function")

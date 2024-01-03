@@ -102,9 +102,10 @@ def instantiateComponent(mcPmsmFocComponent):
     pwm_Interface = mcPwmI_PwmInterfaceClass(mcPmsmFocComponent, pin_manager)
     pwm_Interface()
 
-    global event_System
-    event_System = mcEvtI_EventSystemClass(mcPmsmFocComponent)
-    event_System()
+
+    # global event_System
+    # event_System = mcEvtI_EventSystemClass(mcPmsmFocComponent)
+    # event_System()
 
     global data_Monitoring
     data_Monitoring = mcFocI_DataMonitoringClass(mcPmsmFocComponent, pin_manager)
@@ -145,8 +146,8 @@ def onAttachmentConnected( source, target ):
     # PWM Peripheral
     pwm_Interface.onAttachmentConnected( source, target )
 
-    # Event system
-    event_System.onAttachmentConnected(source, target)
+    # # Event system
+    # event_System.onAttachmentConnected(source, target)
 
     # QEI Peripheral
     position_Interface.onAttachmentConnected( source, target )
@@ -167,8 +168,8 @@ def onAttachmentDisconnected( source, target ):
     # PWM Peripheral
     pwm_Interface.onAttachmentDisconnected( source, target )
 
-    # Event system
-    event_System.onAttachmentDisconnected(source, target)
+    # # Event system
+    # event_System.onAttachmentDisconnected(source, target)
 
     # QEI Peripheral
     position_Interface.onAttachmentDisconnected( source, target )

@@ -38,6 +38,7 @@ import os.path
 #---------------------------------------------------------------------------------------#
 #                                     Classes                                           #
 #---------------------------------------------------------------------------------------#
+
 class mcPwmI_PwmInterfaceClass:
     """
     Description:
@@ -52,18 +53,11 @@ class mcPwmI_PwmInterfaceClass:
         self.information = device.information
         self.name = device.name
         self.id = device.id
+        self.fault_sources = device.externalFaultSources
 
-        if ( self.name == "PWM" ) and ( self.id == "6343"):
-            global global_PWM_FAULT
-            global_PWM_FAULT = "FAULT_PWM_ID2"
-        elif ( self.name == "TCC" ) and ( self.id == "U2213"):
-            # PWM fault management
-            global global_PWM_FAULT
-            global_PWM_FAULT = "EIC_CHANNEL_2"
-        elif ( self.name == "MCPWM" ) and ( self.id == "01477"):
-            # PWM fault management
-            global global_PWM_FAULT
-            global_PWM_FAULT = "FLT15"
+        # ToDO: Check if the implementation can be optimized
+        self.event_System = mcEvtI_EventSystemClass(component)
+        self.event_System()
 
     """
     Description:
@@ -226,17 +220,24 @@ class mcPwmI_PwmInterfaceClass:
         # Fault selection
         fault = ['External Pin']
         self.sym_FAULT_SELECT = self.component.createComboSymbol("MCPMSMFOC_PWM_FAULT_SELECT", self.sym_FAULT, fault )
-        self.sym_FAULT_SELECT.setLabel("Fault Input")
+        self.sym_FAULT_SELECT.setLabel("Fault Type")
+
+        fault_sources = ["** Select **"] + ["None"] + self.fault_sources
+        self.sym_FAULT_SOURCE = self.component.createComboSymbol("MCPMSMFOC_PWM_FAULT_SOURCE", self.sym_FAULT_SELECT, fault_sources )
+        self.sym_FAULT_SOURCE.setLabel("Fault Source")
 
         # Fault polarity
         state = ['Active Low', 'Active High']
-        self.sym_FAULT_STATE = self.component.createComboSymbol("MCPMSMFOC_PWM_FAULT_STATE", self.sym_FAULT, state )
+        self.sym_FAULT_STATE = self.component.createComboSymbol("MCPMSMFOC_PWM_FAULT_STATE", self.sym_FAULT_SELECT, state )
         self.sym_FAULT_STATE.setLabel("Fault Polarity")
+        self.sym_FAULT_STATE.setVisible(False)
+
 
         # Fault recovery
         mode = ['Non-Recoverable', 'Recoverable']
         self.sym_FAULT_TYPE = self.component.createComboSymbol("MCPMSMFOC_PWM_FAULT_TYPE", self.sym_FAULT, mode )
         self.sym_FAULT_TYPE.setLabel("Fault Mode")
+        self.sym_FAULT_TYPE.setVisible(False)
         self.sym_FAULT_TYPE.setReadOnly(True)
 
         # Fault digital filter
@@ -253,7 +254,7 @@ class mcPwmI_PwmInterfaceClass:
         self.sym_PLIB_UPDATE.setDependencies(self.updatePLIB, ["MCPMSMFOC_PWM_INSTANCE",
                                                                "MCPMSMFOC_PWM_FREQUENCY",
                                                                "MCPMSMFOC_PWM_DEAD_TIME",
-                                                               "MCPMSMFOC_PWM_FAULT_SELECT",
+                                                               "MCPMSMFOC_PWM_FAULT_SOURCE",
                                                                "MCPMSMFOC_PWM_FAULT_STATE",
                                                                "MCPMSMFOC_PWM_FAULT_TYPE",
                                                                "MCPMSMFOC_PWM_FAULT_FILTER",
@@ -370,10 +371,12 @@ class mcPwmI_PwmInterfaceClass:
         channel_a = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_A_CHANNEL")
         channel_b = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_B_CHANNEL")
         channel_c = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_C_CHANNEL")
+        fault_source = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_FAULT_SOURCE")
 
         if (    "** Select **" != channel_a
             and "** Select **" != channel_b
-            and "Not selected" != channel_c
+            and "** Select **" != channel_c
+            and "** Select **" != fault_source
            ):
                 message = dict()
                 message['PWM_FREQ'     ]  =  self.sym_PWM_FREQ.getValue()
@@ -381,12 +384,13 @@ class mcPwmI_PwmInterfaceClass:
                 message['PWM_PH_V'     ]  =  int(self.numericFilter(channel_b))
                 message['PWM_PH_W'     ]  =  int(self.numericFilter(channel_c))
                 message['PWM_DEAD_TIME']  =  self.sym_DEAD_TIME.getValue()
-                message['PWM_FAULT'    ]  =  global_PWM_FAULT #self.sym_FAULT_SELECT.getValue()
-
+                message['PWM_FAULT'    ]  =  fault_source
 
                 # Get PLIB id
                 plib_Id = (self.sym_INSTANCE.getValue()).lower()
                 Database.sendMessage(plib_Id, "PMSM_FOC_PWM_CONF", message)
+
+                self.event_System.setConfiguration(fault_source)
 
     def updatePeripheralInstance(self, symbol, event):
         if( (symbol.getValue()).lower() != event["value"].lower()):

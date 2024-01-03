@@ -87,9 +87,9 @@ void mcHalI_InverterPwmEnable( void )
         /** ToDO: Log error */
     }
 <#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL} );
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL} );
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL} );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_A_CHANNEL} );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_B_CHANNEL} );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideEnable( PWM_CHANNEL_${MCPMSMFOC_PWM_C_CHANNEL} );
 <#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipEnable( ${MCPMSMFOC_PWM_INSTANCE}_CH_1 );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipEnable( ${MCPMSMFOC_PWM_INSTANCE}_CH_2 );
@@ -124,9 +124,9 @@ void mcHalI_InverterPwmDisable( void )
         /** ToDO: Log error */
     }
 <#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL} );
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL} );
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL} );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_A_CHANNEL} );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_B_CHANNEL} );
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelOverrideDisable( PWM_CHANNEL_${MCPMSMFOC_PWM_C_CHANNEL} );
 <#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipDisable( ${MCPMSMFOC_PWM_INSTANCE}_CH_1 );
     ${MCPMSMFOC_PWM_INSTANCE}_ChannelPinsOwnershipDisable( ${MCPMSMFOC_PWM_INSTANCE}_CH_2 );
@@ -259,9 +259,9 @@ void mcHalI_PwmTimerStart( void )
 <#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_PWMStart( );
 <#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_A_FINAL}_MASK);
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_B_FINAL}_MASK);
-    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_INSTANCE_PWM_C_FINAL}_MASK);
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_A_CHANNEL}_MASK);
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_B_CHANNEL}_MASK);
+    ${MCPMSMFOC_PWM_INSTANCE}_ChannelsStart(PWM_CHANNEL_${MCPMSMFOC_PWM_C_CHANNEL}_MASK);
 <#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     ${MCPMSMFOC_PWM_INSTANCE}_Start();
 </#if>
@@ -361,7 +361,7 @@ void mcHalI_PwmCallbackRegister( MCPWM_CH_CALLBACK callback, uintptr_t context )
  */
 bool mcHalI_StartStopButtonState( void )
 {
-     return (bool)${buttonName(index)}_Get();
+    return (bool)${buttonName(index)}_Get();
 }
 <#break>
 </#if>

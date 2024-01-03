@@ -130,7 +130,7 @@ class mcBspI_PinManager:
             if old_name == "" and old_mode == "":
                 self.setDatabaseSymbol("core", "PIN_" + pin + "_FUNCTION_NAME", name )
                 self.setDatabaseSymbol("core", "PIN_" + pin + "_FUNCTION_TYPE", mode )
-                self.setDatabaseSymbol("core", "PIN_" + pin + "_LAT", "Low")
+                self.setDatabaseSymbol("core", "PIN_" + pin + "_LAT", "")
                 self.setDatabaseSymbol("core", "PIN_" + pin + "_DIR", "Out")
 
     def configurePin(self, pad, name, mode):

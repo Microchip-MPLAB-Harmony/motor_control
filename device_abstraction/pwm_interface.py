@@ -86,12 +86,19 @@ class mcDevI_PwmInterfaceClass:
 
                 # Initialize instance dictionary
                 self.information[instance] ={}
+                self.externalFaultSources = []
 
                 # Iterate through signals and group by "WO" attribute
                 for signal in signals:
                     group = signal.getAttribute("group")
                     pad = signal.getAttribute("pad")
                     channel = signal.getAttribute("index")
+
+                    if "PWMFI" in group:
+                        fault_source = "FAULT_PWM_ID" + channel
+                        self.externalFaultSources.append(fault_source)
+
+                    print("External Fault sources", self.externalFaultSources)
 
                     # Determine the polarity based on the "group" attribute
                     polarity = "high" if "PWMH" in group else "low" if "PWML" in group else None
@@ -163,9 +170,23 @@ class mcDevI_PwmInterfaceClass:
             # Assign the final result to the class attribute
             self.information = result_information
 
-            # PWM fault management
-            global global_PWM_FAULT
-            global_PWM_FAULT = "EIC_CHANNEL_2"
+            module_path = "/avr-tools-device-file/devices/device/peripherals/module@[name=\"EIC\"]"
+            modules = ATDF.getNode(module_path).getChildren()
+
+            self.externalFaultSources = []
+
+            # Iterate through modules
+            for module in modules:
+                instance = module.getAttribute("name")
+                signal_path = module_path + "/instance@[name=\"" + instance + "\"]/signals"
+                signals = ATDF.getNode(signal_path).getChildren()
+
+                for signal in signals:
+                    if signal.getAttribute("group") == "EXTINT":
+                        source =  "EIC_CHANNEL_" + signal.getAttribute("index")
+
+                        if source not in self.externalFaultSources:
+                            self.externalFaultSources.append(source)
 
         elif ( self.name == "MCPWM" ) and ( self.id == "01477"):
             # Load device XML
@@ -221,10 +242,43 @@ class mcDevI_PwmInterfaceClass:
 
                         self.information[unit][channel]["high"].append(pad)
 
-            # PWM fault management
-            global global_PWM_FAULT
-            global_PWM_FAULT = "FLT15"
+            # PWM Fault external sources
+            register_name = "IOCON1__FLTSRC"
+            value_group_path = self.getValueGroupPath("MCPWM", register_name)
+            values = ATDF.getNode(value_group_path).getChildren()
 
+            self.externalFaultSources = []
+
+            for value in values:
+                self.externalFaultSources.append(value.getAttribute("caption"))
+
+            self.externalFaultSources.sort()
+
+            # PWM Fault internal sources
+    def getRegisterPath(self, ModuleName, RegisterName):
+        labelPath = str('/avr-tools-device-file/modules/module@[name="'
+                       + ModuleName + '"]/register-group@[name="'
+                       + ModuleName + '"]/register@[name="'
+                       + RegisterName + '"]')
+        return labelPath
+
+    def getRegisterBitfieldPath(self, ModuleName, RegisterName, BitfieldName):
+        labelPath = str('/avr-tools-device-file/modules/module@[name="' +
+            ModuleName + '"]/register-group@[name="' + ModuleName +
+            '"]/register@[name="' + RegisterName + '"]/bitfield@[name="'
+            + BitfieldName +'"]')
+        return labelPath
+
+    def getValueGroupPath(self, ModuleName, ValueGroupName):
+        value_groupPath = str('/avr-tools-device-file/modules/module@[name="'
+            + ModuleName + '"]/value-group@[name="' + ValueGroupName + '"]')
+        return value_groupPath
+
+    def getValueGroupValuePath(self, ModuleName, ValueGroupName, ValueString):
+        valuePath = str('/avr-tools-device-file/modules/module@[name="' + ModuleName
+            + '"]/value-group@[name="' + ValueGroupName + '"]/value@[value="' +
+            ValueString + '"]')
+        return valuePath
 
     """
     Description:

@@ -120,6 +120,8 @@ __STATIC_INLINE void mcAppI_MotorStartStop(void)
         mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (AFEC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+        mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
         mcHalI_AdcCallBackRegister( (ADCHS_CALLBACK)mcAppI_InitialPositionDetectIsr, (uintptr_t)dummyForMisra );
 </#if>
@@ -191,7 +193,7 @@ __STATIC_INLINE void mcAppI_DirectionReverse(void)
 
 <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
 <#list 0..10 as index>
-<#if "Direction indication" == ledFunction(index)>
+<#if "Direction Indication" == ledFunction(index)>
         /** Set fault indicator */
         mcHal_DirectionIndication();
 <#break>
@@ -274,6 +276,9 @@ void mcAppI_ApplicationInit( void )
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     /** Enable ADC interrupt for field oriented control */
     mcHalI_AdcCallBackRegister(  (AFEC_CALLBACK)mcAppI_AdcCalibrationIsr, (uintptr_t)dummyForMisra );
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
+    /** Enable ADC interrupt for field oriented control */
+    mcHalI_AdcCallBackRegister(  (ADC_CALLBACK)mcAppI_AdcCalibrationIsr, (uintptr_t)dummyForMisra );
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
     /** Enable ADC interrupt for field oriented control */
     mcHalI_AdcCallBackRegister(  (ADCHS_CALLBACK)mcAppI_AdcCalibrationIsr, (uintptr_t)dummyForMisra );
@@ -284,6 +289,9 @@ void mcAppI_ApplicationInit( void )
     /** Enable ADC module */
     mcHalI_AdcEnable();
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
+    /** Enable ADC module */
+    mcHalI_AdcEnable();
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     /** Enable ADC module */
     mcHalI_AdcEnable();
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
@@ -387,7 +395,7 @@ void mcAppI_OverCurrentReactionIsr( MCPWM_CH_STATUS status, uintptr_t context )
 
 <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
 <#list 0..10 as index>
-<#if "Fault indication" == ledFunction(index)>
+<#if "Fault Indication" == ledFunction(index)>
     /** Set fault indicator */
     mcHal_FaultIndicationSet();
 <#break>

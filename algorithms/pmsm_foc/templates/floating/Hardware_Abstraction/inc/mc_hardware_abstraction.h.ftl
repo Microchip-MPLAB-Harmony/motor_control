@@ -167,7 +167,7 @@ __STATIC_FORCEINLINE void mcHalI_PhaseACurrentGet( void )
     mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
   <#if MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC7" >
-    mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
+    mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(ADCHS_CH${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
   <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC0">
     mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH0);
   <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC1">
@@ -243,19 +243,19 @@ __STATIC_FORCEINLINE void mcHalI_DcLinkVoltageGet( void )
     mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
   <#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC7" >
-    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});
+    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});
   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC0">
-    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH0);
+    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH0);
   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC1">
-    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH1);
+    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH1);
   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC2">
-    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH2);
+    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH2);
   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC3">
-    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH3);
+    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH3);
   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC4">
-    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH4);
+    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH4);
   <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC5">
-    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADCHS_CH5);
+    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH5);
   </#if>
 <#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADC_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});
@@ -395,7 +395,7 @@ __STATIC_FORCEINLINE void mcHalI_AdcInterruptClear( void )
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     NVIC_ClearPendingIRQ(AFEC0_IRQn);
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
-    EVIC_SourceStatusClear(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].INTERRUPT_ADC_RESULT});
+    EVIC_SourceStatusClear(INT_SOURCE_ADC_DATA${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
 <#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     NVIC_ClearPendingIRQ(ADC_IRQn);
 </#if>
@@ -418,7 +418,7 @@ __STATIC_FORCEINLINE void mcHalI_AdcInterruptDisable( void )
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     NVIC_DisableIRQ(AFEC0_IRQn);
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
-    EVIC_SourceDisable(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].INTERRUPT_ADC_RESULT});
+    EVIC_SourceDisable(INT_SOURCE_ADC_DATA${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
 <#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     NVIC_DisableIRQ(ADC_IRQn);
 </#if>
@@ -440,10 +440,10 @@ __STATIC_FORCEINLINE void mcHalI_AdcInterruptEnable( void )
     ADC0_InterruptsEnable( ADC_STATUS_RESRDY );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     NVIC_EnableIRQ(AFEC0_IRQn);
-<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
-    EVIC_SourceEnable(${.vars["${MCPMSMFOC_ADC_MODULE_01?lower_case}"].INTERRUPT_ADC_RESULT});
 <#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     NVIC_EnableIRQ(ADC_IRQn);
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
+    EVIC_SourceEnable(INT_SOURCE_ADC_DATA${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
 </#if>
 }
 
@@ -517,18 +517,18 @@ void mcHalI_InverterPwmDisable( void );
 
 <#--  Get led function  -->
 <#function ledFunction index>
-   <#if 0 == index>
-    <#return MCPMSMFOC_LED_0_FUNCTION>
-  <#elseif 1 == index>
-    <#return MCPMSMFOC_LED_1_FUNCTION>
-  <#else>
-    <#return "Error">
-  </#if>
+<#if 0 == index>
+<#return MCPMSMFOC_LED_0_FUNCTION>
+<#elseif 1 == index>
+<#return MCPMSMFOC_LED_1_FUNCTION>
+<#else>
+<#return "Error">
+</#if>
 </#function>
 
 <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
-    <#list 0..10 as index>
-        <#if "Direction indication" == ledFunction(index)>
+<#list 0..10 as index>
+<#if "Direction Indication" == ledFunction(index)>
 /*! \brief Set direction indicator
 *
 * Details.
@@ -540,8 +540,13 @@ void mcHalI_InverterPwmDisable( void );
 * @return:
 */
 void mcHal_DirectionIndication( void );
+</#if>
+</#list>
+</#if>
 
-<#elseif "Fault indication" == ledFunction(index)>
+<#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
+<#list 0..10 as index>
+<#if "Fault Indication" == ledFunction(index)>
 /*! \brief Set fault indicator
 *
 * Details.
@@ -554,12 +559,8 @@ void mcHal_DirectionIndication( void );
 */
 void mcHal_FaultIndicationSet( void );
 
-        </#if>
-
-        <#if index == ( MCPMSMFOC_LEDS_AVAILABLE -1 )>
-            <#break>
-        </#if>
-    </#list>
+</#if>
+</#list>
 </#if>
 
 
@@ -602,10 +603,10 @@ void mcHalI_PwmTimerStart( void );
 void mcHalI_AdcCallBackRegister( ADC_CALLBACK callback, uintptr_t context );
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
 void mcHalI_AdcCallBackRegister( AFEC_CALLBACK callback, uintptr_t context );
-<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
-void mcHalI_AdcCallBackRegister( ADCHS_CALLBACK callback, uintptr_t context );
 <#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
 void mcHalI_AdcCallBackRegister( ADC_CALLBACK callback, uintptr_t context );
+<#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
+void mcHalI_AdcCallBackRegister( ADCHS_CALLBACK callback, uintptr_t context );
 </#if>
 
 /*! \brief PWM fault callback function
@@ -627,17 +628,17 @@ void mcHalI_PwmCallbackRegister( MCPWM_CH_CALLBACK callback, uintptr_t context )
 </#if>
 
 
- /*! \brief PWM interrupt enable
-  *
-  * Details.
-  * PWM interrupt enable
-  *
-  * @param[in]:
-  * @param[in/out]:
-  * @param[out]:
-  * @return:
-  */
- void mcHalI_PwmInterruptEnable( void );
+/*! \brief PWM interrupt enable
+ *
+ * Details.
+ * PWM interrupt enable
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcHalI_PwmInterruptEnable( void );
 
 <#--  Get button function  -->
 <#function buttonFunction index>
@@ -652,6 +653,7 @@ void mcHalI_PwmCallbackRegister( MCPWM_CH_CALLBACK callback, uintptr_t context )
 
 <#if MCPMSMFOC_BUTTONS_AVAILABLE != 0 >
 <#list 0..( MCPMSMFOC_BUTTONS_AVAILABLE - 1 ) as index>
+
 <#if "Start/Stop" == buttonFunction(index)>
 bool mcHalI_StartStopButtonState( void );
 <#break>

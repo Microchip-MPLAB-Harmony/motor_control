@@ -45,6 +45,7 @@ class mcFocI_DataMonitoringClass:
         self.information = device.information
         self.physical_ports = device.physical_ports
 
+
     def createSymbols(self):
         # Root node
         self.sym_NODE = self.component.createMenuSymbol(None, None)

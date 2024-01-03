@@ -72,18 +72,20 @@ class mcEvtI_EventSystemClass:
         self.IP.setVisible(False)
         self.IP.setValue( self.name + "_" + self.id)
 
+
         self.eic_channel = ""
         self.eic_eo_symbol = ""
         self.eic_config_sense = ""
 
+
     def createSymbols( self ):
         pass
 
-    def setConfiguration(self):
+    def setConfiguration(self, fault_source):
         if ( self.name == "EVSYS" ) and (( self.id == "U2504") or ( self.id == "U2256" )):
             pwmInstance = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_INSTANCE")
             adcInstance = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT")
-            eic = filter(str.isdigit, str( global_PWM_FAULT))
+            eic = filter(str.isdigit, str( fault_source))
             generator0 = generator1 = user0 = user1 = 0
 
             if( fault_source != "** Not Selected **"):
@@ -136,11 +138,13 @@ class mcEvtI_EventSystemClass:
 
                 sortedGenerators = sorted(generators)
 
+
                 for id in range(0, len(sortedGenerators)):
-                    if str(pwmInstance) + "_OVF" in sortedGenerators[id]:
+                    if str(pwmInstance) + "_OVF" == sortedGenerators[id]:
                         generator0 = int(id)
-                    if "EIC_EXTINT_" + str(eic) in sortedGenerators[id]:
+                    if "EIC_EXTINT_" + str(eic) == sortedGenerators[id]:
                         generator1 = int(id)
+
 
                 #Find event USER numbers from ATDF
                 node = ATDF.getNode("/avr-tools-device-file/devices/device/events/users")
@@ -165,7 +169,7 @@ class mcEvtI_EventSystemClass:
         pass
 
     def onAttachmentConnected(self, source, target):
-        self.setConfiguration()
+        pass
 
     """
     Description:
@@ -177,7 +181,6 @@ class mcEvtI_EventSystemClass:
 
     def __call__(self):
         self.createSymbols()
-        self.setConfiguration()
 
 
 
