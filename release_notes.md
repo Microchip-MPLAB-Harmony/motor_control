@@ -9,6 +9,28 @@ has_children: true
 
 # Microchip MPLAB Harmony 3 Release Notes
 
+## Motor Control Release v3.10.1
+
+### Bug Fix
+* Rectify package yml files
+
+### Known Issues
+* None
+
+### Required MPLAB Harmony v3 Modules
+* csp v3.17.0
+* bsp v3.16.1
+* x2c v1.4.0
+* harmony-services v1.3.1
+
+### Development Tools
+* [MPLAB X IDE v6.10](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB XC32 C/C++ Compiler v4.30](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Code Configurator (MCC) v5.3.7
+  * X2CScope v1.3.3.
+
+
 ## Motor Control Release v3.10.0
 
 ### New Features
