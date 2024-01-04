@@ -1,15 +1,15 @@
 package:
   format-version: "1.0.0"
   name: "motor_control"
+  version: "v3.10.1"
   type: "api"
   status: "production"
-  required: true
-  version: "3.10.0"
+  required: false
 
   dependencies:
     - name: "csp"
       type: "package"
-      version: "3.17.0"
+      version: "v3.17.0"
     - name: "x2c"
       type: "package"
       version: "v1.4.0"
