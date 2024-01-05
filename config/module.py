@@ -34,6 +34,16 @@
 #---------------------------------------------------------------------------------------#
 #                                 Suppoted IPs                                          #
 #---------------------------------------------------------------------------------------#
+
+SupportedDeviceSeries = [
+    "LAN9255ZMX", "PIC32CXSG41", "PIC32CXSG60","PIC32CXSG61", "SAMD51A", "SAME51A", "SAME53A", "SAME54A",
+    "PIC32MK MC",
+    "SAME70B", "SAMS70B", "SAMV70B", "SAMV71B", "SAMV71RT", "PIC32CZCA70", "PIC32CZMC70",
+    "SAMC20A", "SAMC21A",
+    "SAMRH707A",
+    "PIC32CMMC00",
+]
+
 SupportedIps = {
     "PWM" : [
               { "name": "TCC", "id": "U2213"},
@@ -59,13 +69,28 @@ def checkIpSupport(module, ip):
         if ( entry["name"] == module.getAttribute("name") and entry["id"] == module.getAttribute("id") ):
             return True
     return False
+
 #---------------------------------------------------------------------------------------#
 #                                 Load module                                           #
 #---------------------------------------------------------------------------------------#
 def loadModule():
 
+    # Get the processor name
+    series = str(ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series"))
+
+    device_supported = False
+    for entry in SupportedDeviceSeries:
+        if series in entry:
+            device_supported = True
+            break
+
+    if not device_supported:
+        return
+
+    # Get the available modules from ATDF file
     periphNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
     modules = periphNode.getChildren()
+
 
     pwmPresent = adcPresent = encoderPresent = False
 

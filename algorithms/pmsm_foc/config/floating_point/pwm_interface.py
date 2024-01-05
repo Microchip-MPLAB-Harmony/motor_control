@@ -125,6 +125,7 @@ class mcPwmI_PwmInterfaceClass:
         hs_pad = self.component.createComboSymbol(hs_pad_symbol, channel, ["** Select **"])
         hs_pad.setLabel("PWM" + channel_name + "H")
         hs_pad.setDefaultValue("** Select **")
+        hs_pad.setVisible(False)
         hs_pad.setDependencies(updateHighSidePadList, [channel_symbol_id, hs_pad_symbol, "MCPMSMFOC_USED_PIN_LIST"])
 
         old_ls_pad_symbol = "MCPMSMFOC_OLD_PWM_" + channel_name + "L_PAD"
@@ -138,6 +139,7 @@ class mcPwmI_PwmInterfaceClass:
         ls_pad = self.component.createComboSymbol( ls_pad_symbol, channel, ["** Select **"])
         ls_pad.setLabel("PWM" + channel_name + "L")
         ls_pad.setDefaultValue("** Select **")
+        ls_pad.setVisible(False)
         ls_pad.setDependencies(updateLowSidePadList, [channel_symbol_id, ls_pad_symbol, "MCPMSMFOC_USED_PIN_LIST"])
 
         return channel
@@ -342,7 +344,7 @@ class mcPwmI_PwmInterfaceClass:
                 value = str(information["PWM_AL"]["PAD"] )
                 self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_AL_PAD", value)
 
-                # Set channel and pad values for PWM phase A
+                # Set channel and pad values for PWM phase B
                 value = str(information["PWM_BH"]["FUNCTION"][0][1])
                 self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_B_CHANNEL", value)
 
@@ -352,7 +354,7 @@ class mcPwmI_PwmInterfaceClass:
                 value = str(information["PWM_BL"]["PAD"] )
                 self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_BL_PAD", value)
 
-                # Set channel and pad values for PWM phase A
+                # Set channel and pad values for PWM phase C
                 value = str(information["PWM_CH"]["FUNCTION"][0][1])
                 self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_C_CHANNEL", value)
 
@@ -361,6 +363,10 @@ class mcPwmI_PwmInterfaceClass:
 
                 value = str(information["PWM_CL"]["PAD"] )
                 self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_CL_PAD", value)
+
+                # Set fault pin
+                value = str(information["FAULT"]["FUNCTION"][0][1])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_FAULT_SOURCE", value)
 
 
     def updatePwmPeriod(self, symbol, event):
@@ -376,7 +382,7 @@ class mcPwmI_PwmInterfaceClass:
         if (    "** Select **" != channel_a
             and "** Select **" != channel_b
             and "** Select **" != channel_c
-            and "** Select **" != fault_source
+            # and "** Select **" != fault_source
            ):
                 message = dict()
                 message['PWM_FREQ'     ]  =  self.sym_PWM_FREQ.getValue()

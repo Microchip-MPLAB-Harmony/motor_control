@@ -113,8 +113,6 @@ class mcEvtI_EventSystemClass:
                 self.eic_config_sense = "EIC_CONFIG_SENSE_" + eic
                 Database.setSymbolValue("eic", self.eic_config_sense, 2)
 
-                print("Symbols Changed", self.eic_channel, self.eic_eo_symbol, self.eic_config_sense )
-
             else:
                 print("EIC Component could not be activated")
 

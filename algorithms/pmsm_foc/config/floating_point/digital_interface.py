@@ -105,6 +105,7 @@ class mcFocI_DigitalInterfaceClass:
         pad  = self.component.createComboSymbol( pad_id, node, self.information)
         pad.setLabel("Pin Number")
         pad.setDefaultValue("** Select **")
+        pad.setVisible(False)
         pad.setDependencies(updateButtonPad, [ pad_id, "MCPMSMFOC_USED_PIN_LIST"])
 
         old_pad_id = "MCPMSMFOC_BUTTON_"+ str(index)+"_OLD_NUMBER"
@@ -176,6 +177,7 @@ class mcFocI_DigitalInterfaceClass:
         pad  = self.component.createComboSymbol( pad_id, node, self.information)
         pad.setLabel("Pin Number")
         pad.setDefaultValue("** Select **")
+        pad.setVisible(False)
         pad.setDependencies(updateLedPad, [ pad_id, "MCPMSMFOC_USED_PIN_LIST"])
 
         old_pad_id = "MCPMSMFOC_LED_"+ str(index)+"_OLD_NUMBER"
@@ -225,8 +227,13 @@ class mcFocI_DigitalInterfaceClass:
         numeric_filter = filter(str.isdigit, str(input_String))
         return "".join(numeric_filter)
 
+    def setDatabaseSymbol(self, namespace, id, value):
+        status = Database.setSymbolValue(namespace, id, value)
+
+        if( status == False):
+            print("Checkpoint. The symbol " + id + " could not be updated")
+
     def handleMessage(self, ID, information):
-        pass
         # if ("BSP_DIGITAL_INTERFACE" == ID) and (None != information):
         #     index = 0
         #     for key, value in information["BUTTONS"].items():
@@ -245,6 +252,58 @@ class mcFocI_DigitalInterfaceClass:
         #         index += 1
 
         #     self.sym_AVAILABLE_LEDS.setValue(index)
+
+        if ("BSP_DIGITAL_INTERFACE" == ID) and (None != information):
+            print("Digital information", information)
+
+            index = 0
+            for key, value in information["BUTTONS"].items():
+                # Set the node value as true
+                node_id = "MCPMSMFOC_BUTTON_"+ str(index) + "_NODE"
+                self.setDatabaseSymbol("pmsm_foc", node_id, True)
+
+                # Set index value
+                idx_id = "MCPMSMFOC_BUTTON_"+ str(index) + "_INDEX"
+                self.setDatabaseSymbol("pmsm_foc", idx_id, index)
+
+                # Set the interface name
+                name_id = "MCPMSMFOC_BUTTON_"+ str(index) +"_NAME"
+                self.setDatabaseSymbol("pmsm_foc", name_id, key)
+
+                # Set the type
+                types_id = "MCPMSMFOC_BUTTON_"+ str(index)+"_TYPE"
+                self.setDatabaseSymbol("pmsm_foc", types_id, "Physical")
+
+                # Update the index
+                index += 1
+
+                # Set the number of buttons
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_BUTTONS_AVAILABLE", index)
+
+            index = 0
+            for key, value in information["LEDS"].items():
+                # Set the node value as true
+                node_id = "MCPMSMFOC_LED_"+ str(index) + "_NODE"
+                self.setDatabaseSymbol("pmsm_foc", node_id, True)
+
+                # Set index value
+                idx_id = "MCPMSMFOC_LED_"+ str(index) + "_INDEX"
+                self.setDatabaseSymbol("pmsm_foc", idx_id, index)
+
+                # Set the interface name
+                name_id = "MCPMSMFOC_LED_"+ str(index) +"_NAME"
+                self.setDatabaseSymbol("pmsm_foc", name_id, key)
+
+                # Set the type
+                types_id = "MCPMSMFOC_LED_"+ str(index)+"_TYPE"
+                self.setDatabaseSymbol("pmsm_foc", types_id, "Physical")
+
+                # Update the index
+                index += 1
+
+                # Set the number of buttons
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_LEDS_AVAILABLE", index)
+
 
     def __call__(self):
         self.createSymbols()

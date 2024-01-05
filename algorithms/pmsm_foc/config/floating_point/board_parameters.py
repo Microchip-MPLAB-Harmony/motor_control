@@ -60,13 +60,19 @@ class mcBrdI_BoardClass:
                     bsp_id = "BSP_" + board.attrib['name'].replace(" ", "_")
                     self.information[bsp_id] = []
 
-                    bsp_xml = os.path.join(Variables.get("__BSP_DIR"),"boards",config_name, "config", "board.xml")
+                    bsp_path = os.path.join(Variables.get("__BSP_DIR"),"boards", config_name, "config")
+                    if os.path.exists(os.path.join(bsp_path, "board.xml")):
+                        bsp_xml = os.path.join(bsp_path, "board.xml")
 
-                    if( os.path.exists(bsp_xml) and os.path.isfile(bsp_xml)):
-                        bspContent = ET.fromstring((open(bsp_xml, "r")).read())
+                        if( os.path.exists(bsp_xml) and os.path.isfile(bsp_xml)):
+                            bspContent = ET.fromstring((open(bsp_xml, "r")).read())
 
-                        for board in bspContent.findall("boards/board"):
-                            self.information[bsp_id].append(board.attrib["name"])
+                            for board in bspContent.findall("boards/board"):
+                                self.information[bsp_id].append(board.attrib["name"])
+
+                    elif os.path.exists(os.path.join(bsp_path, "boards.py")):
+                        execfile(os.path.join(bsp_path, "boards.py"))
+                        self.information[bsp_id] = ["dsPICDEM MCLV2", "dsPICDEM MCHV3"] # (mcBspI_GetBoardData()).keys()
 
     def createSymbols( self ):
         sym_BOARD_NODE = self.component.createBooleanSymbol("MCPMSMFOC_DEVELOPER_MODE", None)

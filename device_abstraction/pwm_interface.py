@@ -98,8 +98,6 @@ class mcDevI_PwmInterfaceClass:
                         fault_source = "FAULT_PWM_ID" + channel
                         self.externalFaultSources.append(fault_source)
 
-                    print("External Fault sources", self.externalFaultSources)
-
                     # Determine the polarity based on the "group" attribute
                     polarity = "high" if "PWMH" in group else "low" if "PWML" in group else None
 

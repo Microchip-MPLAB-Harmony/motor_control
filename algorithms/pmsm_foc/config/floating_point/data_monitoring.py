@@ -94,6 +94,7 @@ class mcFocI_DataMonitoringClass:
 
         self.sym_RECEIVE_PAD = self.component.createComboSymbol("MCPMSMFOC_DATA_MONITOR_RECEIVE_PAD", self.sym_PERIPHERAL, ["** Select **"])
         self.sym_RECEIVE_PAD.setLabel("Receive pad")
+        self.sym_RECEIVE_PAD.setVisible(False)
         self.sym_RECEIVE_PAD.setDependencies(self.updateRxPadList, ["MCPMSMFOC_DATA_MONITOR_PERIPHERAL", "MCPMSMFOC_DATA_MONITOR_RECEIVE_PAD", "MCPMSMFOC_USED_PIN_LIST"])
 
         self.sym_TRANSMIT_CHANNEL = self.component.createComboSymbol("MCPMSMFOC_DEBUG_X_CHANNEL", self.sym_PERIPHERAL, ["** Select **"])
@@ -107,8 +108,8 @@ class mcFocI_DataMonitoringClass:
 
         self.sym_TRANSMIT_PAD = self.component.createComboSymbol("MCPMSMFOC_DATA_MONITOR_TRANSMIT_PAD", self.sym_PERIPHERAL, ["** Select **"])
         self.sym_TRANSMIT_PAD.setLabel("Transmit pad")
+        self.sym_TRANSMIT_PAD.setVisible(False)
         self.sym_TRANSMIT_PAD.setDependencies(self.updateTxPadList, ["MCPMSMFOC_DATA_MONITOR_PERIPHERAL", "MCPMSMFOC_DATA_MONITOR_TRANSMIT_PAD", "MCPMSMFOC_USED_PIN_LIST"])
-
         self.sym_DATA_MONITOR_CALLBACK = self.component.createMenuSymbol(None, None)
         self.sym_DATA_MONITOR_CALLBACK.setLabel("Data monitoring callback")
         self.sym_DATA_MONITOR_CALLBACK.setDependencies(self.updateCommInterface, ["MCPMSMFOC_DATA_MONITOR_PERIPHERAL",
@@ -171,7 +172,8 @@ class mcFocI_DataMonitoringClass:
         receive = self.stringReplace(self.sym_RECEIVE_PAD.getValue())
         transmit = self.stringReplace(self.sym_TRANSMIT_PAD.getValue())
 
-        if unit != "** Select **" and receive != "** Select **" and transmit != "** Select **":
+        if unit != "** Select **":
+            # and receive != "** Select **" and transmit != "** Select **":
             args = {
                         "UNIT": unit,
                         "RECEIVE": { "PAD": receive },
@@ -181,7 +183,7 @@ class mcFocI_DataMonitoringClass:
             # Send the message to custom BSP
             module = str( Database.getSymbolValue(self.component.getID(), "MCPMSMFOC_FOC_X2C_ID"))
             Database.sendMessage(module, "X2CSCOPE_CONFIGURATION", args)
-            Database.sendMessage("cstom_mc_bsp", "MCPMSMFOC_DEBUG_PAD_SET", args)
+            # Database.sendMessage("cstom_mc_bsp", "MCPMSMFOC_DEBUG_PAD_SET", args)
 
     def updateInstance(self, symbol, event):
         if symbol.getValue() == True:
@@ -217,7 +219,9 @@ class mcFocI_DataMonitoringClass:
 
     def handleMessage(self, ID, information):
         if( ID == "BSP_DATA_MONITORING"):
-           pass
+            # Enable X2C Scope
+            Database.setSymbolValue("pmsm_foc", "MCPMSMFOC_DATA_MONITOR_ENABLE", True )
+            Database.setSymbolValue("pmsm_foc", "MCPMSMFOC_DATA_MONITOR_PERIPHERAL", information["TRANSMIT"]["FUNCTION"][0][0] )
 
     def onAttachmentConnected(self, source, target):
         if (source["id"] == "pmsmfoc_X2CSCOPE"):
