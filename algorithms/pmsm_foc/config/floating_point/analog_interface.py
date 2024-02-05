@@ -109,7 +109,7 @@ class mcAniI_AnalogInterfaceClass:
                         "instance" : old_unit.getValue(),
                         "channel"  : old_channel.getValue(),
                     }
-                    Database.sendMessage( ( id.getValue()).lower(), "PMSM_FOC_ADC_CH_CONF_", args)
+                    Database.sendMessage( ( id.getValue()).lower(), "SET_ADC_CONFIG_PARAMS", args)
 
                 # Configure new channel
                 if self.name == "ADC" and ( self.id == "U2500" or self.id == "U2247"):
@@ -153,7 +153,7 @@ class mcAniI_AnalogInterfaceClass:
                         "enable_dma_sequence" :False
                     }
 
-                Database.sendMessage( ( id.getValue()).lower(), "PMSM_FOC_ADC_CH_CONF_", args)
+                Database.sendMessage( ( id.getValue()).lower(), "SET_ADC_CONFIG_PARAMS", args)
 
                 old_unit.setValue(unit.getValue())
                 old_channel.setValue(channel.getValue())
