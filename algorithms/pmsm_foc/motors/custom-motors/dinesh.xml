@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<pmsm>
+<customPmsmMotorState>
+   <handle>CustomMotor</handle>
+   <nickname>CustomMotor</nickname>
+   <mfrCompanyName>dinesh</mfrCompanyName>
+   <mfrMotorName>-</mfrMotorName>
+   <mfrPartNumber>-</mfrPartNumber>
+   <mfrAdditionalInfo>-</mfrAdditionalInfo>
+   <mchpDirectPartNumber>-</mchpDirectPartNumber>
+   <nameplate>
+      <connection>0</connection>
+      <namePlateRatedCurrentContinuous>1.0 A</namePlateRatedCurrentContinuous>
+      <namePlateRatedPeakCurrent>1.0 A</namePlateRatedPeakCurrent>
+      <namePlateRatedVoltage>1.40129846432e-45 V</namePlateRatedVoltage>
+      <namePlateBaseSpeed>1.0 rad/s</namePlateBaseSpeed>
+      <namePlateRatedSpeed>1.0 rad/s</namePlateRatedSpeed>
+   </nameplate>
+   <sensors>
+      <opticalEncoder>
+         <indexPulsePresent />
+         <pulsePerRotation />
+      </opticalEncoder>
+   </sensors>
+   <other>
+      <fullscaleBaseRatio>0.0 one</fullscaleBaseRatio>
+      <polePairs>2.0 one</polePairs>
+   </other>
+   <version>1.0.0</version>
+</customPmsmMotorState>
+<motorParameters>
+   <Rs>
+      <active>1.0 Ohm</active>
+   </Rs>
+   <Ld>
+      <active>2.0 H</active>
+   </Ld>
+   <Lq>
+      <active>2.0 H</active>
+   </Lq>
+   <Ke>
+      <active>2.0 V/rad/s</active>
+   </Ke>
+   <B>
+      <active>1.0 one</active>
+   </B>
+   <Tf>
+      <active>1.0 one</active>
+   </Tf>
+   <J>
+      <active>1.0 one</active>
+   </J>
+</motorParameters>
+</pmsm>

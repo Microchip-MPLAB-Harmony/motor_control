@@ -49,53 +49,11 @@
 #include "mc_motor.h"
 #include "mc_utilities.h"
 #include "mc_key_manager.h"
+#include "mc_rotor_position_parameters.h"
 
 /*******************************************************************************
  Constants
  *******************************************************************************/
-
-/*******************************************************************************
- User defined data types
- *******************************************************************************/
-typedef struct
-{
-    /** Soft switch parameters */
-    float32_t lowerThreshold;
-    float32_t upperThreshold;
-
-    tmcMot_PMSM_s  * pMotorParameters;
-
-    /** HFI parameters */
-    float32_t pulseAmplitude;
-    float32_t foInHertz;
-    float32_t Keps;
-
-    /** Sampling time  */
-    float32_t dt;
-
-    void * pStatePointer;
-}tmcRpe_Parameters_s;
-
-/*******************************************************************************
- Interface variables
- *******************************************************************************/
-__STATIC_INLINE void mcRpe_ParametersSet(tmcRpe_Parameters_s * const pParameters )
-{
-    /** Soft switch parameters */
-    pParameters->lowerThreshold = (float32_t)${MCPMSMFOC_ZSMT_HYB_LOWER_TH};
-    pParameters->upperThreshold = (float32_t)${MCPMSMFOC_ZSMT_HYB_UPPER_TH};
-
-    pParameters->pMotorParameters = &mcMotI_PMSM_gds;
-
-    /** HFI parameters */
-    pParameters->pulseAmplitude = (float32_t)${MCPMSMFOC_ZSMT_HYB_HFI_MAGNITUDE};
-    pParameters->foInHertz = (float32_t)${MCPMSMFOC_ZSMT_HYB_ANGLE_TRACK_F0};
-    pParameters->Keps = (float32_t)${MCPMSMFOC_ZSMT_HYB_HFI_KEPS};
-
-    /** Sampling time */
-    pParameters->dt = (float32_t)(${MCPMSMFOC_PWM_PERIOD});
-
-}
 
 /*******************************************************************************
  Interface Variables
@@ -155,9 +113,68 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
                                                      tmcTypes_AlphaBeta_s * pIAlphaBeta,
                                                      tmcTypes_AlphaBeta_s * pUAlphaBeta,
                                                      tmcTypes_AlphaBeta_s * pEAlphaBeta,
-                                                     float32_t initialPosition,
                                                      float32_t * pAngle, float32_t * pSpeed );
 
+/*! \brief Get the electrical angle of the motor
+ *
+ * Details.
+ *  Get the electrical angle of the motor
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+float32_t mcRpeI_ElectricalAngleGet(  const tmcRpe_Parameters_s * const pParameters );
+
+/*! \brief Get the electrical speed of the motor
+ *
+ * Details.
+ *  Get the electrical speed of the motor
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+float32_t mcRpeI_ElectricalSpeedGet(  const tmcRpe_Parameters_s * const pParameters );
+
+/*! \brief Get mechanical angle
+ *
+ * Details.
+ * Get mechanical angle
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+float32_t mcRpeI_MechanicalAngleGet(  const tmcRpe_Parameters_s * const pParameters );
+
+/*! \brief Get mechanical angle
+ *
+ * Details.
+ * Get mechanical angle
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+float32_t mcRpeI_MechanicalSpeedGet(  const tmcRpe_Parameters_s * const pParameters );
+
+/*! \brief Check if rotor position estimation is ready 
+ *
+ * Details.
+ * Check if rotor position estimation is ready 
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+ bool mcRpeI_RotorPositionReady(  const tmcRpe_Parameters_s * const pParameters );
+ 
 /*! \brief Carrier Signal Injection
  *
  * Details.

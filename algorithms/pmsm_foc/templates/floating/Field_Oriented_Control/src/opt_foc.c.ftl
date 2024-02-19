@@ -779,6 +779,10 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     pState = (tmcFoc_State_s *)pModule->pStatePointer;
 
     /** Get the output structure pointer */
+    tmcFoc_Input_s * pInput;
+    pInput = &pModule->dInput;
+
+    /** Get the output structure pointer */
     tmcFoc_Output_s * pOutput;
     pOutput = &pModule->dOutput;
 
@@ -786,7 +790,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     mcFocI_InputsRead( pModule );
 
     /** Clarke transformation */
-    mcFoc_ClarkeTransformation( pInput->iABC, &pOutput->iAlphaBeta);
+    mcFoc_ClarkeTransformation( &pInput->iABC, &pOutput->iAlphaBeta);
 
     <#if ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' ) >
     mcSupI_OpenLoopStartup( &pState->bOpenLoopStartup, pState->commandDirection, &pState->iQref,
@@ -796,7 +800,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     /** Rotor position estimation */
     tmcTypes_AlphaBeta_s eAlphaBeta;
     mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, &pOutput->iAlphaBeta, &pOutput->uAlphaBeta,
-                                            &eAlphaBeta, pModule->dInput.initialAngle, &pOutput->elecAngle, &pOutput->elecSpeed );
+                                            &eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
 
      /** Reference Control */
      mcRefI_ReferenceControl( &mcFoc_State_mds.bReferenceController, pModule->dInput.reference, &pState->nRef );
@@ -812,11 +816,19 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
      /** Sine-cosine calculation */
      mcUtils_SineCosineCalculation( pOutput->elecAngle, &sine, &cosine );
 </#if>
-     pState->nRef *=  pState->commandDirection;
+    pState->nRef *=  pState->commandDirection;
 
-     /** Execute speed controller */
-     mcSpeI_SpeedControlAuto(&pState->bSpeedController, pState->nRef, pOutput->elecSpeed,
-                                               &pState->iQref );
+    /** Execute speed control loop when rotor position is valid */
+    if( mcRpeI_RotorPositionReady(&pState->bPositionEstimation) )
+    {
+        /** Execute speed controller */
+        mcSpeI_SpeedControlAuto(&pState->bSpeedController, pState->nRef, pOutput->elecSpeed,
+                                                &pState->iQref );
+    }
+    else
+    {
+        pState->iQref = 0.0f;
+    }
 
     /** Park Transformation */
     mcFoc_ParkTransformation( &pOutput->iAlphaBeta, sine, cosine, &pOutput->iDQ );

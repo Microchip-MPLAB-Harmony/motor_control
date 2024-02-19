@@ -226,9 +226,18 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
 
         modIndex = uRef/ uMax;
 
-        if( modIndex > pState->maxModIndex  )       {
-            /** Overmodulation condition */
+        if( modIndex < 1.0f ) 
+        {
+            modIndex = 1.0f;
+        }
+        else if( modIndex > pState->maxModIndex )
+        {
+            /** Over-modulation condition */
             modIndex = pState->maxModIndex;
+        }
+        else
+        {
+            /** For MISRA-C */
         }
 
         uAlphaNorm = modIndex * pUalphaBeta->alpha/ uMax;

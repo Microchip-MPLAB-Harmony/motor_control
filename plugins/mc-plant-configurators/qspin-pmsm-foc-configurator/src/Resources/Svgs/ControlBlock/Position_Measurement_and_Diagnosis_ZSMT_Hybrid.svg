@@ -3,70 +3,116 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="591px"
     height="187px" viewBox="-0.5 -0.5 591 187" style="background-color: rgb(255, 255, 255);">
-<style>
-.boxColor { fill:#1565C0 }
-.boxTextColor { fill:White }
-.boxLineColor { stroke:White; }
-</style>
-    <g id= "blocks" pointer-events="all">
+    <style>
+        .boxColor {
+            fill: #1565C0
+        }
+
+        .boxTextColor {
+            fill: White
+        }
+
+        .boxLineColor {
+            stroke: White;
+        }
+    </style>
+    <g id="blocks" pointer-events="all">
         <g id="box-primary-observer">
-            <rect x="0" y="0" width="109" height="80" rx="7.2" ry="7.2" class="boxColor" stroke="none" pointer-events="all" />
-            <g transform="translate(-0.5 -0.5)">      
-                <text x="55" y="44" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Primary</text>
-                <text x="55" y="59" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Observer</text>
+            <rect x="0" y="0" width="109" height="80" rx="7.2" ry="7.2" class="boxColor" stroke="none"
+                pointer-events="all" />
+            <g transform="translate(-0.5 -0.5)">
+                <text x="55" y="38" class="boxTextColor" font-family="Helvetica" font-size="12px"
+                    text-anchor="middle">Primary</text>
+                <text x="55" y="56" class="boxTextColor" font-family="Helvetica" font-size="12px"
+                    text-anchor="middle">Observer</text>
             </g>
         </g>
 
         <g id="box-secondary-observer">
-            <rect x="0" y="105" width="109" height="80" rx="7.2" ry="7.2" class="boxColor" stroke="none" pointer-events="all" />
+            <rect x="0" y="105" width="109" height="80" rx="7.2" ry="7.2" class="boxColor" stroke="none"
+                pointer-events="all" />
             <g transform="translate(-0.5 -0.5)">
-                <text x="55" y="149" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Secondary</text>
-                <text x="55" y="164" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Observer</text>
+                <text x="55" y="140" class="boxTextColor" font-family="Helvetica" font-size="12px"
+                    text-anchor="middle">Secondary</text>
+                <text x="55" y="160" class="boxTextColor" font-family="Helvetica" font-size="12px"
+                    text-anchor="middle">Observer</text>
             </g>
         </g>
 
-        <g id="box-angle-tracker">
-            <rect x="149" y="1" width="120" height="184" rx="7.2" ry="7.2" class="boxColor" stroke="none" pointer-events="all" />
+        <g id="box-primary-angle-tracker">
+            <rect x="149" y="1" width="120" height="80" rx="7.2" ry="7.2" class="boxColor" stroke="none"
+                pointer-events="all" />
             <g transform="translate(-0.5 -0.5)">
-            <text x="209" y="97" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle">Angle Tracker</text>
+                <text x="209" y="50" class="boxTextColor" font-family="Helvetica" font-size="12px"
+                    text-anchor="middle">Angle Tracker</text>
             </g>
         </g>
 
-        <g id="box-soft-switch">
-            <rect x="309" y="26" width="100" height="112" rx="6" ry="6" class="boxColor" stroke="none" pointer-events="all" />
-            <rect x="343" y="44" width="30" height="60" fill="none" class="boxLineColor" stroke-width="2" pointer-events="all" />
-            <path d="M 363 44 L 393 44" fill="none" class="boxLineColor" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" />
-            <path d="M 325 104 L 355 104" fill="none" class="boxLineColor" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" />
+        <g id="box-secondary-angle-tracker">
+            <rect x="149" y="105" width="120" height="80" rx="7.2" ry="7.2" class="boxColor" stroke="none"
+                pointer-events="all" />
+            <g transform="translate(-0.5 -0.5)">
+                <text x="209" y="150" class="boxTextColor" font-family="Helvetica" font-size="12px"
+                    text-anchor="middle">Angle Tracker</text>
+            </g>
+        </g>
+
+        <g id="box-hysteris-switch">
+            <rect x="309" y="25" width="100" height="138" rx="6" ry="6" class="boxColor" stroke="none"
+                pointer-events="all" />
+            <rect x="343" y="60" width="30" height="60" fill="none" class="boxLineColor" stroke-width="2"
+                pointer-events="all" />
+            <path d="M 363 60 L 393 60" fill="none" class="boxLineColor" stroke-width="2" stroke-miterlimit="10"
+                pointer-events="stroke" />
+            <path d="M 325 120 L 355 120" fill="none" class="boxLineColor" stroke-width="2" stroke-miterlimit="10"
+                pointer-events="stroke" />
 
             <g transform="translate(-0.5 -0.5)">
-                <text x="359" y="130" class="boxTextColor" font-family="Helvetica" font-size="12px" text-anchor="middle"> Soft Switch </text>
+                <text x="359" y="150" class="boxTextColor" font-family="Helvetica" font-size="12px"
+                    text-anchor="middle"> Switch </text>
             </g>
         </g>
     </g>
-            
-    <g id= "connections">       
-        <path d="M 109 38 L 142.63 38" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="stroke" />
-        <path d="M 147.88 38 L 140.88 41.5 L 142.63 38 L 140.88 34.5 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="all" />
-        <path d="M 109 145 L 142.63 145" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="stroke" />
-        <path d="M 147.88 145 L 140.88 148.5 L 142.63 145 L 140.88 141.5 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="all" />
-        <path d="M 270 86 L 303.63 86" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="stroke" />
-        <path d="M 308.88 86 L 301.88 89.5 L 303.63 86 L 301.88 82.5 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="all" />
-        <path d="M 410 58 L 443.63 58" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="stroke" />
-        <path d="M 448.88 58 L 441.88 61.5 L 443.63 58 L 441.88 54.5 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="all" />
-        <path d="M 409 98 L 442.63 98" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="stroke" />
-        <path d="M 447.88 98 L 440.88 101.5 L 442.63 98 L 440.88 94.5 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="all" />
+
+    <g id="connections">
+        <path d="M 109 38 L 142.63 38" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10"
+            pointer-events="stroke" />
+        <path d="M 147.88 38 L 140.88 41.5 L 142.63 38 L 140.88 34.5 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)"
+            stroke-miterlimit="10" pointer-events="all" />
+        <path d="M 109 145 L 142.63 145" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10"
+            pointer-events="stroke" />
+        <path d="M 147.88 145 L 140.88 148.5 L 142.63 145 L 140.88 141.5 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)"
+            stroke-miterlimit="10" pointer-events="all" />
+        <path d="M 269 42 L 303.63 42" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10"
+            pointer-events="stroke" />
+        <path d="M 308.88 42 L 301.88 45.5 L 303.63 42 L 301.88 38.5 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)"
+            stroke-miterlimit="10" pointer-events="all" />
+        <path d="M 269 150 L 303.63 150" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10"
+            pointer-events="stroke" />
+        <path d="M 308.88 150 L 301.88 153.5 L 303.63 150 L 301.88 146.5 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)"
+            stroke-miterlimit="10" pointer-events="all" />
+        <path d="M 410 80 L 443.63 80" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10"
+            pointer-events="stroke" />
+        <path d="M 448.88 80 L 441.88 83.5 L 443.63 80 L 441.88 76.5 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)"
+            stroke-miterlimit="10" pointer-events="all" />
+        <path d="M 409 115 L 442.63 115" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10"
+            pointer-events="stroke" />
+        <path d="M 447.88 115 L 440.88 118.5 L 442.63 115 L 440.88 111.5 Z" fill="rgb(0, 0, 0)" stroke="rgb(0, 0, 0)"
+            stroke-miterlimit="10" pointer-events="all" />
     </g>
-            
-    <g id= "output">
+
+    <g id="output">
         <g transform="translate(-0.5 -0.5)">
-            <text x="454" y="62" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">Speed (RPM)</text>
+            <text x="454" y="85" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">Speed (RPM)</text>
         </g>
         <g transform="translate(-0.5 -0.5)">
-            <text x="453" y="102" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">Electrical Angle ( Rad)</text>
+            <text x="453" y="119" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px">Electrical Angle (
+                Rad)</text>
         </g>
     </g>
-	<g id="tooltip" visibility="hidden">
-    <rect width="80" height="24" fill="#FFFDD0" rx="2" ry="2" stroke="black" stroke-width="0.3"/>
-    <text x="4" y="15" font-size="10" font-weight="bold" fill="black" lengthAdjust="spacingAndGlyphs" font-family="Arial">t</text>
-  </g>
+    <g id="tooltip" visibility="hidden">
+        <rect width="80" height="24" fill="#FFFDD0" rx="2" ry="2" stroke="black" stroke-width="0.3" />
+        <text x="4" y="15" font-size="10" font-weight="bold" fill="black" lengthAdjust="spacingAndGlyphs"
+            font-family="Arial">t</text>
+    </g>
 </svg>

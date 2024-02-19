@@ -151,11 +151,46 @@ class mcRpoI_PositionCalculationAndDiagnosis:
 
         self.sym_PLL_CUTOFF_FREQUENCY = self.component.createFloatSymbol("MCPMSMFOC_ZSMT_HYB_ANGLE_TRACK_F0", self.sym_ANGLE_TRACKER )
         self.sym_PLL_CUTOFF_FREQUENCY.setLabel("Tracking loop cut-off frequency")
-        self.sym_PLL_CUTOFF_FREQUENCY.setDefaultValue(10.0)
-
+        self.sym_PLL_CUTOFF_FREQUENCY.setDependencies(self.default_hfi_pll_cutoff_freq, ['MCPMSMFOC_RATED_SPEED'])
+   
         self.sym_PLL_TUNING_FACTOR = self.component.createFloatSymbol("MCPMSMFOC_ZSMT_HYB_HFI_KEPS", self.sym_ANGLE_TRACKER )
         self.sym_PLL_TUNING_FACTOR.setLabel("Tracking loop tuning factor")
-        self.sym_PLL_TUNING_FACTOR.setDefaultValue(0.25)
+        self.sym_PLL_TUNING_FACTOR.setDefaultValue(0.0)
+        self.sym_PLL_TUNING_FACTOR.setDependencies(self.peak_hfi_current_estimate, ['MCPMSMFOC_LD'])
+
+        self.sym_IPC = self.component.createMenuSymbol("MCPMSMFOC_IPC_MENU", self.sym_ANGLE_TRACKER )
+        self.sym_IPC.setLabel("Initial Position Correction")
+    
+        self.sym_IPC_PUSLE_AMPLITUDE = self.component.createFloatSymbol("MCPMSMFOC_IPC_PULSE_MAGNITUDE", self.sym_IPC )
+        self.sym_IPC_PUSLE_AMPLITUDE.setLabel("IPC pulse amplitude")
+        self.sym_IPC_PUSLE_AMPLITUDE.setDefaultValue(self.sym_PULSE_AMPLITUDE.getValue())
+
+        default_pulse_duty = 10 * Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_PERIOD")
+        self.sym_IPC_PUSLE_DUTY = self.component.createFloatSymbol("MCPMSMFOC_IPC_PULSE_DUTY", self.sym_IPC )
+        self.sym_IPC_PUSLE_DUTY.setLabel("IPC pulse duty (in ms)")
+        self.sym_IPC_PUSLE_DUTY.setDefaultValue(default_pulse_duty)
+
+        default_pulse_duration = 10 * default_pulse_duty
+        self.sym_IPC_PUSLE_DURATION = self.component.createFloatSymbol("MCPMSMFOC_IPC_PULSE_DURATION", self.sym_IPC )
+        self.sym_IPC_PUSLE_DURATION.setLabel("IPC pulse duration (in ms)")
+        self.sym_IPC_PUSLE_DURATION.setDefaultValue(default_pulse_duration)
+
+        self.sym_BEMF_ANGLE_TRACKER = self.component.createMenuSymbol("MCPMSMFOC_BEMF_ANGLE_TRACKER", self.sym_ALGORITHM )
+        self.sym_BEMF_ANGLE_TRACKER.setLabel("Back EMF ")
+        self.sym_BEMF_ANGLE_TRACKER.setVisible(False)
+
+        types = ["Type II", "Type III"]
+        self.sym_PLL_TRACKING_LOOP_TYPE = self.component.createComboSymbol("MCPMSMFOC_BEMF_PLL_TRACKING_LOOP_TYPE", self.sym_BEMF_ANGLE_TRACKER, types )
+        self.sym_PLL_TRACKING_LOOP_TYPE.setLabel("Tracking loop type")
+
+        self.sym_PLL_CUTOFF_FREQUENCY = self.component.createFloatSymbol("MCPMSMFOC_BEMF_ANGLE_TRACK_F0", self.sym_BEMF_ANGLE_TRACKER )
+        self.sym_PLL_CUTOFF_FREQUENCY.setLabel("Tracking loop cut-off frequency")
+        self.sym_PLL_CUTOFF_FREQUENCY.setDependencies(self.default_bemf_pll_cutoff_freq, ['MCPMSMFOC_RATED_SPEED'])
+
+        self.sym_PLL_TUNING_FACTOR = self.component.createFloatSymbol("MCPMSMFOC_BEMF_KEPS", self.sym_BEMF_ANGLE_TRACKER )
+        self.sym_PLL_TUNING_FACTOR.setLabel("Tracking loop tuning factor")
+        self.sym_PLL_TUNING_FACTOR.setDependencies(self.peak_bemf_error_estimate, ['MCPMSMFOC_LD'])
+
 
         self.sym_SM_CURRENT_OBS  = self.component.createMenuSymbol("MCPMSMFOC_SMO_CURRENT_OBSERVER", self.sym_ALGORITHM )
         self.sym_SM_CURRENT_OBS.setLabel("Sliding mode current observer")
@@ -241,6 +276,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
             self.sym_SECONDARY_OBSERVER.setVisible(False)
             self.sym_ZSMT_SOFT_SWITCH.setVisible(False)
             self.sym_ANGLE_TRACKER.setVisible(False)
+            self.sym_BEMF_ANGLE_TRACKER.setVisible(False)
 
             self.sym_SM_CURRENT_OBS.setVisible(False)
             self.sym_SWITCHING_FUNCTION.setVisible(False)
@@ -263,6 +299,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
             self.sym_SECONDARY_OBSERVER.setVisible(False)
             self.sym_ZSMT_SOFT_SWITCH.setVisible(False)
             self.sym_ANGLE_TRACKER.setVisible(False)
+            self.sym_BEMF_ANGLE_TRACKER.setVisible(False)
 
             self.sym_SM_CURRENT_OBS.setVisible(False)
             self.sym_SWITCHING_FUNCTION.setVisible(False)
@@ -284,6 +321,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
             self.sym_SECONDARY_OBSERVER.setVisible(True)
             self.sym_ZSMT_SOFT_SWITCH.setVisible(True)
             self.sym_ANGLE_TRACKER.setVisible(True)
+            self.sym_BEMF_ANGLE_TRACKER.setVisible(True)
 
             self.sym_SM_CURRENT_OBS.setVisible(False)
             self.sym_SWITCHING_FUNCTION.setVisible(False)
@@ -305,6 +343,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
             self.sym_SECONDARY_OBSERVER.setVisible(False)
             self.sym_ZSMT_SOFT_SWITCH.setVisible(False)
             self.sym_ANGLE_TRACKER.setVisible(False)
+            self.sym_BEMF_ANGLE_TRACKER.setVisible(False)
 
             self.sym_SM_CURRENT_OBS.setVisible(True)
             self.sym_SWITCHING_FUNCTION.setVisible(True)
@@ -326,6 +365,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
             self.sym_SECONDARY_OBSERVER.setVisible(False)
             self.sym_ZSMT_SOFT_SWITCH.setVisible(False)
             self.sym_ANGLE_TRACKER.setVisible(False)
+            self.sym_BEMF_ANGLE_TRACKER.setVisible(False)
 
             self.sym_SM_CURRENT_OBS.setVisible(False)
             self.sym_SWITCHING_FUNCTION.setVisible(False)
@@ -335,6 +375,41 @@ class mcRpoI_PositionCalculationAndDiagnosis:
             self.sym_ROLO_OBSERVER.setVisible(True)
             self.sym_ROLO_FLUX_ANGLE_CALCULATION.setVisible(True)
 
+    def peak_hfi_current_estimate(self, symbol, event):
+        if event['value'] == 0:
+            return
+        
+        pulse_amplitude = self.sym_PULSE_AMPLITUDE.getValue()
+        pulse_duration = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_PWM_PERIOD")
+        peak_hfi_current = pulse_amplitude * pulse_duration/ event['value']
+        symbol.setValue(peak_hfi_current)
+
+    def peak_bemf_error_estimate(self, symbol, event):
+        # To DO: Calculate Keps value from equations
+        # For now, it is set to 1
+        symbol.setValue(1)
+    
+    def default_hfi_pll_cutoff_freq(self, symbol, event):
+        if event['value'] == 0:
+            return
+        
+        pole_pairs = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_POLE_PAIRS")
+        rated_elec_freq_in_hz = event['value'] * pole_pairs / 60.0
+
+        # Set default PLL bandwidth to 10% of rated electrical frequency
+        # For HFI PLL, PLL error is twice the theta_error, a factor of 2 is multipled to compensate
+        pll_cut_off_freq = 0.2 * rated_elec_freq_in_hz
+        symbol.setValue(pll_cut_off_freq)
+
+    def default_bemf_pll_cutoff_freq(self, symbol, event):
+        if event['value'] == 0:
+            return
+        
+        pole_pairs = Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_POLE_PAIRS")
+        rated_elec_freq_in_hz = event['value'] * pole_pairs / 60.0
+
+        pll_cut_off_freq = 0.1 * rated_elec_freq_in_hz
+        symbol.setValue(pll_cut_off_freq)
 
     def getDependentLibrary(self, symbol, event):
         if "SENSORED_ENCODER" == symbol.getSelectedKey():

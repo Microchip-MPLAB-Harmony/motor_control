@@ -57,7 +57,7 @@ Headers inclusions
 /*******************************************************************************
  Private variables
  *******************************************************************************/
- <#--  Get button function  -->
+<#--  Get button function  -->
 <#function buttonFunction index>
 <#if 0 == index>
 <#return MCPMSMFOC_BUTTON_0_FUNCTION>
@@ -348,7 +348,7 @@ void mcAppI_ApplicationInit( void )
     mcFocI_FieldOrientedControlInit( &mcFocI_ModuleData_gds);
 </#if>
 
- <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
+ <#if ('IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS )  ||  ('SENSORLESS_ZSMT_HYBRID' == MCPMSMFOC_POSITION_CALC_ALGORITHM )>
     /** Initialize key manager */
     mcKeyI_KeyManagerInit();
 </#if>

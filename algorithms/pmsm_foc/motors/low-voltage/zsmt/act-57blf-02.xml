@@ -1,0 +1,47 @@
+<!--WE DO NOT RECOMMEND MANUAL EDITING OF THIS FILE. THIS IS A GENERATED FILE. EDITING THIS FILE MAY CAUSE ITS IMPORT INTO motorBench® Development Suite TO FAIL WITHOUT ANY WARNING OR NOTIFICATION.-->
+<pmsm>
+<pmsmMotorState>
+   <handle>ACT57BLF02</handle>
+   <nickname>ACT57BLF02</nickname>
+   <mfrCompanyName>ACT</mfrCompanyName>
+   <mfrMotorName>ACT57BLF02</mfrMotorName>
+   <mfrPartNumber>ACT57BLF02</mfrPartNumber>
+   <mfrAdditionalInfo/>
+   <mchpDirectPartNumber>None</mchpDirectPartNumber>
+   <nameplate>
+      <namePlateRatedCurrentContinuous>7.8 A</namePlateRatedCurrentContinuous>
+      <namePlateRatedPeakCurrent>7.8 A</namePlateRatedPeakCurrent>
+      <namePlateRatedVoltage>24 V</namePlateRatedVoltage>
+      <namePlateBaseSpeed>314.1592653589793 rad/s</namePlateBaseSpeed>
+      <namePlateRatedSpeed>418.87902047863906 rad/s</namePlateRatedSpeed>
+   </nameplate>
+   <other>
+      <fullscaleBaseRatio>1.5 one</fullscaleBaseRatio>
+      <polePairs>4.0 one</polePairs>
+   </other>
+   <version>2.15</version>
+</pmsmMotorState>
+<motorParameters>
+   <Rs>
+      <active>0.231436 Ω_line_to_neutral</active>
+   </Rs>
+   <Ld>
+      <active>0.0001020 H_line_to_neutral</active>
+   </Ld>
+   <Lq>
+      <active>0.0001325 H_line_to_neutral</active>
+   </Lq>
+   <Ke>
+      <active>0.02836246 V/rad/s</active>
+   </Ke>
+   <B>
+      <active>0.000045887 one</active>
+   </B>
+   <Tf>
+      <active>0.012851 one</active>
+   </Tf>
+   <J>
+      <active>0.000030081 one</active>
+   </J>
+</motorParameters>
+</pmsm>

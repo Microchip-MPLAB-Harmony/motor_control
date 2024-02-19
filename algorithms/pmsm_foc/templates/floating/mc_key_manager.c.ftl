@@ -49,8 +49,12 @@ Headers inclusions
 /*******************************************************************************
  * Constants
  *******************************************************************************/
+<#if ('IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS )>
 #define IPD_ALGORITHM_KEY        "GET_THE_KEY_FROM_LOCAL_SALES"
+</#if>
+<#if ('SENSORLESS_ZSMT_HYBRID' == MCPMSMFOC_POSITION_CALC_ALGORITHM )>
 #define ZSMT_ALGORITHM_KEY     "GET_THE_KEY_FROM_LOCAL_SALES"
+</#if>
 
 /*******************************************************************************
  Private data-types
@@ -101,13 +105,16 @@ __attribute__((noinline)) char * mcKeyI_ValidationKeyGet( const tmcKey_IPs_s ip)
  */
 void mcKeyI_KeyManagerInit(void)
 {
-     char * result;
+    char * result;
 
-     /** Initialize IPD key  */
-     result = strcpy(mcKeyI_AlgorithmKeys_gds.Keys[(uint8_t)KEY_IPD], IPD_ALGORITHM_KEY );
-
-     /** Initialize ZSMT key  */
+<#if ('IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS )>
+    /** Initialize IPD key  */
+    result = strcpy(mcKeyI_AlgorithmKeys_gds.Keys[(uint8_t)KEY_IPD], IPD_ALGORITHM_KEY );
+</#if>
+<#if ('SENSORLESS_ZSMT_HYBRID' == MCPMSMFOC_POSITION_CALC_ALGORITHM )>
+    /** Initialize ZSMT key  */
     result = strcpy(mcKeyI_AlgorithmKeys_gds.Keys[(uint8_t)KEY_ZSMT], ZSMT_ALGORITHM_KEY );
+</#if>
 
     if( NULL != result )
     {

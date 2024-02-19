@@ -60,7 +60,7 @@ class mcMotI_MotorParametersClass:
                         node = tree.getroot()
 
                         # Now you can extract data from the current XML file
-                        manufacturer_name = node.find('.//mfrCompanyName').text
+                        manufacturer_name = node.find('.//mfrMotorName').text
                         if manufacturer_name not in self.motors:
                             self.motors[manufacturer_name] = {}
 
