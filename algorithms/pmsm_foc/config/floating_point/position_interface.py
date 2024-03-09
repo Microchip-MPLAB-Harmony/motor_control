@@ -227,12 +227,14 @@ class mcFocI_PositionInterfaceClass:
 
     def handleMessage(self, ID, information ):
         if( "BSP_POSITION_INTERFACE" == ID ):
+            print('Position interface -- ', information)
             if( None != information ):
-                if information["QEA"]["FUNCTION"][0][0] == information["QEB"]["FUNCTION"][0][0]:
-                    self.sym_PERIPHERAL.setValue(information["QEA"]["FUNCTION"][0][0])
+                instance = next(iter(information))
+                self.sym_PERIPHERAL.setValue(instance)
 
-                self.sym_QEA_PAD.setValue(information["QEA"]["FUNCTION"][0][1])
-                self.sym_QEB_PAD.setValue(information["QEB"]["FUNCTION"][0][1])
+                channel = next(iter(information[instance]))
+                self.sym_QEA_PAD.setValue(information[instance][channel]['qea'])
+                self.sym_QEB_PAD.setValue(information[instance][channel]['qeb'])
 
     def onAttachmentConnected(self, source, target):
         message = dict()

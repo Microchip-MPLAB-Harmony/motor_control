@@ -40,7 +40,7 @@
         <parameter description = "Winding connection"                id  = "MOTOR_CONNECTION"  value =  "STAR"      />
     </motor>
 
-	 <motor name = "ELRA IPM80S-24V">
+    <motor name = "ELRA IPM80S-24V">
         <parameter description = "Phase resistance"                  id  = "R"                 value =  "0.1396"      />
         <parameter description = "D-axis inductance"                 id  = "LD"                value =  "0.0001307"  />
         <parameter description = "Q-axis inductance"                 id  = "LQ"                value =  "0.0002075"  />
@@ -80,4 +80,3 @@
         <parameter description = "Winding connection"                id  = "MOTOR_CONNECTION"  value =  "STAR"      />
     </motor>
 </motors>
-

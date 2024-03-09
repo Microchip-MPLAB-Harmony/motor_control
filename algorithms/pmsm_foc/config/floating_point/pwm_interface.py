@@ -78,7 +78,10 @@ class mcPwmI_PwmInterfaceClass:
 
                 # Add new pad to the list
                 self.pin_manager.addPinToList(hs_pad.getValue())
-                pad_list = ["** Select **"] + sorted(self.information[self.sym_INSTANCE.getValue()][channel.getValue()]["high"])
+
+                pad_list = ["** Select **"]
+                if self.sym_INSTANCE.getValue() != "** Select **" and channel.getValue() != "** Select **":
+                    pad_list += sorted(self.information[self.sym_INSTANCE.getValue()][channel.getValue()]["high"])
 
                 # Use list comprehension to create a new list that filters elements
                 pad_list = [entry for entry in pad_list if entry not in self.pin_manager.getUsedPinList() or entry == hs_pad.getValue()]
@@ -96,7 +99,10 @@ class mcPwmI_PwmInterfaceClass:
 
                 # Add new pad to the list
                 self.pin_manager.addPinToList(ls_pad.getValue())
-                pad_list = ["** Select **"] + sorted(self.information[self.sym_INSTANCE.getValue()][channel.getValue()]["low"])
+
+                pad_list = ["** Select **"]
+                if self.sym_INSTANCE.getValue() != "** Select **" and channel.getValue() != "** Select **":
+                    pad_list += sorted(self.information[self.sym_INSTANCE.getValue()][channel.getValue()]["low"])
 
                 # Use list comprehension to create a new list that filters elements
                 pad_list = [entry for entry in pad_list if entry not in self.pin_manager.getUsedPinList() or entry == ls_pad.getValue()]
@@ -331,42 +337,43 @@ class mcPwmI_PwmInterfaceClass:
     def handleMessage(self, ID, information ):
         if( "BSP_PWM_INTERFACE" == ID ):
             if( None != information ):                # Set PWM peripheral
-                value = str(information["PWM_AH"]["FUNCTION"][0][0])
-                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_INSTANCE", value)
+                instance = next(iter(information))
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_INSTANCE", instance)
 
                 # Set channel and pad values for PWM phase A
-                value = str(information["PWM_AH"]["FUNCTION"][0][1])
-                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_A_CHANNEL", value)
+                print('PWM information', information)
+                channel = str(information[instance]['phase_a']['high']['channel'])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_A_CHANNEL", channel)
 
-                value = str(information["PWM_AH"]["PAD"] )
-                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_AH_PAD", value)
+                pad = str(information[instance]['phase_a']['high']['pad'])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_AH_PAD", pad)
 
-                value = str(information["PWM_AL"]["PAD"] )
-                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_AL_PAD", value)
+                pad = str(information[instance]['phase_a']['low']['pad'])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_AL_PAD", pad)
 
                 # Set channel and pad values for PWM phase B
-                value = str(information["PWM_BH"]["FUNCTION"][0][1])
-                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_B_CHANNEL", value)
+                channel = str(information[instance]['phase_b']['high']['channel'])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_B_CHANNEL", channel)
 
-                value = str(information["PWM_BH"]["PAD"] )
-                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_BH_PAD", value)
+                pad = str(information[instance]['phase_b']['high']['pad'])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_BH_PAD", pad)
 
-                value = str(information["PWM_BL"]["PAD"] )
-                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_BL_PAD", value)
+                pad = str(information[instance]['phase_b']['low']['pad'])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_BL_PAD", pad)
 
                 # Set channel and pad values for PWM phase C
-                value = str(information["PWM_CH"]["FUNCTION"][0][1])
-                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_C_CHANNEL", value)
+                channel = str(information[instance]['phase_c']['high']['channel'])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_C_CHANNEL", channel)
 
-                value = str(information["PWM_CH"]["PAD"] )
-                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_CH_PAD", value)
+                pad = str(information[instance]['phase_c']['high']['pad'])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_CH_PAD", pad)
 
-                value = str(information["PWM_CL"]["PAD"] )
-                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_CL_PAD", value)
+                pad = str(information[instance]['phase_c']['low']['pad'])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_CL_PAD", pad)
 
                 # Set fault pin
-                value = str(information["FAULT"]["FUNCTION"][0][1])
-                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_FAULT_SOURCE", value)
+                # value = str(information["FAULT"]["FUNCTION"][0][1])
+                # self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_FAULT_SOURCE", value)
 
 
     def updatePwmPeriod(self, symbol, event):

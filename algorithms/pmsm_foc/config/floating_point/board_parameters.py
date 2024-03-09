@@ -27,6 +27,7 @@
 #---------------------------------------------------------------------------------------#
 import os.path
 import xml.etree.ElementTree as ET
+import json
 
 
 #---------------------------------------------------------------------------------------#
@@ -49,30 +50,46 @@ class mcBrdI_BoardClass:
         self.component = component
 
         self.information = {}
+        self.information = self.get_supported_boards_from_bsp()
 
-        bspFile = open(Variables.get("__BSP_DIR") + "/boards/module.xml", "r")
-        bspContent = ET.fromstring(bspFile.read())
+    def get_supported_boards_from_bsp(self):
+        supported_boards = {}
 
-        for board in bspContent.iter("Board"):
-            if board.attrib['processor'] == Variables.get("__PROCESSOR"):
-                config_name = board.attrib['config']
-                if config_name.endswith("_mc"):
-                    bsp_id = "BSP_" + board.attrib['name'].replace(" ", "_")
-                    self.information[bsp_id] = []
+        # Open and parse the BSP file
+        bsp_file_path = os.path.join(Variables.get("__BSP_DIR"), "boards", "module.xml")
+        with open(bsp_file_path, "r") as bsp_file:
+            bsp_content = ET.fromstring(bsp_file.read())
 
-                    bsp_path = os.path.join(Variables.get("__BSP_DIR"),"boards", config_name, "config")
-                    if os.path.exists(os.path.join(bsp_path, "board.xml")):
-                        bsp_xml = os.path.join(bsp_path, "board.xml")
+        # Extract relevant information from the BSP content
+        for board in bsp_content.iter("Board"):
+            if board.attrib.get('processor') == Variables.get("__PROCESSOR"):
+                board_name = board.attrib.get('name', '')
+                board_config_folder = board.attrib.get('config', '')
 
-                        if( os.path.exists(bsp_xml) and os.path.isfile(bsp_xml)):
-                            bspContent = ET.fromstring((open(bsp_xml, "r")).read())
+                # Check if the board is an MC Board
+                if 'MC Board' in board_name:
+                    config_folder_path = os.path.join( Variables.get("__BSP_DIR"),'boards', board_config_folder, "config", "boards")
 
-                            for board in bspContent.findall("boards/board"):
-                                self.information[bsp_id].append(board.attrib["name"])
+                    # Traverse through the configuration folder
+                    for root, _, files in os.walk(config_folder_path):
+                        for file_name in files:
+                            if file_name.endswith('.json'):
+                                file_path = os.path.join(root, file_name)
+                                try:
+                                    with open(file_path, 'r') as json_file:
+                                        data = json.load(json_file)
+                                        if data:  # Check if JSON data is not empty
+                                            root_key = next(iter(data.keys()))  # Get the first key
 
-                    elif os.path.exists(os.path.join(bsp_path, "boards.py")):
-                        execfile(os.path.join(bsp_path, "boards.py"))
-                        self.information[bsp_id] = ["dsPICDEM MCLV2", "dsPICDEM MCHV3"] # (mcBspI_GetBoardData()).keys()
+                                            bsp_id = 'BSP_' + board_name.replace(' ', '_')
+                                            if bsp_id not in supported_boards.keys():
+                                                supported_boards[bsp_id] = []
+                                            supported_boards[bsp_id].append(root_key)
+
+                                except ValueError as e:
+                                    print("Error parsing JSON file {}: {}".format(file_path, e))
+
+        return supported_boards
 
     def createSymbols( self ):
         sym_BOARD_NODE = self.component.createBooleanSymbol("MCPMSMFOC_DEVELOPER_MODE", None)
@@ -116,7 +133,6 @@ class mcBrdI_BoardClass:
 
 
     def updateBspId(self, symbol, event):
-
         # Deactivate the older BSP and connect the selected one
         old_bsp_id = symbol.getValue()
 
@@ -127,6 +143,7 @@ class mcBrdI_BoardClass:
                 if event["symbol"].getSelectedKey() in board_list:
                     symbol.setValue(bsp_id)
 
+        # Deactivate old BSP
         if old_bsp_id != symbol.getValue():
             # Deactivate old BSP
             autoConnectTable = [old_bsp_id]

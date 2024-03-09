@@ -220,8 +220,10 @@ class mcFocI_DataMonitoringClass:
     def handleMessage(self, ID, information):
         if( ID == "BSP_DATA_MONITORING"):
             # Enable X2C Scope
+            print('Data monitoring', information)
+            instance = next(iter(information))
             Database.setSymbolValue("pmsm_foc", "MCPMSMFOC_DATA_MONITOR_ENABLE", True )
-            Database.setSymbolValue("pmsm_foc", "MCPMSMFOC_DATA_MONITOR_PERIPHERAL", information["TRANSMIT"]["FUNCTION"][0][0] )
+            Database.setSymbolValue("pmsm_foc", "MCPMSMFOC_DATA_MONITOR_PERIPHERAL", instance)
 
     def onAttachmentConnected(self, source, target):
         if (source["id"] == "pmsmfoc_X2CSCOPE"):

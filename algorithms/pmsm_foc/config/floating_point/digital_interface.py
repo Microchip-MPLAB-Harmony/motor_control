@@ -118,6 +118,7 @@ class mcFocI_DigitalInterfaceClass:
         actions_id = "MCPMSMFOC_BUTTON_"+ str(index)+ "_FUNCTION"
         action  = self.component.createComboSymbol( actions_id, node, actions)
         action.setLabel("Function")
+        action.setDefaultValue(actions[index])
 
     def createLedSymbolGroup(self, index, root):
         # Update LED list function
@@ -190,6 +191,7 @@ class mcFocI_DigitalInterfaceClass:
         actions_id = "MCPMSMFOC_LED_"+ str(index)+ "_FUNCTION"
         action  = self.component.createComboSymbol( actions_id, node, actions)
         action.setLabel("Function")
+        action.setDefaultValue(actions[index])
 
     def createSymbols(self):
         self.sym_NODE = self.component.createMenuSymbol(None, None)

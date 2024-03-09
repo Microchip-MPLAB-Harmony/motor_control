@@ -323,35 +323,36 @@ class mcAniI_AnalogInterfaceClass:
         pass
 
     def handleMessage(self, ID, information ):
+        print('Analog message')
         if( "BSP_ANALOG_INTERFACE" == ID ) and ( None != information):
-            print("Check the data", information)
+            print('Analog message', information)
             # Set unit and channel symbol for phase A current
-            value = str(information["IA"]["FUNCTION"][0][0])
-            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT", value)
+            instance = next(iter(information[u'IA']))
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_UNIT", instance)
 
-            value = str(information["IA"]["FUNCTION"][0][1])
-            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL", value)
+            channel = str(information['IA'][instance]['channel'])
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL", channel)
 
             # Set unit and channel symbol for phase B current
-            value = str(information["IB"]["FUNCTION"][0][0])
-            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IB_UNIT", value)
+            instance = next(iter(information['IB']))
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IB_UNIT", instance)
 
-            value = str(information["IB"]["FUNCTION"][0][1])
-            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IB_CHANNEL", value)
+            channel = str(information['IB'][instance]['channel'])
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PHASE_CURRENT_IB_CHANNEL", channel)
 
             # Set unit and channel symbol for DC bus voltage
-            value = str(information["VDC"]["FUNCTION"][0][0])
-            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT", value)
+            instance = next(iter(information['VDC']))
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT", instance)
 
-            value = str(information["VDC"]["FUNCTION"][0][1])
-            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL", value)
+            channel = str(information['VDC'][instance]['channel'])
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL", channel)
 
             # Set unit and channel symbol for potentiometer
-            value = str(information["VPOT"]["FUNCTION"][0][0])
-            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_POTENTIOMETER_VPOT_UNIT", value)
+            instance = next(iter(information['VPOT']))
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_POTENTIOMETER_VPOT_UNIT", instance)
 
-            value = str(information["VPOT"]["FUNCTION"][0][1])
-            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_POTENTIOMETER_VPOT_CHANNEL", value)
+            channel = str(information['VPOT'][instance]['channel'])
+            self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_POTENTIOMETER_VPOT_CHANNEL", channel)
 
     def __call__(self):
         self.createSymbols()
