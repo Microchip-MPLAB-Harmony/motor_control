@@ -336,12 +336,12 @@ class mcPwmI_PwmInterfaceClass:
 
     def handleMessage(self, ID, information ):
         if( "BSP_PWM_INTERFACE" == ID ):
-            if( None != information ):                # Set PWM peripheral
+            if( None != information ):
+                print('Fault information', information)
                 instance = next(iter(information))
                 self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_INSTANCE", instance)
 
                 # Set channel and pad values for PWM phase A
-                print('PWM information', information)
                 channel = str(information[instance]['phase_a']['high']['channel'])
                 self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_A_CHANNEL", channel)
 
@@ -372,8 +372,8 @@ class mcPwmI_PwmInterfaceClass:
                 self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_CL_PAD", pad)
 
                 # Set fault pin
-                # value = str(information["FAULT"]["FUNCTION"][0][1])
-                # self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_FAULT_SOURCE", value)
+                value = str(information[instance]["fault_sources"]['channel'])
+                self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_PWM_FAULT_SOURCE", value)
 
 
     def updatePwmPeriod(self, symbol, event):

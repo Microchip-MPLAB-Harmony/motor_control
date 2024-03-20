@@ -1,0 +1,54 @@
+<!--WE DO NOT RECOMMEND MANUAL EDITING OF THIS FILE. THIS IS A GENERATED FILE. -->
+<pmsm>
+<customPmsmMotorState>
+   <handle>CustomMotor</handle>
+   <nickname>CustomMotor</nickname>
+   <mfrCompanyName></mfrCompanyName>
+   <mfrMotorName></mfrMotorName>
+   <mfrPartNumber></mfrPartNumber>
+   <mfrAdditionalInfo/>
+   <mchpDirectPartNumber></mchpDirectPartNumber>
+   <nameplate>
+      <connection></connection>
+      <namePlateRatedCurrentContinuous></namePlateRatedCurrentContinuous>
+      <namePlateRatedPeakCurrent></namePlateRatedPeakCurrent>
+      <namePlateRatedVoltage></namePlateRatedVoltage>
+      <namePlateBaseSpeed></namePlateBaseSpeed>
+      <namePlateRatedSpeed></namePlateRatedSpeed>
+   </nameplate>
+   <sensors>
+      <opticalEncoder>
+         <indexPulsePresent></indexPulsePresent>
+         <pulsePerRotation></pulsePerRotation>
+      </opticalEncoder>
+   </sensors>
+   <other>
+      <fullscaleBaseRatio>1.5 one</fullscaleBaseRatio>
+      <polePairs></polePairs>
+   </other>
+   <version>1.0.0</version>
+</customPmsmMotorState>
+<motorParameters>
+   <Rs>
+      <active></active>
+   </Rs>
+   <Ld>
+      <active></active>
+   </Ld>
+   <Lq>
+      <active></active>
+   </Lq>
+   <Ke>
+      <active></active>
+   </Ke>
+   <B>
+      <active></active>
+   </B>
+   <Tf>
+      <active></active>
+   </Tf>
+   <J>
+      <active></active>
+   </J>
+</motorParameters>
+</pmsm>

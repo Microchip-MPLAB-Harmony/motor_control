@@ -35,22 +35,6 @@ class mcRpoI_PositionCalculationAndDiagnosis:
     def __init__(self, component):
         self.component = component
 
-        # Read motor parameters from motor.xml
-        path = Module.getPath() + "/algorithms/pmsm_foc/config/floating_point/motor.xml"
-        motor_File = open(path, "r")
-        motor_Content = ET.fromstring(motor_File.read())
-
-        self.motor_List = list()
-        self.motor_Parameters = dict()
-
-        for motor in motor_Content.findall("motor"):
-            name = motor.attrib["name"]
-            self.motor_List.append(motor.attrib["name"])
-            self.motor_Parameters[name] = dict()
-            for parameter in motor.findall("parameter"):
-                param = parameter.attrib["id"]
-                self.motor_Parameters[name][param] = parameter.attrib["value"]
-
     def createSymbols(self):
         # Root node
         self.sym_NODE = self.component.createMenuSymbol(None, None)
@@ -120,8 +104,6 @@ class mcRpoI_PositionCalculationAndDiagnosis:
 
         self.sym_QDEC_PULSE_PER_EREV = self.component.createIntegerSymbol("MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV", self.sym_QDEC )
         self.sym_QDEC_PULSE_PER_EREV.setLabel("Pulse Per electrical rotation")
-        self.sym_QDEC_PULSE_PER_EREV.setDependencies( self.symbolUpdate, ["MCPMSMFOC_MOTOR_SEL"])
-        self.sym_QDEC_PULSE_PER_EREV.setDefaultValue(200)
 
         primaryObservers = ["Pulsed Injection", "Sinusoidal Injection"]
         self.sym_PRIMARY_OBSERVER = self.component.createComboSymbol("MCPMSMFOC_ZSMT_HYB_PRIM_OBS", self.sym_ALGORITHM,  primaryObservers )
@@ -373,7 +355,3 @@ class mcRpoI_PositionCalculationAndDiagnosis:
             res = Database.deactivateComponents(autoConnectTable)
 
             symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", False)
-
-    def symbolUpdate( self, symbol, event ):
-        motor = event["symbol"].getValue()
-        symbol.setValue( int( self.motor_Parameters[motor]['QE_PULSES_PER_REV'] ))

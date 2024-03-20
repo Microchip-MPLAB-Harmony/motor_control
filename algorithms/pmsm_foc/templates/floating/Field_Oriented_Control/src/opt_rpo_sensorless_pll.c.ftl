@@ -241,74 +241,74 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
                                                      tmcTypes_AlphaBeta_s * pEAlphaBeta,
                                                      float32_t * pAngle, float32_t * pSpeed )
 {
-     /** Get the linked state variable */
-     tmcRpe_State_s * pState;
-     pState = (tmcRpe_State_s *)pParameters->pStatePointer;
+    /** Get the linked state variable */
+    tmcRpe_State_s * pState;
+    pState = (tmcRpe_State_s *)pParameters->pStatePointer;
 
-     if( pState->enable )
-     {
-         float32_t temp = 0.0f;
-         float32_t sine = 0.0f;
-         float32_t cosine= 0.0f;
+    if( pState->enable )
+    {
+        float32_t temp = 0.0f;
+        float32_t sine = 0.0f;
+        float32_t cosine= 0.0f;
 
-         /** Calculate back EMF along alpha and beta axis */
-         temp = pState->uAlpha;
-         temp -= ( pIAlphaBeta->alpha * pState->Rs );
-         temp -= ( pIAlphaBeta->alpha - pState->iAlpha ) * pState->dLsByDt;
-         LPF( temp, pState->eAlpha, pState->eABFilterParameter );
+        /** Calculate back EMF along alpha and beta axis */
+        temp = pState->uAlpha;
+        temp -= ( pIAlphaBeta->alpha * pState->Rs );
+        temp -= ( pIAlphaBeta->alpha - pState->iAlpha ) * pState->dLsByDt;
+        LPF( temp, pState->eAlpha, pState->eABFilterParameter );
 
-         temp  =  pState->uBeta;
-         temp -= ( pIAlphaBeta->beta * pState->Rs );
-         temp -= ( pIAlphaBeta->beta - pState->iBeta ) * pState->dLsByDt;
-         LPF( temp, pState->eBeta, pState->eABFilterParameter);
+        temp  =  pState->uBeta;
+        temp -= ( pIAlphaBeta->beta * pState->Rs );
+        temp -= ( pIAlphaBeta->beta - pState->iBeta ) * pState->dLsByDt;
+        LPF( temp, pState->eBeta, pState->eABFilterParameter);
 
-         /** Update state variables for next cycle calculation */
-         pState->uAlpha  = pUAlphaBeta->alpha;
-         pState->uBeta  =  pUAlphaBeta->beta;
-         pState->iAlpha  =  pIAlphaBeta->alpha ;
-         pState->iBeta   =  pIAlphaBeta->beta;
+        /** Update state variables for next cycle calculation */
+        pState->uAlpha  = pUAlphaBeta->alpha;
+        pState->uBeta  =  pUAlphaBeta->beta;
+        pState->iAlpha  =  pIAlphaBeta->alpha ;
+        pState->iBeta   =  pIAlphaBeta->beta;
 
-         /** Determine back EMF along direct and quadrature axis using estimated angle */
-         mcUtils_SineCosineCalculation( pState->phi, &sine, &cosine );
+        /** Determine back EMF along direct and quadrature axis using estimated angle */
+        mcUtils_SineCosineCalculation( pState->phi, &sine, &cosine );
 
-         temp  =     pState->eAlpha * cosine;
-         temp +=  ( pState->eBeta * sine );
-         LPF( temp, pState->eD, pState->eDQFilterParameter);
+        temp  =     pState->eAlpha * cosine;
+        temp +=  ( pState->eBeta * sine );
+        LPF( temp, pState->eD, pState->eDQFilterParameter);
 
-         temp  =    -pState->eAlpha * sine;
-         temp +=  ( pState->eBeta * cosine );
-         LPF( temp, pState->eQ, pState->eDQFilterParameter);
+        temp  =    -pState->eAlpha * sine;
+        temp +=  ( pState->eBeta * cosine );
+        LPF( temp, pState->eQ, pState->eDQFilterParameter);
 
-         /** Determine speed  */
-         if( pState->eQ > 0.0f ) {
-             temp  = pState->oneByKe * ( pState->eQ - pState->eD );
-         }
-         else  {
-             temp  = pState->oneByKe * ( pState->eQ + pState->eD );
-         }
+        /** Determine speed  */
+        if( pState->eQ > 0.0f ) {
+            temp  = pState->oneByKe * ( pState->eQ - pState->eD );
+        }
+        else  {
+            temp  = pState->oneByKe * ( pState->eQ + pState->eD );
+        }
 
-         LPF( temp, pState->n, pState->nFilterParameter);
+        LPF( temp, pState->n, pState->nFilterParameter);
 
-         /** Determine phase angle */
-         pState->phi += ( pState->speedToAngle * pState->n );
-         mcUtils_TruncateAngle0To2Pi( &pState->phi );
+        /** Determine phase angle */
+        pState->phi += ( pState->speedToAngle * pState->n );
+        mcUtils_TruncateAngle0To2Pi( &pState->phi );
 
-         /** Update output */
-         *pSpeed = pState->n;
-         *pAngle = pState->phi;
-     }
-     else
-     {
-         /** Rotor position estimation */
-         mcRpeI_RotorPositionEstimReset( pParameters );
+        /** Update output */
+        *pSpeed = pState->n;
+        *pAngle = pState->phi;
+    }
+    else
+    {
+        /** Rotor position estimation */
+        mcRpeI_RotorPositionEstimReset( pParameters );
 
-         /** Update output */
-         *pSpeed = 0.0f;
-         *pAngle = 0.0f;
-     }
+        /** Update output */
+        *pSpeed = 0.0f;
+        *pAngle = 0.0f;
+    }
 
-     pEAlphaBeta->alpha = pState->eAlpha;
-     pEAlphaBeta->beta = pState->eBeta;
+    pEAlphaBeta->alpha = pState->eAlpha;
+    pEAlphaBeta->beta = pState->eBeta;
 }
 
 

@@ -89,6 +89,7 @@ class mcBrdI_BoardClass:
                                 except ValueError as e:
                                     print("Error parsing JSON file {}: {}".format(file_path, e))
 
+        print('Print supported boards', supported_boards)
         return supported_boards
 
     def createSymbols( self ):
