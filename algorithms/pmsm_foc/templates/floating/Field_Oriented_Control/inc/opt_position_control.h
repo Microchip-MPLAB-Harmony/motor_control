@@ -2,14 +2,14 @@
   System Definitions
 
   File Name:
-    mc_torque_control.h
+    mc_speed_control.h
 
   Summary:
-    Header file which contains variables and function prototypes for torque control
-
+    Header file which contains variables and function prototypes for speed control
+ 
   Description:
-    This file contains variables and function prototypes which are generally used for
-    torque control.
+    This file contains variables and function prototypes which are generally used for speed
+    control
 
  *******************************************************************************/
 
@@ -38,17 +38,17 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef MCTOR_H
-#define MCTOR_H
+#ifndef MCPOS_H
+#define MCPOS_H
 
 /*******************************************************************************
- * Header inclusions
+ * Header inclusions 
 *******************************************************************************/
 #include "mc_types.h"
 #include "mc_pi_control.h"
 
 /*******************************************************************************
- Default Module configuration parameters
+ Default Module configuration parameters 
 *******************************************************************************/
 
 /*******************************************************************************
@@ -60,10 +60,10 @@ typedef struct
      float32_t Ki;
      float32_t dt;
      void * pStatePointer;
-}tmcTor_Parameters_s;
+}tmcPos_Parameters_s;
 
 /*******************************************************************************
- * Interface variables
+ * Interface variables 
 *******************************************************************************/
 
 /*******************************************************************************
@@ -79,88 +79,88 @@ typedef struct
  * @param[out]: None
  * @return: None
  */
-__STATIC_INLINE void mcTorI_ParametersSet( tmcTor_Parameters_s * const pParameters )
+__STATIC_INLINE void mcPosI_ParametersSet( tmcPos_Parameters_s * const pParameters )
 {
-   pParameters->Kp = (float32_t)${MCPMSMFOC_IQ_PID_KP};
-   pParameters->Ki =  (float32_t)${MCPMSMFOC_IQ_PID_KI};
-   pParameters->dt =  (float32_t)(${MCPMSMFOC_PWM_PERIOD});
+   pParameters->Kp = (float32_t)${MCPMSMFOC_POSITION_PID_KP};
+   pParameters->Ki = (float32_t)${MCPMSMFOC_POSITION_PID_KI};
+   pParameters->dt = (float32_t)${MCPMSMFOC_POSITION_PID_KC};
 }
 
 /*******************************************************************************
- Interface Functions
+ Interface Functions 
 *******************************************************************************/
-/*! \brief Initialize flux control module
+/*! \brief Initialize speed control module
  *
  * Details.
- * Initialize flux control module
+ * Initialize speed control module
  *
  * @param[in]: None
  * @param[in/out]: None
  * @param[out]: None
  * @return: None
  */
-void  mcTorI_TorqueControlInit( tmcTor_Parameters_s * const pParameters );
+void  mcPosI_PositionControlInit( tmcPos_Parameters_s * const pParameters );
 
-/*! \brief Enable flux control module
+/*! \brief Enable speed control module
  *
  * Details.
- * Enable flux control module
+ * Enable speed control module
  *
  * @param[in]: None
  * @param[in/out]: None
  * @param[out]: None
  * @return: None
  */
-void  mcTorI_TorqueControlEnable( tmcTor_Parameters_s * const pParameters );
+void  mcPosI_PositionControlEnable( tmcPos_Parameters_s * const pParameters );
 
-/*! \brief Disable flux control module
+/*! \brief Disable speed control module
  *
  * Details.
- * Disable flux control module
+ * Disable speed control module
  *
  * @param[in]: None
  * @param[in/out]: None
  * @param[out]: None
  * @return: None
  */
-void  mcTorI_TorqueControlDisable( tmcTor_Parameters_s * const pParameters );
+void  mcPosI_PositionControlDisable( tmcPos_Parameters_s * const pParameters );
 
-/*! \brief Torque control
+/*! \brief Speed control
  *
  * Details.
- * Torque control
+ * Speed control
  *
  * @param[in]: None
  * @param[in/out]: None
  * @param[out]: None
  * @return: None
  */
-void mcTorI_TorqueControlManual(  const tmcTor_Parameters_s * const pParameters,
+void mcPosI_PositionControlManual(  const tmcPos_Parameters_s * const pParameters,
                                                          const float32_t  Out );
 
-/*! \brief Torque control
+/*! \brief Speed control
  *
  * Details.
- * Torque control
+ * Speed control
  *
  * @param[in]: None
  * @param[in/out]: None
  * @param[out]: None
  * @return: None
  */
-void mcTorI_TorqueControlAuto(  const tmcTor_Parameters_s * const pParameters,
-                                              const float32_t iQref, const float32_t iQact, const float32_t yLimit, float32_t * const pOut );
+void mcPosI_PositionControlAuto(  const tmcPos_Parameters_s * const pParameters,
+                                              const float32_t nref, const  float32_t nact, float32_t * const pOut );
 
-/*! \brief Reset Torque control
+/*! \brief Reset Speed control
  *
  * Details.
- * Reset Torque control
+ * Reset Speed control
  *
  * @param[in]: None
  * @param[in/out]: None
  * @param[out]: None
  * @return:
  */
-void mcTorI_TorqueControlReset( const tmcTor_Parameters_s * const pParameters );
+void mcPosI_PositionControlReset( const tmcPos_Parameters_s * const pParameters );
 
-#endif // MCTOR_H
+#endif // mcPos_H

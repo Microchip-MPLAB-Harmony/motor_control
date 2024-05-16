@@ -79,6 +79,9 @@ typedef struct
     tmcMot_PMSM_s  * pMotorParameters;
 
     float32_t dt;
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    uint8_t gearRatio;
+</#if>
     uint16_t velocityCountPrescaler;
 
     /** Encoder parameters */
@@ -154,6 +157,11 @@ __STATIC_INLINE void mcRpcI_ParametersSet( tmcRpc_Parameters_s * const pParamete
      pParameters->velocityCountPrescaler = 100u;
      pParameters->dt = (float32_t)(${MCPMSMFOC_PWM_PERIOD});
 
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+     /** Mechanical Gear Ratio */
+    pParameters->gearRatio = (uint8_t)1;
+</#if>
+
     /** Encoder parameters  */
     pParameters->encPulsesPerElecRev = (uint16_t)${MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV};
     pParameters->encPulsePerMechRev = pParameters->encPulsesPerElecRev * (uint16_t)mcMotI_PMSM_gds.PolePairs;
@@ -212,6 +220,20 @@ void  mcRpcI_RotorPositionCalcDisable( tmcRpc_ModuleData_s * const pModule );
  * @return: None
  */
 void mcRpcI_RotorPositionCalc(  tmcRpc_ModuleData_s * const pModule );
+
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+/*! \brief Get mechanical angle
+ *
+ * Details.
+ * Get mechanical angle
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+float32_t mcRpcI_MechanicalAngleGet(  const tmcRpc_Parameters_s * const pParameters );
+</#if>
 
 /*! \brief Reset Rotor position estimation
  *

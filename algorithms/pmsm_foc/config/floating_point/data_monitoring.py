@@ -220,11 +220,30 @@ class mcFocI_DataMonitoringClass:
     def handleMessage(self, ID, information):
         if( ID == "BSP_DATA_MONITORING"):
             # Enable X2C Scope
-            print('Data monitoring', information)
             instance = next(iter(information))
             Database.setSymbolValue("pmsm_foc", "MCPMSMFOC_DATA_MONITOR_ENABLE", True )
             Database.setSymbolValue("pmsm_foc", "MCPMSMFOC_DATA_MONITOR_PERIPHERAL", instance)
 
+            return {}
+
+        if( ID == "X2CSCOPE_DATA_MONITORING"):
+            instance = self.sym_PERIPHERAL.getValue()
+            tx_channel = self.sym_TRANSMIT_CHANNEL.getValue()
+            rx_channel = self.sym_RECEIVE_CHANNEL.getValue()
+            data_monitoring_params = { 
+                                        instance: { 
+                                                    'transmit' : {
+                                                                    'channel': tx_channel, 
+                                                                    'pad':''
+                                                                },
+                                                    'receive' :  {
+                                                                    'channel': rx_channel, 
+                                                                    'pad':''
+                                                                }
+                                                    }
+                                        }
+            return data_monitoring_params
+  
     def onAttachmentConnected(self, source, target):
         if (source["id"] == "pmsmfoc_X2CSCOPE"):
             self.sym_X2CSCOPE.setValue( target["component"].getID())

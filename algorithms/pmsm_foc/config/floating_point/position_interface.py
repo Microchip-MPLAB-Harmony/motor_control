@@ -227,7 +227,6 @@ class mcFocI_PositionInterfaceClass:
 
     def handleMessage(self, ID, information ):
         if( "BSP_POSITION_INTERFACE" == ID ):
-            print('Position interface -- ', information)
             if( None != information ):
                 instance = next(iter(information))
                 self.sym_PERIPHERAL.setValue(instance)

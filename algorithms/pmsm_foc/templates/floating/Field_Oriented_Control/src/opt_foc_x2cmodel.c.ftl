@@ -81,7 +81,13 @@
  */
 void mcFocI_FieldOrientedControlEnable( void )
 {
+  #if ( X2CMODEL_TYPE == FLOATING_POINT_F32_MODEL )
     x2cModel.inports.bS2 = 1U;
+  #endif
+
+#if ( X2CMODEL_TYPE == FIXED_POINT_Q15_MODEL )
+    x2cModel.inports.bS2 = INT16_MAX;
+#endif
 }
 
 /*! \brief  Field oriented control disable
@@ -96,7 +102,7 @@ void mcFocI_FieldOrientedControlEnable( void )
  */
 void mcFocI_FieldOrientedControlDisable( void )
 {
-    x2cModel.inports.bS2 = 1U;
+    x2cModel.inports.bS2 = 0U;
 }
 
 /*! \brief  Field oriented control initialization

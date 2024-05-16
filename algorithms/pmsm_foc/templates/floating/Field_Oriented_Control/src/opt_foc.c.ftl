@@ -99,6 +99,9 @@ typedef struct
     tmcFlx_Parameters_s bFluxController;
     tmcTor_Parameters_s bTorqueController;
     tmcSpe_Parameters_s bSpeedController;
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+   tmcPos_Parameters_s bPositionController;
+</#if>
     tmcRef_Parameters_s bReferenceController;
 
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
@@ -244,6 +247,11 @@ void  mcFocI_FieldOrientedControlInit( tmcFocI_ModuleData_s * const pModule )
     /** Initialize reference control module */
     mcRefI_ReferenceControlInit( &mcFoc_State_mds.bReferenceController);
 
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    /** Initialize position control module */
+    mcPosI_PositionControlInit( &mcFoc_State_mds.bPositionController);
+</#if>
+
     /** Initialize speed control module */
     mcSpeI_SpeedControlInit( &mcFoc_State_mds.bSpeedController);
 
@@ -319,6 +327,11 @@ void  mcFocI_FieldOrientedControlEnable( tmcFocI_ModuleData_s * const pParameter
 
     /** Enable speed control module */
     mcSpeI_SpeedControlEnable( &mcFoc_State_mds.bSpeedController);
+
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    /** Enable position control module */
+    mcPosI_PositionControlEnable( &mcFoc_State_mds.bPositionController);
+</#if>
 
     /** Enable torque control module */
     mcTorI_TorqueControlEnable( &mcFoc_State_mds.bTorqueController);
@@ -397,6 +410,11 @@ void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParamete
 
     /** Disable reference control module */
     mcRefI_ReferenceControlDisable( &mcFoc_State_mds.bReferenceController);
+
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    /** Disable position control module */
+    mcPosI_PositionControlDisable( &mcFoc_State_mds.bPositionController);
+</#if>
 
     /** Disable speed control module */
     mcSpeI_SpeedControlDisable( &mcFoc_State_mds.bSpeedController);
@@ -707,7 +725,15 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 </#if>
 </#if>
 
-<#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
+<#if ( MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' ) >
+                float32_t referenceSpeed = 0;
+                mcPosI_PositionControlAuto(&pState->bPositionController,  pState->nRef, pInput->mechanicalAngle,
+                                                          &referenceSpeed );
+
+                /** Execute speed controller */
+                mcSpeI_SpeedControlAuto(&pState->bSpeedController,  referenceSpeed, pOutput->elecSpeed,
+                                                          &pState->iQref );
+<#elseif ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
                 /** Execute speed controller */
                 pState->nRef *=  pState->commandDirection;
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>

@@ -55,6 +55,9 @@
 #include "mc_flux_control.h"
 #include "mc_torque_control.h"
 #include "mc_speed_control.h"
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+#include "mc_position_control.h"
+</#if>
 #include "mc_reference_control.h"
 #include "mc_rotor_position_calculation.h"
 <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
@@ -78,6 +81,9 @@ typedef struct
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER' )>
     float32_t elecAngle;
     float32_t elecSpeed;
+</#if>
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    float32_t mechanicalAngle;
 </#if>
     float32_t uBus;
     float32_t reference;
@@ -138,11 +144,17 @@ __STATIC_INLINE void mcFocI_InputsRead( tmcFocI_ModuleData_s * const pModule )
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER' )>
     pInput->elecAngle = (float32_t)mcRpcI_ModuleData_gds.dOutput.elecAngle;
     pInput->elecSpeed = (float32_t)mcRpcI_ModuleData_gds.dOutput.elecSpeed;
+
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    pInput->mechanicalAngle = mcRpcI_MechanicalAngleGet(&mcRpcI_ModuleData_gds.dParameters);
+</#if>
 </#if>
 
     pInput->uBus = (float32_t)mcVolI_ModuleData_gds.dOutput.uBus;
 
-<#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    pInput->reference =  (float32_t)mcHalI_Potentiometer_gdu16 * TWO_PI / 4095.0f;
+<#elseif ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_ZSMT_HYBRID' )>
     pInput->reference = ((float32_t)mcHalI_Potentiometer_gdu16 - 2048.0f ) * pModule->dParameters.potInputToRef;
 <#else>

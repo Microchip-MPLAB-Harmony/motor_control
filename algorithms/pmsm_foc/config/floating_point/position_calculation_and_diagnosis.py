@@ -104,6 +104,8 @@ class mcRpoI_PositionCalculationAndDiagnosis:
 
         self.sym_QDEC_PULSE_PER_EREV = self.component.createIntegerSymbol("MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV", self.sym_QDEC )
         self.sym_QDEC_PULSE_PER_EREV.setLabel("Pulse Per electrical rotation")
+        self.sym_QDEC_PULSE_PER_EREV.setDependencies( self.symbolUpdate, ["MCPMSMFOC_MOTOR_SEL"])
+        self.sym_QDEC_PULSE_PER_EREV.setDefaultValue(200)
 
         primaryObservers = ["Pulsed Injection", "Sinusoidal Injection"]
         self.sym_PRIMARY_OBSERVER = self.component.createComboSymbol("MCPMSMFOC_ZSMT_HYB_PRIM_OBS", self.sym_ALGORITHM,  primaryObservers )
@@ -430,3 +432,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
             res = Database.deactivateComponents(autoConnectTable)
 
             symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", False)
+
+    def symbolUpdate( self, symbol, event ):
+        motor = event["symbol"].getValue()
+        symbol.setValue( int( self.motor_Parameters[motor]['QE_PULSES_PER_REV'] ))

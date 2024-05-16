@@ -113,6 +113,14 @@ void  mcRefI_ReferenceControlInit( tmcRef_Parameters_s * const pParameters )
     /** Calculate ramp rate per cycle   */
     mcRef_State_mds.rampRate = pParameters->rpmPerSecond * pParameters->dt;
 </#if>
+<#elseif ( MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' )>
+    mcRef_State_mds.lowerLimit = pParameters->minimum;
+    mcRef_State_mds.upperLimit = pParameters->maximum;
+
+<#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
+    /** Calculate ramp rate per cycle   */
+    mcRef_State_mds.rampRate = pParameters->rampRate * pParameters->dt;
+</#if>
 </#if>
 
     mcRef_State_mds.initDone = true;

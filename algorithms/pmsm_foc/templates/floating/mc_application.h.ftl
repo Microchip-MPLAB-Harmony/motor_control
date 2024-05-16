@@ -59,7 +59,11 @@
 #include "mc_initial_position_detection.h"
 </#if>
 </#if>
+
+<#if ('IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS )  ||  ('SENSORLESS_ZSMT_HYBRID' == MCPMSMFOC_POSITION_CALC_ALGORITHM )>
 #include "mc_key_manager.h"
+</#if>
+
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER' )>
 #include "mc_rotor_position_calculation.h"
 </#if>

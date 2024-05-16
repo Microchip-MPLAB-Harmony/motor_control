@@ -84,6 +84,14 @@ typedef struct
     int16_t encCountForVelocity;
     int16_t encCountForVelocityLast;
 
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    uint8_t gearFactor;
+    int8_t electricalRotationsPositive;
+    int8_t electricalRotationsNegative;
+    float32_t accumElectricalAngle;
+    float32_t mechanicalAngle;
+</#if>
+
 }tmcRpc_State_s;
 
 /*******************************************************************************
@@ -128,6 +136,9 @@ void  mcRpcI_RotorPositionCalcInit( tmcRpc_ModuleData_s * const pModule )
     mcRpcI_ParametersSet(&pModule->dParameters);
 
     /** Set state parameters  */
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    pState->gearFactor = pParameters->pMotorParameters->PolePairs * pParameters->gearRatio;
+</#if>
     pState->encPulsesPerElecRev =  pParameters->encPulsesPerElecRev;
     pState->velocityCountPrescaler = pParameters->velocityCountPrescaler;
     pState->encPulsesToElecAngle =  TWO_PI / (float32_t)pState->encPulsesPerElecRev;
@@ -229,42 +240,69 @@ void mcRpcI_RotorPositionCalc(  tmcRpc_ModuleData_s * const pModule )
          /** Read input ports */
          mcRpcI_PositionCounterRead( &dInput );
 
-	/* Calculate position */
-	pState->encCount = (uint16_t)dInput.encPulseCount;
+        /* Calculate position */
+        pState->encCount = (uint16_t)dInput.encPulseCount;
 
-	if(       ( pState->encCount > pState->encUpperThreshold )
-		          && ( pState->encCountForPositionLast < pState->encLowerThreshold))
-	{
-	    pState->positionCompensation += pState->encUnderflow;
-	}
-	else if(( pState->encCountForPositionLast > pState->encUpperThreshold)
-		          && ( pState->encCount < pState->encLowerThreshold))
-	{
-	    pState->positionCompensation += pState->encOverflow;
-	}
-	else
-	{
-	       /* Do nothing */
-	}
+        if(       ( pState->encCount > pState->encUpperThreshold )
+                      && ( pState->encCountForPositionLast < pState->encLowerThreshold))
+        {
+            pState->positionCompensation += pState->encUnderflow;
+        }
+        else if(( pState->encCountForPositionLast > pState->encUpperThreshold)
+                      && ( pState->encCount < pState->encLowerThreshold))
+        {
+            pState->positionCompensation += pState->encOverflow;
+        }
+        else
+        {
+               /* Do nothing */
+        }
 
-	pState->positionCompensation %=  pState->encPulsesPerElecRev;
-	pState->encCountForPosition  =  ( pState->encCount + pState->positionCompensation) % pState->encPulsesPerElecRev;
-	pState->encCountForPositionLast =  pState->encCount;
+        pState->positionCompensation %=  pState->encPulsesPerElecRev;
+        pState->encCountForPosition  =  ( pState->encCount + pState->positionCompensation) % pState->encPulsesPerElecRev;
+        pState->encCountForPositionLast =  pState->encCount;
 
-	/* Calculate velocity */
-	if( pState->synCounter > pState->velocityCountPrescaler )
-	{
-	    pState->synCounter = 0u;
-	    pState->encCountForVelocity = ( int16_t )pState->encCount -  ( int16_t )pState->encCountForVelocityLast;
-	    pState->encCountForVelocityLast = (int16_t)pState->encCount;
-	}
+        /* Calculate velocity */
+        if( pState->synCounter > pState->velocityCountPrescaler )
+        {
+            pState->synCounter = 0u;
+            pState->encCountForVelocity = ( int16_t )pState->encCount -  ( int16_t )pState->encCountForVelocityLast;
+            pState->encCountForVelocityLast = (int16_t)pState->encCount;
+        }
 
-	/* Write speed and position output */
-	pModule->dOutput.elecSpeed = (float32_t)pState->encCountForVelocity * pState->encPulsesToElecVelocity;
-	pModule->dOutput.elecAngle  = (float32_t)pState->encCountForPosition * pState->encPulsesToElecAngle;
+        float32_t newAngle = (float32_t)pState->encCountForPosition * pState->encPulsesToElecAngle;
 
-	/* Limit rotor angle range to 0 to 2*M_PI for lookup table */
-	mcUtils_TruncateAngle0To2Pi( &pModule->dOutput.elecAngle );
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+        /** Track number of electrical rotations */
+        float32_t delAngle = pModule->dOutput.elecAngle - newAngle;
+
+        if( delAngle > ONE_PI )
+        {
+            pState->electricalRotationsPositive++;
+            pState->electricalRotationsPositive %= pState->gearFactor;
+        }
+        else
+        {
+            if( delAngle < -ONE_PI )
+            {
+                pState->electricalRotationsNegative++;
+                pState->electricalRotationsNegative %= pState->gearFactor;
+            }
+        }
+
+        int8_t electricalRotations = pState->electricalRotationsPositive - pState->electricalRotationsNegative;
+
+        pState->accumElectricalAngle = newAngle + TWO_PI * electricalRotations;
+        pState->mechanicalAngle = pState->accumElectricalAngle/ pState->gearFactor;
+                  mcUtils_TruncateAngle0To2Pi( &pState->mechanicalAngle  );
+</#if>
+
+        /* Write speed and position output */
+        pModule->dOutput.elecSpeed = (float32_t)pState->encCountForVelocity * pState->encPulsesToElecVelocity;
+        pModule->dOutput.elecAngle  = (float32_t)newAngle;
+
+        /* Limit rotor angle range to 0 to 2*M_PI for lookup table */
+        mcUtils_TruncateAngle0To2Pi( &pModule->dOutput.elecAngle  );
      }
      else
      {
@@ -277,6 +315,26 @@ void mcRpcI_RotorPositionCalc(  tmcRpc_ModuleData_s * const pModule )
      }
 }
 
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+/*! \brief Get mechanical angle
+ *
+ * Details.
+ * Get mechanical angle
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+float32_t mcRpcI_MechanicalAngleGet(  const tmcRpc_Parameters_s * const pParameters )
+{
+        /** Get the linked state variable */
+    tmcRpc_State_s * pState;
+    pState = (tmcRpc_State_s *)pParameters->pStatePointer;
+
+    return pState->mechanicalAngle;
+}
+</#if>
 
 /*! \brief Reset Rotor position estimation
  *
@@ -302,6 +360,13 @@ void mcRpcI_RotorPositionCalcReset( tmcRpc_ModuleData_s * const pModule )
     pState->positionCompensation = 0u;
     pState->encCountForVelocity = 0;
     pState->encCountForVelocityLast = 0;
+
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    pState->accumElectricalAngle = 0.0f;
+    pState->electricalRotationsPositive = 0u;
+    pState->electricalRotationsNegative = 0u;
+    pState->mechanicalAngle = 0.0f;
+</#if>
 }
 <#else>
 /*******************************************************************************
@@ -329,6 +394,14 @@ typedef struct
     uint16_t synCounter;
     uint16_t encPulsesForPosition;
     int16_t encPulsesForVelocity;
+
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    uint8_t gearFactor;
+    int8_t electricalRotationsPositive;
+    int8_t electricalRotationsNegative;
+    float32_t accumElectricalAngle
+    float32_t mechanicalAngle;
+</#if>
 
 }tmcRpc_State_s;
 
@@ -372,6 +445,9 @@ void  mcRpcI_RotorPositionCalcInit( tmcRpc_Parameters_s * const pParameters )
     mcRpcI_ParametersSet(pParameters);
 
     /** Set state parameters  */
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    pState->gearFactor = pParameters->pMotorParameters->PolePairs * pParameters->gearRatio;
+</#if>
     pState->encPulsesPerElecRev =  pParameters->encPulsesPerElecRev;
     pState->velocityCountPrescaler = pParameters->velocityCountPrescaler;
     pState->encPulsesToElecAngle =  TWO_PI / (float32_t)pState->encPulsesPerElecRev;
@@ -481,12 +557,38 @@ void mcRpcI_RotorPositionCalc(  const tmcRpc_Parameters_s * const pParameters,
             pState->encPulsesForVelocity = (int16_t)dInput.encVelocityCount;
         }
 
+        float32_t newAngle =  (float32_t)pState->encPulsesForPosition * pState->encPulsesToElecAngle;
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+        /** Track number of electrical rotations */
+        float32_t delAngle = pModule->dOutput.elecAngle - newAngle;
+
+        if( delAngle > ONE_PI )
+        {
+            pState->electricalRotationsPositive++;
+            pState->electricalRotationsPositive %= pState->gearFactor;
+        }
+        else
+        {
+            if( delAngle < -ONE_PI )
+            {
+                pState->electricalRotationsNegative++;
+                pState->electricalRotationsNegative %= pState->gearFactor;
+            }
+        }
+
+        int8_t electricalRotations = pState->electricalRotationsPositive - pState->electricalRotationsNegative;
+
+        pState->accumElectricalAngle = newAngle + TWO_PI * electricalRotations;
+        pState->mechanicalAngle = pState->accumElectricalAngle/ pState->gearFactor;
+        mcUtils_TruncateAngle0To2Pi( &pState->mechanicalAngle  );
+</#if>
+
         /* Write speed and position output */
-        *pSpeed = (float32_t)pState->encPulsesForVelocity * pState->encPulsesToElecVelocity;
-        *pAngle  = (float32_t)pState->encPulsesForPosition * pState->encPulsesToElecAngle;
+        pModule->dOutput.elecSpeed = (float32_t)pState->encPulsesForVelocity * pState->encPulsesToElecVelocity;
+        pModule->dOutput.elecAngle  = newAngle;
 
         /* Limit rotor angle range to 0 to 2*M_PI for lookup table */
-        mcUtils_TruncateAngle0To2Pi( pAngle );
+        mcUtils_TruncateAngle0To2Pi( &pModule->dOutput.elecAngle );
      }
      else
      {
@@ -494,11 +596,31 @@ void mcRpcI_RotorPositionCalc(  const tmcRpc_Parameters_s * const pParameters,
          mcRpcI_RotorPositionCalcReset( pParameters );
 
          /** Update output */
-         *pSpeed = 0.0f;
-         *pAngle = 0.0f;
+         pModule->dOutput.elecSpeed = 0.0f;
+         pModule->dOutput.elecAngle = 0.0f;
      }
 }
 
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+/*! \brief Get mechanical angle
+ *
+ * Details.
+ * Get mechanical angle
+ *
+ * @param[in]: None
+ * @param[in/out]: None
+ * @param[out]: None
+ * @return: None
+ */
+float32_t mcRpcI_MechanicalAngleGet(  const tmcRpc_Parameters_s * const pParameters )
+{
+        /** Get the linked state variable */
+    tmcRpc_State_s * pState;
+    pState = (tmcRpc_State_s *)pParameters->pStatePointer;
+
+    return pState->mechanicalAngle;
+}
+</#if>
 
 /*! \brief Reset Rotor position estimation
  *
@@ -520,5 +642,12 @@ void mcRpcI_RotorPositionCalcReset( const tmcRpc_Parameters_s * const pParameter
     pState->synCounter = 0u;
     pState->encPulsesForPosition  = 0u;
     pState->encPulsesForVelocity = 0;
+
+<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    pState->accumElectricalAngle = 0.0f;
+    pState->electricalRotationsPositive = 0u;
+    pState->electricalRotationsNegative = 0u;
+    pState->mechanicalAngle = 0.0f;
+</#if>
 }
 </#if>

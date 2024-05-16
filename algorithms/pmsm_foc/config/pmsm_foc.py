@@ -24,6 +24,7 @@
 
 # Package imports
 import os
+import sys
 
 
 """
@@ -58,6 +59,12 @@ This function instantiates the PMSM FOC Component
 def instantiateComponent(mcPmsmFocComponent):
 
     Log.writeInfoMessage("Running PMSM FOC")
+
+    module_root = Variables.get("__MODULE_ROOT")
+    utils_path = os.path.join( module_root, 'libs')
+    sys.path.insert(0, utils_path)
+
+    import yaml
 
     mcPmsmFocInstanceName = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_INSTANCE_NAME", None)
     mcPmsmFocInstanceName.setVisible(False)
@@ -206,7 +213,8 @@ def handleMessage( ID, message):
     position_Interface.handleMessage( ID, message )
 
     # X2C Scope
-    data_Monitoring.handleMessage( ID, message )
+    if(( ID == "X2CSCOPE_DATA_MONITORING") or ( ID == "BSP_DATA_MONITORING")):
+        return data_Monitoring.handleMessage( ID, message )
 
 
 """
@@ -222,7 +230,9 @@ def finalizeComponent(mcPmsmFocComponent):
 
 
     value = Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_FOC_X2C_ENABLE")
-    Database.setSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_FOC_X2C_ENABLE", value)    # Set default algorithms
+    Database.setSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_FOC_X2C_ENABLE", value)    
+    
+    # Set default algorithms
     value = Database.getSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_POSITION_CALC_ALGORITHM")
     Database.setSymbolValue(mcPmsmFocComponent.getID(), "MCPMSMFOC_POSITION_CALC_ALGORITHM", value)
 

@@ -331,6 +331,9 @@ void mcAppI_ApplicationInit( void )
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER' )>
     /** Initialize rotor position calculation  */
     mcRpcI_RotorPositionCalcInit( &mcRpcI_ModuleData_gds );
+
+    /** Enable rotor position calculation  */
+    mcRpcI_RotorPositionCalcEnable( &mcRpcI_ModuleData_gds );
 </#if>
 
 <#if MCPMSMFOC_FOC_X2C_ENABLE == false>

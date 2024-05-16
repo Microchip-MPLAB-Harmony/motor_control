@@ -51,6 +51,72 @@ def mcGen_GenerateCodeUpdate(symbol, event):
     elif ( str( event["id"]) == "MCPMSMFOC_POSITION_CALC_ALGORITHM"):
         symObj = event["symbol"]
         key = (symObj.getSelectedKey()).lower()
+        
+        if 'sensored' in key:
+            modulePath = templatePath + "Rotor_Position_Calculation/"
+
+            for root, dirs, files in os.walk(Module.getPath() + modulePath + "inc"):
+                for filename in files:
+                    if (filename.startswith("opt_rpo")):
+                        if key in filename:
+                            component.getSymbolByID(filename).setEnabled(True)
+                        else:
+                            component.getSymbolByID(filename).setEnabled(False)
+
+            for root, dirs, files in os.walk(Module.getPath() + modulePath + "src"):
+                for filename in files:
+                    if (filename.startswith("opt_rpo")):
+                        if key in filename:
+                            component.getSymbolByID(filename).setEnabled(True)
+                        else:
+                            component.getSymbolByID(filename).setEnabled(False)
+
+            modulePath = templatePath + "Field_Oriented_Control/"
+
+            for root, dirs, files in os.walk(Module.getPath() + modulePath + "inc"):
+                for filename in files:
+                    if (filename.startswith("opt_rpo")):
+                        component.getSymbolByID(filename).setEnabled(False)
+
+            for root, dirs, files in os.walk(Module.getPath() + modulePath + "src"):
+                for filename in files:
+                    if (filename.startswith("opt_rpo")):
+                        component.getSymbolByID(filename).setEnabled(False)
+
+        else:
+            modulePath = templatePath + "Field_Oriented_Control/"
+
+            for root, dirs, files in os.walk(Module.getPath() + modulePath + "inc"):
+                for filename in files:
+                    if (filename.startswith("opt_rpo")):
+                        if key in filename:
+                            component.getSymbolByID(filename).setEnabled(True)
+                        else:
+                            component.getSymbolByID(filename).setEnabled(False)
+
+            for root, dirs, files in os.walk(Module.getPath() + modulePath + "src"):
+                for filename in files:
+                    if (filename.startswith("opt_rpo")):
+                        if key in filename:
+                            component.getSymbolByID(filename).setEnabled(True)
+                        else:
+                            component.getSymbolByID(filename).setEnabled(False)
+
+            modulePath = templatePath + "Rotor_Position_Calculation/"
+
+            for root, dirs, files in os.walk(Module.getPath() + modulePath + "inc"):
+                for filename in files:
+                    if (filename.startswith("opt_rpo")):
+                        component.getSymbolByID(filename).setEnabled(False)
+
+            for root, dirs, files in os.walk(Module.getPath() + modulePath + "src"):
+                for filename in files:
+                    if (filename.startswith("opt_rpo")):
+                        component.getSymbolByID(filename).setEnabled(False)
+
+    elif ( str( event["id"]) == "MCPMSMFOC_CONTROL_TYPE"):
+        symObj = event["symbol"]
+        key = (symObj.getSelectedKey()).lower()
         modulePath = templatePath + "Field_Oriented_Control/"
 
         for _, _, files in os.walk(Module.getPath() + modulePath + "inc"):

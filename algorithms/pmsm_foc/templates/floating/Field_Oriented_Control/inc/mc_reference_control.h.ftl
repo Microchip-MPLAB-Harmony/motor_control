@@ -58,10 +58,17 @@ typedef struct
 <#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
     float32_t minimumRpm;
     float32_t maximumRpm;
-<#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
+  <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     float32_t rpmPerSecond;
     float32_t dt;
-</#if>
+  </#if>
+<#elseif ( MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' ) >
+    float32_t minimum;
+    float32_t maximum;
+  <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
+    float32_t rampRate;
+    float32_t dt;
+  </#if>
 </#if>
     void * pStatePointer;
 }tmcRef_Parameters_s;
@@ -97,6 +104,13 @@ __STATIC_INLINE void mcRefI_ParametersSet( tmcRef_Parameters_s * const pParamete
 
 <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     pParameters->rpmPerSecond = (float32_t)(${MCPMSMFOC_RAMP_PROFILER_MAX_SPEED});
+    pParameters->dt =(float32_t)(${MCPMSMFOC_PWM_PERIOD});
+</#if>
+<#elseif ( MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' )>
+    pParameters->minimum = -(float32_t)0;
+    pParameters->maximum = -(float32_t)TWO_PI;
+<#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
+    pParameters->rampRate = (float32_t)300;
     pParameters->dt =(float32_t)(${MCPMSMFOC_PWM_PERIOD});
 </#if>
 </#if>

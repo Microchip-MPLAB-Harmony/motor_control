@@ -35,3 +35,9 @@ This section briefly describes the basic steps to get started with the **Harmony
 - [Create a new MPLAB® Harmony v3 project using MCC](mc_plant/create_mc_project_with_mcc.md)
 - [Configure motor control firmware using Qspin Motor Control Configuration](mc_plant/qspin_motor_control_configuration.md)
 - [Generate the source code](mc_plant/generate_mc_code_with_mcc.md)
+
+
+## X2C Model based Design in Harmony QSpin
+Harmony QSpin allows seamless integration of X2C model based code with the QSpin code enabling user can leverage the power of model based
+tools for simulation and algorithm development. Get started with [X2C Model based Design in Harmony QSpin](mc_plant/launch_scilab_for_x2c.md).
+

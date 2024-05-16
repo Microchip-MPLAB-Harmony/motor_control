@@ -323,7 +323,6 @@ class mcAniI_AnalogInterfaceClass:
         pass
 
     def handleMessage(self, ID, information ):
-        print('Analog message')
         if( "BSP_ANALOG_INTERFACE" == ID ) and ( None != information):
             print('Analog message', information)
             # Set unit and channel symbol for phase A current

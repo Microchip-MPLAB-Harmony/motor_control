@@ -76,7 +76,7 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_CONTROL_TYPE.addKey("SPEED_LOOP", "0", "Speed control")
         self.sym_CONTROL_TYPE.addKey("TORQUE_LOOP", "1", "Torque control")
         self.sym_CONTROL_TYPE.addKey("OPEN_LOOP", "2", "Open loop control")
-        # self.sym_CONTROL_TYPE.addKey("POSITION_LOOP", "3", "Position control")
+        self.sym_CONTROL_TYPE.addKey("POSITION_LOOP", "3", "Position control")
         self.sym_CONTROL_TYPE.setOutputMode("Key")
         self.sym_CONTROL_TYPE.setDisplayMode("Description")
 
