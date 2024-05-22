@@ -47,10 +47,12 @@
 /*******************************************************************************
  * Per unit scaling
 *******************************************************************************/
-#define BASE_SPEED_IN_RPM               (float32_t)(2804.0f)
-#define BASE_CURRENT_IN_AMPS       (float32_t)(4.40f)
-#define BASE_VOLTAGE_IN_VOLTS      (float32_t)(52.80)
-#define BASE_IMPEDENCE_IN_OHMS   (float32_t)( BASE_VOLTAGE_IN_VOLTS / BASE_CURRENT_IN_AMPS )
+#define BASE_SPEED_IN_RPM                   (float32_t)(2804 )
+#define BASE_CURRENT_IN_AMPS                (float32_t)(2048 * ${MCPMSMFOC_CURRENT_SCALING_FACTORT})
+
+#define VOLTAGE_DIVIDER_RATIO               (float32_t)(${MCPMSMFOC_DC_BUS_RATIO})
+#define BASE_VOLTAGE_IN_VOLTS               (float32_t)(3.30f/ VOLTAGE_DIVIDER_RATIO )
+#define BASE_IMPEDENCE_IN_OHMS              (float32_t)( BASE_VOLTAGE_IN_VOLTS / BASE_CURRENT_IN_AMPS )
 
 
 #define UNIT_VALUE (float32_t)( 16384 )
@@ -62,6 +64,6 @@
  * theta_scaled = omega_rpm_scaled * 65535 * BASE_SPEED * Pz / ( 16384 * 60 * Fs )
  * Therefore, K_TIME = 65535 * BASE_SPEED * Pz / ( 16384 * 60 * Fs )
  * */
-#define K_TIME  (float32_t)( BASE_SPEED_IN_RPM * 5.0f * 4.0f/ (60.0f * 20000.0f ))
+#define K_TIME  (float32_t)( BASE_SPEED_IN_RPM * 5.0f * 4.0f/ (60.0f * ${MCPMSMFOC_PWM_FREQUENCY} ))
 
 #endif // USERPARAMS_H

@@ -229,7 +229,7 @@ void mcTorI_TorqueControlAuto(  const tmcTor_Parameters_s * const pParameters,
         int16_t error = iQref - iQact;
 
         /** Limit update for PI controller */
-        mcUtils_PiLimitUpdate( -10000, 10000, &pState->bPIController );
+        mcUtils_PiLimitUpdate( -16384, 16383, &pState->bPIController );
 
         /** Execute PI controller */
         mcUtils_PiControl( error, &pState->bPIController );

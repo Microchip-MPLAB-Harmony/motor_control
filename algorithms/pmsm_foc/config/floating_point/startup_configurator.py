@@ -64,12 +64,12 @@ class mcSupI_StartupConfigurator:
 
         self.sym_CURRENT = self.component.createFloatSymbol( "MCPMSMFOC_STARTUP_CURRENT", self.sym_ALGORITHM )
         self.sym_CURRENT.setLabel("Alignment current")
-        self.sym_CURRENT.setDefaultValue(0.4)
+        self.sym_CURRENT.setDefaultValue(1.0)
         # self.sym_CURRENT.setDependencies( self.showThisSymbol, ['MCPMSMFOC_ENABLE_ALIGN_OR_DETECT'])
 
         self.sym_TIME = self.component.createFloatSymbol( "MCPMSMFOC_STARTUP_TIME", self.sym_ALGORITHM )
         self.sym_TIME.setLabel("Alignment time")
-        self.sym_TIME.setDefaultValue(2)
+        self.sym_TIME.setDefaultValue(0.5)
         # self.sym_TIME.setDependencies( self.showThisSymbol, ['MCPMSMFOC_ENABLE_ALIGN_OR_DETECT'])
 
         self.sym_PULSE_AMPLITUDE = self.component.createFloatSymbol( "MCPMSMFOC_IPD_PULSE_AMPLITUDE", self.sym_ALGORITHM )
@@ -99,13 +99,13 @@ class mcSupI_StartupConfigurator:
 
         self.sym_OL_RAMP_TIME = self.component.createFloatSymbol( "MCPMSMFOC_OPEN_LOOP_RAMP_TIME", self.sym_OL_RAMP )
         self.sym_OL_RAMP_TIME.setLabel("Ramp time (s)")
-        self.sym_OL_RAMP_TIME.setDefaultValue(5)
+        self.sym_OL_RAMP_TIME.setDefaultValue(3)
         self.sym_OL_RAMP_TIME.setDependencies( self.showThisSymbol, ['MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP'])
 
         self.sym_OL_STAB_TIME = self.component.createFloatSymbol( "MCPMSMFOC_OPEN_LOOP_STAB_TIME", self.sym_OL_RAMP )
         self.sym_OL_STAB_TIME.setLabel("Stabilization time (s)")
         self.sym_OL_STAB_TIME.setDependencies( self.showThisSymbol, ['MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP'])
-        self.sym_OL_STAB_TIME.setDefaultValue(2)
+        self.sym_OL_STAB_TIME.setDefaultValue(1)
 
 
         # Symbols for flying start configuration

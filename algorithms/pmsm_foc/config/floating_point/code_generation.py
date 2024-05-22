@@ -818,6 +818,15 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
                     mcPmsmFocHeaderFile.setEnabled(False)
 
 
+    processor = Variables.get("__PROCESSOR")
+    if (("SAMC2" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
+        print("I am executing")
+        # Symbol to enable "use indirect calls" option from xc32-gcc settings
+        xc32_use_indirect_calls = mcPmsmFocComponent.createSettingSymbol("XC32_USE_INDIRECT_CALLS", None)
+        xc32_use_indirect_calls.setCategory("C32")
+        xc32_use_indirect_calls.setKey("use-indirect-calls")
+        xc32_use_indirect_calls.setValue("true")
+
     # Included in the if condition to avoid interference
     mcPmsmFocCodeGen = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_CODE_GEN", None)
     mcPmsmFocCodeGen.setVisible(False)

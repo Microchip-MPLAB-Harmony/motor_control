@@ -48,7 +48,6 @@ Headers inclusions
 /*******************************************************************************
 Local configuration options
 *******************************************************************************/
-#define RAM_EXECUTE
 #define ONE_BY_SQRT3_FLOAT (float32_t)( 0.577350269 )
 #define TWO_PI_FLOAT (float32_t)(6.28318530f)
 
@@ -244,7 +243,7 @@ void mcFlxI_FluxControlAuto(  const tmcFlx_Parameters_s * const pParameters,
         int16_t error = iDref - iDact;
 
         /** Limit update for PI controller */
-        mcUtils_PiLimitUpdate( -10000, 10000, &pState->bPIController );
+        mcUtils_PiLimitUpdate( -16384, 16383, &pState->bPIController );
 
         /** Excecute PI controller */
         mcUtils_PiControl( error, &pState->bPIController );

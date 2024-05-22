@@ -104,14 +104,14 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_RAMP_PROFILER.setLabel("Ramp Profiler")
 
         # supported_Profiles = ["Step", "Linear", "Pulse", "S-Curve", "Sine Sweep"]
-        supported_Profiles = ["Step", "Linear"]
+        supported_Profiles = ["Linear", "Step"]
         self.sym_RAMP_PROFILES = self.component.createComboSymbol( "MCPMSMFOC_RAMP_PROFILES", self.sym_RAMP_PROFILER, supported_Profiles)
         self.sym_RAMP_PROFILES.setLabel("Profile")
 
         self.sym_RAMP_PROILE_MAX_SPEED = self.component.createFloatSymbol("MCPMSMFOC_RAMP_PROFILER_MAX_SPEED", self.sym_RAMP_PROFILER)
         self.sym_RAMP_PROILE_MAX_SPEED.setLabel("Ramp rate ( RPM/ s) ")
-        self.sym_RAMP_PROILE_MAX_SPEED.setDefaultValue(100)
-        self.sym_RAMP_PROILE_MAX_SPEED.setVisible(False)
+        self.sym_RAMP_PROILE_MAX_SPEED.setDefaultValue(300)
+        self.sym_RAMP_PROILE_MAX_SPEED.setVisible(True)
         self.sym_RAMP_PROILE_MAX_SPEED.setDependencies( self.showRampProfilerSymbol, ["MCPMSMFOC_RAMP_PROFILES"])
 
         self.sym_RAMP_PROILE_MAX_ACCEL = self.component.createFloatSymbol("MCPMSMFOC_RAMP_PROFILER_MAX_ACCEL", self.sym_RAMP_PROFILER)

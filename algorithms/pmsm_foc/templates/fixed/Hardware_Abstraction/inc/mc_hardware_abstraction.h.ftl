@@ -234,9 +234,9 @@ __STATIC_FORCEINLINE void mcHalI_DcLinkVoltageGet( void )
 {
     /** Get ADC value for DC bus voltage */
 <#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
-    mcHalI_UbusAdcInput_gdu16 = ADC1_ConversionResultGet();
+    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ConversionResultGet();
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
-    mcHalI_UbusAdcInput_gdu16 = AFEC0_ChannelResultGet(AFEC_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});
+    mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
   <#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC7" >
     mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});

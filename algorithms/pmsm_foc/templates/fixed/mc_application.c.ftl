@@ -179,6 +179,12 @@ void mcAppI_ApplicationInit( void )
     mcHalI_AdcInterruptDisable();
     mcHalI_AdcInterruptClear();
 
+<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
+    /** Set phase A and phase B current channels */
+    mcHalI_PhaseACurrentChannelSelect();
+    mcHalI_PhaseBCurrentChannelSelect();
+</#if>
+
     /** Enable ADC interrupt for field oriented control */
     mcHalI_AdcCallBackRegister(  (ADC_CALLBACK)mcAppI_AdcCalibrationIsr, (uintptr_t)dummyForMisra );
     mcHalI_AdcInterruptEnable( );
@@ -210,11 +216,6 @@ void mcAppI_ApplicationInit( void )
     /** Initialize PMSM motor control */
     mcFocI_FieldOrientedControlInit( &mcFocI_ModuleData_gds);
 
-<#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
-    /** Set phase A and phase B current channels */
-    mcHalI_PhaseACurrentChannelSelect();
-    mcHalI_PhaseBCurrentChannelSelect();
-</#if>
 }
 
 /*! \brief Over current reaction ISR

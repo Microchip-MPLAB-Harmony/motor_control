@@ -56,11 +56,11 @@ typedef struct
 {
     bool enable;
     bool initDone;
+    int16_t lowerLimit;
+    int16_t upperLimit;
 <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     int16_t reference;
     int16_t rampRate;
-    int16_t lowerLimit;
-    int16_t upperLimit;
 </#if>
 }tmcRef_State_s;
 
@@ -103,12 +103,12 @@ void  mcRefI_ReferenceControlInit( tmcRef_Parameters_s * const pParameters )
     /** Set parameters */
     mcRefI_ParametersSet(pParameters);
 
-    /** Update state variables */
-<#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
-<#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     mcRef_State_mds.lowerLimit = K_SPEED * pParameters->minimumRpm;
     mcRef_State_mds.upperLimit = K_SPEED * pParameters->maximumRpm;
 
+    /** Update state variables */
+<#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
+<#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     /** ToDO: To calculate based on fed parameters  */
     mcRef_State_mds.rampRate = 1;
 </#if>
@@ -134,12 +134,12 @@ void  mcRefI_ReferenceControlEnable( tmcRef_Parameters_s * const pParameters )
 
     if( ( NULL == pState ) || ( !pState->initDone ))
     {
-         /** Initialize parameters */
+        /** Initialize parameters */
         mcRefI_ReferenceControlInit(pParameters);
     }
     else
     {
-         /** For MISRA Compliance */
+        /** For MISRA Compliance */
     }
 
     /** Set enable flag as true */
@@ -204,6 +204,20 @@ void mcRefI_ReferenceControl(  tmcRef_Parameters_s * const pParameters,
         /** Execute reference control */
 <#if MCPMSMFOC_RAMP_PROFILES == 'Step'>
         *pOut = command;
+        
+        /** Clamp the reference  */
+        if( *pOut > pState->upperLimit )
+        {
+            *pOut = pState->upperLimit;
+        }
+        else if( *pOut < pState->lowerLimit)
+        {
+            *pOut = pState->lowerLimit;
+        }
+        else
+        {
+            /** For MISRA Compliance */
+        }
 </#if>
 
 <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>

@@ -395,10 +395,6 @@ void __ramfunc__  mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const 
 void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 #endif
 {
-    /** Intermediate variables */
-    int16_t iQref = 0;
-    int16_t iDref = 0;
-
     int16_t sine = 0;
     int16_t cosine = 0;
 
@@ -466,12 +462,12 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
         case FocState_Startup:
         {
             tmcTypes_StdReturn_e startupStatus;
-            startupStatus = mcSupI_OpenLoopStartup( &pState->bOpenLoopStartup, pState->commandDirection, &iQref, &iDref, &pState->openLoopAngle, &pState->openLoopSpeed );
+            startupStatus = mcSupI_OpenLoopStartup( &pState->bOpenLoopStartup, pState->commandDirection, &pState->iQref, &pState->iDref, &pState->openLoopAngle, &pState->openLoopSpeed );
             if( StdReturn_Complete == startupStatus )
             {
 <#if ( MCPMSMFOC_CONTROL_TYPE != 'TORQUE_LOOP' ) >
                 /** Set speed controller state */
-                mcSpeI_SpeedControlManual( &pState->bSpeedController, iQref );
+                mcSpeI_SpeedControlManual( &pState->bSpeedController, pState->iQref );
 </#if>
 
                 /** Calculate open loop and close loop angle difference */
@@ -511,9 +507,9 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 <#if ( MCPMSMFOC_CONTROL_TYPE != 'TORQUE_LOOP' ) >
             /** Execute speed controller */
             mcSpeI_SpeedControlAuto(&pState->bSpeedController, pState->nRef,
-                                pOutput->elecSpeed, &iQref );
+                                pOutput->elecSpeed, &pState->iQref );
 <#else>
-            iQref = 1000;
+            pState->iQref = 1000;
 </#if>
             break;
         }
@@ -571,9 +567,9 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
             /** Execute speed controller */
             pState->nRef *= pState->commandDirection;
             mcSpeI_SpeedControlAuto(&pState->bSpeedController, pState->nRef,
-                                pOutput->elecSpeed, &iQref );
+                                pOutput->elecSpeed, &pState->iQref );
 <#else>
-            iQref = 1000;
+            pState->iQref = 1000;
 </#if>
             break;
         }
@@ -588,12 +584,12 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     mcFoc_ParkTransformation( &pOutput->iAlphaBeta, sine, cosine, &pOutput->iDQ );
 
     /** Execute flux control */
-    mcFlxI_FluxControlAuto( &pState->bFluxController, iDref, pOutput->iDQ.d, &pState->uDQ.d );
+    mcFlxI_FluxControlAuto( &pState->bFluxController, pState->iDref, pOutput->iDQ.d, &pState->uDQ.d );
 
     /** ToDO: Apply circle limit for Q-axis reference current clamping  */
 
     /** Execute torque control */
-    mcTorI_TorqueControlAuto( &pState->bTorqueController, iQref, pOutput->iDQ.q, &pState->uDQ.q );
+    mcTorI_TorqueControlAuto( &pState->bTorqueController, pState->iQref, pOutput->iDQ.q, &pState->uDQ.q );
 
     /** Inverse Park transformation */
     mcFoc_InverseParkTransformation( &pState->uDQ, sine, cosine, &pOutput->uAlphaBeta );
