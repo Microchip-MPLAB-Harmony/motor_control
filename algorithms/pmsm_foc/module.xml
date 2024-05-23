@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Module name="Motor Control" id="22203e05-3434-4752-bda7-982900204c99" version="3.9.0">
+    <ConfigRoot path="config/module.py"/>
+</Module>

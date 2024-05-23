@@ -1,0 +1,33 @@
+motor:
+  meta_data:
+    creator: Harmony QSpin
+    manufacturer_motor_name: Leadshine EL5-M0400-1-24
+    manufacturer_name: Leadshine
+    manufacturer_part_no: EL5-M0400-1-24
+    microchip_name: New Leadshine400
+  parameters:
+    electrical_parameters:
+      Ke: 31.100230345
+      L: 0.0025380639999999996
+      Ld: 0.002566612
+      Lq: 0.002509516
+      R: 1.705781
+    mechanical_parameters:
+      B: 4.5132728e-05
+      J: 4.604659e-05
+      Tfr: 0.019744
+    name_plate_parameters:
+      connection_type: STAR
+      current:
+        maximum:
+          continuous: 4.24
+      pole_pairs: 5
+      velocity:
+        maximum: 5000
+        nominal: 3000
+      voltage:
+        nominal: 311.0
+    sensor_parameters:
+      incremental_encoder:
+        index_pulse_present: False
+        pulse_per_rev: 10000

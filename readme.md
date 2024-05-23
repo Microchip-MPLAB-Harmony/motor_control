@@ -16,26 +16,30 @@ and microprocessor devices.  Refer to the following links for more information.
  - [Microchip MPLAB X IDE](https://www.microchip.com/mplab/mplab-x-ide)
  - [Microchip MPLAB Harmony](https://www.microchip.com/mplab/mplab-harmony)
  - [Microchip MPLAB Harmony Pages](https://microchip-mplab-harmony.github.io/)
-
-This repository contains the MPLAB® Harmony 3 Motor Control module.  This module
-contains motor control demonstrations implemented on Microchip's 32-bit SAM and PIC32
-microcontrollers. Users can use these demonstrations as a reference for
-developing their own motor control applications on Microchip's SAM and PIC32 series of
-microcontrollers using MPLAB Harmony 3. Refer to the following links for release
-notes and licensing information.
-
- - [Release Notes](./release_notes.md)
  - [MPLAB Harmony License](mplab_harmony_license.md)
 
-# Contents Summary
+This repository serves as the home for Harmony QSpin, a GUI-based motor control system configuration tool. Designed for ease of use, it empowers users to swiftly construct motor control applications featuring well-architected code and MISRA-compliant content. Achieving this is made simple by following intuitive steps, ensuring a seamless and efficient motor control development experience.
+    <p align="center">
+        <img src="Images/Harmony QSpin.JPG" />
+        <figcaption align= "center"> Harmony QSpin </figcaption>
+    </p>
 
-| Folder     | Description                                               |
-|------------|-----------------------------------------------------------|
-| algorithms | Motor Control Algorithm components                        |
-| doc        | Demonstration user guide in .chm format                   |
-| docs       | Demonstration user guide in HTML format                   |
+For a detailed understanding of the tool's various features, consult the [Harmony QSpin Quick Guide](./docs/mc_plant_docs/introduction.md)
 
-# Motor Control Demo Applications Repositories
+Additionally, keep yourself informed with the latest updates and improvements by checking out our release notes:
+ - [Release Notes](./release_notes.md)
+
+# Supported devices
+
+Harmony QSpin supports a wide array of devices. Refer to the list of supported Devices list to check if your device is compatible with Harmony QSpin:
+
+< ```Add supported devices matrix ``` >
+
+# Prerequisites
+< ```Add prerequisites``` >
+
+# Additional Resources
+Refer to the following repositories to find device-specific application projects:
 
 | Repository Name | Description | Help Document | 
 | ----------------- | ------------------- | ---------------- |

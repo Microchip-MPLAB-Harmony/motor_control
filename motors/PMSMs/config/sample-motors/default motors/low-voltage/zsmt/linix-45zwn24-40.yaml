@@ -1,0 +1,29 @@
+motor:
+  meta_data:
+    creator: Harmony QSpin
+    manufacturer_motor_name: Linix 45ZWN24-40
+    manufacturer_name: Linix Motor
+    manufacturer_part_no: 45ZWN24-40
+    microchip_name: New linix-45ZWN24-40
+  parameters:
+    electrical_parameters:
+      Ke: 3.6376124734139
+      L: 0.0003905
+      Ld: 0.000307
+      Lq: 0.000474
+      R: 0.56924
+    mechanical_parameters:
+      B: 1.1095029e-05
+      J: 3.859584e-06
+      Tfr: 0.006072
+    name_plate_parameters:
+      connection_type: ''
+      current:
+        maximum:
+          continuous: 2.2
+      pole_pairs: 2
+      velocity:
+        maximum: 6000
+        nominal: 4000
+      voltage:
+        nominal: 24.0

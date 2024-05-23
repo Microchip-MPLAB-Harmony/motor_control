@@ -1,0 +1,34 @@
+motor:
+  meta_data:
+    creator: Harmony QSpin
+    manufacturer_motor_name: NT DYNAMO DMA0204024B101
+    manufacturer_name: Nidec Hurst
+    manufacturer_part_no: DMA0204024B101
+    microchip_name: New Hurst300
+  parameters:
+    electrical_parameters:
+      Ke: 4.7642538
+      L: 0.00035898099999999997
+      Ld: 0.000368467
+      Lq: 0.000349495
+      R: 0.37160175
+    mechanical_parameters:
+      B: 3.22134e-05
+      J: 1.8079199999999998e-05
+      Tfr: 0.0048125
+    name_plate_parameters:
+      connection_type: STAR
+      current:
+        maximum:
+          continuous: 4.53
+      pole_pairs: 5
+      velocity:
+        maximum: 3600
+        nominal: 2804
+      voltage:
+        nominal: 24.0
+    sensor_parameters:
+      incremental_encoder:
+        index_pulse_present: False
+        pulse_per_rev: 1000
+

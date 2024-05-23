@@ -1,0 +1,29 @@
+motor:
+  meta_data:
+    creator: Harmony QSpin
+    manufacturer_motor_name: ELRA IPM80S
+    manufacturer_name: ELRA Antriebstechnik Vertriebs Ges.m.b.H.
+    manufacturer_part_no: IPM80S-24V + AS5145/3K/1024/5V
+    microchip_name: New elra-ipm80s-24v
+  parameters:
+    electrical_parameters:
+      Ke: 4.03505294
+      L: 0.0004162
+      Ld: 0.0003471
+      Lq: 0.0004853
+      R: 0.1859
+    mechanical_parameters:
+      B: 1.90141e-05
+      J: 5.55319e-05
+      Tfr: 0.0281
+    name_plate_parameters:
+      connection_type: STAR
+      current:
+        maximum:
+          continuous: 7.5
+      pole_pairs: 2
+      velocity:
+        maximum: 5000
+        nominal: 3000
+      voltage:
+        nominal: 24.0

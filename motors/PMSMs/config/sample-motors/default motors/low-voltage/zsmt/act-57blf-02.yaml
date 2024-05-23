@@ -1,0 +1,29 @@
+motor:
+  meta_data:
+    creator: Harmony QSpin
+    manufacturer_motor_name: ACT57BLF02
+    manufacturer_name: ACT
+    manufacturer_part_no: ACT57BLF02
+    microchip_name: ACT57BLF02
+  parameters:
+    electrical_parameters:
+      Ke: 4.65001
+      L: 0.00011725
+      Ld: 0.000102
+      Lq: 0.0001325
+      R: 0.231436
+    mechanical_parameters:
+      B: 4.5887e-05
+      J: 3.0081e-05
+      Tfr: 0.012851
+    name_plate_parameters:
+      connection_type: ''
+      current:
+        maximum:
+          continuous: 7.8
+      pole_pairs: 4
+      velocity:
+        maximum: 5000
+        nominal: 3000
+      voltage:
+        nominal: 24.0
