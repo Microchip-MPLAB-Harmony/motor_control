@@ -400,4 +400,25 @@ void mcHalI_EncoderStart( void  )
     ${MCPMSMFOC_ENCODER_PERIPHERAL}_Start();
 </#if>
 }
+
+/*! \brief Stop the encoder peripheral
+ *
+ * Details.
+ * Stop the encoder peripheral
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcHalI_EncoderStop( void  )
+{
+<#if "PDEC_U2263" == MCPMSMFOC_QEI_IP>
+    ${MCPMSMFOC_ENCODER_PERIPHERAL}_QDECStop();
+<#elseif "TC_6082" == MCPMSMFOC_QEI_IP>
+   ${MCPMSMFOC_ENCODER_PERIPHERAL}_QuadratureStop();
+<#elseif "QEI_01494" == MCPMSMFOC_QEI_IP>
+    ${MCPMSMFOC_ENCODER_PERIPHERAL}_Stop();
+</#if>
+}
 </#if>

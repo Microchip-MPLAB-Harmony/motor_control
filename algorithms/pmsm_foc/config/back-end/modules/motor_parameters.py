@@ -167,7 +167,9 @@ class mcMotI_MotorParametersClass:
             if 'sensor_parameters' in params.keys():
                 if 'incremental_encoder' in params['sensor_parameters'].keys():
                     encoder_count_per_rot = int(params['sensor_parameters']['incremental_encoder']['pulse_per_rev'])
-                    Database.setSymbolValue('pmsm_foc', "MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV", int(encoder_count_per_rot ))
+                    pole_pairs = params['name_plate_parameters']['pole_pairs']
+                    encoder_count_per_elec_rot = encoder_count_per_rot / pole_pairs
+                    Database.setSymbolValue('pmsm_foc', "MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV", int(encoder_count_per_elec_rot ))
                 else:
                     Database.setSymbolValue('pmsm_foc', "MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV", 0 )
 

@@ -683,6 +683,19 @@ bool mcHalI_DirectionButtonState( void );
  * @return:
  */
 void mcHalI_EncoderStart( void  );
+
+/*! \brief Stop the encoder peripheral
+ *
+ * Details.
+ * Stop the encoder peripheral
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+void mcHalI_EncoderStop( void  );
+
 </#if>
 
 #endif // MCHAL_H

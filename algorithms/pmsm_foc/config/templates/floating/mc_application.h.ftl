@@ -50,9 +50,7 @@
 #include "mc_hardware_abstraction.h"
 #include "mc_current_calculation.h"
 #include "mc_voltage_measurement.h"
-<#if MCPMSMFOC_FOC_X2C_ENABLE == false>
 #include "mc_motor.h"
-</#if>
 #include "mc_field_oriented_control.h"
 <#if MCPMSMFOC_FOC_X2C_ENABLE == false>
 <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >

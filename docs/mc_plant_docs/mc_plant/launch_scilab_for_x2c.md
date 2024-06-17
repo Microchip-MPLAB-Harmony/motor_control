@@ -76,6 +76,10 @@ Follow the following steps to utilize Model-Based Design in Harmony QSpin.
      - [Scilab® and X2C Open-Source Tools for Motor Control Development](https://www.microchip.com/en-us/solutions/technologies/motor-control-and-drive/motor-control-simulations/scilab-and-x2c)
      - [Harmony X2C Model](https://github.com/Microchip-MPLAB-Harmony/x2c/tree/master/x2c-model#readme)
 
+*<span style="color: red;">Note :</span>* You can use sample X2C models from <mark style="background-color: #FFFF00">motor_control->algorithms->pmsm_foc->config->x2c-models</mark> to start your model based design.
+
+
+
 ### 8. Transform and Generate Code
    - Click on "transform model and push to communicator".
    - Click on "Start Communicator".

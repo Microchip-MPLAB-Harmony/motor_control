@@ -163,6 +163,7 @@ __STATIC_INLINE void mcRpcI_ParametersSet( tmcRpc_Parameters_s * const pParamete
 </#if>
 
     /** Encoder parameters  */
+	
     pParameters->encPulsesPerElecRev = (uint16_t)${MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV};
     pParameters->encPulsePerMechRev = pParameters->encPulsesPerElecRev * (uint16_t)mcMotI_PMSM_gds.PolePairs;
 }

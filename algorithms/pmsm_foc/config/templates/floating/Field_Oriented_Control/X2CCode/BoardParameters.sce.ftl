@@ -9,19 +9,33 @@
 // THE DAMAGES ARE FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP’S TOTAL LIABILITY ON ALL CLAIMS RELATED 
 // TO THE SOFTWARE WILL NOT EXCEED AMOUNT OF FEES, IF ANY, YOU PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 
-if isdef(['boardName'])==%F then
-    mprintf("[Warning] - No boardName defined, defining this now.");
-    boardName = '${MCPMSMFOC_BOARD_SEL}';
-else
-    if boardName == '${MCPMSMFOC_BOARD_SEL}'
+boardName = '${MCPMSMFOC_BOARD_SEL}'
 
-        fPWM = ${MCPMSMFOC_PWM_FREQUENCY};
-
-        Rshunt = ${MCPMSMFOC_ANALOG_FRONT_END_IA_SHUNT};
-        Igain = ${MCPMSMFOC_ANALOG_FRONT_END_IA_GAIN};
-
-        maxCurrentCommand = 2.9;
-
+if isdef(['Vbus'])==%T then
+    if Vbus == 0 then
+        Vbus = ${MCPMSMFOC_VOLTAGE_MAGNITUDE};
     end
 end
+
+BOARD_PwmFrequencyInHz = ${MCPMSMFOC_PWM_FREQUENCY};
+
+BOARD_RshuntInOhm = ${MCPMSMFOC_ANALOG_FRONT_END_IA_SHUNT};
+BOARD_CSAGain = ${MCPMSMFOC_ANALOG_FRONT_END_IA_GAIN};
+BOARD_CSABias = ${MCPMSMFOC_ANALOG_FRONT_END_IA_OFFSET};
+
+// Calculate maximum measurable current
+if ( BOARD_RshuntInOhm <> 0 & BOARD_CSAGain <> 0 ) then
+    BOARD_ImaxMeasurable = 1.65/ ( BOARD_RshuntInOhm * BOARD_CSAGain )
+else
+    BOARD_ImaxMeasurable = 0
+end
+
+BOARD_BusVoltageDividerRatio = ${MCPMSMFOC_DC_BUS_RATIO}
+// Calculate maximum measurable voltage 
+if ( BOARD_BusVoltageDividerRatio <> 0 ) then
+    BOARD_UmaxMeasurable = 3.3 / BOARD_BusVoltageDividerRatio
+else
+    BOARD_UmaxMeasurable = 0
+end
+
 

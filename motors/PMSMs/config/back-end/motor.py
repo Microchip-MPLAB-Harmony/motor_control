@@ -24,6 +24,14 @@
 *****************************************************************************"""
 
 import os
+import sys
+
+"""
+Add library to system path
+"""
+module_root = Variables.get("__MODULE_ROOT")
+utils_path = os.path.join( module_root, '..' , '..', 'libs')
+sys.path.insert(0, utils_path)
 
 # Get the directory path
 dir_path = os.path.join(Module.getPath(), "config", "back-end", "modules")

@@ -9,36 +9,23 @@
 // THE DAMAGES ARE FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP’S TOTAL LIABILITY ON ALL CLAIMS RELATED 
 // TO THE SOFTWARE WILL NOT EXCEED AMOUNT OF FEES, IF ANY, YOU PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 
-if isdef(['motorName'])==%F then
-    mprintf("[Warning] - No motorName defined, defining this now.");
-    motorName = '${MCPMSMFOC_MOTOR_SEL}';
-else
-    if motorName == '${MCPMSMFOC_MOTOR_SEL}'
-        if isdef(['Vbus'])==%T then
-            if Vbus == 0 then
-                Vbus = ${MCPMSMFOC_VOLTAGE_MAGNITUDE};
-            end
-        end
+motorName = '${MCPMSMFOC_MOTOR_SEL}';
 
-        <#--  Per phase resistance  -->
-        Rs = ${MCPMSMFOC_R};
-        Ld = ${MCPMSMFOC_LD};
-        Lq = ${MCPMSMFOC_LQ};
-        Kell = ${MCPMSMFOC_BEMF_CONST};
+// Nameplate parameters
+MOTOR_WindingConnectionType = '${MCPMSMFOC_MOTOR_CONNECTION}';
+MOTOR_RatedVoltageInVolts = ${MCPMSMFOC_RATED_VOLTAGE};
+MOTOR_Polepairs = ${MCPMSMFOC_POLE_PAIRS};
+MOTOR_NominalRpm = ${MCPMSMFOC_RATED_SPEED}
+MOTOR_MaximumRpm = ${MCPMSMFOC_MAX_SPEED}
+MOTOR_RatedCurrentInAmps = ${MCPMSMFOC_MAX_MOTOR_CURRENT};
 
-        n_p = ${MCPMSMFOC_POLE_PAIRS};
+// Electrical parameters
+MOTOR_PhaseRsInOhm = ${MCPMSMFOC_R};
+MOTOR_PhaseLdInHenry = ${MCPMSMFOC_LD};
+MOTOR_PhaseLqInHenry = ${MCPMSMFOC_LQ};
+MOTOR_BemfConstInVrmsPerKrpm = ${MCPMSMFOC_BEMF_CONST};
 
-        nominalSpeed = ${MCPMSMFOC_RATED_SPEED};
-
-        J_nmradss = 0.912e-6 * 10; // inertia Nm/rad/s/s
-
-        motorRatedCurrent = ${MCPMSMFOC_MAX_MOTOR_CURRENT};
-        motorStartupCurrent = ${MCPMSMFOC_STARTUP_CURRENT};
-
-        boardName == '${MCPMSMFOC_BOARD_SEL}'
-        kpCurrent = ${MCPMSMFOC_ID_PID_KP};
-        kiCurrent = ${MCPMSMFOC_ID_PID_KI};
-        kpVelocity = ${MCPMSMFOC_SPEED_PID_KP};
-        kiVelocity = ${MCPMSMFOC_SPEED_PID_KI};
-    end
-end
+// Mechanical parameters 
+MOTOR_InertiaInNmPerSecSqr = ${MCPMSMFOC_ROTOR_INERTIA};
+MOTOR_DampingCoeffInNmSecPerRad = ${MCPMSMFOC_VISCOUS_DAMPING};
+MOTOR_FrictionTorqueInNm = ${MCPMSMFOC_FRICTION_TORQUE};

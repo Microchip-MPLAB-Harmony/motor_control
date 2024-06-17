@@ -317,10 +317,8 @@ void mcAppI_ApplicationInit( void )
     /** Disable PWM output */
     mcHalI_InverterPwmDisable();
 
-<#if MCPMSMFOC_FOC_X2C_ENABLE == false>
     /** Set motor parameters */
     mcMotI_MotorParametersInit( &mcMotI_PMSM_gds);
-</#if>
 
     /** Initialize Current calculation */
     mcCurI_CurrentCalculationInit(&mcCurI_ModuleData_gds);

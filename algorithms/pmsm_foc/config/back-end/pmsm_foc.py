@@ -26,6 +26,12 @@
 import os
 import sys
 
+"""
+Add library to system path
+"""
+module_root = Variables.get("__MODULE_ROOT")
+utils_path = os.path.join( module_root, '..' , '..', 'libs')
+sys.path.insert(0, utils_path)
 
 """
 Execute all Python files in the given directory.
@@ -59,10 +65,6 @@ This function instantiates the PMSM FOC Component
 def instantiateComponent(mcPmsmFocComponent):
 
     Log.writeInfoMessage("Running PMSM FOC")
-
-    module_root = Variables.get("__MODULE_ROOT")
-    utils_path = os.path.join( module_root, 'libs')
-    sys.path.insert(0, utils_path)
 
     mcPmsmFocInstanceName = mcPmsmFocComponent.createStringSymbol("MCPMSMFOC_INSTANCE_NAME", None)
     mcPmsmFocInstanceName.setVisible(False)

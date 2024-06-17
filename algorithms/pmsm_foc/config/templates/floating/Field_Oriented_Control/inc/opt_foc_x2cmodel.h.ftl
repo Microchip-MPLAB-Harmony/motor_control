@@ -61,6 +61,10 @@
  #define  FLOATING_POINT_F32_MODEL   1U
 
  #define  X2CMODEL_TYPE   FIXED_POINT_Q15_MODEL
+ 
+ <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
+static uint16_t firsttime =0;
+</#if>
 
 /*******************************************************************************
  Interface variables
@@ -120,14 +124,14 @@ static inline void mcFoc_InputPortsRead( void  )
 
    /** Scale speed
       * Scaling:
-      *         Maximum speed -> 16384 units,
-      *         Conversion Factor = 16384 / Maximum speed
+      *         Maximum speed -> 32767 units,
+      *         Conversion Factor = 32767 / Maximum speed
       *
-      *         For a long Hurst motor, maximum speed is around 3500 RPM.
-      *         Therefore, conversion factor ~ 4.68
+      *         If maximum speed is around 3600 RPM.
+      *         Therefore, conversion factor ~ 9.10
       */
     float32_t elecSpeedInRpm =  (float32_t)mcRpcI_ModuleData_gds.dOutput.elecSpeed;
-    x2cModel.inports.bQEI_VEL = (int16_t)( elecSpeedInRpm * 4.68f );
+    x2cModel.inports.bQEI_VEL = (int16_t)( elecSpeedInRpm * 9.10 );
 </#if>
 #endif
 }
@@ -164,21 +168,21 @@ static inline void mcFoc_OutputPortsWrite( void  )
     periodCount = mcHalI_PwmPeriodGet();
 
   <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'> 
-    if( *x2cModel.outports.bHOME_INIT != 0 )
+    if( *x2cModel.outports.bHOME_INIT !=1 )
     {
+        if(firsttime==0){
+         /** Start encoder */
+        mcHalI_EncoderStart();
         /** Enable rotor position estimation */
         mcRpcI_RotorPositionCalcEnable(&mcRpcI_ModuleData_gds);
+        firsttime=1;
+        }
          
-        /** Start encoder */
-        mcHalI_EncoderStart();
+       
     }
     else
     {
-        /** Disable rotor position estimation */
-        mcRpcI_RotorPositionCalcDisable(&mcRpcI_ModuleData_gds);
-         
-        /** Stop encoder */
-        mcHalI_EncoderStop();
+
     }
   </#if>
 

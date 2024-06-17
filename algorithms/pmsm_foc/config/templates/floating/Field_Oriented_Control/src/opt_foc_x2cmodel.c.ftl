@@ -81,12 +81,14 @@
  */
 void mcFocI_FieldOrientedControlEnable( void )
 {
+  /** Please note that the ports may vary depending on your specific model. 
+      Please adjust as needed. */
   #if ( X2CMODEL_TYPE == FLOATING_POINT_F32_MODEL )
-    x2cModel.inports.bS2 = 1U;
+    x2cModel.inports.bSW1 = 1U;
   #endif
 
 #if ( X2CMODEL_TYPE == FIXED_POINT_Q15_MODEL )
-    x2cModel.inports.bS2 = INT16_MAX;
+    x2cModel.inports.bSW1 = 1U;//INT16_MAX;
 #endif
 }
 
@@ -102,7 +104,9 @@ void mcFocI_FieldOrientedControlEnable( void )
  */
 void mcFocI_FieldOrientedControlDisable( void )
 {
-    x2cModel.inports.bS2 = 0U;
+  /** Please note that the ports may vary depending on your specific model. 
+      Please adjust as needed. */
+    x2cModel.inports.bSW1 = 0U;
 }
 
 /*! \brief  Field oriented control initialization
@@ -173,7 +177,24 @@ void mcFocI_FieldOrientedControlSlow( void  )
  */
 void mcFocI_MotorDirectionChange( void )
 {
-    x2cModel.inports.bS3 = x2cModel.inports.bS3 ^ 0U;
+  /** Please note that the ports may vary depending on your specific model. 
+      Please adjust as needed. */
+
+  #if ( X2CMODEL_TYPE == FLOATING_POINT_F32_MODEL )
+    x2cModel.inports.bSW2 ^= 1U;
+  #endif
+
+#if ( X2CMODEL_TYPE == FIXED_POINT_Q15_MODEL )
+    if( x2cModel.inports.bSW2 == 0U )
+    {
+        x2cModel.inports.bSW2 = INT16_MAX;
+     }
+    else
+    {
+        x2cModel.inports.bSW2 = 0U;
+    }
+#endif
+
 }
 
 /*! \brief  Field oriented control reset
