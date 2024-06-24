@@ -9,109 +9,64 @@
 // THE DAMAGES ARE FORESEEABLE. TO THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP’S TOTAL LIABILITY ON ALL CLAIMS RELATED 
 // TO THE SOFTWARE WILL NOT EXCEED AMOUNT OF FEES, IF ANY, YOU PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 
-// System parameters 
-SYSTEM_PwmFrequencyInHz = 20000  
-X2C_sampleTime = 1/ SYSTEM_PwmFrequencyInHz
+// version: R0-RC1
 
-// Define the conversion factors
-sqrt2 = sqrt(2);
-krpm_to_rad_per_s = 100 * %pi / 3;
+// ******* Universal constants *******
+Nm_ozin = 7.061552e-3;
+KRPM_rads = 0.060/2/%pi;
+Vbus = ${MCPMSMFOC_VOLTAGE_MAGNITUDE};                  // override value in volts
 
-// Function to convert ke from Vrms/Krpm to Vpeak/rad/s
-function ke_vpeak_rpm = convert_ke(ke_vrms_krpm)
-    // Convert Vrms/Krpm to Vpeak/Krpm
-    ke_vpeak_krpm = ke_vrms_krpm * sqrt2;
-    
-    // Convert Vpeak/Krpm to Vpeak/rad/s
-    ke_vpeak_rpm = ke_vpeak_krpm / 1000;
-endfunction
-
-// Load all motor and board parameter files
+// ******* Load all motor and board parameter files *******
 exec("MotorParameters.sce", -1);
 exec("BoardParameters.sce", -1);
 
+// ******* Derived parameters *******
+X2C_sampleTime = 1/fPWM;
+Vdc_phase = Vbus/sqrt(3);
+Ipeakfullscale = 1.65/(abs(Igain)*Rshunt);
+startupCurrentNorm = motorStartupCurrent/Ipeakfullscale;
+Isat = min(maxCurrentCommand*0.85,motorRatedCurrent);
+IsatNorm = Isat/Ipeakfullscale;
 
-// Fundamental base values 
-PER_UNIT_Ubase = BOARD_UmaxMeasurable;
-PER_UNIT_Ibase = BOARD_ImaxMeasurable;
-PER_UNIT_Nbase = MOTOR_MaximumRpm;
+// ******* Choose one of the saturation modes *******
+SaturationModeBalancedDQ = %F;
+SaturationModeQheavy = %T;
 
-// Derived base values
-PER_UNIT_Zbase = PER_UNIT_Ubase/PER_UNIT_Ibase
-PER_UNIT_Nbase_rad_per_s = PER_UNIT_Nbase * 2 * %pi / 60;
-PER_UNIT_Lbase = PER_UNIT_Zbase / PER_UNIT_Nbase_rad_per_s;
-PER_UNIT_OneOverKeBase = PER_UNIT_Ubase / PER_UNIT_Nbase;
+if SaturationModeBalancedDQ then
+    // voltage saturation scheme:
+    // remaining voltage after HFI is shared equally
+    // between d axis and q axis controllers
+    VmaxAmp = Vdc_phase - hfiUcAmplitude;
+    Vsat = sqrt((VmaxAmp^2)/2);
+    Vdsat = Vsat;
+    Vqsat = Vsat;
+    VdsatNorm = Vdsat/Vdc_phase;
+    VqsatNorm = Vqsat/Vdc_phase;
+end
 
-// BEMF Estimator
-BemfEstimator_Rs = MOTOR_PhaseRsInOhm / PER_UNIT_Zbase;
-BemfEstimator_Ls = 500 * ( MOTOR_PhaseLdInHenry + MOTOR_PhaseLqInHenry ) / PER_UNIT_Lbase;
-BemfEstimator_oneOverKe = PER_UNIT_Ubase * convert_ke( MOTOR_BemfConstInVrmsPerKrpm )/ PER_UNIT_Nbase;
-BemfEstimator_SpeedToAngle = ( 2 * PER_UNIT_Nbase * MOTOR_Polepairs / 60.0 )
+if SaturationModeQheavy then
+    // voltage saturation scheme:
+    // 95% of remaining voltage after HFI is shared 1x in
+    // d axis controller and 4x in q axis controller
+    VmaxAmp = (Vdc_phase - hfiUcAmplitude)*0.95;
+    Vsat = sqrt((VmaxAmp^2)/17);
+    Vdsat = Vsat;
+    Vqsat = 4*Vsat;
+    VdsatNorm = Vdsat/Vdc_phase;
+    VqsatNorm = Vqsat/Vdc_phase;
+end
 
-// Open loop startup parameters
-OpenloopStartup_CurrentInAmps = 0.7 *  MOTOR_RatedCurrentInAmps/ PER_UNIT_Ibase
-OpenloopStartup_SpeedToAngle = ( 2 * PER_UNIT_Nbase * MOTOR_Polepairs / 60.0 )
-OpenloopStartup_FinalSpeedPlus = ${MCPMSMFOC_OPEN_LOOP_END_SPEED} / PER_UNIT_Nbase;
-OpenloopStartup_FinalSpeedMinus = -OpenloopStartup_FinalSpeedPlus
+// rescaled motor parameters
+Ls_mH = (1e3)*(Ld+Lq)/2;
 
-OpenloopStartup_PrechargeTimeInSec = 0.1;
-OpenloopStartup_AlignmentTimeInSec = ${MCPMSMFOC_STARTUP_TIME};
-OpenloopStartup_SpeedRampTimeInSec = ${MCPMSMFOC_OPEN_LOOP_RAMP_TIME};
-OpenloopStartup_SpeedStabTimeInSec = ${MCPMSMFOC_OPEN_LOOP_STAB_TIME};
-OpenloopStartup_TransitionTimeInSec = 1.0 
-OpenloopStartup_AccelerationInRpmPerSec  = 1 // ToDO: Calculate from final speed and ramp time 
-
-OpenloopStartup_PrechargeStamp = OpenloopStartup_PrechargeTimeInSec;
-OpenloopStartup_AlignmentTimeStamp = OpenloopStartup_PrechargeTimeInSec + OpenloopStartup_AlignmentTimeInSec;
-OpenloopStartup_SpeedRampTimeStamp = OpenloopStartup_AlignmentTimeStamp + OpenloopStartup_SpeedRampTimeInSec;
-OpenloopStartup_SpeedStabTimeStamp = OpenloopStartup_SpeedRampTimeStamp + OpenloopStartup_SpeedStabTimeInSec;
-OpenloopStartup_TransitionTimeStamp = OpenloopStartup_SpeedStabTimeStamp + OpenloopStartup_TransitionTimeInSec;
-
-
-//
-
-OpenloopStartup_PrechargeStampSe = 0.1;
-OpenloopStartup_AlignmentTimeStampSe = 0.8;
-OpenloopStartup_SpeedRampTimeStampSe = 0.8;
-OpenloopStartup_SpeedStabTimeStampSe = 0.8;
-OpenloopStartup_TransitionTimeStampSe = 0.8;
-
-// Sensorless
-//  Default PI controller parameters
-// Speed PI 
-SpeedKp = 1;
-SpeedKi = 5;
-SpeedDemandRate = 0.075;
-SPEED_CONTROL_MaximumReference=0.8;
-SPEED_CONTROL_MinimumReference = 0.005;
+// ZS/MT tuning parameters
+n_scale = nominalSpeed;
+UDCLink_scale = Vbus;
+I_scale = Ipeakfullscale;
+vdcNormalization = Vbus/sqrt(3);
 
 
-// Flux control PI
-PIFluxKp =  0.8;
-PIFluxKi = 0.5;
-
-// Torque control PI
-PITorqueKp = 0.8;
-PITorqueKi =0.5;
-
-// PLL
-PLL_INT = 640;
-
-// Sensored
-//  Default PI controller parameters
-// Speed PI 
-SpeedKpSe = 1;
-SpeedKiSe = 5;
-SpeedDemandRateSe = 2.5;
-SPEED_CONTROL_MaximumReferenceSe=0.8;
-SPEED_CONTROL_MinimumReferenceSe = 0.005;
-
-
-// Flux control PI
-PIFluxKpSe =  0.255;
-PIFluxKiSe = 0.8;
-
-// Torque control PI
-PITorqueKpSe = 0.255;
-PITorqueKiSe =0.8;
+// ******* Derived constants *******
+speed2mechAngle     = (2*%pi*n_scale/60)/%pi;
+speed2elAngle       = speed2mechAngle * n_p;
 

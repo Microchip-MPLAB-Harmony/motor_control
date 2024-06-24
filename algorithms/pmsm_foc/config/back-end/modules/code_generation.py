@@ -107,16 +107,16 @@ def mcGen_GenerateCodeUpdate(symbol, event):
             component.getSymbolByID("MCPMSMFOC_SMO_LIB_A").setEnabled(True)
 
         elif "sensorless_zsmt" in key:
-            component.getSymbolByID("MCPMSMFOC_ENABLE_ALIGN_OR_DETECT").setValue(False)
-            component.getSymbolByID("MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP").setValue(False)
-            component.getSymbolByID("mc_open_loop_startup.h.ftl").setEnabled(False)
-            component.getSymbolByID("mc_open_loop_startup.c.ftl").setEnabled(False)
+            # component.getSymbolByID("MCPMSMFOC_ENABLE_ALIGN_OR_DETECT").setValue(False)
+            # component.getSymbolByID("MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP").setValue(False)
+            # component.getSymbolByID("mc_open_loop_startup.h.ftl").setEnabled(False)
+            # component.getSymbolByID("mc_open_loop_startup.c.ftl").setEnabled(False)
             component.getSymbolByID("MCPMSMFOC_ZSMT_LIB").setEnabled(True)
         else:
-            component.getSymbolByID("MCPMSMFOC_ENABLE_ALIGN_OR_DETECT").setValue(True)
-            component.getSymbolByID("MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP").setValue(True)
-            component.getSymbolByID("mc_open_loop_startup.c.ftl").setEnabled(True)
-            component.getSymbolByID("mc_open_loop_startup.h.ftl").setEnabled(True)
+            # component.getSymbolByID("MCPMSMFOC_ENABLE_ALIGN_OR_DETECT").setValue(True)
+            # component.getSymbolByID("MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP").setValue(True)
+            # component.getSymbolByID("mc_open_loop_startup.c.ftl").setEnabled(True)
+            # component.getSymbolByID("mc_open_loop_startup.h.ftl").setEnabled(True)
             component.getSymbolByID("MCPMSMFOC_ZSMT_LIB").setEnabled(False)
 
     elif  ( str( event["id"] ) == "MCPMSMFOC_FOC_X2C_ENABLE"):

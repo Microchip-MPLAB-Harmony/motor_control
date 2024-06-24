@@ -46,9 +46,7 @@
 *******************************************************************************/
 #include "mc_types.h"
 #include "mc_pwm.h"
-<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >
 #include "mc_open_loop_startup.h"
-</#if>
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
 #include "mc_flying_start.h"
 </#if>

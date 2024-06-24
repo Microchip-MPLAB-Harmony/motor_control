@@ -55,6 +55,13 @@
 /*******************************************************************************
  User defined data types
  *******************************************************************************/
+ typedef struct {
+    bool reinitialize;
+    float32_t iHFI;
+    float32_t angleFromHFIObserver;
+    float32_t angleFromBEMFObserver;
+ }tmcTune_HFITuning_s;
+
  typedef struct
  {
     float32_t foInHertz;
@@ -104,7 +111,8 @@ typedef struct
 /*******************************************************************************
  Interface variables
  *******************************************************************************/
-extern tmcRpe_Parameters_s  mcRpeI_Parameters_gds;
+ extern tmcTune_HFITuning_s  mcRpeI_TuningSettings_gds;
+ extern tmcRpe_Parameters_s  mcRpeI_Parameters_gds;
 
 /*******************************************************************************
  Interface Variables

@@ -75,7 +75,7 @@ class mcAniI_AnalogInterfaceClass:
                 status = Database.sendMessage("custom_mc_board", "MCPMSMFOC_ANALOG_PAD_SET", args)
 
         # Internal function to update pad list based on ADC unit and channel
-        def updatePadList(symbol, event):
+        def updatePadList( self, symbol, event):
             if unit.getValue() != "** Select **" and channel.getValue() != "** Select **":
                 new_list = sorted(self.information[unit.getValue()][channel.getValue()])
 
@@ -144,7 +144,7 @@ class mcAniI_AnalogInterfaceClass:
                         "resolution" : self.device.resolution[0],
                         "mode": "default",
                         "reference": "default",
-                        "conversion_time" : 1,
+                        "conversion_time" : 1.6,
                         "trigger" : trigger,
                         "result_alignment" : "default",
                         "enable_eoc_event" : False,

@@ -61,6 +61,16 @@ extern int16_t mcPwmI_Duty_gau16[3u];
  * User defined data structure
 *******************************************************************************/
 
+<#function extractNumericValue alphanumericString>
+  <#assign numericString = "">
+  <#list 0..(alphanumericString?length-1) as i>
+    <#if alphanumericString[i]?matches("[0-9]")>
+      <#assign numericString += alphanumericString[i]>
+    </#if>
+  </#list>
+  <#return numericString?number>
+</#function>
+
 /*******************************************************************************
  * Static interface Functions
 *******************************************************************************/
@@ -166,20 +176,11 @@ __STATIC_FORCEINLINE void mcHalI_PhaseACurrentGet( void )
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
-  <#if MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC7" >
-    mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(ADCHS_CH${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC0">
-    mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH0);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC1">
-    mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH1);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC2">
-    mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH2);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC3">
-    mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH3);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC4">
-    mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH4);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IA_UNIT == "ADC5">
-    mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH5);
+  <#if MCPMSMFOC_PHASE_CURRENT_IA_UNIT != "ADC7">
+    <#assign numericValue = extractNumericValue(MCPMSMFOC_PHASE_CURRENT_IA_UNIT)>
+    mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${numericValue});
+  <#else>
+    mcHalI_IaAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
   </#if>
 <#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     mcHalI_IaAdcInput_gdu16 = ${MCPMSMFOC_PHASE_CURRENT_IA_UNIT}_ChannelResultGet(ADC_CH${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
@@ -203,20 +204,11 @@ __STATIC_FORCEINLINE void mcHalI_PhaseBCurrentGet( void )
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     mcHalI_IbAdcInput_gdu16 =  ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_PHASE_CURRENT_IB_CHANNEL});
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
-  <#if MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC7" >
-    mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_PHASE_CURRENT_IB_CHANNEL});
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC0">
-    mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH0);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC1">
-    mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH1);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC2">
-    mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH2);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC3">
-    mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH3);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC4">
-    mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH4);
-  <#elseif MCPMSMFOC_PHASE_CURRENT_IB_UNIT == "ADC5">
-    mcHalI_IbAdcInput_gdu16 =  ADCHS_ChannelResultGet(ADCHS_CH5);
+  <#if MCPMSMFOC_PHASE_CURRENT_IB_UNIT != "ADC7">
+    <#assign numericValue = extractNumericValue(MCPMSMFOC_PHASE_CURRENT_IB_UNIT)>
+    mcHalI_IbAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${numericValue});
+  <#else>
+    mcHalI_IbAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_PHASE_CURRENT_IB_CHANNEL});
   </#if>
 <#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     mcHalI_IbAdcInput_gdu16 =  ${MCPMSMFOC_PHASE_CURRENT_IB_UNIT}_ChannelResultGet(ADC_CH${MCPMSMFOC_PHASE_CURRENT_IB_CHANNEL});
@@ -242,20 +234,11 @@ __STATIC_FORCEINLINE void mcHalI_DcLinkVoltageGet( void )
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
-  <#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC7" >
+  <#if MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT != "ADC7">
+    <#assign numericValue = extractNumericValue(MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT)>
+    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${numericValue});
+  <#else>
     mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});
-  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC0">
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH0);
-  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC1">
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH1);
-  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC2">
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH2);
-  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC3">
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH3);
-  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC4">
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH4);
-  <#elseif MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT == "ADC5">
-    mcHalI_UbusAdcInput_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH5);
   </#if>
 <#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     mcHalI_UbusAdcInput_gdu16 = ${MCPMSMFOC_BUS_VOLTAGE_VDC_UNIT}_ChannelResultGet(ADC_CH${MCPMSMFOC_BUS_VOLTAGE_VDC_CHANNEL});
@@ -280,20 +263,11 @@ __STATIC_FORCEINLINE void mcHalI_PotentiometerInputGet( void )
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     mcHalI_Potentiometer_gdu16 = ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ChannelResultGet(AFEC_CH${MCPMSMFOC_POTENTIOMETER_VPOT_CHANNEL});
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
-  <#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC7" >
+  <#if MCPMSMFOC_POTENTIOMETER_VPOT_UNIT != "ADC7">
+    <#assign numericValue = extractNumericValue(MCPMSMFOC_POTENTIOMETER_VPOT_UNIT)>
+    mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${numericValue});
+  <#else>
     mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH${MCPMSMFOC_POTENTIOMETER_VPOT_CHANNEL});
-  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC0">
-    mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH0);
-  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC1">
-    mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH1);
-  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC2">
-    mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH2);
-  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC3">
-    mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH3);
-  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC4">
-    mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH4);
-  <#elseif MCPMSMFOC_POTENTIOMETER_VPOT_UNIT == "ADC5">
-    mcHalI_Potentiometer_gdu16 = ADCHS_ChannelResultGet(ADCHS_CH5);
   </#if>
 <#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     mcHalI_Potentiometer_gdu16 = ${MCPMSMFOC_POTENTIOMETER_VPOT_UNIT}_ChannelResultGet(ADC_CH${MCPMSMFOC_POTENTIOMETER_VPOT_CHANNEL});
@@ -395,7 +369,12 @@ __STATIC_FORCEINLINE void mcHalI_AdcInterruptClear( void )
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     NVIC_ClearPendingIRQ(AFEC0_IRQn);
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
+<#if MCPMSMFOC_PHASE_CURRENT_IA_UNIT != "ADC7">
+    <#assign numericValue = extractNumericValue(MCPMSMFOC_PHASE_CURRENT_IA_UNIT)>
+    EVIC_SourceStatusClear(INT_SOURCE_ADC_DATA${numericValue });
+<#else>
     EVIC_SourceStatusClear(INT_SOURCE_ADC_DATA${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
+</#if>
 <#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     NVIC_ClearPendingIRQ(ADC_IRQn);
 </#if>
@@ -418,7 +397,12 @@ __STATIC_FORCEINLINE void mcHalI_AdcInterruptDisable( void )
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     NVIC_DisableIRQ(AFEC0_IRQn);
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
+<#if MCPMSMFOC_PHASE_CURRENT_IA_UNIT != "ADC7">
+    <#assign numericValue = extractNumericValue(MCPMSMFOC_PHASE_CURRENT_IA_UNIT)>
+    EVIC_SourceDisable(INT_SOURCE_ADC_DATA${numericValue});
+<#else>
     EVIC_SourceDisable(INT_SOURCE_ADC_DATA${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
+</#if>
 <#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     NVIC_DisableIRQ(ADC_IRQn);
 </#if>
@@ -443,7 +427,12 @@ __STATIC_FORCEINLINE void mcHalI_AdcInterruptEnable( void )
 <#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     NVIC_EnableIRQ(ADC_IRQn);
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
+<#if MCPMSMFOC_PHASE_CURRENT_IA_UNIT != "ADC7">
+    <#assign numericValue = extractNumericValue(MCPMSMFOC_PHASE_CURRENT_IA_UNIT)>
+    EVIC_SourceEnable(INT_SOURCE_ADC_DATA${numericValue});
+<#else>
     EVIC_SourceEnable(INT_SOURCE_ADC_DATA${MCPMSMFOC_PHASE_CURRENT_IA_CHANNEL});
+</#if>
 </#if>
 }
 

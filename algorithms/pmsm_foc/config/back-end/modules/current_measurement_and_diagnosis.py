@@ -38,6 +38,12 @@ class mcCurI_CurrentMeasurementAndDiagnosis:
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Current measurement & diagnosis")
 
+        supported_Algorithms = ['Dual-shunt', 'Single-shunt']
+        self.sym_ALGORITHM = self.component.createComboSymbol("MCPMSMFOC_CURRENT_MEAS_ALGORITHM", self.sym_NODE, supported_Algorithms)
+        self.sym_ALGORITHM.setLabel("Select algorithm")
+        self.sym_ALGORITHM.setVisible(False)
+        self.sym_ALGORITHM.setReadOnly(True)
+
         # Current Offset
         self.sym_OFFSET = self.component.createMenuSymbol(None, self.sym_NODE)
         self.sym_OFFSET.setLabel("Offset correction")

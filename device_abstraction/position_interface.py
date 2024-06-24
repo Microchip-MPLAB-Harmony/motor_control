@@ -209,6 +209,8 @@ class mcDevI_PositionInterfaceClass:
 
         else:
             self.information = {}
+            
+        print('Position interface', self.information)
 
     def numericFilter( self, input_String ):
         numeric_filter = filter(str.isdigit, str(input_String))

@@ -227,11 +227,12 @@ class mcFocI_PositionInterfaceClass:
 
     def handleMessage(self, ID, information ):
         if( "BSP_POSITION_INTERFACE" == ID ):
+            print('Position interface', information )
             if( None != information ):
-                instance = next(iter(information))
+                instance = ( information.keys())[0]
                 self.sym_PERIPHERAL.setValue(instance)
 
-                channel = next(iter(information[instance]))
+                channel = ((information[instance]).keys())[0]
                 self.sym_QEA_PAD.setValue(information[instance][channel]['qea'])
                 self.sym_QEB_PAD.setValue(information[instance][channel]['qeb'])
 

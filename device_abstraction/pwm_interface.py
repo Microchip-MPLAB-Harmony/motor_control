@@ -202,6 +202,12 @@ class mcDevI_PwmInterfaceClass:
             pinoutXmlPath = os.path.normpath(pinoutXmlPath)
 
             pinFileContent = ET.fromstring((open(pinoutXmlPath, "r")).read())
+
+            family_xml_name = deviceXmlRoot.get("families")
+            family_xml_path = os.path.join(currentPath, "plugin/pin_xml/families/" + family_xml_name + ".xml")
+            family_xml_path = os.path.normpath(family_xml_path)
+            family_xml_content = ET.parse( family_xml_path )
+
             self.information = {}
             for item in pinFileContent.findall("pins/pin"):
                 for function in item.findall("function"):
@@ -241,16 +247,36 @@ class mcDevI_PwmInterfaceClass:
                         self.information[unit][channel]["high"].append(pad)
 
             # PWM Fault external sources
-            register_name = "IOCON1__FLTSRC"
-            value_group_path = self.getValueGroupPath("MCPWM", register_name)
-            values = ATDF.getNode(value_group_path).getChildren()
+            fault_channels = {'internal': {}, 'external': {}}
 
-            self.externalFaultSources = []
+            pwm_fault_channels = {}
+            root = family_xml_content.getroot()
 
-            for value in values:
-                self.externalFaultSources.append(value.getAttribute("caption"))
+            for group in root.findall('groups/group'):
+                pad_list = []
+                for pin in group.findall('pin'):
+                    pad_list.append( ( pin.attrib['name'] ).replace('RP', 'R'))
 
-            self.externalFaultSources.sort()
+                for function in group.findall('function'):
+                    if function.attrib['name'].startswith('FLT'):
+                        pwm_fault_channels[function.attrib['name']] = pad_list
+
+            for item in pinFileContent.findall("pins/pin"):
+                for function in item.findall("function"):
+                    channel_Name = function.attrib["name"]
+                    if channel_Name.startswith("FLT"):
+                        channel = channel_Name
+                        pad = item.attrib["name"]
+
+                        if channel not in fault_channels['external'].keys():
+                            fault_channels['external'][channel] = []
+
+                        fault_channels['external'][channel].append(pad)
+
+            fault_channels['external'].update(pwm_fault_channels)
+
+            #  Update external fault sources 
+            self.externalFaultSources = fault_channels['external'].keys()
 
             # PWM Fault internal sources
     def getRegisterPath(self, ModuleName, RegisterName):

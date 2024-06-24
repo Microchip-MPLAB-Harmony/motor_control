@@ -52,7 +52,42 @@ Local configuration options
 /*******************************************************************************
  Private data types
 *******************************************************************************/
- <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
+<#if ( MCPMSMFOC_DEVELOPER_MODE == true ) >
+typedef enum {
+    CONSTANT,
+    PULSE_PERTURBATION
+} tmcFoc_OverrideType_e;
+
+typedef struct {
+    struct {
+        bool enableOpenloopControl;
+        float32_t openloopSpeed;
+        float32_t openloopAngle;
+    }openloopControl;
+
+    struct {
+        bool enableAngleOverride;
+        float32_t angleOverrideValue;
+    } angleOverride;
+    struct {
+        bool enableOverride;
+        tmcFoc_OverrideType_e overrideType;
+        float32_t overrideValue;
+        float32_t overridePulseHigh;
+        float32_t overridePulseLow;
+        uint32_t overridePulseFreq;
+    } iqOverride;
+    struct {
+        bool enableOverride;
+        tmcFoc_OverrideType_e overrideType;
+        float32_t overrideValue;
+        float32_t overridePulseHigh;
+        float32_t overridePulseLow;
+        uint32_t overridePulseFreq;
+    } idOverride;
+} tmcFoc_TuningSettings_s;
+</#if>
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 typedef enum
 {
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
@@ -91,10 +126,7 @@ typedef struct
     tmcFly_Parameters_s bFlyingStart;
 </#if>
 </#if>
-
-<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >
     tmcSup_Parameters_s bOpenLoopStartup;
-</#if>
     tmcPwm_Parameters_s bPwmModulator;
     tmcFlx_Parameters_s bFluxController;
     tmcTor_Parameters_s bTorqueController;
@@ -103,27 +135,19 @@ typedef struct
    tmcPos_Parameters_s bPositionController;
 </#if>
     tmcRef_Parameters_s bReferenceController;
-
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
     tmcRpe_Parameters_s bPositionEstimation;
 </#if>
 
     uint16_t duty[3u];
- }tmcFoc_State_s;
+}tmcFoc_State_s;
 
 /*******************************************************************************
 Private variables
 *******************************************************************************/
 static tmcFoc_State_s mcFoc_State_mds;
-
-<#if MCPMSMFOC_DEVELOPER_MODE == true>
-#if ( ENABLE == ENABLE_FOC_ANGLE_OVERRIDE  )
-static float32_t mcFoc_FocOverrideAngle_gdf32 = 0.0f;
-#endif
-</#if>
-
-<#if ( MCPMSMFOC_CONTROL_TYPE == 'TORQUE_LOOP' )>
-static float32_t mcFoc_FocOverrideCurrent_gdf32 = 0.4f;
+<#if ( MCPMSMFOC_DEVELOPER_MODE == true ) >
+static tmcFoc_TuningSettings_s  mcFoc_TuningSettings_mds;
 </#if>
 
 /*******************************************************************************
@@ -238,15 +262,11 @@ void  mcFocI_FieldOrientedControlInit( tmcFocI_ModuleData_s * const pModule )
     mcFlyI_FlyingStartInit( &mcFoc_State_mds.bFlyingStart );
 </#if>
 </#if>
-
-<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >
     /** Initialize open loop start-up module */
     mcSupI_OpenLoopStartupInit( &mcFoc_State_mds.bOpenLoopStartup );
-</#if>
 
     /** Initialize reference control module */
     mcRefI_ReferenceControlInit( &mcFoc_State_mds.bReferenceController);
-
 <#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
     /** Initialize position control module */
     mcPosI_PositionControlInit( &mcFoc_State_mds.bPositionController);
@@ -260,12 +280,10 @@ void  mcFocI_FieldOrientedControlInit( tmcFocI_ModuleData_s * const pModule )
 
     /** Initialize flux control module */
     mcFlxI_FluxControlInit( &mcFoc_State_mds.bFluxController);
-
 <#if ( MCPMSMFOC_ENABLE_FW == true ) >
     /** Initialize flux weakening module */
     mcFlxI_FluxWeakeningInit(  &mcFoc_State_mds.bFluxController );
 </#if>
-
 <#if ( MCPMSMFOC_ENABLE_MTPA == true ) >
     /** Initialize MTPA module */
     mcFlxI_MTPAInit(  &mcFoc_State_mds.bFluxController );
@@ -309,7 +327,6 @@ void  mcFocI_FieldOrientedControlEnable( tmcFocI_ModuleData_s * const pParameter
     {
          /** For MISRA Compliance */
     }
-
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
     /** Enable flying start module */
@@ -317,10 +334,8 @@ void  mcFocI_FieldOrientedControlEnable( tmcFocI_ModuleData_s * const pParameter
 </#if>
 </#if>
 
-<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >
     /** Enable open loop start-up module */
     mcSupI_OpenLoopStartupEnable( &mcFoc_State_mds.bOpenLoopStartup );
-</#if>
 
     /** Enable reference control module */
     mcRefI_ReferenceControlEnable( &mcFoc_State_mds.bReferenceController);
@@ -343,12 +358,10 @@ void  mcFocI_FieldOrientedControlEnable( tmcFocI_ModuleData_s * const pParameter
     /** Enable MTPA module */
     mcFlxI_MTPAEnable(  &pState->bFluxController );
 </#if>
-
 <#if ( MCPMSMFOC_ENABLE_FW == true ) >
     /** Enable flux weakening module */
     mcFlxI_FluxWeakeningEnable(  &pState->bFluxController );
 </#if>
-
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
     /** Enable rotor position estimation  */
     mcRpeI_RotorPositionEstimEnable( &mcFoc_State_mds.bPositionEstimation);
@@ -395,22 +408,18 @@ void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParamete
     {
         /** For MISRA Compliance */
     }
-
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
     /** Disable flying start module */
     mcFlyI_FlyingStartDisable( &mcFoc_State_mds.bFlyingStart );
- </#if>
-  </#if>
+</#if>
+</#if>
 
-<#if ( ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID' ) || ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' )) >
     /** Disable open loop start-up module */
     mcSupI_OpenLoopStartupDisable( &mcFoc_State_mds.bOpenLoopStartup );
- </#if>
 
     /** Disable reference control module */
     mcRefI_ReferenceControlDisable( &mcFoc_State_mds.bReferenceController);
-
 <#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
     /** Disable position control module */
     mcPosI_PositionControlDisable( &mcFoc_State_mds.bPositionController);
@@ -424,7 +433,6 @@ void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParamete
 
     /** Disable flux control module */
     mcFlxI_FluxControlDisable( &mcFoc_State_mds.bFluxController);
-
 <#if ( MCPMSMFOC_ENABLE_MTPA == true ) >
     /** Disable MTPA module */
     mcFlxI_MTPADisable(  &pState->bFluxController );
@@ -434,7 +442,6 @@ void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParamete
     /** Disable flux weakening module */
     mcFlxI_FluxWeakeningDisable(  &pState->bFluxController );
 </#if>
-
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
     /** Disable rotor position estimation  */
     mcRpeI_RotorPositionEstimDisable( &mcFoc_State_mds.bPositionEstimation);
@@ -459,13 +466,12 @@ void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParamete
  * @param[out]: None
  * @return: None
  */
- <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 {
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
     bool dutyOverride = false;
 </#if>
-
     /** Intermediate variables */
     float32_t sine = 0.0f;
     float32_t cosine = 0.0f;
@@ -506,7 +512,6 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
                                &eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
 </#if>
 </#if>
-
     switch(pState->FocState )
     {
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' ) && ( MCPMSMFOC_ENABLE_FLYING_START == true ) >
@@ -585,37 +590,14 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 </#if>
             }
 
-<#if MCPMSMFOC_DEVELOPER_MODE == true>
-#if ( ENABLE == ENABLE_FOC_ANGLE_OVERRIDE  )
-                /**
-                *  Note: Set the value of mcFoc_FocOverrideAngle_gdf32 to appropriate
-                *           value before starting the motor with start-stop button
-                *
-                */
-                mcUtils_SineCosineCalculation( mcFoc_FocOverrideAngle_gdf32, &sine, &cosine );
-#else
-</#if>
-                /** Sine-cosine calculation */
-                mcUtils_SineCosineCalculation( pState->openLoopAngle, &sine, &cosine );
+            /** Sine-cosine calculation */
+            mcUtils_SineCosineCalculation( pState->openLoopAngle, &sine, &cosine );
 
-<#if MCPMSMFOC_DEVELOPER_MODE == true>
-#endif
-</#if>
-                break;
-            }
+            break;
+        }
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
 	        case FocState_ClosingLoop:
             {
-<#if MCPMSMFOC_DEVELOPER_MODE == true>
-#if ( ENABLE == ENABLE_FOC_ANGLE_OVERRIDE  )
-                /**
-                *  Note: Set the value of mcFoc_FocOverrideAngle_gdf32 to appropriate
-                *           value before starting the motor with start-stop button
-                *
-                */
-                mcUtils_SineCosineCalculation( mcFoc_FocOverrideAngle_gdf32, &sine, &cosine );
-#else
-</#if>
                 float32_t angle = pOutput->elecAngle + pState->angleDifference;
                 mcUtils_TruncateAngle0To2Pi(&angle);
 
@@ -630,9 +612,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 
                 /** Sine-cosine calculation */
                 mcUtils_SineCosineCalculation( angle, &sine, &cosine );
-<#if MCPMSMFOC_DEVELOPER_MODE == true>
-#endif
-</#if>
+
                 /** Reference Control */
                 mcRefI_ReferenceControl( &mcFoc_State_mds.bReferenceController, pModule->dInput.reference, &pState->nRef );
 
@@ -661,16 +641,8 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 
             case FocState_CloseLoop:
             {
-<#if MCPMSMFOC_DEVELOPER_MODE == true>
-#if ( ENABLE == ENABLE_FOC_ANGLE_OVERRIDE  )
-                /**
-                *  Note: Set the value of mcFoc_FocOverrideAngle_gdf32 to appropriate
-                *           value before starting the motor with start-stop button
-                *
-                */
-                mcUtils_SineCosineCalculation( mcFoc_FocOverrideAngle_gdf32, &sine, &cosine );
-#else
-</#if>
+
+
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
                 /** Sine-cosine calculation */
                 mcUtils_SineCosineCalculation( pInput->elecAngle, &sine, &cosine );
@@ -678,10 +650,6 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
                 /** Sine-cosine calculation */
                 mcUtils_SineCosineCalculation( pOutput->elecAngle, &sine, &cosine );
 </#if>
-<#if MCPMSMFOC_DEVELOPER_MODE == true>
-#endif
-</#if>
-
                 /** Reference Control */
                 mcRefI_ReferenceControl( &mcFoc_State_mds.bReferenceController, pModule->dInput.reference, &pState->nRef );
 <#if ( ( MCPMSMFOC_ENABLE_FW == true ) && ( MCPMSMFOC_ENABLE_MTPA == true )) >
@@ -820,7 +788,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 
     <#if ( MCPMSMFOC_CONTROL_TYPE == 'OPEN_LOOP' ) >
     mcSupI_OpenLoopStartup( &pState->bOpenLoopStartup, pState->commandDirection, &pState->iQref,
-                                                                            &pState->iDref, &pState->openLoopAngle, &pState->openLoopSpeed );
+                          &pState->iDref, &pState->openLoopAngle, &pState->openLoopSpeed );
     </#if>
 
     /** Rotor position estimation */
@@ -835,12 +803,6 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
      /** Execute flux weakening  */
      mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,  &eAlphaBeta,
                                          pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &pState->iDref );
-
-     /** Sine-cosine calculation */
-     mcUtils_SineCosineCalculation( pOutput->elecAngle, &sine, &cosine );
-<#else>
-     /** Sine-cosine calculation */
-     mcUtils_SineCosineCalculation( pOutput->elecAngle, &sine, &cosine );
 </#if>
     pState->nRef *=  pState->commandDirection;
 
@@ -855,6 +817,17 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     {
         pState->iQref = 0.0f;
     }
+<#if ( MCPMSMFOC_DEVELOPER_MODE == true ) >
+    if( mcFoc_TuningSettings_mds.openloopControl.enableOpenloopControl ) {
+        mcSupI_OpenLoopStartup( &pState->bOpenLoopStartup, pState->commandDirection, &pState->iQref,
+                                         &pState->iDref, &mcFoc_TuningSettings_mds.openloopControl.openloopAngle,
+                                         &mcFoc_TuningSettings_mds.openloopControl.openloopSpeed );
+
+        pOutput->elecAngle = mcFoc_TuningSettings_mds.openloopControl.openloopAngle;
+    }
+</#if>
+    /** Sine-cosine calculation */
+    mcUtils_SineCosineCalculation( pOutput->elecAngle, &sine, &cosine );
 
     /** Park Transformation */
     mcFoc_ParkTransformation( &pOutput->iAlphaBeta, sine, cosine, &pOutput->iDQ );
@@ -863,12 +836,56 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     float32_t ydLimit = pModule->dInput.uBus * TWO_BY_PI;
 
     /** Execute flux control */
+<#if ( MCPMSMFOC_DEVELOPER_MODE == true ) >
+    if( mcFoc_TuningSettings_mds.idOverride.enableOverride )
+    {
+        if( mcFoc_TuningSettings_mds.idOverride.overrideType == CONSTANT ) {
+             pState->iQref  = mcFoc_TuningSettings_mds.idOverride.overrideValue;
+        }
+        else if( mcFoc_TuningSettings_mds.idOverride.overrideType == PULSE_PERTURBATION  )
+        {
+            static uint32_t u32Counter = 0U;
+            u32Counter++;
+            if( u32Counter <= ( mcFoc_TuningSettings_mds.idOverride.overridePulseFreq >> 1U ) )  {
+                pState->iQref = mcFoc_TuningSettings_mds.idOverride.overridePulseLow;
+            }
+            else if( u32Counter < ( mcFoc_TuningSettings_mds.idOverride.overridePulseFreq ) )  {
+                pState->iQref = mcFoc_TuningSettings_mds.idOverride.overridePulseHigh;
+            }
+            else {
+                u32Counter = 0U;
+            }
+        }
+    }
+</#if>
     mcFlxI_FluxControlAuto( &pState->bFluxController, pState->iDref, pOutput->iDQ.d, ydLimit, &pState->uDQ.d );
 
     /** Apply circle limit for Q-axis reference current clamping  */
     float32_t yqLimit = UTIL_SquareRootFloat( UTIL_SquareFloat( ydLimit ) - UTIL_SquareFloat( pState->uDQ.d * pState->uDQ.d ));
 
     /** Execute torque control */
+<#if ( MCPMSMFOC_DEVELOPER_MODE == true ) >
+    if( mcFoc_TuningSettings_mds.iqOverride.enableOverride )
+    {
+        if( mcFoc_TuningSettings_mds.iqOverride.overrideType == CONSTANT ) {
+             pState->iQref  = mcFoc_TuningSettings_mds.iqOverride.overrideValue;
+        }
+        else if( mcFoc_TuningSettings_mds.iqOverride.overrideType == PULSE_PERTURBATION  )
+        {
+            static uint32_t u32Counter = 0U;
+            u32Counter++;
+            if( u32Counter <= ( mcFoc_TuningSettings_mds.iqOverride.overridePulseFreq << 1U ) )  {
+                pState->iQref = mcFoc_TuningSettings_mds.iqOverride.overridePulseLow;
+            }
+            else if( u32Counter < ( mcFoc_TuningSettings_mds.iqOverride.overridePulseFreq ) )  {
+                pState->iQref = mcFoc_TuningSettings_mds.iqOverride.overridePulseHigh;
+            }
+            else {
+                u32Counter = 0U;
+            }
+        }
+    }
+</#if>
     mcTorI_TorqueControlAuto( &pState->bTorqueController, pState->iQref, pOutput->iDQ.q, yqLimit, &pState->uDQ.q );
 
     /** High Frequency pulse injection */

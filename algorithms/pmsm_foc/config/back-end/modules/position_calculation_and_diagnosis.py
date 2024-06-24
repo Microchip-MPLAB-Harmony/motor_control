@@ -414,7 +414,8 @@ class mcRpoI_PositionCalculationAndDiagnosis:
         symbol.setValue(pll_cut_off_freq)
 
     def getDependentLibrary(self, symbol, event):
-        if "SENSORED_ENCODER" == symbol.getSelectedKey():
+        print('Debug encoder', symbol.getSelectedKey() )
+        if "SENSORED_ENCODER" == str(symbol.getSelectedKey()):
             symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", True)
 
             # Activate and connect the default  peripheral for quadrature decoder
@@ -424,12 +425,15 @@ class mcRpoI_PositionCalculationAndDiagnosis:
 
             autoComponentIDTable = [[ "pmsm_foc", "pmsmfoc_QDEC", module.lower(), module.upper() + "_QDEC"]]
             res = Database.connectDependencies(autoComponentIDTable)
+            
+            print( 'Debug encoder', autoComponentIDTable )
 
         else:
             # Deactivate and connect the default  peripheral for quadrature decoder
             module = str( Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_ENCODER_PERIPHERAL_ID"))
             autoConnectTable = [ module]
             res = Database.deactivateComponents(autoConnectTable)
+            print( 'Debug encoder', 'Failed' )
 
             symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", False)
 

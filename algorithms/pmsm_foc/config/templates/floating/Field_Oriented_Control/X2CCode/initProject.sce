@@ -4,7 +4,7 @@
 // All rights reserved.
 //
 // This file is licensed according to the BSD 3-clause license as follows:
-//
+// 
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
 //     * Redistributions of source code must retain the above copyright
@@ -15,7 +15,7 @@
 //     * Neither the name of the "Linz Center of Mechatronics GmbH" and "LCM" nor
 //       the names of its contributors may be used to endorse or promote products
 //       derived from this software without specific prior written permission.
-//
+// 
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -41,12 +41,13 @@ CurrentDir = pwd();
 arch = getArchitecture();
 
 if (getos() == "Linux") then
-    // load X2C libraries (needed for simulation)
-    loadLibs();
+	// load X2C libraries (needed for simulation)
+	loadLibs();
 end
 
 // get project directory (assumption: initProject.sce lies in X2CCode directory)
-ProjectPath = strsubst(CurrentDir, "X2CCode", "");
+//ProjectPath = strsubst(CurrentDir, "X2CCode", "");
+ProjectPath = strsubst(CurrentDir, "X2CModel", "");
 
 mprintf("+ Initializing project\n")
 
@@ -60,10 +61,10 @@ if isdir(ProjectPath + "Library") then
     x2cLibs = jinvoke(x2cLM, "addPath_XcosLibPathStr", ProjectPath + "Library");
     libRoot = [ProjectPath + "Library"];
     for curLib = x2cLibs
-        chdir(curLib);
+		chdir(curLib);
         libName = strsubst(curLib, [fs + "Scilab"], "");
         libName = strsubst(libName , [libRoot + fs], "");
-
+        
         // load library
         loaderFile = ["loader_" + arch + ".sce"];
         if isfile(loaderFile) then
@@ -71,24 +72,21 @@ if isdir(ProjectPath + "Library") then
         end
         // load functions and palette
         //deletefile(libName + ".xpal");  // delete palette to force rebuild (otherwise error would occur since block image can't be found)
-        exec("starter.sce", -1)
+		exec("starter.sce", -1)
 
         mprintf("Project specific library " + libName + " added.\n")
     end
-    chdir(CurrentDir)
+	chdir(CurrentDir)
     // clean  up
     clear("libName", "libRoot", "loaderFile", "curLib", "x2cLibs", "x2cLM")
-    //mprintf("Project specific library " + libName + " added.\n")
+	//mprintf("Project specific library " + libName + " added.\n")
 end
-
 // load model parameters
 chdir(CurrentDir);
-
-if isfile("ModelParameters.sce") then
-    exec("ModelParameters.sce", -1);
+if isfile("ModelParameter.sce") then
+    exec("ModelParameter.sce", -1);
     mprintf("Model parameter loaded.\n")
 end
-
 // clean up
 clear("fs", "CurrentDir", "vers", "opt", "arc", "ProjectPath")
 mprintf("- Init done and opening model...\n");

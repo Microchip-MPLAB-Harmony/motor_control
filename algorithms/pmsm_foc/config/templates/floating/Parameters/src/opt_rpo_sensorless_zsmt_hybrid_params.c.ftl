@@ -66,6 +66,7 @@
  Private variables
  *******************************************************************************/
 tmcRpe_Parameters_s  mcRpeI_Parameters_gds;
+tmcTune_HFITuning_s  mcRpeI_TuningSettings_gds;
 
 /*******************************************************************************
  Interface Variables
