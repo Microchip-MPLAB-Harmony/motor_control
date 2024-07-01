@@ -131,7 +131,7 @@ typedef struct
     tmcFlx_Parameters_s bFluxController;
     tmcTor_Parameters_s bTorqueController;
     tmcSpe_Parameters_s bSpeedController;
-<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+<#if ( MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' ) >
    tmcPos_Parameters_s bPositionController;
 </#if>
     tmcRef_Parameters_s bReferenceController;
@@ -699,7 +699,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
                                                           &referenceSpeed );
 
                 /** Execute speed controller */
-                mcSpeI_SpeedControlAuto(&pState->bSpeedController,  referenceSpeed, pOutput->elecSpeed,
+                mcSpeI_SpeedControlAuto(&pState->bSpeedController,  referenceSpeed, pInput->elecSpeed,
                                                           &pState->iQref );
 <#elseif ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
                 /** Execute speed controller */

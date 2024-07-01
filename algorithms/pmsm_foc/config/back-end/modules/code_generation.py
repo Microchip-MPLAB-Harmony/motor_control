@@ -44,6 +44,14 @@ def mcGen_GenerateCodeUpdate(symbol, event):
             component.getSymbolByID("MCPMSMFOC_IPD_HEADER").setEnabled(False)
             component.getSymbolByID("MCPMSMFOC_IPD_LIB").setEnabled(False)
 
+    elif ( str( event["id"] ) == "MCPMSMFOC_CONTROL_TYPE"):
+        if event["value"] in [3, 'POSITION_LOOP']:
+            component.getSymbolByID(str("opt_position_control.c.ftl")).setEnabled(True)
+            component.getSymbolByID(str("opt_position_control.h.ftl")).setEnabled(True)
+        else:
+            component.getSymbolByID(str("opt_position_control.c.ftl")).setEnabled(False)
+            component.getSymbolByID(str("opt_position_control.h.ftl")).setEnabled(False)
+
     elif ( str( event["id"]) == "MCPMSMFOC_POSITION_CALC_ALGORITHM"):
         symObj = event["symbol"]
         key = (symObj.getSelectedKey()).lower()
@@ -382,6 +390,30 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
                     mcPmsmFocHeaderFile.setType("HEADER")
                     mcPmsmFocHeaderFile.setMarkup(True)
                     mcPmsmFocHeaderFile.setEnabled(False)
+
+    # Position control files
+    filename = "opt_position_control.h.ftl"
+    modulePath = templatePath + "Field_Oriented_Control/"
+    projectPath = "config/" + configName + "/QSpin/Field_Oriented_Control/"
+
+    mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol( filename, None)
+    mcPmsmFocHeaderFile.setSourcePath(modulePath + "inc/" + filename)
+    mcPmsmFocHeaderFile.setOutputName("mc_position_control.h")
+    mcPmsmFocHeaderFile.setDestPath("QSpin/Field_Oriented_Control")
+    mcPmsmFocHeaderFile.setProjectPath(projectPath)
+    mcPmsmFocHeaderFile.setType("HEADER")
+    mcPmsmFocHeaderFile.setMarkup(True)
+    mcPmsmFocHeaderFile.setEnabled(False)
+
+    filename = "opt_position_control.c.ftl"
+    mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol( filename, None)
+    mcPmsmFocSourceFile.setSourcePath( modulePath + "src/" + filename)
+    mcPmsmFocSourceFile.setOutputName("mc_position_control.c")
+    mcPmsmFocSourceFile.setDestPath("QSpin/Field_Oriented_Control/")
+    mcPmsmFocSourceFile.setProjectPath(projectPath)
+    mcPmsmFocSourceFile.setType("SOURCE")
+    mcPmsmFocSourceFile.setMarkup(True)
+    mcPmsmFocSourceFile.setEnabled(False)
 
     if( ("SAME7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR"))):
         smoLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_SMO_LIB_A", None)
@@ -767,5 +799,6 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
                                                               "MCPMSMFOC_ALIGN_OR_DETECT_ALGORITHM",
                                                               "MCPMSMFOC_ALIGN_OR_DETECT_AXIS",
                                                               "MCPMSMFOC_FOC_X2C_ENABLE",
+                                                              "MCPMSMFOC_CONTROL_TYPE",
     ])
 

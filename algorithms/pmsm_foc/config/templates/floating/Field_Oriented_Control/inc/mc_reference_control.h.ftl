@@ -45,6 +45,7 @@
  * Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
+#include "mc_utilities.h"
 
 /*******************************************************************************
  Default Module configuration parameters
@@ -108,7 +109,7 @@ __STATIC_INLINE void mcRefI_ParametersSet( tmcRef_Parameters_s * const pParamete
 </#if>
 <#elseif ( MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' )>
     pParameters->minimum = -(float32_t)0;
-    pParameters->maximum = -(float32_t)TWO_PI;
+    pParameters->maximum =  (float32_t)TWO_PI;
 <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     pParameters->rampRate = (float32_t)300;
     pParameters->dt =(float32_t)(${MCPMSMFOC_PWM_PERIOD});

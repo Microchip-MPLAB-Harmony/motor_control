@@ -133,15 +133,18 @@ class mcMocI_MotorControlAndDiagnosis:
 
         self.sym_POSITION_PID_KP = self.component.createFloatSymbol("MCPMSMFOC_POSITION_PID_KP", self.sym_POSITION_PID)
         self.sym_POSITION_PID_KP.setLabel("Kp")
+        self.sym_POSITION_PID_KP.setDefaultValue(500)
 
         self.sym_POSITION_PID_KI = self.component.createFloatSymbol("MCPMSMFOC_POSITION_PID_KI", self.sym_POSITION_PID)
         self.sym_POSITION_PID_KI.setLabel("Ki")
+        self.sym_POSITION_PID_KI.setDefaultValue(1)
 
         # self.sym_POSITION_PID_KV = self.component.createFloatSymbol("MCPMSMFOC_POSITION_PID_KV", self.sym_POSITION_PID)
         # self.sym_POSITION_PID_KV.setLabel("Kv")
 
         self.sym_POSITION_PID_KC = self.component.createFloatSymbol("MCPMSMFOC_POSITION_PID_KC", self.sym_POSITION_PID)
         self.sym_POSITION_PID_KC.setLabel("Kc")
+        self.sym_POSITION_PID_KC.setDefaultValue(0.0)
         self.sym_POSITION_PID_KC.setVisible(True)
         self.sym_POSITION_PID_KC.setDependencies(self.showSymbolForAntiWindup, ["MCPMSMFOC_POSITION_PID_AW"])
 

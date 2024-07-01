@@ -271,6 +271,7 @@ void mcRpcI_RotorPositionCalc(  tmcRpc_ModuleData_s * const pModule )
         }
 
         float32_t newAngle = (float32_t)pState->encCountForPosition * pState->encPulsesToElecAngle;
+        mcUtils_TruncateAngle0To2Pi( &newAngle );
 
 <#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
         /** Track number of electrical rotations */
@@ -294,7 +295,7 @@ void mcRpcI_RotorPositionCalc(  tmcRpc_ModuleData_s * const pModule )
 
         pState->accumElectricalAngle = newAngle + TWO_PI * electricalRotations;
         pState->mechanicalAngle = pState->accumElectricalAngle/ pState->gearFactor;
-                  mcUtils_TruncateAngle0To2Pi( &pState->mechanicalAngle  );
+        mcUtils_TruncateAngle0To2Pi( &pState->mechanicalAngle  );
 </#if>
 
         /* Write speed and position output */
@@ -399,7 +400,7 @@ typedef struct
     uint8_t gearFactor;
     int8_t electricalRotationsPositive;
     int8_t electricalRotationsNegative;
-    float32_t accumElectricalAngle
+    float32_t accumElectricalAngle;
     float32_t mechanicalAngle;
 </#if>
 
@@ -413,6 +414,7 @@ static tmcRpc_State_s mcRpc_State_mds;
 /*******************************************************************************
 Interface  variables
 *******************************************************************************/
+tmcRpc_ModuleData_s mcRpcI_ModuleData_gds;
 
 /*******************************************************************************
 Macro Functions
@@ -435,8 +437,10 @@ Private Functions
  * @param[out]: None
  * @return: None
  */
-void  mcRpcI_RotorPositionCalcInit( tmcRpc_Parameters_s * const pParameters )
+void  mcRpcI_RotorPositionCalcInit( tmcRpc_ModuleData_s * const pModule )
 {
+    tmcRpc_Parameters_s * pParameters = &pModule->dParameters;
+
     /** Link state variable structure to the module */
     pParameters->pStatePointer = (void *)&mcRpc_State_mds;
     tmcRpc_State_s * pState = &mcRpc_State_mds;
@@ -469,16 +473,16 @@ void  mcRpcI_RotorPositionCalcInit( tmcRpc_Parameters_s * const pParameters )
  * @param[out]: None
  * @return: None
  */
-void  mcRpcI_RotorPositionCalcEnable( tmcRpc_Parameters_s * const pParameters )
+void  mcRpcI_RotorPositionCalcEnable(  tmcRpc_ModuleData_s * const pModule )
 {
     /** Get the linked state variable */
     tmcRpc_State_s * pState;
-    pState = (tmcRpc_State_s *)pParameters->pStatePointer;
+    pState = (tmcRpc_State_s *)pModule->dParameters.pStatePointer;
 
     if( ( NULL == pState ) || ( !pState->initDone ))
     {
          /** Initialize parameters */
-        mcRpcI_RotorPositionCalcInit(pParameters);
+        mcRpcI_RotorPositionCalcInit(pModule);
     }
     else
     {
@@ -499,16 +503,16 @@ void  mcRpcI_RotorPositionCalcEnable( tmcRpc_Parameters_s * const pParameters )
  * @param[out]: None
  * @return: None
  */
-void  mcRpcI_RotorPositionCalcDisable( tmcRpc_Parameters_s * const pParameters )
+void  mcRpcI_RotorPositionCalcDisable(  tmcRpc_ModuleData_s * const pModule )
 {
     /** Get the linked state variable */
     tmcRpc_State_s * pState;
-    pState = (tmcRpc_State_s *)pParameters->pStatePointer;
+    pState = (tmcRpc_State_s *)pModule->dParameters.pStatePointer;
 
     if( NULL != pState)
     {
         /** Reset state variables  */
-        mcRpcI_RotorPositionCalcReset(pParameters);
+        mcRpcI_RotorPositionCalcReset(pModule);
     }
     else
     {
@@ -529,12 +533,11 @@ void  mcRpcI_RotorPositionCalcDisable( tmcRpc_Parameters_s * const pParameters )
  * @param[out]: None
  * @return: None
  */
-void mcRpcI_RotorPositionCalc(  const tmcRpc_Parameters_s * const pParameters,
-                                                  float32_t * const pAngle, float32_t * const pSpeed )
+void mcRpcI_RotorPositionCalc(   tmcRpc_ModuleData_s * const pModule )
 {
      /** Get the linked state variable */
      tmcRpc_State_s * pState;
-     pState = (tmcRpc_State_s *)pParameters->pStatePointer;
+     pState = (tmcRpc_State_s *)pModule->dParameters.pStatePointer;
 
      if( pState->enable )
      {
@@ -558,6 +561,7 @@ void mcRpcI_RotorPositionCalc(  const tmcRpc_Parameters_s * const pParameters,
         }
 
         float32_t newAngle =  (float32_t)pState->encPulsesForPosition * pState->encPulsesToElecAngle;
+        mcUtils_TruncateAngle0To2Pi( &newAngle  );
 <#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
         /** Track number of electrical rotations */
         float32_t delAngle = pModule->dOutput.elecAngle - newAngle;
@@ -593,7 +597,7 @@ void mcRpcI_RotorPositionCalc(  const tmcRpc_Parameters_s * const pParameters,
      else
      {
          /** Rotor position estimation */
-         mcRpcI_RotorPositionCalcReset( pParameters );
+         mcRpcI_RotorPositionCalcReset( pModule );
 
          /** Update output */
          pModule->dOutput.elecSpeed = 0.0f;
@@ -612,11 +616,11 @@ void mcRpcI_RotorPositionCalc(  const tmcRpc_Parameters_s * const pParameters,
  * @param[out]: None
  * @return: None
  */
-float32_t mcRpcI_MechanicalAngleGet(  const tmcRpc_Parameters_s * const pParameters )
+float32_t mcRpcI_MechanicalAngleGet(  const tmcRpc_ModuleData_s * const pModule )
 {
-        /** Get the linked state variable */
+    /** Get the linked state variable */
     tmcRpc_State_s * pState;
-    pState = (tmcRpc_State_s *)pParameters->pStatePointer;
+    pState = (tmcRpc_State_s *)pModule->dParameters.pStatePointer;
 
     return pState->mechanicalAngle;
 }
@@ -632,11 +636,11 @@ float32_t mcRpcI_MechanicalAngleGet(  const tmcRpc_Parameters_s * const pParamet
  * @param[out]: None
  * @return:
  */
-void mcRpcI_RotorPositionCalcReset( const tmcRpc_Parameters_s * const pParameters )
+void mcRpcI_RotorPositionCalcReset(  tmcRpc_ModuleData_s * const pModule )
 {
     /** Get the linked state variable */
     tmcRpc_State_s * pState;
-    pState = (tmcRpc_State_s *)pParameters->pStatePointer;
+    pState = (tmcRpc_State_s *)pModule->dParameters.pStatePointer;
 
     /* Reset state variables */
     pState->synCounter = 0u;

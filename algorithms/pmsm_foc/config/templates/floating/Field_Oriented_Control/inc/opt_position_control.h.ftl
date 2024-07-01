@@ -83,11 +83,11 @@ __STATIC_INLINE void mcPosI_ParametersSet( tmcPos_Parameters_s * const pParamete
 {
    pParameters->Kp = (float32_t)${MCPMSMFOC_POSITION_PID_KP};
    pParameters->Ki = (float32_t)${MCPMSMFOC_POSITION_PID_KI};
-   pParameters->dt = (float32_t)${MCPMSMFOC_POSITION_PID_KC};
+   pParameters->dt = (float32_t)${MCPMSMFOC_PWM_PERIOD};
 }
 
 /*******************************************************************************
- Interface Functions 
+ Interface Functions
 *******************************************************************************/
 /*! \brief Initialize speed control module
  *

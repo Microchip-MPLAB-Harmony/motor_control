@@ -80,7 +80,7 @@ typedef struct
     float32_t elecAngle;
     float32_t elecSpeed;
 </#if>
-<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+<#if ( MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' ) >
     float32_t mechanicalAngle;
 </#if>
     float32_t uBus;
@@ -95,8 +95,10 @@ typedef struct
     tmcTypes_AlphaBeta_s  iAlphaBeta;
     tmcTypes_AlphaBeta_s  uAlphaBeta;
     tmcTypes_DQ_s  iDQ;
+<#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER' )>
     float32_t elecAngle;
     float32_t elecSpeed;
+</#if>
     int16_t duty[3u];
 }tmcFoc_Output_s;
 
@@ -144,7 +146,7 @@ __STATIC_INLINE void mcFocI_InputsRead( tmcFocI_ModuleData_s * const pModule )
     pInput->elecSpeed = (float32_t)mcRpcI_ModuleData_gds.dOutput.elecSpeed;
 
 <#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
-    pInput->mechanicalAngle = mcRpcI_MechanicalAngleGet(&mcRpcI_ModuleData_gds.dParameters);
+    pInput->mechanicalAngle = mcRpcI_MechanicalAngleGet(&mcRpcI_ModuleData_gds);
 </#if>
 </#if>
 
