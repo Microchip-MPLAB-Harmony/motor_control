@@ -1,19 +1,24 @@
-/*******************************************************************************
- Current calculation functions
+/**
+ * @brief 
+  *  Motor Control current measurement interface file
+ *
+ * @Company 
+ *   Microchip Technology Inc.
+ *
+ * @File name
+ *   mc_current_calculation.h
+ *
+ * @Summary 
+ *    Header file for current measurement
+ *
+ * @Description
+ *   This file contains the data structures and function prototypes  necessary for the current
+ *    measurement functionality in motor control applications.
+ *
+ *   It includes definitions for initializing the current measurement module,  calculating current
+ *   sensor offsets, computing phase currents, and resetting  the current calculations.
+ */
 
-  Company:
-     - Microchip Technology Inc.
-
-  File Name:
-      - mc_current_calculation.c
-
-  Summary:
-      - Current calculation functions
-
-  Description:
-     - Current calculation functions
-
- *******************************************************************************/
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
@@ -47,30 +52,29 @@
 /*******************************************************************************
  Module configuration
  *******************************************************************************/
-
 /*******************************************************************************
- Private constants
+ * Private constants
  *******************************************************************************/
-#define OFFSET_SAMPLES    128u
+#define OFFSET_SAMPLES    128u  /**< No of samples for offset calculation  */
 
 /*******************************************************************************
- Private data-types
+ * Private data-types
  *******************************************************************************/
 
 typedef struct
 {
-    uint8_t  calibDone;
-    uint16_t  adcSampleCounter;
-    float32_t iaOffset;
-    float32_t ibOffset;
-    float32_t adcToCurrentFactor;
+    uint8_t  calibDone;             /**< Flag indicating calibration status */
+    uint16_t  adcSampleCounter;     /**< Counter for ADC samples */
+    float32_t iaOffset;             /**< Offset for phase A current */
+    float32_t ibOffset;             /**< Offset for phase B current */
+    float32_t adcToCurrentFactor;   /**< Conversion factor from ADC to current */
 <#if MCPMSMFOC_OFFSET_OOR == true >
-    float32_t minOffset;
-    float32_t maxOffset;
+    float32_t minOffset;            /**< Minimum allowable offset */
+    float32_t maxOffset;            /**< Maximum allowable offset */
 </#if>
-    uint32_t iaOffsetBuffer;
-    uint32_t ibOffsetBuffer;
-}tmcCur_States_s;
+    uint32_t iaOffsetBuffer;        /**< Buffer for phase A offset */
+    uint32_t ibOffsetBuffer;        /**< Buffer for phase B offset */
+} tmcCur_States_s;
 
 /*******************************************************************************
  Private variables
@@ -90,15 +94,15 @@ tmcCur_ModuleData_s mcCurI_ModuleData_gds;
  Interface Functions
  *******************************************************************************/
 
-/*! \brief Current control initialization function
+/**
+ * @brief Current control initialization function.
  *
- * Details.
- *  Current control initialization function
+ * Initializes the current control module by setting up the required parameters 
+ * and preparing the module for current calculations.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
+ * 
+ * @return None
  */
 void mcCurI_CurrentCalculationInit( tmcCur_ModuleData_s * const pModule )
 {
@@ -119,17 +123,14 @@ void mcCurI_CurrentCalculationInit( tmcCur_ModuleData_s * const pModule )
 </#if>
 }
 
-
-
-/*! \brief Function to calculate the current sensor offset
+/**
+ * @brief Function to calculate the current sensor offset.
  *
- * Details.
- * Function to calculate current sensor offset
+ * Calculates the offset for the current sensors to ensure accurate current measurements.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
+ * 
+ * @return None
  */
 tmcTypes_StdReturn_e mcCurI_CurrentOffsetCalculation( tmcCur_ModuleData_s * const pModule )
 {
@@ -180,15 +181,15 @@ tmcTypes_StdReturn_e mcCurI_CurrentOffsetCalculation( tmcCur_ModuleData_s * cons
     return status;
 }
 
-/*! \brief Function to calculate the phase  currents
+/**
+ * @brief Function to calculate the phase currents.
  *
- * Details.
- * Function to calculate phase currents
+ * Computes the phase currents based on the ADC input values and stores the results 
+ * in the module's output structure.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
+ * 
+ * @return None
  */
 void mcCurI_CurrentCalculation( tmcCur_ModuleData_s * const pModule )
 {
@@ -208,17 +209,15 @@ void mcCurI_CurrentCalculation( tmcCur_ModuleData_s * const pModule )
     pModule->dOutput.iABC.c = -pModule->dOutput.iABC.a - pModule->dOutput.iABC.b;
 }
 
-
-
-/*! \brief Function to reset phase current calculation
+/**
+ * @brief Function to reset phase current calculation.
  *
- * Details.
- * Function to reset phase current calculation
+ * Resets the state of the current calculation module, clearing any stored values 
+ * and preparing it for a fresh set of calculations.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
+ * 
+ * @return None
  */
 void mcCurI_CurrentCalculationReset( tmcCur_ModuleData_s * const pModule )
 {

@@ -1,18 +1,22 @@
-/*******************************************************************************
- Motor Control application interface file
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    mc_motor_control.h
-
-  Summary:
-    Motor control algorithm interface
-
-  Description:
-    This file contains the data structures and function prototypes of motor control loop.
- *******************************************************************************/
+/**
+ * @brief 
+ *    Field Oriented Control (FOC) header file
+ *
+ * @File Name 
+ *    mc_field_oriented_control.h
+ *
+ * @Company 
+ *   Microchip Technology Inc.
+ *
+ * @Summary
+ *    This file contains declarations for Field Oriented Control (FOC) functions.
+ *
+ * @Description
+ *   This file provides the function prototypes and data structures necessary for Field Oriented
+ *    Control (FOC), which is used to control motor currents based on given inputs.
+ *    Functions include initialization, execution, resetting, current updating,
+ *    torque calculation, and field weakening control.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -72,6 +76,16 @@ static uint16_t firsttime =0;
 /*******************************************************************************
  Static Functions
  *******************************************************************************/
+/**
+ * @brief Read input ports
+ *
+ * @details Reads the input ports for the FOC module.
+ *
+ * @param[in] None
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
+ */
 static inline void mcFoc_InputPortsRead( void  )
 {
   /** Please note that the ports may vary depending on your specific model. 
@@ -135,6 +149,16 @@ static inline void mcFoc_InputPortsRead( void  )
 #endif
 }
 
+/**
+ * @brief Write output ports
+ *
+ * @details Writes the output ports for the FOC module.
+ *
+ * @param[in] pOutput Pointer to the FOC output structure
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
+ */
 static inline void mcFoc_OutputPortsWrite( void  )
 {
   /** Please note that the ports may vary depending on your specific model. 
@@ -197,89 +221,87 @@ static inline void mcFoc_OutputPortsWrite( void  )
  * Interface Functions
  *******************************************************************************/
 
-/*! \brief  Field oriented control enable
+/**
+ * @brief Enable Field Oriented Control (FOC) module
  *
- * Details.
- *   Field oriented control enable
+ * @details Enables the FOC module.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_FieldOrientedControlEnable( void );
 
-/*! \brief  Field oriented control disable
+/**
+ * @brief Disable Field Oriented Control (FOC) module
  *
- * Details.
- *   Field oriented control disable
+ * @details Disables the FOC module.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_FieldOrientedControlDisable( void );
 
-/*! \brief  Field oriented control initialization
+/**
+ * @brief Initialize Field Oriented Control (FOC) module
  *
- * Details.
- * Field oriented control initialization
+ * @details Initializes the FOC module.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pModule Pointer to the FOC module data
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_FieldOrientedControlInit( void  );
 
-/*! \brief Field oriented control
+/**
+ * @brief Execute Field Oriented Control (FOC) fast loop
  *
- * Details.
- * Field oriented control
+ * @details Executes the fast loop of the FOC algorithm.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pModule Pointer to the FOC module data
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
-
 void mcFocI_FieldOrientedControlFast( void  );
 
-/*! \brief Field oriented control
+ /**
+ * @brief Execute Field Oriented Control (FOC) slow loop
  *
- * Details.
- * Field oriented control
+ * @details Executes the slow loop of the FOC algorithm.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
-
 void mcFocI_FieldOrientedControlSlow( void  );
 
-/*! \brief  Direction change
+/**
+ * @brief Change motor direction
  *
- * Details.
- * Direction change
+ * @details Changes the direction of the motor.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pModule Pointer to the FOC module data
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_MotorDirectionChange( void );
 
-/*! \brief  Field oriented control reset
+ /**
+ * @brief Reset Field Oriented Control (FOC)
  *
- * Details.
- * Field oriented control reset
+ * @details Resets the FOC module.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_FieldOrientedControlReset( void );
 

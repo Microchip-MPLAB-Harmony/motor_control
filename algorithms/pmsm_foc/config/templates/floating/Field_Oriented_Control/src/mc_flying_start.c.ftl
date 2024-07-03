@@ -1,19 +1,19 @@
-/*******************************************************************************
- Flying Start source file
-
-  Company:
-    - Microchip Technology Inc.
-
-  File Name:
-    - mc_torque_control.c
-
-  Summary:
-    - Flying Start source file
-
-  Description:
-    - This file implements functions for flying Start
-
- *******************************************************************************/
+/**
+ * @file mc_flying_start.c
+ *
+ * @brief 
+ *    Source file for Flying Start
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Source file containing variables and function prototypes for flying start.
+ *
+ * @Description
+ *    This Source file defines variables and function prototypes commonly used for
+ *    implementing flying start functionality in embedded systems.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -121,15 +121,13 @@ Private Functions
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
-/*! \brief Initialize flying Start module
+/**
+ * @brief Initialize Flying Start module
  *
- * Details.
- * Initialize flying Start module
+ * This function initializes the Flying Start module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param pParameters Pointer to the parameters structure.
+ * @return None
  */
 void  mcFlyI_FlyingStartInit( tmcFly_Parameters_s * const pParameters )
 {
@@ -173,15 +171,13 @@ void  mcFlyI_FlyingStartInit( tmcFly_Parameters_s * const pParameters )
      pFlyingStart->initDone = true;
 }
 
-/*! \brief Enable flying Start module
+/**
+ * @brief Enable Flying Start module
  *
- * Details.
- * Enable flying Start module
+ * This function enables the Flying Start module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param pParameters Pointer to the parameters structure.
+ * @return None
  */
 void  mcFlyI_FlyingStartEnable( tmcFly_Parameters_s * const pParameters )
 {
@@ -203,15 +199,13 @@ void  mcFlyI_FlyingStartEnable( tmcFly_Parameters_s * const pParameters )
     pState->enable = true;
 }
 
-/*! \brief Disable flying Start module
+/**
+ * @brief Disable Flying Start module
  *
- * Details.
- * Disable flying Start module
+ * This function disables the Flying Start module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param pParameters Pointer to the parameters structure.
+ * @return None
  */
 void  mcFlyI_FlyingStartDisable( tmcFly_Parameters_s * const pParameters )
 {
@@ -234,15 +228,19 @@ void  mcFlyI_FlyingStartDisable( tmcFly_Parameters_s * const pParameters )
 
 }
 
-/*! \brief Flying Start
+/**
+ * @brief Perform Flying Start
  *
- * Details.
- * Flying Start
+ * This function performs the Flying Start operation.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param pParameters Pointer to the parameters structure.
+ * @param speed Current speed value.
+ * @param commandDirection Commanded direction value.
+ * @param pIdref Pointer to the reference Id value.
+ * @param pIqref Pointer to the reference Iq value.
+ * @param pDutyOverride Pointer to the duty cycle override flag.
+ * @param pDuty Pointer to the duty cycle value.
+ * @return Standard return status indicating success or failure.
  */
 tmcTypes_StdReturn_e  mcFlyI_FlyingStart( tmcFly_Parameters_s * const pParameters,
                                    const float32_t speed, const float32_t commandDirection,
@@ -382,16 +380,13 @@ tmcTypes_StdReturn_e  mcFlyI_FlyingStart( tmcFly_Parameters_s * const pParameter
     return status;
 }
 
-
-/*! \brief Reset Flying Start
+/**
+ * @brief Reset Flying Start module
  *
- * Details.
- * Reset Flying Start
+ * This function resets the Flying Start module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param pParameters Pointer to the parameters structure.
+ * @return None
  */
 void mcFlyI_FlyingStartReset( const tmcFly_Parameters_s * const pParameters )
 {

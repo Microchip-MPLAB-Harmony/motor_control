@@ -1,19 +1,20 @@
-/*******************************************************************************
- Application source file
+/**
+ * @file application.c
+ *
+ * @brief 
+ *   Application source file
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *   Header file defining application-specific details.
+ *
+ * @Description
+ *   This header file provides definitions and structures specific to the application,
+ *   including configuration settings, function prototypes, and any other necessary details.
+ */
 
-  Company:
-  Microchip Technology Inc.
-
-  File Name:
-  mc_tasks.c
-
-  Summary:
-  Application source file
-
-  Description:
-  Application source file
-
- *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -88,16 +89,16 @@ static uint8_t runStatus = 0u;
 /*******************************************************************************
  Private Functions
  *******************************************************************************/
-
-/*! \brief Start stop button scan
+/**
+ * @brief Start/stop button scan
  *
- * Details.
- * Start stop button scan
+ * @details Controls motor start/stop based on button input.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] None
+ * @param[in/out] None
+ * @param[out] None
+ *
+ * @return None
  */
 __STATIC_INLINE void mcAppI_MotorStartStop(void)
 {
@@ -157,17 +158,17 @@ __STATIC_INLINE void mcAppI_MotorStartStop(void)
     }
 }
 
-/*! \brief Start stop button scan
+/**
+ * @brief Direction reverse button scan
  *
- * Details.
- * Start stop button scan
+ * @details Reverses motor direction based on button input.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] None
+ * @param[in/out] None
+ * @param[out] None
+ *
+ * @return None
  */
-
 <#--  Get led function  -->
 <#function ledFunction index>
   <#if 0 == index>
@@ -203,15 +204,16 @@ __STATIC_INLINE void mcAppI_DirectionReverse(void)
     }
 }
 
-/*! \brief 1 ms tasks handler
+/**
+ * @brief 1 ms tasks handler
  *
- * Details.
- * 1 ms tasks handler
+ * @details Handles tasks to be executed every 1 ms.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] None
+ * @param[in/out] None
+ * @param[out] None
+ *
+ * @return None
  */
 __STATIC_INLINE void mcAppI_1msTasksHandler( void )
 {
@@ -253,16 +255,16 @@ __STATIC_INLINE void mcAppI_1msTasksHandler( void )
 /*******************************************************************************
  Interface Functions
  *******************************************************************************/
-
-/*! \brief Application initialization
+/**
+ * @brief Application initialization
  *
- * Details.
- * Application initialization
+ * @details Initializes the application.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] None
+ * @param[in/out] None
+ * @param[out] None
+ *
+ * @return None
  */
 void mcAppI_ApplicationInit( void )
 {
@@ -362,15 +364,16 @@ void mcAppI_ApplicationInit( void )
 
 }
 
-/*! \brief Over current reaction ISR
+/**
+ * @brief Over current reaction ISR
  *
- * Details.
- * Fault reaction ISR
+ * @details Interrupt service routine for over current reaction.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] status Status information
+ * @param[in/out] context Interrupt context
+ * @param[out] None
+ *
+ * @return None
  */
 <#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
 void mcAppI_OverCurrentReactionIsr( uint32_t status,  uintptr_t context )
@@ -406,15 +409,16 @@ void mcAppI_OverCurrentReactionIsr( MCPWM_CH_STATUS status, uintptr_t context )
 
 }
 
-/*! \brief Motor control application calibration
+/**
+ * @brief Motor control application calibration ISR
  *
- * Details.
- *  Motor Control application calibration
+ * @details Interrupt service routine for motor control application calibration.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] status ADC status information
+ * @param[in/out] context Interrupt context
+ * @param[out] None
+ *
+ * @return None
  */
 <#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
 void mcAppI_AdcCalibrationIsr(ADC_STATUS status, uintptr_t context)
@@ -493,15 +497,16 @@ void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
 <#if MCPMSMFOC_FOC_X2C_ENABLE == false>
  <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
 
-/*! \brief Initial position detection
+/**
+ * @brief ADC finished ISR
  *
- * Details.
- *  Initial position detection
+ * @details Interrupt service routine for ADC finished tasks for IPD
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] status ADC status information
+ * @param[in/out] context Interrupt context
+ * @param[out] None
+ *
+ * @return None
  */
 <#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
 void mcAppI_InitialPositionDetectIsr(ADC_STATUS status, uintptr_t context )
@@ -572,15 +577,16 @@ void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t conte
 </#if>
 </#if>
 
-/*! \brief Interrupt tasks execution
+/**
+ * @brief ADC finished ISR
  *
- * Details.
- *  Interrupt tasks execution
+ * @details Interrupt service routine for ADC finished tasks.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] status ADC status information
+ * @param[in/out] context Interrupt context
+ * @param[out] None
+ *
+ * @return None
  */
 <#if ("ADC_U2500" == MCPMSMFOC_ADC_IP )  || ("ADC_U2247" == MCPMSMFOC_ADC_IP )>
 void mcAppI_AdcFinishedIsr(ADC_STATUS status, uintptr_t context )
@@ -659,15 +665,16 @@ void mcAppI_AdcFinishedIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
     mcHalI_AdcInterruptEnable();
 }
 
-/*! \brief Non-ISR tasks
+/**
+ * @brief Non-ISR tasks execution
  *
- * Details.
- * Non-ISR tasks
+ * @details Executes non-interrupt service routine tasks.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] None
+ * @param[in/out] None
+ * @param[out] None
+ *
+ * @return None
  */
 void mcAppI_NonISRTasks( void )
 {
@@ -679,15 +686,16 @@ void mcAppI_NonISRTasks( void )
     }
 }
 
-/*! \brief Application reset
+/**
+ * @brief Application reset
  *
- * Details.
- * Application reset
+ * @details Resets the application.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] None
+ * @param[in/out] None
+ * @param[out] None
+ *
+ * @return None
  */
 void mcAppI_ApplicationReset( void )
 {

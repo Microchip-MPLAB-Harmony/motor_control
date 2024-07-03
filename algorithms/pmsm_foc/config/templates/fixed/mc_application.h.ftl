@@ -1,18 +1,19 @@
-/*******************************************************************************
- Application
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    application.h
-
-  Summary:
- Application
-
-  Description:
-   Application
- *******************************************************************************/
+/**
+ * @file application.h
+ *
+ * @brief 
+ *   Application Header file
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *   Header file defining application-specific details.
+ *
+ * @Description
+ *   This header file provides definitions and structures specific to the application,
+ *   including configuration settings, function prototypes, and any other necessary details.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -58,98 +59,92 @@
  * Interface variables
  *******************************************************************************/
 
-
 /*******************************************************************************
  Interface Functions
  *******************************************************************************/
 
- /*! \brief General flags initialization
+/**
+ * @brief Application initialization
  *
- * Details.
- * General flags initialization
+ * @details Initializes the application.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] None
+ * @param[in/out] None
+ * @param[out] None
+ *
+ * @return None
  */
-void mcAppI_GeneralFlagsInit(void);
+void mcAppI_ApplicationInit(void);
 
-/*! \brief Application initialization
+/**
+ * @brief Over current reaction ISR
  *
- * Details.
- * Application initialization
+ * @details Interrupt service routine for over current reaction.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] status Status information
+ * @param[in/out] context Interrupt context
+ * @param[out] None
+ *
+ * @return None
  */
-void mcAppI_ApplicationInit( void );
+void mcAppI_OverCurrentReactionIsr(uint32_t status, uintptr_t context);
 
-/*! \brief Over current reaction ISR
+/**
+ * @brief Motor control application calibration ISR
  *
- * Details.
- * Fault reaction ISR
+ * @details Interrupt service routine for motor control application calibration.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] status ADC status information
+ * @param[in/out] context Interrupt context
+ * @param[out] None
+ *
+ * @return None
  */
-void mcAppI_OverCurrentReactionIsr( uint32_t status,  uintptr_t context );
+void mcAppI_AdcCalibrationIsr(ADC_STATUS status, uintptr_t context);
 
-/*! \brief Motor control application calibration
+/**
+ * @brief ADC finished ISR
  *
- * Details.
- *  Motor Control application calibration
+ * @details Interrupt service routine for ADC finished tasks.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
- */
-void mcAppI_AdcCalibrationIsr( ADC_STATUS status, uintptr_t context );
-
-/*! \brief Interrupt tasks execution
+ * @param[in] status ADC status information
+ * @param[in/out] context Interrupt context
+ * @param[out] None
  *
- * Details.
- *  Interrupt tasks execution
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @return None
  */
 #ifdef RAM_EXECUTE
-void __ramfunc__  mcAppI_AdcFinishedIsr( ADC_STATUS status, uintptr_t context );
+void __ramfunc__ mcAppI_AdcFinishedIsr(ADC_STATUS status, uintptr_t context);
 #else
-void  mcAppI_AdcFinishedIsr( ADC_STATUS status, uintptr_t context );
+void mcAppI_AdcFinishedIsr(ADC_STATUS status, uintptr_t context);
 #endif
 
-/*! \brief Non-ISR tasks
+/**
+ * @brief Non-ISR tasks execution
  *
- * Details.
- * Non-ISR tasks
+ * @details Executes non-interrupt service routine tasks.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] None
+ * @param[in/out] None
+ * @param[out] None
+ *
+ * @return None
  */
-void mcAppI_NonISRTasks( void );
+void mcAppI_NonISRTasks(void);
 
-/*! \brief Application reset
+/**
+ * @brief Application reset
  *
- * Details.
- * Application reset
+ * @details Resets the application.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] None
+ * @param[in/out] None
+ * @param[out] None
+ *
+ * @return None
  */
-void mcAppI_ApplicationReset( void );
+void mcAppI_ApplicationReset(void);
+
 
 #endif //MCAPP_H
 

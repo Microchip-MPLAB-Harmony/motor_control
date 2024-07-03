@@ -68,16 +68,15 @@
 /*******************************************************************************
  Interface Functions
  *******************************************************************************/
-
-/*! \brief  Field oriented control enable
+/**
+ * @brief Enable Field Oriented Control (FOC) module
  *
- * Details.
- *   Field oriented control enable
+ * @details Enables the FOC module.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_FieldOrientedControlEnable( void )
 {
@@ -92,15 +91,15 @@ void mcFocI_FieldOrientedControlEnable( void )
 #endif
 }
 
-/*! \brief  Field oriented control disable
+/**
+ * @brief Disable Field Oriented Control (FOC) module
  *
- * Details.
- *   Field oriented control disable
+ * @details Disables the FOC module.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_FieldOrientedControlDisable( void )
 {
@@ -109,15 +108,15 @@ void mcFocI_FieldOrientedControlDisable( void )
     x2cModel.inports.bSW1 = 0U;
 }
 
-/*! \brief  Field oriented control initialization
+/**
+ * @brief Initialize Field Oriented Control (FOC) module
  *
- * Details.
- *   Field oriented control initialization
+ * @details Initializes the FOC module.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pModule Pointer to the FOC module data
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_FieldOrientedControlInit( void )
 {
@@ -125,17 +124,16 @@ void mcFocI_FieldOrientedControlInit( void )
     X2C_Initialize();
 }
 
-/*! \brief Field oriented control
+/**
+ * @brief Execute Field Oriented Control (FOC) fast loop
  *
- * Details.
- *   Field oriented control
+ * @details Executes the fast loop of the FOC algorithm.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pModule Pointer to the FOC module data
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
-
 void mcFocI_FieldOrientedControlFast( void  )
 {
     /** Read input ports */
@@ -149,31 +147,30 @@ void mcFocI_FieldOrientedControlFast( void  )
 }
 
 
-/*! \brief Field oriented control
+/**
+ * @brief Execute Field Oriented Control (FOC) slow loop
  *
- * Details.
- *   Field oriented control
+ * @details Executes the slow loop of the FOC algorithm.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
-
 void mcFocI_FieldOrientedControlSlow( void  )
 {
     /**ToDO */
 }
 
-/*! \brief  Direction change
+/**
+ * @brief Change motor direction
  *
- * Details.
- * Direction change
+ * @details Changes the direction of the motor.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pModule Pointer to the FOC module data
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_MotorDirectionChange( void )
 {
@@ -197,15 +194,15 @@ void mcFocI_MotorDirectionChange( void )
 
 }
 
-/*! \brief  Field oriented control reset
+/**
+ * @brief Reset Field Oriented Control (FOC)
  *
- * Details.
- * Field oriented control reset
+ * @details Resets the FOC module.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_FieldOrientedControlReset(  void   )
 {

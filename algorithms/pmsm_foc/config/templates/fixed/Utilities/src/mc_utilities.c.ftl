@@ -1,20 +1,22 @@
-/*******************************************************************************
-  Utility Functions
-
-  Company:
-    - Microchip Technology Inc
-
-  File Name:
-    - mc_utilitiesc
-
-  Summary:
-    - Utility Functions
-
-  Description:
-    - Utility Functions
-
- *******************************************************************************/
-
+/**
+ * @brief
+ *  Header file for motor control utility functions
+ *
+ * @Company
+ *  Microchip Technology Inc.
+ *
+ * @File Name:
+ *   mc_utilities.h
+ *
+ * @Summary:
+ *   Header file which contains variables and function prototypes of utility functions.
+ *
+ * @Description:
+ *   This file contains variables and function prototypes of utility functions which are
+ *   generally used in Motor Control. Implemented in Q2.14 Fixed Point Arithmetic.
+ *
+ */
+ 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
  * Copyright (C) 2022 Microchip Technology Inc and its subsidiaries
@@ -92,7 +94,6 @@ Private global variables
  *      0 - 256 maps to 0 to Pi/2
  */
 
-
 static const int16_t sineTable[ TRIG_TABLE_DIMENSION + 1u ] =
 {
         0,   101,   201,   302,   402,   503,   603,   704,        //   0, ..,   7
@@ -135,17 +136,15 @@ static const int16_t sineTable[ TRIG_TABLE_DIMENSION + 1u ] =
  *  Functions
  *******************************************************************************/
 
-/*! \brief Calculate sine and cosine value
+/**
+ * @brief Calculate sine and cosine value
  *
- * Details
- * Calculate sine value
+ * @details Calculate sine and cosine values for a given angle.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] ang Angle in degrees (0 to 65535).
+ * @param[out] sine Pointer to store the calculated sine value.
+ * @param[out] cosine Pointer to store the calculated cosine value.
  */
-
 #ifdef RAM_EXECUTE
 void __ramfunc__ mcUtils_SineCosineCalculation( const uint16_t ang,
                                                                   int16_t * const sine,  int16_t * const cosine )
@@ -185,15 +184,13 @@ void mcUtils_SineCosineCalculation(const uint16_t ang,
 }
 
 
-/*! \brief Calculate square root value
+/**
+ * @brief Calculate square root value
  *
- * Details
- * Calculate square root value
+ * @details Calculate the square root of a given number.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] number Number for which square root needs to be calculated.
+ * @return Calculated square root value.
  */
 #ifdef RAM_EXECUTE
 uint32_t  __ramfunc__ mcUtils_SquareRoot(uint32_t number)
@@ -204,15 +201,14 @@ uint32_t mcUtils_SquareRoot(uint32_t number )
     return DIVAS_SquareRoot( number );
 }
 
-/*! \brief Linear ramp
+/**
+ * @brief Perform a linear ramp operation
  *
- * Details
- * Linear ramp
+ * @details Perform a linear ramp operation on the input value towards a final value.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] input Pointer to the input value to be ramped.
+ * @param[in] stepSize Step size of the ramp.
+ * @param[in] finalValue Final value towards which the input value will ramp.
  */
 #ifdef RAM_EXECUTE
  void __ramfunc__ mcUtils_LinearRamp(int32_t * const input, const int32_t stepSize, const int32_t finalValue)
@@ -234,15 +230,13 @@ void mcUtils_LinearRamp(int32_t * const input, const int32_t stepSize, const int
     }
 }
 
-/*! \brief Button response Function
+/**
+ * @brief Button response function
  *
- * Details
- * Button response function
+ * @details Execute a function based on the button response.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] buttonResData Pointer to the button response data structure.
+ * @param[in] buttonJob Pointer to the function to execute on button press.
  */
 void mcUtils_ButtonResponse(button_response_t * buttonResData, void (* buttonJob)(void))
 {
@@ -277,15 +271,14 @@ void mcUtils_ButtonResponse(button_response_t * buttonResData, void (* buttonJob
 }
 
 
-/*! \brief
+/**
+ * @brief Convert float to value and shift pair
  *
- * Details
+ * @details Convert a float value to a fixed-point integer value and its corresponding shift amount.
  *
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] input Float value to convert.
+ * @param[out] value Pointer to store the converted integer value.
+ * @param[out] shift Pointer to store the shift amount.
  */
 void mcUtils_FloatToValueShiftPair( const float32_t input, int16_t * const value, uint16_t * const shift )
 {

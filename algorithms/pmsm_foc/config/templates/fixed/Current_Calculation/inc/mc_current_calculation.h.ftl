@@ -1,18 +1,23 @@
-/*******************************************************************************
- Motor Control current measurement interface file
-
-  Company:
-    - Microchip Technology Inc.
-
-  File Name:
-    - mc_current_calculation.h
-
-  Summary:
-    - Header file for current measurement
-
-  Description:
-    - This file contains the data structures and function prototypes of current measurement.
- *******************************************************************************/
+/**
+ * @brief 
+  *  Motor Control current measurement interface file
+ *
+ * @Company 
+ *   Microchip Technology Inc.
+ *
+ * @File name
+ *   mc_current_calculation.h
+ *
+ * @Summary 
+ *    Header file for current measurement
+ *
+ * @Description
+ *   This file contains the data structures and function prototypes  necessary for the current
+ *    measurement functionality in motor control applications.
+ *
+ *   It includes definitions for initializing the current measurement module,  calculating current
+ *   sensor offsets, computing phase currents, and resetting  the current calculations.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -57,38 +62,45 @@
  User defined data-types
  *******************************************************************************/
 
+/**
+ * @brief Structure for current inputs.
+ */
 typedef struct
 {
-    int16_t  iaAdcInput;
-    int16_t  ibAdcInput;
-}tmcCur_Input_s;
+    int16_t iaAdcInput;  /**< ADC input for phase A current */
+    int16_t ibAdcInput;  /**< ADC input for phase B current */
+} tmcCur_Input_s;
 
+/**
+ * @brief Structure for current outputs.
+ */
 typedef struct
 {
-    tmcTypes_ABC_s  iABC;
-    uint8_t  calibDone;
-}tmcCur_Output_s;
+    tmcTypes_ABC_s iABC;  /**< Structure holding phase currents */
+    uint8_t calibDone;    /**< Calibration status flag */
+} tmcCur_Output_s;
 
+/**
+ * @brief Structure for current parameters.
+ */
 typedef struct
 {
-<#if MCPMSMFOC_OFFSET_OOR == true >
-    int16_t minOffset;
-    int16_t maxOffset;
-</#if>
-}tmcCur_Parameters_s;
+    #if MCPMSMFOC_OFFSET_OOR == true
+    int16_t minOffset;  /**< Minimum offset value */
+    int16_t maxOffset;  /**< Maximum offset value */
+    #endif
+} tmcCur_Parameters_s;
 
+/**
+ * @brief Structure for module data.
+ */
 typedef struct
 {
-    /* Input ports */
-    tmcCur_Input_s pInput;
+    tmcCur_Input_s pInput;         /**< Input ports */
+    tmcCur_Output_s dOutput;       /**< Output ports */
+    tmcCur_Parameters_s pParameters; /**< User Parameters */
+} tmcCur_ModuleData_s;
 
-    /* Output ports */
-    tmcCur_Output_s dOutput;
-
-    /* User Parameters */
-    tmcCur_Parameters_s pParameters;
-
-}tmcCur_ModuleData_s;
 
 
 /*******************************************************************************
@@ -100,77 +112,101 @@ extern tmcCur_ModuleData_s mcCurI_ModuleData_gds;
 /*******************************************************************************
  Static Functions
  *******************************************************************************/
-__STATIC_INLINE  void mcCur_InputPortsRead( tmcCur_Input_s * const pInput )
+/**
+ * @brief Reads the current input ports.
+ * 
+ * This function reads the ADC input values for phase currents
+ * and assigns them to the respective fields in the input structure.
+ * 
+ * @param[in,out] pInput Pointer to the input structure where ADC values are stored.
+ */
+__STATIC_INLINE void mcCur_InputPortsRead(tmcCur_Input_s * const pInput)
 {
     pInput->iaAdcInput = (int16_t)mcHalI_IaAdcInput_gdu16;
     pInput->ibAdcInput = (int16_t)mcHalI_IbAdcInput_gdu16;
 }
 
-__STATIC_INLINE void mcCur_OutputPortsWrite( tmcCur_Output_s * const pOutput )
+/**
+ * @brief Writes to the current output ports.
+ * 
+ * This function is a placeholder for writing the output values.
+ * 
+ * @param[in] pOutput Pointer to the output structure to be written.
+ * @note ToDO: Remove for optimization.
+ */
+__STATIC_INLINE void mcCur_OutputPortsWrite(tmcCur_Output_s * const pOutput)
 {
-    /** ToDO: Remove for  optimization */
+    /** ToDO: Remove for optimization */
 }
 
-__STATIC_INLINE void mcCur_ParametersSet( tmcCur_Parameters_s * const pParameters )
+/**
+ * @brief Sets the current parameters.
+ * 
+ * This function sets the minimum and maximum offset values in the parameters structure
+ * if the MCPMSMFOC_OFFSET_OOR flag is set to true.
+ * 
+ * @param[in,out] pParameters Pointer to the parameters structure where offset values are stored.
+ */
+__STATIC_INLINE void mcCur_ParametersSet(tmcCur_Parameters_s * const pParameters)
 {
-<#if MCPMSMFOC_OFFSET_OOR == true >
+    #if MCPMSMFOC_OFFSET_OOR == true
     pParameters->minOffset = (int16_t)(${MCPMSMFOC_OFFSET_OOR_MINIMUM});
     pParameters->maxOffset = (int16_t)(${MCPMSMFOC_OFFSET_OOR_MAXIMUM});
-</#if>
+    #endif
 }
+
 
 /*******************************************************************************
  Interface functions
  *******************************************************************************/
 
-/*! \brief Current control initialization function
+/**
+ * @brief Current control initialization function.
  *
- * Details.
- *  Current control initialization function
+ * Initializes the current control module by setting up the required parameters 
+ * and preparing the module for current calculations.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
+ * 
+ * @return None
  */
-void mcCurI_CurrentCalculationInit( tmcCur_ModuleData_s * const pModule );
+void mcCurI_CurrentCalculationInit(tmcCur_ModuleData_s * const pModule);
 
-/*! \brief Function to calculate the current sensor offset
+/**
+ * @brief Function to calculate the current sensor offset.
  *
- * Details.
- * Function to calculate current sensor offset
+ * Calculates the offset for the current sensors to ensure accurate current measurements.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
+ * 
+ * @return None
  */
-void mcCurI_CurrentSensorOffsetCalculate( tmcCur_ModuleData_s * const pModule );
+void mcCurI_CurrentSensorOffsetCalculate(tmcCur_ModuleData_s * const pModule);
 
-/*! \brief Function to calculate the phase  currents
+/**
+ * @brief Function to calculate the phase currents.
  *
- * Details.
- * Function to calculate phase currents
+ * Computes the phase currents based on the ADC input values and stores the results 
+ * in the module's output structure.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
+ * 
+ * @return None
  */
-void mcCurI_CurrentCalculation( tmcCur_ModuleData_s * const pModule );
+void mcCurI_CurrentCalculation(tmcCur_ModuleData_s * const pModule);
 
-
-/*! \brief Function to reset phase current calculation
+/**
+ * @brief Function to reset phase current calculation.
  *
- * Details.
- * Function to reset phase current calculation
+ * Resets the state of the current calculation module, clearing any stored values 
+ * and preparing it for a fresh set of calculations.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
+ * 
+ * @return None
  */
-void mcCurI_CurrentCalculationReset( tmcCur_ModuleData_s * const pModule );
+void mcCurI_CurrentCalculationReset(tmcCur_ModuleData_s * const pModule);
+
 
 #endif //MCCUR_H_
 

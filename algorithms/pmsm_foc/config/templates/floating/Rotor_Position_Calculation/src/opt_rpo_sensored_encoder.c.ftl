@@ -1,19 +1,20 @@
-/*******************************************************************************
- Rotor position estimation source file
-
-  Company:
-    - Microchip Technology Inc.
-
-  File Name:
-    - mc_rotor_position_estimation.c
-
-  Summary:
-    - Rotor position estimation source file
-
-  Description:
-    - This file implements functions for rotor position estimation
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Source file for rotor position calculation
+ *
+ * @File Name 
+ *    mc_rotor_position_calculation.c
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Source file containing variables and function prototypes for rotor position calculation.
+ *
+ * @Description
+ *    This file contains variables and function prototypes which are generally used for rotor
+ *    position estimation in pulse width modulation. 
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -115,15 +116,10 @@ Private Functions
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
-/*! \brief Initialize rotor position estimation module
+/**
+ * @brief Initialize rotor position calculation module
  *
- * Details.
- * Initialize rotor position estimation module
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
  */
 void  mcRpcI_RotorPositionCalcInit( tmcRpc_ModuleData_s * const pModule )
 {
@@ -154,15 +150,10 @@ void  mcRpcI_RotorPositionCalcInit( tmcRpc_ModuleData_s * const pModule )
     pState->initDone = true;
 }
 
-/*! \brief Enable rotor position estimation module
+/**
+ * @brief Enable rotor position calculation module
  *
- * Details.
- * Enable rotor position estimation module
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
  */
 void  mcRpcI_RotorPositionCalcEnable( tmcRpc_ModuleData_s * const pModule )
 {
@@ -184,15 +175,10 @@ void  mcRpcI_RotorPositionCalcEnable( tmcRpc_ModuleData_s * const pModule )
     pState->enable = true;
 }
 
-/*! \brief Disable rotor position estimation module
+/**
+ * @brief Disable rotor position calculation module
  *
- * Details.
- * Disable rotor position estimation module
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
  */
 void  mcRpcI_RotorPositionCalcDisable( tmcRpc_ModuleData_s * const pModule )
 {
@@ -214,15 +200,10 @@ void  mcRpcI_RotorPositionCalcDisable( tmcRpc_ModuleData_s * const pModule )
     pState->enable = false;
 }
 
-/*! \brief Rotor position estimation
+/**
+ * @brief Perform rotor position calculation
  *
- * Details.
- * Rotor position estimation
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
  */
 void mcRpcI_RotorPositionCalc(  tmcRpc_ModuleData_s * const pModule )
 {
@@ -317,35 +298,26 @@ void mcRpcI_RotorPositionCalc(  tmcRpc_ModuleData_s * const pModule )
 }
 
 <#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
-/*! \brief Get mechanical angle
+/**
+ * @brief Get mechanical angle
  *
- * Details.
- * Get mechanical angle
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
+ * @return Mechanical angle
  */
-float32_t mcRpcI_MechanicalAngleGet(  const tmcRpc_Parameters_s * const pParameters )
+float32_t mcRpcI_MechanicalAngleGet(  const tmcRpc_ModuleData_s * const pModule )
 {
         /** Get the linked state variable */
     tmcRpc_State_s * pState;
-    pState = (tmcRpc_State_s *)pParameters->pStatePointer;
+    pState = (tmcRpc_State_s *)pModule->dParameters.pStatePointer;
 
     return pState->mechanicalAngle;
 }
 </#if>
 
-/*! \brief Reset Rotor position estimation
+/**
+ * @brief Reset rotor position calculation module
  *
- * Details.
- * Reset Rotor position estimation
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pModule Pointer to module data structure
  */
 void mcRpcI_RotorPositionCalcReset( tmcRpc_ModuleData_s * const pModule )
 {
@@ -427,15 +399,10 @@ Private Functions
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
-/*! \brief Initialize rotor position estimation module
+/**
+ * @brief Initialize rotor position calculation module
  *
- * Details.
- * Initialize rotor position estimation module
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
  */
 void  mcRpcI_RotorPositionCalcInit( tmcRpc_ModuleData_s * const pModule )
 {
@@ -463,15 +430,10 @@ void  mcRpcI_RotorPositionCalcInit( tmcRpc_ModuleData_s * const pModule )
     pState->initDone = true;
 }
 
-/*! \brief Enable rotor position estimation module
+/**
+ * @brief Enable rotor position calculation module
  *
- * Details.
- * Enable rotor position estimation module
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
  */
 void  mcRpcI_RotorPositionCalcEnable(  tmcRpc_ModuleData_s * const pModule )
 {
@@ -493,15 +455,10 @@ void  mcRpcI_RotorPositionCalcEnable(  tmcRpc_ModuleData_s * const pModule )
     pState->enable = true;
 }
 
-/*! \brief Disable rotor position estimation module
+/**
+ * @brief Disable rotor position calculation module
  *
- * Details.
- * Disable rotor position estimation module
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
  */
 void  mcRpcI_RotorPositionCalcDisable(  tmcRpc_ModuleData_s * const pModule )
 {
@@ -523,15 +480,10 @@ void  mcRpcI_RotorPositionCalcDisable(  tmcRpc_ModuleData_s * const pModule )
     pState->enable = false;
 }
 
-/*! \brief Rotor position estimation
+/**
+ * @brief Perform rotor position calculation
  *
- * Details.
- * Rotor position estimation
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
  */
 void mcRpcI_RotorPositionCalc(   tmcRpc_ModuleData_s * const pModule )
 {
@@ -606,15 +558,11 @@ void mcRpcI_RotorPositionCalc(   tmcRpc_ModuleData_s * const pModule )
 }
 
 <#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
-/*! \brief Get mechanical angle
+/**
+ * @brief Get mechanical angle
  *
- * Details.
- * Get mechanical angle
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
+ * @return Mechanical angle
  */
 float32_t mcRpcI_MechanicalAngleGet(  const tmcRpc_ModuleData_s * const pModule )
 {
@@ -626,15 +574,10 @@ float32_t mcRpcI_MechanicalAngleGet(  const tmcRpc_ModuleData_s * const pModule 
 }
 </#if>
 
-/*! \brief Reset Rotor position estimation
+/**
+ * @brief Reset rotor position calculation module
  *
- * Details.
- * Reset Rotor position estimation
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pModule Pointer to module data structure
  */
 void mcRpcI_RotorPositionCalcReset(  tmcRpc_ModuleData_s * const pModule )
 {

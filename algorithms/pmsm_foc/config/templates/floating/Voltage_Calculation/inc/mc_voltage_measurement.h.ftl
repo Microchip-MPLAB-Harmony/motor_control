@@ -1,18 +1,18 @@
-/*******************************************************************************
- Voltage measurement
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    mc_voltage_measurement.h
-
-  Summary:
-   Voltage measurement
-
-  Description:
-  Voltage measurement
- *******************************************************************************/
+/**
+ * @brief Voltage calculation functions
+ *
+ * @Company Microchip Technology Inc.
+ *
+ * @File Name
+ *   mc_voltage_measurement.h
+ *
+ * @Summary
+ *   Header file which contains variables and function prototypes of voltage measurement functions.
+ *
+ * @Description
+ *   This file contains variables and function prototypes of voltage measurement functions
+ *   which are used in motor control applications.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -98,11 +98,27 @@ extern tmcVol_ModuleData_s mcVolI_ModuleData_gds;
 /*******************************************************************************
  Static functions
  *******************************************************************************/
+/**
+ * @brief Set voltage measurement parameters.
+ *
+ * @details
+ * Sets the parameters for voltage measurement.
+ *
+ * @param[in] pParameters Pointer to the parameters structure.
+ */
 __STATIC_INLINE  void mcVol_ParametersSet( tmcVol_Parameters_s * const pParameters )
 {
     pParameters->adcToVoltsFactor = (float32_t)${MCPMSMFOC_ADC_TO_VOLTS_FACTORT};
 }
 
+/**
+ * @brief Read voltage sensor input ports.
+ *
+ * @details
+ * Reads the voltage sensor input and updates the structure.
+ *
+ * @param[in,out] pInput Pointer to the input ports structure.
+ */
 __STATIC_INLINE void mcVol_InputPortsRead(tmcVol_Input_s * const pInput )
 {
     pInput->sensorInput = mcHalI_UbusAdcInput_gdu16;
@@ -111,41 +127,33 @@ __STATIC_INLINE void mcVol_InputPortsRead(tmcVol_Input_s * const pInput )
 /*******************************************************************************
  Interface Functions
  *******************************************************************************/
-
-/*! \brief Voltage calculation initialization function
+/**
+ * @brief Initialize voltage calculation module.
  *
- * Details.
- *  Voltage calculation initialization function
+ * @details
+ * Initializes the voltage calculation module.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
  */
 void mcVolI_VoltageCalculationInit( tmcVol_ModuleData_s * const pModule );
 
-/*! \brief Voltage calculation function
+/**
+ * @brief Perform voltage calculation.
  *
- * Details.
- *  Voltage calculation function
+ * @details
+ * Executes the voltage calculation process.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
  */
 void mcVolI_VoltageCalculation( tmcVol_ModuleData_s * const pModule );
 
-
-/*! \brief Voltage calculation reset
+/**
+ * @brief Reset voltage calculation.
  *
- * Details.
- *  Voltage calculation reset
+ * @details
+ * Resets the voltage calculation module to initial state.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
  */
 void mcVolI_VoltageCalculationReset( tmcVol_ModuleData_s * const pModule );
 

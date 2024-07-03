@@ -1,19 +1,22 @@
-/*******************************************************************************
- Rotor position estimation source file
-
-  Company:
-    - Microchip Technology Inc.
-
-  File Name:
-    - mc_rotor_position_estimation.c
-
-  Summary:
-    - Rotor position estimation source file
-
-  Description:
-    - This file implements functions for rotor position estimation
-
- *******************************************************************************/
+/**
+ * @file mc_rotor_position_estimation.c
+ *
+ * @brief 
+ *    Source file for rotor position estimation
+ *
+ * @File Name 
+ *    mc_rotor_position_estimation.c
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Source file which contains variables and function implementations for rotor position estimation.
+ *
+ * @Description
+ *    This file contains variables and function implementations which are generally used for rotor
+ *    position estimation in pulse width modulation. It is implemented in Q2.14 fixed point arithmetic.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -131,66 +134,62 @@ Macro Functions
  */
 #define LPF(x,y ,a)  (y) = (y) + (a) * ( (x) - (y))
 
-/*******************************************************************************
-Private Functions
-*******************************************************************************/
-
-__STATIC_INLINE void UTILS_LimitAngle0To2Pi( float32_t * const angle )
+/******************************************************************************
+ * Inline functions
+ ******************************************************************************/
+/**
+ * @brief Limits the angle to the range 0 to 2*PI
+ *
+ * @param[in,out] angle Pointer to the angle value to be limited
+ */
+__STATIC_INLINE void UTILS_LimitAngle0To2Pi(float32_t * const angle)
 {
-    if(*angle >= TWO_PI )
+    if (*angle >= TWO_PI)
     {
         *angle -= TWO_PI;
     }
-    else if( 0.0f > *angle )
+    else if (0.0f > *angle)
     {
         *angle += TWO_PI;
     }
     else
     {
-       /** For MISRA compliance*/
+        /** For MISRA compliance */
     }
 }
 
-/*! \brief Tustin approximation
+/**
+ * @brief Apply Tustin approximation
  *
- * Details.
- * Tustin approximation
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] Kp Pointer to proportional gain
+ * @param[in,out] Ki Pointer to integral gain
+ * @param[in] dt Time step
  */
-__STATIC_INLINE void mcRpe_TustinApply( float32_t * const Kp, float32_t * const Ki, const float32_t dt )
+__STATIC_INLINE void mcRpe_TustinApply(float32_t * const Kp, float32_t * const Ki, const float32_t dt)
 {
    *Ki = *Ki * dt;
-   *Kp = *Kp + 0.5f * ( *Ki );
+   *Kp = *Kp + 0.5f * (*Ki);
 }
 
-
-/*! \brief Tracking loop initialization
+/**
+ * @brief Initialize tracking loop
  *
- * Details.
- * Tracking loop initialization
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pParameter Pointer to tracking loop parameters
+ * @param[in,out] pState Pointer to phase detector state
  */
-__STATIC_INLINE void mcRpe_AngleTrackingLoopInit( tmcRpe_Parameters_s * const pParameter, tmcRpe_PhaseDetector_s * pState)
+__STATIC_INLINE void mcRpe_AngleTrackingLoopInit(tmcRpe_Parameters_s * const pParameter, tmcRpe_PhaseDetector_s * pState)
 {
 #if defined TYPE_II_PLL
     float32_t rho = TWO_PI * pParameter->f0InHertz;
     float32_t zeta = 0.7f;
     float32_t keps = 0.35f;
     float32_t zp = pParameter->pMotorParameters->PolePairs;
-    float32_t radPerSecToRpm = 30.0f / ( zp * ONE_PI );
+    float32_t radPerSecToRpm = 30.0f / (zp * ONE_PI);
 
-    pState->KpSpeed = zeta * radPerSecToRpm * rho/keps;
-    pState->KiSpeed = radPerSecToRpm * rho * rho/(2.0f * keps);
+    pState->KpSpeed = zeta * radPerSecToRpm * rho / keps;
+    pState->KiSpeed = radPerSecToRpm * rho * rho / (2.0f * keps);
     float32_t dt = pParameter->dt;
-    mcRpe_TustinApply( &pState->KpSpeed, &pState->KiSpeed, dt );
+    mcRpe_TustinApply(&pState->KpSpeed, &pState->KiSpeed, dt);
 
     /** Use a factor of 4 since the frequency of PLL is four times slower than PWM frequency */
     pState->KiAngle = dt / radPerSecToRpm;
@@ -201,29 +200,29 @@ __STATIC_INLINE void mcRpe_AngleTrackingLoopInit( tmcRpe_Parameters_s * const pP
     zp = pParameter->pMotorParameters->PolePairs;
     jp = pParameter->pMotorParameters->JmInKgPerCmSquare;
     rho = TWO_PI * pParameter->f0InHertz;
-    float32_t phi2speed    = 60.0f / ( zp * TWO_PI );
-    float32_t torque2speed = 1.0f/jp;
+    float32_t phi2speed = 60.0f / (zp * TWO_PI);
+    float32_t torque2speed = 1.0f / jp;
     float32_t Keps = pParameter->Keps;
 
-    pState->iGain =  0.5f/ Keps;
-    pState->vGain =  3.0f * rho * phi2speed;
+    pState->iGain = 0.5f / Keps;
+    pState->vGain = 3.0f * rho * phi2speed;
 
     /**
-        *   Design rule for observer parameter:
-        *          Kp = 3*Rho^2*Jp (integral-term of observer);
-        *          Ki = Rho^3*Jp  * (double-integral-term of observer))
-        */
-    pState->KiTorque =  phi2speed * rho * rho * rho / torque2speed;
+     * Design rule for observer parameter:
+     * Kp = 3*Rho^2*Jp (integral-term of observer);
+     * Ki = Rho^3*Jp (double-integral-term of observer))
+     */
+    pState->KiTorque = phi2speed * rho * rho * rho / torque2speed;
     pState->KpTorque = 3 * phi2speed * rho * rho / torque2speed;
-    mcRpe_TustinApply( &pState->KpTorque, &pState->KiTorque, pParameter->dt  );
+    mcRpe_TustinApply(&pState->KpTorque, &pState->KiTorque, pParameter->dt);
 
     pState->KiSpeed = torque2speed;
     pState->KpSpeed = 0.0f;
-    mcRpe_TustinApply( &pState->KpSpeed, &pState->KiSpeed, pParameter->dt );
+    mcRpe_TustinApply(&pState->KpSpeed, &pState->KiSpeed, pParameter->dt);
 
-    pState->KiAngle = 1.0f/ phi2speed;
+    pState->KiAngle = 1.0f / phi2speed;
     pState->KpAngle = 0.0f;
-    mcRpe_TustinApply( &pState->KpAngle, &pState->KiAngle, pParameter->dt );
+    mcRpe_TustinApply(&pState->KpAngle, &pState->KiAngle, pParameter->dt);
 
     pState->rawSpeed = 0;
 
@@ -234,24 +233,20 @@ __STATIC_INLINE void mcRpe_AngleTrackingLoopInit( tmcRpe_Parameters_s * const pP
 #endif
 }
 
-/*! \brief Tracking loop initialization
+/**
+ * @brief Execute tracking loop
  *
- * Details.
- * Tracking loop initialization
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] initialAngle Initial angle
+ * @param[in] error Error value
  */
-__STATIC_INLINE void mcRpe_AngleTrackingLoop( const float32_t initialAngle, const float32_t error )
+__STATIC_INLINE void mcRpe_AngleTrackingLoop(const float32_t initialAngle, const float32_t error)
 {
 #ifdef TYPE_II_PLL
     float32_t yp;
     tmcRpe_PhaseDetector_s * pState;
     pState = &mcRpe_State_mds.phaseDetector;
 
-    if( !pState->initDone )
+    if (!pState->initDone)
     {
         pState->angle = initialAngle;
 
@@ -262,12 +257,12 @@ __STATIC_INLINE void mcRpe_AngleTrackingLoop( const float32_t initialAngle, cons
     }
 
     /** PI Compensator stage */
-    yp = ((float32_t)pState->KpSpeed * (float32_t)error );
+    yp = ((float32_t)pState->KpSpeed * (float32_t)error);
     pState->speed = (float32_t)yp + (float32_t)(pState->YiSpeed);
-    pState->YiSpeed += ((float32_t)pState->KiSpeed * error );
+    pState->YiSpeed += ((float32_t)pState->KiSpeed * error);
 
     /** Calculate angle  */
-    pState->angle  = pState->angle + pState->speed * pState->KiAngle;
+    pState->angle = pState->angle + pState->speed * pState->KiAngle;
     UTILS_LimitAngle0To2Pi(&pState->angle);
 #else
     float32_t y, yp;
@@ -275,7 +270,7 @@ __STATIC_INLINE void mcRpe_AngleTrackingLoop( const float32_t initialAngle, cons
     tmcRpe_PhaseDetector_s * pState;
     pState = &mcRpe_State_mds.phaseDetector;
 
-    if( !pState->initDone )
+    if (!pState->initDone)
     {
         pState->angle = initialAngle;
 
@@ -287,7 +282,6 @@ __STATIC_INLINE void mcRpe_AngleTrackingLoop( const float32_t initialAngle, cons
         /** Preset outputs */
         pState->speed = 0.0f;
         pState->initDone = true;
-
     }
 
     /** Current error to angle error */
@@ -302,14 +296,14 @@ __STATIC_INLINE void mcRpe_AngleTrackingLoop( const float32_t initialAngle, cons
     tempSpeed = ((float32_t)pState->vGain * pState->phiEps);
 
     /** First stage integrator */
-    yp = ((float32_t)pState->KpSpeed * (float32_t)y ) ;
+    yp = ((float32_t)pState->KpSpeed * (float32_t)y);
     temp = (yp + (float32_t)(pState->YiSpeed));
     tempSpeed += temp;
-    pState->YiSpeed += ((float32_t)pState->KiSpeed * (float32_t)y );
+    pState->YiSpeed += ((float32_t)pState->KiSpeed * (float32_t)y);
 
     /** Second stage integrator */
-    yp   = ((float32_t)(pState->KpAngle ) * (float32_t)tempSpeed);
-    pState->angle  = yp + (float32_t)(pState->YiAngle);
+    yp = ((float32_t)(pState->KpAngle) * (float32_t)tempSpeed);
+    pState->angle = yp + (float32_t)(pState->YiAngle);
     UTILS_LimitAngle0To2Pi(&pState->angle);
     pState->YiAngle += ((float32_t)pState->KiAngle * (float32_t)tempSpeed);
     UTILS_LimitAngle0To2Pi(&pState->YiAngle);
@@ -323,21 +317,15 @@ __STATIC_INLINE void mcRpe_AngleTrackingLoop( const float32_t initialAngle, cons
     {
         pState->speed = (float32_t)(temp);
     }
-
 #endif
 }
 
-/*! \brief Tracking loop reset
+/**
+ * @brief Reset tracking loop
  *
- * Details.
- * Tracking loop reset
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pState Pointer to phase detector state
  */
-__STATIC_INLINE void mcRpe_AngleTrackingLoopReset( tmcRpe_PhaseDetector_s * pState )
+__STATIC_INLINE void mcRpe_AngleTrackingLoopReset(tmcRpe_PhaseDetector_s * pState)
 {
 #if defined TYPE_II_PLL
     pState->initDone = false;
@@ -358,18 +346,19 @@ __STATIC_INLINE void mcRpe_AngleTrackingLoopReset( tmcRpe_PhaseDetector_s * pSta
 #endif
 }
 
+
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
-/*! \brief Initialize rotor position estimation module
+/*! 
+ * @brief Initialize rotor position estimation module
  *
- * Details.
+ * @details
  * Initialize rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
 {
@@ -398,15 +387,15 @@ void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
     pState->initDone = true;
 }
 
-/*! \brief Enable rotor position estimation module
+/*! 
+ * @brief Enable rotor position estimation module
  *
- * Details.
+ * @details
  * Enable rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void  mcRpeI_RotorPositionEstimEnable( tmcRpe_Parameters_s * const pParameters )
 {
@@ -428,15 +417,15 @@ void  mcRpeI_RotorPositionEstimEnable( tmcRpe_Parameters_s * const pParameters )
     pState->enable = true;
 }
 
-/*! \brief Disable rotor position estimation module
+/*! 
+ * @brief Disable rotor position estimation module
  *
- * Details.
+ * @details
  * Disable rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void  mcRpeI_RotorPositionEstimDisable( tmcRpe_Parameters_s * const pParameters )
 {
@@ -458,18 +447,20 @@ void  mcRpeI_RotorPositionEstimDisable( tmcRpe_Parameters_s * const pParameters 
     pState->enable = false;
 }
 
-/*! \brief Rotor position estimation
+/*! 
+ * @brief Perform rotor position estimation
  *
- * Details.
- * Rotor position estimation
+ * @details
+ * Perform rotor position estimation
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ * @param[in] pIAlphaBeta - Pointer to input alpha-beta voltages
+ * @param[in] pUAlphaBeta - Pointer to input alpha-beta currents
+ * @param[out] pAngle - Pointer to store estimated rotor angle
+ * @param[out] pSpeed - Pointer to store estimated rotor speed
+ *
+ * @return None
  */
-
-
 void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
                                                      const float32_t refSpeed,
                                                      const tmcTypes_AlphaBeta_s * pIAlphaBeta,
@@ -542,16 +533,15 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
      pEAlphaBeta->beta = pState->eBetaHat;
 }
 
-
-/*! \brief Reset Rotor position estimation
+/*! 
+ * @brief Reset rotor position estimation module
  *
- * Details.
- * Reset Rotor position estimation
+ * @details
+ * Reset rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void mcRpeI_RotorPositionEstimReset( const tmcRpe_Parameters_s * const pParameters )
 {

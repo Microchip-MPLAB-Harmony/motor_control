@@ -1,17 +1,20 @@
-/*******************************************************************************
-  System Definitions
-
-  File Name:
-    mc_pwm.h
-
-  Summary:
-    Header file which contains variables and function prototypes for pulse width modulation
-
-  Description:
-    This file contains variables and function prototypes which are generally used for pulse
-    width modulation. It is implemented in Q2.14 fixed Point Arithmetic.
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Header file for rotor position calculation
+ *
+ * @File Name 
+ *    mc_rotor_position_calculation.h
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Header file containing variables and function prototypes for rotor position calculation.
+ *
+ * @Description
+ *    This file contains variables and function prototypes which are generally used for rotor
+ *    position estimation in pulse width modulation. 
+ */
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -104,18 +107,16 @@ typedef struct
 extern tmcRpc_ModuleData_s mcRpcI_ModuleData_gds;
 
 /*******************************************************************************
- Static Interface Functions
-*******************************************************************************/
+ * Static Interface Functions
+ ******************************************************************************/
 
-/*! \brief Set module parameters
+/*! \brief Read position counter from encoder
  *
- * Details.
- * Set module parameters
+ * This function reads the position counter from the encoder and stores it
+ * in the provided input structure.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in/out] pInput Pointer to input structure where encoder pulse count will be stored.
+ * @return None
  */
 __STATIC_INLINE void mcRpcI_PositionCounterRead( tmcRpc_Input_s * const pInput )
 {
@@ -123,15 +124,13 @@ __STATIC_INLINE void mcRpcI_PositionCounterRead( tmcRpc_Input_s * const pInput )
 }
 
 <#if __PROCESSOR?matches(".*PIC32MK.*") == true>
-/*! \brief Set module parameters
+/*! \brief Read speed counter from encoder
  *
- * Details.
- * Set module parameters
+ * This function reads the speed counter from the encoder and stores it
+ * in the provided input structure.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in/out] pInput Pointer to input structure where encoder velocity count will be stored.
+ * @return None
  */
 __STATIC_INLINE void mcRpcI_SpeedCounterRead( tmcRpc_Input_s * const pInput )
 {
@@ -139,109 +138,84 @@ __STATIC_INLINE void mcRpcI_SpeedCounterRead( tmcRpc_Input_s * const pInput )
 }
 </#if>
 
-/*! \brief Set module parameters
+/*******************************************************************************
+ * Interface Functions
+ ******************************************************************************/
+
+/*! 
+ * @brief Set module parameters for rotor position estimation
  *
- * Details.
- * Set module parameters
+ * @detailsThis function initializes module parameters for rotor position estimation.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in/out] pParameters Pointer to parameters structure to be initialized.
+ * @return None
  */
 __STATIC_INLINE void mcRpcI_ParametersSet( tmcRpc_Parameters_s * const pParameters )
 {
     /** Motor parameters */
     pParameters->pMotorParameters = &mcMotI_PMSM_gds;
 
-     pParameters->velocityCountPrescaler = 100u;
-     pParameters->dt = (float32_t)(${MCPMSMFOC_PWM_PERIOD});
+    /** Prescaler for velocity count */
+    pParameters->velocityCountPrescaler = 100u;
 
-<#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
-     /** Mechanical Gear Ratio */
+    /** PWM period */
+    pParameters->dt = (float32_t)(${MCPMSMFOC_PWM_PERIOD});
+
+    <#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
+    /** Mechanical Gear Ratio */
     pParameters->gearRatio = (uint8_t)1;
-</#if>
+    </#if>
 
-    /** Encoder parameters  */
-
+    /** Encoder parameters */
     pParameters->encPulsesPerElecRev = (uint16_t)${MCPMSMFOC_ENCODER_QDEC_PULSE_PER_EREV};
     pParameters->encPulsePerMechRev = pParameters->encPulsesPerElecRev * (uint16_t)mcMotI_PMSM_gds.PolePairs;
 }
 
 /*******************************************************************************
- Interface Functions
-*******************************************************************************/
-/*! \brief Initialize rotor position estimation module
+ * Interface Functions
+ ******************************************************************************/
+/**
+ * @brief Initialize rotor position calculation module
  *
- * Details.
- * Initialize rotor position estimation module
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
  */
 void  mcRpcI_RotorPositionCalcInit( tmcRpc_ModuleData_s * const pModule );
 
-/*! \brief Enable rotor position estimation module
+/**
+ * @brief Enable rotor position calculation module
  *
- * Details.
- * Enable rotor position estimation module
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
  */
 void  mcRpcI_RotorPositionCalcEnable( tmcRpc_ModuleData_s * const pModule );
 
-/*! \brief Disable rotor position estimation module
+/**
+ * @brief Disable rotor position calculation module
  *
- * Details.
- * Disable rotor position estimation module
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
  */
 void  mcRpcI_RotorPositionCalcDisable( tmcRpc_ModuleData_s * const pModule );
 
-/*! \brief Rotor position estimation
+/**
+ * @brief Perform rotor position calculation
  *
- * Details.
- * Rotor position estimation
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
  */
-void mcRpcI_RotorPositionCalc(  tmcRpc_ModuleData_s * const pModule );
+void mcRpcI_RotorPositionCalc( tmcRpc_ModuleData_s * const pModule );
 
 <#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
-/*! \brief Get mechanical angle
+/**
+ * @brief Get mechanical angle
  *
- * Details.
- * Get mechanical angle
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to module data structure
+ * @return Mechanical angle
  */
 float32_t mcRpcI_MechanicalAngleGet( const tmcRpc_ModuleData_s * const pModule );
 </#if>
 
-/*! \brief Reset Rotor position estimation
+/**
+ * @brief Reset rotor position calculation module
  *
- * Details.
- * Reset Rotor position estimation
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pModule Pointer to module data structure
  */
 void mcRpcI_RotorPositionCalcReset( tmcRpc_ModuleData_s * const pModule );
 

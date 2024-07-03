@@ -1,19 +1,20 @@
-/*******************************************************************************
-  Utility Functions
-
-  Company:
-    - Microchip Technology Inc
-
-  File Name:
-    - mc_pi_control.c
-
-  Summary:
-    - Utility Functions
-
-  Description:
-    - Utility Functions
-
- *******************************************************************************/
+/**
+ * @brief
+ *  PI controller functions for motor control.
+ *
+ * @Company
+ *  Microchip Technology Inc.
+ *
+ * @File name
+ *  mc_pi_control.c
+ *
+ * @Summary
+ *  Source file which contains the implementation of PI controller functions.
+ *
+ * @Description
+ *  This file contains the implementation of PI controller functions which are
+ *  generally used in Motor Control. Implemented in Q2.14 Fixed Point Arithmetic.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -57,15 +58,18 @@ Private global variables
 /*******************************************************************************
 Functions
  *******************************************************************************/
-/*! \brief
+/**
+ * @brief Initializes the PI control structure with the given parameters.
  *
- * Details
+ * This function sets up the PI control structure with proportional and integral
+ * gains, and computes the shifts required for fixed-point arithmetic.
  *
+ * @param[in] Kp Proportional gain.
+ * @param[in] Ki Integral gain.
+ * @param[in] dt Sampling time.
+ * @param[in,out] pControl Pointer to the PI control structure to be initialized.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @return None.
  */
 void mcUtils_PiControlInit( float32_t Kp, float32_t Ki, float32_t dt,  tmcUtils_PiControl_s  * const pControl)
 {
@@ -77,15 +81,16 @@ void mcUtils_PiControlInit( float32_t Kp, float32_t Ki, float32_t dt,  tmcUtils_
      pControl->Ki = Ki * dt;
 }
 
-/*! \brief
+/**
+ * @brief Updates the PI control limits.
  *
- * Details
+ * This function updates the minimum and maximum output limits for the PI control.
  *
+ * @param[in] Ymin Minimum output limit.
+ * @param[in] Ymax Maximum output limit.
+ * @param[in,out] pControl Pointer to the PI control structure to be updated.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @return None.
  */
 void mcUtils_PiLimitUpdate( const float32_t Ymin, const float32_t Ymax, tmcUtils_PiControl_s  * const pControl  )
 {
@@ -93,30 +98,31 @@ void mcUtils_PiLimitUpdate( const float32_t Ymin, const float32_t Ymax, tmcUtils
     pControl->Ymax = Ymax;
 }
 
-/*! \brief
+/**
+ * @brief Updates the integral part of the PI control.
  *
- * Details
+ * This function updates the integral term of the PI control with the given value.
  *
+ * @param[in] value Integral value to be updated.
+ * @param[in,out] pControl Pointer to the PI control structure to be updated.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @return None.
  */
 void mcUtils_PiIntegralUpdate( const float32_t value, tmcUtils_PiControl_s  * const pControl )
 {
     pControl->Yint = value;
 }
 
-/*! \brief
+/**
+ * @brief Executes the PI control algorithm.
  *
- * Details
+ * This function computes the PI control output based on the given error and
+ * updates the control structure accordingly.
  *
+ * @param[in] error The current error value.
+ * @param[in,out] pControl Pointer to the PI control structure to be updated.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @return None.
  */
 void mcUtils_PiControl(const float32_t error, tmcUtils_PiControl_s  * const pControl  )
 {
@@ -163,15 +169,15 @@ void mcUtils_PiControl(const float32_t error, tmcUtils_PiControl_s  * const pCon
      pControl->Yo = y;
 }
 
-/*! \brief
+/**
+ * @brief Resets the PI control output.
  *
- * Details
+ * This function resets the PI control output to the given value.
  *
+ * @param[in] out The output value to reset.
+ * @param[in,out] pControl Pointer to the PI control structure to be reset.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @return None.
  */
 void mcUtils_PiControlReset(const float32_t integral, tmcUtils_PiControl_s  * const pControl)
 {

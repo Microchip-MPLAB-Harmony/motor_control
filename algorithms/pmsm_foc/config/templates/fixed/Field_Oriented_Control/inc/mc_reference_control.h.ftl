@@ -1,17 +1,20 @@
-/*******************************************************************************
-  System Definitions
-
-  File Name:
-    mc_pwm.h
-
-  Summary:
-    Header file which contains variables and function prototypes for pulse width modulation
-
-  Description:
-    This file contains variables and function prototypes which are generally used for pulse
-    width modulation. It is implemented in Q2.14 fixed Point Arithmetic.
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Header file for reference control
+ *
+ * @File Name 
+ *    mc_reference_control.h
+ *
+ * @Company 
+ *   Microchip Technology Inc.
+ *
+ * @Summary
+ *    Header file which contains variables and function prototypes for reference control.
+ *
+ * @Description
+ *    This file contains variables and function prototypes which are generally used for reference
+ *    control in pulse width modulation. It is implemented in Q2.14 fixed point arithmetic.
+ */
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -52,37 +55,37 @@
 *******************************************************************************/
 
 /*******************************************************************************
-Type Definition
-*******************************************************************************/
+ Type Definition
+ *******************************************************************************/
+/**
+ * @brief Structure defining the parameters for the reference control module.
+ */
 typedef struct
 {
 <#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
-    float32_t minimumRpm;
-    float32_t maximumRpm;
-    float32_t rpmPerSecond;
-    float32_t dt;
+    float32_t minimumRpm; /**< Minimum RPM */
+    float32_t maximumRpm; /**< Maximum RPM */
+    float32_t rpmPerSecond; /**< RPM change per second */
+    float32_t dt; /**< Delta time */
 </#if>
-    void * pStatePointer;
-}tmcRef_Parameters_s;
+    void * pStatePointer; /**< Pointer to state information */
+} tmcRef_Parameters_s;
 
 /*******************************************************************************
  * Interface variables
-*******************************************************************************/
+ *******************************************************************************/
 
 /*******************************************************************************
  Static Interface Functions
-*******************************************************************************/
-/*! \brief Set module parameters
+ *******************************************************************************/
+/**
+ * @brief Set module parameters
  *
- * Details.
- * Set module parameters
+ * This function sets the parameters for the reference control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
-__STATIC_INLINE void mcRefI_ParametersSet( tmcRef_Parameters_s * const pParameters )
+__STATIC_INLINE void mcRefI_ParametersSet(tmcRef_Parameters_s * const pParameters)
 {
 <#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
 <#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_ZSMT_HYBRID') >
@@ -96,78 +99,74 @@ __STATIC_INLINE void mcRefI_ParametersSet( tmcRef_Parameters_s * const pParamete
 
 <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     pParameters->rpmPerSecond = (float32_t)(${MCPMSMFOC_RAMP_PROFILER_MAX_SPEED});
-    pParameters->dt =(float32_t)(${MCPMSMFOC_PWM_PERIOD});
+    pParameters->dt = (float32_t)(${MCPMSMFOC_PWM_PERIOD});
 </#if>
 </#if>
 }
 
 /*******************************************************************************
  Interface Functions
-*******************************************************************************/
-/*! \brief Initialize reference control module
+ *******************************************************************************/
+/**
+ * @brief Initialize reference control module
  *
- * Details.
- * Initialize reference control module
+ * This function initializes the reference control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
-void  mcRefI_ReferenceControlInit( tmcRef_Parameters_s * const pParameters );
+void mcRefI_ReferenceControlInit(tmcRef_Parameters_s * const pParameters);
 
-/*! \brief Enable reference control module
+/**
+ * @brief Enable reference control module
  *
- * Details.
- * Enable reference control module
+ * This function enables the reference control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
-void  mcRefI_ReferenceControlEnable( tmcRef_Parameters_s * const pParameters );
+void mcRefI_ReferenceControlEnable(tmcRef_Parameters_s * const pParameters);
 
-/*! \brief Disable reference control module
+/**
+ * @brief Disable reference control module
  *
- * Details.
- * Disable reference control module
+ * This function disables the reference control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
-void  mcRefI_ReferenceControlDisable( tmcRef_Parameters_s * const pParameters );
+void mcRefI_ReferenceControlDisable(tmcRef_Parameters_s * const pParameters);
 
-/*! \brief Reference control
- *
- * Details.
- * Reference control
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
- */
 #ifdef RAM_EXECUTE
-void __ramfunc__  mcRefI_ReferenceControl( tmcRef_Parameters_s * const pParameters,
-                                                                       const int16_t command, int16_t * const pOut   );
+/**
+ * @brief Reference control
+ *
+ * This function performs the reference control.
+ *
+ * @param[in] pParameters Pointer to the reference parameters structure
+ * @param[in] command The command input
+ * @param[out] pOut Pointer to the output
+ */
+void __ramfunc__ mcRefI_ReferenceControl(tmcRef_Parameters_s * const pParameters,
+                                         const int16_t command, int16_t * const pOut);
 #else
-void mcRefI_ReferenceControl(  tmcRef_Parameters_s * const pParameters,
-                                                    const int16_t command, int16_t * const pOut );
+/**
+ * @brief Reference control
+ *
+ * This function performs the reference control.
+ *
+ * @param[in] pParameters Pointer to the reference parameters structure
+ * @param[in] command The command input
+ * @param[out] pOut Pointer to the output
+ */
+void mcRefI_ReferenceControl(tmcRef_Parameters_s * const pParameters,
+                             const int16_t command, int16_t * const pOut);
 #endif
 
-/*! \brief Reset Reference control
+/**
+ * @brief Reset reference control
  *
- * Details.
- * Reset Reference control
+ * This function resets the reference control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
-void mcRefI_ReferenceControlReset( tmcRef_Parameters_s * const pParameters );
+void mcRefI_ReferenceControlReset(tmcRef_Parameters_s * const pParameters);
 
 #endif // MCREF_H

@@ -1,18 +1,24 @@
-/*******************************************************************************
-  System Definitions
-
-  File Name:
-    userparams.h
-
-  Summary:
-    Header file which defines Motor Specific and Board Specific constants
-
-  Description:
-    This file contains the motor and board specific constants. It also defines
- * switches which allows algorithm to be run in debug modes like Open Loop Mode,
- * Torque mode, etc.
-
- *******************************************************************************/
+/**
+ * @file userparams.h
+ *
+ * @brief
+ *    Header file defining Motor Specific and Board Specific constants
+ *
+ * @Company
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    This file contains constants and scaling factors specific to the motor and
+ *    board configuration. It also includes switches for debug modes like Open Loop Mode
+ *    and Torque mode.
+ *
+ * @Description
+ *    This header file defines various constants and scaling factors used in motor
+ *    control algorithms. It includes definitions for base speed, current, voltage
+ *    divider ratio, and impedance. Constants like K_SPEED and K_CURRENT are defined
+ *    for per unit scaling. Additionally, the file provides a calculation for K_TIME
+ *    used in time scaling based on motor parameters and PWM frequency.
+ */
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -47,23 +53,28 @@
 /*******************************************************************************
  * Per unit scaling
 *******************************************************************************/
-#define BASE_SPEED_IN_RPM                   (float32_t)(2804 )
-#define BASE_CURRENT_IN_AMPS                (float32_t)(2048 * ${MCPMSMFOC_CURRENT_SCALING_FACTORT})
+/**
+ * @defgroup per_unit_scaling Per Unit Scaling Constants
+ * @{
+ */
+#define BASE_SPEED_IN_RPM                   (float32_t)(2804) /**< Base speed in RPM */
+#define BASE_CURRENT_IN_AMPS                (float32_t)(2048 * ${MCPMSMFOC_CURRENT_SCALING_FACTORT}) /**< Base current in Amperes */
 
-#define VOLTAGE_DIVIDER_RATIO               (float32_t)(${MCPMSMFOC_DC_BUS_RATIO})
-#define BASE_VOLTAGE_IN_VOLTS               (float32_t)(3.30f/ VOLTAGE_DIVIDER_RATIO )
-#define BASE_IMPEDENCE_IN_OHMS              (float32_t)( BASE_VOLTAGE_IN_VOLTS / BASE_CURRENT_IN_AMPS )
+#define VOLTAGE_DIVIDER_RATIO               (float32_t)(${MCPMSMFOC_DC_BUS_RATIO}) /**< Voltage divider ratio */
+#define BASE_VOLTAGE_IN_VOLTS               (float32_t)(3.30f / VOLTAGE_DIVIDER_RATIO) /**< Base voltage in Volts */
+#define BASE_IMPEDENCE_IN_OHMS              (float32_t)(BASE_VOLTAGE_IN_VOLTS / BASE_CURRENT_IN_AMPS) /**< Base impedance in Ohms */
 
+#define UNIT_VALUE                          (float32_t)(16384) /**< Unit value for scaling */
+#define K_SPEED                             (float32_t)(UNIT_VALUE / BASE_SPEED_IN_RPM) /**< Scaling factor for speed */
+#define K_CURRENT                           (float32_t)(UNIT_VALUE / BASE_CURRENT_IN_AMPS) /**< Scaling factor for current */
 
-#define UNIT_VALUE (float32_t)( 16384 )
-#define K_SPEED   (float32_t)( UNIT_VALUE / BASE_SPEED_IN_RPM )
-#define K_CURRENT   (float32_t)( UNIT_VALUE / BASE_CURRENT_IN_AMPS )
-
-
-/** ToDO: Reverify the formula.
- * theta_scaled = omega_rpm_scaled * 65535 * BASE_SPEED * Pz / ( 16384 * 60 * Fs )
- * Therefore, K_TIME = 65535 * BASE_SPEED * Pz / ( 16384 * 60 * Fs )
- * */
-#define K_TIME  (float32_t)( BASE_SPEED_IN_RPM * 5.0f * 4.0f/ (60.0f * ${MCPMSMFOC_PWM_FREQUENCY} ))
+/** 
+ * @brief Scaling factor for time based on motor parameters and PWM frequency
+ *
+ * K_TIME is calculated using the formula:
+ * K_TIME = BASE_SPEED_IN_RPM * 5.0f * 4.0f / (60.0f * ${MCPMSMFOC_PWM_FREQUENCY})
+ */
+ 
+#define K_TIME                              (float32_t)(BASE_SPEED_IN_RPM * 5.0f * 4.0f / (60.0f * ${MCPMSMFOC_PWM_FREQUENCY}))
 
 #endif // USERPARAMS_H

@@ -1,17 +1,20 @@
-/*******************************************************************************
-  System Definitions
-
-  File Name:
-    mc_pwm.h
-
-  Summary:
-    Header file which contains variables and function prototypes for pulse width modulation
-
-  Description:
-    This file contains variables and function prototypes which are generally used for pulse
-    width modulation. It is implemented in Q2.14 fixed Point Arithmetic.
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Header file for rotor position estimation
+ *
+ * @File Name 
+ *    mc_rotor_position_estimation.h
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Header file containing variables and function prototypes for rotor position estimation.
+ *
+ * @Description
+ *    This file contains variables and function prototypes which are generally used for rotor
+ *    position estimation in pulse width modulation. It is implemented in Q2.14 fixed point arithmetic.
+ */
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -78,15 +81,15 @@ typedef struct
 /*******************************************************************************
  Static Interface Functions
 *******************************************************************************/
-/*! \brief Set module parameters
+/*! 
+ * @brief Set module parameters
  *
- * Details.
+ * @details
  * Set module parameters
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 __STATIC_INLINE void mcRpeI_ParametersSet( tmcRpe_Parameters_s * const pParameters )
 {
@@ -105,51 +108,56 @@ __STATIC_INLINE void mcRpeI_ParametersSet( tmcRpe_Parameters_s * const pParamete
 /*******************************************************************************
  Interface Functions
 *******************************************************************************/
-/*! \brief Initialize rotor position estimation module
+/*! 
+ * @brief Initialize rotor position estimation module
  *
- * Details.
+ * @details
  * Initialize rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters );
 
-/*! \brief Enable rotor position estimation module
+/*! 
+ * @brief Enable rotor position estimation module
  *
- * Details.
+ * @details
  * Enable rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void  mcRpeI_RotorPositionEstimEnable( tmcRpe_Parameters_s * const pParameters );
 
-/*! \brief Disable rotor position estimation module
+/*! 
+ * @brief Disable rotor position estimation module
  *
- * Details.
+ * @details
  * Disable rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void  mcRpeI_RotorPositionEstimDisable( tmcRpe_Parameters_s * const pParameters );
 
-/*! \brief Rotor position estimation
+/*! 
+ * @brief Perform rotor position estimation
  *
- * Details.
- * Rotor position estimation
+ * @details
+ * Perform rotor position estimation
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ * @param[in] pIAlphaBeta - Pointer to input alpha-beta voltages
+ * @param[in] pUAlphaBeta - Pointer to input alpha-beta currents
+ * @param[out] pEAlphaBeta - Pointer to store estimated alpha-beta bemf
+ * @param[out] pAngle - Pointer to store estimated rotor angle
+ * @param[out] pSpeed - Pointer to store estimated rotor speed
+ *
+ * @return None
  */
 void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
                                                      const float32_t refSpeed,
@@ -158,15 +166,15 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
                                                      tmcTypes_AlphaBeta_s * pEAlphaBeta,
                                                      float32_t * pAngle, float32_t * pSpeed );
 
-/*! \brief Reset Rotor position estimation
+/*! 
+ * @brief Reset rotor position estimation module
  *
- * Details.
- * Reset Rotor position estimation
+ * @details
+ * Reset rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void mcRpeI_RotorPositionEstimReset( const tmcRpe_Parameters_s * const pParameters );
 

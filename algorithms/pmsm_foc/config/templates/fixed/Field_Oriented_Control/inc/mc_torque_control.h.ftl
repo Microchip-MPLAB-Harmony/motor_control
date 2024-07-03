@@ -1,17 +1,20 @@
-/*******************************************************************************
-  System Definitions
-
-  File Name:
-    mc_torque_control.h
-
-  Summary:
-    Header file which contains variables and function prototypes for torque control
-
-  Description:
-    This file contains variables and function prototypes which are generally used for
-    torque control.
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Header file for torque control
+ *
+ * @File Name 
+ *    mc_torque_control.h
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Header file which contains variables and function prototypes for torque control.
+ *
+ * @Description
+ *    This file contains variables and function prototypes which are generally used for
+ *    torque control.
+ */
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -52,34 +55,39 @@
  Default Module configuration parameters
 *******************************************************************************/
 
-
 /*******************************************************************************
 Type Definition
 *******************************************************************************/
+/**
+ * @brief 
+ *    Type Definition for Torque Control Parameters
+ *
+ * @details
+ *    Defines the structure for storing parameters used in torque control.
+ */
 typedef struct
 {
-    float32_t Kp;
-    float32_t Ki;
-    float32_t dt;
-    void * pStatePointer;
-}tmcTor_Parameters_s;
+    float32_t Kp;             /**< Proportional gain for torque control */
+    float32_t Ki;             /**< Integral gain for torque control */
+    float32_t dt;             /**< Time step for torque control */
+    void * pStatePointer;     /**< Pointer to state information for torque control */
+} tmcTor_Parameters_s;
 
 /*******************************************************************************
  * Interface variables
 *******************************************************************************/
-
 /*******************************************************************************
  Static Interface Functions
-*******************************************************************************/
-/*! \brief Set module parameters
+ ******************************************************************************/
+
+/**
+ * @brief 
+ *    Set module parameters
  *
- * Details.
- * Set module parameters
+ * @details
+ *    Sets the module parameters based on configuration.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to the parameters structure.
  */
 __STATIC_INLINE void mcTorI_ParametersSet( tmcTor_Parameters_s * const pParameters )
 {
@@ -94,89 +102,89 @@ __STATIC_INLINE void mcTorI_ParametersSet( tmcTor_Parameters_s * const pParamete
 
 /*******************************************************************************
  Interface Functions
-*******************************************************************************/
-/*! \brief Initialize flux control module
- *
- * Details.
- * Initialize flux control module
- *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
- */
-void  mcTorI_TorqueControlInit( tmcTor_Parameters_s * const pParameters );
+ ******************************************************************************/
 
-/*! \brief Enable flux control module
+/**
+ * @brief 
+ *    Initialize torque control module
  *
- * Details.
- * Enable flux control module
+ * @details
+ *    Initializes the torque control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to the parameters structure.
  */
-void  mcTorI_TorqueControlEnable( tmcTor_Parameters_s * const pParameters );
+void mcTorI_TorqueControlInit( tmcTor_Parameters_s * const pParameters );
 
-/*! \brief Disable flux control module
+/**
+ * @brief 
+ *    Enable torque control module
  *
- * Details.
- * Disable flux control module
+ * @details
+ *    Enables the torque control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to the parameters structure.
  */
-void  mcTorI_TorqueControlDisable( tmcTor_Parameters_s * const pParameters );
+void mcTorI_TorqueControlEnable( tmcTor_Parameters_s * const pParameters );
 
-/*! \brief Torque control
+/**
+ * @brief 
+ *    Disable torque control module
  *
- * Details.
- * Torque control
+ * @details
+ *    Disables the torque control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to the parameters structure.
+ */
+void mcTorI_TorqueControlDisable( tmcTor_Parameters_s * const pParameters );
+
+/**
+ * @brief 
+ *    Manual torque control
+ *
+ * @details
+ *    Implements manual torque control.
+ *
+ * @param[in] pParameters - Pointer to the parameters structure.
+ * @param[in] Out - Output torque value.
  */
 #ifdef RAM_EXECUTE
-void __ramfunc__  mcTorI_TorqueControlManual( const tmcTor_Parameters_s * const pParameters,
-                                                                   const int16_t Out   );
+void __ramfunc__ mcTorI_TorqueControlManual( const tmcTor_Parameters_s * const pParameters,
+                                             const int16_t Out );
 #else
-void mcTorI_TorqueControlManual(  const tmcTor_Parameters_s * const pParameters,
-                                                         const int16_t  Out );
+void mcTorI_TorqueControlManual( const tmcTor_Parameters_s * const pParameters,
+                                 const int16_t Out );
 #endif
 
-/*! \brief Torque control
+/**
+ * @brief 
+ *    Automatic torque control
  *
- * Details.
- * Torque control
+ * @details
+ *    Implements automatic torque control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to the parameters structure.
+ * @param[in] iQref - Reference current.
+ * @param[in] iQact - Actual current.
+ * @param[out] pOut - Pointer to the output torque value.
  */
 #ifdef RAM_EXECUTE
-void __ramfunc__  mcTorI_TorqueControlAuto( const tmcTor_Parameters_s * const pParameters,
-                                                                   const int16_t iQref, const int16_t iQact, int16_t * const pOut   );
+void __ramfunc__ mcTorI_TorqueControlAuto( const tmcTor_Parameters_s * const pParameters,
+                                           const int16_t iQref, const int16_t iQact, int16_t * const pOut );
 #else
-void mcTorI_TorqueControlAuto(  const tmcTor_Parameters_s * const pParameters,
-                                              const int16_t iQref, const int16_t iQact, int16_t * const pOut );
+void mcTorI_TorqueControlAuto( const tmcTor_Parameters_s * const pParameters,
+                               const int16_t iQref, const int16_t iQact, int16_t * const pOut );
 #endif
 
-/*! \brief Reset Torque control
+/**
+ * @brief 
+ *    Reset torque control
  *
- * Details.
- * Reset Torque control
+ * @details
+ *    Resets the torque control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters - Pointer to the parameters structure.
  */
 void mcTorI_TorqueControlReset( const tmcTor_Parameters_s * const pParameters );
 
 #endif // MCTOR_H
+

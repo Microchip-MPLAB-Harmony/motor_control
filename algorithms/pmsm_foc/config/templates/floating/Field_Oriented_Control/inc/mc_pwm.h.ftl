@@ -1,17 +1,20 @@
-/*******************************************************************************
-  System Definitions
-
-  File Name:
-    mc_pwm.h
-
-  Summary:
-    Header file which contains variables and function prototypes for pulse width modulation
-
-  Description:
-    This file contains variables and function prototypes which are generally used for pulse
-    width modulation. It is implemented in Q2.14 fixed Point Arithmetic.
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Header file for PWM modulation
+ *
+ * @File Name 
+ *    mc_pwm.h
+ *
+ * @Company 
+ *   Microchip Technology Inc.
+ *
+ * @Summary
+ *    Header file which contains variables and function prototypes for pulse width modulation.
+ *
+ * @Description
+ *    This file contains variables and function prototypes which are generally used for pulse
+ *    width modulation.
+ */
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -70,15 +73,12 @@ typedef struct
 /*******************************************************************************
  Static Interface Functions
 *******************************************************************************/
-/*! \brief Set module parameters
+/**
+ * @brief Set module parameters
  *
- * Details.
- * Set module parameters
+ * This function sets the parameters for the PWM module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the PWM parameters structure
  */
 __STATIC_INLINE void mcPwmI_ParametersSet( tmcPwm_Parameters_s * const pParameters )
 {
@@ -98,66 +98,53 @@ __STATIC_INLINE void mcPwmI_ParametersSet( tmcPwm_Parameters_s * const pParamete
 /*******************************************************************************
  Interface Functions
 *******************************************************************************/
-/*! \brief Initialize PWM modulator
+/**
+ * @brief Initialize PWM modulator
  *
- * Details.
- * Initialize PWM Modulator
+ * This function initializes the PWM modulator.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the PWM parameters structure
  */
 void  mcPwmI_PulseWidthModulationInit( tmcPwm_Parameters_s * const pParameters );
 
-/*! \brief Enable PWM modulator
+/**
+ * @brief Enable PWM modulator
  *
- * Details.
- * Enable PWM Modulator
+ * This function enables the PWM modulator.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the PWM parameters structure
  */
 void  mcPwmI_PulseWidthModulationEnable( tmcPwm_Parameters_s * const pParameters );
 
-/*! \brief Disable PWM modulator
+/**
+ * @brief Disable PWM modulator
  *
- * Details.
- * Disable PWM Modulator
+ * This function disables the PWM modulator.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the PWM parameters structure
  */
 void  mcPwmI_PulseWidthModulationDisable( tmcPwm_Parameters_s * const pParameters );
 
-/*! \brief PWM Modulator
+/**
+ * @brief PWM Modulator
  *
- * Details.
- * PWM Modulator
+ * This function performs the PWM modulation.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the PWM parameters structure
+ * @param[in] pUalphaBeta Pointer to the alpha-beta voltage components
+ * @param[out] pDuty Pointer to the duty cycle
  */
 void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
                                                            const float32_t uBus,
                                                            const tmcTypes_AlphaBeta_s * const pUalphaBeta,
                                                            int16_t * const pDuty );
 
-/*! \brief Reset PWM Modulator
+/**
+ * @brief Reset PWM modulator
  *
- * Details.
- * Reset PWM Modulator
+ * This function resets the PWM modulator.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to the PWM parameters structure
  */
 void mcPwmI_PulseWidthModulationReset( const tmcPwm_Parameters_s * const pParameters );
 

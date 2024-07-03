@@ -1,18 +1,19 @@
-/*******************************************************************************
-  Rotor Position Source File
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    mc_rotor_position.c
-
-  Summary:
-    This file contains functions to get the rotor position of a motor
-
-  Description:
-    This file contains functions to get the rotor position of a motor
- *******************************************************************************/
+/**
+ * @file mc_rotor_position_parameters.c
+ *
+ * @brief 
+ *    Rotor Position Parameters
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Source file containing data structures and function prototypes for rotor position.
+ *
+ * @Description
+ *    This file defines the data structures and function prototypes used for
+ *    managing rotor position in motor control applications.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -71,6 +72,15 @@ tmcTune_HFITuning_s  mcRpeI_TuningSettings_gds;
 /*******************************************************************************
  Interface Variables
  *******************************************************************************/
+/** 
+ * @brief Set rotor position estimation parameters
+ *
+ * @details 
+ *   This function sets the parameters for rotor position estimation module.
+ *
+ * @param[in] pParameters Pointer to the parameters structure.
+ * @return None
+ */
 void mcRpeI_ParametersSet(tmcRpe_Parameters_s * const pParameters )
 {
     /** Soft switch parameters */

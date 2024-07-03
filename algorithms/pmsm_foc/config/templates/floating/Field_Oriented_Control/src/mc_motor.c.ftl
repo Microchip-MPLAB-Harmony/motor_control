@@ -1,20 +1,23 @@
-/*******************************************************************************
-  Motor data
-
-  Company:
-  Microchip Technology Inc.
-
-  File Name:
-  mc_motor.c
-
-  Summary:
-  Motor data
-
-  Description:
-  Motor data.
-
- *******************************************************************************/
-
+/**
+ * @brief 
+ *    Motor data
+ *
+ * @File Name 
+ *    mc_motor.c
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    This file contains definitions for motor data and parameters.
+ *
+ * @Description
+ *    This file provides the implementation of structures and functions necessary for 
+ *    defining and managing motor parameters. It includes the initialization and setting
+ *    of motor parameters such as resistance, inductance, pole pairs, back EMF constant, 
+ *    maximum and rated speeds, and motor inertia.
+ */
+ 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
  * Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries.
@@ -72,16 +75,12 @@ tmcMot_PMSM_s mcMotI_PMSM_gds;
 /*******************************************************************************
  Interface Functions
  *******************************************************************************/
-
-/*! \brief Motor parameters initialization
+/**
+ * @brief Motor parameters initialization
  *
- * Details.
- * Motor parameters initialization
+ * This function initializes the motor parameters.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pParameters Pointer to the PMSM motor parameters structure
  */
 void mcMotI_MotorParametersInit( tmcMot_PMSM_s * const pParameters )
 {

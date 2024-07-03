@@ -1,19 +1,21 @@
-/*******************************************************************************
- Open loop start-up source file
-
-  Company:
-    - Microchip Technology Inc.
-
-  File Name:
-    - mc_torque_control.c
-
-  Summary:
-    - Open loop start-up source file
-
-  Description:
-    - This file implements functions for open loop start-up
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Open loop start-up source file
+ *
+ * @File Name 
+ *    mc_open_loop_startup.c
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    This file implements functions for open loop start-up.
+ *
+ * @Description
+ *    This file provides the implementation of functions necessary for open loop start-up
+ *    of a motor. It includes the initialization and control routines to start the motor 
+ *    in an open loop manner before transitioning to closed loop control.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -52,34 +54,41 @@ Local configuration options
 /*******************************************************************************
  Private data types
 *******************************************************************************/
+/**
+ * @brief Enumeration for the open loop start-up states.
+ */
 typedef enum
 {
-  startupState_Align,
-  startupState_Ramp,
-  startupState_Stabilize
-}tmcSup_State_e;
+    startupState_Align,      /**< Alignment state */
+    startupState_Ramp,       /**< Ramp state */
+    startupState_Stabilize   /**< Stabilize state */
+} tmcSup_State_e;
 
+/**
+ * @brief Structure defining the state parameters for open loop start-up.
+ */
 typedef struct
 {
-    bool enable;
-    bool initDone;
-    tmcSup_State_e StartupState;
-    int16_t alignmentCurrent;
-    int16_t openLoopCurrent;
-    uint16_t currentRampRateShift;
-    int16_t currentRampRateVal;
-    uint16_t speedRampRateShift;
-    int16_t speedRampRateVal;
-    uint16_t speedToAngleShift;
-    int16_t speedToAngleVal;
-    int16_t openLoopSpeed;
-    int16_t openLoopFinalSpeed;
-    uint32_t alignmentTimeLoopCount;
-    uint32_t halfAlignmentTimeLoopCount;
-    uint32_t openLoopRampTimeLoopCount;
-    uint32_t openLoopStabTimeLoopCount;
-    uint32_t zCounter;
-}tmcSup_State_s;
+    bool enable;                           /**< Flag indicating if the start-up is enabled */
+    bool initDone;                         /**< Flag indicating if initialization is done */
+    tmcSup_State_e StartupState;           /**< Current state of the start-up process */
+    int16_t alignmentCurrent;              /**< Current for the alignment phase */
+    int16_t openLoopCurrent;               /**< Current for the open loop phase */
+    uint16_t currentRampRateShift;         /**< Shift value for current ramp rate */
+    int16_t currentRampRateVal;            /**< Value for current ramp rate */
+    uint16_t speedRampRateShift;           /**< Shift value for speed ramp rate */
+    int16_t speedRampRateVal;              /**< Value for speed ramp rate */
+    uint16_t speedToAngleShift;            /**< Shift value for speed to angle conversion */
+    int16_t speedToAngleVal;               /**< Value for speed to angle conversion */
+    int16_t openLoopSpeed;                 /**< Current open loop speed */
+    int16_t openLoopFinalSpeed;            /**< Final open loop speed */
+    uint32_t alignmentTimeLoopCount;       /**< Loop count for the alignment phase */
+    uint32_t halfAlignmentTimeLoopCount;   /**< Half of the loop count for the alignment phase */
+    uint32_t openLoopRampTimeLoopCount;    /**< Loop count for the ramp phase */
+    uint32_t openLoopStabTimeLoopCount;    /**< Loop count for the stabilization phase */
+    uint32_t zCounter;                     /**< Zero crossing counter or general purpose counter */
+} tmcSup_State_s;
+
 
 /*******************************************************************************
 Private variables
@@ -105,15 +114,12 @@ Private Functions
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
-/*! \brief Initialize open loop start-up module
+/**
+ * @brief Initialize open loop start-up module
  *
- * Details.
- * Initialize open loop start-up module
+ * This function initializes the open loop start-up module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the open loop start-up parameters structure
  */
 void  mcSupI_OpenLoopStartupInit( tmcSup_Parameters_s * const pParameters )
 {
@@ -166,15 +172,12 @@ void  mcSupI_OpenLoopStartupInit( tmcSup_Parameters_s * const pParameters )
     pState->initDone = true;
 }
 
-/*! \brief Enable open loop start-up module
+/**
+ * @brief Enable open loop start-up module
  *
- * Details.
- * Enable open loop start-up module
+ * This function enables the open loop start-up module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the open loop start-up parameters structure
  */
 void  mcSupI_OpenLoopStartupEnable( tmcSup_Parameters_s * const pParameters )
 {
@@ -196,15 +199,12 @@ void  mcSupI_OpenLoopStartupEnable( tmcSup_Parameters_s * const pParameters )
     pState->enable = true;
 }
 
-/*! \brief Disable open loop start-up module
+/**
+ * @brief Disable open loop start-up module
  *
- * Details.
- * Disable open loop start-up module
+ * This function disables the open loop start-up module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the open loop start-up parameters structure
  */
 void  mcSupI_OpenLoopStartupDisable( tmcSup_Parameters_s * const pParameters )
 {
@@ -227,15 +227,19 @@ void  mcSupI_OpenLoopStartupDisable( tmcSup_Parameters_s * const pParameters )
 
 }
 
-/*! \brief Open loop start-up
+/**
+ * @brief Perform open loop start-up
  *
- * Details.
- * Open loop start-up
+ * This function performs the open loop start-up of the motor.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the open loop start-up parameters structure
+ * @param[in] direction Motor rotation direction
+ * @param[out] pIQref Pointer to the q-axis current reference
+ * @param[out] pIDref Pointer to the d-axis current reference
+ * @param[out] pAngle Pointer to the rotor angle
+ * @param[out] pSpeed Pointer to the rotor speed
+ *
+ * @return Standard return type indicating success or failure
  */
 #ifdef RAM_EXECUTE
 tmcTypes_StdReturn_e __ramfunc__  mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const pParameters,
@@ -349,16 +353,12 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
     return openLoopStatus;
 }
 
-
-/*! \brief Reset Open loop start-up
+/**
+ * @brief Reset open loop start-up
  *
- * Details.
- * Reset Open loop start-up
+ * This function resets the open loop start-up parameters.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to the open loop start-up parameters structure
  */
 void mcSupI_OpenLoopStartupReset( const tmcSup_Parameters_s * const pParameters )
 {

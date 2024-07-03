@@ -1,19 +1,19 @@
-/*******************************************************************************
-  Hardware abstraction source file
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    mc_hardware_abstraction.c
-
-  Summary:
-    This file contains all the functions related to hardware abstraction
-
-  Description:
-    This file contains implementation of the hardware abstraction
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Hardware abstraction source file
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @File Name
+ *   mc_hardware_abstraction.c
+ *
+ * @Summary
+ *   This file contains implementation of the hardware abstraction
+ *
+ * @Description
+ *   This file contains implementation of the hardware abstraction
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -53,26 +53,21 @@ Headers inclusions
 /*******************************************************************************
  * Interface variables
 *******************************************************************************/
-/** Analog interfaces */
-uint16_t mcHalI_IaAdcInput_gdu16;
-uint16_t mcHalI_IbAdcInput_gdu16;
-uint16_t mcHalI_UbusAdcInput_gdu16;
-uint16_t mcHalI_Potentiometer_gdu16;
-int16_t mcPwmI_Duty_gau16[3u];
+uint16_t mcHalI_IaAdcInput_gdu16;         /**< Phase A current ADC input */
+uint16_t mcHalI_IbAdcInput_gdu16;         /**< Phase B current ADC input */
+uint16_t mcHalI_UbusAdcInput_gdu16;     /**< DC bus voltage ADC input   */
+uint16_t mcHalI_Potentiometer_gdu16;      /**< Potentiometer ADC input     */
+int16_t mcPwmI_Duty_gau16[3u];              /**< PWM duty cycle array        */
 
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
 
-/*! \brief Enable PWM inverter
+/**
+ * @brief Enable three phase inverter
  *
- * Details.
- * Enable PWM inverter
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @details
+ * Enable three phase inverter
  */
 void mcHalI_InverterPwmEnable( void )
 {
@@ -94,15 +89,11 @@ void mcHalI_InverterPwmEnable( void )
 </#if>
 }
 
-/*! \brief Disable PWM inverter
+/**
+ * @brief Disable three phase inverter
  *
- * Details.
- * Disable PWM inverter
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @details
+ * Disable three phase inverter
  */
 void mcHalI_InverterPwmDisable( void )
 {
@@ -150,15 +141,11 @@ void mcHalI_InverterPwmDisable( void )
 <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
 <#list 0..10 as index>
 <#if "Direction Indication" == ledFunction(index)>
-/*! \brief Set direction indicator
+/**
+ * @brief Set direction indication
  *
- * Details.
- * Set direction indicator
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @details
+ * Set direction indication
  */
 void mcHal_DirectionIndication( void )
 {
@@ -172,15 +159,11 @@ void mcHal_DirectionIndication( void )
 <#if MCPMSMFOC_LEDS_AVAILABLE != 0 >
 <#list 0..10 as index>
 <#if "Fault Indication" == ledFunction(index)>
-/*! \brief Set fault indicator
+/**
+ * @brief Set fault indication
  *
- * Details.
- * Set fault indicator
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @details
+ * Set fault indication
  */
 void mcHal_FaultIndicationSet( void )
 {
@@ -191,15 +174,11 @@ void mcHal_FaultIndicationSet( void )
 </#list>
 </#if>
 
-/*! \brief ADC Enable
+/**
+ * @brief Enable ADC peripheral
  *
- * Details.
- * ADC Enable
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @details
+ * Enable ADC peripheral
  */
 void mcHalI_AdcEnable( void )
 {
@@ -215,15 +194,11 @@ void mcHalI_AdcEnable( void )
 </#if>
 }
 
-/*! \brief PWM Enable
+/**
+ * @brief Enable PWM fault interrupt
  *
- * Details.
- * PWM Enable
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @details
+ * Enable PWM fault interrupt
  */
 void mcHalI_PwmInterruptEnable( void )
 {
@@ -236,15 +211,11 @@ void mcHalI_PwmInterruptEnable( void )
 </#if>
 }
 
-/*! \brief PWM timer Start
+/**
+ * @brief Start PWM timer
  *
- * Details.
- * PWM timer Start
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @details
+ * Start PWM timer
  */
 void mcHalI_PwmTimerStart( void )
 {
@@ -259,17 +230,12 @@ void mcHalI_PwmTimerStart( void )
 </#if>
 }
 
-/*! \brief ADC callback function
+/**
+ * @brief ADC conversion complete interrupt callback function
  *
- * Details.
- * ADC callback function
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @details
+ * ADC conversion complete interrupt callback function
  */
-
 <#if "ADC_U2500" == MCPMSMFOC_ADC_IP>
 void mcHalI_AdcCallBackRegister( ADC_CALLBACK callback, uintptr_t context )
 {
@@ -304,15 +270,11 @@ void mcHalI_AdcCallBackRegister( ADC_CALLBACK callback, uintptr_t context )
 }
 </#if>
 
-/*! \brief PWM fault callback function
+/**
+ * @brief PWM fault interrupt callback function
  *
- * Details.
- * PWM fault callback function
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @details
+ * PWM fault interrupt callback function
  */
 <#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
 void mcHalI_PwmCallbackRegister( TCC_CALLBACK callback, uintptr_t context )
@@ -358,6 +320,14 @@ void mcHalI_PwmCallbackRegister( MCPWM_CH_CALLBACK callback, uintptr_t context )
 <#if MCPMSMFOC_BUTTONS_AVAILABLE != 0 >
 <#list 0..( MCPMSMFOC_BUTTONS_AVAILABLE - 1 ) as index>
 <#if "Start/Stop" == buttonFunction(index)>
+/**
+ * @brief Get start-stop button state
+ *
+ * @details
+ * Get start-stop button state
+ *
+ * @return  True if button is pressed, false if button is not pressed
+ */
 bool mcHalI_StartStopButtonState( void )
 {
      return (bool)${buttonName(index)}_Get();
@@ -370,6 +340,14 @@ bool mcHalI_StartStopButtonState( void )
 <#if MCPMSMFOC_BUTTONS_AVAILABLE != 0 >
 <#list 0..( MCPMSMFOC_BUTTONS_AVAILABLE - 1 ) as index>
 <#if "Direction Toggle" == buttonFunction(index)>
+/**
+ * @brief Get direction button state
+ *
+ * @details
+ * Get direction button state
+ *
+ * @return  True if button is pressed, false if button is not pressed
+ */
 bool mcHalI_DirectionButtonState( void )
 {
      return (bool)${buttonName(index)}_Get();
@@ -380,15 +358,11 @@ bool mcHalI_DirectionButtonState( void )
 </#if>
 
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-/*! \brief Start the encoder peripheral
+/**
+ * @brief Start encoder pulses counter of qudarature decoder
  *
- * Details.
- * Start the encoder peripheral
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @details
+ * Start encoder pulses counter of qudarature decoder
  */
 void mcHalI_EncoderStart( void  )
 {
@@ -401,15 +375,11 @@ void mcHalI_EncoderStart( void  )
 </#if>
 }
 
-/*! \brief Stop the encoder peripheral
+/**
+ * @brief Stop encoder pulses counter of qudarature decoder
  *
- * Details.
- * Stop the encoder peripheral
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @details
+ * Stop encoder pulses counter of qudarature decoder
  */
 void mcHalI_EncoderStop( void  )
 {

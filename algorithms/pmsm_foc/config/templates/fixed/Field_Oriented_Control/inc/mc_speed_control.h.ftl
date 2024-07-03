@@ -1,17 +1,20 @@
-/*******************************************************************************
-  System Definitions
+/**
+ * @file mc_speed_control.h
+ *
+ * @brief 
+ *    System Definitions for Speed Control
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Header file containing variables and function prototypes for speed control.
+ *
+ * @Description
+ *    This file defines variables and function prototypes typically used for speed control 
+ *    implementations.
+ */
 
-  File Name:
-    mc_speed_control.h
-
-  Summary:
-    Header file which contains variables and function prototypes for speed control
-
-  Description:
-    This file contains variables and function prototypes which are generally used for speed
-    control
-
- *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -51,35 +54,33 @@
 /*******************************************************************************
  Default Module configuration parameters
 *******************************************************************************/
-
 /*******************************************************************************
-Type Definition
-*******************************************************************************/
+ * Type Definitions
+ ******************************************************************************/
 typedef struct
 {
-     float32_t Kp;
-     float32_t Ki;
-     float32_t Ymax;
-     float32_t dt;
-     void * pStatePointer;
-}tmcSpe_Parameters_s;
+    float32_t Kp;               /**< Proportional gain */
+    float32_t Ki;               /**< Integral gain */
+    float32_t Ymax;             /**< Maximum motor current */
+    float32_t dt;               /**< PWM period */
+    void * pStatePointer;       /**< Pointer to state information */
+} tmcSpe_Parameters_s;
 
 /*******************************************************************************
- * Interface variables
-*******************************************************************************/
+ * Interface Variables
+ ******************************************************************************/
 
 /*******************************************************************************
- Static Interface Functions
-*******************************************************************************/
-/*! \brief Set module parameters
+ * Static Interface Functions
+ ******************************************************************************/
+
+/**
+ * @brief Set module parameters
  *
- * Details.
- * Set module parameters
+ * @details
+ * Set module parameters for the speed control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the speed control parameters structure.
  */
 __STATIC_INLINE void mcSpeI_ParametersSet( tmcSpe_Parameters_s * const pParameters )
 {
@@ -90,53 +91,47 @@ __STATIC_INLINE void mcSpeI_ParametersSet( tmcSpe_Parameters_s * const pParamete
 }
 
 /*******************************************************************************
- Interface Functions
-*******************************************************************************/
-/*! \brief Initialize speed control module
+ * Interface Functions
+ ******************************************************************************/
+
+/**
+ * @brief Initialize speed control module
  *
- * Details.
- * Initialize speed control module
+ * @details
+ * Initialize speed control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the speed control parameters structure.
  */
 void  mcSpeI_SpeedControlInit( tmcSpe_Parameters_s * const pParameters );
 
-/*! \brief Enable speed control module
+/**
+ * @brief Enable speed control module
  *
- * Details.
- * Enable speed control module
+ * @details
+ * Enable speed control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the speed control parameters structure.
  */
 void  mcSpeI_SpeedControlEnable( tmcSpe_Parameters_s * const pParameters );
 
-/*! \brief Disable speed control module
+/**
+ * @brief Disable speed control module
  *
- * Details.
- * Disable speed control module
+ * @details
+ * Disable speed control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the speed control parameters structure.
  */
 void  mcSpeI_SpeedControlDisable( tmcSpe_Parameters_s * const pParameters );
 
-/*! \brief Speed control
+/**
+ * @brief Manual speed control
  *
- * Details.
- * Speed control
+ * @details
+ * Perform manual speed control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the speed control parameters structure.
+ * @param[in] Out Output value for speed control.
  */
 #ifdef RAM_EXECUTE
 void __ramfunc__  mcSpeI_SpeedControlManual( const tmcSpe_Parameters_s * const pParameters,
@@ -146,15 +141,16 @@ void mcSpeI_SpeedControlManual(  const tmcSpe_Parameters_s * const pParameters,
                                                          const int16_t  Out );
 #endif
 
-/*! \brief Speed control
+/**
+ * @brief Automatic speed control
  *
- * Details.
- * Speed control
+ * @details
+ * Perform automatic speed control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the speed control parameters structure.
+ * @param[in] nref Reference speed value.
+ * @param[in] nact Actual speed value.
+ * @param[out] pOut Pointer to the output speed control value.
  */
 #ifdef RAM_EXECUTE
 void __ramfunc__  mcSpeI_SpeedControlAuto( const tmcSpe_Parameters_s * const pParameters,
@@ -164,15 +160,13 @@ void mcSpeI_SpeedControlAuto(  const tmcSpe_Parameters_s * const pParameters,
                                               const int16_t nref, const  int16_t nact, int16_t * const pOut );
 #endif
 
-/*! \brief Reset Speed control
+/**
+ * @brief Reset speed control
  *
- * Details.
- * Reset Speed control
+ * @details
+ * Reset speed control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to the speed control parameters structure.
  */
 void mcSpeI_SpeedControlReset( const tmcSpe_Parameters_s * const pParameters );
 

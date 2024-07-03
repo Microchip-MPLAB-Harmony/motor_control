@@ -1,19 +1,20 @@
-/*******************************************************************************
- Voltage calculation functions
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    mc_voltage_measurement.c
-
-  Summary:
-  Voltage calculation functions
-
-  Description:
-  Voltage Calculation functions
-
- *******************************************************************************/
+/**
+ * @brief 
+ *   Voltage calculation functions
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @File Name 
+ *    mc_voltage_measurement.c
+ *
+ * @Summary 
+ *    Implementation file for voltage measurement functions.
+ *
+ * @Description
+ *    This file contains the implementation of functions used for voltage 
+ *    measurement in motor control applications.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -70,16 +71,13 @@ tmcVol_ModuleData_s mcVolI_ModuleData_gds;
 /*******************************************************************************
  Interface Functions
  *******************************************************************************/
-
-/*! \brief Voltage calculation initialization function
+/**
+ * @brief Initialize voltage calculation module.
  *
- * Details.
- *  Voltage calculation initialization function
+ * @details
+ * Initializes the voltage calculation module.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
  */
 void  mcVolI_VoltageCalculationInit( tmcVol_ModuleData_s * const pModule )
 {
@@ -87,16 +85,13 @@ void  mcVolI_VoltageCalculationInit( tmcVol_ModuleData_s * const pModule )
     mcVol_ParametersSet( &pModule->pParameters);
 }
 
-
-/*! \brief Voltage calculation function
+/**
+ * @brief Perform voltage calculation.
  *
- * Details.
- *  Voltage calculation function
+ * @details
+ * Executes the voltage calculation process.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
  */
 void mcVolI_VoltageCalculation( tmcVol_ModuleData_s * const pModule )
 {
@@ -114,18 +109,13 @@ void mcVolI_VoltageCalculation( tmcVol_ModuleData_s * const pModule )
     mcVol_OutputPortsWrite(&pModule->pOutput);
 }
 
-
-
-
-/*! \brief Voltage calculation reset
+/**
+ * @brief Reset voltage calculation.
  *
- * Details.
- *  Voltage calculation reset
+ * @details
+ * Resets the voltage calculation module to initial state.
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in,out] pModule Pointer to the module data structure.
  */
 void mcVolI_VoltageCalculationReset( tmcVol_ModuleData_s * const pModule )
 {

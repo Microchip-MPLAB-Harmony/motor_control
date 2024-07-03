@@ -1,19 +1,21 @@
-/*******************************************************************************
- Reference control source file
+/**
+ * @brief 
+ *    Source file for reference control
+ *
+ * @File Name 
+ *    mc_reference_control.c
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Source file which contains variables and function implementations for reference control.
+ *
+ * @Description
+ *    This file contains variables and function implementations which are generally used for reference
+ *    control in pulse width modulation. It is implemented in Q2.14 fixed point arithmetic.
+ */
 
-  Company:
-    - Microchip Technology Inc.
-
-  File Name:
-    - mc_reference_control.c
-
-  Summary:
-    - Reference control source file
-
-  Description:
-    - This file implements functions for reference control
-
- *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -52,17 +54,20 @@ Local configuration options
 /*******************************************************************************
  Private data types
 *******************************************************************************/
+/**
+ * @brief Structure defining the state of the reference control module.
+ */
 typedef struct
 {
-    bool enable;
-    bool initDone;
-    int16_t lowerLimit;
-    int16_t upperLimit;
+    bool enable;        /**< Flag indicating if the module is enabled */
+    bool initDone;      /**< Flag indicating if initialization is done */
+    int16_t lowerLimit; /**< Lower limit for the reference value */
+    int16_t upperLimit; /**< Upper limit for the reference value */
 <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
-    int16_t reference;
-    int16_t rampRate;
+    int16_t reference;  /**< Reference value */
+    int16_t rampRate;   /**< Ramp rate for the reference value */
 </#if>
-}tmcRef_State_s;
+} tmcRef_State_s;
 
 /*******************************************************************************
 Private variables
@@ -85,15 +90,12 @@ Private Functions
  * Interface Functions
 *******************************************************************************/
 
-/*! \brief Initialize reference control module
+/**
+ * @brief Initialize reference control module
  *
- * Details.
- * Initialize reference control module
+ * This function initializes the reference control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
 void  mcRefI_ReferenceControlInit( tmcRef_Parameters_s * const pParameters )
 {
@@ -116,15 +118,12 @@ void  mcRefI_ReferenceControlInit( tmcRef_Parameters_s * const pParameters )
     mcRef_State_mds.initDone = true;
 }
 
-/*! \brief Enable reference control module
+/**
+ * @brief Enable reference control module
  *
- * Details.
- * Enable reference control module
+ * This function enables the reference control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
 void  mcRefI_ReferenceControlEnable( tmcRef_Parameters_s * const pParameters )
 {
@@ -146,15 +145,12 @@ void  mcRefI_ReferenceControlEnable( tmcRef_Parameters_s * const pParameters )
     pState->enable = true;
 }
 
-/*! \brief Disable reference control module
+/**
+ * @brief Disable reference control module
  *
- * Details.
- * Disable reference control module
+ * This function disables the reference control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
 void  mcRefI_ReferenceControlDisable( tmcRef_Parameters_s * const pParameters )
 {
@@ -177,15 +173,14 @@ void  mcRefI_ReferenceControlDisable( tmcRef_Parameters_s * const pParameters )
 
 }
 
-/*! \brief Reference control
+/**
+ * @brief Reference control
  *
- * Details.
- * Reference control
+ * This function performs the reference control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
+ * @param[in] command The command input
+ * @param[out] pOut Pointer to the output
  */
 #ifdef RAM_EXECUTE
 void __ramfunc__  mcRefI_ReferenceControl( tmcRef_Parameters_s * const pParameters,
@@ -259,16 +254,12 @@ void mcRefI_ReferenceControl(  tmcRef_Parameters_s * const pParameters,
     }
 }
 
-
-/*! \brief Reset Reference control
+/**
+ * @brief Reset reference control
  *
- * Details.
- * Reset Reference control
+ * This function resets the reference control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
 void mcRefI_ReferenceControlReset( tmcRef_Parameters_s * const pParameters )
 {

@@ -1,18 +1,19 @@
-/*******************************************************************************
- Rotor Position interface file
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    mc_rotor_position.h
-
-  Summary:
-    Header file for rotor position
-
-  Description:
-    This file contains the data structures and function prototypes of rotor position.
- *******************************************************************************/
+/**
+ * @file mc_rotor_position_parameters.h
+ *
+ * @brief 
+ *    Rotor Position Parameters
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Header file containing data structures and function prototypes for rotor position.
+ *
+ * @Description
+ *    This file defines the data structures and function prototypes used for
+ *    managing rotor position in motor control applications.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -53,75 +54,77 @@
  *******************************************************************************/
 
 /*******************************************************************************
- User defined data types
- *******************************************************************************/
- typedef struct {
-    bool reinitialize;
-    float32_t iHFI;
-    float32_t angleFromHFIObserver;
-    float32_t angleFromBEMFObserver;
- }tmcTune_HFITuning_s;
+ * User defined data types
+ ******************************************************************************/
 
- typedef struct
- {
-    float32_t foInHertz;
-    float32_t Keps;
- }tmcRpe_TrackingLoopParams_s;
+typedef struct {
+    bool reinitialize;                     /*!< Flag to reinitialize */
+    float32_t iHFI;                        /*!< High-Frequency Injection current */
+    float32_t angleFromHFIObserver;        /*!< Angle from HFI observer */
+    float32_t angleFromBEMFObserver;       /*!< Angle from BEMF observer */
+} tmcTune_HFITuning_s;
 
- typedef struct
- {
-    float32_t pulseAmplitude;
- }tmcRpe_HFIParameters_s;
+typedef struct {
+    float32_t foInHertz;                   /*!< Frequency in Hertz */
+    float32_t Keps;                        /*!< Keps parameter */
+} tmcRpe_TrackingLoopParams_s;
 
- typedef struct
- {
-    float32_t pulseAmplitude;
-    float32_t pulseDuty;
-    float32_t pulseDuration;
- }tmcRpe_IPCParameters_s;
- 
-typedef struct
-{
+typedef struct {
+    float32_t pulseAmplitude;              /*!< Pulse amplitude */
+} tmcRpe_HFIParameters_s;
+
+typedef struct {
+    float32_t pulseAmplitude;              /*!< Pulse amplitude */
+    float32_t pulseDuty;                   /*!< Pulse duty cycle */
+    float32_t pulseDuration;               /*!< Pulse duration */
+} tmcRpe_IPCParameters_s;
+
+typedef struct {
     /** Soft switch parameters */
-    float32_t lowerThreshold;
-    float32_t upperThreshold;
+    float32_t lowerThreshold;              /*!< Lower threshold */
+    float32_t upperThreshold;              /*!< Upper threshold */
 
-    tmcMot_PMSM_s  * pMotorParameters;
+    tmcMot_PMSM_s * pMotorParameters;      /*!< Pointer to motor parameters */
 
     /** HFI parameters */
-    tmcRpe_HFIParameters_s hfiParameters;
+    tmcRpe_HFIParameters_s hfiParameters;  /*!< HFI parameters */
 
     /** IPC Parameters */
-    tmcRpe_IPCParameters_s ipcParameters;
+    tmcRpe_IPCParameters_s ipcParameters;  /*!< IPC parameters */
 
     /** HFI tracking loop parameters */
-    tmcRpe_TrackingLoopParams_s  hfiTrackingLoop;
+    tmcRpe_TrackingLoopParams_s hfiTrackingLoop;  /*!< HFI tracking loop parameters */
 
     /** BEMF tracking loop parameters */
-    tmcRpe_TrackingLoopParams_s  bemfTrackingLoop;
+    tmcRpe_TrackingLoopParams_s bemfTrackingLoop; /*!< BEMF tracking loop parameters */
 
     /** Mechanical Gear Ratio */
-    uint8_t gearRatio;
+    uint8_t gearRatio;                     /*!< Mechanical gear ratio */
 
-    /** Sampling time  */
-    float32_t dt;
-
-}tmcRpe_Parameters_s;
-
-/*******************************************************************************
- Interface variables
- *******************************************************************************/
- extern tmcTune_HFITuning_s  mcRpeI_TuningSettings_gds;
- extern tmcRpe_Parameters_s  mcRpeI_Parameters_gds;
+    /** Sampling time */
+    float32_t dt;                          /*!< Sampling time */
+} tmcRpe_Parameters_s;
 
 /*******************************************************************************
- Interface Variables
- *******************************************************************************/
+ * Interface variables
+ ******************************************************************************/
 
+extern tmcTune_HFITuning_s mcRpeI_TuningSettings_gds;  /*!< Global tuning settings */
+
+extern tmcRpe_Parameters_s mcRpeI_Parameters_gds;     /*!< Global parameters */
 
 /*******************************************************************************
- Interface Functions
- *******************************************************************************/
+ * Interface Functions
+ ******************************************************************************/
+ /** 
+ * @brief Set rotor position estimation parameters
+ *
+ * @details 
+ *   This function sets the parameters for rotor position estimation module.
+ *
+ * @param[in] pParameters Pointer to the parameters structure.
+ * @return None
+ */
 void mcRpeI_ParametersSet(tmcRpe_Parameters_s * const pParameters );
 
 #endif //MCRPE_PARAMS_H

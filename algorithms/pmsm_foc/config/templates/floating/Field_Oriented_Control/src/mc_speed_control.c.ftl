@@ -1,19 +1,20 @@
-/*******************************************************************************
- Flux control source file
-
-  Company:
-    - Microchip Technology Inc.
-
-  File Name:
-    - mc_speed_control.c
-
-  Summary:
-    - Flux control source file
-
-  Description:
-    - This file implements functions for speed control
-
- *******************************************************************************/
+/**
+ * @file mc_speed_control.c
+ *
+ * @brief 
+ *    Speed Control Implementation
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    This file contains the implementation of functions for speed control.
+ *
+ * @Description
+ *    This file provides the implementation of speed control functions and handles
+ *    related operations such as initialization, enabling/disabling, and actual control
+ *    algorithms.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -79,15 +80,13 @@ Private Functions
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
-/*! \brief Initialize speed control module
+/**
+ * @brief Initialize speed control module
  *
- * Details.
- * Initialize speed control module
+ * @details
+ * Initialize speed control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the speed control parameters structure.
  */
 void  mcSpeI_SpeedControlInit( tmcSpe_Parameters_s * const pParameters )
 {
@@ -105,15 +104,13 @@ void  mcSpeI_SpeedControlInit( tmcSpe_Parameters_s * const pParameters )
 
 }
 
-/*! \brief Enable speed control module
+/**
+ * @brief Enable speed control module
  *
- * Details.
- * Enable speed control module
+ * @details
+ * Enable speed control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the speed control parameters structure.
  */
 void  mcSpeI_SpeedControlEnable( tmcSpe_Parameters_s * const pParameters )
 {
@@ -135,15 +132,13 @@ void  mcSpeI_SpeedControlEnable( tmcSpe_Parameters_s * const pParameters )
     pState->enable = true;
 }
 
-/*! \brief Disable speed control module
+/**
+ * @brief Disable speed control module
  *
- * Details.
- * Disable speed control module
+ * @details
+ * Disable speed control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the speed control parameters structure.
  */
 void  mcSpeI_SpeedControlDisable( tmcSpe_Parameters_s * const pParameters )
 {
@@ -166,15 +161,14 @@ void  mcSpeI_SpeedControlDisable( tmcSpe_Parameters_s * const pParameters )
 
 }
 
-/*! \brief Flux control
+/**
+ * @brief Speed control - manual mode
  *
- * Details.
- * Flux control
+ * @details
+ * Perform speed control - manual mode.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the speed control parameters structure.
+ * @param[in] Out Output value for speed control.
  */
 void mcSpeI_SpeedControlManual(  const tmcSpe_Parameters_s * const pParameters,
                                                          const float32_t  Out )
@@ -194,15 +188,17 @@ void mcSpeI_SpeedControlManual(  const tmcSpe_Parameters_s * const pParameters,
         mcUtils_PiControlReset( 0.0f, &pState->bPIController );
     }
 }
-/*! \brief Flux control
+
+/**
+ * @brief Speed control - auto mode
  *
- * Details.
- * Flux control
+ * @details
+ * Perform speed control - auto mode.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the speed control parameters structure.
+ * @param[in] nref Reference speed value.
+ * @param[in] nact Actual speed value.
+ * @param[out] pOut Pointer to the output speed control value.
  */
 void mcSpeI_SpeedControlAuto(  const tmcSpe_Parameters_s * const pParameters,
                                               const float32_t nref, const float32_t nact, float32_t * const pOut )
@@ -231,15 +227,13 @@ void mcSpeI_SpeedControlAuto(  const tmcSpe_Parameters_s * const pParameters,
 }
 
 
-/*! \brief Reset Flux control
+/**
+ * @brief Reset speed control
  *
- * Details.
- * Reset Flux control
+ * @details
+ * Reset speed control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to the speed control parameters structure.
  */
 void mcSpeI_SpeedControlReset( const tmcSpe_Parameters_s * const pParameters )
 {

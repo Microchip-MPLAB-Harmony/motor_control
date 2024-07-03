@@ -1,16 +1,21 @@
-/*******************************************************************************
-  System Definitions
-
-  File Name:
-    mc_pwm.h
-
-  Summary:
-    Header file which contains variables and function prototypes for open loop start-up
-
-  Description:
-    This file contains variables and function prototypes which are generally used for open loop start-up.
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Open loop start-up header file
+ *
+ * @File Name 
+ *    mc_open_loop_startup.h
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    This file contains definitions for open loop start-up functions and parameters.
+ *
+ * @Description
+ *    This file provides the definitions of structures and functions necessary for open loop 
+ *    start-up of a motor. It includes declarations for initialization and control routines 
+ *    to start the motor in an open loop manner before transitioning to closed loop control.
+ */
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -80,6 +85,13 @@ typedef struct
 /*******************************************************************************
  Static interface functions
  *******************************************************************************/
+ /**
+ * @brief Set the parameters for the open loop start-up
+ *
+ * This function sets the parameters for the open loop start-up.
+ *
+ * @param[in] pParameters Pointer to the open loop start-up parameters structure
+ */
 __STATIC_INLINE void mcSupI_ParametersSet( tmcSup_Parameters_s * const pParameters )
 {
     pParameters->pMotorParameters = &mcMotI_PMSM_gds;
@@ -100,66 +112,58 @@ __STATIC_INLINE void mcSupI_ParametersSet( tmcSup_Parameters_s * const pParamete
  Interface Functions
 *******************************************************************************/
 
-/*! \brief Initialize open loop start-up module
+/**
+ * @brief Initialize open loop start-up module
  *
- * Details.
- * Initialize open loop start-up module
+ * This function initializes the open loop start-up module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the open loop start-up parameters structure
  */
 void  mcSupI_OpenLoopStartupInit( tmcSup_Parameters_s * const pParameters );
 
-/*! \brief Enable open loop start-up module
+/**
+ * @brief Enable open loop start-up module
  *
- * Details.
- * Enable open loop start-up module
+ * This function enables the open loop start-up module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the open loop start-up parameters structure
  */
 void  mcSupI_OpenLoopStartupEnable( tmcSup_Parameters_s * const pParameters );
 
-/*! \brief Disable open loop start-up module
+/**
+ * @brief Disable open loop start-up module
  *
- * Details.
- * Disable open loop start-up module
+ * This function disables the open loop start-up module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the open loop start-up parameters structure
  */
 void  mcSupI_OpenLoopStartupDisable( tmcSup_Parameters_s * const pParameters );
 
-/*! \brief Open loop start-up
+/**
+ * @brief Perform open loop start-up
  *
- * Details.
- * Open loop start-up
+ * This function performs the open loop start-up of the motor.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the open loop start-up parameters structure
+ * @param[in] direction Motor rotation direction
+ * @param[out] pIQref Pointer to the q-axis current reference
+ * @param[out] pIDref Pointer to the d-axis current reference
+ * @param[out] pAngle Pointer to the rotor angle
+ * @param[out] pSpeed Pointer to the rotor speed
+ *
+ * @return Standard return type indicating success or failure
  */
 tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const pParameters,
                                           float32_t direction, float32_t * const pIQref,
                                           float32_t * const pIDref, float32_t * const pAngle,
                                           float32_t * const pSpeed );
 
-/*! \brief Reset Open loop start-up
+/**
+ * @brief Reset open loop start-up
  *
- * Details.
- * Reset Open loop start-up
+ * This function resets the open loop start-up parameters.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to the open loop start-up parameters structure
  */
 void mcSupI_OpenLoopStartupReset( const tmcSup_Parameters_s * const pParameters );
 

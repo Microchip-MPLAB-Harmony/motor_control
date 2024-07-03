@@ -1,17 +1,20 @@
-/*******************************************************************************
-  System Definitions
-
-  File Name:
-    mc_pwm.h
-
-  Summary:
-    Header file which contains variables and function prototypes for pulse width modulation
-
-  Description:
-    This file contains variables and function prototypes which are generally used for pulse
-    width modulation. It is implemented in Q2.14 fixed Point Arithmetic.
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Header file for reference control
+ *
+ * @File Name 
+ *    mc_reference_control.h
+ *
+ * @Company 
+ *   Microchip Technology Inc.
+ *
+ * @Summary
+ *    Header file which contains variables and function prototypes for reference control.
+ *
+ * @Description
+ *    This file contains variables and function prototypes which are generally used for reference
+ *    control in pulse width modulation.
+ */
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -81,15 +84,12 @@ typedef struct
 /*******************************************************************************
  Static Interface Functions
 *******************************************************************************/
-/*! \brief Set module parameters
+/**
+ * @brief Set module parameters
  *
- * Details.
- * Set module parameters
+ * This function sets the parameters for the reference control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
 __STATIC_INLINE void mcRefI_ParametersSet( tmcRef_Parameters_s * const pParameters )
 {
@@ -108,7 +108,7 @@ __STATIC_INLINE void mcRefI_ParametersSet( tmcRef_Parameters_s * const pParamete
     pParameters->dt =(float32_t)(${MCPMSMFOC_PWM_PERIOD});
 </#if>
 <#elseif ( MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' )>
-    pParameters->minimum = -(float32_t)0;
+    pParameters->minimum =  (float32_t)0;
     pParameters->maximum =  (float32_t)TWO_PI;
 <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     pParameters->rampRate = (float32_t)300;
@@ -120,64 +120,51 @@ __STATIC_INLINE void mcRefI_ParametersSet( tmcRef_Parameters_s * const pParamete
 /*******************************************************************************
  Interface Functions
 *******************************************************************************/
-/*! \brief Initialize reference control module
+/**
+ * @brief Initialize reference control module
  *
- * Details.
- * Initialize reference control module
+ * This function initializes the reference control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
 void  mcRefI_ReferenceControlInit( tmcRef_Parameters_s * const pParameters );
 
-/*! \brief Enable reference control module
+/**
+ * @brief Enable reference control module
  *
- * Details.
- * Enable reference control module
+ * This function enables the reference control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
 void  mcRefI_ReferenceControlEnable( tmcRef_Parameters_s * const pParameters );
 
-/*! \brief Disable reference control module
+/**
+ * @brief Disable reference control module
  *
- * Details.
- * Disable reference control module
+ * This function disables the reference control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
 void  mcRefI_ReferenceControlDisable( tmcRef_Parameters_s * const pParameters );
 
-/*! \brief Reference control
+/**
+ * @brief Reference control
  *
- * Details.
- * Reference control
+ * This function performs the reference control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the reference parameters structure
+ * @param[in] command The command input
+ * @param[out] pOut Pointer to the output
  */
 void mcRefI_ReferenceControl(  tmcRef_Parameters_s * const pParameters,
                                                     const float32_t command, float32_t * const pOut );
 
-/*! \brief Reset Reference control
+/**
+ * @brief Reset reference control
  *
- * Details.
- * Reset Reference control
+ * This function resets the reference control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to the reference parameters structure
  */
 void mcRefI_ReferenceControlReset( tmcRef_Parameters_s * const pParameters );
 

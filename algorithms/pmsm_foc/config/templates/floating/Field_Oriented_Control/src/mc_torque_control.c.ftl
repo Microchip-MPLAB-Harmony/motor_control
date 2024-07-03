@@ -1,19 +1,20 @@
-/*******************************************************************************
- Torque control source file
-
-  Company:
-    - Microchip Technology Inc.
-
-  File Name:
-    - mc_flux_control.c
-
-  Summary:
-    - Torque control source file
-
-  Description:
-    - This file implements functions for flux control
-
- *******************************************************************************/
+/**
+ * @brief 
+ *   Source file for torque control
+ *
+ * @File Name 
+ *    mc_torque_control.c
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Source file which contains variables and function implementations for torque control.
+ *
+ * @Description
+ *    This file contains variables and function implementations which are generally used for
+ *    torque control.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -79,15 +80,14 @@ Private Functions
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
-/*! \brief Initialize flux control module
+/**
+ * @brief 
+ *    Initialize torque control module
  *
- * Details.
- * Initialize flux control module
+ * @details
+ *    Initializes the torque control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to the parameters structure.
  */
 void  mcTorI_TorqueControlInit( tmcTor_Parameters_s * const pParameters )
 {
@@ -104,15 +104,14 @@ void  mcTorI_TorqueControlInit( tmcTor_Parameters_s * const pParameters )
      mcTor_State_mds.initDone = true;
 }
 
-/*! \brief Enable flux control module
+/**
+ * @brief 
+ *    Enable torque control module
  *
- * Details.
- * Enable flux control module
+ * @details
+ *    Enables the torque control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to the parameters structure.
  */
 void  mcTorI_TorqueControlEnable( tmcTor_Parameters_s * const pParameters )
 {
@@ -134,15 +133,14 @@ void  mcTorI_TorqueControlEnable( tmcTor_Parameters_s * const pParameters )
     pState->enable = true;
 }
 
-/*! \brief Disable flux control module
+/**
+ * @brief 
+ *    Disables torque control module
  *
- * Details.
- * Disable flux control module
+ * @details
+ *    Disables the torque control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to the parameters structure.
  */
 void  mcTorI_TorqueControlDisable( tmcTor_Parameters_s * const pParameters )
 {
@@ -165,15 +163,15 @@ void  mcTorI_TorqueControlDisable( tmcTor_Parameters_s * const pParameters )
 
 }
 
-/*! \brief Torque control
+/**
+ * @brief 
+ *    Torque control - manual mode
  *
- * Details.
- * Torque control
+ * @details
+ *    Implements torque control - manual mode.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to the parameters structure.
+ * @param[in] Out - Output torque value.
  */
 void mcTorI_TorqueControlManual(  const tmcTor_Parameters_s * const pParameters,
                                                          const float32_t  Out )
@@ -193,15 +191,18 @@ void mcTorI_TorqueControlManual(  const tmcTor_Parameters_s * const pParameters,
          mcUtils_PiControlReset( 0.0f, &pState->bPIController );
      }
 }
-/*! \brief Torque control
+
+/**
+ * @brief 
+ *    Torque control - auto mode
  *
- * Details.
- * Torque control
+ * @details
+ *    Implements torque control - auto mode.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to the parameters structure.
+ * @param[in] iQref - Reference current.
+ * @param[in] iQact - Actual current.
+ * @param[out] pOut - Pointer to the output torque value.
  */
 void mcTorI_TorqueControlAuto(  const tmcTor_Parameters_s * const pParameters,
                                               const float32_t iQref, const float32_t iQact, const float32_t yLimit,
@@ -231,16 +232,14 @@ void mcTorI_TorqueControlAuto(  const tmcTor_Parameters_s * const pParameters,
      }
 }
 
-
-/*! \brief Reset Torque control
+/**
+ * @brief 
+ *    Reset torque control
  *
- * Details.
- * Reset Torque control
+ * @details
+ *    Resets the torque control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters - Pointer to the parameters structure.
  */
 void mcTorI_TorqueControlReset( const tmcTor_Parameters_s * const pParameters )
 {

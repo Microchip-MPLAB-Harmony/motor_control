@@ -79,15 +79,13 @@ Private Functions
 /*******************************************************************************
  * Interface Functions 
 *******************************************************************************/
-/*! \brief Initialize speed control module
- * 
- * Details.
- * Initialize speed control module
- * 
- * @param[in]: None 
- * @param[in/out]: None
- * @param[out]: None 
- * @return: None
+/*! 
+ * @brief Initialize position control module
+ *
+ * @details Initialize the position control module.
+ *
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @return None
  */
 void  mcPosI_PositionControlInit( tmcPos_Parameters_s * const pParameters )
 {  
@@ -105,15 +103,13 @@ void  mcPosI_PositionControlInit( tmcPos_Parameters_s * const pParameters )
 
 }
 
-/*! \brief Enable speed control module
+/*! 
+ * @brief Enable position control module
  *
- * Details.
- * Enable speed control module
+ * @details Enable the position control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @return None
  */
 void  mcPosI_PositionControlEnable( tmcPos_Parameters_s * const pParameters )
 {
@@ -135,15 +131,13 @@ void  mcPosI_PositionControlEnable( tmcPos_Parameters_s * const pParameters )
     pState->enable = true;
 }
 
-/*! \brief Disable speed control module
+/*! 
+ * @brief Disable position control module
  *
- * Details.
- * Disable speed control module
+ * @details Disable the position control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @return None
  */
 void  mcPosI_PositionControlDisable( tmcPos_Parameters_s * const pParameters )
 {
@@ -166,15 +160,14 @@ void  mcPosI_PositionControlDisable( tmcPos_Parameters_s * const pParameters )
 
 }
 
-/*! \brief Flux control
+/*! 
+ * @brief Perform manual position control
  *
- * Details.
- * Flux control
+ * @details Perform manual position control with specified output.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @param[in] Out Output value for manual control.
+ * @return None
  */
 void mcPosI_PositionControlManual(  const tmcPos_Parameters_s * const pParameters,
                                                          const float32_t  Out )
@@ -194,15 +187,17 @@ void mcPosI_PositionControlManual(  const tmcPos_Parameters_s * const pParameter
         mcUtils_PiControlReset( 0.0f, &pState->bPIController );
     }
 }
-/*! \brief Flux control
+
+/*! 
+ * @brief Perform automatic position control
  *
- * Details.
- * Flux control
+ * @details Perform automatic position control with specified reference and actual values.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @param[in] nref Reference position value.
+ * @param[in] nact Actual position value.
+ * @param[out] pOut Pointer to store the output of the control.
+ * @return None
  */
 void mcPosI_PositionControlAuto(  const tmcPos_Parameters_s * const pParameters,
                                               const float32_t nref, const float32_t nact, float32_t * const pOut )
@@ -219,13 +214,8 @@ void mcPosI_PositionControlAuto(  const tmcPos_Parameters_s * const pParameters,
          /** ToDO: Calculate Ymax and Ymin based on the motor control states. Remove the magic numbers  */
          pState->bPIController.Ymax = 10000.0f;
          pState->bPIController.Ymin = -10000.0f;
-
          mcUtils_PiControl( error, &pState->bPIController );
-		 
-
          *pOut = pState->bPIController.Yo;
-		 		 /** Feed-forward term  */
-	//	*pOut += 	(error * 100);	 
      }
      else
      {
@@ -234,16 +224,13 @@ void mcPosI_PositionControlAuto(  const tmcPos_Parameters_s * const pParameters,
      }
 }
 
-
-/*! \brief Reset Flux control
- * 
- * Details.
- * Reset Flux control
- * 
- * @param[in]: None 
- * @param[in/out]: None
- * @param[out]: None 
- * @return: 
+/*! 
+ * @brief Reset position control module
+ *
+ * @details Reset the position control module to its initial state.
+ *
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @return None
  */
 void mcPosI_PositionControlReset( const tmcPos_Parameters_s * const pParameters )
 {

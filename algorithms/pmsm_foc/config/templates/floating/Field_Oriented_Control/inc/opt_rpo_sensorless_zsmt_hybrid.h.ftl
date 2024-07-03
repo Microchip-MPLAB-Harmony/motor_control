@@ -1,18 +1,20 @@
-/*******************************************************************************
- Rotor Position interface file
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    mc_rotor_position.h
-
-  Summary:
-    Header file for rotor position
-
-  Description:
-    This file contains the data structures and function prototypes of rotor position.
- *******************************************************************************/
+/**
+ * @brief 
+ *    Header file for rotor position estimation
+ *
+ * @File Name 
+ *    mc_rotor_position_estimation.h
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Header file containing variables and function prototypes for rotor position estimation.
+ *
+ * @Description
+ *    This file contains variables and function prototypes which are generally used for rotor
+ *    position estimation in pulse width modulation. It is implemented in Q2.14 fixed point arithmetic.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -62,52 +64,56 @@
 /*******************************************************************************
  Interface Functions
  *******************************************************************************/
-
-/*! \brief Initialize rotor position estimation module
+/*! 
+ * @brief Initialize rotor position estimation module
  *
- * Details.
+ * @details
  * Initialize rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters );
 
-/*! \brief Enable rotor position estimation module
+/*! 
+ * @brief Enable rotor position estimation module
  *
- * Details.
+ * @details
  * Enable rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void  mcRpeI_RotorPositionEstimEnable( tmcRpe_Parameters_s * const pParameters );
 
-/*! \brief Disable rotor position estimation module
+/*! 
+ * @brief Disable rotor position estimation module
  *
- * Details.
+ * @details
  * Disable rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void  mcRpeI_RotorPositionEstimDisable( tmcRpe_Parameters_s * const pParameters );
 
-/*! \brief Rotor position estimation
+/*! 
+ * @brief Perform rotor position estimation
  *
- * Details.
- * Rotor position estimation
+ * @details
+ * Perform rotor position estimation
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ * @param[in] pIAlphaBeta - Pointer to input alpha-beta voltages
+ * @param[in] pUAlphaBeta - Pointer to input alpha-beta currents
+ * @param[out] pEAlphaBeta - Pointer to store estimated alpha-beta bemf
+ * @param[out] pAngle - Pointer to store estimated rotor angle
+ * @param[out] pSpeed - Pointer to store estimated rotor speed
+ *
+ * @return None
  */
 void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
                                                      tmcTypes_AlphaBeta_s * pIAlphaBeta,
@@ -115,87 +121,88 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
                                                      tmcTypes_AlphaBeta_s * pEAlphaBeta,
                                                      float32_t * pAngle, float32_t * pSpeed );
 
-/*! \brief Get the electrical angle of the motor
+ /*! 
+ * @brief Get electrical angle
  *
- * Details.
- *  Get the electrical angle of the motor
+ * @details
+ * Get electrical angle
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return Electrical angle of the motor
  */
 float32_t mcRpeI_ElectricalAngleGet(  const tmcRpe_Parameters_s * const pParameters );
 
-/*! \brief Get the electrical speed of the motor
+ /*! 
+ * @brief Get electrical speed
  *
- * Details.
- *  Get the electrical speed of the motor
+ * @details
+ * Get electrical speed
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return Electrical speed of the motor
  */
 float32_t mcRpeI_ElectricalSpeedGet(  const tmcRpe_Parameters_s * const pParameters );
 
-/*! \brief Get mechanical angle
+ /*! 
+ * @brief Get mechanical angle
  *
- * Details.
+ * @details
  * Get mechanical angle
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return Mechanical angle of the motor
  */
 float32_t mcRpeI_MechanicalAngleGet(  const tmcRpe_Parameters_s * const pParameters );
 
-/*! \brief Get mechanical angle
+/*! 
+ * @brief Get mechanical speed
  *
- * Details.
- * Get mechanical angle
+ * @details
+ * Get mechanical speed
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return Mechanical speed of the motor
  */
 float32_t mcRpeI_MechanicalSpeedGet(  const tmcRpe_Parameters_s * const pParameters );
 
-/*! \brief Check if rotor position estimation is ready 
+/*! 
+ * @brief Check if rotor position estimation is ready 
  *
- * Details.
+ * @details
  * Check if rotor position estimation is ready 
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return True if rotor position is ready. False if rotor position is not ready
  */
  bool mcRpeI_RotorPositionReady(  const tmcRpe_Parameters_s * const pParameters );
  
-/*! \brief Carrier Signal Injection
+/*! 
+ * @brief Inject HF pulse to the DQ axis voltage
  *
- * Details.
- * Carrier Signal Injection
+ * @details
+ * Inject HF pulse to the DQ axis voltage
  *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+ * @param[in] pParameters - Pointer to parameters structure
+ * @param[out] pUdq - DQ axis voltage with HF injection
+ *
+ * @return None
  */
 void mcRpeI_CarrierSignalInjection(tmcRpe_Parameters_s * pParameters, tmcTypes_DQ_s * const pUdq );
 
-/*! \brief Reset Rotor position estimation
+/*! 
+ * @brief Reset rotor position estimation module
  *
- * Details.
- * Reset Rotor position estimation
+ * @details
+ * Reset rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void mcRpeI_RotorPositionEstimReset( const tmcRpe_Parameters_s * const pParameters );
 

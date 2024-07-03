@@ -1,19 +1,22 @@
-/*******************************************************************************
- Rotor position estimation source file
-
-  Company:
-    - Microchip Technology Inc.
-
-  File Name:
-    - mc_torque_control.c
-
-  Summary:
-    - Rotor position estimation source file
-
-  Description:
-    - This file implements functions for rotor position estimation
-
- *******************************************************************************/
+/**
+ * @file mc_rotor_position_estimation.c
+ *
+ * @brief 
+ *    Source file for rotor position estimation
+ *
+ * @File Name 
+ *    mc_rotor_position_estimation.c
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Source file which contains variables and function implementations for rotor position estimation.
+ *
+ * @Description
+ *    This file contains variables and function implementations which are generally used for rotor
+ *    position estimation in pulse width modulation. It is implemented in Q2.14 fixed point arithmetic.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -55,31 +58,31 @@ Local configuration options
 *******************************************************************************/
 typedef struct
 {
-    bool enable;
-    bool initDone;
-    int16_t RsVal;
-    uint16_t RsShift;
-    int16_t LsFsVal;
-    uint16_t LsFsShift;
-    int16_t OneByKeVal;
-    uint16_t OneByKeShift;
-    int16_t SpeedToAngleVal;
-    uint16_t SpeedToAngleShift;
-    int16_t eAlpha;
-    int16_t eBeta;
-    int16_t eD;
-    int16_t eQ;
-    int16_t iAlphaLast;
-    int16_t iBetaLast;
-    int16_t uAlphaLast;
-    int16_t uBetaLast;
-    uint16_t phi;
-    int16_t speed;
-    int16_t integOffset;
+    bool enable;                /**< Flag indicating if the module is enabled */
+    bool initDone;              /**< Flag indicating if initialization is done */
+    int16_t RsVal;              /**< Stator resistance value */
+    uint16_t RsShift;           /**< Shift amount for stator resistance */
+    int16_t LsFsVal;            /**< Filtered inductance value */
+    uint16_t LsFsShift;         /**< Shift amount for filtered inductance */
+    int16_t OneByKeVal;         /**< Inverse of back EMF constant value */
+    uint16_t OneByKeShift;      /**< Shift amount for inverse of back EMF constant */
+    int16_t SpeedToAngleVal;    /**< Speed to angle conversion value */
+    uint16_t SpeedToAngleShift; /**< Shift amount for speed to angle conversion */
+    int16_t eAlpha;             /**< Error in alpha axis */
+    int16_t eBeta;              /**< Error in beta axis */
+    int16_t eD;                 /**< Error in direct axis */
+    int16_t eQ;                 /**< Error in quadrature axis */
+    int16_t iAlphaLast;         /**< Last alpha axis current value */
+    int16_t iBetaLast;          /**< Last beta axis current value */
+    int16_t uAlphaLast;         /**< Last alpha axis voltage value */
+    int16_t uBetaLast;          /**< Last beta axis voltage value */
+    uint16_t phi;               /**< Rotor electrical angle */
+    int16_t speed;              /**< Rotor speed */
+    int16_t integOffset;        /**< Integration offset */
 #if defined SRF_PLL
-    tmcUtils_PiControl_s bPIController;
+    tmcUtils_PiControl_s bPIController; /**< PI controller for PLL */
 #endif
-}tmcRpe_State_s;
+} tmcRpe_State_s;
 
 /*******************************************************************************
 Private variables
@@ -104,15 +107,15 @@ Private Functions
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
-/*! \brief Initialize rotor position estimation module
+/*! 
+ * @brief Initialize rotor position estimation module
  *
- * Details.
+ * @details
  * Initialize rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
 {
@@ -153,15 +156,15 @@ void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
     pState->initDone = true;
 }
 
-/*! \brief Enable rotor position estimation module
+/*! 
+ * @brief Enable rotor position estimation module
  *
- * Details.
+ * @details
  * Enable rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void  mcRpeI_RotorPositionEstimEnable( tmcRpe_Parameters_s * const pParameters )
 {
@@ -183,15 +186,15 @@ void  mcRpeI_RotorPositionEstimEnable( tmcRpe_Parameters_s * const pParameters )
     pState->enable = true;
 }
 
-/*! \brief Disable rotor position estimation module
+/*! 
+ * @brief Disable rotor position estimation module
  *
- * Details.
+ * @details
  * Disable rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void  mcRpeI_RotorPositionEstimDisable( tmcRpe_Parameters_s * const pParameters )
 {
@@ -213,15 +216,19 @@ void  mcRpeI_RotorPositionEstimDisable( tmcRpe_Parameters_s * const pParameters 
     pState->enable = false;
 }
 
-/*! \brief Rotor position estimation
+/*! 
+ * @brief Perform rotor position estimation
  *
- * Details.
- * Rotor position estimation
+ * @details
+ * Perform rotor position estimation
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters - Pointer to parameters structure
+ * @param[in] pIAlphaBeta - Pointer to input alpha-beta voltages
+ * @param[in] pUAlphaBeta - Pointer to input alpha-beta currents
+ * @param[out] pAngle - Pointer to store estimated rotor angle
+ * @param[out] pSpeed - Pointer to store estimated rotor speed
+ *
+ * @return None
  */
 #ifdef RAM_EXECUTE
 void __ramfunc__  mcRpeI_RotorPositionEstim( const tmcRpe_Parameters_s * const pParameters,
@@ -353,16 +360,15 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
      }
 }
 
-
-/*! \brief Reset Rotor position estimation
+/*! 
+ * @brief Reset rotor position estimation module
  *
- * Details.
- * Reset Rotor position estimation
+ * @details
+ * Reset rotor position estimation module
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters - Pointer to parameters structure
+ *
+ * @return None
  */
 void mcRpeI_RotorPositionEstimReset( const tmcRpe_Parameters_s * const pParameters )
 {

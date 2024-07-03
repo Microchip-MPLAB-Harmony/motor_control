@@ -1,19 +1,22 @@
-/*******************************************************************************
- Field Oriented Control ( FOC ) source file
-
-  Company:
-    - Microchip Technology Inc.
-
-  File Name:
-    - mc_torque_control.c
-
-  Summary:
-    - Field Oriented Control ( FOC ) source file
-
-  Description:
-    - This file implements functions for Field Oriented Control ( FOC )
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Field Oriented Control (FOC) source file
+ *
+ * @File Name 
+ *    mc_field_oriented_control.c
+ *
+ * @Company 
+ *   Microchip Technology Inc.
+ *
+ * @Summary
+ *    This file implements functions for Field Oriented Control (FOC).
+ *
+ * @Description
+ *   This file contains the implementation of functions necessary for Field Oriented
+ *    Control (FOC), which is used to control motor currents based on given inputs.
+ *    Functions include initialization, execution, resetting, current updating,
+ *    torque calculation, and field weakening control.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -46,86 +49,112 @@ Headers inclusions
 #include "mc_field_oriented_control.h"
 
 /*******************************************************************************
-Local configuration options
-*******************************************************************************/
-#define ONE_BY_SQRT3   (int16_t)( 9459 )
-#define TWO_BY_SQRT3   (int16_t)( 18919 )
+ * Local Configuration Options
+ *******************************************************************************/
+/** 
+ * @brief 1/sqrt(3) constant in Q15 format
+ * 
+ * This constant is used for Clarke transformation calculations where the value of 
+ * 1/sqrt(3) is required.
+ */
+#define ONE_BY_SQRT3   (int16_t)(9459)
+
+/** 
+ * @brief 2/sqrt(3) constant in Q15 format
+ * 
+ * This constant is used for Clarke transformation calculations where the value of 
+ * 2/sqrt(3) is required.
+ */
+#define TWO_BY_SQRT3   (int16_t)(18919)
+
+/** 
+ * @brief Step size for open to close angle transition
+ * 
+ * This constant defines the step size for transitioning from an open loop to a closed 
+ * loop control in the angle calculation.
+ */
 #define OPEN_TO_CLOSE_ANGLE_STEP_SIZE   (uint16_t)(4)
 
 /*******************************************************************************
- Private data types
-*******************************************************************************/
+ * Private Data Types
+ *******************************************************************************/
+/**
+ * @brief Enumeration for FOC states
+ */
 typedef enum
 {
-    FocState_FlyingStart,
-    FocState_Startup,
-    FocState_ClosingLoop,
-    FocState_CloseLoop
-}tmcFoc_FocState_e;
+    FocState_FlyingStart, /**< State for flying start */
+    FocState_Startup,     /**< State for startup */
+    FocState_ClosingLoop, /**< State for closing the loop */
+    FocState_CloseLoop    /**< State for closed loop control */
+} tmcFoc_FocState_e;
 
+/**
+ * @brief Data structure for FOC state
+ */
 typedef struct
 {
-    bool enable;
-    bool initDone;
-    tmcFoc_FocState_e FocState;
-    tmcTypes_DQ_s uDQ;
-    uint16_t openLoopAngle;
-    int16_t openLoopSpeed;
-    int16_t iQref;
-    int16_t iDref;
-    int16_t nRef;
+    bool enable;                  /**< Enable flag */
+    bool initDone;                /**< Initialization done flag */
+    tmcFoc_FocState_e FocState;   /**< Current FOC state */
+    tmcTypes_DQ_s uDQ;            /**< DQ axis voltage components */
+    uint16_t openLoopAngle;       /**< Open loop angle */
+    int16_t openLoopSpeed;        /**< Open loop speed */
+    int16_t iQref;                /**< Q-axis current reference */
+    int16_t iDref;                /**< D-axis current reference */
+    int16_t nRef;                 /**< Speed reference */
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
-    int16_t angleDifference;
+    int16_t angleDifference;      /**< Angle difference for position calculation */
 </#if>
-    int16_t commandDirection;
-    int16_t ratedSpeedInRpm;
+    int16_t commandDirection;     /**< Commanded direction */
+    int16_t ratedSpeedInRpm;      /**< Rated speed in RPM */
 
-    tmcSup_Parameters_s bOpenLoopStartup;
-    tmcPwm_Parameters_s bPwmModulator;
-    tmcFlx_Parameters_s bFluxController;
-    tmcTor_Parameters_s bTorqueController;
-    tmcSpe_Parameters_s bSpeedController;
-    tmcRef_Parameters_s bReferenceController;
+    tmcSup_Parameters_s bOpenLoopStartup; /**< Open loop startup parameters */
+    tmcPwm_Parameters_s bPwmModulator;    /**< PWM modulator parameters */
+    tmcFlx_Parameters_s bFluxController;  /**< Flux controller parameters */
+    tmcTor_Parameters_s bTorqueController; /**< Torque controller parameters */
+    tmcSpe_Parameters_s bSpeedController; /**< Speed controller parameters */
+    tmcRef_Parameters_s bReferenceController; /**< Reference controller parameters */
 
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-    tmcRpc_Parameters_s bPositionCalculation;
+    tmcRpc_Parameters_s bPositionCalculation; /**< Position calculation parameters */
 <#else>
-    tmcRpe_Parameters_s bPositionEstimation;
+    tmcRpe_Parameters_s bPositionEstimation; /**< Position estimation parameters */
 </#if>
 
-    uint16_t duty[3u];
-}tmcFoc_State_s;
+    uint16_t duty[3u]; /**< PWM duty cycles for three phases */
+} tmcFoc_State_s;
 
 /*******************************************************************************
-Private variables
-*******************************************************************************/
+ * Private Variables
+ *******************************************************************************/
 static tmcFoc_State_s mcFoc_State_mds;
 
 /*******************************************************************************
-Interface  variables
-*******************************************************************************/
+ * Interface Variables
+ *******************************************************************************/
 tmcFocI_ModuleData_s mcFocI_ModuleData_gds;
 
 /*******************************************************************************
-Macro Functions
-*******************************************************************************/
+ * Macro Functions
+ *******************************************************************************/
 #define MULT_SHIFT     mcUtils_MultAndRightShiftS16
 
 /*******************************************************************************
-Private Functions
-*******************************************************************************/
-/*! \brief Clarke Transformation
+ * Private Functions
+ *******************************************************************************/
+/**
+ * @brief Clarke Transformation
  *
- * Details.
- * Clarke Transformation
+ * @details
+ * This function performs the Clarke transformation to convert three-phase
+ * currents into two-phase alpha-beta currents.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pABC Pointer to the structure holding three-phase currents
+ * @param[out] pAlphaBeta Pointer to the structure holding alpha-beta currents
  */
-__STATIC_FORCEINLINE void mcFoc_ClarkeTransformation( const tmcTypes_ABC_s * pABC,
-                                                                                       tmcTypes_AlphaBeta_s * const pAlphaBeta )
+__STATIC_FORCEINLINE void mcFoc_ClarkeTransformation(const tmcTypes_ABC_s * pABC,
+                                                     tmcTypes_AlphaBeta_s * const pAlphaBeta)
 {
     /** ToDO: Implement clipping */
     /** Temporary variables used to store intermediate results */
@@ -135,101 +164,105 @@ __STATIC_FORCEINLINE void mcFoc_ClarkeTransformation( const tmcTypes_ABC_s * pAB
     pAlphaBeta->alpha = pABC->a;
 
     /** Intermediate product is calculated by (1/(sqrt(3)) * a) */
-    s16a = (int16_t)MULT_SHIFT(pABC->a, ONE_BY_SQRT3, 14u );
+    s16a = (int16_t)MULT_SHIFT(pABC->a, ONE_BY_SQRT3, 14u);
 
     /** Intermediate product is calculated by (2/sqrt(3) * b) */
-    s16b = (int16_t)MULT_SHIFT( pABC->b, TWO_BY_SQRT3, 14u);
+    s16b = (int16_t)MULT_SHIFT(pABC->b, TWO_BY_SQRT3, 14u);
 
     /** Calculate beta-axis component by adding the intermediate products */
     pAlphaBeta->beta = (int16_t)(s16a + s16b);
 }
 
-/*! \brief Park Transformation
+/**
+ * @brief Park Transformation
  *
- * Details.
- * Park Transformation
+ * @details
+ * This function performs the Park transformation to convert alpha-beta currents
+ * into DQ currents using the provided sine and cosine values.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pAlphaBeta Pointer to the structure holding alpha-beta currents
+ * @param[in] sine Sine value of the electrical angle
+ * @param[in] cosine Cosine value of the electrical angle
+ * @param[out] pDQ Pointer to the structure holding DQ currents
  */
-__STATIC_FORCEINLINE void mcFoc_ParkTransformation( const tmcTypes_AlphaBeta_s * const pAlphaBeta,
-                                            const int16_t sine, const int16_t cosine,
-                                            tmcTypes_DQ_s * const pDQ )
+__STATIC_FORCEINLINE void mcFoc_ParkTransformation(const tmcTypes_AlphaBeta_s * const pAlphaBeta,
+                                                   const int16_t sine, const int16_t cosine,
+                                                   tmcTypes_DQ_s * const pDQ)
 {
     /** ToDO: Implement clipping */
     /** Temporary variables used to store intermediate results */
     int16_t s16a, s16b;
 
     /** Intermediate product is calculated by (pAlphaBeta->alpha * cosVal) */
-    s16a = (int16_t)MULT_SHIFT( pAlphaBeta->alpha, cosine, 14u);
+    s16a = (int16_t)MULT_SHIFT(pAlphaBeta->alpha, cosine, 14u);
 
     /** Intermediate product is calculated by (pAlphaBeta->beta * sinVal) */
-    s16b = (int16_t)MULT_SHIFT( pAlphaBeta->beta, sine, 14u);
+    s16b = (int16_t)MULT_SHIFT(pAlphaBeta->beta, sine, 14u);
 
     /** Calculate pId by adding the two intermediate s16a and s16b */
     pDQ->d = s16a + s16b;
 
     /** Intermediate product is calculated by (pAlphaBeta->alpha * sinVal) */
-    s16a = (int16_t)MULT_SHIFT( pAlphaBeta->alpha, sine, 14u);
+    s16a = (int16_t)MULT_SHIFT(pAlphaBeta->alpha, sine, 14u);
 
     /** Intermediate product is calculated by (pAlphaBeta->beta * cosVal) */
-    s16b = (int16_t)MULT_SHIFT( pAlphaBeta->beta, cosine, 14u);
+    s16b = (int16_t)MULT_SHIFT(pAlphaBeta->beta, cosine, 14u);
 
     /** Calculate pIq by subtracting the two intermediate s16a from s16b */
     pDQ->q = s16b - s16a;
 }
 
-/*! \brief Inverse Park Transformation
+/**
+ * @brief Inverse Park Transformation
  *
- * Details.
- * Inverse Park Transformation
+ * @details
+ * This function performs the inverse Park transformation to convert DQ currents
+ * back into alpha-beta currents using the provided sine and cosine values.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pDQ Pointer to the structure holding DQ currents
+ * @param[in] sine Sine value of the electrical angle
+ * @param[in] cosine Cosine value of the electrical angle
+ * @param[out] pAlphaBeta Pointer to the structure holding alpha-beta currents
  */
-__STATIC_FORCEINLINE void mcFoc_InverseParkTransformation( const tmcTypes_DQ_s * const pDQ,
-                                                        const int16_t sine, const int16_t cosine,
-                                                        tmcTypes_AlphaBeta_s * const pAlphaBeta )
+__STATIC_FORCEINLINE void mcFoc_InverseParkTransformation(const tmcTypes_DQ_s * const pDQ,
+                                                          const int16_t sine, const int16_t cosine,
+                                                          tmcTypes_AlphaBeta_s * const pAlphaBeta)
 {
     /** ToDO: Implement clipping */
     /** Temporary variables used to store intermediate results */
     int16_t s16a, s16b;
 
-    /** Intermediate product is calculated by (pAlphaBeta->alpha * cosVal) */
-    s16a = (int16_t)MULT_SHIFT( pDQ->d, cosine,  14u);
+    /** Intermediate product is calculated by (pDQ->d * cosVal) */
+    s16a = (int16_t)MULT_SHIFT(pDQ->d, cosine, 14u);
 
-    /** Intermediate product is calculated by (pAlphaBeta->beta * sinVal) */
-    s16b =(int16_t)MULT_SHIFT( pDQ->q, sine, 14u);
+    /** Intermediate product is calculated by (pDQ->q * sinVal) */
+    s16b = (int16_t)MULT_SHIFT(pDQ->q, sine, 14u);
 
-    /** Calculate pId by adding the two intermediate s16a and s16b */
+    /** Calculate alpha by subtracting the two intermediate s16a from s16b */
     pAlphaBeta->alpha = s16a - s16b;
 
-    /** Intermediate product is calculated by (pAlphaBeta->alpha * sinVal) */
-    s16a = (int16_t)MULT_SHIFT( pDQ->d, sine, 14u );
+    /** Intermediate product is calculated by (pDQ->d * sinVal) */
+    s16a = (int16_t)MULT_SHIFT(pDQ->d, sine, 14u);
 
-    /** Intermediate product is calculated by (pAlphaBeta->beta * cosVal) */
-    s16b = (int16_t)MULT_SHIFT( pDQ->q, cosine, 14u );
+    /** Intermediate product is calculated by (pDQ->q * cosVal) */
+    s16b = (int16_t)MULT_SHIFT(pDQ->q, cosine, 14u);
 
-    /** Calculate pIq by subtracting the two intermediate s16a from s16b */
+    /** Calculate beta by adding the two intermediate s16a and s16b */
     pAlphaBeta->beta = s16a + s16b;
 }
 
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
-/*! \brief Initialize Field Oriented Control ( FOC ) module
+/**
+ * @brief Initialize Field Oriented Control (FOC) module
  *
- * Details.
- * Initialize Field Oriented Control ( FOC ) module
+ * @details Initializes the FOC module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to the FOC module data
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void  mcFocI_FieldOrientedControlInit( tmcFocI_ModuleData_s * const pModule )
 {
@@ -269,15 +302,15 @@ void  mcFocI_FieldOrientedControlInit( tmcFocI_ModuleData_s * const pModule )
     mcFoc_State_mds.initDone = true;
 }
 
-/*! \brief Enable Field Oriented Control ( FOC ) module
+/**
+ * @brief Enable Field Oriented Control (FOC) module
  *
- * Details.
- * Enable Field Oriented Control ( FOC ) module
+ * @details Enables the FOC module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void  mcFocI_FieldOrientedControlEnable( tmcFocI_ModuleData_s * const pParameters )
 {
@@ -327,15 +360,15 @@ void  mcFocI_FieldOrientedControlEnable( tmcFocI_ModuleData_s * const pParameter
     pState->enable = true;
 }
 
-/*! \brief Disable Field Oriented Control ( FOC ) module
+/**
+ * @brief Disable Field Oriented Control (FOC) module
  *
- * Details.
- * Disable Field Oriented Control ( FOC ) module
+ * @details Disables the FOC module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParameters )
 {
@@ -379,15 +412,15 @@ void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParamete
 
 }
 
-/*! \brief Field Oriented Control ( FOC )
+/**
+ * @brief Execute Field Oriented Control (FOC) fast loop
  *
- * Details.
- * Field Oriented Control ( FOC )
+ * @details Executes the fast loop of the FOC algorithm.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to the FOC module data
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 #ifdef RAM_EXECUTE
 void __ramfunc__  mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
@@ -599,16 +632,15 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 
 }
 
-
-/*! \brief Field Oriented Control ( FOC )
+/**
+ * @brief Execute Field Oriented Control (FOC) slow loop
  *
- * Details.
- * Field Oriented Control ( FOC )
+ * @details Executes the slow loop of the FOC algorithm.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 #ifdef RAM_EXECUTE
 void __ramfunc__  mcFocI_FieldOrientedControlSlow( const tmcFocI_ModuleData_s * const pParameters )
@@ -619,15 +651,15 @@ void mcFocI_FieldOrientedControlSlow( const tmcFocI_ModuleData_s * const pParame
 
 }
 
-/*! \brief Change motor direction
+/**
+ * @brief Change motor direction
  *
- * Details.
- * Change motor direction
+ * @details Changes the direction of the motor.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to the FOC module data
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_MotorDirectionChange(const tmcFocI_ModuleData_s * const pModule )
 {
@@ -640,17 +672,15 @@ void mcFocI_MotorDirectionChange(const tmcFocI_ModuleData_s * const pModule )
 
 }
 
-
-
-/*! \brief Reset Field Oriented Control ( FOC )
+/**
+ * @brief Reset Field Oriented Control (FOC)
  *
- * Details.
- * Reset Field Oriented Control ( FOC )
+ * @details Resets the FOC module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_FieldOrientedControlReset( const tmcFocI_ModuleData_s * const pParameters )
 {

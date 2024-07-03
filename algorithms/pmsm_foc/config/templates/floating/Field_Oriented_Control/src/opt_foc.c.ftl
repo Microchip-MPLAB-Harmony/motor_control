@@ -1,19 +1,22 @@
-/*******************************************************************************
- Field Oriented Control ( FOC ) source file
-
-  Company:
-    - Microchip Technology Inc.
-
-  File Name:
-    - mc_field_oriented_control.c
-
-  Summary:
-    - Field Oriented Control ( FOC ) source file
-
-  Description:
-    - This file implements functions for Field Oriented Control ( FOC )
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Field Oriented Control (FOC) source file
+ *
+ * @File Name 
+ *    mc_field_oriented_control.c
+ *
+ * @Company 
+ *   Microchip Technology Inc.
+ *
+ * @Summary
+ *    This file implements functions for Field Oriented Control (FOC).
+ *
+ * @Description
+ *   This file contains the implementation of functions necessary for Field Oriented
+ *    Control (FOC), which is used to control motor currents based on given inputs.
+ *    Functions include initialization, execution, resetting, current updating,
+ *    torque calculation, and field weakening control.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -177,15 +180,15 @@ Macro Functions
 /*******************************************************************************
 Private Functions
 *******************************************************************************/
-/*! \brief Clarke Transformation
+/**
+ * @brief Clarke Transformation
  *
- * Details.
- * Clarke Transformation
+ * @details
+ * This function performs the Clarke transformation to convert three-phase
+ * currents into two-phase alpha-beta currents.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pABC Pointer to the structure holding three-phase currents
+ * @param[out] pAlphaBeta Pointer to the structure holding alpha-beta currents
  */
 __STATIC_FORCEINLINE void mcFoc_ClarkeTransformation( const tmcTypes_ABC_s * pABC,
                                                                                        tmcTypes_AlphaBeta_s * const pAlphaBeta )
@@ -194,15 +197,17 @@ __STATIC_FORCEINLINE void mcFoc_ClarkeTransformation( const tmcTypes_ABC_s * pAB
     pAlphaBeta->beta = (pABC->a * ONE_BY_SQRT3 ) + ( pABC->b * TWO_BY_SQRT3 );
 }
 
-/*! \brief Park Transformation
+/**
+ * @brief Park Transformation
  *
- * Details.
- * Park Transformation
+ * @details
+ * This function performs the Park transformation to convert alpha-beta currents
+ * into DQ currents using the provided sine and cosine values.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pAlphaBeta Pointer to the structure holding alpha-beta currents
+ * @param[in] sine Sine value of the electrical angle
+ * @param[in] cosine Cosine value of the electrical angle
+ * @param[out] pDQ Pointer to the structure holding DQ currents
  */
 __STATIC_FORCEINLINE void mcFoc_ParkTransformation( const tmcTypes_AlphaBeta_s * const pAlphaBeta,
                                                                                     const float32_t sine, const float32_t cosine,
@@ -212,15 +217,17 @@ __STATIC_FORCEINLINE void mcFoc_ParkTransformation( const tmcTypes_AlphaBeta_s *
     pDQ->q = -pAlphaBeta->alpha * sine  + pAlphaBeta->beta * cosine;
 }
 
-/*! \brief Inverse Park Transformation
+/**
+ * @brief Inverse Park Transformation
  *
- * Details.
- * Inverse Park Transformation
+ * @details
+ * This function performs the inverse Park transformation to convert DQ currents
+ * back into alpha-beta currents using the provided sine and cosine values.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pDQ Pointer to the structure holding DQ currents
+ * @param[in] sine Sine value of the electrical angle
+ * @param[in] cosine Cosine value of the electrical angle
+ * @param[out] pAlphaBeta Pointer to the structure holding alpha-beta currents
  */
 __STATIC_FORCEINLINE void mcFoc_InverseParkTransformation( const tmcTypes_DQ_s * const pDQ,
                                                                                                 const float32_t sine, const float32_t cosine,
@@ -233,15 +240,15 @@ __STATIC_FORCEINLINE void mcFoc_InverseParkTransformation( const tmcTypes_DQ_s *
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
-/*! \brief Initialize Field Oriented Control ( FOC ) module
+/**
+ * @brief Initialize Field Oriented Control (FOC) module
  *
- * Details.
- * Initialize Field Oriented Control ( FOC ) module
+ * @details Initializes the FOC module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to the FOC module data
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void  mcFocI_FieldOrientedControlInit( tmcFocI_ModuleData_s * const pModule )
 {
@@ -302,15 +309,15 @@ void  mcFocI_FieldOrientedControlInit( tmcFocI_ModuleData_s * const pModule )
 
 }
 
-/*! \brief Enable Field Oriented Control ( FOC ) module
+/**
+ * @brief Enable Field Oriented Control (FOC) module
  *
- * Details.
- * Enable Field Oriented Control ( FOC ) module
+ * @details Enables the FOC module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void  mcFocI_FieldOrientedControlEnable( tmcFocI_ModuleData_s * const pParameters )
 {
@@ -383,15 +390,15 @@ void  mcFocI_FieldOrientedControlEnable( tmcFocI_ModuleData_s * const pParameter
     pState->enable = true;
 }
 
-/*! \brief Disable Field Oriented Control ( FOC ) module
+/**
+ * @brief Disable Field Oriented Control (FOC) module
  *
- * Details.
- * Disable Field Oriented Control ( FOC ) module
+ * @details Disables the FOC module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParameters )
 {
@@ -455,16 +462,15 @@ void  mcFocI_FieldOrientedControlDisable( tmcFocI_ModuleData_s * const pParamete
 
 }
 
-
-/*! \brief Field Oriented Control ( FOC )
+/**
+ * @brief Execute Field Oriented Control (FOC) fast loop
  *
- * Details.
- * Field Oriented Control ( FOC )
+ * @details Executes the fast loop of the FOC algorithm.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to the FOC module data
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
 void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
@@ -902,31 +908,30 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 }
 </#if>
 
-
-/*! \brief Field Oriented Control ( FOC )
+/**
+ * @brief Execute Field Oriented Control (FOC) slow loop
  *
- * Details.
- * Field Oriented Control ( FOC )
+ * @details Executes the slow loop of the FOC algorithm.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_FieldOrientedControlSlow( const tmcFocI_ModuleData_s * const pParameters )
 {
     /** ToDO: Put appropriate tasks */
 }
 
-/*! \brief Field Oriented Control ( FOC )
+/**
+ * @brief Change motor direction
  *
- * Details.
- * Field Oriented Control ( FOC )
+ * @details Changes the direction of the motor.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pModule Pointer to the FOC module data
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_MotorDirectionChange(const tmcFocI_ModuleData_s * const pParameters)
 {
@@ -937,15 +942,16 @@ void mcFocI_MotorDirectionChange(const tmcFocI_ModuleData_s * const pParameters)
     pState->commandDirection = - pState->commandDirection;
 
 }
-/*! \brief Reset Field Oriented Control ( FOC )
+
+/**
+ * @brief Reset Field Oriented Control (FOC)
  *
- * Details.
- * Reset Field Oriented Control ( FOC )
+ * @details Resets the FOC module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to the FOC parameters
+ * @param[in,out] None
+ * @param[out] None
+ * @return None
  */
 void mcFocI_FieldOrientedControlReset( const tmcFocI_ModuleData_s * const pParameters )
 {

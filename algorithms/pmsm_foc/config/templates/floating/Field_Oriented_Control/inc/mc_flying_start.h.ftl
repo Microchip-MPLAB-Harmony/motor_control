@@ -1,17 +1,19 @@
-/*******************************************************************************
-  System Definitions
-
-  File Name:
-    mc_flying_start.h
-
-  Summary:
-    Header file which contains variables and function prototypes for flying start
-
-  Description:
-    This file contains variables and function prototypes which are generally used for flying
-    start.
-
- *******************************************************************************/
+/**
+ * @file mc_flying_start.h
+ *
+ * @brief 
+ *    Header file for Flying Start
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *    Header file containing variables and function prototypes for flying start.
+ *
+ * @Description
+ *    This header file defines variables and function prototypes commonly used for
+ *    implementing flying start functionality in embedded systems.
+ */
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -77,15 +79,13 @@ typedef struct
 /*******************************************************************************
  Static Interface Functions
 *******************************************************************************/
-/*! \brief Set module parameters
+/**
+ * @brief Set module parameters
  *
- * Details.
- * Set module parameters
+ * This function sets the parameters of the module.
  *
- * @param[in]: Input structure
- * @param[in/out]: State structure
- * @param[out]: Output structure
- * @return: None
+ * @param[in] Input structure containing parameters to be set.
+ * @return None
  */
 __STATIC_INLINE void mcFlyI_ParametersSet( tmcFly_Parameters_s * const pParameter )
 {
@@ -106,67 +106,63 @@ __STATIC_INLINE void mcFlyI_ParametersSet( tmcFly_Parameters_s * const pParamete
 /*******************************************************************************
  Interface Functions
 *******************************************************************************/
-/*! \brief Initialize flying Start module
+/**
+ * @brief Initialize Flying Start module
  *
- * Details.
- * Initialize flying Start module
+ * This function initializes the Flying Start module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param pParameters Pointer to the parameters structure.
+ * @return None
  */
-void  mcFlyI_FlyingStartInit( tmcFly_Parameters_s * const pParameters );
+void mcFlyI_FlyingStartInit(tmcFly_Parameters_s * const pParameters);
 
-/*! \brief Enable flying Start module
+/**
+ * @brief Enable Flying Start module
  *
- * Details.
- * Enable flying Start module
+ * This function enables the Flying Start module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param pParameters Pointer to the parameters structure.
+ * @return None
  */
-void  mcFlyI_FlyingStartEnable( tmcFly_Parameters_s * const pParameters );
+void mcFlyI_FlyingStartEnable(tmcFly_Parameters_s * const pParameters);
 
-/*! \brief Disable flying Start module
+/**
+ * @brief Disable Flying Start module
  *
- * Details.
- * Disable flying Start module
+ * This function disables the Flying Start module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param pParameters Pointer to the parameters structure.
+ * @return None
  */
-void  mcFlyI_FlyingStartDisable( tmcFly_Parameters_s * const pParameters );
+void mcFlyI_FlyingStartDisable(tmcFly_Parameters_s * const pParameters);
 
-/*! \brief Flying Start
+/**
+ * @brief Perform Flying Start
  *
- * Details.
- * Flying Start
+ * This function performs the Flying Start operation.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param pParameters Pointer to the parameters structure.
+ * @param speed Current speed value.
+ * @param commandDirection Commanded direction value.
+ * @param pIdref Pointer to the reference Id value.
+ * @param pIqref Pointer to the reference Iq value.
+ * @param pDutyOverride Pointer to the duty cycle override flag.
+ * @param pDuty Pointer to the duty cycle value.
+ * @return Standard return status indicating success or failure.
  */
-tmcTypes_StdReturn_e  mcFlyI_FlyingStart( tmcFly_Parameters_s * const pParameters,
-                               const float32_t speed, const float32_t commandDirection,
-                               float32_t * const pIdref, float32_t * const pIqref,
-                               bool * const pDutyOverride, int16_t * const pDuty );
+tmcTypes_StdReturn_e mcFlyI_FlyingStart(tmcFly_Parameters_s * const pParameters,
+                                        const float32_t speed, const float32_t commandDirection,
+                                        float32_t * const pIdref, float32_t * const pIqref,
+                                        bool * const pDutyOverride, int16_t * const pDuty);
 
-/*! \brief Reset Flying Start
+/**
+ * @brief Reset Flying Start module
  *
- * Details.
- * Reset Flying Start
+ * This function resets the Flying Start module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param pParameters Pointer to the parameters structure.
+ * @return None
  */
-void mcFlyI_FlyingStartReset( const tmcFly_Parameters_s * const pParameters );
+void mcFlyI_FlyingStartReset(const tmcFly_Parameters_s * const pParameters);
 
 #endif // MCFLY_H

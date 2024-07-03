@@ -1,19 +1,22 @@
-/*******************************************************************************
- Flux control source file
-
-  Company:
-    - Microchip Technology Inc.
-
-  File Name:
-    - mc_flux_control.c
-
-  Summary:
-    - Flux control source file
-
-  Description:
-    - This file implements functions for flux control
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Flux Control source file
+ *
+ * @File Name 
+ *    mc_flux_control.c
+ *
+ * @Company 
+ *   Microchip Technology Inc.
+ *
+ * @Summary
+ *    This file contains definitions for Flux Control functions and data structures.
+ *
+ * @Description
+ *    This file provides the implementation of functions and data structures necessary for 
+ *    Flux Control, which includes controlling the flux of a motor in various operating modes.
+ *    Functions include initialization, enabling/disabling, manual and automatic control modes,
+ *    flux weakening, and MTPA (Maximum Torque per Ampere) control.
+ */
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -122,15 +125,13 @@ Private Functions
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
-/*! \brief Initialize flux control module
+/*! 
+ * @brief Initialize flux control module
  *
- * Details.
- * Initialize flux control module
+ * Initializes the flux control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
 void  mcFlxI_FluxControlInit( tmcFlx_Parameters_s * const pParameters )
 {
@@ -148,15 +149,13 @@ void  mcFlxI_FluxControlInit( tmcFlx_Parameters_s * const pParameters )
 
 }
 
-/*! \brief Enable flux control module
+/*! 
+ * @brief Enable flux control module
  *
- * Details.
- * Enable flux control module
+ * Enables the flux control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
 void  mcFlxI_FluxControlEnable( tmcFlx_Parameters_s * const pParameters )
 {
@@ -178,15 +177,13 @@ void  mcFlxI_FluxControlEnable( tmcFlx_Parameters_s * const pParameters )
     pState->enable = true;
 }
 
-/*! \brief Disable flux control module
+/*! 
+ * @brief Disable flux control module
  *
- * Details.
- * Disable flux control module
+ * Disables the flux control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
 void  mcFlxI_FluxControlDisable( tmcFlx_Parameters_s * const pParameters )
 {
@@ -209,15 +206,14 @@ void  mcFlxI_FluxControlDisable( tmcFlx_Parameters_s * const pParameters )
 
 }
 
-/*! \brief Flux control
+/*! 
+ * @brief Flux control - Manual/ Tracking mode
  *
- * Details.
- * Flux control
+ * Performs Flux control - Manual/ Tracking mode
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] Out Output value for manual control
+ * @return None
  */
 void mcFlxI_FluxControlManual(  const tmcFlx_Parameters_s * const pParameters,
                                                          const float32_t  Out )
@@ -238,15 +234,16 @@ void mcFlxI_FluxControlManual(  const tmcFlx_Parameters_s * const pParameters,
     }
 }
 
-/*! \brief Flux control
+/*! 
+ * @brief Flux control
  *
- * Details.
- * Flux control
+ * Performs flux control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] iDref Reference d-axis current
+ * @param[in] iDact Actual d-axis current
+ * @param[out] pOut Pointer to output variable for automatic control
+ * @return None
  */
 void mcFlxI_FluxControlAuto(  const tmcFlx_Parameters_s * const pParameters,
                                               const float32_t iDref, const float32_t iDact, const float32_t yLimit, float32_t * const pOut )
@@ -277,15 +274,13 @@ void mcFlxI_FluxControlAuto(  const tmcFlx_Parameters_s * const pParameters,
     }
 }
 
-/*! \brief Reset Flux control
+/*! 
+ * @brief Reset flux control
  *
- * Details.
- * Reset Flux control
+ * Resets the flux control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
 void mcFlxI_FluxControlReset( const tmcFlx_Parameters_s * const pParameters )
 {
@@ -298,16 +293,13 @@ void mcFlxI_FluxControlReset( const tmcFlx_Parameters_s * const pParameters )
 }
 
 <#if ( MCPMSMFOC_ENABLE_FW == true ) >
-
-/*! \brief Enable flux weakening module
+/*! 
+ * @brief Enable flux weakening module
  *
- * Details.
- * Enable flux weakening module
+ * Enables the flux weakening module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
 void  mcFlxI_FluxWeakeningEnable( tmcFlx_Parameters_s * const pParameters )
 {
@@ -329,15 +321,13 @@ void  mcFlxI_FluxWeakeningEnable( tmcFlx_Parameters_s * const pParameters )
     pState->enable = true;
 }
 
-/*! \brief Disable flux weakening module
+/*! 
+ * @brief Disable flux weakening module
  *
- * Details.
- * Disable flux weakening module
+ * Disables the flux weakening module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
 void  mcFlxI_FluxWeakeningDisable( tmcFlx_Parameters_s * const pParameters )
 {
@@ -360,15 +350,13 @@ void  mcFlxI_FluxWeakeningDisable( tmcFlx_Parameters_s * const pParameters )
 
 }
 
-/*! \brief Initialize flux weakening module
+/*! 
+ * @brief Initialize flux weakening module
  *
- * Details.
- * Initialize flux weakening module
+ * Initializes the flux weakening module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
 void  mcFlxI_FluxWeakeningInit( tmcFlx_Parameters_s * const pParameters )
 {
@@ -409,15 +397,19 @@ void  mcFlxI_FluxWeakeningInit( tmcFlx_Parameters_s * const pParameters )
 }
 
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-/*! \brief Flux control
+/*! 
+ * @brief Flux weakening control
  *
- * Details.
- * Flux control
+ * Performs flux weakening control using other algorithms.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pUDQ Pointer to DQ voltage vector
+ * @param[in] pEAlphaBeta Pointer to Alpha-Beta voltage vector
+ * @param[in] uBus DC bus voltage
+ * @param[in] wmechRPM Mechanical speed in RPM
+ * @param[out] pIDQ Pointer to output DQ current vector
+ * @param[out] pIdref Pointer to output reference ID current
+ * @return None
  */
 void mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
                                                const tmcTypes_DQ_s * const pUDQ,
@@ -486,15 +478,19 @@ void mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
 
 }
 <#else>
-/*! \brief Flux control
+/*! 
+ * @brief Flux weakening control
  *
- * Details.
- * Flux control
+ * Performs flux weakening control using other algorithms.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pUDQ Pointer to DQ voltage vector
+ * @param[in] pEAlphaBeta Pointer to Alpha-Beta voltage vector
+ * @param[in] uBus DC bus voltage
+ * @param[in] wmechRPM Mechanical speed in RPM
+ * @param[out] pIDQ Pointer to output DQ current vector
+ * @param[out] pIdref Pointer to output reference ID current
+ * @return None
  */
 void mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
                                                const tmcTypes_DQ_s * const pUDQ,
@@ -564,15 +560,13 @@ void mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
 }
 </#if>
 
-/*! \brief Reset Flux control
+/*! 
+ * @brief Reset flux weakening module
  *
- * Details.
- * Reset Flux control
+ * Resets the flux weakening module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
 void mcFlxI_FluxWeakeningReset( const tmcFlx_Parameters_s * const pParameters )
 {
@@ -586,15 +580,13 @@ void mcFlxI_FluxWeakeningReset( const tmcFlx_Parameters_s * const pParameters )
 </#if>
 
 <#if MCPMSMFOC_ENABLE_MTPA == true >
-/*! \brief Enable MTPA module
+/*! 
+ * @brief Enable MTPA module
  *
- * Details.
- * Enable MTPA module
+ * Enables the Maximum Torque per Ampere (MTPA) module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
 void  mcFlxI_MTPAEnable( tmcFlx_Parameters_s * const pParameters )
 {
@@ -616,15 +608,13 @@ void  mcFlxI_MTPAEnable( tmcFlx_Parameters_s * const pParameters )
      pState->enable = true;
 }
 
-/*! \brief Disable MTPA module
+/*! 
+ * @brief Disable MTPA module
  *
- * Details.
- * Disable MTPA module
+ * Disables the MTPA module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
 void  mcFlxI_MTPADisable( tmcFlx_Parameters_s * const pParameters )
 {
@@ -646,17 +636,13 @@ void  mcFlxI_MTPADisable( tmcFlx_Parameters_s * const pParameters )
      pState->enable = false;
 }
 
-
-
-/*! \brief Disable MTPA module
+/*! 
+ * @brief Initialize MTPA module
  *
- * Details.
- * Disable MTPA module
+ * Initializes the MTPA module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
 void  mcFlxI_MTPAInit( tmcFlx_Parameters_s * const pParameters )
 {
@@ -689,15 +675,15 @@ void  mcFlxI_MTPAInit( tmcFlx_Parameters_s * const pParameters )
     pState->initDone = true;
 }
 
-/*! \brief Disable MTPA module
+/*! 
+ * @brief MTPA control
  *
- * Details.
- * Disable MTPA module
+ * Performs Maximum Torque per Ampere (MTPA) control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pIdq Pointer to DQ current vector
+ * @param[out] pIdref Pointer to output reference ID current
+ * @return None
  */
 void  mcFlxI_MTPA( tmcFlx_Parameters_s * const pParameters,
                    const tmcTypes_DQ_s * const pIdq, float32_t * const pIdref )
@@ -731,15 +717,13 @@ void  mcFlxI_MTPA( tmcFlx_Parameters_s * const pParameters,
      }
 }
 
-/*! \brief Disable MTPA module
+/*! 
+ * @brief Reset MTPA module
  *
- * Details.
- * Disable MTPA module
+ * Resets the MTPA module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
 void  mcFlxI_MTPAReset( tmcFlx_Parameters_s * const pParameters )
 {

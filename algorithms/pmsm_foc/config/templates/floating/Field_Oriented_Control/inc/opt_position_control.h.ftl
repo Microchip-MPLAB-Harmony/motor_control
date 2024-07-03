@@ -41,126 +41,117 @@
 #ifndef MCPOS_H
 #define MCPOS_H
 
+
 /*******************************************************************************
- * Header inclusions 
-*******************************************************************************/
+ * Header inclusions
+ ******************************************************************************/
 #include "mc_types.h"
 #include "mc_pi_control.h"
 
 /*******************************************************************************
- Default Module configuration parameters 
-*******************************************************************************/
+ * Default Module configuration parameters
+ ******************************************************************************/
 
 /*******************************************************************************
-Type Definition
-*******************************************************************************/
+ * Type Definitions
+ ******************************************************************************/
 typedef struct
 {
-     float32_t Kp;
-     float32_t Ki;
-     float32_t dt;
-     void * pStatePointer;
-}tmcPos_Parameters_s;
+    float32_t Kp;              /*!< Proportional gain */
+    float32_t Ki;              /*!< Integral gain */
+    float32_t dt;              /*!< Time step */
+    void * pStatePointer;      /*!< Pointer to module state */
+} tmcPos_Parameters_s;
 
 /*******************************************************************************
- * Interface variables 
-*******************************************************************************/
+ * Interface variables
+ ******************************************************************************/
 
 /*******************************************************************************
- Static Interface Functions
-*******************************************************************************/
-/*! \brief Set module parameters
+ * Static Interface Functions
+ ******************************************************************************/
+/*! 
+ * @brief Set module parameters
  *
- * Details.
- * Set module parameters
+ * @details Set module parameters from predefined constants.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @return None
  */
-__STATIC_INLINE void mcPosI_ParametersSet( tmcPos_Parameters_s * const pParameters )
+__STATIC_INLINE void mcPosI_ParametersSet(tmcPos_Parameters_s * const pParameters)
 {
-   pParameters->Kp = (float32_t)${MCPMSMFOC_POSITION_PID_KP};
-   pParameters->Ki = (float32_t)${MCPMSMFOC_POSITION_PID_KI};
-   pParameters->dt = (float32_t)${MCPMSMFOC_PWM_PERIOD};
+    pParameters->Kp = (float32_t)${MCPMSMFOC_POSITION_PID_KP};
+    pParameters->Ki = (float32_t)${MCPMSMFOC_POSITION_PID_KI};
+    pParameters->dt = (float32_t)${MCPMSMFOC_PWM_PERIOD};
 }
 
 /*******************************************************************************
- Interface Functions
-*******************************************************************************/
-/*! \brief Initialize speed control module
+ * Interface Functions
+ ******************************************************************************/
+/*! 
+ * @brief Initialize position control module
  *
- * Details.
- * Initialize speed control module
+ * @details Initialize the position control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @return None
  */
-void  mcPosI_PositionControlInit( tmcPos_Parameters_s * const pParameters );
+void mcPosI_PositionControlInit(tmcPos_Parameters_s * const pParameters);
 
-/*! \brief Enable speed control module
+/*! 
+ * @brief Enable position control module
  *
- * Details.
- * Enable speed control module
+ * @details Enable the position control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @return None
  */
-void  mcPosI_PositionControlEnable( tmcPos_Parameters_s * const pParameters );
+void mcPosI_PositionControlEnable(tmcPos_Parameters_s * const pParameters);
 
-/*! \brief Disable speed control module
+/*! 
+ * @brief Disable position control module
  *
- * Details.
- * Disable speed control module
+ * @details Disable the position control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @return None
  */
-void  mcPosI_PositionControlDisable( tmcPos_Parameters_s * const pParameters );
+void mcPosI_PositionControlDisable(tmcPos_Parameters_s * const pParameters);
 
-/*! \brief Speed control
+/*! 
+ * @brief Perform manual position control
  *
- * Details.
- * Speed control
+ * @details Perform manual position control with specified output.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @param[in] Out Output value for manual control.
+ * @return None
  */
-void mcPosI_PositionControlManual(  const tmcPos_Parameters_s * const pParameters,
-                                                         const float32_t  Out );
+void mcPosI_PositionControlManual(const tmcPos_Parameters_s * const pParameters,
+                                  const float32_t Out);
 
-/*! \brief Speed control
+/*! 
+ * @brief Perform automatic position control
  *
- * Details.
- * Speed control
+ * @details Perform automatic position control with specified reference and actual values.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @param[in] nref Reference position value.
+ * @param[in] nact Actual position value.
+ * @param[out] pOut Pointer to store the output of the control.
+ * @return None
  */
-void mcPosI_PositionControlAuto(  const tmcPos_Parameters_s * const pParameters,
-                                              const float32_t nref, const  float32_t nact, float32_t * const pOut );
+void mcPosI_PositionControlAuto(const tmcPos_Parameters_s * const pParameters,
+                                const float32_t nref, const float32_t nact, float32_t * const pOut);
 
-/*! \brief Reset Speed control
+/*! 
+ * @brief Reset position control module
  *
- * Details.
- * Reset Speed control
+ * @details Reset the position control module to its initial state.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to the module parameters structure.
+ * @return None
  */
-void mcPosI_PositionControlReset( const tmcPos_Parameters_s * const pParameters );
+void mcPosI_PositionControlReset(const tmcPos_Parameters_s * const pParameters);
 
-#endif // mcPos_H
+#endif // MCPOS_H

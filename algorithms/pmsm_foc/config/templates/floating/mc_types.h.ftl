@@ -1,18 +1,21 @@
-/*******************************************************************************
- Motor control types
+/**
+ * @file mc_types.h
+ *
+ * @brief 
+ *   Motor control types
+ *
+ * @Company 
+ *    Microchip Technology Inc.
+ *
+ * @Summary
+ *   Header file defining motor control types.
+ *
+ * @Description
+ *   This header file defines various types used in motor control applications,
+ *   including data structures and enumerations for representing phase quantities,
+ *   coordinate frames, and standard return status codes.
+ */
 
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    mc_types.h
-
-  Summary:
-    Motor control types
-
-  Description:
- Motor control types
- *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************

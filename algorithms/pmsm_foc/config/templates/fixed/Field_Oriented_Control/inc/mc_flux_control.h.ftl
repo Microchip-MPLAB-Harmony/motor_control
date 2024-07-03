@@ -1,17 +1,21 @@
-/*******************************************************************************
-  System Definitions
-
-  File Name:
-    mc_flux_control.h
-
-  Summary:
-    Header file which contains variables and function prototypes for flux control
-
-  Description:
-    This file contains variables and function prototypes which are generally used for flux
-    control
-
- *******************************************************************************/
+/**
+ * @brief 
+ *    Flux Control header file
+ *
+ * @File Name 
+ *    mc_flux_control.h
+ *
+ * @Company 
+ *   Microchip Technology Inc.
+ *
+ * @Summary
+ *    This file contains declarations for flux control functions.
+ *
+ * @Description
+ *    This file provides the function prototypes and data structures necessary for flux 
+ *    control in motor control applications. Functions include initialization, enabling,
+ *    disabling, and various control functions for manual and automatic flux control.
+ */
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -42,7 +46,7 @@
 #define MCFLX_H
 
 /*******************************************************************************
- * Header inclusions
+ * Header Inclusions
 *******************************************************************************/
 #include "mc_types.h"
 #include "mc_pi_control.h"
@@ -50,42 +54,39 @@
 #include "mc_motor.h"
 
 /*******************************************************************************
- Default Module configuration parameters
+ * Default Module Configuration Parameters
 *******************************************************************************/
 
 /*******************************************************************************
-Type Definition
+ * Type Definitions
 *******************************************************************************/
 typedef struct
 {
-    float32_t Kp;
-    float32_t Ki;
-    float32_t dt;
+    float32_t Kp;                    /**< Proportional gain for PI controller */
+    float32_t Ki;                    /**< Integral gain for PI controller */
+    float32_t dt;                    /**< Sampling time */
 <#if ( MCPMSMFOC_ENABLE_MTPA == true ) || ( MCPMSMFOC_ENABLE_FW == true) >
-    tmcMot_PMSM_s * pMotorParameters;
+    tmcMot_PMSM_s * pMotorParameters; /**< Pointer to motor parameters */
 </#if>
-    void * pStatePointer;
-}tmcFlx_Parameters_s;
+    void * pStatePointer;            /**< Pointer to the state structure */
+} tmcFlx_Parameters_s;
 
 /*******************************************************************************
- * Interface variables
+ * Interface Variables
 *******************************************************************************/
 //#define RAM_EXECUTE
-
 /*******************************************************************************
- Static Interface Functions
+ * Static Interface Functions
 *******************************************************************************/
-/*! \brief Set module parameters
+/*! 
+ * @brief Set module parameters
  *
- * Details.
- * Set module parameters
+ * This function sets the parameters for the flux control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-__STATIC_INLINE void mcFlxI_ParametersSet( tmcFlx_Parameters_s * const pParameters )
+__STATIC_INLINE void mcFlxI_ParametersSet(tmcFlx_Parameters_s * const pParameters)
 {
     pParameters->Kp = (float32_t)${MCPMSMFOC_ID_PID_KP};
     pParameters->Ki = (float32_t)${MCPMSMFOC_ID_PID_KI};
@@ -102,270 +103,219 @@ __STATIC_INLINE void mcFlxI_ParametersSet( tmcFlx_Parameters_s * const pParamete
 }
 
 /*******************************************************************************
- Interface Functions
+ * Interface Functions
 *******************************************************************************/
-/*! \brief Initialize flux control module
+/*! 
+ * @brief Initialize flux control module
  *
- * Details.
- * Initialize flux control module
+ * Initializes the flux control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-void  mcFlxI_FluxControlInit( tmcFlx_Parameters_s * const pParameters );
+void mcFlxI_FluxControlInit(tmcFlx_Parameters_s * const pParameters);
 
-/*! \brief Enable flux control module
+/*! 
+ * @brief Enable flux control module
  *
- * Details.
- * Enable flux control module
+ * Enables the flux control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-void  mcFlxI_FluxControlEnable( tmcFlx_Parameters_s * const pParameters );
+void mcFlxI_FluxControlEnable(tmcFlx_Parameters_s * const pParameters);
 
-/*! \brief Disable flux control module
+/*! 
+ * @brief Disable flux control module
  *
- * Details.
- * Disable flux control module
+ * Disables the flux control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-void  mcFlxI_FluxControlDisable( tmcFlx_Parameters_s * const pParameters );
+void mcFlxI_FluxControlDisable(tmcFlx_Parameters_s * const pParameters);
 
-/*! \brief Flux control
+/*! 
+ * @brief Manual flux control
  *
- * Details.
- * Flux control
+ * Performs manual flux control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] Out Output value for manual control
+ * @return None
  */
 #ifdef RAM_EXECUTE
-void __ramfunc__  mcFlxI_FluxControlManual( const tmcFlx_Parameters_s * const pParameters,
-                                                                   const int16_t Out   );
+void __ramfunc__ mcFlxI_FluxControlManual(const tmcFlx_Parameters_s * const pParameters, const int16_t Out);
 #else
-void mcFlxI_FluxControlManual(  const tmcFlx_Parameters_s * const pParameters,
-                                                         const int16_t  Out );
+void mcFlxI_FluxControlManual(const tmcFlx_Parameters_s * const pParameters, const int16_t Out);
 #endif
 
-/*! \brief Flux control
+/*! 
+ * @brief Automatic flux control
  *
- * Details.
- * Flux control
+ * Performs automatic flux control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] iDref Reference d-axis current
+ * @param[in] iDact Actual d-axis current
+ * @param[out] pOut Pointer to output variable for automatic control
+ * @return None
  */
 #ifdef RAM_EXECUTE
-void __ramfunc__  mcFlxI_FluxControlAuto( const tmcFlx_Parameters_s * const pParameters,
-                                          const int16_t iDref, const int16_t iDact, int16_t * const pOut   );
+void __ramfunc__ mcFlxI_FluxControlAuto(const tmcFlx_Parameters_s * const pParameters, const int16_t iDref, const int16_t iDact, int16_t * const pOut);
 #else
-void mcFlxI_FluxControlAuto(  const tmcFlx_Parameters_s * const pParameters,
-                              const int16_t iDref, const  int16_t iDact, int16_t * const pOut );
+void mcFlxI_FluxControlAuto(const tmcFlx_Parameters_s * const pParameters, const int16_t iDref, const int16_t iDact, int16_t * const pOut);
 #endif
 
-/*! \brief Reset Flux control
+/*! 
+ * @brief Reset flux control
  *
- * Details.
- * Reset Flux control
+ * Resets the flux control module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-void mcFlxI_FluxControlReset( const tmcFlx_Parameters_s * const pParameters );
-
+void mcFlxI_FluxControlReset(const tmcFlx_Parameters_s * const pParameters);
 
 <#if MCPMSMFOC_ENABLE_FW == true >
-/*! \brief Enable flux weakening module
+/*! 
+ * @brief Enable flux weakening module
  *
- * Details.
- * Enable flux weakening module
+ * Enables the flux weakening module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-void  mcFlxI_FluxWeakeningEnable( tmcFlx_Parameters_s * const pParameters );
+void mcFlxI_FluxWeakeningEnable(tmcFlx_Parameters_s * const pParameters);
 
-/*! \brief Disable flux weakening module
+/*! 
+ * @brief Disable flux weakening module
  *
- * Details.
- * Disable flux weakening module
+ * Disables the flux weakening module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-void  mcFlxI_FluxWeakeningDisable( tmcFlx_Parameters_s * const pParameters );
+void mcFlxI_FluxWeakeningDisable(tmcFlx_Parameters_s * const pParameters);
 
-/*! \brief Initialize flux weakening module
+/*! 
+ * @brief Initialize flux weakening module
  *
- * Details.
- * Initialize flux weakening module
+ * Initializes the flux weakening module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-void  mcFlxI_FluxWeakeningInit( tmcFlx_Parameters_s * const pParameters );
+void mcFlxI_FluxWeakeningInit(tmcFlx_Parameters_s * const pParameters);
 
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-/*! \brief Flux control
+/*! 
+ * @brief Flux weakening control
  *
- * Details.
- * Flux control
+ * Performs flux weakening control using sensorless encoder algorithm.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pUDQ Pointer to DQ voltage vector
+ * @param[in] uBus DC bus voltage
+ * @param[in] wmechRPM Mechanical speed in RPM
+ * @param[out] pIDQ Pointer to output DQ current vector
+ * @param[out] pIdref Pointer to output reference ID current
+ * @return None
  */
 #ifdef RAM_EXECUTE
-void __ramfunc__ mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
-                                               const tmcTypes_DQ_s * const pUDQ,
-                                               const float32_t uBus,
-                                               const float32_t wmechRPM,
-                                               tmcTypes_DQ_s * const pIDQ,
-                                               float32_t * const pIdref );
+void __ramfunc__ mcFlxI_FluxWeakening(const tmcFlx_Parameters_s * const pParameters, const tmcTypes_DQ_s * const pUDQ, const float32_t uBus, const float32_t wmechRPM, tmcTypes_DQ_s * const pIDQ, float32_t * const pIdref);
 #else
-void mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
-                            const tmcTypes_DQ_s * const pUDQ,
-                            const float32_t uBus,
-                            const float32_t wmechRPM,
-                            tmcTypes_DQ_s * const pIDQ,
-                            float32_t * const pIdref );
-
+void mcFlxI_FluxWeakening(const tmcFlx_Parameters_s * const pParameters, const tmcTypes_DQ_s * const pUDQ, const float32_t uBus, const float32_t wmechRPM, tmcTypes_DQ_s * const pIDQ, float32_t * const pIdref);
 #endif
 <#else>
-/*! \brief Flux control
+/*! 
+ * @brief Flux weakening control
  *
- * Details.
- * Flux control
+ * Performs flux weakening control using other algorithms.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pUDQ Pointer to DQ voltage vector
+ * @param[in] pEAlphaBeta Pointer to Alpha-Beta voltage vector
+ * @param[in] uBus DC bus voltage
+ * @param[in] wmechRPM Mechanical speed in RPM
+ * @param[out] pIDQ Pointer to output DQ current vector
+ * @param[out] pIdref Pointer to output reference ID current
+ * @return None
  */
 #ifdef RAM_EXECUTE
-void __ramfunc__ mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
-                                               const tmcTypes_DQ_s * const pUDQ,
-                                               const tmcTypes_AlphaBeta_s * const pEAlphaBeta,
-                                               const int16_t uBus,
-                                               const int16_t wmechRPM,
-                                               tmcTypes_DQ_s * const pIDQ,
-                                               int16_t * const pIdref );
+void __ramfunc__ mcFlxI_FluxWeakening(const tmcFlx_Parameters_s * const pParameters, const tmcTypes_DQ_s * const pUDQ, const tmcTypes_AlphaBeta_s * const pEAlphaBeta, const int16_t uBus, const int16_t wmechRPM, tmcTypes_DQ_s * const pIDQ, int16_t * const pIdref);
 #else
-void mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
-                                               const tmcTypes_DQ_s * const pUDQ,
-                                               const tmcTypes_AlphaBeta_s * const pEAlphaBeta,
-                                               const int16_t uBus,
-                                               const int16_t wmechRPM,
-                                               tmcTypes_DQ_s * const pIDQ,
-                                               int16_t * const pIdref );
-
+void mcFlxI_FluxWeakening(const tmcFlx_Parameters_s * const pParameters, const tmcTypes_DQ_s * const pUDQ, const tmcTypes_AlphaBeta_s * const pEAlphaBeta, const int16_t uBus, const int16_t wmechRPM, tmcTypes_DQ_s * const pIDQ, int16_t * const pIdref);
 #endif
 </#if>
 
-/*! \brief Reset Flux control
+/*! 
+ * @brief Reset flux weakening module
  *
- * Details.
- * Reset Flux control
+ * Resets the flux weakening module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return:
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-void mcFlxI_FluxWeakeningReset( const tmcFlx_Parameters_s * const pParameters );
-
+void mcFlxI_FluxWeakeningReset(const tmcFlx_Parameters_s * const pParameters);
 </#if>
 
 <#if MCPMSMFOC_ENABLE_MTPA == true >
-/*! \brief Enable MTPA module
+/*! 
+ * @brief Enable MTPA module
  *
- * Details.
- * Enable MTPA module
+ * Enables the Maximum Torque per Ampere (MTPA) module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-void  mcFlxI_MTPAEnable( tmcFlx_Parameters_s * const pParameters );
+void mcFlxI_MTPAEnable(tmcFlx_Parameters_s * const pParameters);
 
-/*! \brief Disable MTPA module
+/*! 
+ * @brief Disable MTPA module
  *
- * Details.
- * Disable MTPA module
+ * Disables the MTPA module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-void  mcFlxI_MTPADisable( tmcFlx_Parameters_s * const pParameters );
+void mcFlxI_MTPADisable(tmcFlx_Parameters_s * const pParameters);
 
-/*! \brief Disable MTPA module
+/*! 
+ * @brief Initialize MTPA module
  *
- * Details.
- * Disable MTPA module
+ * Initializes the MTPA module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-void  mcFlxI_MTPAInit( tmcFlx_Parameters_s * const pParameters );
+void mcFlxI_MTPAInit(tmcFlx_Parameters_s * const pParameters);
 
-/*! \brief Disable MTPA module
+/*! 
+ * @brief MTPA control
  *
- * Details.
- * Disable MTPA module
+ * Performs Maximum Torque per Ampere (MTPA) control.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pIdq Pointer to DQ current vector
+ * @param[out] pIdref Pointer to output reference ID current
+ * @return None
  */
 #ifdef RAM_EXECUTE
-void __ramfunc__  mcFlxI_MTPA( tmcFlx_Parameters_s * const pParameters,
-                   const tmcTypes_DQ_s * const pIdq, int16_t * const pIdref );
+void __ramfunc__ mcFlxI_MTPA(tmcFlx_Parameters_s * const pParameters, const tmcTypes_DQ_s * const pIdq, int16_t * const pIdref);
 #else
-void mcFlxI_MTPA( tmcFlx_Parameters_s * const pParameters,
-                   const tmcTypes_DQ_s * const pIdq, int16_t * const pIdref );
+void mcFlxI_MTPA(tmcFlx_Parameters_s * const pParameters, const tmcTypes_DQ_s * const pIdq, int16_t * const pIdref);
 #endif
 
-/*! \brief Disable MTPA module
+/*! 
+ * @brief Reset MTPA module
  *
- * Details.
- * Disable MTPA module
+ * Resets the MTPA module.
  *
- * @param[in]: None
- * @param[in/out]: None
- * @param[out]: None
- * @return: None
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
  */
-void  mcFlxI_MTPAReset( tmcFlx_Parameters_s * const pParameters );
-
+void mcFlxI_MTPAReset(tmcFlx_Parameters_s * const pParameters);
 </#if>
 
 #endif // MCFLX_H
-
