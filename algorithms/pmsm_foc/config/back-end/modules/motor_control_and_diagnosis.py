@@ -291,8 +291,8 @@ class mcMocI_MotorControlAndDiagnosis:
 
         self.sym_FW = self.component.createBooleanSymbol("MCPMSMFOC_ENABLE_FW", self.sym_FW_AND_MTPA)
         self.sym_FW.setLabel("Enable field weakening")
-        if self.architecture == "CORTEX-M0PLUS":
-            self.sym_FW.setReadOnly(True)
+        # if self.architecture == "CORTEX-M0PLUS":
+        #     self.sym_FW.setReadOnly(True)
 
 
         self.sym_FW_IMAX = self.component.createFloatSymbol("MCPMSMFOC_FW_MAX_NEGATIVE_ID", self.sym_FW)

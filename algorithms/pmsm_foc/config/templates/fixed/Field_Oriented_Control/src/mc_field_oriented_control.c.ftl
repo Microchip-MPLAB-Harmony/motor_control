@@ -52,22 +52,6 @@ Headers inclusions
  * Local Configuration Options
  *******************************************************************************/
 /** 
- * @brief 1/sqrt(3) constant in Q15 format
- * 
- * This constant is used for Clarke transformation calculations where the value of 
- * 1/sqrt(3) is required.
- */
-#define ONE_BY_SQRT3   (int16_t)(9459)
-
-/** 
- * @brief 2/sqrt(3) constant in Q15 format
- * 
- * This constant is used for Clarke transformation calculations where the value of 
- * 2/sqrt(3) is required.
- */
-#define TWO_BY_SQRT3   (int16_t)(18919)
-
-/** 
  * @brief Step size for open to close angle transition
  * 
  * This constant defines the step size for transitioning from an open loop to a closed 
@@ -94,20 +78,21 @@ typedef enum
  */
 typedef struct
 {
-    bool enable;                  /**< Enable flag */
-    bool initDone;                /**< Initialization done flag */
-    tmcFoc_FocState_e FocState;   /**< Current FOC state */
-    tmcTypes_DQ_s uDQ;            /**< DQ axis voltage components */
-    uint16_t openLoopAngle;       /**< Open loop angle */
-    int16_t openLoopSpeed;        /**< Open loop speed */
-    int16_t iQref;                /**< Q-axis current reference */
-    int16_t iDref;                /**< D-axis current reference */
-    int16_t nRef;                 /**< Speed reference */
+    bool enable;                        /**< Enable flag */
+    bool initDone;                      /**< Initialization done flag */
+    tmcFoc_FocState_e FocState;         /**< Current FOC state */
+    tmcTypes_DQ_s uDQ;                  /**< DQ axis voltage components */
+    tmcTypes_AlphaBeta_s eAlphaBeta;    /**< Alpha-beta bemf components */
+    uint16_t openLoopAngle;             /**< Open loop angle */
+    int16_t openLoopSpeed;              /**< Open loop speed */
+    int16_t iQref;                      /**< Q-axis current reference */
+    int16_t iDref;                      /**< D-axis current reference */
+    int16_t nRef;                       /**< Speed reference */
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
-    int16_t angleDifference;      /**< Angle difference for position calculation */
+    int16_t angleDifference;            /**< Angle difference for position calculation */
 </#if>
-    int16_t commandDirection;     /**< Commanded direction */
-    int16_t ratedSpeedInRpm;      /**< Rated speed in RPM */
+    int16_t commandDirection;           /**< Commanded direction */
+    int16_t ratedSpeedInRpm;            /**< Rated speed in RPM */
 
     tmcSup_Parameters_s bOpenLoopStartup; /**< Open loop startup parameters */
     tmcPwm_Parameters_s bPwmModulator;    /**< PWM modulator parameters */
@@ -156,7 +141,6 @@ tmcFocI_ModuleData_s mcFocI_ModuleData_gds;
 __STATIC_FORCEINLINE void mcFoc_ClarkeTransformation(const tmcTypes_ABC_s * pABC,
                                                      tmcTypes_AlphaBeta_s * const pAlphaBeta)
 {
-    /** ToDO: Implement clipping */
     /** Temporary variables used to store intermediate results */
     int16_t  s16a, s16b;
 
@@ -164,10 +148,10 @@ __STATIC_FORCEINLINE void mcFoc_ClarkeTransformation(const tmcTypes_ABC_s * pABC
     pAlphaBeta->alpha = pABC->a;
 
     /** Intermediate product is calculated by (1/(sqrt(3)) * a) */
-    s16a = (int16_t)MULT_SHIFT(pABC->a, ONE_BY_SQRT3, 14u);
+    s16a = (int16_t)Q_MULTIPLY(pABC->a, Q_SCALE(ONE_OVER_SQRT_3) );
 
     /** Intermediate product is calculated by (2/sqrt(3) * b) */
-    s16b = (int16_t)MULT_SHIFT(pABC->b, TWO_BY_SQRT3, 14u);
+    s16b = (int16_t)Q_MULTIPLY( pABC->b, Q_SCALE(TWO_OVER_SQRT_3 ));
 
     /** Calculate beta-axis component by adding the intermediate products */
     pAlphaBeta->beta = (int16_t)(s16a + s16b);
@@ -189,24 +173,23 @@ __STATIC_FORCEINLINE void mcFoc_ParkTransformation(const tmcTypes_AlphaBeta_s * 
                                                    const int16_t sine, const int16_t cosine,
                                                    tmcTypes_DQ_s * const pDQ)
 {
-    /** ToDO: Implement clipping */
     /** Temporary variables used to store intermediate results */
     int16_t s16a, s16b;
 
     /** Intermediate product is calculated by (pAlphaBeta->alpha * cosVal) */
-    s16a = (int16_t)MULT_SHIFT(pAlphaBeta->alpha, cosine, 14u);
+    s16a = (int16_t)Q_MULTIPLY( pAlphaBeta->alpha, cosine);
 
     /** Intermediate product is calculated by (pAlphaBeta->beta * sinVal) */
-    s16b = (int16_t)MULT_SHIFT(pAlphaBeta->beta, sine, 14u);
+    s16b = (int16_t)Q_MULTIPLY( pAlphaBeta->beta, sine);
 
     /** Calculate pId by adding the two intermediate s16a and s16b */
     pDQ->d = s16a + s16b;
 
     /** Intermediate product is calculated by (pAlphaBeta->alpha * sinVal) */
-    s16a = (int16_t)MULT_SHIFT(pAlphaBeta->alpha, sine, 14u);
+    s16a = (int16_t)Q_MULTIPLY( pAlphaBeta->alpha, sine);
 
     /** Intermediate product is calculated by (pAlphaBeta->beta * cosVal) */
-    s16b = (int16_t)MULT_SHIFT(pAlphaBeta->beta, cosine, 14u);
+    s16b = (int16_t)Q_MULTIPLY( pAlphaBeta->beta, cosine);
 
     /** Calculate pIq by subtracting the two intermediate s16a from s16b */
     pDQ->q = s16b - s16a;
@@ -228,26 +211,25 @@ __STATIC_FORCEINLINE void mcFoc_InverseParkTransformation(const tmcTypes_DQ_s * 
                                                           const int16_t sine, const int16_t cosine,
                                                           tmcTypes_AlphaBeta_s * const pAlphaBeta)
 {
-    /** ToDO: Implement clipping */
     /** Temporary variables used to store intermediate results */
     int16_t s16a, s16b;
 
-    /** Intermediate product is calculated by (pDQ->d * cosVal) */
-    s16a = (int16_t)MULT_SHIFT(pDQ->d, cosine, 14u);
+    /** Intermediate product is calculated by (pAlphaBeta->alpha * cosVal) */
+    s16a = (int16_t)Q_MULTIPLY( pDQ->d, cosine);
 
-    /** Intermediate product is calculated by (pDQ->q * sinVal) */
-    s16b = (int16_t)MULT_SHIFT(pDQ->q, sine, 14u);
+    /** Intermediate product is calculated by (pAlphaBeta->beta * sinVal) */
+    s16b =(int16_t)Q_MULTIPLY( pDQ->q, sine);
 
-    /** Calculate alpha by subtracting the two intermediate s16a from s16b */
+    /** Calculate pId by adding the two intermediate s16a and s16b */
     pAlphaBeta->alpha = s16a - s16b;
 
-    /** Intermediate product is calculated by (pDQ->d * sinVal) */
-    s16a = (int16_t)MULT_SHIFT(pDQ->d, sine, 14u);
+    /** Intermediate product is calculated by (pAlphaBeta->alpha * sinVal) */
+    s16a = (int16_t)Q_MULTIPLY( pDQ->d, sine );
 
-    /** Intermediate product is calculated by (pDQ->q * cosVal) */
-    s16b = (int16_t)MULT_SHIFT(pDQ->q, cosine, 14u);
+    /** Intermediate product is calculated by (pAlphaBeta->beta * cosVal) */
+    s16b = (int16_t)Q_MULTIPLY( pDQ->q, cosine );
 
-    /** Calculate beta by adding the two intermediate s16a and s16b */
+    /** Calculate pIq by subtracting the two intermediate s16a from s16b */
     pAlphaBeta->beta = s16a + s16b;
 }
 
@@ -442,12 +424,12 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     /** Read FOC inputs  */
     mcFocI_InputsRead( &pModule->dInput );
 
-    /** Clarke transformation */
+    /** Clarke transformation  */
     mcFoc_ClarkeTransformation( &pModule->dInput.iABC, &pOutput->iAlphaBeta);
 
-    /** Rotor position estimation */
-    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, &pOutput->iAlphaBeta,
-                            &pOutput->uAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
+    /** Rotor position estimation   */
+    mcRpeI_RotorPositionEstim(&pState->bPositionEstimation,  &pOutput->iAlphaBeta, &pOutput->uAlphaBeta, 
+                         &pState->eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
 
     switch(pState->FocState )
     {
@@ -495,7 +477,8 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
         case FocState_Startup:
         {
             tmcTypes_StdReturn_e startupStatus;
-            startupStatus = mcSupI_OpenLoopStartup( &pState->bOpenLoopStartup, pState->commandDirection, &pState->iQref, &pState->iDref, &pState->openLoopAngle, &pState->openLoopSpeed );
+            startupStatus = mcSupI_OpenLoopStartup( &pState->bOpenLoopStartup, pState->commandDirection,
+                                                                &pState->iQref, &pState->iDref, &pState->openLoopAngle, &pState->openLoopSpeed );
             if( StdReturn_Complete == startupStatus )
             {
 <#if ( MCPMSMFOC_CONTROL_TYPE != 'TORQUE_LOOP' ) >
@@ -507,25 +490,22 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
                 pState->angleDifference = UTIL_AngleDifferenceGet( pState->openLoopAngle, pOutput->elecAngle );
 
                 /** Set FOC state machine to ClosingLoop */
-                pState->FocState = FocState_ClosingLoop;
+               pState->FocState = FocState_ClosingLoop;
             }
 
             pState->nRef = pState->openLoopSpeed;
 
             /** Sine-cosine calculation */
             mcUtils_SineCosineCalculation( pState->openLoopAngle, &sine, &cosine );
-
             break;
         }
 
         case FocState_ClosingLoop:
         {
-            uint16_t transitionAngle = 0u;
-
-            transitionAngle = pOutput->elecAngle + pState->angleDifference;
+            pOutput->elecAngle = pOutput->elecAngle + pState->angleDifference;
 
             /** Sine-cosine calculation */
-            mcUtils_SineCosineCalculation( transitionAngle, &sine, &cosine );
+            mcUtils_SineCosineCalculation( pOutput->elecAngle, &sine, &cosine );
 
             /** Linear ramp */
             UTILS_LinearRamp(&pState->angleDifference, OPEN_TO_CLOSE_ANGLE_STEP_SIZE, 0u);
@@ -540,7 +520,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 <#if ( MCPMSMFOC_CONTROL_TYPE != 'TORQUE_LOOP' ) >
             /** Execute speed controller */
             mcSpeI_SpeedControlAuto(&pState->bSpeedController, pState->nRef,
-                                pOutput->elecSpeed, &pState->iQref );
+                                               pOutput->elecSpeed, &pState->iQref );
 <#else>
             pState->iQref = 1000;
 </#if>
@@ -554,53 +534,11 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
             /** Reference Control */
             mcRefI_ReferenceControl( &mcFoc_State_mds.bReferenceController, pModule->dInput.reference, &pState->nRef );
 
-<#if ( ( MCPMSMFOC_ENABLE_FW == true ) && ( MCPMSMFOC_ENABLE_MTPA == true )) >
-
-            /** Execute flux weakening  */
-            int16_t idrefFW = 0;
-            int16_t idrefMTPA = 0f;
-
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-            /** Execute flux weakening  */
-            mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,
-                                pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &idrefFW );
-<#else>
-            /** Execute flux weakening  */
-            mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,  &eAlphaBeta,
-                                pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &idrefFW );
-</#if>
-
-            mcFlxI_MTPA(  &pState->bFluxController, &pOutput->iDQ, &idrefMTPA );
-
-            /** */
-            if( idrefMTPA < idrefFW ) {
-                pState->iDref = idrefMTPA;
-            }
-            else {
-                pState->iDref = idrefFW;
-            }
-
-<#elseif ( MCPMSMFOC_ENABLE_MTPA ==  true ) >
-            mcFlxI_MTPA(  &pState->bFluxController, &pOutput->iDQ, &pState->iDref );
-<#elseif ( MCPMSMFOC_ENABLE_FW == true ) >
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-
-            /** Execute flux weakening  */
-            mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,
-                                pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &pState->iDref );
-<#else>
-            /** Execute flux weakening  */
-            mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,  &eAlphaBeta,
-                                pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &pState->iDref );
-</#if>
-</#if>
-
-
 <#if ( MCPMSMFOC_CONTROL_TYPE != 'TORQUE_LOOP' ) >
             /** Execute speed controller */
             pState->nRef *= pState->commandDirection;
             mcSpeI_SpeedControlAuto(&pState->bSpeedController, pState->nRef,
-                                pOutput->elecSpeed, &pState->iQref );
+                                                  pOutput->elecSpeed, &pState->iQref );
 <#else>
             pState->iQref = 1000;
 </#if>
@@ -613,22 +551,37 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
         break;
     }
 
-    /** Park Transformation */
+    /** Park Transformation   */
     mcFoc_ParkTransformation( &pOutput->iAlphaBeta, sine, cosine, &pOutput->iDQ );
 
-    /** Execute flux control */
-    mcFlxI_FluxControlAuto( &pState->bFluxController, pState->iDref, pOutput->iDQ.d, &pState->uDQ.d );
+    /** Execute flux control. Note. Implied rescale of 0.636619 * Vdc  to 1 */
+    int16_t  maxBusVoltage = Q_SCALE(1.0);
+    mcFlxI_FluxControlAuto( &pState->bFluxController, pState->iDref, pOutput->iDQ.d, maxBusVoltage, &pState->uDQ.d );
 
-    /** ToDO: Apply circle limit for Q-axis reference current clamping  */
+    /** Calculate maximum allowed Q-axis voltage   */
+    int32_t uqLimitSquare =((int32_t)Q_SCALE(1.0) * (int32_t)Q_SCALE(1.0)) - ( (int32_t)pState->uDQ.d * (int32_t)pState->uDQ.d );
+    int16_t uqLimit = mcUtils_SquareRoot( uqLimitSquare );
 
-    /** Execute torque control */
-    mcTorI_TorqueControlAuto( &pState->bTorqueController, pState->iQref, pOutput->iDQ.q, &pState->uDQ.q );
+    /** Calculate the maximum allowed Q-axis reference current  */
+    int32_t iqrefLimitSquare = ((int32_t)Q_SCALE(1.0) * (int32_t)Q_SCALE(1.0)) - ( (int32_t)pState->iDref * (int32_t)pState->iDref );
+    int16_t iqrefLimit = mcUtils_SquareRoot( iqrefLimitSquare );
 
-    /** Inverse Park transformation */
+    UTIL_ApplyClampS16( &pState->iQref, iqrefLimit, -iqrefLimit );
+
+    /** Execute torque control  */
+    mcTorI_TorqueControlAuto( &pState->bTorqueController, pState->iQref, pOutput->iDQ.q, uqLimit, &pState->uDQ.q );
+
+    /** Inverse Park transformation  */
     mcFoc_InverseParkTransformation( &pState->uDQ, sine, cosine, &pOutput->uAlphaBeta );
 
-    /** Space vector modulation */
+    /** Space vector modulation  */
     mcPwmI_PulseWidthModulation(&pState->bPwmModulator, &pOutput->uAlphaBeta, mcPwmI_Duty_gau16 );
+
+<#if ( MCPMSMFOC_ENABLE_MTPA == true ) || ( MCPMSMFOC_ENABLE_FW == true ) >
+    /** Get Flux reference value  */
+    mcFlxI_FluxReferenceGet( &pState->bFluxController, &pState->uDQ, &pOutput->iDQ,
+                                   &pState->eAlphaBeta, pOutput->elecSpeed,  Q_SCALE(1.0), &pState->iDref );
+</#if>
 
 }
 
@@ -663,7 +616,7 @@ void mcFocI_FieldOrientedControlSlow( const tmcFocI_ModuleData_s * const pParame
  */
 void mcFocI_MotorDirectionChange(const tmcFocI_ModuleData_s * const pModule )
 {
-     /** Get the linked state variable */
+    /** Get the linked state variable */
     tmcFoc_State_s * pState;
     pState = (tmcFoc_State_s *)pModule->pStatePointer;
 

@@ -13,7 +13,7 @@
  *
  * @Description
  *    This file contains variables and function implementations which are generally used for reference
- *    control in pulse width modulation. It is implemented in Q2.14 fixed point arithmetic.
+ *    control in pulse width modulation. 
  */
 
 // DOM-IGNORE-BEGIN

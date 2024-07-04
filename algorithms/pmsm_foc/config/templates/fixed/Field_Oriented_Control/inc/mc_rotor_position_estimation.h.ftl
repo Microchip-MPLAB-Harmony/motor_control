@@ -13,7 +13,7 @@
  *
  * @Description
  *    This file contains variables and function prototypes which are generally used for rotor
- *    position estimation in pulse width modulation. It is implemented in Q2.14 fixed point arithmetic.
+ *    position estimation in pulse width modulation. 
  */
 
 //DOM-IGNORE-BEGIN
@@ -66,10 +66,10 @@ typedef struct
     tmcMot_PMSM_s  * pMotorParameters;
 
     /** BEMF observer parameters */
-    float32_t Ke;   /**< BEMF observer gain */
-    float32_t dt;   /**< Sampling time */
-    float32_t nMin; /**< Minimum electrical speed */
-    void * pStatePointer; /**< Pointer to module state */
+    float32_t Ke;              /**< BEMF observer gain */
+    float32_t dt;              /**< Sampling time */
+    float32_t calibTimeInSec;  /**< Offset calibration time */
+    void * pStatePointer;      /**< Pointer to module state */
 } tmcRpe_Parameters_s;
 
 /*******************************************************************************
@@ -95,9 +95,9 @@ __STATIC_INLINE void mcRpeI_ParametersSet( tmcRpe_Parameters_s * const pParamete
     pParameters->pMotorParameters = &mcMotI_PMSM_gds;
 
     /** BEMF observer parameters */
-    pParameters->Ke = (float32_t)7.515;
-    pParameters->dt = (float32_t)(0.0000625);
-    pParameters->nMin = 500.0f ;
+    pParameters->Ke = (float32_t)${MCPMSMFOC_BEMF_CONST};
+    pParameters->dt = (float32_t)${MCPMSMFOC_PWM_PERIOD};
+    pParameters->calibTimeInSec = (float32_t)(1.0);
 }
 
 /*******************************************************************************
@@ -154,15 +154,17 @@ void mcRpeI_RotorPositionEstimDisable( tmcRpe_Parameters_s * const pParameters )
  * @return None
  */
 #ifdef RAM_EXECUTE
-void __ramfunc__ mcRpeI_RotorPositionEstim( const tmcRpe_Parameters_s * const pParameters,
-                                            const tmcTypes_AlphaBeta_s * pIAlphaBeta,
-                                            const tmcTypes_AlphaBeta_s * pUAlphaBeta,
-                                            uint16_t * pAngle, int16_t * pSpeed );
+void __ramfunc__  mcRpeI_RotorPositionEstim( const tmcRpe_Parameters_s * const pParameters,
+                                          const tmcTypes_AlphaBeta_s * pIAlphaBeta,
+                                          const tmcTypes_AlphaBeta_s * pUAlphaBeta,
+                                          tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                                          uint16_t * pAngle, int16_t * pSpeed  );
 #else
-void mcRpeI_RotorPositionEstim( const tmcRpe_Parameters_s * const pParameters,
-                                const tmcTypes_AlphaBeta_s * pIAlphaBeta,
-                                const tmcTypes_AlphaBeta_s * pUAlphaBeta,
-                                uint16_t * pAngle, int16_t * pSpeed );
+void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
+                              const tmcTypes_AlphaBeta_s * pIAlphaBeta,
+                              const tmcTypes_AlphaBeta_s * pUAlphaBeta,
+                              tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                              uint16_t * pAngle, int16_t * pSpeed );
 #endif
 
 /*! 

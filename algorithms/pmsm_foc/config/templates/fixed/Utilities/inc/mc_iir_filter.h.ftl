@@ -37,11 +37,10 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef MC_PI_CONTROL
-#define MC_PI_CONTROL
+#ifndef MC_IIR_FILTER
+#define MC_IIR_FILTER
 
 #include "mc_types.h"
-#include "mc_utilities.h"
 
 /******************************************************************************
  * Constants
@@ -50,19 +49,24 @@
 /******************************************************************************
  * User-defined data structure
 ******************************************************************************/
-typedef struct
-{
-    int16_t error;
-    int16_t KpVal;
-    uint16_t KpShift;
-    int16_t KiVal;
-    uint16_t KiShift;
-    int32_t Yp;
-    int64_t Yint;
-    int16_t Ymin;
-    int16_t Ymax;
-    int16_t Yo;
-}tmcUtils_PiControl_s;
+/**
+ * @brief Structure to hold the state and coefficients for each stage of the IIR filter.
+ */
+typedef struct {
+    int16_t a;            /**< Coefficient a in Q15 format */
+    int16_t b;            /**< Coefficient b in Q15 format */
+    int16_t prev_input;   /**< Previous input (x[n-1]) in Q15 format */
+    int16_t prev_output;  /**< Previous output (y[n-1]) in Q15 format */
+} IIRStage;
+
+/**
+ * @brief Structure to hold multiple stages of the IIR filter.
+ */
+typedef struct {
+    IIRStage *stages;   /**< Array of IIR filter stages */
+    int num_stages;     /**< Number of stages in the IIR filter */
+} IIRFilter;
+
 
 /******************************************************************************
  * Interface variables
@@ -71,79 +75,30 @@ typedef struct
 /******************************************************************************
  * Interface functions
 ******************************************************************************/
-/*! \brief
- *
- * Details
- *
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+/**
+ * @brief Initializes the IIR filter with the given coefficients and number of stages.
+ * 
+ * @param filter Pointer to the IIR filter structure.
+ * @param a Array of coefficients a for each stage in Q15 format.
+ * @param b Array of coefficients b for each stage in Q15 format.
+ * @param num_stages Number of stages in the IIR filter.
  */
-void mcUtils_PiControlInit( float32_t Kp, float32_t Ki, float32_t dt,  tmcUtils_PiControl_s  * const pControl);
+void IIRFilter_FilterInitialize(IIRFilter *filter, int16_t a[], int16_t b[], int num_stages);
 
-/*! \brief
- *
- * Details
- *
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+/**
+ * @brief Applies the IIR filter to an input sample.
+ * 
+ * @param filter Pointer to the IIR filter structure.
+ * @param input Input sample to filter.
+ * @return Filtered output sample.
  */
+int16_t IIRFilter_FilterApply(IIRFilter *filter, int16_t input);
 
-#ifdef RAM_EXECUTE
-void __ramfunc__ mcUtils_PiLimitUpdate( const int16_t Ymin, const int16_t Ymax, tmcUtils_PiControl_s  * const pControl );
-#else
-void mcUtils_PiLimitUpdate( const int16_t Ymin, const int16_t Ymax, tmcUtils_PiControl_s  * const pControl );
-#endif
-
-/*! \brief
- *
- * Details
- *
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+/**
+ * @brief Frees the memory allocated for the IIR filter stages.
+ * 
+ * @param filter Pointer to the IIR filter structure.
  */
+void IIRFilter_FilterFree(IIRFilter *filter);
 
-#ifdef RAM_EXECUTE
-void __ramfunc__ mcUtils_PiIntegralUpdate( const int16_t value, tmcUtils_PiControl_s  * const pControl );
-#else
-void mcUtils_PiIntegralUpdate( const int16_t value, tmcUtils_PiControl_s  * const pControl );
-#endif
-
-/*! \brief
- *
- * Details
- *
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
- */
-
-#ifdef RAM_EXECUTE
-void __ramfunc__ mcUtils_PiControl( const int16_t error, tmcUtils_PiControl_s  * const pControl );
-#else
-void mcUtils_PiControl(const int16_t error, tmcUtils_PiControl_s  * const pControl  );
-#endif
-
-/*! \brief
- *
- * Details
- *
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
- */
-void mcUtils_PiControlReset(const int32_t integral, tmcUtils_PiControl_s  * const pControl);
-
-#endif // MC_PI_CONTROL
+#endif // MC_IIR_FILTER

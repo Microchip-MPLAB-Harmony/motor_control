@@ -169,10 +169,10 @@ void mcHal_DirectionIndication( void )
 <#list 0..10 as index>
 <#if "Fault Indication" == ledFunction(index)>
 /**
- * @brief Set direction indication
+ * @brief Set fault indication
  *
  * @details
- * Set direction indication
+ * Set fault indication
  */
 void mcHal_FaultIndicationSet( void )
 {

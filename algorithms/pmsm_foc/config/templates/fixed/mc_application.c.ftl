@@ -197,8 +197,8 @@ void mcAppI_ApplicationInit( void )
     /** Enable interrupt for fault detection */
     mcHalI_PwmCallbackRegister( (TCC_CALLBACK)mcAppI_OverCurrentReactionIsr, (uintptr_t)dummyForMisra );
 
-    /** ToDO: Check if it is needed */
-    // mcHalI_PwmInterruptEnable( );
+    /** TEnable PWM fault interrupt for Over-current reaction */
+    mcHalI_PwmInterruptEnable( );
 
     /** Enables PWM channels. */
     mcHalI_PwmTimerStart( );

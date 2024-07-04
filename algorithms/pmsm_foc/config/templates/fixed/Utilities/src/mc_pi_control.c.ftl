@@ -1,20 +1,19 @@
-/**
- * @brief
- *  PI controller functions for motor control.
- *
- * @Company
- *  Microchip Technology Inc.
- *
- * @File name
- *  mc_pi_control.c
- *
- * @Summary
- *  Source file which contains the implementation of PI controller functions.
- *
- * @Description
- *  This file contains the implementation of PI controller functions which are
- *  generally used in Motor Control. Implemented in Q2.14 Fixed Point Arithmetic.
- */
+/*******************************************************************************
+  Utility Functions
+
+  Company:
+    - Microchip Technology Inc
+
+  File Name:
+    - mc_utilitiesc
+
+  Summary:
+    - Utility Functions
+
+  Description:
+    - Utility Functions
+
+ *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -50,7 +49,6 @@ Headers inclusions
 /*******************************************************************************
 Macro definitions
  *******************************************************************************/
-#define GET_VALUE_SHIFT     mcUtils_FloatToValueShiftPair
 
 /******************************************************************************
 Private global variables
@@ -59,148 +57,149 @@ Private global variables
 /*******************************************************************************
 Functions
  *******************************************************************************/
-/**
- * @brief Initializes the PI control structure with the given parameters.
+/*! \brief
  *
- * This function sets up the PI control structure with proportional and integral
- * gains, and computes the shifts required for fixed-point arithmetic.
+ * Details
  *
- * @param[in] Kp Proportional gain.
- * @param[in] Ki Integral gain.
- * @param[in] dt Sampling time.
- * @param[in,out] pControl Pointer to the PI control structure to be initialized.
  *
- * @return None.
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
-void mcUtils_PiControlInit(float32_t Kp, float32_t Ki, float32_t dt, tmcUtils_PiControl_s * const pControl)
+void mcUtils_PiControlInit( float32_t Kp, float32_t Ki, float32_t dt,  tmcUtils_PiControl_s  * const pControl)
 {
-    float32_t f32a;
+  float32_t f32a;
 #if defined ENABLE_TUSTIN_APPROXIMATION
     /** */
 #else
 #endif
-    GET_VALUE_SHIFT(Kp, &pControl->KpVal, &pControl->KpShift);
+     mcUtils_FloatToValueShiftPair( Kp, &pControl->KpVal, &pControl->KpShift);
 
-    f32a = Ki * (float32_t)(1u << pControl->KpShift) * dt;
-    GET_VALUE_SHIFT(f32a, &pControl->KiVal, &pControl->KiShift);
+     f32a = Ki * dt;
+     mcUtils_FloatToValueShiftPair(f32a, &pControl->KiVal, &pControl->KiShift);
+     pControl->KiShift -= pControl->KpShift;
 }
 
-/**
- * @brief Updates the PI control limits.
+/*! \brief
  *
- * This function updates the minimum and maximum output limits for the PI control.
+ * Details
  *
- * @param[in] Ymin Minimum output limit.
- * @param[in] Ymax Maximum output limit.
- * @param[in,out] pControl Pointer to the PI control structure to be updated.
  *
- * @return None.
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
+
 #ifdef RAM_EXECUTE
-void __ramfunc__ mcUtils_PiLimitUpdate(const int16_t Ymin, const int16_t Ymax, tmcUtils_PiControl_s * const pControl)
+void __ramfunc__ mcUtils_PiLimitUpdate( const int16_t Ymin, const int16_t Ymax, tmcUtils_PiControl_s  * const pControl )
 #else
-void mcUtils_PiLimitUpdate(const int16_t Ymin, const int16_t Ymax, tmcUtils_PiControl_s * const pControl)
+void mcUtils_PiLimitUpdate( const int16_t Ymin, const int16_t Ymax, tmcUtils_PiControl_s  * const pControl  )
 #endif
 {
     pControl->Ymin = Ymin;
     pControl->Ymax = Ymax;
 }
 
-/**
- * @brief Updates the integral part of the PI control.
+/*! \brief
  *
- * This function updates the integral term of the PI control with the given value.
+ * Details
  *
- * @param[in] value Integral value to be updated.
- * @param[in,out] pControl Pointer to the PI control structure to be updated.
  *
- * @return None.
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
+
 #ifdef RAM_EXECUTE
-void __ramfunc__ mcUtils_PiIntegralUpdate(const int16_t value, tmcUtils_PiControl_s * const pControl)
+void __ramfunc__ mcUtils_PiIntegralUpdate( const int16_t value, tmcUtils_PiControl_s  * const pControl )
 #else
-void mcUtils_PiIntegralUpdate(const int16_t value, tmcUtils_PiControl_s * const pControl)
+void mcUtils_PiIntegralUpdate( const int16_t value, tmcUtils_PiControl_s  * const pControl )
 #endif
 {
-    pControl->Yint = mcUtils_LeftShiftS16(value, pControl->KpShift);
+    pControl->Yint = value << pControl->KpShift;
 }
 
-/**
- * @brief Executes the PI control algorithm.
+/*! \brief
  *
- * This function computes the PI control output based on the given error and
- * updates the control structure accordingly.
+ * Details
  *
- * @param[in] error The current error value.
- * @param[in,out] pControl Pointer to the PI control structure to be updated.
  *
- * @return None.
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
+
 #ifdef RAM_EXECUTE
-void __ramfunc__ mcUtils_PiControl(const int16_t error, tmcUtils_PiControl_s * const pControl)
+void __ramfunc__ mcUtils_PiControl( const int16_t error, tmcUtils_PiControl_s  * const pControl )
 #else
-void mcUtils_PiControl(const int16_t error, tmcUtils_PiControl_s * const pControl)
+void mcUtils_PiControl(const int16_t error, tmcUtils_PiControl_s  * const pControl  )
 #endif
 {
-    int32_t y, yp;
+     int32_t y, yp;
 
-    /** Update error */
-    pControl->error = error;
+     /** Update error */
+     pControl->error = error;
 
-    /** Proportional term */
-    yp = ((int32_t)pControl->KpVal * (int32_t)error);
-    pControl->Yp = yp;
+     /** Limit error */
+     UTIL_ApplyClampS16( &pControl->error, Q_SCALE( 0.98f ), -Q_SCALE( 0.98f ));
 
-    /** Sum */
-    y = mcUtils_RightShiftS32((yp + pControl->Yint), pControl->KpShift);
+     /** Proportional term */
+     yp  = ((int32_t)pControl->KpVal * (int32_t) pControl->error);
+     pControl->Yp = yp;
 
-    /** Output limitation and anti wind-up */
-    if (y > pControl->Ymax)
-    {
-        /** Limitation of output to upper boundary */
-        y = pControl->Ymax;
+     /** Sum */
+     y = ( yp +  pControl->Yint ) >> pControl->KpShift;
 
-        /** Limitation of integral part */
-        if (yp > pControl->Ymax)
-        {
-            yp = pControl->Ymax;
-        }
-        pControl->Yint = mcUtils_LeftShiftS32((int32_t)pControl->Ymax, pControl->KpShift) - yp;
-    }
-    else if (y < pControl->Ymin)
-    {
-        /** Limitation of output to lower boundary */
-        y = pControl->Ymin;
+     /** Output limitation and anti wind-up */
+     if ( y > pControl->Ymax )
+     {
+          /** Limitation of output to upper boundary */
+          y = pControl->Ymax;
 
-        /** Limitation of integral part */
-        if (yp < pControl->Ymin)
-        {
-            yp = pControl->Ymin;
-        }
-        pControl->Yint = mcUtils_LeftShiftS32((int32_t)-pControl->Ymax, pControl->KpShift) - yp;
-    }
-    else
-    {
-        /** No output limitation -> no limitation of integral term */
-        pControl->Yint += mcUtils_RightShiftS32(((int32_t)pControl->KiVal * (int32_t)error), pControl->KiShift);
-    }
+          /** Limitation of integral part */
+          if (yp > pControl->Ymax)
+          {
+              yp = pControl->Ymax;
+          }
+          pControl->Yint =  ((int32_t)pControl->Ymax << pControl->KpShift ) - yp;
+     }
+     else if (y < pControl->Ymin )
+     {
+          /** Limitation of output to lower boundary */
+          y = pControl->Ymin;
 
-    pControl->Yo = (int16_t)y;
+          /** Limitation of integral part */
+          if (yp < pControl->Ymin)
+          {
+               yp = pControl->Ymin;
+          }
+          pControl->Yint =  ((int32_t)pControl->Ymin << pControl->KpShift ) - yp;
+     }
+     else
+     {
+          /** No output limitation -> no limitation of integral term */
+          pControl->Yint += (((int32_t)pControl->KiVal * (int32_t) pControl->error ) >> pControl->KiShift );
+     }
+
+     pControl->Yo = (int16_t)y;
 }
 
-/**
- * @brief Resets the PI control output.
+/*! \brief
  *
- * This function resets the PI control output to the given value.
+ * Details
  *
- * @param[in] out The output value to reset.
- * @param[in,out] pControl Pointer to the PI control structure to be reset.
  *
- * @return None.
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
-void mcUtils_PiControlReset(const int32_t out, tmcUtils_PiControl_s * const pControl)
+void mcUtils_PiControlReset(const int32_t out, tmcUtils_PiControl_s  * const pControl)
 {
-    pControl->Yint = mcUtils_LeftShiftS32(out, pControl->KpShift);
+    pControl->Yint = out << pControl->KpShift;
 }
-
 

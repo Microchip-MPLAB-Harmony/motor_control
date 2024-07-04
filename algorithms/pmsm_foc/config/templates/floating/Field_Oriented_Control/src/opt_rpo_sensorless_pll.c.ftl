@@ -15,7 +15,7 @@
  *
  * @Description
  *    This file contains variables and function implementations which are generally used for rotor
- *    position estimation in pulse width modulation. It is implemented in Q2.14 fixed point arithmetic.
+ *    position estimation in pulse width modulation. 
  */
 
 // DOM-IGNORE-BEGIN

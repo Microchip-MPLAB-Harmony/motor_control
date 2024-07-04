@@ -37,11 +37,10 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef MC_PI_CONTROL
-#define MC_PI_CONTROL
+#ifndef MC_FIR_FILTER
+#define MC_FIR_FILTER
 
 #include "mc_types.h"
-#include "mc_utilities.h"
 
 /******************************************************************************
  * Constants
@@ -50,19 +49,11 @@
 /******************************************************************************
  * User-defined data structure
 ******************************************************************************/
-typedef struct
-{
-    int16_t error;
-    int16_t KpVal;
-    uint16_t KpShift;
-    int16_t KiVal;
-    uint16_t KiShift;
-    int32_t Yp;
-    int64_t Yint;
-    int16_t Ymin;
-    int16_t Ymax;
-    int16_t Yo;
-}tmcUtils_PiControl_s;
+typedef struct {
+    int16_t *coefficients;
+    int16_t *history;
+    int num_taps;
+} FIRFilter;
 
 /******************************************************************************
  * Interface variables
@@ -71,79 +62,29 @@ typedef struct
 /******************************************************************************
  * Interface functions
 ******************************************************************************/
-/*! \brief
- *
- * Details
- *
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+/**
+ * @brief Initializes the FIR filter with the given coefficients and number of taps.
+ * 
+ * @param filter Pointer to the FIR filter structure.
+ * @param coefficients Array of FIR filter coefficients in Q15 format.
+ * @param num_taps Number of taps in the FIR filter.
  */
-void mcUtils_PiControlInit( float32_t Kp, float32_t Ki, float32_t dt,  tmcUtils_PiControl_s  * const pControl);
+void FIRFilter_FilterInitialize(FIRFilter *filter, int16_t *coefficients, int num_taps);
 
-/*! \brief
- *
- * Details
- *
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+/**
+ * @brief Applies the FIR filter to an input sample.
+ * 
+ * @param filter Pointer to the FIR filter structure.
+ * @param input Input sample to filter.
+ * @return Filtered output sample.
  */
+int16_t FIRFilter_FilterApply(FIRFilter *filter, int16_t input);
 
-#ifdef RAM_EXECUTE
-void __ramfunc__ mcUtils_PiLimitUpdate( const int16_t Ymin, const int16_t Ymax, tmcUtils_PiControl_s  * const pControl );
-#else
-void mcUtils_PiLimitUpdate( const int16_t Ymin, const int16_t Ymax, tmcUtils_PiControl_s  * const pControl );
-#endif
-
-/*! \brief
- *
- * Details
- *
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
+/**
+ * @brief Frees the memory allocated for the FIR filter.
+ * 
+ * @param filter Pointer to the FIR filter structure.
  */
+void FIRFilter_FilterFree(FIRFilter *filter) ;
 
-#ifdef RAM_EXECUTE
-void __ramfunc__ mcUtils_PiIntegralUpdate( const int16_t value, tmcUtils_PiControl_s  * const pControl );
-#else
-void mcUtils_PiIntegralUpdate( const int16_t value, tmcUtils_PiControl_s  * const pControl );
-#endif
-
-/*! \brief
- *
- * Details
- *
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
- */
-
-#ifdef RAM_EXECUTE
-void __ramfunc__ mcUtils_PiControl( const int16_t error, tmcUtils_PiControl_s  * const pControl );
-#else
-void mcUtils_PiControl(const int16_t error, tmcUtils_PiControl_s  * const pControl  );
-#endif
-
-/*! \brief
- *
- * Details
- *
- *
- * @param[in]:
- * @param[in/out]:
- * @param[out]:
- * @return:
- */
-void mcUtils_PiControlReset(const int32_t integral, tmcUtils_PiControl_s  * const pControl);
-
-#endif // MC_PI_CONTROL
+#endif // MC_FIR_FILTER

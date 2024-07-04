@@ -51,12 +51,11 @@ Headers inclusions
 /*******************************************************************************
  * Local configuration options
 *******************************************************************************/
-#define ONE_BY_SQRT3_FLOAT (float32_t)(0.577350269) /*!< Value of 1/sqrt(3) as a float */
-#define TWO_PI_FLOAT (float32_t)(6.28318530f)     /*!< Value of 2*pi as a float */
 
 /*******************************************************************************
  * Private data types
 *******************************************************************************/
+<#if MCPMSMFOC_ENABLE_MTPA == true >
 /**
  * @brief Structure defining MTPA module state
  */
@@ -64,11 +63,31 @@ typedef struct
 {
     bool enable;         /*!< Flag indicating if MTPA module is enabled */
     bool initDone;       /*!< Flag indicating if MTPA module initialization is done */
-    int16_t psi;         /*!< Psi parameter */
+
     int32_t K1;          /*!< K1 parameter */
     int32_t K2;          /*!< K2 parameter */
-    int16_t idref;       /*!< Reference id current */
+    int16_t mtpaIdRef;   /*!< Reference id current */
 } tmcFlx_MTPA_s;
+</#if>
+
+<#if MCPMSMFOC_ENABLE_FW == true >
+typedef struct {
+    bool enable;
+    bool initDone;
+    int16_t RsValue;
+    uint16_t RsShift;
+    int16_t LdValue;
+    uint16_t LdShift;
+    int16_t KeValue;
+    uint16_t KeShift;
+    int16_t uqrefLimit;
+    int16_t absIqRs;
+    int16_t eMagnitude;
+    int16_t omegaLdId;
+    int16_t omegaLd;
+    int16_t fluxWeakIdRef;
+}tmcFlx_FieldWeakening_s;
+</#if>
 
 /**
  * @brief Structure defining flux control state
@@ -77,7 +96,12 @@ typedef struct
 {
     bool enable;                    /*!< Flag indicating if flux control is enabled */
     bool initDone;                  /*!< Flag indicating if flux control initialization is done */
+<#if MCPMSMFOC_ENABLE_MTPA == true >
     tmcFlx_MTPA_s bMTPA;            /*!< MTPA module state structure */
+</#if>
+<#if MCPMSMFOC_ENABLE_FW == true >
+    tmcFlx_FieldWeakening_s bFieldWeakening;  /*!< Flux weakening module state structure */
+</#if>
     tmcUtils_PiControl_s bPIController; /*!< PI controller state structure */
 } tmcFlx_State_s;
 
@@ -97,6 +121,314 @@ Macro Functions
 /*******************************************************************************
 Private Functions
 *******************************************************************************/
+<#if MCPMSMFOC_ENABLE_MTPA == true >
+/*!
+ * @brief MTPA parameters initialization
+ *
+ *  MTPA parameters initialization
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_MTPAInit( tmcFlx_Parameters_s * const pParameters )
+{
+    float32_t f32a;
+
+    /** Get the linked state variable */
+    tmcFlx_State_s * pState;
+    pState = (tmcFlx_State_s *)pParameters->pStatePointer;
+
+    /** Calculate air-gap flux */
+    f32a = pParameters->pMotorParameters->KeInVrmsPerKrpm;
+    float32_t airGapFlux = (float32_t)(  60.0f * f32a / ( 1.414f * 1000 * ONE_PI ));
+
+    /** Calculate inductance difference  */
+    float32_t ldLqDiff = pParameters->pMotorParameters->LdInHenry - pParameters->pMotorParameters->LqInHenry;
+
+    /** Calculate intermediate coefficients for MTPA current calculation */
+    f32a = -(float32_t)( 0.5f * airGapFlux / ldLqDiff );
+    pState->bMTPA.K1 = f32a * K_CURRENT;
+    pState->bMTPA.K2 = ( pState->bMTPA.K1 * pState->bMTPA.K1 ) >> 2u;
+
+    /** Set initialization flag */
+    pState->bMTPA.initDone = true;
+}
+
+/*!
+ * @brief Get MTPA current
+ *
+ * Get MTPA current
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pUDQ Pointer to DQ axis voltage
+ * @param[in] pIDQ Pointer to DQ axis current
+ * @param[in] wmechRPM Mechanical speed of motor
+ * @param[in] uBus Bus voltage
+ * @return None
+ */
+#ifdef RAM_EXECUTE
+int16_t __ramfunc__ mcFlx_MTPA( tmcFlx_MTPA_s * const pMTPA, tmcTypes_DQ_s * const pIDQ )
+#else
+int16_t mcFlx_MTPA( tmcFlx_MTPA_s * const pMTPA, tmcTypes_DQ_s * const pIDQ )
+#endif
+{
+    if( !pMTPA->enable ) {
+        return 0;
+    }
+
+    int32_t  iqSquareBy4;
+    iqSquareBy4 = ((int32_t)pIDQ->q * (int32_t)pIDQ->q ) >> 2u;
+    pMTPA->mtpaIdRef = (int32_t)pMTPA->K1 - ((int32_t)mcUtils_SquareRoot( (uint32_t)pMTPA->K2 + (uint32_t)iqSquareBy4 ) << 1u );
+
+    return pMTPA->mtpaIdRef;
+}
+
+/*!
+ * @brief MTPA reset
+ *
+ * Get MTPA current
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_MTPAReset( const tmcFlx_Parameters_s * const pParameters )
+{
+    /** Get the linked state variable */
+    tmcFlx_State_s * pState;
+    pState = (tmcFlx_State_s *)pParameters->pStatePointer;
+
+    /** Reset MTPA values   */
+    pState->bMTPA.mtpaIdRef = 0;
+}
+/*!
+ * @brief MTPA parameters enable
+ *
+ *  MTPA parameters enable
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_MTPAEnable( tmcFlx_Parameters_s * const pParameters )
+{
+    /** Get the linked state variable */
+    tmcFlx_State_s * pState;
+    pState = (tmcFlx_State_s *)pParameters->pStatePointer;
+
+    if( ( NULL == pState ) || ( !pState->bMTPA.initDone ))
+    {
+        /** Initialize parameters */
+        mcFlx_MTPAInit(pParameters);
+    }
+    else
+    {
+        /** For MISRA Compliance */
+    }
+
+    /** Set enable flag as true */
+    pState->bMTPA.enable = true;
+}
+
+/*!
+ * @brief MTPA parameters disable
+ *
+ *  MTPA parameters disable
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_MTPADisable( tmcFlx_Parameters_s * const pParameters )
+{
+    /** Get the linked state variable */
+    tmcFlx_State_s * pState;
+    pState = (tmcFlx_State_s *)pParameters->pStatePointer;
+
+    if( NULL != pState)
+    {
+        /** Reset state variables  */
+        mcFlx_MTPAReset(pParameters);
+    }
+    else
+    {
+        /** For MISRA Compliance */
+    }
+
+    /** Set enable flag as true */
+    pState->bMTPA.enable = false;
+}
+</#if>
+
+<#if MCPMSMFOC_ENABLE_FW == true >
+/*!
+ * @brief Field weakening parameters initialization
+ *
+ * Get field weakening current
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_FieldWeakeningInit( tmcFlx_Parameters_s * const pParameters )
+{
+    float32_t f32a;
+
+    /** Get the linked state variable */
+    tmcFlx_State_s * pState;
+    pState = (tmcFlx_State_s *)pParameters->pStatePointer;
+
+    /** Calculate scaled values  */
+    f32a = pParameters->pMotorParameters->RsInOhms/ BASE_IMPEDENCE_IN_OHMS;
+    mcUtils_FloatToValueShiftPair( f32a, &pState->bFieldWeakening.RsValue, &pState->bFieldWeakening.RsShift );
+
+    f32a = pParameters->pMotorParameters->LdInHenry * BASE_SPEED_IN_RPM / BASE_IMPEDENCE_IN_OHMS;
+    mcUtils_FloatToValueShiftPair( f32a, &pState->bFieldWeakening.LdValue, &pState->bFieldWeakening.LdShift );
+
+    /** BEMF constant values  */
+    f32a = pParameters->pMotorParameters->KeInVrmsPerKrpm / ( 1225.0f * (BASE_VOLTAGE_IN_VOLTS/ BASE_SPEED_IN_RPM ));
+    mcUtils_FloatToValueShiftPair( f32a, &pState->bFieldWeakening.KeValue, &pState->bFieldWeakening.KeShift );
+
+    /** Set initialization flag */
+    pState->bFieldWeakening.initDone = true;
+}
+
+/*!
+ * @brief Get field weakening current
+ *
+ * Get field weakening current
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pUDQ Pointer to DQ axis voltage
+ * @param[in] pIDQ Pointer to DQ axis current
+ * @param[in] wmechRPM Mechanical speed of motor
+ * @param[in] uBus Bus voltage
+ * @return None
+ */
+#ifdef RAM_EXECUTE
+int16_t __ramfunc__ mcFlx_FieldWeakening( tmcFlx_FieldWeakening_s * const pFieldWeakening,
+                                        const tmcTypes_DQ_s * const pUDQ,
+                                        tmcTypes_DQ_s * const pIDQ,
+                                        tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                                        const int16_t wmechRPM,
+                                        const int16_t uBus )
+#else
+int16_t  mcFlx_FieldWeakening(  tmcFlx_FieldWeakening_s * const pFieldWeakening,
+                                        const tmcTypes_DQ_s * const pUDQ,
+                                        tmcTypes_DQ_s * const pIDQ,
+                                        tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                                        const int16_t wmechRPM,
+                                        const int16_t uBus )
+#endif
+{
+    int16_t absIq;
+    if( !pFieldWeakening->enable )    {
+        return 0;
+    }
+
+    int32_t uqrefLimitSquare;
+
+    /** Calculate maximum q-axis reference voltage */
+    uqrefLimitSquare = (Q_SCALE(1.0) * Q_SCALE(1.0)) - ((int32_t)pIDQ->d * (int32_t)pIDQ->d);
+    pFieldWeakening->uqrefLimit = mcUtils_SquareRoot( uqrefLimitSquare );
+
+    /** Calculate BEMF voltage magnitude from mechanical RPM */
+    pFieldWeakening->eMagnitude = mcUtils_SquareRoot(( pEAlphaBeta->alpha * pEAlphaBeta->alpha ) + ( pEAlphaBeta->beta * pEAlphaBeta->beta ));
+
+    /** Calculate resistive drop  */
+    absIq = UTIL_Abs16( pIDQ->q );
+    pFieldWeakening->absIqRs =  ((int32_t)pFieldWeakening->RsValue *  (int32_t)absIq ) >> pFieldWeakening->RsShift;
+
+    /** Calculate numerator */
+    pFieldWeakening->omegaLdId = pFieldWeakening->uqrefLimit - pFieldWeakening->absIqRs - pFieldWeakening->eMagnitude;
+
+    /** Calculate numerator */
+    pFieldWeakening->omegaLd = ( (int32_t)wmechRPM *  (int32_t)pFieldWeakening->LdValue ) >> pFieldWeakening->LdShift;
+
+    /** Calculate reference */
+    if( pFieldWeakening->omegaLdId < 0 && pFieldWeakening->omegaLd != 0)
+    {
+        pFieldWeakening->fluxWeakIdRef = pFieldWeakening->omegaLdId / pFieldWeakening->omegaLd;
+    }
+    else
+    {
+        pFieldWeakening->fluxWeakIdRef = 0;
+    }
+
+    return pFieldWeakening->fluxWeakIdRef;
+}
+
+/*!
+ * @brief Field weakening reset
+ *
+ * Get field weakening current
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_FieldWeakeningReset( const tmcFlx_Parameters_s * const pParameters )
+{
+    /** Get the linked state variable */
+    tmcFlx_State_s * pState;
+    pState = (tmcFlx_State_s *)pParameters->pStatePointer;
+
+    /** Calculate scaled values  */
+    pState->bFieldWeakening.fluxWeakIdRef = 0;
+}
+
+
+/*!
+ * @brief Field weakening enable
+ *
+ *  Field weakening enable
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_FieldWeakeningEnable( tmcFlx_Parameters_s * const pParameters )
+{
+    /** Get the linked state variable */
+    tmcFlx_State_s * pState;
+    pState = (tmcFlx_State_s *)pParameters->pStatePointer;
+
+    if( ( NULL == pState ) || ( !pState->bFieldWeakening.initDone ))
+    {
+        /** Initialize parameters */
+        mcFlx_FieldWeakeningInit(pParameters);
+    }
+    else
+    {
+        /** For MISRA Compliance */
+    }
+
+    /** Set enable flag as true */
+    pState->bFieldWeakening.enable = true;
+}
+
+/*!
+ * @brief Field weakening disable
+ *
+ *  Field weakening disable
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_FieldWeakeningDisable( tmcFlx_Parameters_s * const pParameters )
+{
+    /** Get the linked state variable */
+    tmcFlx_State_s * pState;
+    pState = (tmcFlx_State_s *)pParameters->pStatePointer;
+
+    if( NULL != pState)
+    {
+        /** Reset state variables  */
+        mcFlx_FieldWeakeningReset(pParameters);
+    }
+    else
+    {
+        /** For MISRA Compliance */
+    }
+
+    /** Set enable flag as true */
+    pState->bFieldWeakening.enable = false;
+}
+</#if>
 
 /*******************************************************************************
  * Interface Functions
@@ -118,13 +450,12 @@ void  mcFlxI_FluxControlInit( tmcFlx_Parameters_s * const pParameters )
     mcFlxI_ParametersSet(pParameters);
 
     /** Set PI controller parameters */
-    float32_t Kp = pParameters->Kp;// * BASE_SPEED_IN_RPM / BASE_CURRENT_IN_AMPS;
-    float32_t Ki  = pParameters->Ki;// * BASE_SPEED_IN_RPM / BASE_CURRENT_IN_AMPS;
+    float32_t Kp = pParameters->Kp * BASE_CURRENT_IN_AMPS / BASE_VOLTAGE_IN_VOLTS;
+    float32_t Ki  = pParameters->Ki * BASE_CURRENT_IN_AMPS / BASE_VOLTAGE_IN_VOLTS;
     mcUtils_PiControlInit( Kp, Ki, pParameters->dt, &mcFlx_State_mds.bPIController );
 
     /** Set initialization flag as true */
     mcFlx_State_mds.initDone = true;
-
 }
 
 /*! 
@@ -148,8 +479,18 @@ void  mcFlxI_FluxControlEnable( tmcFlx_Parameters_s * const pParameters )
     }
     else
     {
-         /** For MISRA Compliance */
+        /** For MISRA Compliance */
     }
+
+<#if MCPMSMFOC_ENABLE_FW == true >
+    /** Enable flux weakening by default */
+    mcFlx_FieldWeakeningEnable( pParameters );
+</#if>
+
+<#if MCPMSMFOC_ENABLE_MTPA == true >
+    /** Enable MTPA by default */
+    mcFlx_MTPAEnable( pParameters );
+</#if>
 
     /** Set enable flag as true */
     pState->enable = true;
@@ -181,7 +522,6 @@ void  mcFlxI_FluxControlDisable( tmcFlx_Parameters_s * const pParameters )
 
     /** Set enable flag as true */
     pState->enable = false;
-
 }
 
 /*! 
@@ -230,10 +570,10 @@ void mcFlxI_FluxControlManual(  const tmcFlx_Parameters_s * const pParameters,
  */
 #ifdef RAM_EXECUTE
 void __ramfunc__  mcFlxI_FluxControlAuto( const tmcFlx_Parameters_s * const pParameters,
-                                        const int16_t iDref, const int16_t iDact, int16_t * const pOut   )
+                                        const int16_t iDref, const int16_t iDact, int16_t iDmax, int16_t * const pOut   )
 #else
-void mcFlxI_FluxControlAuto(  const tmcFlx_Parameters_s * const pParameters,
-                           const int16_t iDref, const int16_t iDact, int16_t * const pOut )
+void __ramfunc__  mcFlxI_FluxControlAuto( const tmcFlx_Parameters_s * const pParameters,
+                                        const int16_t iDref, const int16_t iDact, int16_t iDmax, int16_t * const pOut   )
 #endif
 {
     /** Get the linked state variable */
@@ -246,7 +586,7 @@ void mcFlxI_FluxControlAuto(  const tmcFlx_Parameters_s * const pParameters,
         int16_t error = iDref - iDact;
 
         /** Limit update for PI controller */
-        mcUtils_PiLimitUpdate( -16384, 16383, &pState->bPIController );
+        mcUtils_PiLimitUpdate( -iDmax, iDmax, &pState->bPIController );
 
         /** Excecute PI controller */
         mcUtils_PiControl( error, &pState->bPIController );
@@ -277,274 +617,58 @@ void mcFlxI_FluxControlReset( const tmcFlx_Parameters_s * const pParameters )
 
     /** Reset PI Controller */
     mcUtils_PiControlReset( 0, &pState->bPIController );
-}
-
-<#if MCPMSMFOC_ENABLE_FW == true >
-/*! 
- * @brief Enable flux weakening module
- *
- * Enables the flux weakening module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void  mcFlxI_FluxWeakeningEnable( tmcFlx_Parameters_s * const pParameters )
-{
-
-}
-
-/*! 
- * @brief Disable flux weakening module
- *
- * Disables the flux weakening module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void  mcFlxI_FluxWeakeningDisable( tmcFlx_Parameters_s * const pParameters )
-{
-
-}
-
-/*! 
- * @brief Initialize flux weakening module
- *
- * Initializes the flux weakening module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void  mcFlxI_FluxWeakeningInit( tmcFlx_Parameters_s * const pParameters )
-{
-
-}
-
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-/*! 
- * @brief Flux weakening control
- *
- * Performs flux weakening control using other algorithms.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @param[in] pUDQ Pointer to DQ voltage vector
- * @param[in] pEAlphaBeta Pointer to Alpha-Beta voltage vector
- * @param[in] uBus DC bus voltage
- * @param[in] wmechRPM Mechanical speed in RPM
- * @param[out] pIDQ Pointer to output DQ current vector
- * @param[out] pIdref Pointer to output reference ID current
- * @return None
- */
-#ifdef RAM_EXECUTE
-void __ramfunc__ mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
-                                        const tmcTypes_DQ_s * const pUDQ,
-                                        const float32_t uBus,
-                                        const float32_t wmechRPM,
-                                        tmcTypes_DQ_s * const pIDQ,
-                                        float32_t * const pIdref )
-#else
-void mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
-                            const tmcTypes_DQ_s * const pUDQ,
-                            const float32_t uBus,
-                            const float32_t wmechRPM,
-                            tmcTypes_DQ_s * const pIDQ,
-                            float32_t * const pIdref )
-#endif
-{
-
-}
-
-<#else>
-/*! 
- * @brief Flux weakening control
- *
- * Performs flux weakening control using other algorithms.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @param[in] pUDQ Pointer to DQ voltage vector
- * @param[in] pEAlphaBeta Pointer to Alpha-Beta voltage vector
- * @param[in] uBus DC bus voltage
- * @param[in] wmechRPM Mechanical speed in RPM
- * @param[out] pIDQ Pointer to output DQ current vector
- * @param[out] pIdref Pointer to output reference ID current
- * @return None
- */
-#ifdef RAM_EXECUTE
-void __ramfunc__ mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
-                                        const tmcTypes_DQ_s * const pUDQ,
-                                        const tmcTypes_AlphaBeta_s * const pEAlphaBeta,
-                                        const int16_t uBus,
-                                        const int16_t wmechRPM,
-                                        tmcTypes_DQ_s * const pIDQ,
-                                        int16_t * const pIdref )
-#else
-void mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
-                            const tmcTypes_DQ_s * const pUDQ,
-                            const tmcTypes_AlphaBeta_s * const pEAlphaBeta,
-                            const int16_t uBus,
-                            const int16_t wmechRPM,
-                            tmcTypes_DQ_s * const pIDQ,
-                            int16_t * const pIdref )
-
-#endif
-{
-
-}
-</#if>
-
-/*! 
- * @brief Reset flux weakening module
- *
- * Resets the flux weakening module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void mcFlxI_FluxWeakeningReset( const tmcFlx_Parameters_s * const pParameters )
-{
-
-}
-
-</#if>
 
 <#if MCPMSMFOC_ENABLE_MTPA == true >
-/*! 
- * @brief Enable MTPA module
- *
- * Enables the Maximum Torque per Ampere (MTPA) module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void  mcFlxI_MTPAEnable( tmcFlx_Parameters_s * const pParameters )
-{
-    /** Get the linked state variable */
-    tmcFlx_MTPA_s * pState;
-    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
-
-    if( ( NULL == pState ) || ( !pState->initDone ))
-    {
-        /** Initialize parameters */
-        mcFlxI_MTPAInit(pParameters);
-    }
-    else
-    {
-        /** For MISRA Compliance */
-    }
-
-    /** Set enable flag as true */
-    pState->enable = true;
+    /** Reset max-torque per ampere ( MTPA ) */
+    mcFlx_MTPAReset( pParameters );
+</#if>
 }
 
-/*! 
- * @brief Disable MTPA module
+<#if ( MCPMSMFOC_ENABLE_MTPA == true ) || ( MCPMSMFOC_ENABLE_FW == true ) >
+/*!
+ * @brief Get reference flux
  *
- * Disables the MTPA module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void  mcFlxI_MTPADisable( tmcFlx_Parameters_s * const pParameters )
-{
-    /** Get the linked state variable */
-    tmcFlx_MTPA_s * pState;
-    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
-
-    if( NULL != pState)
-    {
-        /** Reset state variables  */
-        mcFlxI_MTPAReset(pParameters);
-    }
-    else
-    {
-        /** For MISRA Compliance */
-    }
-
-    /** Set enable flag as true */
-    pState->enable = false;
-}
-
-/*! 
- * @brief Initialize MTPA module
- *
- * Initializes the MTPA module.
+ * Get reference flux
  *
  * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void  mcFlxI_MTPAInit( tmcFlx_Parameters_s * const pParameters )
-{
-    float32_t f32a;
-    tmcFlx_MTPA_s * pState;
-
-    /** Get the linked state variable */
-    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
-
-     /** Calculate per-phase KEMF in Vpeak per Krpm */
-    f32a = ONE_BY_SQRT3_FLOAT * pParameters->pMotorParameters->KeInVrmsPerKrpm;
-
-    // Calculate in radian/s
-    f32a = f32a * 60.0f / (TWO_PI_FLOAT * 1000.0f);
-    pState->psi = f32a * pParameters->pMotorParameters->PolePairs;
-
-     /** Calculate intermediate value */
-    float32_t LdDiff = pParameters->pMotorParameters->LdInHenry - pParameters->pMotorParameters->LdInHenry;
-    f32a = 0.5f * pState->psi / LdDiff;
-
-     /** Determine constant values */
-    pState->K1 = (int32_t)(K_CURRENT * f32a + 0.5f);
-    pState->K2 = pState->K1 * pState->K1;
-
-     /** Set enable flag as true */
-    pState->initDone = true;
-}
-
-/*! 
- * @brief MTPA control
- *
- * Performs Maximum Torque per Ampere (MTPA) control.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @param[in] pIdq Pointer to DQ current vector
- * @param[out] pIdref Pointer to output reference ID current
  * @return None
  */
 #ifdef RAM_EXECUTE
-void __ramfunc__  mcFlxI_MTPA( tmcFlx_Parameters_s * const pParameters,
-                   const tmcTypes_DQ_s * const pIdq, int16_t * const pIdref )
+void __ramfunc__ mcFlxI_FluxReferenceGet(  const tmcFlx_Parameters_s * const pParameters,
+                                        const tmcTypes_DQ_s * const pUDQ,
+                                        tmcTypes_DQ_s * const pIDQ,
+                                        tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                                        const int16_t wmechRPM,
+                                        const int16_t uBus,
+                                        int16_t * const pIdref )
 #else
-void mcFlxI_MTPA( tmcFlx_Parameters_s * const pParameters,
-                   const tmcTypes_DQ_s * const pIdq, int16_t * const pIdref )
+void  mcFlxI_FluxReferenceGet(  const tmcFlx_Parameters_s * const pParameters,
+                                        const tmcTypes_DQ_s * const pUDQ,
+                                        tmcTypes_DQ_s * const pIDQ,
+                                        tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                                        const int16_t wmechRPM,
+                                        const int16_t uBus,
+                                        int16_t * const pIdref )
 #endif
 {
-    tmcFlx_MTPA_s * pState =&( (tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
+    /** Get the linked state variable */
+    tmcFlx_State_s * pState;
+    pState = (tmcFlx_State_s *)pParameters->pStatePointer;
 
-    if( pState->enable )
-    {
-        /** Determine second term of MTPA equation */
-        int32_t s32a = ((int32_t)pIdq->q * (int32_t)pIdq->q) + pState->K2;
+<#if ( MCPMSMFOC_ENABLE_MTPA == true ) && ( MCPMSMFOC_ENABLE_FW == true ) >
+    int16_t idrefFW = mcFlx_FieldWeakening( &pState->bFieldWeakening, pUDQ, pIDQ, pEAlphaBeta, wmechRPM, uBus );
+    int16_t idrefMTPA = mcFlx_MTPA(&pState->bMTPA, pIDQ );
 
-        /** Calculate d-axis reference current for MTPA */
-        *pIdref = pState->K1 - mcUtils_SquareRoot(s32a);
+    if( idrefFW < idrefMTPA ) {
+        *pIdref = idrefFW;
     }
-    else
-    {
-        mcFlxI_MTPAReset(pParameters);
+    else {
+        *pIdref = idrefMTPA;
     }
-
-}
-
-/*! 
- * @brief Reset MTPA module
- *
- * Resets the MTPA module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void  mcFlxI_MTPAReset( tmcFlx_Parameters_s * const pParameters )
-{
-
-}
-
+<#elseif MCPMSMFOC_ENABLE_MTPA == true >
+    *pIdref = mcFlx_MTPA(&pState->bMTPA, pIDQ );
+<#else>
+    *pIdref = mcFlx_FieldWeakening( &pState->bFieldWeakening, pUDQ, pIDQ, pEAlphaBeta, wmechRPM, uBus );
 </#if>
-
+}
+</#if>

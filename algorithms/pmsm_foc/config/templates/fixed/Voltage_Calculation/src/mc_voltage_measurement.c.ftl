@@ -93,7 +93,11 @@ void  mcVolI_VoltageCalculationInit( tmcVol_ModuleData_s * const pModule )
  *
  * @param[in,out] pModule Pointer to the module data structure.
  */
+#ifdef RAM_EXECUTE
+void __ramfunc__ mcVolI_VoltageCalculation( tmcVol_ModuleData_s * const pModule )
+#else
 void mcVolI_VoltageCalculation( tmcVol_ModuleData_s * const pModule )
+#endif
 {
     tmcVol_Input_s * pInput;
 
@@ -103,7 +107,7 @@ void mcVolI_VoltageCalculation( tmcVol_ModuleData_s * const pModule )
     mcVol_InputPortsRead(pInput);
 
     /** Calculate DC bus voltage */
-    pModule->pOutput.uBus =   pInput->sensorInput << 4u;
+    pModule->pOutput.uBus =   Qx_NORMALIZE( Q12, pInput->sensorInput);
 
     /** Write output ports */
     mcVol_OutputPortsWrite(&pModule->pOutput);

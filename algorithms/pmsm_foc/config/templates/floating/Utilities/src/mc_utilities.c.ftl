@@ -1,22 +1,19 @@
-/**
- * @brief
- *  Header file for motor control utility functions
- *
- * @Company
- *  Microchip Technology Inc.
- *
- * @File Name:
- *   mc_utilities.h
- *
- * @Summary:
- *   Header file which contains variables and function prototypes of utility functions.
- *
- * @Description:
- *   This file contains variables and function prototypes of utility functions which are
- *   generally used in Motor Control. Implemented in Q2.14 Fixed Point Arithmetic.
- *
- */
- 
+/*******************************************************************************
+  Utility Functions
+
+  Company:
+    - Microchip Technology Inc
+
+  File Name:
+    - mc_utilitiesc
+
+  Summary:
+    - Utility Functions
+
+  Description:
+    - Utility Functions
+
+ *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -149,12 +146,16 @@ const static float cosineTable[CONSTANT_SineTableSize] =
 /*******************************************************************************
  *  Functions
  *******************************************************************************/
-/**
- * @brief Calculate sine and cosine values of an angle
+
+/*! \brief Calculate sine and cosine value
  *
- * @param[in] angle Input angle in radians
- * @param[out] sine Pointer to store sine value
- * @param[out] cosine Pointer to store cosine value
+ * Details
+ * Calculate sine value
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
 void mcUtils_SineCosineCalculation(const float32_t angle,
                                    float32_t * const sine,  float32_t * const cosine )
@@ -193,12 +194,15 @@ void mcUtils_SineCosineCalculation(const float32_t angle,
      *cosine = y0 + ((y1 - y0) * temp);
 }
 
-/**
- * @brief Perform linear ramping of an integer value towards a final value
+/*! \brief Linear ramp
  *
- * @param[in,out] input Pointer to the value to be ramped
- * @param[in] stepSize Increment size for ramping
- * @param[in] finalValue Final value to reach
+ * Details
+ * Linear ramp
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
 void mcUtils_LinearRamp(int32_t * const input, const int32_t stepSize, const int32_t finalValue)
 {
@@ -216,11 +220,15 @@ void mcUtils_LinearRamp(int32_t * const input, const int32_t stepSize, const int
     }
 }
 
-/**
- * @brief Execute button response function based on button state
+/*! \brief Button response Function
  *
- * @param[in,out] buttonResData Pointer to button response data structure
- * @param[in] buttonJob Function pointer to button job function
+ * Details
+ * Button response function
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
 void mcUtils_ButtonResponse(button_response_t * buttonResData, void (* buttonJob)(void))
 {
@@ -254,10 +262,15 @@ void mcUtils_ButtonResponse(button_response_t * buttonResData, void (* buttonJob
     }
 }
 
-/**
- * @brief Truncate angle to the range 0 to 2*PI
+/*! \brief Truncate angle to  0 to 2pi
  *
- * @param[in,out] angle Pointer to angle value to be truncated
+ * Details.
+ * Truncate angle to 0 to 2pi
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
 void mcUtils_TruncateAngle0To2Pi( float32_t * const angle )
 {
@@ -275,12 +288,15 @@ void mcUtils_TruncateAngle0To2Pi( float32_t * const angle )
     }
 }
 
-/**
- * @brief Initialize a 2D plot structure with given data points and points array
+/*! \brief Initialize 2D plot
  *
- * @param[in,out] p2DPlot Pointer to 2D plot structure to initialize
- * @param[in] dataPoints Number of data points to initialize
- * @param[in] points Array of 2D points to initialize the plot with
+ * Details.
+ * Initialize 2D plot
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
 void UTIL_2DPlotInitialize( tUTIL_2DPlot_s * const p2DPlot, const uint8_t dataPoints,
                                             const tUTIL_2DPoints_s points[] )
@@ -301,12 +317,15 @@ void UTIL_2DPlotInitialize( tUTIL_2DPlot_s * const p2DPlot, const uint8_t dataPo
      }
 }
 
-/**
- * @brief Read interpolated value from a 2D plot based on given x-coordinate
+/*! \brief Read from 2D plot
  *
- * @param[in,out] p2DPlot Pointer to 2D plot structure to read from
- * @param[in] xPoint X-coordinate to read interpolated value from the plot
- * @return Interpolated value at xPoint from the 2D plot
+ * Details.
+ * Read from 2D plot
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
 float32_t UTIL_2DPlotRead( tUTIL_2DPlot_s * const p2DPlot,  const float32_t xPoint )
 {

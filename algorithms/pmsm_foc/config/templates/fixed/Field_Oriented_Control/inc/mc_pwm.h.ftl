@@ -13,7 +13,7 @@
  *
  * @Description
  *    This file contains variables and function prototypes which are generally used for pulse
- *    width modulation. It is implemented in Q2.14 fixed point arithmetic.
+ *    width modulation. 
  */
 
 

@@ -53,6 +53,7 @@
 #include "mc_types.h"
 #include "mc_utilities.h"
 #include "mc_hardware_abstraction.h"
+#include "mc_userparams.h"
 
 /*******************************************************************************
  Default module parameters
@@ -85,6 +86,9 @@ typedef struct
  */
 typedef struct
 {
+    float32_t maxBoardCurrent;  /**< Maximum board current */
+    float32_t baseCurrent;      /**< Base current */
+
     #if MCPMSMFOC_OFFSET_OOR == true
     int16_t minOffset;  /**< Minimum offset value */
     int16_t maxOffset;  /**< Maximum offset value */
@@ -149,6 +153,9 @@ __STATIC_INLINE void mcCur_OutputPortsWrite(tmcCur_Output_s * const pOutput)
  */
 __STATIC_INLINE void mcCur_ParametersSet(tmcCur_Parameters_s * const pParameters)
 {
+    pParameters->maxBoardCurrent = MAXIMUM_BOARD_CURRENT;
+	pParameters->baseCurrent = BASE_CURRENT_IN_AMPS;
+
     #if MCPMSMFOC_OFFSET_OOR == true
     pParameters->minOffset = (int16_t)(${MCPMSMFOC_OFFSET_OOR_MINIMUM});
     pParameters->maxOffset = (int16_t)(${MCPMSMFOC_OFFSET_OOR_MAXIMUM});
@@ -193,7 +200,11 @@ void mcCurI_CurrentSensorOffsetCalculate(tmcCur_ModuleData_s * const pModule);
  * 
  * @return None
  */
+#ifdef RAM_EXECUTE
+void __ramfunc__ mcCurI_CurrentCalculation(tmcCur_ModuleData_s * const pModule);
+#else
 void mcCurI_CurrentCalculation(tmcCur_ModuleData_s * const pModule);
+#endif
 
 /**
  * @brief Function to reset phase current calculation.

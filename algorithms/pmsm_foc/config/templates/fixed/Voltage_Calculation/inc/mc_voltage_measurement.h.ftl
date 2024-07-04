@@ -165,7 +165,11 @@ void mcVolI_VoltageCalculationInit(tmcVol_ModuleData_s * const pModule);
  *
  * @param[in,out] pModule Pointer to the module data structure.
  */
-void mcVolI_VoltageCalculation(tmcVol_ModuleData_s * const pModule);
+#ifdef RAM_EXECUTE
+void __ramfunc__ mcVolI_VoltageCalculation( tmcVol_ModuleData_s * const pModule );
+#else
+void mcVolI_VoltageCalculation( tmcVol_ModuleData_s * const pModule );
+#endif
 
 /**
  * @brief Reset voltage calculation.

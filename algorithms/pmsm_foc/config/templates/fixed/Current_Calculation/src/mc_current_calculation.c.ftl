@@ -74,6 +74,8 @@ typedef struct
     int16_t  ibOffset;          /**< Offset for phase B current */
     int16_t  minOffset;         /**< Minimum offset value */
     int16_t  maxOffset;         /**< Maximum offset value */
+    int16_t  convFactorValue;    /**<  Coversion factor value */
+    uint16_t  convFactorShift;   /**<  Coversion factor shift */
     int32_t  iaOffsetBuffer;    /**< Buffer for phase A current offset calculation */
     int32_t  ibOffsetBuffer;    /**< Buffer for phase B current offset calculation */
 } tmcCur_States_s;
@@ -128,6 +130,12 @@ void mcCurI_CurrentCalculationInit(tmcCur_ModuleData_s * const pModule)
 
     /* Set parameters */
     mcCur_ParametersSet(&pModule->pParameters);
+
+    /* Set parameters */
+    mcCur_ParametersSet( &pModule->pParameters);
+
+    float32_t f32a = 16.0f * pModule->pParameters.maxBoardCurrent / pModule->pParameters.baseCurrent;
+    mcUtils_FloatToValueShiftPair( f32a, &mcCur_State_mds.convFactorValue, &mcCur_State_mds.convFactorShift );
 }
 
 /**
@@ -141,17 +149,17 @@ void mcCurI_CurrentCalculationInit(tmcCur_ModuleData_s * const pModule)
  */
 void mcCurI_CurrentSensorOffsetCalculate(tmcCur_ModuleData_s * const pModule)
 {
-    tmcCur_States_s *pState;
-    tmcCur_Input_s *pInput;
-    tmcCur_Output_s *pOutput;
+    tmcCur_States_s * pState;
+    tmcCur_Input_s * pInput;
+    tmcCur_Output_s * pOutput;
 
     pInput = &pModule->pInput;
     pOutput = &pModule->dOutput;
     pState = &mcCur_State_mds;
 
-    mcCur_InputPortsRead(pInput);
+    mcCur_InputPortsRead( pInput );
 
-    if (pState->adcSampleCounter < OFFSET_SAMPLES)
+    if ( pState->adcSampleCounter < OFFSET_SAMPLES)
     {
         pState->iaOffsetBuffer += pInput->iaAdcInput;
         pState->ibOffsetBuffer += pInput->ibAdcInput;
@@ -159,10 +167,11 @@ void mcCurI_CurrentSensorOffsetCalculate(tmcCur_ModuleData_s * const pModule)
     }
     else
     {
-        pState->iaOffset = (int16_t)(pState->iaOffsetBuffer / (int16_t)OFFSET_SAMPLES);
-        pState->ibOffset = (int16_t)(pState->ibOffsetBuffer / (int16_t)OFFSET_SAMPLES);
 
-        /** Set ADC Calibration Done Flag */
+        pState->iaOffset = (int16_t)( pState->iaOffsetBuffer/ (int16_t)OFFSET_SAMPLES );
+        pState->ibOffset = (int16_t)( pState->ibOffsetBuffer/ (int16_t)OFFSET_SAMPLES );
+
+        /**Set ADC Calibration Done Flag */
         pOutput->calibDone = 1u;
     }
 #if MCPMSMFOC_OFFSET_OOR == true
@@ -182,25 +191,31 @@ void mcCurI_CurrentSensorOffsetCalculate(tmcCur_ModuleData_s * const pModule)
  * 
  * @return None
  */
+#ifdef RAM_EXECUTE
+void __ramfunc__ mcCurI_CurrentCalculation(tmcCur_ModuleData_s * const pModule)
+#else
 void mcCurI_CurrentCalculation(tmcCur_ModuleData_s * const pModule)
+#endif
 {
-    tmcCur_States_s *pState;
-    tmcCur_Input_s *pInput;
-    tmcCur_Output_s *pOutput;
+    tmcCur_States_s * pState;
+    tmcCur_Input_s * pInput;
+    tmcCur_Output_s * pOutput;
 
     pInput = &pModule->pInput;
     pOutput = &pModule->dOutput;
     pState = &mcCur_State_mds;
 
-    mcCur_InputPortsRead(&pModule->pInput);
+    mcCur_InputPortsRead( &pModule->pInput );
 
     /** Phase A current measurement */
-    pOutput->iABC.a = mcUtils_LeftShiftS16((pState->iaOffset - pInput->iaAdcInput), 3u);
+    int16_t   temp  = pState->iaOffset - pInput->iaAdcInput;
+    pOutput->iABC.a = ((int32_t)temp * (int32_t)pState->convFactorValue ) >> pState->convFactorShift;
 
     /** Phase B current measurement */
-    pOutput->iABC.b = mcUtils_LeftShiftS16((pState->ibOffset - pInput->ibAdcInput), 3u);
+    temp  = pState->ibOffset - pInput->ibAdcInput;
+    pOutput->iABC.b =  ((int32_t)temp  * (int32_t)pState->convFactorValue ) >> pState->convFactorShift;
 
-    mcCur_OutputPortsWrite(&pModule->dOutput);
+    mcCur_OutputPortsWrite( &pModule->dOutput );
 }
 
 /**
@@ -215,7 +230,7 @@ void mcCurI_CurrentCalculation(tmcCur_ModuleData_s * const pModule)
  */
 void mcCurI_CurrentCalculationReset(tmcCur_ModuleData_s * const pModule)
 {
-    tmcCur_Output_s *pOutput;
+    tmcCur_Output_s * pOutput;
     pOutput = &pModule->dOutput;
 
     /** Reset state variables */
@@ -226,6 +241,6 @@ void mcCurI_CurrentCalculationReset(tmcCur_ModuleData_s * const pModule)
     pOutput->iABC.c = 0;
 
     /** Update output ports */
-    mcCur_OutputPortsWrite(&pModule->dOutput);
+    mcCur_OutputPortsWrite( &pModule->dOutput );
 }
 

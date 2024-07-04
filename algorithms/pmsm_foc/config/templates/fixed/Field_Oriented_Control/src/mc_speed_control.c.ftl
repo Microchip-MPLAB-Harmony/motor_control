@@ -104,7 +104,6 @@ void  mcSpeI_SpeedControlInit( tmcSpe_Parameters_s * const pParameters )
 
     /** Set initialization flag as true */
     mcSpe_State_mds.initDone = true;
-
 }
 
 /**
@@ -161,7 +160,6 @@ void  mcSpeI_SpeedControlDisable( tmcSpe_Parameters_s * const pParameters )
 
     /** Set enable flag as true */
     pState->enable = false;
-
 }
 
 /**
@@ -244,7 +242,8 @@ void mcSpeI_SpeedControlAuto(  const tmcSpe_Parameters_s * const pParameters,
  * Reset speed control module.
  *
  * @param[in] pParameters Pointer to the speed control parameters structure.
- */void mcSpeI_SpeedControlReset( const tmcSpe_Parameters_s * const pParameters )
+ */
+void mcSpeI_SpeedControlReset( const tmcSpe_Parameters_s * const pParameters )
 {
     /** Get the linked state variable */
     tmcSpe_State_s * pState;

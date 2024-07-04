@@ -1,22 +1,20 @@
-/**
- * @brief
- *  Header file for motor control utility functions
- *
- * @Company
- *  Microchip Technology Inc.
- *
- * @File Name:
- *   mc_utilities.h
- *
- * @Summary:
- *   Header file which contains variables and function prototypes of utility functions.
- *
- * @Description:
- *   This file contains variables and function prototypes of utility functions which are
- *   generally used in Motor Control. Implemented in Q2.14 Fixed Point Arithmetic.
- *
- */
- 
+/*******************************************************************************
+  Utility Functions
+
+  Company:
+    - Microchip Technology Inc
+
+  File Name:
+    - mc_utilitiesc
+
+  Summary:
+    - Utility Functions
+
+  Description:
+    - Utility Functions
+
+ *******************************************************************************/
+
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
  * Copyright (C) 2022 Microchip Technology Inc and its subsidiaries
@@ -59,17 +57,17 @@ Macro definitions
 /**
  *  Trignometric tables dimension shift value
  */
-#define  SH_TRIG_TABLE_DIMENSION	( 8u )
+#define  SH_TRIG_TABLE_DIMENSION    ( 8u )
 
 /**
  *  Trignometric tables dimension
  */
-#define  TRIG_TABLE_DIMENSION		( (uint16_t)1u << (uint16_t)SH_TRIG_TABLE_DIMENSION )
+#define  TRIG_TABLE_DIMENSION       ( (uint16_t)1u << (uint16_t)SH_TRIG_TABLE_DIMENSION )
 
 /**
  *  Sine table shift value
  */
-#define  SH_SINE_TABLE		( 14u - SH_TRIG_TABLE_DIMENSION )
+#define  SH_SINE_TABLE      ( 14u - SH_TRIG_TABLE_DIMENSION )
 
 /**
  *  Sine table shift value
@@ -94,6 +92,44 @@ Private global variables
  *      0 - 256 maps to 0 to Pi/2
  */
 
+#if ( GLOBAL_Q_FORMAT == Q15_FORMAT )
+static const int16_t sineTable[ TRIG_TABLE_DIMENSION + 1u ] =
+{
+        0,   202,   402,   604,   804,  1006,  1206,  1408,  //   0, ..,   7
+    1608,  1808,  2010,  2210,  2410,  2612,  2812,  3012,  //   8, ..,  15
+    3212,  3412,  3612,  3812,  4012,  4210,  4410,  4610,  //  16, ..,  23
+    4808,  5006,  5206,  5404,  5602,  5800,  5998,  6196,  //  24, ..,  31
+    6392,  6590,  6786,  6984,  7180,  7376,  7572,  7766,  //  32, ..,  39
+    7962,  8156,  8352,  8546,  8740,  8934,  9126,  9320,  //  40, ..,  47
+    9512,  9704,  9896, 10088, 10278, 10470, 10660, 10850,  //  48, ..,  55
+   11040, 11228, 11416, 11606, 11794, 11980, 12168, 12354,  //  56, ..,  63
+   12540, 12726, 12910, 13094, 13278, 13462, 13646, 13828,  //  64, ..,  71
+   14010, 14192, 14372, 14552, 14732, 14912, 15090, 15270,  //  72, ..,  79
+   15446, 15624, 15800, 15976, 16152, 16326, 16500, 16674,  //  80, ..,  87
+   16846, 17018, 17190, 17360, 17530, 17700, 17870, 18038,  //  88, ..,  95
+   18204, 18372, 18538, 18704, 18868, 19032, 19196, 19358,  //  96, .., 103
+   19520, 19682, 19842, 20002, 20160, 20318, 20476, 20632,  // 104, .., 111
+   20788, 20942, 21098, 21250, 21404, 21556, 21706, 21856,  // 112, .., 119
+   22006, 22154, 22302, 22448, 22594, 22740, 22884, 23028,  // 120, .., 127
+   23170, 23312, 23454, 23594, 23732, 23870, 24008, 24144,  // 128, .., 135
+   24280, 24414, 24548, 24680, 24812, 24944, 25074, 25202,  // 136, .., 143
+   25330, 25458, 25584, 25708, 25832, 25956, 26078, 26200,  // 144, .., 151
+   26320, 26438, 26558, 26674, 26790, 26906, 27020, 27134,  // 152, .., 159
+   27246, 27356, 27466, 27576, 27684, 27792, 27898, 28002,  // 160, .., 167
+   28106, 28208, 28310, 28412, 28512, 28610, 28708, 28804,  // 168, .., 175
+   28900, 28994, 29086, 29178, 29270, 29360, 29448, 29536,  // 176, .., 183
+   29622, 29708, 29792, 29874, 29956, 30038, 30118, 30196,  // 184, .., 191
+   30274, 30350, 30426, 30500, 30572, 30644, 30714, 30784,  // 192, .., 199
+   30852, 30920, 30986, 31050, 31114, 31176, 31238, 31298,  // 200, .., 207
+   31358, 31414, 31472, 31526, 31582, 31634, 31686, 31736,  // 208, .., 215
+   31786, 31834, 31882, 31928, 31972, 32016, 32058, 32098,  // 216, .., 223
+   32138, 32176, 32214, 32250, 32286, 32320, 32352, 32384,  // 224, .., 231
+   32414, 32442, 32470, 32496, 32522, 32546, 32568, 32590,  // 232, .., 239
+   32610, 32630, 32648, 32664, 32680, 32694, 32706, 32718,  // 240, .., 247
+   32728, 32738, 32746, 32752, 32758, 32762, 32766, 32767,  // 248, .., 255
+   32767
+};
+#elif  (GLOBAL_Q_FORMAT == Q14_FORMAT )
 static const int16_t sineTable[ TRIG_TABLE_DIMENSION + 1u ] =
 {
         0,   101,   201,   302,   402,   503,   603,   704,        //   0, ..,   7
@@ -130,21 +166,24 @@ static const int16_t sineTable[ TRIG_TABLE_DIMENSION + 1u ] =
   16364, 16369, 16373, 16376, 16379, 16381, 16383, 16384, // 248, .., 255
   16384
 };
+#endif
 
 
 /*******************************************************************************
  *  Functions
  *******************************************************************************/
 
-/**
- * @brief Calculate sine and cosine value
+/*! \brief Calculate sine and cosine value
  *
- * @details Calculate sine and cosine values for a given angle.
+ * Details
+ * Calculate sine value
  *
- * @param[in] ang Angle in degrees (0 to 65535).
- * @param[out] sine Pointer to store the calculated sine value.
- * @param[out] cosine Pointer to store the calculated cosine value.
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
+
 #ifdef RAM_EXECUTE
 void __ramfunc__ mcUtils_SineCosineCalculation( const uint16_t ang,
                                                                   int16_t * const sine,  int16_t * const cosine )
@@ -163,20 +202,20 @@ void mcUtils_SineCosineCalculation(const uint16_t ang,
      /** Subtract the angle from 2Pi if it is in 2nd quadrant */
      if( 0u != IS_COSINE(angle))
      {
-         a = PIHALVES - a;
+         a = Q15_ANGLE( HALF_PI  ) - a;
      }
 
      /** Set the sign of the sine value  */
      *sine =  ( 0u != IS_NEGATIVE(angle))? -sineTable[a >> SH_SINE_TABLE]: sineTable[a >> SH_SINE_TABLE];
 
      /** Remap the input angle to first quadrant */
-     angle = ang + PIHALVES;
+     angle = ang + Q15_ANGLE( HALF_PI  );
      a = GET_FIRST_QUADRANT( angle );
 
      /** Subtract the angle from 2Pi if it is in 2nd quadrant */
      if( 0u != IS_COSINE(angle))
      {
-          a = PIHALVES - a;
+          a = Q15_ANGLE( HALF_PI  ) - a;
      }
 
      /** Set the sign of the sine value  */
@@ -184,13 +223,15 @@ void mcUtils_SineCosineCalculation(const uint16_t ang,
 }
 
 
-/**
- * @brief Calculate square root value
+/*! \brief Calculate square root value
  *
- * @details Calculate the square root of a given number.
+ * Details
+ * Calculate square root value
  *
- * @param[in] number Number for which square root needs to be calculated.
- * @return Calculated square root value.
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
 #ifdef RAM_EXECUTE
 uint32_t  __ramfunc__ mcUtils_SquareRoot(uint32_t number)
@@ -201,14 +242,15 @@ uint32_t mcUtils_SquareRoot(uint32_t number )
     return DIVAS_SquareRoot( number );
 }
 
-/**
- * @brief Perform a linear ramp operation
+/*! \brief Linear ramp
  *
- * @details Perform a linear ramp operation on the input value towards a final value.
+ * Details
+ * Linear ramp
  *
- * @param[in,out] input Pointer to the input value to be ramped.
- * @param[in] stepSize Step size of the ramp.
- * @param[in] finalValue Final value towards which the input value will ramp.
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
 #ifdef RAM_EXECUTE
  void __ramfunc__ mcUtils_LinearRamp(int32_t * const input, const int32_t stepSize, const int32_t finalValue)
@@ -230,13 +272,15 @@ void mcUtils_LinearRamp(int32_t * const input, const int32_t stepSize, const int
     }
 }
 
-/**
- * @brief Button response function
+/*! \brief Button response Function
  *
- * @details Execute a function based on the button response.
+ * Details
+ * Button response function
  *
- * @param[in,out] buttonResData Pointer to the button response data structure.
- * @param[in] buttonJob Pointer to the function to execute on button press.
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
 void mcUtils_ButtonResponse(button_response_t * buttonResData, void (* buttonJob)(void))
 {
@@ -271,14 +315,15 @@ void mcUtils_ButtonResponse(button_response_t * buttonResData, void (* buttonJob
 }
 
 
-/**
- * @brief Convert float to value and shift pair
+/*! \brief
  *
- * @details Convert a float value to a fixed-point integer value and its corresponding shift amount.
+ * Details
  *
- * @param[in] input Float value to convert.
- * @param[out] value Pointer to store the converted integer value.
- * @param[out] shift Pointer to store the shift amount.
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
  */
 void mcUtils_FloatToValueShiftPair( const float32_t input, int16_t * const value, uint16_t * const shift )
 {
@@ -289,16 +334,28 @@ void mcUtils_FloatToValueShiftPair( const float32_t input, int16_t * const value
     /* MISRA C-2012 Rule 14.1 deviated in this function. Deviation record ID -  H3_MISRAC_2012_R_2_2_DR_1  */
     f32a = input;
     *shift = 0u;
-    while(( ( f32a * 2.0f )  < 16384.0f ) && ( 16u > *shift ) )
+    if( f32a > 0.0f ) {
+        while(( ( f32a * 2.0f )  < 32767.0f ) && ( 15u > *shift ) )
+        {
+            f32a *= 2.0f;
+            (*shift )++;
+        }
+
+        f32a += 0.5f;
+        *value = ( int16_t)f32a;
+    }
+    else
     {
-        f32a *= 2.0f;
-        (*shift )++;
+        while(( ( f32a * 2.0f )  > -32767.0f ) && ( 15u > *shift ) )
+        {
+            f32a *= 2.0f;
+            (*shift )++;
+        }
+
+        f32a += 0.5f;
+        *value = ( int16_t)f32a;
     }
     /* MISRAC 2012 deviation block end */
-
-    f32a += 0.5f;
-
-    *value = ( int16_t)f32a;
 #else
      uint16_t u16a;
      float32_t f32a;

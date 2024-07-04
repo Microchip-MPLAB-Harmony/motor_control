@@ -54,6 +54,7 @@
 #include "mc_open_loop_startup.h"
 #include "mc_pwm.h"
 #include "mc_current_calculation.h"
+#include "mc_voltage_measurement.h"
 #include "mc_flux_control.h"
 #include "mc_torque_control.h"
 #include "mc_speed_control.h"
@@ -131,12 +132,8 @@ extern tmcFocI_ModuleData_s mcFocI_ModuleData_gds;
 __STATIC_INLINE void mcFocI_InputsRead(tmcFoc_Input_s * const pInput)
 {
     pInput->iABC = mcCurI_ModuleData_gds.dOutput.iABC;
-
-<#if (MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP')>
-    pInput->reference = mcHalI_Potentiometer_gdu16 << 2u;
-<#elseif (MCPMSMFOC_CONTROL_TYPE == 'TORQUE_LOOP')>
-    pInput->reference = mcHalI_Potentiometer_gdu16;
-</#if>
+    pInput->uBus = mcVolI_ModuleData_gds.pOutput.uBus;
+    pInput->reference = Qx_NORMALIZE( Q12, mcHalI_Potentiometer_gdu16 );
 }
 
 /**

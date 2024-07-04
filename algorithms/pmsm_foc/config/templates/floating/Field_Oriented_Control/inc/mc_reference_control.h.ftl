@@ -101,7 +101,11 @@ __STATIC_INLINE void mcRefI_ParametersSet( tmcRef_Parameters_s * const pParamete
 <#else>
     pParameters->minimumRpm = (float32_t)${MCPMSMFOC_OPEN_LOOP_END_SPEED};
 </#if>
+<#if ( MCPMSMFOC_ENABLE_FW == true )>
     pParameters->maximumRpm = (float32_t)${MCPMSMFOC_MAX_SPEED};
+<#else>
+    pParameters->maximumRpm = (float32_t)${MCPMSMFOC_RATED_SPEED};
+</#if>
 
 <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     pParameters->rpmPerSecond = (float32_t)(${MCPMSMFOC_RAMP_PROFILER_MAX_SPEED});

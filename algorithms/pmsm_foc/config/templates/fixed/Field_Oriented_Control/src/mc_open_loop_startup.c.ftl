@@ -74,12 +74,9 @@ typedef struct
     tmcSup_State_e StartupState;           /**< Current state of the start-up process */
     int16_t alignmentCurrent;              /**< Current for the alignment phase */
     int16_t openLoopCurrent;               /**< Current for the open loop phase */
-    uint16_t currentRampRateShift;         /**< Shift value for current ramp rate */
-    int16_t currentRampRateVal;            /**< Value for current ramp rate */
-    uint16_t speedRampRateShift;           /**< Shift value for speed ramp rate */
-    int16_t speedRampRateVal;              /**< Value for speed ramp rate */
-    uint16_t speedToAngleShift;            /**< Shift value for speed to angle conversion */
-    int16_t speedToAngleVal;               /**< Value for speed to angle conversion */
+    int16_t currentRampRate;            /**< Value for current ramp rate */
+    int16_t speedRampRate;              /**< Value for speed ramp rate */
+    int16_t speedToAngle;               /**< Value for speed to angle conversion */
     int16_t openLoopSpeed;                 /**< Current open loop speed */
     int16_t openLoopFinalSpeed;            /**< Final open loop speed */
     uint32_t alignmentTimeLoopCount;       /**< Loop count for the alignment phase */
@@ -88,7 +85,6 @@ typedef struct
     uint32_t openLoopStabTimeLoopCount;    /**< Loop count for the stabilization phase */
     uint32_t zCounter;                     /**< Zero crossing counter or general purpose counter */
 } tmcSup_State_s;
-
 
 /*******************************************************************************
 Private variables
@@ -102,14 +98,11 @@ Interface  variables
 /*******************************************************************************
 Macro Functions
 *******************************************************************************/
-#define MULT_SHIFT_S16     mcUtils_MultAndRightShiftS16
-#define GET_VALUE_SHIFT     mcUtils_FloatToValueShiftPair
-
-#define MULT_SHIFT_U32(x, y, shift) (uint32_t)( ((uint64_t)((x)) * (uint64_t)((y))) >> (shift) )
 
 /*******************************************************************************
 Private Functions
 *******************************************************************************/
+
 
 /*******************************************************************************
  * Interface Functions
@@ -151,7 +144,7 @@ void  mcSupI_OpenLoopStartupInit( tmcSup_Parameters_s * const pParameters )
 
     /** Determine current ramp rate */
     float32_t rampRate = (float32_t)pState->openLoopCurrent/ (float32_t)pState->halfAlignmentTimeLoopCount;
-    GET_VALUE_SHIFT( rampRate, &pState->currentRampRateVal , &pState->currentRampRateShift );
+    pState->currentRampRate = Q_SCALE( rampRate);
 
     f32a = ( K_SPEED * pParameters->openLoopTransSpeed ) + 0.5f;
     pState->openLoopFinalSpeed = (int16_t)f32a;
@@ -159,11 +152,11 @@ void  mcSupI_OpenLoopStartupInit( tmcSup_Parameters_s * const pParameters )
     /** Determine open loop speed ramp rate */
     float32_t speedRampRate;
     speedRampRate  =  (float32_t)pState->openLoopFinalSpeed / (float32_t)pState->openLoopRampTimeLoopCount;
-    GET_VALUE_SHIFT( speedRampRate, &pState->speedRampRateVal , &pState->speedRampRateShift );
+    pState->speedRampRate = Q_SCALE( speedRampRate );
 
     /** Speed to angle conversion factor calculation */
     float32_t speedToAngle = (float32_t)K_TIME;
-    GET_VALUE_SHIFT( speedToAngle, &pState->speedToAngleVal, &pState->speedToAngleShift );
+    pState->speedToAngle = Q_SCALE( speedToAngle );
 
     /** Set the initial state of the state machine  */
     pState->StartupState = startupState_Align;
@@ -224,7 +217,6 @@ void  mcSupI_OpenLoopStartupDisable( tmcSup_Parameters_s * const pParameters )
 
     /** Set enable flag as true */
     pState->enable = false;
-
 }
 
 /**
@@ -280,11 +272,11 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
                 *pIDref = 0;
                 if( direction < 0)
                 {
-                    *pAngle = PIHALVES;
+                    *pAngle = Q15_ANGLE( HALF_PI  );
                 }
                 else
                 {
-                    *pAngle = THREEPIHALVES;
+                    *pAngle = Q15_ANGLE( THREE_HALVES_PI  );
                 }
 
 <#elseif 'D_AXIS' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
@@ -299,14 +291,14 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
             {
                 ++pState->zCounter;
 
-                pState->openLoopSpeed = (int16_t)MULT_SHIFT_U32( pState->zCounter, pState->speedRampRateVal, pState->speedRampRateShift);
+                pState->openLoopSpeed = (int16_t)Q_MULTIPLY( pState->zCounter, pState->speedRampRate );
 
                 if( pState->openLoopFinalSpeed < pState->openLoopSpeed )
                 {
                     pState->zCounter = 0u;
                     pState->StartupState = startupState_Stabilize;
                 }
-                uint16_t delAngle = (uint16_t)MULT_SHIFT_S16(pState->openLoopSpeed, pState->speedToAngleVal, pState->speedToAngleShift );
+                uint16_t delAngle = (uint16_t)Q_MULTIPLY( pState->openLoopSpeed, pState->speedToAngle );
                 *pAngle += ( direction * (int16_t)delAngle );
 
                 *pIDref = 0;
@@ -324,7 +316,7 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
                     openLoopStatus = StdReturn_Complete;
                 }
 </#if>
-                uint16_t delAngle = (uint16_t)MULT_SHIFT_S16(pState->openLoopSpeed, pState->speedToAngleVal, pState->speedToAngleShift );
+                uint16_t delAngle = (uint16_t)Q_MULTIPLY(pState->openLoopSpeed, pState->speedToAngle );
                 *pAngle += ( direction * (int16_t)delAngle );
                 *pIDref = 0;
                 *pIQref = direction * pState->alignmentCurrent;

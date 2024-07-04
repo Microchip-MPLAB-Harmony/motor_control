@@ -98,8 +98,8 @@ void  mcTorI_TorqueControlInit( tmcTor_Parameters_s * const pParameters )
     mcTorI_ParametersSet(pParameters);
 
     /** Set PI controller parameters */
-    float32_t Kp = pParameters->Kp;// * BASE_CURRENT_IN_AMPS / BASE_VOLTAGE_IN_VOLTS;
-    float32_t Ki  = pParameters->Ki;// * BASE_CURRENT_IN_AMPS / BASE_VOLTAGE_IN_VOLTS;
+    float32_t Kp = pParameters->Kp * BASE_CURRENT_IN_AMPS / BASE_VOLTAGE_IN_VOLTS;
+    float32_t Ki  = pParameters->Ki * BASE_CURRENT_IN_AMPS / BASE_VOLTAGE_IN_VOLTS;
     mcUtils_PiControlInit( Kp, Ki, pParameters->dt, &mcTor_State_mds.bPIController );
 
     /** Set initialization flag as true */
@@ -162,7 +162,6 @@ void  mcTorI_TorqueControlDisable( tmcTor_Parameters_s * const pParameters )
 
     /** Set enable flag as true */
     pState->enable = false;
-
 }
 
 /**
@@ -213,10 +212,10 @@ void mcTorI_TorqueControlManual(  const tmcTor_Parameters_s * const pParameters,
  */
 #ifdef RAM_EXECUTE
 void __ramfunc__  mcTorI_TorqueControlAuto( const tmcTor_Parameters_s * const pParameters,
-                                                                   const int16_t iQref, const int16_t iQact, int16_t * const pOut   )
+                                                                   const int16_t iQref, const int16_t iQact, int16_t iQmax,int16_t * const pOut   )
 #else
 void mcTorI_TorqueControlAuto(  const tmcTor_Parameters_s * const pParameters,
-                                              const int16_t iQref, const int16_t iQact, int16_t * const pOut )
+                                              const int16_t iQref, const int16_t iQact, int16_t iQmax, int16_t * const pOut )
 #endif
 {
     /** Get the linked state variable */
@@ -229,7 +228,7 @@ void mcTorI_TorqueControlAuto(  const tmcTor_Parameters_s * const pParameters,
         int16_t error = iQref - iQact;
 
         /** Limit update for PI controller */
-        mcUtils_PiLimitUpdate( -16384, 16383, &pState->bPIController );
+        mcUtils_PiLimitUpdate( -iQmax, iQmax, &pState->bPIController );
 
         /** Execute PI controller */
         mcUtils_PiControl( error, &pState->bPIController );

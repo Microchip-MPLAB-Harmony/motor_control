@@ -54,7 +54,7 @@
 #include <string.h>
 #include <sys/attribs.h>
 #include "toolchain_specifics.h"
-
+#include "mc_constants.h"
 
 /*******************************************************************************
  Defines

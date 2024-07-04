@@ -13,7 +13,7 @@
  *
  * @Description
  *    This file contains variables and function prototypes which are generally used for reference
- *    control in pulse width modulation. It is implemented in Q2.14 fixed point arithmetic.
+ *    control in pulse width modulation. 
  */
 
 //DOM-IGNORE-BEGIN
@@ -48,6 +48,7 @@
  * Header inclusions
 *******************************************************************************/
 #include "mc_types.h"
+#include "mc_utilities.h"
 #include "mc_userparams.h"
 
 /*******************************************************************************
@@ -95,7 +96,11 @@ __STATIC_INLINE void mcRefI_ParametersSet(tmcRef_Parameters_s * const pParameter
 <#else>
     pParameters->minimumRpm = (float32_t)${MCPMSMFOC_OPEN_LOOP_END_SPEED};
 </#if>
+<#if MCPMSMFOC_ENABLE_FW == true>
     pParameters->maximumRpm = (float32_t)${MCPMSMFOC_MAX_SPEED};
+<#else>
+    pParameters->maximumRpm = (float32_t)${MCPMSMFOC_RATED_SPEED};
+</#if>
 
 <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     pParameters->rpmPerSecond = (float32_t)(${MCPMSMFOC_RAMP_PROFILER_MAX_SPEED});
