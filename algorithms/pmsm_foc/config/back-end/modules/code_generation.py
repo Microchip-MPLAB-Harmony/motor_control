@@ -35,9 +35,16 @@ else:
 
 def mcGen_GenerateCodeUpdate(symbol, event):
     component = symbol.getComponent()
+    if ( str( event["id"] ) == "MCPMSMFOC_ENABLE_FLYING_START"):
+        if event["value"] == True: # Flying start
+            component.getSymbolByID("opt_flying_start.h.ftl").setEnabled(True)
+            component.getSymbolByID("opt_flying_start.c.ftl").setEnabled(True)
+        else:
+            component.getSymbolByID("opt_flying_start.h.ftl").setEnabled(False)
+            component.getSymbolByID("opt_flying_start.c.ftl").setEnabled(False)
 
-    if ( str( event["id"] ) == "MCPMSMFOC_ALIGN_OR_DETECT_AXIS"):
-        if event["value"] == 2: # Initial position detection
+    elif ( str( event["id"] ) == "MCPMSMFOC_ALIGN_OR_DETECT_AXIS"):
+        if event["value"] == 2 or event['value'] != 'IPD': # Initial position detection
             component.getSymbolByID("MCPMSMFOC_IPD_HEADER").setEnabled(True)
             component.getSymbolByID("MCPMSMFOC_IPD_LIB").setEnabled(True)
         else:
@@ -113,6 +120,7 @@ def mcGen_GenerateCodeUpdate(symbol, event):
 
         if "sensorless_smo" in key:
             component.getSymbolByID("MCPMSMFOC_SMO_LIB_A").setEnabled(True)
+            component.getSymbolByID("MCPMSMFOC_ZSMT_LIB").setEnabled(False)
 
         elif "sensorless_zsmt" in key:
             # component.getSymbolByID("MCPMSMFOC_ENABLE_ALIGN_OR_DETECT").setValue(False)
@@ -120,12 +128,14 @@ def mcGen_GenerateCodeUpdate(symbol, event):
             # component.getSymbolByID("mc_open_loop_startup.h.ftl").setEnabled(False)
             # component.getSymbolByID("mc_open_loop_startup.c.ftl").setEnabled(False)
             component.getSymbolByID("MCPMSMFOC_ZSMT_LIB").setEnabled(True)
+            component.getSymbolByID("MCPMSMFOC_SMO_LIB_A").setEnabled(False)
         else:
             # component.getSymbolByID("MCPMSMFOC_ENABLE_ALIGN_OR_DETECT").setValue(True)
             # component.getSymbolByID("MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP").setValue(True)
             # component.getSymbolByID("mc_open_loop_startup.c.ftl").setEnabled(True)
             # component.getSymbolByID("mc_open_loop_startup.h.ftl").setEnabled(True)
             component.getSymbolByID("MCPMSMFOC_ZSMT_LIB").setEnabled(False)
+            component.getSymbolByID("MCPMSMFOC_SMO_LIB_A").setEnabled(False)
 
     elif  ( str( event["id"] ) == "MCPMSMFOC_FOC_X2C_ENABLE"):
         if (True == event["value"]):
@@ -194,7 +204,7 @@ def mcGen_GenerateCodeUpdate(symbol, event):
                     component.getSymbolByID(str(filename)).setEnabled(False)
 
             # component.getSymbolByID("MCPMSMFOC_IPD_SOURCE").setEnabled(True)
-            component.getSymbolByID("MCPMSMFOC_IPD_HEADER").setEnabled(True)
+            # component.getSymbolByID("MCPMSMFOC_IPD_HEADER").setEnabled(True)
 
             # Disable
             component.getSymbolByID(str("opt_foc.h.ftl")).setEnabled(True)
@@ -357,6 +367,15 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
                     mcPmsmFocSourceFile.setMarkup(True)
                     mcPmsmFocSourceFile.setEnabled(False)
 
+        mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol(str('opt_flying_start.c.ftl'), None)
+        mcPmsmFocSourceFile.setSourcePath(modulePath + "src/" + str('opt_flying_start.c.ftl'))
+        mcPmsmFocSourceFile.setOutputName("mc_flying_start.c")
+        mcPmsmFocSourceFile.setDestPath("QSpin/Field_Oriented_Control")
+        mcPmsmFocSourceFile.setProjectPath(projectPath)
+        mcPmsmFocSourceFile.setType("SOURCE")
+        mcPmsmFocSourceFile.setMarkup(True)
+        mcPmsmFocSourceFile.setEnabled(False)
+
     for _, _, files in os.walk(Module.getPath() + modulePath + "inc"):
         for filename in files:
             if (".h" in filename):
@@ -390,6 +409,15 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
                     mcPmsmFocHeaderFile.setType("HEADER")
                     mcPmsmFocHeaderFile.setMarkup(True)
                     mcPmsmFocHeaderFile.setEnabled(False)
+
+        mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str('opt_flying_start.h.ftl'), None)
+        mcPmsmFocHeaderFile.setSourcePath(modulePath + "inc/" + str('opt_flying_start.h.ftl'))
+        mcPmsmFocHeaderFile.setOutputName("mc_flying_start.h")
+        mcPmsmFocHeaderFile.setDestPath("QSpin/Field_Oriented_Control")
+        mcPmsmFocHeaderFile.setProjectPath(projectPath)
+        mcPmsmFocHeaderFile.setType("HEADER")
+        mcPmsmFocHeaderFile.setMarkup(True)
+        mcPmsmFocHeaderFile.setEnabled(False)
 
     # Position control files
     filename = "opt_position_control.h.ftl"
@@ -451,6 +479,7 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
     ipdHeaderFile.setProjectPath(projectPath)
     ipdHeaderFile.setType("HEADER")
     ipdHeaderFile.setMarkup(True)
+    ipdHeaderFile.setEnabled(False)
 
     if( ("SAME7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR"))):
         zsmtLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_ZSMT_LIB", None)
@@ -782,7 +811,6 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
 
     processor = Variables.get("__PROCESSOR")
     if (("SAMC2" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
-        print("I am executing")
         # Symbol to enable "use indirect calls" option from xc32-gcc settings
         xc32_use_indirect_calls = mcPmsmFocComponent.createSettingSymbol("XC32_USE_INDIRECT_CALLS", None)
         xc32_use_indirect_calls.setCategory("C32")
@@ -794,8 +822,7 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
     mcPmsmFocCodeGen.setVisible(False)
     mcPmsmFocCodeGen.setDependencies(mcGen_GenerateCodeUpdate,
                                                              ["MCPMSMFOC_POSITION_CALC_ALGORITHM",
-                                                              "MCPMSMFOC_FLYING_START",
-                                                              "MCPMSMFOC_FLYING_START_CODE_TYPE",
+                                                              "MCPMSMFOC_ENABLE_FLYING_START",
                                                               "MCPMSMFOC_ALIGN_OR_DETECT_ALGORITHM",
                                                               "MCPMSMFOC_ALIGN_OR_DETECT_AXIS",
                                                               "MCPMSMFOC_FOC_X2C_ENABLE",
