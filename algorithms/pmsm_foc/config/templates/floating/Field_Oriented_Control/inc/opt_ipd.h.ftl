@@ -121,7 +121,14 @@ extern tmcIpd_ModuleData_s mcIpdI_ModuleData_gds;  /*!< Global module data */
  * @param[in] pInput Pointer to the input structure.
  * @return None
  */
-__STATIC_INLINE void mcIpdI_InputPortsRead(tmcIpd_Input_s * const pInput);
+__STATIC_INLINE void mcIpdI_InputPortsRead( tmcIpd_Input_s * const pInput )
+{
+     pInput->iA = mcCurI_ModuleData_gds.dOutput.iABC.a;
+     pInput->iB = mcCurI_ModuleData_gds.dOutput.iABC.b;
+     pInput->iC = mcCurI_ModuleData_gds.dOutput.iABC.c;
+
+     pInput->uBus = mcVolI_ModuleData_gds.dOutput.uBus;
+}
 
 /*! \brief Write output ports
  *
@@ -130,7 +137,12 @@ __STATIC_INLINE void mcIpdI_InputPortsRead(tmcIpd_Input_s * const pInput);
  * @param[in] pOutput Pointer to the output structure.
  * @return None
  */
-__STATIC_INLINE void mcIpdI_OutputPortsWrite(tmcIpd_Output_s * const pOutput);
+__STATIC_INLINE void mcIpdI_OutputPortsWrite( tmcIpd_Output_s * const pOutput )
+{
+    mcPwmI_Duty_gau16[0u] =  pOutput->duty[0u];
+    mcPwmI_Duty_gau16[1u] =  pOutput->duty[1u];
+    mcPwmI_Duty_gau16[2u] =  pOutput->duty[2u];
+}
 
 /*! \brief Set module parameters
  *
@@ -139,7 +151,14 @@ __STATIC_INLINE void mcIpdI_OutputPortsWrite(tmcIpd_Output_s * const pOutput);
  * @param[in] pParameter Pointer to the parameters structure.
  * @return None
  */
-__STATIC_INLINE void mcIpdI_ParametersSet(tmcIpd_Parameters_s * const pParameter);
+__STATIC_INLINE void mcIpdI_ParametersSet( tmcIpd_Parameters_s * const pParameter )
+{
+    pParameter->uPulse = (float32_t)(${MCPMSMFOC_IPD_PULSE_AMPLITUDE});
+    pParameter->tPulse = (float32_t)(${MCPMSMFOC_IPD_PULSE_DURATION});
+    pParameter->tPeriod = (float32_t)(${MCPMSMFOC_IPD_PULSE_PERIOD});
+    pParameter->fsInHertz = (float32_t)(${MCPMSMFOC_PWM_FREQUENCY}u);
+    pParameter->yPeriodCount = mcHalI_PwmPeriodGet();
+}
 
 /*******************************************************************************
  * Interface functions

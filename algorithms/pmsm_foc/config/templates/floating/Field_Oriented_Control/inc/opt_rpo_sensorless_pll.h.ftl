@@ -60,15 +60,15 @@ Type Definition
 *******************************************************************************/
 typedef struct
 {
-/** Motor parameters */
+    /** Motor parameters */
     tmcMot_PMSM_s  * pMotorParameters;
 
     /** BEMF observer parameters */
-    float32_t Ke;
-    float32_t dt;
-    float32_t nMin;
-    void * pStatePointer;
-}tmcRpe_Parameters_s;
+    float32_t Ke;              /**< BEMF observer gain */
+    float32_t dt;              /**< Sampling time */
+    float32_t calibTimeInSec;  /**< Offset calibration time */
+    void * pStatePointer;      /**< Pointer to module state */
+} tmcRpe_Parameters_s;
 
 /*******************************************************************************
  * Interface variables
@@ -94,8 +94,8 @@ __STATIC_INLINE void mcRpeI_ParametersSet( tmcRpe_Parameters_s * const pParamete
 
     /** BEMF observer parameters */
     pParameters->Ke = (float32_t)${MCPMSMFOC_BEMF_CONST};
-    pParameters->dt = (float32_t)(${MCPMSMFOC_PWM_PERIOD});
-    pParameters->nMin = 500.0f ;
+    pParameters->dt = (float32_t)${MCPMSMFOC_PWM_PERIOD};
+    pParameters->calibTimeInSec = (float32_t)(1.0);
 }
 
 /*******************************************************************************

@@ -246,6 +246,10 @@ __STATIC_INLINE void UTIL_LinearRampFloat( float32_t * pValue, const float32_t r
 }
 
 
+__STATIC_INLINE bool UTIL_AbsLessThanEqual(float32_t x, float32_t limit)
+{
+    return (x >= -limit) && (x <= limit);
+}
 
 /******************************************************************************
  * Interface functions
@@ -323,5 +327,6 @@ void UTIL_2DPlotInitialize( tUTIL_2DPlot_s * const p2DPlot, const uint8_t dataPo
  * @return:
  */
 float32_t UTIL_2DPlotRead( tUTIL_2DPlot_s * const p2DPlot,  const float32_t xPoint );
+
 
 #endif // MC_UTILS

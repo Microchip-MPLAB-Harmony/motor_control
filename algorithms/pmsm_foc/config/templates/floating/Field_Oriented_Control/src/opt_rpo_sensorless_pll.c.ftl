@@ -51,6 +51,7 @@ Headers inclusions
 /*******************************************************************************
 Constants
 *******************************************************************************/
+#define ENABLE_PHI_OFFSET_COMPENSATION
 #define SQUARE_ROOT_THREE_OVER_TWO     (float32_t)1.224744871
 
 /*******************************************************************************
@@ -85,6 +86,10 @@ typedef struct
    float32_t   nFilterParameter;
    float32_t   oneByKe;
    float32_t   speedToAngle;
+
+   float32_t phiOffset;
+   uint16_t calibCounter;
+   uint16_t calibTimeinCounts;
 }tmcRpe_State_s;
 
 /*******************************************************************************
@@ -165,6 +170,9 @@ void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
     pState->eDQFilterParameter = 1.0f;
     pState->nFilterParameter = 1.0f;
 
+    /** Rotor position calibration time */
+    pState->calibTimeinCounts = pParameters->calibTimeInSec / pParameters->dt;
+
     /** Set initialization flag to true */
     pState->initDone = true;
 }
@@ -228,6 +236,53 @@ void  mcRpeI_RotorPositionEstimDisable( tmcRpe_Parameters_s * const pParameters 
     /** Set enable flag as true */
     pState->enable = false;
 }
+
+#if defined  ENABLE_PHI_OFFSET_COMPENSATION
+/*! 
+ * @brief Disable rotor position estimation module
+ *
+ * @details
+ * Rotor position offset calculation
+ *
+ * @param[in] pParameters - Pointer to parameters structure
+ * @param[in/out] pS16Offset - Pointer to offset values
+ *
+ * @return None
+ */
+__STATIC_INLINE  void mcRpe_RotorPostionOffsetCalc( const tmcRpe_Parameters_s * const pParameters, 
+                                                    float32_t * const pF32Offset ) 
+{
+    /** Get the linked state variable */
+    tmcRpe_State_s * pState;
+    pState = (tmcRpe_State_s *)pParameters->pStatePointer;
+
+    pState->calibCounter++;
+
+    if( pState->calibCounter > pState->calibTimeinCounts ){
+        return;
+    }
+
+    /** Integrator drift  tracking and compensation based on speed direction */
+    if( 0 < pState->n )     {
+        if( UTIL_AbsLessThanEqual( pState->eAlpha,  0.001 ))
+        {
+            if( pState->eBeta > 0 )
+            {
+                *pF32Offset = pState->phi;
+            }
+        }
+    }
+    else      {
+        if( UTIL_AbsLessThanEqual( pState->eAlpha,  0.001 ))
+        {
+            if( pState->eBeta < 0 ) 
+            {
+                *pF32Offset = pState->phi;
+            }
+        }
+    }
+}
+#endif
 
 /*! 
  * @brief Perform rotor position estimation
@@ -301,9 +356,14 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
         pState->phi += ( pState->speedToAngle * pState->n );
         mcUtils_TruncateAngle0To2Pi( &pState->phi );
 
+#if defined  ENABLE_PHI_OFFSET_COMPENSATION
+        mcRpe_RotorPostionOffsetCalc( pParameters, &pState->phiOffset );
+#endif
+
         /** Update output */
         *pSpeed = pState->n;
-        *pAngle = pState->phi;
+        *pAngle = pState->phi - pState->phiOffset;
+         mcUtils_TruncateAngle0To2Pi( pAngle );
     }
     else
     {
