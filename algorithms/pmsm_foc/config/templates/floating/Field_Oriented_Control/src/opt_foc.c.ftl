@@ -88,6 +88,14 @@ typedef struct {
         float32_t overridePulseLow;
         uint32_t overridePulseFreq;
     } idOverride;
+    struct {
+        bool enableOverride;
+        tmcFoc_OverrideType_e overrideType;
+        float32_t overrideValue;
+        float32_t overridePulseHigh;
+        float32_t overridePulseLow;
+        uint32_t overridePulseFreq;
+    } speedOverride;
 } tmcFoc_TuningSettings_s;
 </#if>
 <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORLESS_ZSMT_HYBRID'>
@@ -802,16 +810,39 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     mcRpeI_RotorPositionEstim(&pState->bPositionEstimation, &pOutput->iAlphaBeta, &pOutput->uAlphaBeta,
                                             &eAlphaBeta, &pOutput->elecAngle, &pOutput->elecSpeed );
 
-     /** Reference Control */
-     mcRefI_ReferenceControl( &mcFoc_State_mds.bReferenceController, pModule->dInput.reference, &pState->nRef );
+    /** Reference Control */
+    mcRefI_ReferenceControl( &mcFoc_State_mds.bReferenceController, pModule->dInput.reference, &pState->nRef );
 
 <#if ( MCPMSMFOC_ENABLE_FW == true ) >
-     /** Execute flux weakening  */
-     mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,  &eAlphaBeta,
+    /** Execute flux weakening  */
+    mcFlxI_FluxWeakening(  &pState->bFluxController,  &pState->uDQ,  &eAlphaBeta,
                                          pModule->dInput.uBus, pOutput->elecSpeed, &pOutput->iDQ, &pState->iDref );
 </#if>
     pState->nRef *=  pState->commandDirection;
 
+<#if ( MCPMSMFOC_DEVELOPER_MODE == true ) >
+    /** Speed override */
+    if( mcFoc_TuningSettings_mds.speedOverride.enableOverride )
+    {
+        if( mcFoc_TuningSettings_mds.speedOverride.overrideType == CONSTANT ) {
+             pState->nRef  = mcFoc_TuningSettings_mds.speedOverride.overrideValue;
+        }
+        else if( mcFoc_TuningSettings_mds.speedOverride.overrideType == PULSE_PERTURBATION  )
+        {
+            static uint32_t u32Counter = 0U;
+            u32Counter++;
+            if( u32Counter <= ( mcFoc_TuningSettings_mds.speedOverride.overridePulseFreq >> 1U ) )  {
+                pState->nRef = mcFoc_TuningSettings_mds.speedOverride.overridePulseLow;
+            }
+            else if( u32Counter < ( mcFoc_TuningSettings_mds.speedOverride.overridePulseFreq ) )  {
+                pState->nRef = mcFoc_TuningSettings_mds.speedOverride.overridePulseHigh;
+            }
+            else {
+                u32Counter = 0U;
+            }
+        }
+    }
+</#if>
     /** Execute speed control loop when rotor position is valid */
     if( mcRpeI_RotorPositionReady(&pState->bPositionEstimation) )
     {

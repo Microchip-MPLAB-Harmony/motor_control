@@ -17,3 +17,5 @@ Gemfile
 **/*.IAR/*.dep
 **/*.IAR/*.custom_argvars
 **/*.X/*.lst
+# Ignore custom folders
+motors/PMSMs/config/sample-motors/custom-motors
