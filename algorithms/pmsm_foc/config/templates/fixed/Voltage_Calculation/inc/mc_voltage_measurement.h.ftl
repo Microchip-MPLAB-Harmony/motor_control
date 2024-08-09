@@ -48,6 +48,7 @@
 #include "mc_types.h"
 #include "mc_hardware_abstraction.h"
 #include "mc_userparams.h"
+#include "mc_utilities.h"
 
 /*******************************************************************************
  Constants
@@ -82,7 +83,8 @@ typedef struct
  */
 typedef struct tmcVol_Parameters_s
 {
-    /* Currently no parameters defined */
+    float32_t maxVoltage;  /**< max measurable bus voltage  */
+    float32_t baseVoltage;  /**< Base voltage  */
 } tmcVol_Parameters_s;
 
 /**
@@ -91,8 +93,8 @@ typedef struct tmcVol_Parameters_s
 typedef struct
 {
     tmcVol_Input_s dInput;         /**< Input ports structure. */
-    tmcVol_Output_s pOutput;       /**< Output ports structure. */
-    tmcVol_Parameters_s pParameters; /**< User parameters structure. */
+    tmcVol_Output_s dOutput;       /**< Output ports structure. */
+    tmcVol_Parameters_s dParameters; /**< User parameters structure. */
 } tmcVol_ModuleData_s;
 
 /*******************************************************************************
@@ -114,7 +116,8 @@ extern tmcVol_ModuleData_s mcVolI_ModuleData_gds;
  */
 __STATIC_INLINE void mcVol_ParametersSet(tmcVol_Parameters_s * const pParameters)
 {
-    /** @todo Implement setting of voltage measurement parameters. */
+    pParameters->maxVoltage = (float32_t)MAXIMUM_MEASURABLE_VOLTAGE;
+    pParameters->baseVoltage = (float32_t)BASE_VOLTAGE_IN_VOLTS;
 }
 
 /**

@@ -1,11 +1,3 @@
----
-parent: Getting Started
-grand_parent: Motor Control Plant Projects
-title: Launch Scilab for X2C based Model based design
-nav_order: 3
-has_children: false
-has_toc: false
----
 ## Steps to Utilize Model-Based Design in Harmony QSpin
 
 Follow the following steps to utilize Model-Based Design in Harmony QSpin. 

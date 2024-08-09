@@ -89,10 +89,10 @@ typedef struct
     float32_t maxBoardCurrent;  /**< Maximum board current */
     float32_t baseCurrent;      /**< Base current */
 
-    #if MCPMSMFOC_OFFSET_OOR == true
+<#if MCPMSMFOC_OFFSET_OOR == true >
     int16_t minOffset;  /**< Minimum offset value */
     int16_t maxOffset;  /**< Maximum offset value */
-    #endif
+</#if>
 } tmcCur_Parameters_s;
 
 /**
@@ -100,9 +100,9 @@ typedef struct
  */
 typedef struct
 {
-    tmcCur_Input_s pInput;         /**< Input ports */
+    tmcCur_Input_s dInput;         /**< Input ports */
     tmcCur_Output_s dOutput;       /**< Output ports */
-    tmcCur_Parameters_s pParameters; /**< User Parameters */
+    tmcCur_Parameters_s dParameters; /**< User Parameters */
 } tmcCur_ModuleData_s;
 
 
@@ -156,10 +156,10 @@ __STATIC_INLINE void mcCur_ParametersSet(tmcCur_Parameters_s * const pParameters
     pParameters->maxBoardCurrent = MAXIMUM_BOARD_CURRENT;
 	pParameters->baseCurrent = BASE_CURRENT_IN_AMPS;
 
-    #if MCPMSMFOC_OFFSET_OOR == true
+<#if MCPMSMFOC_OFFSET_OOR == true >
     pParameters->minOffset = (int16_t)(${MCPMSMFOC_OFFSET_OOR_MINIMUM});
     pParameters->maxOffset = (int16_t)(${MCPMSMFOC_OFFSET_OOR_MAXIMUM});
-    #endif
+</#if>
 }
 
 
@@ -188,7 +188,7 @@ void mcCurI_CurrentCalculationInit(tmcCur_ModuleData_s * const pModule);
  * 
  * @return None
  */
-void mcCurI_CurrentSensorOffsetCalculate(tmcCur_ModuleData_s * const pModule);
+tmcTypes_StdReturn_e mcCurI_CurrentOffsetCalculation(tmcCur_ModuleData_s * const pModule);
 
 /**
  * @brief Function to calculate the phase currents.

@@ -59,6 +59,8 @@ class mcPwmI_PwmInterfaceClass:
         self.event_System = mcEvtI_EventSystemClass(component)
         self.event_System()
 
+        self.architecture = ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("architecture")
+
     """
     Description:
     Create pin symbols for PWM
@@ -188,7 +190,12 @@ class mcPwmI_PwmInterfaceClass:
         # PWM Period
         self.sym_PWM_FREQ = self.component.createFloatSymbol("MCPMSMFOC_PWM_FREQUENCY", self.sym_PWM )
         self.sym_PWM_FREQ.setLabel("PWM Frequency (Hz)")
-        self.sym_PWM_FREQ.setDefaultValue(20000.0)
+        processor = Variables.get("__PROCESSOR")
+
+        if self.architecture == "CORTEX-M0PLUS":
+             self.sym_PWM_FREQ.setDefaultValue(10000.0)
+        else:
+             self.sym_PWM_FREQ.setDefaultValue(20000.0)
 
          # PWM Period
         self.sym_PWM_PERIOD = self.component.createFloatSymbol("MCPMSMFOC_PWM_PERIOD", self.sym_PWM )

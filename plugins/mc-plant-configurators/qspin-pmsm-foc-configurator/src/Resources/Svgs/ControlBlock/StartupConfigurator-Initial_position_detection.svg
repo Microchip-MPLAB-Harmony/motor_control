@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+    width="549px" height="459px" viewBox="-0.5 -0.5 549 459"
+    style="background-color: rgb(255, 255, 255);">
+    <g transform="translate(168.93, 0)"> <!-- Move Group 1 further to the right by 0.5 cm -->
+        <!-- Outer polygon -->
+        <path d="M 68 24 L 156 24 L 187 94 L 156 164 L 68 164 L 37 94 Z" fill="none" stroke="black" stroke-miterlimit="10" />
+        
+        <!-- Horizontal red line -->
+        <path d="M 43.37 94 L 180.63 94" fill="none" stroke="#ff0000" stroke-miterlimit="10" />
+        <path d="M 38.12 94 L 45.12 90.5 L 43.37 94 L 45.12 97.5 Z" fill="#ff0000" />
+        <path d="M 185.88 94 L 178.88 97.5 L 180.63 94 L 178.88 90.5 Z" fill="#ff0000" />
+        
+        <!-- Diagonal yellow line -->
+        <path d="M 152.42 158.32 L 71.88 29.68" fill="none" stroke="#ffd966" stroke-miterlimit="10" />
+        <path d="M 155.21 162.77 L 148.53 158.7 L 152.42 158.32 L 154.46 154.98 Z" fill="#ffd966" />
+        <path d="M 69.09 25.23 L 75.77 29.3 L 71.88 29.68 L 69.84 33.02 Z" fill="#ffd966" />
+        
+        <!-- Diagonal blue line -->
+        <path d="M 72.05 157.78 L 152.7 30.08" fill="none" stroke="#0000ff" stroke-miterlimit="10" />
+        <path d="M 69.25 162.21 L 70.03 154.43 L 72.05 157.78 L 75.94 158.17 Z" fill="#0000ff" />
+        <path d="M 155.5 25.65 L 154.72 33.43 L 152.7 30.08 L 148.81 29.69 Z" fill="#0000ff" />
+
+        <!-- Text labels -->
+        <text x="196" y="96" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">A+</text>
+        <text x="66" y="19" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">B+</text>
+        <text x="67" y="172" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">C+</text>
+        <text x="30" y="96" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">A-</text>
+        <text x="158" y="20" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">C-</text>
+        <text x="162" y="172" fill="black" font-family="Helvetica" font-size="12px" text-anchor="middle">B-</text>
+    </g>
+
+    <g>
+        <path d="M 30 433.63 L 30 266.37" fill="none" stroke="#000000" />
+        <path d="M 30 438.88 L 26.5 431.88 L 30 433.63 L 33.5 431.88 Z" fill="#000000" />
+        <path d="M 30 261.12 L 33.5 268.12 L 30 266.37 L 26.5 268.12 Z" fill="#000000" />
+        <path d="M 71 350 L 71 290 L 91 290 L 91 350 L 91 410 L 110 410 L 110 350" fill="none"
+            stroke="#ff3333" stroke-width="2" />
+        <path d="M 107.38 420 L 92.62 420" fill="none" stroke="#000000" />
+        <path d="M 108.88 420 L 106.88 421 L 107.38 420 L 106.88 419 Z" fill="#000000" />
+        <path d="M 91.12 420 L 93.12 419 L 92.62 420 L 93.12 421 Z" fill="#000000" />
+        <path d="M 147.38 284 L 72.62 284" fill="none" stroke="#000000" />
+        <path d="M 148.88 284 L 146.88 285 L 147.38 284 L 146.88 283 Z" fill="#000000" />
+        <path d="M 71.12 284 L 73.12 283 L 72.62 284 L 73.12 285 Z" fill="#000000" />
+        <path d="M 30 350 L 533.63 350" fill="none" stroke="#000000" />
+        <path d="M 538.88 350 L 531.88 353.5 L 533.63 350 L 531.88 346.5 Z" fill="#000000" />
+        <path d="M 150 350 L 150 290 L 170 290 L 170 350 L 170 410 L 189 410 L 189 350" fill="none"
+            stroke="#ffd333" stroke-width="2" />
+        <path d="M 230 350 L 230 290 L 250 290 L 250 350 L 250 410 L 269 410 L 269 350" fill="none"
+            stroke="#3370ff" stroke-width="2" />
+        <path d="M 310 350 L 310 290 L 330 290 L 330 350 L 330 410 L 349 410 L 349 350" fill="none"
+            stroke="#ff3333" stroke-width="2" />
+        <path d="M 389 350 L 389 290 L 409 290 L 409 350 L 409 410 L 428 410 L 428 350" fill="none"
+            stroke="#ffd333" stroke-width="2" />
+        <path d="M 469 350 L 469 290 L 489 290 L 489 350 L 489 410 L 508 410 L 508 350" fill="none"
+            stroke="#3370ff" stroke-width="2" />
+        <rect x="80" y="254" width="60" height="30" fill="none" />
+        <text x="110" y="273" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">
+            Pulse Period
+        </text>
+        <rect x="50" y="420" width="100" height="30" fill="none" />
+        <text x="100" y="439" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">
+            Pulse Duration
+        </text>
+        <rect x="-30" y="332" width="90" height="30" fill="none" transform="rotate(-90,15,347)" />
+        <text x="15" y="351" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle"
+            transform="rotate(-90, 15, 351)">
+            Pulse Amplitude
+        </text>
+        <path d="M 30 290 L 70 290" fill="none" stroke="#000000" stroke-width="0.5" stroke-dasharray="1.5 1.5" />
+        <path d="M 90 415 L 90 425" fill="none" stroke="#000000" stroke-width="0.5" stroke-dasharray="1.5 1.5" />
+        <path d="M 110 415 L 110 425" fill="none" stroke="#000000" stroke-width="0.5" stroke-dasharray="1.5 1.5" />
+        <path d="M 150 280 L 150 290" fill="none" stroke="#000000" stroke-width="0.5" stroke-dasharray="1.5 1.5" />
+        <path d="M 70 279 L 70 289" fill="none" stroke="#000000" stroke-width="0.5" stroke-dasharray="1.5 1.5" />
+        <rect x="72" y="302" width="60" height="30" fill="none" />
+        <text x="102" y="321" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">
+            A+
+        </text>
+        <rect x="152" y="301" width="60" height="30" fill="none" />
+        <text x="182" y="320" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">
+            B+
+        </text>
+        <rect x="230" y="301" width="60" height="30" fill="none" />
+        <text x="260" y="320" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">
+            C+
+        </text>
+        <rect x="311" y="300" width="60" height="30" fill="none" />
+        <text x="341" y="319" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">
+            A-
+        </text>
+        <rect x="391" y="299" width="60" height="30" fill="none" />
+        <text x="421" y="318" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">
+            B-
+        </text>
+        <rect x="420" y="299" width="60" height="30" fill="none" />
+        <text x="500" y="318" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">
+            C-
+        </text>
+    </g>
+  <g transform="translate(66.93, 0)">
+    <path d="M 0 244 C 0 232.68 9.18 223.5 20.5 223.5 L 189.5 223.5 C 200.82 223.5 210 214.32 210 203 C 210 214.32 219.18 223.5 230.5 223.5 L 399.5 223.5 C 410.82 223.5 420 232.68 420 244" fill="none" stroke="#0000cc" stroke-miterlimit="10"/>
+  </g>
+</svg>

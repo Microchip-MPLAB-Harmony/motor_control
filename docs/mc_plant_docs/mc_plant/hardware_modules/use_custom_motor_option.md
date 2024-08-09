@@ -1,11 +1,3 @@
----
-parent: Getting Started
-grand_parent: Motor Control Plant Projects
-title: How to Use the Custom Motor Option
-nav_order: 1
-has_children: false
-has_toc: false
---- 
 # How to Use the Custom Motor Option
 
 1.  Click on the motor block to open PMSM parameter window as shown below.

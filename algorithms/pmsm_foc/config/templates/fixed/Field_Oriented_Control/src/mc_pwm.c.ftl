@@ -93,8 +93,6 @@ Interface  variables
 /*******************************************************************************
 Macro Functions
 *******************************************************************************/
-#define MULT_SHIFT     mcUtils_MultAndRightShiftS16
-#define RIGHT_SHIFT   mcUtils_RightShiftS16
 
 /*******************************************************************************
 Private Functions
@@ -191,26 +189,34 @@ void  mcPwmI_PulseWidthModulationDisable( tmcPwm_Parameters_s * const pParameter
  */
 #ifdef RAM_EXECUTE
 void __ramfunc__  mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
+                                        const float32_t uBus,
                                         const tmcTypes_AlphaBeta_s * const pUalphaBeta,
                                         int16_t * const pDuty )
 #else
 void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
+                            const float32_t uBus,
                             const tmcTypes_AlphaBeta_s * const pUalphaBeta,
                             int16_t * const pDuty )
 #endif
 {
     int16_t  uA, uB, uC;
+    int16_t  uAlpha, uBeta;
+
     tmcPwm_Sector_e bSector;
 
     /** Get the linked state variable */
     tmcPwm_State_s * pState;
     pState = (tmcPwm_State_s *)pParameters->pStatePointer;
 
+    /** Apply circle limit */
+    uAlpha = Q_DIVISION( pUalphaBeta->alpha, uBus );
+    uBeta = Q_DIVISION( pUalphaBeta->beta, uBus );
+
     if( pState->enable )
     {
         /** Calculate abc voltage from alpha-beta voltage  */
-        uA = pUalphaBeta->beta;
-        uB =  -Q_MULTIPLY( pUalphaBeta->beta, Q_SCALE(ONE_OVER_TWO) ) + Q_MULTIPLY( pUalphaBeta->alpha, Q_SCALE(SQRT_3_OVER_2) );
+        uA = uBeta;
+        uB =  -Q_MULTIPLY( uBeta, Q_SCALE(ONE_OVER_TWO) ) + Q_MULTIPLY( uAlpha, Q_SCALE(SQRT_3_OVER_2) );
         uC =-uA -uB;
 
         /** Determine space vector sector */
@@ -359,4 +365,3 @@ void mcPwmI_PulseWidthModulationReset( const tmcPwm_Parameters_s * const pParame
 {
 
 }
-

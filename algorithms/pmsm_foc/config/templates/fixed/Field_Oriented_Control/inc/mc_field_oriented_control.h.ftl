@@ -132,7 +132,7 @@ extern tmcFocI_ModuleData_s mcFocI_ModuleData_gds;
 __STATIC_INLINE void mcFocI_InputsRead(tmcFoc_Input_s * const pInput)
 {
     pInput->iABC = mcCurI_ModuleData_gds.dOutput.iABC;
-    pInput->uBus = mcVolI_ModuleData_gds.pOutput.uBus;
+    pInput->uBus = mcVolI_ModuleData_gds.dOutput.uBus;
     pInput->reference = Qx_NORMALIZE( Q12, mcHalI_Potentiometer_gdu16 );
 }
 

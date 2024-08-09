@@ -257,6 +257,8 @@ void mcAppI_OverCurrentReactionIsr( uint32_t status,  uintptr_t context )
  */
 void mcAppI_AdcCalibrationIsr( ADC_STATUS status, uintptr_t context )
 {
+    tmcTypes_StdReturn_e returnStatus;
+
     /** ADC end of conversion interrupt generation for FOC control */
     mcHalI_AdcInterruptDisable();
     mcHalI_AdcInterruptClear();
@@ -265,14 +267,17 @@ void mcAppI_AdcCalibrationIsr( ADC_STATUS status, uintptr_t context )
     mcHalI_PhaseACurrentGet();
     mcHalI_PhaseBCurrentGet();
 
+    /** Phase current offset measurement  */
+    returnStatus = mcCurI_CurrentOffsetCalculation(&mcCurI_ModuleData_gds );
+
     /** Current sense amplifiers offset calculation */
-    if( 0u == mcCurI_ModuleData_gds.dOutput.calibDone )
+    if( StdReturn_Complete == returnStatus )
     {
-        mcCurI_CurrentSensorOffsetCalculate( &mcCurI_ModuleData_gds );
+        mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
     }
     else
     {
-        mcHalI_AdcCallBackRegister( (ADC_CALLBACK)mcAppI_AdcFinishedIsr, (uintptr_t)dummyForMisra );
+        /** For MISRA compliance */
     }
 
     /** Calibration and monitoring update */

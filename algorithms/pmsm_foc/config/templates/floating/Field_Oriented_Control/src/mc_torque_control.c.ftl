@@ -205,7 +205,7 @@ void mcTorI_TorqueControlManual(  const tmcTor_Parameters_s * const pParameters,
  * @param[out] pOut - Pointer to the output torque value.
  */
 void mcTorI_TorqueControlAuto(  const tmcTor_Parameters_s * const pParameters,
-                                              const float32_t iQref, const float32_t iQact, const float32_t yLimit,
+                                              const float32_t iQref, const float32_t iQact, const float32_t iQmax,
                                               float32_t * const pOut )
 {
      /** Get the linked state variable */
@@ -219,7 +219,7 @@ void mcTorI_TorqueControlAuto(  const tmcTor_Parameters_s * const pParameters,
 
          /** ToDO: Calculate Ymax and Ymin based on the motor control states. Remove the magic numbers  */
          /** Limit update for PI controller */
-         mcUtils_PiLimitUpdate( -yLimit, yLimit, &pState->bPIController );
+         mcUtils_PiLimitUpdate( -iQmax, iQmax, &pState->bPIController );
 
          /** Execute PI controller */
          mcUtils_PiControl( error, &pState->bPIController );

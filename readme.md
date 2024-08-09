@@ -29,17 +29,49 @@ For a detailed understanding of the tool's various features, consult the [Harmon
 Additionally, keep yourself informed with the latest updates and improvements by checking out our release notes:
  - [Release Notes](./release_notes.md)
 
-# Supported devices
+# Harmony QSpin Device and Algorithm Compatibility
 
-Harmony QSpin supports a wide array of devices. Refer to the list of supported Devices list to check if your device is compatible with Harmony QSpin:
+Harmony QSpin is designed to support a wide range of devices and algorithms for motor control applications. Below are the lists of supported devices, motors, and algorithms:
 
-< ```Add supported devices matrix ``` >
+## Supported Devices
 
-# Prerequisites
-< ```Add prerequisites``` >
+Harmony QSpin supports various microcontroller families from Microchip, ensuring compatibility with different motor control applications.
+
+| Device Families                                                                                           | Tested On                                                        | Remarks |
+|-----------------------------------------------------------------------------------------------------------|------------------------------------------------------------------|---------|
+| [SAMD/E5x](https://www.microchip.com/en-us/solutions/technologies/motor-control-and-drive/motor-control-products/32-bit-microcontrollers-for-motor-control-applications/sam-d5x-and-e5x) | [ATSAME54P20A](https://www.microchip.com/en-us/product/atsame54p20a) | -       |
+| [SAME7x](https://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/sam-32-bit-mcus/sam-e)                          | [ATSAME70Q21B](https://www.microchip.com/en-us/product/atsame70q21) | -       |
+| [SAMV7x](https://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/sam-32-bit-mcus/sam-v)                          | -                                                                | -       |
+| [SAMC2x](https://www.microchip.com/en-us/solutions/technologies/motor-control-and-drive/motor-control-products/32-bit-microcontrollers-for-motor-control-applications/sam-c2x-and-d2x) | [ATSAMC21J18A](https://www.microchip.com/en-us/product/atsamc21j18a) | -       |
+| [PIC32CM MC](https://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/pic32-32-bit-mcus/pic32cm-mc)             | [PIC32CM1216MC00048](https://www.microchip.com/en-us/product/PIC32CM1216MC00048) | -       |
+| [PIC32MK MCF](https://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/pic32-32-bit-mcus/pic32mk)               | [PIC32MK1024MCF100](https://www.microchip.com/en-us/product/pic32mk1024mcf100) | -       |
+| [PIC32MK MCM](https://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/pic32-32-bit-mcus/pic32mk)               | [PIC32MK1024MCM100](https://www.microchip.com/en-us/product/PIC32MK1024MCM100) | -       |
+| [PIC32MK MCA](https://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/pic32-32-bit-mcus/pic32mk)               | [PIC32MK0128MCA048](https://www.microchip.com/en-us/product/PIC32MK0128MCA048) | -       |
+
+## Supported Motors
+
+Harmony QSpin provides support for following motors:
+- Permanent Magnet Synchronous Motors (PMSM)
+
+## Supported Algorithms
+
+Harmony QSpin integrates advanced algorithms tailored for different microcontroller families, enabling efficient motor control strategies.
+
+| Algorithms                                          | SAMD/E5x   | SAME7x / SAMV7x   | SAMC2x/ PIC32CM MC |  PIC32MK MCF/ PIC32MK MCM/ PIC32MK MCA |
+|-----------------------------------------------|------------|--------------------|---------------------|----------------------------------------|
+| Classical PLL based Estimator                   | Yes        | Yes                | Yes                 | Yes                                    |
+| Sliding mode observer                           | Yes        | Yes                | No                  | Yes                                    |
+| Reduced Order Luenberger Observer               | Yes        | Yes                | No                  | Yes                                    |
+| Encoder based position calculation              | Yes        | Yes                | No                  | Yes                                    |
+| ZSMT-HF Hybrid                                   | Yes        | No                 | No                  | Yes                                    |
+| Flux weakening                                   | Yes        | Yes                | No                  | Yes                                    |
+| MTPA                                             | Yes        | Yes                | No                  | Yes                                    |
+| Null vector Flying start                         | Yes        | Yes                | No                  | Yes                                    |
+| Encoder based position control                  | Yes        | Yes                | No                  | Yes                                    |
 
 # Additional Resources
-Refer to the following repositories to find device-specific application projects:
+
+Explore a variety of example application projects generated from QSpin and discover high-value standalone projects in the following repositories:
 
 | Repository Name | Description | Help Document | 
 | ----------------- | ------------------- | ---------------- |

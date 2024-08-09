@@ -108,9 +108,18 @@
 
 
 #define   Q15_MULTIPLY(x, y )   (int16_t)(( (int32_t)(x)  * (int32_t)(y)) >> 15U )
+#define   Q15_MULTIPLY_SAT(x, y) ({                \
+    int32_t result = ((int32_t)(x) * (int32_t)(y)) >> 15U; \
+    if (result > INT16_MAX) result = INT16_MAX;            \
+    else if (result < INT16_MIN) result = INT16_MIN;       \
+    (int16_t)result;                                       \
+})
+
+#define   Q15_DIVISION( x, y)      (int16_t)(((int32_t)x * (int32_t)Q15_SCALE_FACTOR ) / y )
 #define   Q15_RIGHT_SHIFT( x, y)   (int16_t)( x  >> y )
 #define   Q15_SCALE(value)         (int16_t)( value * (float32_t)Q15_SCALE_FACTOR)
 
+#define   Q14_DIVISION( x, y)      (int16_t)(((int32_t)x * (int32_t)Q14_SCALE_FACTOR ) / y )
 #define   Q14_SCALE(value)         (int16_t)( value * (float32_t)Q14_SCALE_FACTOR)
 #define   Q14_MULTIPLY(x, y )   (int16_t)(( (int32_t)(x)  * (int32_t)(y)) >> 14U )
 #define   Q14_RIGHT_SHIFT( x, y)   (int16_t)( x  >> y )
@@ -119,7 +128,9 @@
 
 #if ( GLOBAL_Q_FORMAT == Q15_FORMAT )
 #define  Q_SCALE_FACTOR                   Q15_SCALE_FACTOR
-#define  Q_MULTIPLY                            Q15_MULTIPLY
+// #define  Q_MULTIPLY                            Q15_MULTIPLY
+#define  Q_MULTIPLY                            Q15_MULTIPLY_SAT
+#define  Q_DIVISION                            Q15_DIVISION
 #define  Q_SCALE                                  Q15_SCALE
 #define  Q_RIGHT_SHIFT                     Q15_RIGHT_SHIFT
 #define  Qx_NORMALIZE( x, value )       (int16_t)( value << ( 15U - x ))

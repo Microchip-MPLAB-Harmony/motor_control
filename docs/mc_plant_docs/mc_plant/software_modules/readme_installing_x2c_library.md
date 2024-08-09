@@ -1,12 +1,3 @@
----
-grand_parent: MPLAB® Harmony X2C
-parent: X2C Model
-title: Installing X2C Library
-has_children: false
-has_toc: false
-nav_order: 1
-
----
 # Installing X2C Library
 
 ## Pre-requisites

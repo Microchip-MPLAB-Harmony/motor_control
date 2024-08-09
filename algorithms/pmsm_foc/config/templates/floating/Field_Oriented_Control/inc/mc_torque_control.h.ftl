@@ -156,7 +156,7 @@ void mcTorI_TorqueControlManual(  const tmcTor_Parameters_s * const pParameters,
  * @param[out] pOut - Pointer to the output torque value.
  */
 void mcTorI_TorqueControlAuto(  const tmcTor_Parameters_s * const pParameters,
-                                              const float32_t iQref, const float32_t iQact, const float32_t yLimit, float32_t * const pOut );
+                                              const float32_t iQref, const float32_t iQact, const float32_t iQmax, float32_t * const pOut );
 
 /**
  * @brief 

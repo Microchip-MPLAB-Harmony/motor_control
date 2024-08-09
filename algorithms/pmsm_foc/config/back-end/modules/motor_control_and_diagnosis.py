@@ -79,7 +79,11 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_CONTROL_TYPE.addKey("POSITION_LOOP", "3", "Position control")
         self.sym_CONTROL_TYPE.setOutputMode("Key")
         self.sym_CONTROL_TYPE.setDisplayMode("Description")
-
+        
+        self.sym_CONTROL_TYPE_COMMENT = self.component.createCommentSymbol("MCPMSMFOC_CONTROL_TYPE_COMMENT", self.sym_NODE )
+        self.sym_CONTROL_TYPE_COMMENT.setLabel('**Kindly ensure that any sensored method is selected for position estimation **')
+        self.sym_CONTROL_TYPE_COMMENT.setDependencies( self.updateComment, [ 'MCPMSMFOC_CONTROL_TYPE'] )
+        self.sym_CONTROL_TYPE_COMMENT.setVisible(False)
 
         # --------------------- Reference source -----------------------------------------#
         self.sym_INPUT_SOURCE = self.component.createMenuSymbol(None, self.sym_NODE)
@@ -351,6 +355,12 @@ class mcMocI_MotorControlAndDiagnosis:
         # Over-modulation enable
         self.sym_DECOUPLING_ENABLE = self.component.createBooleanSymbol("MCPMSMFOC_ENABLE_DECOUPLING", self.sym_DECOUPLING_NETWORK)
         self.sym_DECOUPLING_ENABLE.setLabel("Enable Inductive Decoupling")
+
+    def updateComment( self, symbol, event ):
+         if "POSITION_LOOP" == event["symbol"].getSelectedKey():
+            symbol.setVisible( True )
+         else:
+              symbol.setVisible( False )
 
     def showRampProfilerSymbol(self, symbol, event):
         if "Step" == event["symbol"].getValue():

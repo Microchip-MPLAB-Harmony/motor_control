@@ -94,14 +94,16 @@ typedef struct
 } tmcTypes_DQ_s;
 
 /*! \brief Enumeration for standard return status codes */
-typedef enum
-{
-    StdReturn_Progress,  /*!< Operation in progress */
+typedef enum {
+    StdReturn_Progress, /*!< Operation in progress */
+    StdReturn_Failed,   /*!< Operation failed */
     StdReturn_Success,   /*!< Operation successful */
-    StdReturn_Fail,      /*!< Operation failed */
-    StdReturn_Complete   /*!< Operation completed */
+    StdReturn_Complete, /*!< Operation successful */
+    StdReturn_Pending,  /*!< Operation pending */
+    StdReturn_Error,    /*!< Operation error */
+    StdReturn_Timeout,  /*!< Operation timeout */
+    StdReturn_Invalid,  /*!< Operation invalid */
 } tmcTypes_StdReturn_e;
-
 
 /*******************************************************************************
  Interface variables

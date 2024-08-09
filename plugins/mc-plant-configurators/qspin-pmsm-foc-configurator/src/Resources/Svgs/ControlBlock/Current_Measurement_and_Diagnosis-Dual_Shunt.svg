@@ -40,20 +40,20 @@
       <path d="M 427.3 291.63 L 420.27 295.06 L 422.05 291.57 L 420.33 288.06 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
       <path d="M 518.9 276.06 L 558.7 276.06" fill="none" stroke="#000000" stroke-miterlimit="10"/>
       <path d="M 563.95 276.06 L 556.95 279.56 L 558.7 276.06 L 556.95 272.56 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10"/>
-      <g id="text-iuoffset">
-        <text x="213" y="64" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">IuOffset</text>
+      <g id="text-Iaoffset">
+        <text x="213" y="64" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">IaOffset</text>
       </g>
-      <g id="text-ivoffset">
-        <text x="214" y="166" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">IvOffset</text>
+      <g id="text-Iboffset">
+        <text x="214" y="166" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">IbOffset</text>
       </g>
-      <g id="text-iu">
-        <text x="580" y="40" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Iu</text>
+      <g id="text-Ia">
+        <text x="580" y="40" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Ia</text>
       </g>
-      <g id="text-iv">
-        <text x="580" y="114" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Iv</text>
+      <g id="text-Ib">
+        <text x="580" y="114" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Ib</text>
       </g>
-      <g id="text-iw">
-        <text x="580" y="198" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Iw</text>
+      <g id="text-Ic">
+        <text x="580" y="198" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Ic</text>
       </g>
       <g id="text-status">
         <text x="591" y="279" fill="#000000" font-family="Verdana" font-size="12px" text-anchor="middle">Status</text>
@@ -81,13 +81,13 @@
       </g>
     </g>
     <g id="boxes" pointer-events="all">
-      <g id="box-iusens">
+      <g id="box-Iasens">
         <path d="M 14.94 -0.34 L 49.7 -0.34 L 49.7 51.01 L 32.32 64.29 L 14.94 51.01 Z" class="boxColor"  stroke-miterlimit="10" transform="rotate(270,32.32,31.98)"/>
-        <text x="28" y="36" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">IuSens</text>
+        <text x="28" y="36" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">IaSens</text>
       </g>
-      <g id="box-ivsens">
+      <g id="box-Ibsens">
         <path d="M 14.94 162.09 L 49.7 162.09 L 49.7 213.44 L 32.32 226.72 L 14.94 213.44 Z" class="boxColor"  stroke-miterlimit="10" transform="rotate(270,32.32,194.41)"/>
-        <text x="28" y="198" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">IvSens</text>
+        <text x="28" y="198" class="boxTextColor" font-family="Verdana" font-size="12px" text-anchor="middle">IbSens</text>
       </g>
       <g id="box-diagnosis" pointer-events="all">
         <rect x="428.42" y="240.5" width="110.8" height="69.52" class="boxColor" />

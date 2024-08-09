@@ -70,6 +70,11 @@ typedef struct
     tmcMot_PMSM_s * pMotorParameters; /**< Pointer to motor parameters */
     float32_t maxNegativeCurrentInAmps;  /**< Maximum negative current  */
 </#if>
+
+<#if ( MCPMSMFOC_ENABLE_FW == true) >
+    float32_t fwTuneFactor;  /**< Field weakening tuning factor  */
+</#if>
+
     void * pStatePointer;            /**< Pointer to the state structure */
 } tmcFlx_Parameters_s;
 
@@ -101,6 +106,7 @@ __STATIC_INLINE void mcFlxI_ParametersSet(tmcFlx_Parameters_s * const pParameter
 <#if MCPMSMFOC_ENABLE_FW == true >
     pParameters->pMotorParameters = &mcMotI_PMSM_gds;
     pParameters->maxNegativeCurrentInAmps = (float)(${MCPMSMFOC_FW_MAX_NEGATIVE_ID});
+    pParameters->fwTuneFactor = (float)(1.30f);
 </#if>
 }
 

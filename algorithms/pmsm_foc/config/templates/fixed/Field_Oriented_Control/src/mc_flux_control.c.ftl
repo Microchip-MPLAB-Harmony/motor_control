@@ -278,7 +278,7 @@ void  mcFlx_FieldWeakeningInit( tmcFlx_Parameters_s * const pParameters )
     f32a = pParameters->pMotorParameters->RsInOhms/ BASE_IMPEDENCE_IN_OHMS;
     mcUtils_FloatToValueShiftPair( f32a, &pState->bFieldWeakening.RsValue, &pState->bFieldWeakening.RsShift );
 
-    f32a = pParameters->pMotorParameters->LdInHenry * BASE_SPEED_IN_RPM / BASE_IMPEDENCE_IN_OHMS;
+    f32a = pParameters->pMotorParameters->LdInHenry * BASE_SPEED_IN_RPM / ( pParameters->fwTuneFactor * BASE_IMPEDENCE_IN_OHMS );
     mcUtils_FloatToValueShiftPair( f32a, &pState->bFieldWeakening.LdValue, &pState->bFieldWeakening.LdShift );
 
     /** BEMF constant values  */
@@ -318,6 +318,8 @@ int16_t  mcFlx_FieldWeakening(  tmcFlx_FieldWeakening_s * const pFieldWeakening,
 #endif
 {
     int16_t absIq;
+    int16_t absRPM;
+
     if( !pFieldWeakening->enable )    {
         return 0;
     }
@@ -325,7 +327,7 @@ int16_t  mcFlx_FieldWeakening(  tmcFlx_FieldWeakening_s * const pFieldWeakening,
     int32_t uqrefLimitSquare;
 
     /** Calculate maximum q-axis reference voltage */
-    uqrefLimitSquare = (Q_SCALE(1.0) * Q_SCALE(1.0)) - ((int32_t)pIDQ->d * (int32_t)pIDQ->d);
+    uqrefLimitSquare = ( (int32_t)uBus * (int32_t)uBus) - ((int32_t)pUDQ->d * (int32_t)pUDQ->d);
     pFieldWeakening->uqrefLimit = mcUtils_SquareRoot( uqrefLimitSquare );
 
     /** Calculate BEMF voltage magnitude from mechanical RPM */
@@ -339,12 +341,13 @@ int16_t  mcFlx_FieldWeakening(  tmcFlx_FieldWeakening_s * const pFieldWeakening,
     pFieldWeakening->omegaLdId = pFieldWeakening->uqrefLimit - pFieldWeakening->absIqRs - pFieldWeakening->eMagnitude;
 
     /** Calculate numerator */
-    pFieldWeakening->omegaLd = ( (int32_t)wmechRPM *  (int32_t)pFieldWeakening->LdValue ) >> pFieldWeakening->LdShift;
+    absRPM = UTIL_Abs16( wmechRPM );
+    pFieldWeakening->omegaLd = ( (int32_t)absRPM *  (int32_t)pFieldWeakening->LdValue ) >>  pFieldWeakening->LdShift;
 
     /** Calculate reference */
     if( pFieldWeakening->omegaLdId < 0 && pFieldWeakening->omegaLd != 0)
     {
-        pFieldWeakening->fluxWeakIdRef = pFieldWeakening->omegaLdId / pFieldWeakening->omegaLd;
+        pFieldWeakening->fluxWeakIdRef = Q_DIVISION( pFieldWeakening->omegaLdId, pFieldWeakening->omegaLd );
     }
     else
     {

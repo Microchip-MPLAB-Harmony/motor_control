@@ -1,11 +1,3 @@
----
-parent: Getting Started
-grand_parent: Motor Control Plant Projects
-title: Create MCC project for MC Plant
-nav_order: 1
-has_children: false
-has_toc: false
---- 
 # Create a new MPLAB® Harmony v3 project using MCC
 
 This section describes step by step process for creating a new Motor Control Project using MPLAB Code Configurator (MCC) from scratch. 

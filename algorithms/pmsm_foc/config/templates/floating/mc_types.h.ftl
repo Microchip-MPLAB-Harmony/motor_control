@@ -80,13 +80,17 @@ typedef struct
     float32_t q;
 }tmcTypes_DQ_s;
 
-typedef enum
-{
-    StdReturn_Progress,
-    StdReturn_Success,
-    StdReturn_Fail,
-    StdReturn_Complete
-}tmcTypes_StdReturn_e;
+/*! \brief Enumeration for standard return status codes */
+typedef enum {
+    StdReturn_Progress, /*!< Operation in progress */
+    StdReturn_Failed,   /*!< Operation failed */
+    StdReturn_Success,   /*!< Operation successful */
+    StdReturn_Complete, /*!< Operation successful */
+    StdReturn_Pending,  /*!< Operation pending */
+    StdReturn_Error,  /*!< Operation error */
+    StdReturn_Timeout,  /*!< Operation timeout */
+    StdReturn_Invalid,  /*!< Operation invalid */
+} tmcTypes_StdReturn_e;
 
 /*******************************************************************************
  Interface variables

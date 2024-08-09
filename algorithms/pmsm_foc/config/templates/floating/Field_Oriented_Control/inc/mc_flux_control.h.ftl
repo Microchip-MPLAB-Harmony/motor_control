@@ -151,7 +151,7 @@ void mcFlxI_FluxControlManual(  const tmcFlx_Parameters_s * const pParameters,
  * @return None
  */
 void mcFlxI_FluxControlAuto(  const tmcFlx_Parameters_s * const pParameters,
-                                              const float32_t iDref, const  float32_t iDact, const float32_t yLimit, float32_t * const pOut );
+                                              const float32_t iDref, const  float32_t iDact, const float32_t iDmax, float32_t * const pOut );
 
 /*! 
  * @brief Reset flux control

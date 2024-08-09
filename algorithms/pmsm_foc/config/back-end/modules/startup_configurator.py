@@ -112,11 +112,12 @@ class mcSupI_StartupConfigurator:
         self.sym_FLYING = self.component.createBooleanSymbol( "MCPMSMFOC_ENABLE_FLYING_START", self.sym_NODE )
         self.sym_FLYING.setLabel("Flying Start")
         self.sym_FLYING.setDefaultValue(False)
-        if self.architecture == "CORTEX-M0PLUS":
-            self.sym_FLYING.setReadOnly(True)
 
-        # Enable flying start after functional test
-        self.sym_FLYING.setReadOnly(False)
+        if self.architecture == "CORTEX-M0PLUS":
+             self.sym_FLYING.setReadOnly(True)
+        else:
+             # Enable flying start after functional test
+             self.sym_FLYING.setReadOnly(False)
 
         self.sym_DETECT_TIME = self.component.createFloatSymbol( "MCPMSMFOC_FLY_START_DETECTION_TIME", self.sym_FLYING )
         self.sym_DETECT_TIME.setLabel("Detection Time")

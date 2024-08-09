@@ -54,10 +54,15 @@ Headers inclusions
 /*******************************************************************************
  Private data-types
  *******************************************************************************/
+typedef struct {
+    int16_t adcToVoltFactorValue;
+    uint16_t  adcToVoltFactorShift;
+}tmcVol_State_s;
 
 /*******************************************************************************
  Private variables
  *******************************************************************************/
+static tmcVol_State_s  mcVol_State_mds;
 
 /*******************************************************************************
  Interface Variables
@@ -82,7 +87,11 @@ tmcVol_ModuleData_s mcVolI_ModuleData_gds;
 void  mcVolI_VoltageCalculationInit( tmcVol_ModuleData_s * const pModule )
 {
     /** Set parameters */
-    mcVol_ParametersSet( &pModule->pParameters);
+    mcVol_ParametersSet( &pModule->dParameters);
+
+    /** Calculate scaling factor */
+    float32_t f32a = pModule->dParameters.maxVoltage / pModule->dParameters.baseVoltage;
+    mcUtils_FloatToValueShiftPair( f32a, &mcVol_State_mds.adcToVoltFactorValue, &mcVol_State_mds.adcToVoltFactorShift );
 }
 
 /**
@@ -107,10 +116,11 @@ void mcVolI_VoltageCalculation( tmcVol_ModuleData_s * const pModule )
     mcVol_InputPortsRead(pInput);
 
     /** Calculate DC bus voltage */
-    pModule->pOutput.uBus =   Qx_NORMALIZE( Q12, pInput->sensorInput);
+    int16_t  temp = Qx_NORMALIZE( Q12, pInput->sensorInput);
+    pModule->dOutput.uBus =  ( (int32_t)temp * (int32_t)mcVol_State_mds.adcToVoltFactorValue ) >> mcVol_State_mds.adcToVoltFactorShift;
 
     /** Write output ports */
-    mcVol_OutputPortsWrite(&pModule->pOutput);
+    mcVol_OutputPortsWrite(&pModule->dOutput);
 }
 
 /**
@@ -124,12 +134,12 @@ void mcVolI_VoltageCalculation( tmcVol_ModuleData_s * const pModule )
 void mcVolI_VoltageCalculationReset( tmcVol_ModuleData_s * const pModule )
 {
     tmcVol_Output_s * pOutput;
-    pOutput = &pModule->pOutput;
+    pOutput = &pModule->dOutput;
 
     /** Reset output ports */
     pOutput->uBus = 0u;
     pOutput->uBusFilt = 0u;
 
     /** Write output ports */
-    mcVol_OutputPortsWrite(&pModule->pOutput);
+    mcVol_OutputPortsWrite(&pModule->dOutput);
 }

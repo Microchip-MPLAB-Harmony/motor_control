@@ -59,6 +59,13 @@ Headers inclusions
  */
 #define OPEN_TO_CLOSE_ANGLE_STEP_SIZE   (uint16_t)(4)
 
+/** 
+ * @brief DC bus voltage limit
+ * 
+ * This constant defines  DC bus voltage limit.
+ */
+#define  DC_BUS_VOLTAGE_LIMIT     Q_SCALE( 0.5658032638 )
+
 /*******************************************************************************
  * Private Data Types
  *******************************************************************************/
@@ -555,11 +562,11 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     mcFoc_ParkTransformation( &pOutput->iAlphaBeta, sine, cosine, &pOutput->iDQ );
 
     /** Execute flux control. Note. Implied rescale of 0.636619 * Vdc  to 1 */
-    int16_t  maxBusVoltage = Q_SCALE(1.0);
+    int16_t  maxBusVoltage = Q_MULTIPLY( pModule->dInput.uBus, DC_BUS_VOLTAGE_LIMIT );
     mcFlxI_FluxControlAuto( &pState->bFluxController, pState->iDref, pOutput->iDQ.d, maxBusVoltage, &pState->uDQ.d );
 
     /** Calculate maximum allowed Q-axis voltage   */
-    int32_t uqLimitSquare =((int32_t)Q_SCALE(1.0) * (int32_t)Q_SCALE(1.0)) - ( (int32_t)pState->uDQ.d * (int32_t)pState->uDQ.d );
+    int32_t uqLimitSquare =((int32_t)maxBusVoltage * (int32_t)maxBusVoltage) - ( (int32_t)pState->uDQ.d * (int32_t)pState->uDQ.d );
     int16_t uqLimit = mcUtils_SquareRoot( uqLimitSquare );
 
     /** Calculate the maximum allowed Q-axis reference current  */
@@ -575,12 +582,12 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     mcFoc_InverseParkTransformation( &pState->uDQ, sine, cosine, &pOutput->uAlphaBeta );
 
     /** Space vector modulation  */
-    mcPwmI_PulseWidthModulation(&pState->bPwmModulator, &pOutput->uAlphaBeta, mcPwmI_Duty_gau16 );
+    mcPwmI_PulseWidthModulation(&pState->bPwmModulator, maxBusVoltage, &pOutput->uAlphaBeta, mcPwmI_Duty_gau16 );
 
 <#if ( MCPMSMFOC_ENABLE_MTPA == true ) || ( MCPMSMFOC_ENABLE_FW == true ) >
     /** Get Flux reference value  */
     mcFlxI_FluxReferenceGet( &pState->bFluxController, &pState->uDQ, &pOutput->iDQ,
-                                   &pState->eAlphaBeta, pOutput->elecSpeed,  Q_SCALE(1.0), &pState->iDref );
+                                   &pState->eAlphaBeta, pOutput->elecSpeed,  maxBusVoltage, &pState->iDref );
 </#if>
 
 }
