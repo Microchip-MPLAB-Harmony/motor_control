@@ -47,10 +47,10 @@ import yaml
 class mcMotI_MotorParametersClass:
     def __init__(self, component):
         self.component = component
-        autoConnectTable = ['motortype_PMSM']
+        autoConnectTable = ['pmsm_motor']
         res = Database.activateComponents(autoConnectTable)
 
-        autoComponentIDTable = [[ 'pmsm_foc', "pmsmfoc_MOTOR", "motortype_PMSM", "PMSM"]]
+        autoComponentIDTable = [[ 'pmsm_foc', "pmsmfoc_MOTOR", "pmsm_motor", "motortype_PMSM"]]
         res = Database.connectDependencies(autoComponentIDTable)
 
     def create_symbols(self):

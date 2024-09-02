@@ -67,8 +67,6 @@ class mcMotI_MotorParametersClass:
                                 print("Warning: Motor file cannot be parsed: {}, {}, Error: {}".format(yaml_file_path, filename, e))
                     except Exception as e:
                          print("Warning: Motor data not extracted successfully: {}, {}, Error: {}".format(yaml_file_path, filename, e))
-                         
-        print('Motor parameters  ', self.motors)
 
     def create_symbols(self):
         '''
@@ -84,7 +82,6 @@ class mcMotI_MotorParametersClass:
         # Saving the new board
         self.sym_METADATA_MENU = self.component.createMenuSymbol("MCPMSMFOC_MOTOR_METADATA_MENU",  self.sym_SELECT_MOTOR )
         self.sym_METADATA_MENU.setLabel("Metadata")
-        self.sym_METADATA_MENU.setDependencies(self.make_read_only, ['MCPMSMFOC_MOTOR_SEL'])
 
         self.sym_METADATA_NAME = self.component.createStringSymbol("MCPMSMFOC_METADATA_MOTOR_FILE_NAME", self.sym_METADATA_MENU)
         self.sym_METADATA_NAME.setLabel('Microchip motor name')
@@ -102,6 +99,18 @@ class mcMotI_MotorParametersClass:
         self.sym_METADATA_PART_NO.setLabel('Manufaturer part number')
         self.sym_METADATA_PART_NO.setDependencies(self.make_read_only, ['MCPMSMFOC_MOTOR_SEL'])
 
+        self.sym_WARNING = self.component.createCommentSymbol("MCPMSMFOC_CUSTOM_MOTOR_WARNING", self.sym_METADATA_MENU )
+        self.sym_WARNING.setLabel('No Warning')
+        self.sym_WARNING.setVisible(False)
+
+        #   Custom motor parameters
+        self.sym_CUSTOM_MOTOR_PARAMS = self.component.createStringSymbol("MCPMSMFOC_CUSTOM_MOTOR_PARAMS", self.sym_METADATA_MENU )
+        self.sym_CUSTOM_MOTOR_PARAMS.setLabel('Custom motor parameters')
+        self.sym_CUSTOM_MOTOR_PARAMS.setDefaultValue('')
+        self.sym_CUSTOM_MOTOR_PARAMS.setVisible(False)
+        self.sym_CUSTOM_MOTOR_PARAMS.setReadOnly(True)
+        self.sym_CUSTOM_MOTOR_PARAMS.setDependencies(self.update_motor_list, ['MCPMSMFOC_CUSTOM_MOTOR_PARAMS'])
+
         self.sym_NAME_PLATE_PARAMS = self.component.createMenuSymbol("MCPMSMFOC_MOTOR_NAME_PLATE_PARAMS",  self.sym_SELECT_MOTOR )
         self.sym_NAME_PLATE_PARAMS.setLabel("Nameplate Parameters")
 
@@ -117,6 +126,8 @@ class mcMotI_MotorParametersClass:
         except:
             print("Warning: The connection type is not indicated in the file", default_motor)
 
+        self.sym_POLARITY.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_MOTOR_CONNECTION"])
+
         # Motor pole pairs
         if 'Custom' == default_motor:
             pole_pairs = 0
@@ -126,7 +137,7 @@ class mcMotI_MotorParametersClass:
         self.sym_ZP = self.component.createFloatSymbol("MCPMSMFOC_POLE_PAIRS", self.sym_NAME_PLATE_PARAMS)
         self.sym_ZP.setLabel("Pole pairs")
         self.sym_ZP.setDefaultValue(pole_pairs)
-
+        self.sym_ZP.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_POLE_PAIRS"])
 
         # Motor rated speed
         if 'Custom' == default_motor:
@@ -137,6 +148,7 @@ class mcMotI_MotorParametersClass:
         self.sym_N_RATED = self.component.createFloatSymbol("MCPMSMFOC_RATED_SPEED", self.sym_NAME_PLATE_PARAMS)
         self.sym_N_RATED.setLabel("Base mechanical speed (RPM)")
         self.sym_N_RATED.setDefaultValue(rated_speed)
+        self.sym_N_RATED.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_RATED_SPEED"])
 
         # Motor maximum speed
         if 'Custom' == default_motor:
@@ -147,6 +159,7 @@ class mcMotI_MotorParametersClass:
         self.sym_N_MAX = self.component.createFloatSymbol("MCPMSMFOC_MAX_SPEED", self.sym_NAME_PLATE_PARAMS)
         self.sym_N_MAX.setLabel("Maximum mechanical speed (RPM)")
         self.sym_N_MAX.setDefaultValue(max_speed)
+        self.sym_N_MAX.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_MAX_SPEED"])
 
         # Motor maximum current
         if 'Custom' == default_motor:
@@ -157,6 +170,7 @@ class mcMotI_MotorParametersClass:
         self.sym_I_MAX = self.component.createFloatSymbol("MCPMSMFOC_MAX_MOTOR_CURRENT", self.sym_NAME_PLATE_PARAMS)
         self.sym_I_MAX.setLabel("Rated continuous current (A)")
         self.sym_I_MAX.setDefaultValue(i_max)
+        self.sym_I_MAX.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_MAX_MOTOR_CURRENT"])
 
         # Motor line-line resistance
         if 'Custom' == default_motor:
@@ -173,6 +187,7 @@ class mcMotI_MotorParametersClass:
         self.sym_RATED_VOLTAGE = self.component.createFloatSymbol("MCPMSMFOC_RATED_VOLTAGE", self.sym_NAME_PLATE_PARAMS)
         self.sym_RATED_VOLTAGE.setLabel("Rated voltage (V)")
         self.sym_RATED_VOLTAGE.setDefaultValue(rated_voltage)
+        self.sym_RATED_VOLTAGE.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_RATED_VOLTAGE"])
 
         self.sym_ELECTRICAL_PARAMS = self.component.createMenuSymbol("MCPMSMFOC_MOTOR_ELECTRICAL_PARAMS",  self.sym_SELECT_MOTOR )
         self.sym_ELECTRICAL_PARAMS.setLabel("Electrical Parameters")
@@ -180,6 +195,7 @@ class mcMotI_MotorParametersClass:
         self.sym_RS = self.component.createFloatSymbol("MCPMSMFOC_R", self.sym_ELECTRICAL_PARAMS)
         self.sym_RS.setLabel("Resistance (ohms)")
         self.sym_RS.setDefaultValue(res)
+        self.sym_RS.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_R"])
 
         # Motor direct axis inductance
         if 'Custom' == default_motor:
@@ -190,6 +206,7 @@ class mcMotI_MotorParametersClass:
         self.sym_LD = self.component.createFloatSymbol("MCPMSMFOC_LD", self.sym_ELECTRICAL_PARAMS)
         self.sym_LD.setLabel("Direct-axis inductance Ld (Henry)")
         self.sym_LD.setDefaultValue(Ld)
+        self.sym_LD.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_LD"])
 
         # Motor quadrature axis inductance
         if 'Custom' == default_motor:
@@ -200,6 +217,7 @@ class mcMotI_MotorParametersClass:
         self.sym_LQ = self.component.createFloatSymbol("MCPMSMFOC_LQ", self.sym_ELECTRICAL_PARAMS)
         self.sym_LQ.setLabel("Quadrature-axis inductance Lq (Henry)")
         self.sym_LQ.setDefaultValue(Lq)
+        self.sym_LQ.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_LQ"])
 
         # Motor back emf constant
         if 'Custom' == default_motor:
@@ -210,6 +228,7 @@ class mcMotI_MotorParametersClass:
         self.sym_KE = self.component.createFloatSymbol("MCPMSMFOC_BEMF_CONST", self.sym_ELECTRICAL_PARAMS)
         self.sym_KE.setLabel("Back EMF Constant (Vrms/KRPM line-line)")
         self.sym_KE.setDefaultValue(Ke)
+        self.sym_KE.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_BEMF_CONST"])
 
         self.sym_MECHANICAL_PARAMS = self.component.createMenuSymbol("MCPMSMFOC_MOTOR_MECHANICAL_PARAMS",  self.sym_SELECT_MOTOR )
         self.sym_MECHANICAL_PARAMS.setLabel("Mechanical Parameters")
@@ -223,6 +242,7 @@ class mcMotI_MotorParametersClass:
         self.sym_B = self.component.createFloatSymbol("MCPMSMFOC_VISCOUS_DAMPING", self.sym_MECHANICAL_PARAMS)
         self.sym_B.setLabel("Viscous damping coefficient (N-m /(rad/s))")
         self.sym_B.setDefaultValue(damping_coefficient)
+        self.sym_B.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_VISCOUS_DAMPING"])
 
         # Motor frictional constant
         if 'Custom' == default_motor:
@@ -233,6 +253,7 @@ class mcMotI_MotorParametersClass:
         self.sym_TF = self.component.createFloatSymbol("MCPMSMFOC_FRICTION_TORQUE", self.sym_MECHANICAL_PARAMS)
         self.sym_TF.setLabel("Constant frictional torque (N-m))")
         self.sym_TF.setDefaultValue(friction_const)
+        self.sym_TF.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_FRICTION_TORQUE"])
 
         # Motor inertia
         if 'Custom' == default_motor:
@@ -243,6 +264,7 @@ class mcMotI_MotorParametersClass:
         self.sym_J = self.component.createFloatSymbol("MCPMSMFOC_ROTOR_INERTIA", self.sym_MECHANICAL_PARAMS)
         self.sym_J.setLabel("Rotor inertia (N-m /(rad/s^2))")
         self.sym_J.setDefaultValue(inertia_val)
+        self.sym_J.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_ROTOR_INERTIA"])
 
         self.sym_SENSOR_PARAMS = self.component.createMenuSymbol("MCPMSMFOC_MOTOR_SENSOR_PARAMS",  self.sym_SELECT_MOTOR )
         self.sym_SENSOR_PARAMS.setLabel("Sensor Parameters")
@@ -261,45 +283,12 @@ class mcMotI_MotorParametersClass:
         self.sym_ENCODER_PPR = self.component.createIntegerSymbol("MCPMSMFOC_MOTOR_SENSOR_ENCODER_PPR", self.sym_SENSOR_SEL )
         self.sym_ENCODER_PPR.setLabel("Pulse per revolution")
         self.sym_ENCODER_PPR.setDefaultValue(0)
+        self.sym_ENCODER_PPR.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_MOTOR_SENSOR_ENCODER_PPR"])
 
         # Initialize callback functions
         self.sym_DEPENDNCIES = self.component.createStringSymbol("MCPMSMFOC_MOTOR_PARAMS", self.sym_SELECT_MOTOR)
         self.sym_DEPENDNCIES.setVisible(False)
-        self.sym_DEPENDNCIES.setDependencies( self.motor_parameters_update, ["MCPMSMFOC_MOTOR_SEL"])
-
-        # Saving the new board
-        self.sym_CUSTOM_MENU = self.component.createMenuSymbol("MCPMSMFOC_MOTOR_CUSTOM_MENU",  self.sym_SELECT_MOTOR )
-        self.sym_CUSTOM_MENU.setLabel("Custom Motor")
-        self.sym_CUSTOM_MENU.setDependencies(self.make_symbol_visible, ['MCPMSMFOC_MOTOR_SEL'])
-        self.sym_CUSTOM_MENU.setVisible(False)
-
-        self.sym_CUSTOM_MOTOR_NAME = self.component.createStringSymbol("MCPMSMFOC_CUSTOM_MOTOR_FILE_NAME", self.sym_CUSTOM_MENU)
-        self.sym_CUSTOM_MOTOR_NAME.setLabel('Custom motor name')
-
-        self.sym_CUSTOM_MOTOR_MANUFACTURER = self.component.createStringSymbol("MCPMSMFOC_CUSTOM_MOTOR_MANUFACTURER", self.sym_CUSTOM_MENU)
-        self.sym_CUSTOM_MOTOR_MANUFACTURER.setLabel('Manufaturer name')
-
-        self.sym_CUSTOM_MOTOR_PART_NO = self.component.createStringSymbol("MCPMSMFOC_CUSTOM_MOTOR_PART_NO", self.sym_CUSTOM_MENU)
-        self.sym_CUSTOM_MOTOR_PART_NO.setLabel('Manufaturer part number')
-
-        #   Custom motor parameters
-        self.sym_CUSTOM_MOTOR_PARAMS = self.component.createStringSymbol("MCPMSMFOC_CUSTOM_MOTOR_PARAMS", self.sym_CUSTOM_MENU )
-        self.sym_CUSTOM_MOTOR_PARAMS.setLabel('Custom motor parameters')
-        self.sym_CUSTOM_MOTOR_PARAMS.setDefaultValue('')
-        self.sym_CUSTOM_MOTOR_PARAMS.setVisible(True)
-        self.sym_CUSTOM_MOTOR_PARAMS.setReadOnly(True)
-        self.sym_CUSTOM_MOTOR_PARAMS.setDependencies(self.update_motor_list, ['MCPMSMFOC_CUSTOM_MOTOR_PARAMS'])
-
-        self.sym_SAVE_CUSTOM_BOARD = self.component.createBooleanSymbol("MCPMSMFOC_CUSTOM_MOTOR_SAVE", self.sym_CUSTOM_MENU)
-        self.sym_SAVE_CUSTOM_BOARD.setLabel('Save custom board data')
-        self.sym_SAVE_CUSTOM_BOARD.setVisible(True)
-        self.sym_SAVE_CUSTOM_BOARD.setDependencies(self.create_custom_motor_file, ['MCPMSMFOC_CUSTOM_MOTOR_SAVE'])
-
-        self.sym_WARNING = self.component.createStringSymbol("MCPMSMFOC_CUSTOM_MOTOR_WARNING", self.sym_SAVE_CUSTOM_BOARD)
-        self.sym_WARNING.setLabel('Warning Status')
-        self.sym_WARNING.setDefaultValue('No warnings yet')
-        self.sym_WARNING.setVisible(True)
-        self.sym_WARNING.setReadOnly(True)
+        self.sym_DEPENDNCIES.setDependencies( self.motor_change_update, ["MCPMSMFOC_MOTOR_SEL"])
 
         # Saving the new board
         self.sym_MBENCH_IMPORT_MENU = self.component.createMenuSymbol("MCPMSMFOC_MOTOR_MBENCH_IMPORT_MENU",  self.sym_SELECT_MOTOR )
@@ -351,84 +340,89 @@ class mcMotI_MotorParametersClass:
         existing_custom_motors.update(new_custom_motor)
         self.sym_CUSTOM_MOTOR_PARAMS.setValue(str(existing_custom_motors))
 
-    def create_custom_motor_file(self, symbol, event):
-        if event['value'] == True:
-            custom_motor_name = str(self.sym_CUSTOM_MOTOR_NAME.getValue())
-            if  self.sym_CUSTOM_MOTOR_PARAMS.getValue() != '':
-                existing_custom_motors = eval(self.sym_CUSTOM_MOTOR_PARAMS.getValue())
-            else:
-                existing_custom_motors = {}
+    def save_custom_motor_params( self ):
+        self.sym_WARNING.setVisible(False)
+        custom_motor_name = str(self.sym_METADATA_NAME.getValue())
+        if  self.sym_CUSTOM_MOTOR_PARAMS.getValue() != '':
+            existing_custom_motors = eval(self.sym_CUSTOM_MOTOR_PARAMS.getValue())
+        else:
+            existing_custom_motors = {}
 
-            if custom_motor_name  in existing_custom_motors:
-                self.sym_WARNING.setValue('The motor already exists. Change motor name and save again')
+        if custom_motor_name  in existing_custom_motors:
+            self.sym_WARNING.setVisible(True)
+            self.sym_WARNING.setLabel('The motor already exists. Change motor name and save again')
+            return
+
+        if custom_motor_name != ''  and custom_motor_name:
+            input_file = os.path.join(Module.getPath(), 'config', 'sample-motors', 'templates', 'custom_motor.yaml.template')
+
+            prospective_out_file = os.path.join(Module.getPath(), 'config', 'sample-motors', 'custom-motors', custom_motor_name + '.yaml')
+            if os.path.exists(prospective_out_file):
+                self.sym_WARNING.setVisible(True)
+                self.sym_WARNING.setLabel('The motor file already exists. Change motor name and re-enable')
                 return
 
-            if custom_motor_name != ''  and custom_motor_name:
-                input_file = os.path.join(Module.getPath(), 'config', 'sample-motors', 'templates', 'custom_motor.yaml.template')
+            self.sym_WARNING.setVisible(False)
+            self.sym_WARNING.setLabel('No Warning')
 
-                prospective_out_file = os.path.join(Module.getPath(), 'config', 'sample-motors', 'custom-motors', custom_motor_name + '.yaml')
-                if os.path.exists(prospective_out_file):
-                    self.sym_WARNING.setValue('The motor file already exists. Change motor name and re-enable')
-                    return
+            # Load the YAML template file
+            with open(input_file, 'r') as file:
+                yaml_data = yaml.safe_load(file)
 
-                # Load the YAML template file
-                with open(input_file, 'r') as file:
-                    yaml_data = yaml.safe_load(file)
+            # Update the YAML data with the new values
+            yaml_data['motor']['meta_data'] = {
+                'microchip_name': custom_motor_name,
+                'manufacturer_name': str(self.sym_METADATA_MANUFACTURER.getValue()),
+                'manufacturer_motor_name': str(self.sym_METADATA_MANUFACTURER_NAME.getValue()),
+                'manufacturer_part_no': str(self.sym_METADATA_PART_NO.getValue()),
+            }
 
-                # Update the YAML data with the new values
-                yaml_data['motor']['meta_data'] = {
-                    'microchip_name': custom_motor_name,
-                    'manufacturer_name': '-',
-                    'manufacturer_motor_name': '-',
-                    'manufacturer_part_no': '-',
+            # Update nameplate parameters
+            if '0' == str(self.sym_POLARITY.getValue()):
+                connection_type = 'STAR'
+            elif '1' == str(self.sym_POLARITY.getValue()):
+                connection_type = 'DELTA'
+
+            yaml_data['motor']['parameters']['name_plate_parameters'] = {
+                'connection_type': connection_type,
+                'pole_pairs': self.sym_ZP.getValue(),
+                'velocity': {
+                    'nominal': self.sym_N_RATED.getValue(),
+                    'maximum': self.sym_N_MAX.getValue()
+                },
+                'current': {
+                    'maximum': {
+                        'continuous': self.sym_I_MAX.getValue()
+                    }
                 }
+            }
 
-                # Update nameplate parameters
-                if '0' == str(self.sym_POLARITY.getValue()):
-                    connection_type = 'STAR'
-                elif '1' == str(self.sym_POLARITY.getValue()):
-                    connection_type = 'DELTA'
+            # Update electrical parameters
+            yaml_data['motor']['parameters']['electrical_parameters'] = {
+                'R':     self.sym_RS.getValue(),
+                'Lq':    self.sym_LQ.getValue(),
+                'Ld':    self.sym_LD.getValue(),
+                 'L':  (( self.sym_LD.getValue() + self.sym_LQ.getValue()) / 2),  # Assuming L is the average of Ld and Lq
+                 'Ke':    self.sym_KE.getValue(),
+            }
 
-                yaml_data['motor']['parameters']['name_plate_parameters'] = {
-                    'connection_type': connection_type,
-                    'pole_pairs': self.sym_ZP.getValue(),
-                    'velocity': {
-                        'nominal': self.sym_N_RATED.getValue(),
-                        'maximum': self.sym_N_MAX.getValue()
-                    },
-                    'current': {
-                        'maximum': {
-                            'continuous': self.sym_I_MAX.getValue()
-                        }
+            # Update mechanical parameters
+            yaml_data['motor']['parameters']['mechanical_parameters'] = {
+                'J': self.sym_J.getValue(),
+                'B': self.sym_B.getValue(),
+                'Tfr': self.sym_TF.getValue(),
+            }
+            if 'Incremental Encoder' == self.sym_SENSOR_SEL.getValue():
+                yaml_data['motor']['parameters']['sensor_parameters'] = {
+                    'incremental_encoder':  {
+                        'index_pulse_present': self.sym_ENCODER_INDEX.getValue(),
+                        'pulse_per_rev': self.sym_ENCODER_PPR.getValue(),
                     }
                 }
 
-                # Update electrical parameters
-                yaml_data['motor']['parameters']['electrical_parameters'] = {
-                    'R':     self.sym_RS.getValue(),
-                    'Lq':    self.sym_LQ.getValue(),
-                    'Ld':    self.sym_LD.getValue(),
-                    'L':  (( self.sym_LD.getValue() + self.sym_LQ.getValue()) / 2),  # Assuming L is the average of Ld and Lq
-                    'Ke':    self.sym_KE.getValue(),
-                }
-
-                # Update mechanical parameters
-                yaml_data['motor']['parameters']['mechanical_parameters'] = {
-                    'J': self.sym_J.getValue(),
-                    'B': self.sym_B.getValue(),
-                    'Tfr': self.sym_TF.getValue(),
-                }
-                if 'Incremental Encoder' == self.sym_SENSOR_SEL.getValue():
-                    yaml_data['motor']['parameters']['sensor_parameters'] = {
-                        'incremental_encoder':  {
-                            'index_pulse_present': self.sym_ENCODER_INDEX.getValue(),
-                            'pulse_per_rev': self.sym_ENCODER_PPR.getValue(),
-                        }
-                    }
-
-                new_custom_motor = { custom_motor_name: yaml_data['motor'] }
-                existing_custom_motors.update(new_custom_motor)
-                self.sym_CUSTOM_MOTOR_PARAMS.setValue(str(existing_custom_motors))
+            new_custom_motor = { custom_motor_name: yaml_data['motor'] }
+            existing_custom_motors.update(new_custom_motor)
+            self.sym_CUSTOM_MOTOR_PARAMS.setValue(str(existing_custom_motors))
 
     def numeric_value_get(self, value_str):
         # Split the string by whitespace to separate the numeric value from the unit
@@ -476,18 +470,57 @@ class mcMotI_MotorParametersClass:
         return bemf_const_vrms_sec_per_rad_get
 
     def make_read_only( self, symbol, event):
-        if event["symbol"].getValue() != 'Custom':
+        if event["value"] != 'Custom':
             symbol.setReadOnly(True)
         else:
             symbol.setReadOnly(False)
 
     def make_symbol_visible(self, symbol, event):
-        if event["symbol"].getValue() == 'Custom':
+        if event["value"] == 'Custom':
             symbol.setVisible(True)
         else:
             symbol.setVisible(False)
 
-    def motor_parameters_update( self, symbol, event ):
+    def motor_parameters_update(self, symbol, event):
+        message = {
+            'selected_motor':  self.sym_SELECT_MOTOR.getValue(),
+            'electrical_parameters': {
+                'R': self.sym_RS.getValue(),
+                'Ld': self.sym_LD.getValue(),
+                'Lq': self.sym_LQ.getValue(),
+                'Ke': self.sym_KE.getValue()
+            },
+            'name_plate_parameters': {
+                'pole_pairs': self.sym_ZP.getValue(),
+                'velocity': {
+                    'nominal': self.sym_N_RATED.getValue(),
+                    'maximum': self.sym_N_MAX.getValue()
+                },
+                'current': {
+                    'maximum': {
+                        'continuous': self.sym_I_MAX.getValue()
+                    }
+                },
+                'voltage': {
+                    'nominal': self.sym_RATED_VOLTAGE.getValue()
+                },
+                'connection': self.sym_POLARITY.getSelectedKey()
+            },
+            'mechanical_parameters': {
+                'B': self.sym_B.getValue(),
+                'Tfr': self.sym_TF.getValue(),
+                'J': self.sym_J.getValue(),
+                'sensor_parameters': {
+                    'incremental_encoder': {
+                        'pulse_per_rev': self.sym_ENCODER_PPR.getValue()
+                    }
+                }
+            }
+        }
+        Database.sendMessage('pmsm_foc', 'PMSM_PARAMETERS_SET', message)
+
+
+    def motor_change_update( self, symbol, event ):
         selected_motor = event["symbol"].getValue()
         if selected_motor != 'Custom':
             meta_data = self.motors[selected_motor]['meta_data']
@@ -536,7 +569,7 @@ class mcMotI_MotorParametersClass:
             self.sym_METADATA_NAME.setValue('')
             self.sym_METADATA_MANUFACTURER.setValue('')
             self.sym_METADATA_MANUFACTURER_NAME.setValue('')
-            self.self.sym_METADATA_PART_NO.setValue('')
+            self.sym_METADATA_PART_NO.setValue('')
             self.sym_RS.setValue(0.0)
             self.sym_LD.setValue(0.0)
             self.sym_LQ.setValue(0.0)
@@ -566,6 +599,11 @@ class mcMotI_MotorParametersClass:
 
         self.motors.update(custom_motors)
         self.sym_SELECT_MOTOR.setRange( ['Custom'] + self.motors.keys())
+
+    def handle_message( self, message_id, args ):
+        if message_id == 'MESSAGE_FROM_QSPIN_GUI':
+            if args['custom_motor_set'] == True:
+                self.save_custom_motor_params()
 
     def __call__( self ):
 

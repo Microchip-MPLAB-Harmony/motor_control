@@ -103,5 +103,5 @@ def loadModule():
             encoderPresent = True
 
     if (pwmPresent and adcPresent):
-        motor_component = Module.CreateComponent("motortype_PMSM", "Permanent Magnet Synchronous motor","/Motor Control/Motors/", "config/back-end/motor.py")
+        motor_component = Module.CreateComponent("pmsm_motor", "Permanent Magnet Synchronous Motor","/Motor Control/Motors/", "config/back-end/motor.py")
         motor_component.addCapability("motortype_PMSM", "PMSM")

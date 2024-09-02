@@ -50,6 +50,6 @@ def instantiateComponent(component):
     motor_class = mcMotI_MotorParametersClass(component)
     motor_class()
 
-def handleMessage(id, args):
-    pass
+def handleMessage(message_id, args):
+    motor_class.handle_message( message_id, args)
 
