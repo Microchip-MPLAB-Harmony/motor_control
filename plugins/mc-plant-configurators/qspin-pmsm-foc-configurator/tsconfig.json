@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2015",
     "lib": [
       "dom",
       "dom.iterable",
@@ -18,12 +18,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "removeComments": true,
     "jsx": "react-jsx",
   },
   "include": [
-    "src"
-  ],
+    "src"],
   "exclude": [
     "node_modules",
     "babel.config.js",

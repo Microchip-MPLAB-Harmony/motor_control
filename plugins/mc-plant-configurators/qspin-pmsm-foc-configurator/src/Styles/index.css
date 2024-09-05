@@ -1,3 +1,15 @@
 html {
-    font-size: 14px;
+  font-family: 'Calibri';
+  font-size: 12px;
+  position: relative;
+}
+body {
+  margin: 0px;
+}
+input {
+  min-width: 40px;
+}
+.p-radiobutton .p-radiobutton-box {
+  width: 20px;
+  height: 20px;
 }

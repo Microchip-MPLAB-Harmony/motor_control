@@ -1,59 +1,70 @@
 {
   "name": "qspin-pmsm-foc-configurator",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "homepage": ".",
   "headers": {
     "Access-Control-Allow-Origin": "*"
   },
   "dependencies": {
-    "@mplab_harmony/harmony-plugin-core-service": "2.0.0",
-    "@mplab_harmony/harmony-plugin-ui": "2.0.0",
+    "@mplab_harmony/harmony-plugin-client-lib": "^1.0.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "@types/classnames": "^2.2.10",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "@types/react-transition-group": "^4.4.5",
+    "dependencies": "^0.0.1",
+    "jquery": "3.7.1",
+    "lodash": "^4.17.21",
     "primeflex": "^3.2.1",
     "primeicons": "^5.0.0",
     "primereact": "^8.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-transition-group": "^4.4.2",
+    "react-transition-group": "^4.4.5",
     "typescript": "^4.7.4",
-    "web-vitals": "^2.1.0"
-  },
-  "devDependencies": {
-    "react-scripts": "^5.0.1",
-    "use-force-update": "^1.0.11"
-  },
-  "resolutions": {
-    "lodash": "^4.17.5"
+    "use-between": "^1.3.4",
+    "use-force-update": "^1.0.11",
+    "web-vitals": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "lint": "eslint ./src/",
+    "lint:fix:prefer-const": "eslint ./src/ --rule \"prefer-const:error\" --fix",
+    "lint:fix:react-in-jsx-scope": "eslint ./src/ --rule \"react/react-in-jsx-scope:error\" --fix",
+    "format": "prettier --write \"./{src,public}/**/*.{js,jsx,ts,tsx,css,md,json,html}\" --config ./.prettierrc"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
     ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "rules": {
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off"
+    }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@types/jquery": "3.5.29",
+    "@types/react-native": "^0.66.9",
+    "@types/react-test-renderer": "^17.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.46.0",
+    "@typescript-eslint/parser": "^5.46.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.11",
+    "prettier": "^2.8.1",
+    "react-scripts": "^5.0.1"
   }
 }

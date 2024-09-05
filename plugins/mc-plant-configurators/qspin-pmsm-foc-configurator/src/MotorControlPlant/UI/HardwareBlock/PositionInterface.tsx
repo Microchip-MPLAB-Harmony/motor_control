@@ -1,23 +1,24 @@
+import { useComboSymbol } from '@mplab_harmony/harmony-plugin-client-lib';
+import MultipleUIComponentsWithLabel from '../../Tools/MultipleUIComponentsWithLabel';
 import { DialogCommonInitilizeCode } from '../CustomPopUp/CustomPopUp';
-import { mc_component_id } from '../MainView/MainBlock';
-import { AddMultipleUIComponentsWithLabel } from '@mplab_harmony/harmony-plugin-ui';
+import { useEffect } from 'react';
 
-const PositionInterface = (props: { parentUpdate: () => void; showToast: (arg0: any) => void }) => {
+const PositionInterface = (props: { componentId: string; showToast: (arg0: any) => void }) => {
+  const selection = useComboSymbol({
+    componentId: props.componentId,
+    symbolId: 'MCPMSMFOC_ENCODER_PERIPHERAL'
+  });
+  useEffect(() => {}, [selection]);
+
   let selectInstance = 'MCPMSMFOC_ENCODER_PERIPHERAL';
   let SymbolsArray = [selectInstance, 'MCPMSMFOC_ENCODER_QEA_PAD', 'MCPMSMFOC_ENCODER_QEB_PAD'];
 
-  DialogCommonInitilizeCode(props.showToast, SymbolsArray);
-
-  function SymbolValueChanged(onchange: Map<String, any>) {
-    // do nothing
-  }
-
+  DialogCommonInitilizeCode(props.showToast, props.componentId, SymbolsArray);
   return (
     <div className='flex'>
-      <AddMultipleUIComponentsWithLabel
-        componentId={mc_component_id}
+      <MultipleUIComponentsWithLabel
+        componentId={props.componentId}
         symbolsArray={SymbolsArray}
-        onChange={SymbolValueChanged}
       />
     </div>
   );

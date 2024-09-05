@@ -1,33 +1,25 @@
 import { Dialog } from 'primereact/dialog';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Button } from 'primereact/button';
-import StartUpConfigurator from '../ControlBlock/StartUpConfigurator';
-import useForceUpdate from 'use-force-update';
 import MotorControlDiagnosis, {
   SetMotorControlDiagnosisDefaultWindowView
-} from '../ControlBlock/MotorControlandDiagnosis';
+} from '../ControlBlock/MotorControlDiagnosis/MotorControlandDiagnosis';
 import AnalogFrontEnd, {
   SetAnalogFrontEndDefaultWindowView
-} from '../HardwareBlock/AnalogFrontEnd';
+} from '../HardwareBlock/AnalogFrontEnd/AnalogFrontEnd';
 import OutputStageDiagnosis from '../ControlBlock/OutputStageDiagnosis';
-import MotorParameters from '../HardwareBlock/MotorParameters';
+import MotorParameters from '../HardwareBlock/MotorParameters/MotorParameters';
 import PWMParameters from '../HardwareBlock/PWMParameters';
 import { Toast } from 'primereact/toast';
-import { useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 import VoltageMeasurementDiagnosis, {
   SetVoltageMeasurementDefaultWindowView
-} from '../ControlBlock/VoltageMeasurementDiagnosis';
+} from '../ControlBlock/VoltageMeasurementBlock/VoltageMeasurementDiagnosis';
 import CurrentMeasurementAndDiagnosisDualShunt, {
   SetCurrentMeasurementDefaultWindowView
 } from '../ControlBlock/CurrentMeasurementAndDiagnosisDualShunt';
-import AnalogInterface, {
-  SetAnalogInterfaceDefaultWindowView
-} from '../HardwareBlock/AnalogInterface';
 import PositionInterface from '../HardwareBlock/PositionInterface';
 import QuickSettings from '../MainView/QuickSettings';
-import PositionMesurementAndDiagnosis, {
-  SetPositionControlDiagnosisDefaultWindowView
-} from '../ControlBlock/PositionMesurementAndDiagnosis';
 import VoltageSource from '../HardwareBlock/VoltageSource';
 import DataMonitoring from '../ControlBlock/DataMonitoring';
 import {
@@ -45,28 +37,18 @@ import {
   voltageSourceText,
   dataMonitoringText,
   quickSettingsText
-} from '../SVGScript';
-import {
-  StoreSymbolArrayToMap,
-  UpdateArrayofSymbolsResetAction,
-  clearAllSymbols
-} from '@mplab_harmony/harmony-plugin-core-service/build/database-access/SymbolUtils';
-import { mc_component_id } from '../MainView/MainBlock';
+} from '../../UI/MainView/MainBlock';
+import { PluginConfigContext, symbolUtilApi } from '@mplab_harmony/harmony-plugin-client-lib';
+import { StoreSymbolArrayToMap, UpdateArrayofSymbolsResetAction } from '../../Tools/CommonUtil';
+import LoadPositionMeasureBlock from '../ControlBlock/PositionMeasurementBlock/LoadPositionMeasureBlock';
+import AnalogInterface, {
+  SetAnalogInterfaceDefaultWindowView
+} from '../HardwareBlock/AnalogInterfaceBlock/AnalogInterface';
+import StartUpConfigurator from '../ControlBlock/StartUpBlock/StartUpConfigurator';
 
-let dialogVisibleStatus = false;
 let resetToDefaultStatus = false;
 let resetStatus = false;
 let resetValues = new Map<String, Object>();
-
-let ActionId: any;
-let Width: any;
-let Height: any;
-export function CustomPopUpLoadConfig(Id: string, widthValue: string, heightValue: string) {
-  dialogVisibleStatus = true;
-  ActionId = Id;
-  Width = widthValue;
-  Height = heightValue;
-}
 
 export function GetResetToDefaultStatus() {
   return resetToDefaultStatus;
@@ -84,9 +66,16 @@ export function SetResetStatus(value: boolean) {
   resetStatus = value;
 }
 
-const GenericPopUp = () => {
-  const update = useForceUpdate();
-
+const GenericPopUp = (props: {
+  Id: string;
+  helpLink?: string;
+  widthValue: string;
+  heightValue: string;
+  dialogVisibleStatus: boolean;
+  setGenericPopupVisible: (arg: boolean) => void;
+}) => {
+  const { componentId = 'pmsm_foc' } = useContext(PluginConfigContext);
+  const [update, SetUpdate] = useState(false);
   const toastRef = useRef<any>();
 
   const showToast = (message: any) => {
@@ -98,15 +87,10 @@ const GenericPopUp = () => {
   };
 
   const onHide = () => {
-    dialogVisibleStatus = false;
     SetResetToDefaultStatus(false);
     SetResetStatus(false);
     resetValues.clear();
-    update();
-  };
-
-  const callUpdate = () => {
-    update();
+    props.setGenericPopupVisible(false);
   };
 
   const confirmPopupAccecpt = (name: String) => {
@@ -115,7 +99,7 @@ const GenericPopUp = () => {
     } else if (name === 'RESET') {
       SetResetStatus(true);
     }
-    callUpdate();
+    SetUpdate(!update);
   };
 
   const confirmPopupReject = () => {
@@ -150,7 +134,7 @@ const GenericPopUp = () => {
             label='Reset to Default'
             tooltip='Reset symbols to default value'
             tooltipOptions={{ position: 'right' }}
-            style={{ height: '1.75rem', fontSize: '14px' }}
+            style={{ height: '1.85rem', fontSize: '14px' }}
             onClick={() => onResetToDefault()}
           />
         </div>
@@ -161,14 +145,14 @@ const GenericPopUp = () => {
             label='Revert'
             tooltip='Revert symbols to previous saved value'
             tooltipOptions={{ position: 'left' }}
-            style={{ height: '1.75rem', fontSize: '14px' }}
+            style={{ height: '1.85rem', fontSize: '14px' }}
             onClick={() => onReset()}
           />
           <Button
             type='button'
             className='p-button-raised p-button-rounded'
             label='Close'
-            style={{ height: '1.75rem', fontSize: '14px' }}
+            style={{ height: '1.85rem', fontSize: '14px' }}
             onClick={() => onHide()}
             autoFocus
           />
@@ -177,20 +161,58 @@ const GenericPopUp = () => {
     );
   };
 
+  const renderHeader = () => {
+    return (
+      <div className='flex justify-content-between'>
+        <div>
+          <label>{props.Id}</label>
+        </div>
+        <div>
+          <Button
+            type='button'
+            className='p-button-raised p-button-rounded'
+            label='Help'
+            icon='pi pi-search'
+            style={{ height: '1.85rem', fontSize: '14px', marginRight: '20px' }}
+            onClick={() =>
+              props.helpLink
+                ? onHelp(props.helpLink)
+                : toastRef.current.show({
+                    severity: 'error',
+                    summary: 'Help not available !',
+                    life: 4000
+                  })
+            }
+            autoFocus
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const onHelp = (helpLink: string) => {};
+
   const LoadMotorDiagnosis = () => {
     SetMotorControlDiagnosisDefaultWindowView();
     return (
       <div>
-        <MotorControlDiagnosis showToast={showToast} />
+        <MotorControlDiagnosis
+          componentId={componentId}
+          showToast={showToast}
+          dialogVisibleStatus={props.dialogVisibleStatus}
+        />
       </div>
     );
   };
 
   const LoadPositionAndControlDiagnosis = () => {
-    SetPositionControlDiagnosisDefaultWindowView();
     return (
       <div>
-        <PositionMesurementAndDiagnosis showToast={showToast} />
+        <LoadPositionMeasureBlock
+          showToast={showToast}
+          componentId={componentId}
+          dialogVisibleStatus={props.dialogVisibleStatus}
+        />
       </div>
     );
   };
@@ -199,7 +221,11 @@ const GenericPopUp = () => {
     SetVoltageMeasurementDefaultWindowView();
     return (
       <div>
-        <VoltageMeasurementDiagnosis showToast={showToast} />
+        <VoltageMeasurementDiagnosis
+          showToast={showToast}
+          componentId={componentId}
+          dialogVisibleStatus={props.dialogVisibleStatus}
+        />
       </div>
     );
   };
@@ -208,7 +234,11 @@ const GenericPopUp = () => {
     SetCurrentMeasurementDefaultWindowView();
     return (
       <div>
-        <CurrentMeasurementAndDiagnosisDualShunt showToast={showToast} />
+        <CurrentMeasurementAndDiagnosisDualShunt
+          componentId={componentId}
+          showToast={showToast}
+          dialogVisibleStatus={props.dialogVisibleStatus}
+        />
       </div>
     );
   };
@@ -217,7 +247,11 @@ const GenericPopUp = () => {
     SetAnalogFrontEndDefaultWindowView();
     return (
       <div>
-        <AnalogFrontEnd showToast={showToast} />
+        <AnalogFrontEnd
+          componentId={componentId}
+          showToast={showToast}
+          dialogVisibleStatus={props.dialogVisibleStatus}
+        />
       </div>
     );
   };
@@ -226,7 +260,11 @@ const GenericPopUp = () => {
     SetAnalogInterfaceDefaultWindowView();
     return (
       <div>
-        <AnalogInterface showToast={showToast} />
+        <AnalogInterface
+          componentId={componentId}
+          showToast={showToast}
+          dialogVisibleStatus={props.dialogVisibleStatus}
+        />
       </div>
     );
   };
@@ -239,45 +277,65 @@ const GenericPopUp = () => {
         position='bottom-right'></Toast>
       <div className='card'>
         <Dialog
-          visible={dialogVisibleStatus}
+          visible={props.dialogVisibleStatus}
           maximizable={true}
           closeOnEscape
           closable
           focusOnShow
           modal
-          style={{ width: Width, height: Height, fontSize: '14px' }}
-          header={ActionId}
+          style={{ width: props.widthValue, height: props.heightValue, fontSize: '14px' }}
+          header={renderHeader()}
           footer={renderFooter()}
           onHide={() => onHide()}>
           <div>
-            {ActionId === motorParameters && <MotorParameters showToast={showToast} />}
-            {ActionId === pulseWidthModulatorText && <PWMParameters showToast={showToast} />}
-            {ActionId === startupConfiguratorText && <StartUpConfigurator showToast={showToast} />}
-            {ActionId === motorControlDiagnosisText && LoadMotorDiagnosis()}
-            {ActionId === outputStageDignosisText && <OutputStageDiagnosis showToast={showToast} />}
-            {ActionId === currentMeasurementAndDiagnosisText &&
+            {props.Id === motorParameters && <MotorParameters showToast={showToast} />}
+            {props.Id === pulseWidthModulatorText && (
+              <PWMParameters
+                componentId={componentId}
+                showToast={showToast}
+              />
+            )}
+            {props.Id === startupConfiguratorText && (
+              <StartUpConfigurator
+                showToast={showToast}
+                componentId={componentId}
+              />
+            )}
+            {props.Id === motorControlDiagnosisText && LoadMotorDiagnosis()}
+            {props.Id === outputStageDignosisText && (
+              <OutputStageDiagnosis
+                showToast={showToast}
+                componentId={componentId}
+              />
+            )}
+            {props.Id === currentMeasurementAndDiagnosisText &&
               CurrentMeasurementAndControlDiagnosis()}
-            {ActionId === voltageMeasurementAndDiagnosisText &&
+            {props.Id === voltageMeasurementAndDiagnosisText &&
               VoltageMeasurementAndControlDiagnosis()}
-            {ActionId === positionMeasurementCalculationText && LoadPositionAndControlDiagnosis()}
-            {ActionId === analogFrontEndText && LoadAnalogFrontEnd()}
-            {ActionId === analogInterfaceText && LoadAnalogInterface()}
-            {ActionId === positionInterfaceText && (
+            {props.Id === positionMeasurementCalculationText && LoadPositionAndControlDiagnosis()}
+            {props.Id === analogFrontEndText && LoadAnalogFrontEnd()}
+            {props.Id === analogInterfaceText && LoadAnalogInterface()}
+            {props.Id === positionInterfaceText && (
               <PositionInterface
-                parentUpdate={update}
+                componentId={componentId}
                 showToast={showToast}
               />
             )}
-            {ActionId === voltageSourceText && (
+            {props.Id === voltageSourceText && (
               <VoltageSource
-                parentUpdate={update}
+                componentId={componentId}
                 showToast={showToast}
               />
             )}
-            {ActionId === dataMonitoringText && <DataMonitoring showToast={showToast} />}
-            {ActionId === quickSettingsText && (
+            {props.Id === dataMonitoringText && (
+              <DataMonitoring
+                componentId={componentId}
+                showToast={showToast}
+              />
+            )}
+            {props.Id === quickSettingsText && (
               <QuickSettings
-                parentUpdate={update}
+                componentId={componentId}
                 showToast={showToast}
               />
             )}
@@ -290,36 +348,51 @@ const GenericPopUp = () => {
 
 export default GenericPopUp;
 
-export function callClearSymbols(showToast: (arg0: any) => void, symbolsArray: string[]) {
-  clearAllSymbols(mc_component_id, symbolsArray);
-  SetResetToDefaultStatus(false);
-  ResetDialogSettings();
-  showToast('Reset to Default Action Completed!');
+export function callClearSymbols(
+  showToast: (arg0: any) => void,
+  componentId: string,
+  symbolsArray: string[]
+) {
+  symbolUtilApi.clearUserValue(componentId, symbolsArray).then((v) => {
+    SetResetToDefaultStatus(false);
+    ResetDialogSettings();
+    showToast('Reset to Default Action Completed!');
+  });
 }
 
-export function ResetSymbols(showToast: (arg0: any) => void, symbolsArray: string[]) {
+export const ResetSymbols = async (
+  showToast: (arg0: any) => void,
+  componentId: string,
+  symbolsArray: string[]
+) => {
   if (resetValues.size === 0) {
-    clearAllSymbols(mc_component_id, symbolsArray);
+    symbolUtilApi.clearUserValue(componentId, symbolsArray);
   } else {
-    UpdateArrayofSymbolsResetAction(resetValues, mc_component_id, symbolsArray);
+    UpdateArrayofSymbolsResetAction(resetValues, componentId, symbolsArray);
   }
   SetResetStatus(false);
   ResetDialogSettings();
   showToast('Revert Action Completed!');
-}
+};
 
-export function DialogCommonInitilizeCode(showToast: (arg0: any) => void, symbolsArray: string[]) {
-  UpdateResetValues(symbolsArray);
+export function DialogCommonInitilizeCode(
+  showToast: (arg0: any) => void,
+  componentId: string,
+  symbolsArray: string[]
+) {
+  UpdateResetValues(componentId, symbolsArray);
   if (GetResetToDefaultStatus()) {
-    callClearSymbols(showToast, symbolsArray);
+    callClearSymbols(showToast, componentId, symbolsArray);
   } else if (GetResetStatus()) {
-    ResetSymbols(showToast, symbolsArray);
+    ResetSymbols(showToast, componentId, symbolsArray);
   }
 }
 
-export function UpdateResetValues(symbolsArray: string[]) {
+export function UpdateResetValues(componentId: string, symbolsArray: string[]) {
   if (resetValues.size === 0 && symbolsArray.length !== 0) {
-    resetValues = StoreSymbolArrayToMap(resetValues, mc_component_id, symbolsArray);
+    StoreSymbolArrayToMap(resetValues, componentId, symbolsArray).then(
+      (value) => (resetValues = value)
+    );
   }
 }
 
