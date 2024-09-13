@@ -1,0 +1,23 @@
+nav.wh_tools {
+  margin-top: 0px;
+}
+
+.header-sticky {
+  position: sticky;
+  z-index: 999;
+}
+
+.breadcrumb-sticky {
+  position: sticky;
+  z-index: 998;
+}
+
+.indexTerms-sticky {
+  position: sticky;
+  z-index: 998;
+}
+
+.search-sticky {
+  position: sticky;
+  z-index: 997;
+}

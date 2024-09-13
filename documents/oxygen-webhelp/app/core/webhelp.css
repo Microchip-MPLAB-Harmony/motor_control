@@ -1,0 +1,18 @@
+@import "fonts.css?buildId=2022062014";
+@import "icons.css?buildId=2022062014";
+@import "../indexterms/indexterms.css?buildId=2022062014";
+/* WH-2488 Refactoring */
+@import "wh-elements.css?buildId=2022062014";
+@import "wh-responsive-images.css?buildId=2022062014";
+@import "wh-modal.css?buildId=2022062014";
+@import "wh-bootstrap-fix.css?buildId=2022062014";
+@import "wh-publication-logo-and-title.css?buildId=2022062014";
+@import "wh-welcome-area.css?buildId=2022062014";
+@import "wh-breadcrumb.css?buildId=2022062014";
+@import "wh-tools-and-navigation.css?buildId=2022062014";
+@import "wh-index-link.css?buildId=2022062014";
+@import "wh-toc.css?buildId=2022062014";
+@import "wh-search.css?buildId=2022062014";
+@import "wh-common.css?buildId=2022062014";
+@import "wh-sticky.css?buildId=2022062014";
+@import "footer-fix.css?buildId=2022062014";

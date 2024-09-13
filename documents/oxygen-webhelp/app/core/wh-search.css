@@ -1,0 +1,378 @@
+/*
+ * ------------------------------------------------------------------
+ *
+ * Search area
+ *
+ */
+.wh_search_input{
+    border: 0;
+}
+#searchForm{
+    margin:0;
+}
+#searchForm > div {
+    position: relative;
+    margin:auto;
+    width: 65%;
+    max-width: 1000px;
+}
+
+.wh_search_textfield {
+    display:inline-block;
+    width: 100%;
+    height:100%;
+    border:none;
+    margin: 0;
+}
+.wh_search_button{
+    display: inline-block;
+    position:absolute;
+    right:0;
+    top:0;
+    float:right;
+    width:2.8em;
+    height:100%;
+    border:none;
+    cursor: pointer;
+}
+.wh_search_button>span{
+    display: none;
+}
+.wh_search_button:after{
+    font-family: "oXygen WebHelp", serif;
+    content:"f";
+}
+
+.ui-menu-item-wrapper > .search-autocomplete-proposal-icon {
+    font-family: "oXygen WebHelp", serif;
+    display: inline-block;
+    min-width: 1.5em;
+    font-size: 0.7em;
+}
+
+/*
+ * ------------------------------------------------------------------
+ *
+ * Search page
+ *
+ */
+
+/* Render search area for devices smaller than 767px */
+@media only screen and (max-width: 767px) {
+    #searchForm > div {
+        width: 90%;
+    }
+    .wh_search_button {
+        display: none;
+    }
+}
+
+/*
+ * Search results.
+ */
+.wh_search_results {
+    margin-top:10px;
+}
+
+/** Remove left padding added by the browser for <ul> */
+.searchresult {
+    padding-left:0;
+}
+
+/* Search results header containing search expression and current displayed page */
+
+.wh_search_results_header {
+    border-bottom: solid 1px #EBEBEB;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.wh_search_results_header_docs {
+    font-size: 1.3em;
+    flex-grow: 2;
+}
+
+.wh_search_results_for {
+    font-size: 1.5em;
+}
+
+/* Current displayed page 'Page 1 of 4' */
+.wh_search_results_header_pages {
+    align-self: flex-end;
+}
+
+/** Errors */
+.errorMessage{
+    display: block;
+    position: relative;
+    background: #fff;
+    border: 1px solid #d04437;
+    color: #333;
+    padding: 10px 0 10px 50px;
+    border-radius: 5px;
+}
+.errorMessage:before{
+    position: absolute;
+    display: block;
+    font-family: 'oXygen WebHelp', serif;
+    content: 'm';
+    bottom: 0;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    color: #fff;
+    background-color: #d04437;
+    text-align: center;
+    padding-top:9px;
+}
+
+/** Search result item */
+.searchresult li a.foundResult {
+    font-size: 1.3em;
+}
+.searchresult li{
+    padding: .5em 0;
+}
+
+.searchItemAdditionalData {
+    display:flex;
+    justify-content:center;
+}
+
+/* Search results breadcrumb */
+.search-breadcrumb ol {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: flex-start;
+    font-size: .8em;
+}
+
+.search-breadcrumb li {
+    padding: 0 !important;
+    margin-bottom: .3em;
+    margin-left: -1.2em;
+
+}
+
+.search-breadcrumb li:first-child {
+    margin-left: inherit;
+}
+
+.search-breadcrumb li .title {
+    display:flex;
+    justify-content:flex-start;
+    flex-wrap: nowrap;
+}
+
+.search-breadcrumb li a {
+    color: #fff;
+    display: block;
+    background: #ddd;
+    text-decoration: none;
+    line-height: 1.6em;
+    padding: 0 .5em;
+    text-align: center;
+}
+
+.search-breadcrumb li:first-child a {
+    border-radius: .1em 0 0 .1em;
+}
+.search-breadcrumb li:first-child .title:before,
+.search-breadcrumb li:last-child .title:after {
+    border: none;
+}
+.search-breadcrumb li:last-child a {
+    border-radius: 0 .1em .1em 0;
+}
+
+.search-breadcrumb li:only-child a {
+    border-radius: .1em;
+}
+
+.search-breadcrumb li .title:before,
+.search-breadcrumb li .title:after {
+    display: inline-block;
+    content: "";
+    border-style: solid;
+    border-color: #ddd;
+    border-width: .8em;
+}
+.search-breadcrumb li .title:before {
+    border-left-color: transparent;
+}
+.search-breadcrumb li .title:after {
+    border-color: transparent;
+    border-left-color: #ddd;
+}
+
+/* Container displaying missing words and similar results */
+.missingAndSimilar {
+    flex-grow: 2;
+}
+
+#rightDiv {
+    align-self:flex-start;
+}
+/*
+ * Missing words.
+ */
+.searchresult .wh_missing_word {
+    color:#888888;
+    text-decoration:line-through;
+}
+
+.searchresult .wh_missing_words {
+    font-size: .8em;
+}
+
+
+/* Search relative path */
+.searchresult .relativePath {
+    display: none;
+}
+
+/* Similar results */
+.showSimilarPages {
+    font-size: .8em;
+    display: inline-block;
+    margin: 0;
+    cursor: pointer
+}
+.showSimilarPages:before{
+    font-family: "oXygen WebHelp", serif;
+    content: "s";
+    display: inline-block;
+    font-size: .7em;
+    padding-right: .2em
+}
+.showSimilarPages.expanded:before{
+    content: "z";
+}
+.similarResult {
+    display:none;
+    margin: 0 0 0 1.5em;
+}
+.showSimilarPages:hover {
+    color: red;
+}
+
+/*
+ * Rating of searched terms
+ */
+#star .star {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 85px;
+    height: 20px;
+    left: 1px;
+    top: -5px;
+    position: relative;
+    float: right;
+    background: url('../img/starsSmall.png') repeat-x 0 -25px;
+}
+#star div {
+    padding: 0;
+    margin: 0;
+    float: right;
+    display: block;
+    width: 85px;
+    height: 20px;
+    text-decoration: none;
+    text-indent: -9000px;
+    z-index: 20;
+}
+#star .curr {
+    background: url('../img/starsSmall.png') 0 25px;
+    float: left;
+    width: 85px;
+    font-size: 1px;
+}
+
+#star div.user {
+    left: 5px;
+    position: relative;
+    float: right;
+    font-size: 13px;
+    font-family: Arial, "Lucida Grande", Verdana, "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
+    color: #888;
+}
+
+/* Short description highlight. */
+.search-shortdescription-highlight {
+    font-weight: bold;
+}
+
+/* Center pagination widget */
+.wh-search-pagination {
+    display: flex;
+    justify-content: center;
+}
+
+/** 
+ * The list displaying search suggestions.
+ */
+.ui-autocomplete {
+    max-height: 300px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    z-index: 998;
+}
+
+/* Don't add border or margin to active item in autocomplate widget */
+.ui-menu .ui-state-active,
+ui-menu-item > .ui-state-active{
+    margin: 0;
+    border: none;
+}
+
+.search-autocomplete-proposal-type-history a,
+.search-autocomplete-proposal-type-history a:hover,
+.search-autocomplete-proposal-type-history a:visited,
+.search-autocomplete-proposal-type-history a:active{
+    text-decoration: none;
+    color:#333;
+}
+
+.removed-from-history{
+    text-decoration: line-through;
+}
+
+.search-autocomplete-proposal-type-history {
+    float: right;
+}
+
+.search-autocomplete-proposal-hg {
+    font-weight: bold;
+}
+
+/* OSB-273 - Fix default look of Search Component */
+.wh_search_input {
+  display: block;
+  margin: 0;
+  position: relative;
+  padding: 40px 0;
+}
+
+.wh_search_textfield {
+  border: solid 1px #CCC;
+  border-radius: 5px;
+  padding: 0 .5em;
+  position: relative;
+  height: 2.8em;
+}
+
+.wh_search_button {
+  border: solid 1px #CCC;
+  border-radius: 0 5px 5px 0;
+  padding: 0.6em 1em;
+  color: #fff;
+  background-color: #C93416;
+  height: 2.8em;
+}

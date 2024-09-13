@@ -1,0 +1,127 @@
+/* The Modal background */
+#modal_img_large {
+	display: none;
+	position: fixed;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+	margin: auto;
+	display: block;
+	width: 80%;
+}
+
+#modal-img {
+	width: auto;
+	max-width: 95%;
+	max-height: 95%;
+}
+
+.zoom {
+	cursor: pointer
+}
+
+/* Caption of Modal Image (Image Text) */
+#caption {
+	margin: auto;
+	display: block;
+	width: 80%;
+	max-width: 700px;
+	text-align: center;
+	color: #ccc;
+	padding: 10px 0;
+	height: 150px;
+}
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption {
+	-webkit-animation-name: zoom;
+	-webkit-animation-duration: 0.6s;
+	animation-name: zoom;
+	animation-duration: 0.6s;
+}
+
+@media screen {
+	@-webkit-keyframes zoom {
+		from {
+			-webkit-transform: scale(0)
+		}
+		to {
+			-webkit-transform: scale(1)
+		}
+	}
+
+	@keyframes zoom {
+		from {
+			transform: scale(0)
+		}
+		to {
+			transform: scale(1)
+		}
+	}
+}
+
+/* The Close button of the modal container*/
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 30px;
+    transition: 0.3s;
+    font-weight: 100;
+    opacity: .4;
+    text-shadow: none;
+}
+.close:hover,
+.close:focus {
+    color: #ccc;
+    text-decoration: none;
+    cursor: pointer;
+    opacity:1;
+}
+
+.wh_topic_toc{
+    border-left: 1px solid #cfe2f5;
+    margin-left:0;
+    padding-left:1em;
+}
+.wh_topic_toc li, .wh_publication_toc li{
+    line-height: 1.4em;
+    margin:.5em 0;
+}
+
+.wh_topic_toc .wh_topic_label{
+    font-weight:600;
+}
+.wh_topic_toc .wh_topic_label:after{
+    content: ": "
+}
+
+.wh_topic_toc ul ul li:last-of-type, .wh_publication_toc ul ul li:last-of-type{
+    margin-bottom:0
+}
+
+#wh_topic_toc ul{
+    padding-left:0;
+    margin-left:0;
+    list-style:none;
+}
+
+#wh_topic_toc ul ul{
+    padding-left:1em
+}
+
+.wh_footer{
+    margin-top: 2em;
+}
+
+.wh_top_menu ul li a{
+    line-height:1.3em
+}

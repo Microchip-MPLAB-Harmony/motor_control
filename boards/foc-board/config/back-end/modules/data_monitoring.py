@@ -103,7 +103,7 @@ class DataMonitorClass(UartPeripheral):
 
     def send_information(self):
         Database = self.object_wrapper.get_database_object()
-        Database.sendMessage("X2CScope", "BSP_DATA_MONITORING", self.information)
+        Database.sendMessage("X2Cscope", "BSP_DATA_MONITORING", self.information)
         Database.sendMessage("pmsm_foc", "BSP_DATA_MONITORING", self.information)
 
     def handle_message(self, ID, information):

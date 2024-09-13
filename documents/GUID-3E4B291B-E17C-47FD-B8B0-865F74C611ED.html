@@ -1,0 +1,319 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="copyright" content="(C) Copyright 2024"/><meta name="generator" content="DITA-OT"/><meta name="description" content="This section describes the API references for the rotor position estimation module."/>        
+      <title>1.1.1.1.4.5 Rotor Position Estimation API Reference</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED-d1683e1530"/><meta name="wh-source-relpath" content="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED.xml"/><meta name="wh-out-relpath" content="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
+    
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+    <script src="https://assets.adobedtm.com/6a72a357eb48/a636c708c7fe/launch-0b0023397020.min.js"></script><!-- Adobe Analytics -->
+</head>
+
+    <body id="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony 3 Motor Control &#xA;    "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony 3 Motor Control 
+    </a></div>
+                    
+                </div>
+                
+                
+            </div>
+
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div class="d-flex justify-contents-around"><div class="flex-grow-1"></div><div class="position-relative flex-grow-1"><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div><div class="align-self-center flex-grow-1 ml-2"></div></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
+</div>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C"><div class="title"><a href="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Harmony QSpin Motor Control</a></div></div></li><li><div class="topicref" data-id="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60"><div class="title"><a href="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+<strong class="ph b">Supported Algorithms</strong></a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSPIN supported motor control algorithms.</p></div></div></div></li><li><div class="topicref" data-id="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F"><div class="title"><a href="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Permanent Magnet Synchronous Motors</a><div class="wh-tooltip"><p class="shortdesc">This section describes the field oriented control implementation of permanent magnet         synchronous motors (PMSM) and Harmony QSPIN configuration.</p></div></div></div></li><li><div class="topicref" data-id="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35"><div class="title"><a href="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1</ph>
+PMSM FOC</a></div></div></li><li><div class="topicref" data-id="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8"><div class="title"><a href="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4</ph>
+Harmony QSpin API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSpin API references for the motor control         application.</p></div></div></div></li><li class="active"><div class="topicref" data-id="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED"><div class="title"><a href="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5</ph>
+Rotor Position Estimation API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the API references for the rotor position estimation         module.</p></div></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            <div class="row" style="margin-top: -1em;"><div class="col-lg-9 col-md-9 col-sm-12 offset-lg-3 offset-md-3 text-right border-bottom mb-1"><h2 class="text-dark header_title">
+    </h2></div></div>
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d1683e11" class="topicref" data-id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d1683e11-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C.html" id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d1683e11-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Harmony QSpin Motor Control</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60-d1683e19" class="topicref" data-id="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60-d1683e19-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60.html" id="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60-d1683e19-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+<strong class="ph b">Supported Algorithms</strong></a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSPIN supported motor control algorithms.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F-d1683e31" class="topicref" data-id="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-85BE370F-0541-4589-AA23-E11A372DBE9F-d1683e31-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F.html" id="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F-d1683e31-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Permanent Magnet Synchronous Motors</a><div class="wh-tooltip"><p class="shortdesc">This section describes the field oriented control implementation of permanent magnet         synchronous motors (PMSM) and Harmony QSPIN configuration.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42" class="topicref" data-id="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35.html" id="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1</ph>
+PMSM FOC</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50" class="topicref" data-id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-5CCF6974-52BB-4407-9796-20C86F178C71.html" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1</ph>
+Field Oriented Control</a><div class="wh-tooltip"><p class="shortdesc">The Field Oriented Control (FOC) is the conventional control scheme for permanent-magnet         synchronous motors. It generally results in smoother torque, slightly higher efficiency, and         higher torque-speed curve, compared to six-step control, but requires a measurement or         estimate of rotor position, and is more computationally intensive.</p></div></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-81C3E3D7-9C52-4575-B330-AB618C657300-d1683e94" class="topicref" data-id="GUID-81C3E3D7-9C52-4575-B330-AB618C657300" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-81C3E3D7-9C52-4575-B330-AB618C657300-d1683e94-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-81C3E3D7-9C52-4575-B330-AB618C657300.html" id="GUID-81C3E3D7-9C52-4575-B330-AB618C657300-d1683e94-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2</ph>
+Harmony QSpin: PMSM FOC</a><div class="wh-tooltip"><p class="shortdesc"></p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3-d1683e361" class="topicref" data-id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3.html" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3-d1683e361-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.3</ph>
+Field Oriented Control Implementation</a><div class="wh-tooltip"><p class="shortdesc">The generated code from the Harmony QSpin intends to achieve following goals:</p></div></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8-d1683e372" class="topicref" data-id="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8-d1683e372-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8.html" id="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8-d1683e372-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4</ph>
+Harmony QSpin API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSpin API references for the motor control         application.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-722DD900-7015-4646-B69F-20C19A60A801-d1683e383" class="topicref" data-id="GUID-722DD900-7015-4646-B69F-20C19A60A801" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-722DD900-7015-4646-B69F-20C19A60A801-d1683e383-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-722DD900-7015-4646-B69F-20C19A60A801.html" id="GUID-722DD900-7015-4646-B69F-20C19A60A801-d1683e383-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.1</ph>
+Application API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the API references for the motor control application.</p></div></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-9305E76E-942D-44E6-9DD2-A6049ABE3323-d1683e466" class="topicref" data-id="GUID-9305E76E-942D-44E6-9DD2-A6049ABE3323" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-9305E76E-942D-44E6-9DD2-A6049ABE3323-d1683e466-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-9305E76E-942D-44E6-9DD2-A6049ABE3323.html" id="GUID-9305E76E-942D-44E6-9DD2-A6049ABE3323-d1683e466-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.2</ph>
+Current Measurement API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the  API references for the current measurement         module.</p></div></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-29D06553-EE7F-4EDC-92DF-17C19EE36334-d1683e549" class="topicref" data-id="GUID-29D06553-EE7F-4EDC-92DF-17C19EE36334" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-29D06553-EE7F-4EDC-92DF-17C19EE36334-d1683e549-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-29D06553-EE7F-4EDC-92DF-17C19EE36334.html" id="GUID-29D06553-EE7F-4EDC-92DF-17C19EE36334-d1683e549-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.3</ph>
+Field Oriented Control API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the API references for the field oriented control                 module.</p></div></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-ADE7881E-AEEB-4EDC-B439-356982B16585-d1683e1430" class="topicref" data-id="GUID-ADE7881E-AEEB-4EDC-B439-356982B16585" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-ADE7881E-AEEB-4EDC-B439-356982B16585-d1683e1430-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-ADE7881E-AEEB-4EDC-B439-356982B16585.html" id="GUID-ADE7881E-AEEB-4EDC-B439-356982B16585-d1683e1430-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.4</ph>
+Rotor Position Calculation API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the API references for the rotor position calculation         module.</p></div></div></div></li><li role="treeitem" aria-expanded="true" class="active"><div data-tocid="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED-d1683e1530" class="topicref" data-id="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED-d1683e1530-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED.html" id="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED-d1683e1530-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5</ph>
+Rotor Position Estimation API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the API references for the rotor position estimation         module.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-0BA3B3DD-B3CF-40CB-999C-0D13BED79AFE-d1683e1541" class="topicref" data-id="GUID-0BA3B3DD-B3CF-40CB-999C-0D13BED79AFE" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-0BA3B3DD-B3CF-40CB-999C-0D13BED79AFE.html" id="GUID-0BA3B3DD-B3CF-40CB-999C-0D13BED79AFE-d1683e1541-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.1</ph>
+mcRpeI_RotorPositionEstimInit</a></div></div></li><li role="treeitem"><div data-tocid="GUID-144FAB56-2319-4EC8-B7C4-49C9351A39D1-d1683e1549" class="topicref" data-id="GUID-144FAB56-2319-4EC8-B7C4-49C9351A39D1" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-144FAB56-2319-4EC8-B7C4-49C9351A39D1.html" id="GUID-144FAB56-2319-4EC8-B7C4-49C9351A39D1-d1683e1549-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.2</ph>
+mcRpeI_RotorPositionReady</a></div></div></li><li role="treeitem"><div data-tocid="GUID-513B1473-8804-4954-A6A2-74A15B83D972-d1683e1557" class="topicref" data-id="GUID-513B1473-8804-4954-A6A2-74A15B83D972" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-513B1473-8804-4954-A6A2-74A15B83D972.html" id="GUID-513B1473-8804-4954-A6A2-74A15B83D972-d1683e1557-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.3</ph>
+mcRpeI_RotorPositionEstimEnable</a></div></div></li><li role="treeitem"><div data-tocid="GUID-2D8E3700-A5FA-4894-B9E9-CB42E98374B0-d1683e1565" class="topicref" data-id="GUID-2D8E3700-A5FA-4894-B9E9-CB42E98374B0" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-2D8E3700-A5FA-4894-B9E9-CB42E98374B0.html" id="GUID-2D8E3700-A5FA-4894-B9E9-CB42E98374B0-d1683e1565-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.4</ph>
+mcRpeI_ParametersSet</a></div></div></li><li role="treeitem"><div data-tocid="GUID-20614B72-FE37-4738-89D3-C0E4740BB4F4-d1683e1573" class="topicref" data-id="GUID-20614B72-FE37-4738-89D3-C0E4740BB4F4" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-20614B72-FE37-4738-89D3-C0E4740BB4F4.html" id="GUID-20614B72-FE37-4738-89D3-C0E4740BB4F4-d1683e1573-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.5</ph>
+mcRpeI_RotorPositionEstim</a></div></div></li><li role="treeitem"><div data-tocid="GUID-6823E2B6-2607-45AA-96B7-A8A902E0A5EE-d1683e1581" class="topicref" data-id="GUID-6823E2B6-2607-45AA-96B7-A8A902E0A5EE" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-6823E2B6-2607-45AA-96B7-A8A902E0A5EE.html" id="GUID-6823E2B6-2607-45AA-96B7-A8A902E0A5EE-d1683e1581-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.6</ph>
+mcRpe_RotorPostionOffsetCalc</a></div></div></li><li role="treeitem"><div data-tocid="GUID-37583C5E-D05D-4E96-8F6E-3C72BC407236-d1683e1589" class="topicref" data-id="GUID-37583C5E-D05D-4E96-8F6E-3C72BC407236" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-37583C5E-D05D-4E96-8F6E-3C72BC407236.html" id="GUID-37583C5E-D05D-4E96-8F6E-3C72BC407236-d1683e1589-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.7</ph>
+mcRpeI_MechanicalSpeedGet</a></div></div></li><li role="treeitem"><div data-tocid="GUID-9F0534F6-7369-445E-960E-419575EB2399-d1683e1597" class="topicref" data-id="GUID-9F0534F6-7369-445E-960E-419575EB2399" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9F0534F6-7369-445E-960E-419575EB2399.html" id="GUID-9F0534F6-7369-445E-960E-419575EB2399-d1683e1597-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.8</ph>
+mcRpeI_MechanicalAngleGet</a></div></div></li><li role="treeitem"><div data-tocid="GUID-DAB212D4-35AC-4316-8B51-728B693A284C-d1683e1605" class="topicref" data-id="GUID-DAB212D4-35AC-4316-8B51-728B693A284C" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-DAB212D4-35AC-4316-8B51-728B693A284C.html" id="GUID-DAB212D4-35AC-4316-8B51-728B693A284C-d1683e1605-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.9</ph>
+mcRpeI_ElectricalSpeedGet</a></div></div></li><li role="treeitem"><div data-tocid="GUID-D924D758-3530-47B1-B4B8-7D6D6362D28E-d1683e1613" class="topicref" data-id="GUID-D924D758-3530-47B1-B4B8-7D6D6362D28E" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-D924D758-3530-47B1-B4B8-7D6D6362D28E.html" id="GUID-D924D758-3530-47B1-B4B8-7D6D6362D28E-d1683e1613-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.10</ph>
+mcRpeI_ElectricalAngleGet</a></div></div></li><li role="treeitem"><div data-tocid="GUID-2CC7C7AD-A0B2-4FEF-8B9A-E4C20268EFF4-d1683e1622" class="topicref" data-id="GUID-2CC7C7AD-A0B2-4FEF-8B9A-E4C20268EFF4" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-2CC7C7AD-A0B2-4FEF-8B9A-E4C20268EFF4.html" id="GUID-2CC7C7AD-A0B2-4FEF-8B9A-E4C20268EFF4-d1683e1622-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.11</ph>
+mcRpeI_CarrierSignalInjection</a></div></div></li><li role="treeitem"><div data-tocid="GUID-6B99ABD1-D79A-48A3-9E4E-8454083A026B-d1683e1630" class="topicref" data-id="GUID-6B99ABD1-D79A-48A3-9E4E-8454083A026B" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-6B99ABD1-D79A-48A3-9E4E-8454083A026B.html" id="GUID-6B99ABD1-D79A-48A3-9E4E-8454083A026B-d1683e1630-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.12</ph>
+mcRpeI_RotorPositionEstimReset</a></div></div></li><li role="treeitem"><div data-tocid="GUID-DC1BD475-C96E-44E6-8DF0-5C92AEC92844-d1683e1638" class="topicref" data-id="GUID-DC1BD475-C96E-44E6-8DF0-5C92AEC92844" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-DC1BD475-C96E-44E6-8DF0-5C92AEC92844.html" id="GUID-DC1BD475-C96E-44E6-8DF0-5C92AEC92844-d1683e1638-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.13</ph>
+mcRpeI_RotorPositionEstimDisable</a></div></div></li><li role="treeitem"><div data-tocid="GUID-C0F33F98-171D-4E8B-8C1B-C038FB5FF19B-d1683e1646" class="topicref" data-id="GUID-C0F33F98-171D-4E8B-8C1B-C038FB5FF19B" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C0F33F98-171D-4E8B-8C1B-C038FB5FF19B.html" id="GUID-C0F33F98-171D-4E8B-8C1B-C038FB5FF19B-d1683e1646-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.14</ph>
+tmcRpe_TrackingLoopParams_s Struct</a></div></div></li><li role="treeitem"><div data-tocid="GUID-A09367B3-9AF4-4388-8AE9-15D50E3C8FF8-d1683e1654" class="topicref" data-id="GUID-A09367B3-9AF4-4388-8AE9-15D50E3C8FF8" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A09367B3-9AF4-4388-8AE9-15D50E3C8FF8.html" id="GUID-A09367B3-9AF4-4388-8AE9-15D50E3C8FF8-d1683e1654-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.15</ph>
+tmcRpe_State_s Struct</a></div></div></li><li role="treeitem"><div data-tocid="GUID-4ACA687D-C6F6-422A-ACE3-C5EE61947232-d1683e1662" class="topicref" data-id="GUID-4ACA687D-C6F6-422A-ACE3-C5EE61947232" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4ACA687D-C6F6-422A-ACE3-C5EE61947232.html" id="GUID-4ACA687D-C6F6-422A-ACE3-C5EE61947232-d1683e1662-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.16</ph>
+tmcRpe_Parameters_s Struct</a></div></div></li><li role="treeitem"><div data-tocid="GUID-22299CE3-D3BD-4E0A-A2E3-3D10749DE067-d1683e1670" class="topicref" data-id="GUID-22299CE3-D3BD-4E0A-A2E3-3D10749DE067" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-22299CE3-D3BD-4E0A-A2E3-3D10749DE067.html" id="GUID-22299CE3-D3BD-4E0A-A2E3-3D10749DE067-d1683e1670-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.17</ph>
+tmcRpe_IPCParameters_s Struct</a></div></div></li><li role="treeitem"><div data-tocid="GUID-46094F12-D8C4-496E-9BBE-6F49A3C6C569-d1683e1678" class="topicref" data-id="GUID-46094F12-D8C4-496E-9BBE-6F49A3C6C569" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-46094F12-D8C4-496E-9BBE-6F49A3C6C569.html" id="GUID-46094F12-D8C4-496E-9BBE-6F49A3C6C569-d1683e1678-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.5.18</ph>
+tmcRpe_HFIParameters_s Struct</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-D3037FB0-D2D8-4DAD-8982-9C3653254BE9-d1683e1686" class="topicref" data-id="GUID-D3037FB0-D2D8-4DAD-8982-9C3653254BE9" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-D3037FB0-D2D8-4DAD-8982-9C3653254BE9-d1683e1686-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-D3037FB0-D2D8-4DAD-8982-9C3653254BE9.html" id="GUID-D3037FB0-D2D8-4DAD-8982-9C3653254BE9-d1683e1686-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.6</ph>
+IPD API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the API references for the initial position detection         module.</p></div></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-B6A3C0CD-E527-48B2-A454-3F3CCE8AEAF4-d1683e1769" class="topicref" data-id="GUID-B6A3C0CD-E527-48B2-A454-3F3CCE8AEAF4" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-B6A3C0CD-E527-48B2-A454-3F3CCE8AEAF4-d1683e1769-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-B6A3C0CD-E527-48B2-A454-3F3CCE8AEAF4.html" id="GUID-B6A3C0CD-E527-48B2-A454-3F3CCE8AEAF4-d1683e1769-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.7</ph>
+Voltage Measurement API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the API references for the voltage calculation module.</p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-C4F47DBF-B88F-4147-A7D9-D8C69DFCEC07-d1683e1828" class="topicref" data-id="GUID-C4F47DBF-B88F-4147-A7D9-D8C69DFCEC07" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C4F47DBF-B88F-4147-A7D9-D8C69DFCEC07.html" id="GUID-C4F47DBF-B88F-4147-A7D9-D8C69DFCEC07-d1683e1828-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.8</ph>
+mc_hardware_abstraction_api</a><div class="wh-tooltip"><p class="shortdesc">Enter a short description of your topic here (optional).</p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-A09E5182-84A4-40CB-9732-FE12DAC559EC-d1683e1839" class="topicref" data-id="GUID-A09E5182-84A4-40CB-9732-FE12DAC559EC" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A09E5182-84A4-40CB-9732-FE12DAC559EC.html" id="GUID-A09E5182-84A4-40CB-9732-FE12DAC559EC-d1683e1839-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.9</ph>
+mc_utilities_api</a><div class="wh-tooltip"><p class="shortdesc">Enter a short description of your topic here (optional).</p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-F3037440-0B95-4A3A-8BBC-61A03B757556-d1683e1850" class="topicref" data-id="GUID-F3037440-0B95-4A3A-8BBC-61A03B757556" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F3037440-0B95-4A3A-8BBC-61A03B757556.html" id="GUID-F3037440-0B95-4A3A-8BBC-61A03B757556-d1683e1850-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4.10</ph>
+mc_key_manager_api</a><div class="wh-tooltip"><p class="shortdesc">Enter a short description of your topic here (optional).</p></div></div></div></li></ul></li></ul></li></ul></li></ul></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-42876005-92C2-4CC0-81FC-71368462D294-d1683e1861" class="topicref" data-id="GUID-42876005-92C2-4CC0-81FC-71368462D294" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-42876005-92C2-4CC0-81FC-71368462D294-d1683e1861-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-42876005-92C2-4CC0-81FC-71368462D294.html" id="GUID-42876005-92C2-4CC0-81FC-71368462D294-d1683e1861-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2</ph>
+Harmony QSpin Motor Control</a></div></div></li><li role="treeitem"><div data-tocid="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508-d1683e1894" class="topicref" data-id="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508.html" id="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508-d1683e1894-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">3</ph>
+Microchip MPLAB® Harmony 3 Release Notes</a></div></div></li><li role="treeitem"><div data-tocid="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183-d1683e1902" class="topicref" data-id="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183.html" id="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183-d1683e1902-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">4</ph>
+License</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1683e1910" class="topicref backmatter backmatter_parent" data-id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1683e1910-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B.html" id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1683e1910-link">Microchip Information</a></div></div></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-9 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED__GUID-6BB21660-4D94-49B3-8FA9-7D31DD02C759">
+<h1 class="- topic/title title topictitle1" id="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED__GUID-6BB21660-4D94-49B3-8FA9-7D31DD02C759" style="">Rotor Position Estimation API
+        Reference</h1>
+<p class="- topic/shortdesc shortdesc">This section describes the API references for the rotor position estimation
+        module.</p>
+</article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
+  
+  <script type="text/javascript">_satellite.pageBottom();</script><!-- Adobe Analytics -->
+  <script type="text/javascript" src="mchp-js/prepend.js"></script><!-- Package for viewing PDFs on mobile devices -->
+  
+</div>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+       
+        </body>
+</html>

@@ -1,0 +1,1588 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="copyright" content="(C) Copyright 2024"/><meta name="generator" content="DITA-OT"/><meta name="description" content="The Field Oriented Control (FOC) is the conventional control scheme for permanent-magnet synchronous motors. It generally results in smoother torque, slightly higher efficiency, and higher torque-speed curve, compared to six-step control, but requires a measurement or estimate of rotor position, and is more computationally intensive."/>        
+      <title>1.1.1.1.1 Field Oriented Control</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50"/><meta name="wh-source-relpath" content="GUID-5CCF6974-52BB-4407-9796-20C86F178C71.xml"/><meta name="wh-out-relpath" content="GUID-5CCF6974-52BB-4407-9796-20C86F178C71.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
+    
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+    <script src="https://assets.adobedtm.com/6a72a357eb48/a636c708c7fe/launch-0b0023397020.min.js"></script><!-- Adobe Analytics -->
+</head>
+
+    <body id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony 3 Motor Control &#xA;    "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony 3 Motor Control 
+    </a></div>
+                    
+                </div>
+                
+                
+            </div>
+
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div class="d-flex justify-contents-around"><div class="flex-grow-1"></div><div class="position-relative flex-grow-1"><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div><div class="align-self-center flex-grow-1 ml-2"></div></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
+</div>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C"><div class="title"><a href="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Harmony QSpin Motor Control</a></div></div></li><li><div class="topicref" data-id="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60"><div class="title"><a href="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+<strong class="ph b">Supported Algorithms</strong></a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSPIN supported motor control algorithms.</p></div></div></div></li><li><div class="topicref" data-id="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F"><div class="title"><a href="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Permanent Magnet Synchronous Motors</a><div class="wh-tooltip"><p class="shortdesc">This section describes the field oriented control implementation of permanent magnet         synchronous motors (PMSM) and Harmony QSPIN configuration.</p></div></div></div></li><li><div class="topicref" data-id="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35"><div class="title"><a href="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1</ph>
+PMSM FOC</a></div></div></li><li class="active"><div class="topicref" data-id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71"><div class="title"><a href="GUID-5CCF6974-52BB-4407-9796-20C86F178C71.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1</ph>
+Field Oriented Control</a><div class="wh-tooltip"><p class="shortdesc">The Field Oriented Control (FOC) is the conventional control scheme for permanent-magnet         synchronous motors. It generally results in smoother torque, slightly higher efficiency, and         higher torque-speed curve, compared to six-step control, but requires a measurement or         estimate of rotor position, and is more computationally intensive.</p></div></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            <div class="row" style="margin-top: -1em;"><div class="col-lg-7 col-md-7 col-sm-12 offset-lg-3 offset-md-3 text-right border-bottom mb-1"><h2 class="text-dark header_title">
+    </h2></div></div>
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d1683e11" class="topicref" data-id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d1683e11-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C.html" id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d1683e11-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Harmony QSpin Motor Control</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60-d1683e19" class="topicref" data-id="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60-d1683e19-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60.html" id="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60-d1683e19-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+<strong class="ph b">Supported Algorithms</strong></a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSPIN supported motor control algorithms.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F-d1683e31" class="topicref" data-id="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-85BE370F-0541-4589-AA23-E11A372DBE9F-d1683e31-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F.html" id="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F-d1683e31-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Permanent Magnet Synchronous Motors</a><div class="wh-tooltip"><p class="shortdesc">This section describes the field oriented control implementation of permanent magnet         synchronous motors (PMSM) and Harmony QSPIN configuration.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42" class="topicref" data-id="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35.html" id="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1</ph>
+PMSM FOC</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true" class="active"><div data-tocid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50" class="topicref" data-id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-5CCF6974-52BB-4407-9796-20C86F178C71.html" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1</ph>
+Field Oriented Control</a><div class="wh-tooltip"><p class="shortdesc">The Field Oriented Control (FOC) is the conventional control scheme for permanent-magnet         synchronous motors. It generally results in smoother torque, slightly higher efficiency, and         higher torque-speed curve, compared to six-step control, but requires a measurement or         estimate of rotor position, and is more computationally intensive.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E-d1683e61" class="topicref" data-id="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E.html" id="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E-d1683e61-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1.1</ph>
+Permanent Magnet Synchronous Motor</a><div class="wh-tooltip"><p class="shortdesc">The Permanent Magnet Synchronous Motor (PMSM) is the most preferred choice for motor         control applications. Due to their permanent magnet rotor, they also have higher torque with         smaller frame size and no rotor current, all of which are advantages over AC Induction         Motors (AICMs). With their high power-to-size ratio, PMSMs can help make the design smaller         without the loss of torque. These strengths enable the usage of PMSM in a broad range of         variable frequency drives (VFDs) applications.</p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F-d1683e72" class="topicref" data-id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F.html" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F-d1683e72-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1.2</ph>
+Current Measurement</a><div class="wh-tooltip"><p class="shortdesc">The phase current information is crucial to control the torque of the motor of an         electric drive with Field Oriented Control. The following section describes different         current measurement principles in an electric drive, and how it can be configured with         Harmony Qspin.</p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7-d1683e83" class="topicref" data-id="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7.html" id="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7-d1683e83-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1.3</ph>
+Rotor Position Sensing</a><div class="wh-tooltip"><p class="shortdesc">he rotor position information is crucial to control the torque of the motor of an         electric drive with Field Oriented Control. The following section describes different rotor         position measurement technique in an electric drive, and how it can be configured with         Harmony QSpin.</p></div></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-81C3E3D7-9C52-4575-B330-AB618C657300-d1683e94" class="topicref" data-id="GUID-81C3E3D7-9C52-4575-B330-AB618C657300" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-81C3E3D7-9C52-4575-B330-AB618C657300-d1683e94-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-81C3E3D7-9C52-4575-B330-AB618C657300.html" id="GUID-81C3E3D7-9C52-4575-B330-AB618C657300-d1683e94-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2</ph>
+Harmony QSpin: PMSM FOC</a><div class="wh-tooltip"><p class="shortdesc"></p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3-d1683e361" class="topicref" data-id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3.html" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3-d1683e361-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.3</ph>
+Field Oriented Control Implementation</a><div class="wh-tooltip"><p class="shortdesc">The generated code from the Harmony QSpin intends to achieve following goals:</p></div></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8-d1683e372" class="topicref" data-id="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8-d1683e372-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8.html" id="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8-d1683e372-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4</ph>
+Harmony QSpin API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSpin API references for the motor control         application.</p></div></div></div></li></ul></li></ul></li></ul></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-42876005-92C2-4CC0-81FC-71368462D294-d1683e1861" class="topicref" data-id="GUID-42876005-92C2-4CC0-81FC-71368462D294" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-42876005-92C2-4CC0-81FC-71368462D294-d1683e1861-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-42876005-92C2-4CC0-81FC-71368462D294.html" id="GUID-42876005-92C2-4CC0-81FC-71368462D294-d1683e1861-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2</ph>
+Harmony QSpin Motor Control</a></div></div></li><li role="treeitem"><div data-tocid="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508-d1683e1894" class="topicref" data-id="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508.html" id="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508-d1683e1894-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">3</ph>
+Microchip MPLAB® Harmony 3 Release Notes</a></div></div></li><li role="treeitem"><div data-tocid="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183-d1683e1902" class="topicref" data-id="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183.html" id="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183-d1683e1902-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">4</ph>
+License</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1683e1910" class="topicref backmatter backmatter_parent" data-id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1683e1910-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B.html" id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1683e1910-link">Microchip Information</a></div></div></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-7 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        <button id="wh_close_topic_toc_button" class="close-toc-button d-none" aria-label="Toggle topic table of content" aria-controls="wh_topic_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-E0C68FF6-8937-4876-8CFA-D481BD7A3EC7">
+<h1 class="- topic/title title topictitle1" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-E0C68FF6-8937-4876-8CFA-D481BD7A3EC7" style="">1.1.1.1.1 Field Oriented Control</h1>
+
+<div class="- topic/body body"><p class="- topic/shortdesc shortdesc">The Field Oriented Control (FOC) is the conventional control scheme for permanent-magnet
+        synchronous motors. It generally results in smoother torque, slightly higher efficiency, and
+        higher torque-speed curve, compared to six-step control, but requires a measurement or
+        estimate of rotor position, and is more computationally intensive.</p>
+        <p class="- topic/p p">This section introduces the field oriented control.</p>
+        <section class="- topic/section section" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__SECTION_L5N_TD1_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__SECTION_L5N_TD1_WXB"><h2 class="- topic/title title sectiontitle">Torque Production in three-phase AC motor</h2>
+            
+            <p class="- topic/p p">A three-phase AC has a stationary part called the stator; a rotating part called the
+                rotor. The stator consists of three-phase windings. When the stator is excited with
+                a balanced three-phase voltage, it generates a rotating magnetic field. The rotor
+                has generates its own magnetic field either using implanted magnets (in Permanent
+                Magnet Synchronous Motors) or using electromagnets (Synchronous or Asynchronous AC
+                motors). The rotor's magnetic field interacts with the stator's rotating magnetic
+                field to produce the rotor torque.</p>
+            <p class="- topic/p p">Electromagnetic torque <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>T</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>e</mi>
+                                    <mi>m</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> is proportional to the cross product of stator currents and rotor flux
+                linkage. Here <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mover>
+                                <mrow>
+                                    <mi>z</mi>
+                                </mrow>
+                                <mrow>
+                                    <mo>^</mo>
+                                </mrow>
+                            </mover>
+                        </mrow>
+                    </math> is a unit vector along the axis of rotation, <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>x</mi>
+                        </mrow>
+                    </math> and<math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>y</mi>
+                        </mrow>
+                    </math>  are components of a two-dimensional plane perpendicular to <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mover>
+                                <mrow>
+                                    <mi>z</mi>
+                                </mrow>
+                                <mrow>
+                                    <mo>^</mo>
+                                </mrow>
+                            </mover>
+                        </mrow>
+                    </math>, and the current vector is an equivalent vector sum of currents based on
+                how the resulting fields are aligned with these <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>x</mi>
+                        </mrow>
+                    </math> and<math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>y</mi>
+                        </mrow>
+                    </math>  axes.</p>
+            <div class="- topic/p p">
+                <figure class="+ topic/fig equation-d/equation-figure fig equation-figure fignone" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_CVK_MG1_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_CVK_MG1_WXB">
+                    <div class="+ topic/div equation-d/equation-block  eqn-block "><math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                                <mrow>
+                                    <msub>
+                                        <mrow>
+                                            <mi>T</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>e</mi>
+                                            <mi>m</mi>
+                                        </mrow>
+                                    </msub>
+                                    <mo>=</mo>
+                                    <mrow>
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>3</mn>
+                                            </mrow>
+                                            <mrow>
+                                                <mn>2</mn>
+                                            </mrow>
+                                        </mfrac>
+                                        <msub>
+                                            <mrow>
+                                                <mi>N</mi>
+                                            </mrow>
+                                            <mrow>
+                                                <mi>p</mi>
+                                            </mrow>
+                                        </msub>
+                                        <mo>(</mo>
+                                        <mover>
+                                            <mrow>
+                                                <mi>ψ</mi>
+                                            </mrow>
+                                            <mrow>
+                                                <mo>¯</mo>
+                                            </mrow>
+                                        </mover>
+                                        <mo>×</mo>
+                                        <mover>
+                                            <mrow>
+                                                <mi>I</mi>
+                                            </mrow>
+                                            <mrow>
+                                                <mo>¯</mo>
+                                            </mrow>
+                                        </mover>
+                                        <mo>)</mo>
+                                    </mrow>
+                                </mrow>
+                            </math></div>
+                </figure>
+                <figure class="+ topic/fig equation-d/equation-figure fig equation-figure fignone" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_VSJ_PH1_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_VSJ_PH1_WXB">
+                    <div class="+ topic/div equation-d/equation-block  eqn-block "><math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                                <mrow>
+                                    <msub>
+                                        <mrow>
+                                            <mi>T</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>e</mi>
+                                            <mi>m</mi>
+                                        </mrow>
+                                    </msub>
+                                    <mo>=</mo>
+                                    <mrow>
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>3</mn>
+                                            </mrow>
+                                            <mrow>
+                                                <mn>2</mn>
+                                            </mrow>
+                                        </mfrac>
+                                        <msub>
+                                            <mrow>
+                                                <mi>N</mi>
+                                            </mrow>
+                                            <mrow>
+                                                <mi>p</mi>
+                                            </mrow>
+                                        </msub>
+                                        <mo>(</mo>
+                                        <msub>
+                                            <mrow>
+                                                <mi>ψ</mi>
+                                            </mrow>
+                                            <mrow>
+                                                <mi>x</mi>
+                                            </mrow>
+                                        </msub>
+                                        <msub>
+                                            <mrow>
+                                                <msub>
+                                                  <mrow>
+                                                  <mi>I</mi>
+                                                  </mrow>
+                                                  <mrow>
+                                                  <mi>y</mi>
+                                                  </mrow>
+                                                </msub>
+                                                <mo>−</mo>
+                                                <msub>
+                                                  <mrow>
+                                                  <mi>I</mi>
+                                                  </mrow>
+                                                  <mrow>
+                                                  <mi>x</mi>
+                                                  </mrow>
+                                                </msub>
+                                                <mi>ψ</mi>
+                                            </mrow>
+                                            <mrow>
+                                                <mi>y</mi>
+                                            </mrow>
+                                        </msub>
+                                        <mo>)</mo>
+                                        <mover>
+                                            <mrow>
+                                                <mi>z</mi>
+                                            </mrow>
+                                            <mrow>
+                                                <mo>^</mo>
+                                            </mrow>
+                                        </mover>
+                                    </mrow>
+                                </mrow>
+                            </math></div>
+                </figure>
+                <figure class="+ topic/fig equation-d/equation-figure fig equation-figure fignone" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_NCD_ZH1_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_NCD_ZH1_WXB">
+                    <div class="+ topic/div equation-d/equation-block  eqn-block "><math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                                <mrow>
+                                    <msub>
+                                        <mrow>
+                                            <mi>T</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>e</mi>
+                                            <mi>m</mi>
+                                        </mrow>
+                                    </msub>
+                                    <mo>=</mo>
+                                    <mrow>
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>3</mn>
+                                            </mrow>
+                                            <mrow>
+                                                <mn>2</mn>
+                                            </mrow>
+                                        </mfrac>
+                                        <msub>
+                                            <mrow>
+                                                <mi>N</mi>
+                                            </mrow>
+                                            <mrow>
+                                                <mi>p</mi>
+                                            </mrow>
+                                        </msub>
+                                        <mi>ψ</mi>
+                                        <mi>I</mi>
+                                        <mo>⁢</mo>
+                                        <mi>sin</mi>
+                                        <mo>⁡</mo>
+                                        <mi mathvariant="normal">Φ</mi>
+                                    </mrow>
+                                </mrow>
+                            </math></div>
+                </figure>
+            </div>
+            <div class="- topic/p p">The angle <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi mathvariant="normal">Φ</mi>
+                        </mrow>
+                    </math> between flux linkage and current vectors, illustrated in the Phasor
+                diagram Figure, plays an important role in determining electromagnetic torque. If
+                the two vectors are aligned, this angle <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi mathvariant="normal">Φ</mi>
+                        </mrow>
+                    </math> is zero, and no torque is produced. Maximum torque occurs when the flux
+                linkage and current vectors are perpendicular, and the term <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>sin</mi>
+                            <mo>⁡</mo>
+                            <mi mathvariant="normal">Φ</mi>
+                        </mrow>
+                    </math>.<figure class="- topic/fig fig fignone" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__FIG_UTY_FT1_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__FIG_UTY_FT1_WXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-1. <span id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-6F419DBB-6CD5-4973-BAD0-D8D1FBBCA392" class="fig--title">Phasor diagram</span></span></figcaption>
+                    
+                    <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__IMAGE_VTY_FT1_WXB" src="GUID-AAA8DE61-4311-4EBB-B0EE-F076314A8DA8-high.svg"/></div></div>
+                </figure></div>
+            <p class="- topic/p p"><a class="- topic/xref xref" href="#GUID-5CCF6974-52BB-4407-9796-20C86F178C71__FIG_UTY_FT1_WXB"><span>Figure 1-1</span></a> Flux linkage vector, current vector, and the angle <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi mathvariant="normal">Φ</mi>
+                        </mrow>
+                    </math> between them, in an arbitrary <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>x</mi>
+                            <mi>y</mi>
+                        </mrow>
+                    </math> coordinate frame.</p>
+            <p class="- topic/p p">It is important to note that these <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>x</mi>
+                        </mrow>
+                    </math> and <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>y</mi>
+                        </mrow>
+                    </math> axes are arbitrary — we can pick any unit basis vectors <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mover>
+                                <mrow>
+                                    <mi>x</mi>
+                                </mrow>
+                                <mrow>
+                                    <mo>^</mo>
+                                </mrow>
+                            </mover>
+                        </mrow>
+                    </math> and <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mover>
+                                <mrow>
+                                    <mi>y</mi>
+                                </mrow>
+                                <mrow>
+                                    <mo>^</mo>
+                                </mrow>
+                            </mover>
+                        </mrow>
+                    </math> that form a mutually perpendicular set with the axis of rotation <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mover>
+                                <mrow>
+                                    <mi>z</mi>
+                                </mrow>
+                                <mrow>
+                                    <mo>^</mo>
+                                </mrow>
+                            </mover>
+                        </mrow>
+                    </math>, such that their cross product <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mover>
+                                <mrow>
+                                    <mi>x</mi>
+                                </mrow>
+                                <mrow>
+                                    <mo>^</mo>
+                                </mrow>
+                            </mover>
+                            <mo>×</mo>
+                            <mover>
+                                <mrow>
+                                    <mi>y</mi>
+                                </mrow>
+                                <mrow>
+                                    <mo>^</mo>
+                                </mrow>
+                            </mover>
+                            <mo>=</mo>
+                            <mover>
+                                <mrow>
+                                    <mi>z</mi>
+                                </mrow>
+                                <mrow>
+                                    <mo>^</mo>
+                                </mrow>
+                            </mover>
+                        </mrow>
+                    </math>.</p>
+            <p class="- topic/p p">There are two common choices for these basis vectors. One is the stationary frame,
+                commonly aligned with one of the stator phases. Pictured on the left of Figure
+                Current Vector Coils is a three-phase stator with windings positioned 120° apart.
+                This is equivalent — at least in terms of magnetic flux linkage — to a two-phase
+                stator with orthogonal windings α and β, pictured on the right. For any combination
+                of currents <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>I</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>A</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math>, <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>I</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>B</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math>, <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>I</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>C</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> in the three-phase stator winding, the same magnetic field seen by the
+                rotor can be produced by an appropriate combination of currents <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>I</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>α</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> and <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>I</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>β</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> through two “virtual” coils used to create the horizontal and vertical
+                components of the stator field. The mathematical conversion of projecting
+                three-phase quantities onto these virtual orthogonal coils is called the Clarke
+                transform, after one of its originators, Edith Clarke. [2].</p>
+            <figure class="- topic/fig fig fignone" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__FIG_GLY_FJG_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__FIG_GLY_FJG_WXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-2. <span id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-583EB9C1-57CF-45D7-B327-3E55219A0F17" class="fig--title">Current vector coils</span></span></figcaption>
+                
+                <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__IMAGE_HLY_FJG_WXB" src="GUID-6AB847B8-4336-47C7-B0A7-26F863CC4CEA-high.jpg"/></div></div>
+            </figure>
+            <p class="- topic/p p"><a class="- topic/xref xref" href="#GUID-5CCF6974-52BB-4407-9796-20C86F178C71__FIG_GLY_FJG_WXB"><span>Figure 1-2</span></a> Use of Clarke transform to convert between per-phase quantities and the <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>α</mi>
+                            <mi>β</mi>
+                        </mrow>
+                    </math> frame The angle reference is commonly aligned with the first motor phase
+                and the <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>α</mi>
+                        </mrow>
+                    </math> winding. The rotor’s position is some electrical angle <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>θ</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>r</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> relative to these angle references.</p>
+            <p class="- topic/p p">The Clarke transform is a linear transformation, shown in following equation, which
+                can apply to any vector quantity <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>X</mi>
+                        </mrow>
+                    </math>, although typical examples are voltage <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>V</mi>
+                        </mrow>
+                    </math>, current <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>I</mi>
+                        </mrow>
+                    </math>, or flux linkage <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>ψ</mi>
+                        </mrow>
+                    </math>.</p>
+            <figure class="+ topic/fig equation-d/equation-figure fig equation-figure fignone" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_APR_WJG_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_APR_WJG_WXB">
+                <div class="+ topic/div equation-d/equation-block  eqn-block "><math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                            <mrow>
+                                <msub>
+                                    <mrow>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>α</mi>
+                                    </mrow>
+                                </msub>
+                                <mo>=</mo>
+                                <mrow>
+                                    <mfrac>
+                                        <mrow>
+                                            <mn>2</mn>
+                                        </mrow>
+                                        <mrow>
+                                            <mn>3</mn>
+                                        </mrow>
+                                    </mfrac>
+                                </mrow>
+                                <msub>
+                                    <mrow>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>A</mi>
+                                    </mrow>
+                                </msub>
+                                <mo>−</mo>
+                                <mrow>
+                                    <mfrac>
+                                        <mrow>
+                                            <mn>1</mn>
+                                        </mrow>
+                                        <mrow>
+                                            <mn>3</mn>
+                                        </mrow>
+                                    </mfrac>
+                                </mrow>
+                                <msub>
+                                    <mrow>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>B</mi>
+                                    </mrow>
+                                </msub>
+                                <mo>−</mo>
+                                <mrow>
+                                    <mfrac>
+                                        <mrow>
+                                            <mn>1</mn>
+                                        </mrow>
+                                        <mrow>
+                                            <mn>3</mn>
+                                        </mrow>
+                                    </mfrac>
+                                </mrow>
+                                <msub>
+                                    <mrow>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>C</mi>
+                                    </mrow>
+                                </msub>
+                            </mrow>
+                        </math></div>
+            </figure>
+            <figure class="+ topic/fig equation-d/equation-figure fig equation-figure fignone" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_I4X_NKG_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_I4X_NKG_WXB">
+                <div class="+ topic/div equation-d/equation-block  eqn-block "><math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                            <mrow>
+                                <msub>
+                                    <mrow>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>β</mi>
+                                    </mrow>
+                                </msub>
+                                <mo>=</mo>
+                                <mrow>
+                                    <mfrac>
+                                        <mrow>
+                                            <mn>1</mn>
+                                        </mrow>
+                                        <mrow>
+                                            <msqrt>
+                                                <mrow>
+                                                  <mn>3</mn>
+                                                </mrow>
+                                            </msqrt>
+                                        </mrow>
+                                    </mfrac>
+                                </mrow>
+                                <msub>
+                                    <mrow>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>B</mi>
+                                    </mrow>
+                                </msub>
+                                <mo>−</mo>
+                                <mfrac>
+                                    <mrow>
+                                        <mn>1</mn>
+                                    </mrow>
+                                    <mrow>
+                                        <msqrt>
+                                            <mrow>
+                                                <mn>3</mn>
+                                            </mrow>
+                                        </msqrt>
+                                    </mrow>
+                                </mfrac>
+                                <msub>
+                                    <mrow>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>C</mi>
+                                    </mrow>
+                                </msub>
+                            </mrow>
+                        </math></div>
+            </figure>
+            <p class="- topic/p p">We can substitute <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mo>(</mo>
+                            <mi>x</mi>
+                            <mo>,</mo>
+                            <mi>y</mi>
+                            <mo>)</mo>
+                            <mo>⇒</mo>
+                            <mo>(</mo>
+                            <mi>α</mi>
+                            <mo>,</mo>
+                            <mi>β</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </math> in above equation to get the following equation describing torque based on
+                stationary-frame quantities:</p>
+            <figure class="+ topic/fig equation-d/equation-figure fig equation-figure fignone" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_BZP_LLG_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_BZP_LLG_WXB">
+                <div class="+ topic/div equation-d/equation-block  eqn-block "><math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                            <mrow>
+                                <msub>
+                                    <mrow>
+                                        <mi>T</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>e</mi>
+                                        <mi>m</mi>
+                                    </mrow>
+                                </msub>
+                                <mo>=</mo>
+                                <mrow>
+                                    <mfrac>
+                                        <mrow>
+                                            <mn>3</mn>
+                                        </mrow>
+                                        <mrow>
+                                            <mn>2</mn>
+                                        </mrow>
+                                    </mfrac>
+                                    <msub>
+                                        <mrow>
+                                            <mi>N</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>p</mi>
+                                        </mrow>
+                                    </msub>
+                                    <mo>(</mo>
+                                    <msub>
+                                        <mrow>
+                                            <mi>ψ</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>α</mi>
+                                        </mrow>
+                                    </msub>
+                                    <msub>
+                                        <mrow>
+                                            <msub>
+                                                <mrow>
+                                                  <mi>I</mi>
+                                                </mrow>
+                                                <mrow>
+                                                  <mi>β</mi>
+                                                </mrow>
+                                            </msub>
+                                            <mo>−</mo>
+                                            <mi>ψ</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>β</mi>
+                                        </mrow>
+                                    </msub>
+                                    <msub>
+                                        <mrow>
+                                            <mi>I</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>α</mi>
+                                        </mrow>
+                                    </msub>
+                                    <mo>)</mo>
+                                </mrow>
+                            </mrow>
+                        </math></div>
+            </figure>
+            <p class="- topic/p p">In the stationary reference frame, the flux vector <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <mrow>
+                                <msub>
+                                    <mrow>
+                                        <mi>ψ</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>α</mi>
+                                        <mi>β</mi>
+                                    </mrow>
+                                </msub>
+                            </mrow>
+                        </mrow>
+                    </math> and current vector <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>I</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>α</mi>
+                                    <mi>β</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> are not fixed, but rotate along with the rotor’s magnetic field.</p>
+            <p class="- topic/p p">The other common choice of basis vectors is the rotating reference frame, aligned
+                with the electrical angle of excitation <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>θ</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>e</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> as it increases with electrical frequency <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>ω</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>e</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math>. This reference frame has components denoted dd (“direct”) and qq
+                (“quadrature”). The transformation from <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>α</mi>
+                            <mi>β</mi>
+                        </mrow>
+                    </math> to <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>d</mi>
+                            <mi>q</mi>
+                        </mrow>
+                    </math> axes is a rotation by an angle <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <mo>−</mo>
+                            <msub>
+                                <mrow>
+                                    <mi>θ</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>e</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math>. This is known as the Park transform, named for Robert Park, who developed
+                it in the late 1920s, while working at General Electric to analyze the dynamics of
+                synchronous motors. [1] [3] With permanent-magnet synchronous motors, this reference
+                frame is known as the synchronous reference frame. Correct alignment for a PMSM
+                occurs when the <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mi>d</mi>
+                        </mrow>
+                    </math>-axis is aligned with the rotor flux, and the electrical angle <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>θ</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>e</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> is identical to the rotor’s electrical angle <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>θ</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>r</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math>.</p>
+            <figure class="+ topic/fig equation-d/equation-figure fig equation-figure fignone" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_JYD_HY5_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_JYD_HY5_WXB">
+                <div class="+ topic/div equation-d/equation-block  eqn-block "><math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                            <mrow>
+                                <msub>
+                                    <mrow>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>d</mi>
+                                    </mrow>
+                                </msub>
+                                <mo>=</mo>
+                                <msub>
+                                    <mrow>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>α</mi>
+                                    </mrow>
+                                </msub>
+                                <mi>cos</mi>
+                                <mo>⁡</mo>
+                                <msub>
+                                    <mrow>
+                                        <mi>θ</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>e</mi>
+                                    </mrow>
+                                </msub>
+                                <mo>+</mo>
+                                <msub>
+                                    <mrow>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>β</mi>
+                                    </mrow>
+                                </msub>
+                                <mi>sin</mi>
+                                <mo>⁡</mo>
+                                <msub>
+                                    <mrow>
+                                        <mi>θ</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>e</mi>
+                                    </mrow>
+                                </msub>
+                            </mrow>
+                        </math></div>
+            </figure>
+            <figure class="+ topic/fig equation-d/equation-figure fig equation-figure fignone" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_P4G_RY5_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_P4G_RY5_WXB">
+                <div class="+ topic/div equation-d/equation-block  eqn-block "><math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                            <mrow>
+                                <msub>
+                                    <mrow>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>d</mi>
+                                    </mrow>
+                                </msub>
+                                <mo>=</mo>
+                                <msub>
+                                    <mrow>
+                                        <mo>−</mo>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>α</mi>
+                                    </mrow>
+                                </msub>
+                                <mi>sin</mi>
+                                <mo>⁡</mo>
+                                <msub>
+                                    <mrow>
+                                        <mi>θ</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>e</mi>
+                                    </mrow>
+                                </msub>
+                                <mo>+</mo>
+                                <msub>
+                                    <mrow>
+                                        <mi>X</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>β</mi>
+                                    </mrow>
+                                </msub>
+                                <mi>c</mi>
+                                <mi>o</mi>
+                                <mi>s</mi>
+                                <mo>⁡</mo>
+                                <msub>
+                                    <mrow>
+                                        <mi>θ</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>e</mi>
+                                    </mrow>
+                                </msub>
+                            </mrow>
+                        </math></div>
+            </figure>
+            <p class="- topic/p p">We can substitute <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                        <mrow>
+                            <mo>(</mo>
+                            <mi>x</mi>
+                            <mo>,</mo>
+                            <mi>y</mi>
+                            <mo>)</mo>
+                            <mo>⇒</mo>
+                            <mo>(</mo>
+                            <mi>α</mi>
+                            <mo>,</mo>
+                            <mi>β</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </math> in Torque Equation to below Equation, describing torque based on
+                synchronous-frame quantities:</p>
+            <figure class="+ topic/fig equation-d/equation-figure fig equation-figure fignone" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_MRL_JZ5_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__EQUATION-FIGURE_MRL_JZ5_WXB">
+                <div class="+ topic/div equation-d/equation-block  eqn-block "><math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                            <mrow>
+                                <msub>
+                                    <mrow>
+                                        <mi>T</mi>
+                                    </mrow>
+                                    <mrow>
+                                        <mi>e</mi>
+                                        <mi>m</mi>
+                                    </mrow>
+                                </msub>
+                                <mo>=</mo>
+                                <mrow>
+                                    <mfrac>
+                                        <mrow>
+                                            <mn>3</mn>
+                                        </mrow>
+                                        <mrow>
+                                            <mn>2</mn>
+                                        </mrow>
+                                    </mfrac>
+                                    <msub>
+                                        <mrow>
+                                            <mi>N</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>p</mi>
+                                        </mrow>
+                                    </msub>
+                                    <mo>(</mo>
+                                    <msub>
+                                        <mrow>
+                                            <mi>ψ</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>d</mi>
+                                        </mrow>
+                                    </msub>
+                                    <msub>
+                                        <mrow>
+                                            <msub>
+                                                <mrow>
+                                                  <mi>I</mi>
+                                                </mrow>
+                                                <mrow>
+                                                  <mi>q</mi>
+                                                </mrow>
+                                            </msub>
+                                            <mo>−</mo>
+                                            <mi>ψ</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>q</mi>
+                                        </mrow>
+                                    </msub>
+                                    <msub>
+                                        <mrow>
+                                            <mi>I</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>d</mi>
+                                        </mrow>
+                                    </msub>
+                                    <mo>)</mo>
+                                </mrow>
+                            </mrow>
+                        </math></div>
+            </figure>
+            <p class="- topic/p p">The advantage of using the synchronous frame is that for steady-state rotation, to
+                produce constant electromagnetic torque <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>T</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>e</mi>
+                                    <mi>m</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math>, the flux linkage vector <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>ψ</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>d</mi>
+                                    <mi>q</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> and the current vector <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>I</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>d</mi>
+                                    <mi>q</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> are constants. This allows current controllers with an integrator term to
+                operate with zero steady-state error. It also allows for independent torque and flux
+                control.</p>
+            <p class="- topic/p p">It is worth noting that for different motor types, the angle of the reference frame <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>θ</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>e</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> and the electrical angle of the rotor <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>θ</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>r</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> may or may not be identical. For permanent-magnet synchronous motors, the
+                reference frame should be aligned with the permanent magnet flux of the rotor, so
+                that <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>θ</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>e</mi>
+                                </mrow>
+                            </msub>
+                            <mo>=</mo>
+                            <msub>
+                                <mrow>
+                                    <mi>θ</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>r</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math>. For induction motors <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>θ</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>e</mi>
+                                </mrow>
+                            </msub>
+                            <mo>≠</mo>
+                            <msub>
+                                <mrow>
+                                    <mi>θ</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>r</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math>; the electrical frequency <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>ω</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>e</mi>
+                                </mrow>
+                            </msub>
+                            <mo>=</mo>
+                            <msub>
+                                <mrow>
+                                    <mi>ω</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>r</mi>
+                                </mrow>
+                            </msub>
+                            <mo>+</mo>
+                            <msub>
+                                <mrow>
+                                    <mi>ω</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>s</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> where <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>ω</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>r</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> is the rotor speed expressed as an electrical frequency, and <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>ω</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>s</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> is the slip frequency needed to produce rotor current.</p>
+        </section>
+        <section class="- topic/section section" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__SECTION_B23_2DV_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__SECTION_B23_2DV_WXB"><h2 class="- topic/title title sectiontitle">FOC block diagram</h2>
+            
+            <p class="- topic/p p">The general structure of an FOC controller is an inner vector current loop, and an
+                outer velocity loop, as shown in below figure.</p>
+            <figure class="- topic/fig fig fignone" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__FIG_XWW_NDV_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__FIG_XWW_NDV_WXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-3. <span id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-8B4D490C-4896-4010-BE2E-916E1CFA8097" class="fig--title">FOC Block Diagram</span></span></figcaption>
+                
+                <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__IMAGE_YWW_NDV_WXB" src="GUID-E6E0B93C-00AB-4140-9018-5E40AE7FB407-high.svg"/></div></div>
+            </figure>
+            <p class="- topic/p p">The inner vector current loop has a current controller that operates in the
+                synchronous <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <mo>(</mo>
+                            <mi>d</mi>
+                            <mi>q</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </math> frame. Park and Clarke transforms are used in the feedback path to convert
+                measured phase currents to the synchronous frame as inputs to the current
+                controller, and in the forward path to convert desired synchronous-frame voltages <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table" align="center">
+                        <mrow>
+                            <msub>
+                                <mrow>
+                                    <mi>V</mi>
+                                </mrow>
+                                <mrow>
+                                    <mi>d</mi>
+                                    <mi>q</mi>
+                                </mrow>
+                            </msub>
+                        </mrow>
+                    </math> to realizable PWM duty cycles in a three-phase bridge.</p>
+            <p class="- topic/p p">In its linear range, there is nothing particularly special about the vector current
+                loop, and it is often realized as two PI controllers, one for the d axis and the
+                other for the q axis. Saturation and anti-windup should be designed carefully,
+                keeping in mind the overall vector controller, rather than as two independent axis
+                controllers.</p>
+            <p dir="lro" class="- topic/p p">The following steps summarize the basic sensorless FOC operation:</p>
+            <ul class="- topic/ul ul" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__UL_M5L_C2V_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__UL_M5L_C2V_WXB">
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-6FDDA000-2B2F-49F8-ACD8-17ECE03C2A89" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-6FDDA000-2B2F-49F8-ACD8-17ECE03C2A89">
+                    <p dir="lro" class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Measure the current flowing in the motor</strong>. There are several
+                        ways to measure the three-phase currents flowing in the motor. Some popular
+                        options include measurement using hall-effect or transformer-based magnetic
+                        sensors or using strategically placed one, two or three shunt resistors.</p>
+                </li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-F493A75E-9D0B-45C1-894C-136532CD735C" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-F493A75E-9D0B-45C1-894C-136532CD735C">
+                    <p dir="lro" class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Estimate the rotor flux angle</strong>. The rotor flux angle can be
+                        estimated by either back EMF-based algorithms or by high-frequency pulse
+                        injection.</p>
+                </li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-29F8BB8C-DBC5-4F0F-8376-B73F1909E369" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-29F8BB8C-DBC5-4F0F-8376-B73F1909E369">
+                    <p dir="lro" class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Transform the measured current to<math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                                    <mrow>
+                                        <mi>α</mi>
+                                        <mi>β</mi>
+                                    </mrow>
+                                </math>  reference frame</strong>. The measured phase currents of the motor
+                        are transformed to two orthogonal components in <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                                <mrow>
+                                    <mi>α</mi>
+                                    <mi>β</mi>
+                                </mrow>
+                            </math> reference frame by Clarke Transformation.</p>
+                </li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-26F486E3-414C-418D-BCCA-D2EF2F5160FF" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-26F486E3-414C-418D-BCCA-D2EF2F5160FF">
+                    <p dir="lro" class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Transform the <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                                    <mrow>
+                                        <mi>α</mi>
+                                        <mi>β</mi>
+                                    </mrow>
+                                </math> current to <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                                    <mrow>
+                                        <mi>d</mi>
+                                        <mi>q</mi>
+                                    </mrow>
+                                </math> current</strong>. The <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                                <mrow>
+                                    <mi>α</mi>
+                                    <mi>β</mi>
+                                </mrow>
+                            </math> are transformed to two orthogonal components in <a class="- topic/xref xref" href="https://github.com/Microchip-MPLAB-Harmony/motor_control/blob/master/algorithms/pmsm_foc/mc_plant_docs/theory/svg/aIFRXddgq9.svg" target="_blank" rel="external noopener"><div class=""><img class="- topic/image image" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__IMAGE_JM5_X2V_WXB" src="https://github.com/Microchip-MPLAB-Harmony/motor_control/raw/master/algorithms/pmsm_foc/mc_plant_docs/theory/svg/aIFRXddgq9.svg"/></div></a> reference frame using the estimated
+                        rotor flux angle by Park Transformation.</p>
+                </li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-7F1F15DC-6A45-4343-85F5-43571C997349" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-7F1F15DC-6A45-4343-85F5-43571C997349">
+                    <p dir="lro" class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Compare the measured <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                                    <mrow>
+                                        <mi>d</mi>
+                                        <mi>q</mi>
+                                    </mrow>
+                                </math> current with the desired current and generate an error
+                            signal</strong>. The desired <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                                <mrow>
+                                    <mi>q</mi>
+                                </mrow>
+                            </math>-axis reference current for controlling the torque, and desired <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                                <mrow>
+                                    <mi>d</mi>
+                                </mrow>
+                            </math>-axis current for controlling the flux are compared with their
+                        corresponding measured quantities to generate respective error signals.</p>
+                </li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-78375FED-5B8E-4110-B8CC-D790A85B8CB3" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-78375FED-5B8E-4110-B8CC-D790A85B8CB3">
+                    <p dir="lro" class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Estimate the rotor flux angle</strong>. The rotor flux angle can be
+                        estimated by either back EMF-based algorithms or by high-frequency pulse
+                        injection.</p>
+                </li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-99FB0ECC-16EC-4B89-A292-8F3776C07BD8" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-99FB0ECC-16EC-4B89-A292-8F3776C07BD8">
+                    <p dir="lro" class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Calculate control voltage from the error signal</strong>. The error
+                        signals are used to calculate correction voltage. Conventionally a
+                        closed-loop feedback mechanism using a PI regulator is used for the
+                        task.</p>
+                </li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-07CC61D2-6B30-47D9-9C27-14BE1EF5F699" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-07CC61D2-6B30-47D9-9C27-14BE1EF5F699">
+                    <p dir="lro" class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Apply control voltage to motor terminals</strong>. The correction
+                        voltage in <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                                <mrow>
+                                    <mi>d</mi>
+                                    <mi>q</mi>
+                                </mrow>
+                            </math> reference frame is transformed back to voltages in <a class="- topic/xref xref" href="https://github.com/Microchip-MPLAB-Harmony/motor_control/blob/master/algorithms/pmsm_foc/mc_plant_docs/theory/svg/6BJVMnUULg.svg" target="_blank" rel="external noopener"><div class=""><img class="- topic/image image" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__IMAGE_V3Y_1FV_WXB" src="https://github.com/Microchip-MPLAB-Harmony/motor_control/raw/master/algorithms/pmsm_foc/mc_plant_docs/theory/svg/6BJVMnUULg.svg"/></div></a> reference frame. These voltages are
+                        applied to the motor terminals by some power switching techniques.
+                        Conventionally in MCU-based systems, PWM modulation techniques like Space
+                        Vector modulation are used for the task.</p>
+                </li>
+            </ul>
+        </section>
+        <section class="- topic/section section" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__SECTION_SPR_5MV_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__SECTION_SPR_5MV_WXB"><h2 class="- topic/title title sectiontitle">References</h2>
+            
+            <p class="- topic/p p">Some of the material in this section was adapted from the section “FOC in Fifteen
+                Minutes” from the 2016 MASTERS presentation How to Succeed in Motor Control.</p>
+            <ol class="- topic/ol ol" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__OL_IHY_2NV_WXB" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__OL_IHY_2NV_WXB">
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-CE89DC34-8BED-4E92-8981-5343A8A6EB47" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-CE89DC34-8BED-4E92-8981-5343A8A6EB47">R. H. Park, “Two-reaction theory
+                    of synchronous machines generalized method of analysis-part I,”, Transactions of
+                    the American Institute of Electrical Engineers, vol. 48, no. 3, pp. 716-727,
+                    July 1929.</li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-6E5F71FA-CE1B-4B47-8774-9AEC62802BA7" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-6E5F71FA-CE1B-4B47-8774-9AEC62802BA7">W. C. Duesterhoeft, M. W. Schulz
+                    and E. Clarke, “Determination of Instantaneous Currents and Voltages by Means of
+                    Alpha, Beta, and Zero Components,”, Transactions of the American Institute of
+                    Electrical Engineers, vol. 70, no. 2, pp. 1248-1255, July 1951.</li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-ED8F9113-7814-45B1-848D-90FEF50AF7A8" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-ED8F9113-7814-45B1-848D-90FEF50AF7A8">C. J. O’Rourke, M. M. Qasim, M.
+                    R. Overlin and J. L. Kirtley, “A Geometric Interpretation of Reference Frames
+                    and Transformations: dq0, Clarke, and Park,”, IEEE Transactions on Energy
+                    Conversion, vol. 34, no. 4, pp. 2070-2083, Dec. 2019. Also available via MIT
+                    Open Access.</li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-B1ECAEF6-8E25-40AF-9A11-46146B7FA8C3" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-B1ECAEF6-8E25-40AF-9A11-46146B7FA8C3">D. Busse, J. Erdman, R. J.
+                    Kerkman, D. Schlegel and G. Skibinski, “Bearing currents and their relationship
+                    to PWM drives,”, IEEE Transactions on Power Electronics, vol. 12, no. 2, pp.
+                    243-252, March 1997.</li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-BB714D60-28AF-4BB7-8B58-2B9DFD73FAB0" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-BB714D60-28AF-4BB7-8B58-2B9DFD73FAB0">Annette von Jouanne and Haoran
+                    Zhang, “Bearing Currents: A Major Source of Mechanical Failure for Motors in
+                    Adjustable Speed Drive Applications”, Turning Point (US Department of Energy),
+                    p. 3, Sep 1998.</li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-52D28744-6173-4835-938A-CF4C63F88C19" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-52D28744-6173-4835-938A-CF4C63F88C19">IEC 60034-8 Rotating electrical
+                    machines, Part 8: Terminal markings and direction of rotation.</li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-E2503BF3-4684-4623-9BD7-6BF4117E7842" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-E2503BF3-4684-4623-9BD7-6BF4117E7842">For copper temperature
+                    coefficient, see the two sources below. The figure 0.00393/°C is bandied about
+                    quite a lot, but this was decided by convention in 1913, based on data available
+                    at the time. (See [8], page 4.) The 1979 article by Matula [9] identifies and
+                    re-publishes numerous datasets for copper resistivity measurements and proposes
+                    an interpolated table of Recommended Values for the Electrical Resistivity of
+                    Copper (see table 2) vs. temperature.</li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-19945F2A-F30B-4FF4-A401-E3C1E8E86A85" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-19945F2A-F30B-4FF4-A401-E3C1E8E86A85">“Copper Wire Tables”, National
+                    Bureau of Standards Handbook 100, February 1966.</li>
+                <li class="- topic/li li" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-C4B589C5-9D17-4A41-B982-21FA101F43FE" data-ofbid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__GUID-C4B589C5-9D17-4A41-B982-21FA101F43FE">“Electrical resistivity of
+                    copper, gold, palladium, and silver”, R. A. Matula, Journal of Physical and
+                    Chemical Reference Data, vol. 8, no. 4, pp. 1147-1298, Oct 1979.</li>
+            </ol>
+        </section>
+</div>
+</article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                        <nav role="navigation" id="wh_topic_toc" aria-label="On this page" class="col-lg-2 d-none d-lg-block navbar d-print-none"> 
+                            <div id="wh_topic_toc_content">
+		                        
+	                            <div class=" wh_topic_toc "><div class="wh_topic_label">On this page</div><ul><li class="section-item"><div class="section-title"><a href="#GUID-5CCF6974-52BB-4407-9796-20C86F178C71__SECTION_L5N_TD1_WXB" data-tocid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__SECTION_L5N_TD1_WXB">Torque Production in three-phase AC motor</a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-5CCF6974-52BB-4407-9796-20C86F178C71__SECTION_B23_2DV_WXB" data-tocid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__SECTION_B23_2DV_WXB">FOC block diagram</a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-5CCF6974-52BB-4407-9796-20C86F178C71__SECTION_SPR_5MV_WXB" data-tocid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71__SECTION_SPR_5MV_WXB">References</a></div></li></ul></div>
+	                        	
+                        	</div>
+                        </nav>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
+  
+  <script type="text/javascript">_satellite.pageBottom();</script><!-- Adobe Analytics -->
+  <script type="text/javascript" src="mchp-js/prepend.js"></script><!-- Package for viewing PDFs on mobile devices -->
+  
+</div>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+       
+        </body>
+</html>

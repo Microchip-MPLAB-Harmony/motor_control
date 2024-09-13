@@ -1,0 +1,144 @@
+/* 
+ * Codeblock copy to clipboard action
+ */
+.codeblock .copyTooltip{
+    background: #fafafa url("../img/Copy.png") no-repeat 85% 50%;
+    background-size: 15px;
+    width: 68px;
+    height: 32px;
+    margin-top: -7px;
+    color: #888;
+    border:1px solid #CCCCCC;
+    right: 15px;
+    position: absolute;
+    cursor: pointer;
+    opacity: 0.5;
+    font-size: 15px;
+    border-radius:0 7px 0 0px;
+}
+
+.copyTooltip::before{
+    content: " Copy ";
+    line-height: 2em;
+    text-indent: 0.5em;
+}
+
+.codeblock .copyTooltip:hover{
+    opacity: 1;
+}
+
+.codeblock .tooltip.top .tooltip-arrow{
+    border-top-color: #4f4f4f;
+}
+
+.codeblock .tooltip-inner {
+    width: 200px;
+    padding: 0.7em 8px;
+    background-color: #4f4f4f;
+    font-size: 1.4em
+}
+
+pre{
+    margin-top: 0.5em;
+    border-radius: 7px;
+}
+.apiname{
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+}
+/*
+ * Go to top button
+ */
+#go2top {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    height: 44px;
+    width: 44px;
+    bottom: 37px;
+    right: 25px;
+    border-radius: 0.25em;
+    border: 1px solid #999999;
+    cursor: pointer;
+    text-align: center;
+    padding: 4px 12px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #444444;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 1.5em;
+}
+/*
+ * Edit link
+ */
+div.edit-link-container {
+    display: inline;
+}
+
+.edit-link {
+    float: right;
+    font-style: normal;
+}
+
+@media print {
+	.edit-link {
+		display: none;
+	}
+	
+	#oxygen-feedback-frame-container {
+		display: none;
+	}
+}
+
+/*
+ * Hide the figure numbers, not useful in the context of a small topic.
+ */ 
+ 
+ @media screen {
+ 	.fig--title-label-number,
+ 	.fig--title-label-punctuation {
+ 		display:none;
+ 	}
+ 	
+ 	.fig--title-label:after {
+ 		content:": ";
+ 	}
+ }
+ 
+/* 
+ * WH-2114 Fix font size issues 
+ */
+html {
+    font-size: 10px;     
+}
+
+body {
+    font-size: 14px;
+    line-height: 1.5; /* Moved here from bootstrap so it ca be applied on the styles basket preview area.*/        
+}
+
+/*
+ * Custom toggler
+ */
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(52,123,183, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+.custom-toggler {
+    border-color: #347bb7;
+}
+
+.navbar {
+	background: white;
+}
+
+@media screen {
+    .wh_topic_toc li,
+    .wh_publication_toc li,
+    .wh_main_page_toc_entry,
+    .wh_top_menu ul,
+    .wh_breadcrumb ol {
+        word-break: break-word;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
+}

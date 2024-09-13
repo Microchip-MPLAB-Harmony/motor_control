@@ -1,0 +1,79 @@
+div.note, div.note[dir="ltr"], [dir] div.note[dir="ltr"], [dir] [dir] div.note[dir="ltr"], [dir] [dir] [dir] div.note[dir="ltr"], [dir] [dir] [dir] [dir] div.note[dir="ltr"], [dir="ltr"] div.note, [dir] [dir="ltr"] div.note, [dir] [dir] [dir="ltr"] div.note, [dir] [dir] [dir] [dir="ltr"] div.note, [dir] [dir] [dir] [dir] [dir="ltr"] div.note {
+  background-position: 0 10px;
+  min-height: 54px;
+  padding: 5px 0 5px 110px;
+}
+
+*[class~="topic/note"]:not([class~="hazard-d/hazardstatement"]) {
+  border-top: 1px solid #d0d0d0;
+  border-bottom: 1px solid #d0d0d0;
+  background-size: 32px;
+  background-repeat: no-repeat;
+}
+
+/*notes-content-two-lines*/
+span.note__title {
+  display: inline;
+  padding-right: 5px;
+}
+
+/*notes-colors-colorful*/
+*[class~="topic/note"]:not([class~="hazard-d/hazardstatement"]) {
+}
+*[class~="topic/note"].note_attention {
+  background-image: url('resources/notes/attention.svg');  
+}
+*[class~="topic/note"].note_caution {
+  background-image: url('resources/notes/caution.svg');
+  background-size: 100px;
+  min-height: 62px;
+}
+*[class~="topic/note"].note_danger {
+  background-image: url('resources/notes/danger.svg');
+  background-size: 100px;
+  min-height: 62px;
+}
+*[class~="topic/note"].note_execute {
+  background-image: url('resources/notes/execute.svg');
+}
+*[class~="topic/note"].note_important {
+  background-image: url('resources/notes/important.svg');
+}
+*[class~="topic/note"].note_info {
+  background-image: url('resources/notes/info.svg');
+}
+*[class~="topic/note"].note_notype {
+  background-image: none;  
+  border-top: none;
+  border-bottom: none;
+  background-size: initial;
+  background-repeat: initial;
+  background-position: initial;
+  min-height: unset;
+  padding: initial;
+}
+*[class~="topic/note"].note_note {
+  background-image: url('resources/notes/info.svg');
+}
+*[class~="topic/note"].note_notice {
+  background-image: url('resources/notes/notice.svg');
+  background-size: 100px;
+  min-height: 62px;
+}
+*[class~="topic/note"].note_restriction {
+  background-image: url('resources/notes/restriction.svg');
+}
+*[class~="topic/note"].note_result {
+  background-image: url('resources/notes/result.svg');
+}
+*[class~="topic/note"].note_tip {
+  background-image: url('resources/notes/tip.svg');
+}
+*[class~="topic/note"].note_todo {
+  background-image: url('resources/notes/todo.svg');
+}
+*[class~="topic/note"].note_warning {
+  background-image: url('resources/notes/warning.svg');
+  background-size: 100px;
+  min-height: 62px;
+}

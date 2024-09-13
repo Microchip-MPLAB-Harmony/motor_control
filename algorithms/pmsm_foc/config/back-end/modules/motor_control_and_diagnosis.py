@@ -67,8 +67,8 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_X2C_ID = self.component.createStringSymbol("MCPMSMFOC_FOC_X2C_ID", None)
         self.sym_X2C_ID.setLabel("Peripheral ID")
         self.sym_X2C_ID.setVisible(False)
-        self.sym_X2C_ID.setDefaultValue("X2CScope")
-        self.sym_X2C_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_FOC_X2C_ENABLE"] )
+        self.sym_X2C_ID.setDefaultValue("X2Cscope")
+        self.sym_X2C_ID.setDependencies(self.updatePeripheralInstance, ["MCPMSMFOC_FOC_X2C_ID", "MCPMSMFOC_FOC_X2C_ENABLE"] )
 
         # Control strategy
         self.sym_CONTROL_TYPE = self.component.createKeyValueSetSymbol("MCPMSMFOC_CONTROL_TYPE", self.sym_NODE )
@@ -517,21 +517,39 @@ class mcMocI_MotorControlAndDiagnosis:
             # Get all the connected Harmony components
             listOfComps = Database.getActiveComponentIDs()
 
+            modelFound = 0
             for comp in listOfComps:
-                if comp == "X2CScope":
+                if comp == "X2Cscope":
                     # Deactivate component
                     Database.deactivateComponents([comp])
 
-                elif comp == "X2C Model":
+                elif comp == "X2Cmodel":
                     # X2C Model is found
                     modelFound = 1
 
-            if modelFound == 0:
+            data_monitor_enable = Database.getSymbolValue(self.component.getID(), "MCPMSMFOC_DATA_MONITOR_ENABLE" )
+
+            if ( data_monitor_enable == True ) and ( modelFound == 0 ):
                 # Instantiate and connect
-                Database.activateComponents(["X2C Model"])
+                Database.activateComponents(["X2Cmodel"])
+
+            # Set communication protocol to X2Cmodel
+            Database.setSymbolValue(self.component.getID(), "MCPMSMFOC_FOC_X2C_ID", 'X2Cmodel' )
+
+        else:
+            # Set communication protocol to X2Cscope
+            Database.setSymbolValue(self.component.getID(), "MCPMSMFOC_FOC_X2C_ID", 'X2Cscope' )
 
     def updatePeripheralInstance(self, symbol, event):
         status = Database.getSymbolValue(self.component.getID(), "MCPMSMFOC_DATA_MONITOR_ENABLE")
+
+        # Determine peripheral ID.
+        if( True == event["value"]):
+             # Set communication protocol to X2Cmodel
+             Database.setSymbolValue(self.component.getID(), "MCPMSMFOC_DATA_MONITOR_PROTOCOL", 'X2Cmodel' )
+        else:
+             # Set communication protocol to X2Cmodel
+             Database.setSymbolValue(self.component.getID(), "MCPMSMFOC_DATA_MONITOR_PROTOCOL", 'X2Cscope' )
 
         if status == True:
             # Determine peripheral ID.
@@ -539,22 +557,22 @@ class mcMocI_MotorControlAndDiagnosis:
                 autoComponentIDTable = [symbol.getValue()]
                 res = Database.deactivateComponents(autoComponentIDTable)
 
-                symbol.setValue("X2C Model")
-
+                symbol.setValue("X2Cmodel")
 
                 # Activate and connect the default PWM peripheral
-                res = Database.activateComponents(["X2C Model"])
-                autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE", "X2C Model", "x2cModel" ]]
+                res = Database.activateComponents(["X2Cmodel"])
+                autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE", "X2Cmodel", "X2Cmodel" ]]
                 res = Database.connectDependencies(autoComponentIDTable)
+
             else:
                 autoComponentIDTable = [symbol.getValue()]
                 res = Database.deactivateComponents(autoComponentIDTable)
 
-                symbol.setValue("X2CScope")
+                symbol.setValue("X2Cscope")
 
                 # Activate and connect the default PWM peripheral
-                res = Database.activateComponents(["X2CScope"])
-                autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE", "X2CScope", "x2cScope_Scope" ]]
+                res = Database.activateComponents(["X2Cscope"])
+                autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE", "X2Cscope", "X2Cscope_Scope" ]]
                 res = Database.connectDependencies(autoComponentIDTable)
 
     def __call__(self):

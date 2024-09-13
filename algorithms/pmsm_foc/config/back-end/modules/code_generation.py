@@ -154,7 +154,7 @@ def mcGen_GenerateCodeUpdate(symbol, event):
                         component.getSymbolByID(str(filename)).setEnabled(False)
 
             # Enable all X2C files for field oriented control module
-            for _, _, files in os.walk(Module.getPath() + modulePath + "X2CCode"):
+            for _, _, files in os.walk(Module.getPath() + modulePath + "X2Cmodel"):
                 for filename in files:
                     component.getSymbolByID(str(filename)).setEnabled(True)
 
@@ -199,7 +199,7 @@ def mcGen_GenerateCodeUpdate(symbol, event):
                             else:
                                 component.getSymbolByID(filename).setEnabled(False)
 
-            for _, _, files in os.walk(Module.getPath() + modulePath + "X2CCode"):
+            for _, _, files in os.walk(Module.getPath() + modulePath + "X2Cmodel"):
                 for filename in files:
                     component.getSymbolByID(str(filename)).setEnabled(False)
 
@@ -521,15 +521,15 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
         ipdLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/")
         ipdLibraryFile.setEnabled(False)
 
-    for _, _, files in os.walk(Module.getPath() + modulePath + "X2CCode"):
+    for _, _, files in os.walk(Module.getPath() + modulePath + "X2Cmodel"):
         for filename in files:
             x2cModelFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
-            x2cModelFile.setSourcePath(modulePath + "X2CCode/" + filename)
+            x2cModelFile.setSourcePath(modulePath + "X2Cmodel/" + filename)
             if (filename.endswith(".ftl")):
                 filename = filename[:-4]
             x2cModelFile.setOutputName(filename)
-            x2cModelFile.setDestPath("/X2CCode/")
-            x2cModelFile.setProjectPath("config/" + configName + "/X2CCode/")
+            x2cModelFile.setDestPath("/X2Cmodel/")
+            x2cModelFile.setProjectPath("config/" + configName + "/X2Cmodel/")
             x2cModelFile.setType("IMPORTANT")
             x2cModelFile.setMarkup(True)
 

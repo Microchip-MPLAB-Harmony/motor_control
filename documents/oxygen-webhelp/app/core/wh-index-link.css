@@ -1,0 +1,37 @@
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Link to the index.
+ * 
+ */
+.wh_indexterms_link{
+    display: inline-block;
+    vertical-align: middle;
+}
+.wh_indexterms_link a:before{
+    content:"a"; /*The book symbol*/
+    font-family: "oXygen WebHelp";
+    display: inline-block;
+    position: relative;
+    bottom:0em;
+    font-size: 1.6em;
+    margin-left:0.8em;
+}
+
+@media only screen and (max-width: 767px) {
+
+    .wh_indexterms_link {
+        float: none;
+    }
+
+    .wh_indexterms_link a:before{
+        position: relative;
+        padding-bottom: 0 !important;
+        margin-left: 0;
+    }
+}
+
+/* OSB-273 - Fix default look of Index link */
+.wh_indexterms_link a span {
+  display: none;
+}

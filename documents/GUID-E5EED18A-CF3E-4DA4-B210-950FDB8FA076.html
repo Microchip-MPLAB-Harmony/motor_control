@@ -1,0 +1,532 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="copyright" content="(C) Copyright 2024"/><meta name="generator" content="DITA-OT"/><meta name="description" content="This section describes how to configure the motor control software modules as per their project requirements."/>        
+      <title>1.1.1.1.2.1.2.3 Configure software modules</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076-d1683e162"/><meta name="wh-source-relpath" content="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076.xml"/><meta name="wh-out-relpath" content="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
+    
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+    <script src="https://assets.adobedtm.com/6a72a357eb48/a636c708c7fe/launch-0b0023397020.min.js"></script><!-- Adobe Analytics -->
+</head>
+
+    <body id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony 3 Motor Control &#xA;    "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony 3 Motor Control 
+    </a></div>
+                    
+                </div>
+                
+                
+            </div>
+
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div class="d-flex justify-contents-around"><div class="flex-grow-1"></div><div class="position-relative flex-grow-1"><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div><div class="align-self-center flex-grow-1 ml-2"></div></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
+</div>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C"><div class="title"><a href="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Harmony QSpin Motor Control</a></div></div></li><li><div class="topicref" data-id="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60"><div class="title"><a href="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+<strong class="ph b">Supported Algorithms</strong></a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSPIN supported motor control algorithms.</p></div></div></div></li><li><div class="topicref" data-id="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F"><div class="title"><a href="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Permanent Magnet Synchronous Motors</a><div class="wh-tooltip"><p class="shortdesc">This section describes the field oriented control implementation of permanent magnet         synchronous motors (PMSM) and Harmony QSPIN configuration.</p></div></div></div></li><li><div class="topicref" data-id="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35"><div class="title"><a href="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1</ph>
+PMSM FOC</a></div></div></li><li><div class="topicref" data-id="GUID-81C3E3D7-9C52-4575-B330-AB618C657300"><div class="title"><a href="GUID-81C3E3D7-9C52-4575-B330-AB618C657300.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2</ph>
+Harmony QSpin: PMSM FOC</a><div class="wh-tooltip"><p class="shortdesc"></p></div></div></div></li><li><div class="topicref" data-id="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525"><div class="title"><a href="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2.1</ph>
+Getting Started</a><div class="wh-tooltip"><p class="shortdesc">This section briefly describes the basic steps to get started with the <strong class="ph b">Harmony             Qspin</strong>. It consists of following steps:</p></div></div></div></li><li><div class="topicref" data-id="GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291"><div class="title"><a href="GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2.1.2</ph>
+Qspin Motor Control Configuration</a><div class="wh-tooltip"><p class="shortdesc">The Harmony Qspin Motor Control is an intuitive graphical tool for developing motor         control application software.</p></div></div></div></li><li class="active"><div class="topicref" data-id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076"><div class="title"><a href="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2.1.2.3</ph>
+Configure software modules</a><div class="wh-tooltip"><p class="shortdesc">This section describes how to configure the motor control software modules as per their         project requirements.</p></div></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            <div class="row" style="margin-top: -1em;"><div class="col-lg-7 col-md-7 col-sm-12 offset-lg-3 offset-md-3 text-right border-bottom mb-1"><h2 class="text-dark header_title">
+    </h2></div></div>
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d1683e11" class="topicref" data-id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d1683e11-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C.html" id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d1683e11-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Harmony QSpin Motor Control</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60-d1683e19" class="topicref" data-id="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60-d1683e19-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60.html" id="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60-d1683e19-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+<strong class="ph b">Supported Algorithms</strong></a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSPIN supported motor control algorithms.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F-d1683e31" class="topicref" data-id="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-85BE370F-0541-4589-AA23-E11A372DBE9F-d1683e31-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F.html" id="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F-d1683e31-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Permanent Magnet Synchronous Motors</a><div class="wh-tooltip"><p class="shortdesc">This section describes the field oriented control implementation of permanent magnet         synchronous motors (PMSM) and Harmony QSPIN configuration.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42" class="topicref" data-id="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35.html" id="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1</ph>
+PMSM FOC</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50" class="topicref" data-id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-5CCF6974-52BB-4407-9796-20C86F178C71.html" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1</ph>
+Field Oriented Control</a><div class="wh-tooltip"><p class="shortdesc">The Field Oriented Control (FOC) is the conventional control scheme for permanent-magnet         synchronous motors. It generally results in smoother torque, slightly higher efficiency, and         higher torque-speed curve, compared to six-step control, but requires a measurement or         estimate of rotor position, and is more computationally intensive.</p></div></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-81C3E3D7-9C52-4575-B330-AB618C657300-d1683e94" class="topicref" data-id="GUID-81C3E3D7-9C52-4575-B330-AB618C657300" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-81C3E3D7-9C52-4575-B330-AB618C657300-d1683e94-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-81C3E3D7-9C52-4575-B330-AB618C657300.html" id="GUID-81C3E3D7-9C52-4575-B330-AB618C657300-d1683e94-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2</ph>
+Harmony QSpin: PMSM FOC</a><div class="wh-tooltip"><p class="shortdesc"></p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525-d1683e104" class="topicref" data-id="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525-d1683e104-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525.html" id="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525-d1683e104-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2.1</ph>
+Getting Started</a><div class="wh-tooltip"><p class="shortdesc">This section briefly describes the basic steps to get started with the <strong class="ph b">Harmony             Qspin</strong>. It consists of following steps:</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8-d1683e118" class="topicref" data-id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8.html" id="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8-d1683e118-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2.1.1</ph>
+Create a new MPLAB® Harmony v3 project using MCC</a><div class="wh-tooltip"><p class="shortdesc">This section describes step by step process for creating a new Motor Control Project         using MPLAB Code Configurator (MCC) from scratch.</p></div></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291-d1683e129" class="topicref" data-id="GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291-d1683e129-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291.html" id="GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291-d1683e129-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2.1.2</ph>
+Qspin Motor Control Configuration</a><div class="wh-tooltip"><p class="shortdesc">The Harmony Qspin Motor Control is an intuitive graphical tool for developing motor         control application software.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-ECF85ABD-803D-4969-8737-C0CA3DBC62EA-d1683e140" class="topicref" data-id="GUID-ECF85ABD-803D-4969-8737-C0CA3DBC62EA" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-ECF85ABD-803D-4969-8737-C0CA3DBC62EA.html" id="GUID-ECF85ABD-803D-4969-8737-C0CA3DBC62EA-d1683e140-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2.1.2.1</ph>
+Setting hardware modules</a><div class="wh-tooltip"><p class="shortdesc">This section describes how to set-up hardware modules for motor control                 application project with Harmony QSpin.</p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-5CB16768-D98D-45EA-805F-343C7E896621-d1683e151" class="topicref" data-id="GUID-5CB16768-D98D-45EA-805F-343C7E896621" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5CB16768-D98D-45EA-805F-343C7E896621.html" id="GUID-5CB16768-D98D-45EA-805F-343C7E896621-d1683e151-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2.1.2.2</ph>
+Configuring Peripheral Modules</a><div class="wh-tooltip"><p class="shortdesc">This section describes how to configure MCU peripherals for motor control application         projects with Harmony Qspin.</p></div></div></div></li><li role="treeitem" class="active"><div data-tocid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076-d1683e162" class="topicref" data-id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076.html" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076-d1683e162-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2.1.2.3</ph>
+Configure software modules</a><div class="wh-tooltip"><p class="shortdesc">This section describes how to configure the motor control software modules as per their         project requirements.</p></div></div></div></li></ul></li><li role="treeitem"><div data-tocid="GUID-4DD19DCE-B6EF-408C-8574-5B2258EAA616-d1683e173" class="topicref" data-id="GUID-4DD19DCE-B6EF-408C-8574-5B2258EAA616" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4DD19DCE-B6EF-408C-8574-5B2258EAA616.html" id="GUID-4DD19DCE-B6EF-408C-8574-5B2258EAA616-d1683e173-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2.1.3</ph>
+Generate code with MCC</a><div class="wh-tooltip"><p class="shortdesc">Click on the generate button to generate the code.</p></div></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-35451F85-BBB3-4DF6-B3AC-00FB57657EFF-d1683e184" class="topicref" data-id="GUID-35451F85-BBB3-4DF6-B3AC-00FB57657EFF" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-35451F85-BBB3-4DF6-B3AC-00FB57657EFF-d1683e184-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-35451F85-BBB3-4DF6-B3AC-00FB57657EFF.html" id="GUID-35451F85-BBB3-4DF6-B3AC-00FB57657EFF-d1683e184-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2.2</ph>
+Harmony QSpin: PMSM FOC Modules</a><div class="wh-tooltip"><p class="shortdesc"></p></div></div></div></li></ul></li><li role="treeitem"><div data-tocid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3-d1683e361" class="topicref" data-id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3.html" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3-d1683e361-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.3</ph>
+Field Oriented Control Implementation</a><div class="wh-tooltip"><p class="shortdesc">The generated code from the Harmony QSpin intends to achieve following goals:</p></div></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8-d1683e372" class="topicref" data-id="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8-d1683e372-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8.html" id="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8-d1683e372-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4</ph>
+Harmony QSpin API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSpin API references for the motor control         application.</p></div></div></div></li></ul></li></ul></li></ul></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-42876005-92C2-4CC0-81FC-71368462D294-d1683e1861" class="topicref" data-id="GUID-42876005-92C2-4CC0-81FC-71368462D294" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-42876005-92C2-4CC0-81FC-71368462D294-d1683e1861-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-42876005-92C2-4CC0-81FC-71368462D294.html" id="GUID-42876005-92C2-4CC0-81FC-71368462D294-d1683e1861-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2</ph>
+Harmony QSpin Motor Control</a></div></div></li><li role="treeitem"><div data-tocid="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508-d1683e1894" class="topicref" data-id="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508.html" id="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508-d1683e1894-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">3</ph>
+Microchip MPLAB® Harmony 3 Release Notes</a></div></div></li><li role="treeitem"><div data-tocid="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183-d1683e1902" class="topicref" data-id="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183.html" id="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183-d1683e1902-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">4</ph>
+License</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1683e1910" class="topicref backmatter backmatter_parent" data-id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1683e1910-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B.html" id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1683e1910-link">Microchip Information</a></div></div></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-7 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        <button id="wh_close_topic_toc_button" class="close-toc-button d-none" aria-label="Toggle topic table of content" aria-controls="wh_topic_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-E0889878-B7E7-4AB6-BFB0-39266A1DE422">
+<h1 class="- topic/title title topictitle1" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-E0889878-B7E7-4AB6-BFB0-39266A1DE422" style="">Configure software modules</h1>
+
+<div class="- topic/body body"><p class="- topic/shortdesc shortdesc">This section describes how to configure the motor control software modules as per their
+        project requirements.</p>
+        <p class="- topic/p p">For convenience, the motor control software is divided into following modules:</p>
+        <ul class="- topic/ul ul" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_CX1_PZP_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_CX1_PZP_SXB">
+            <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-903BB282-723B-4CDA-B25E-5F2FDD702DA0" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-903BB282-723B-4CDA-B25E-5F2FDD702DA0">
+                <p class="- topic/p p">Start-up Configurator</p>
+            </li>
+            <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-097A23E3-3E48-42D8-9F4A-BC27B353707F" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-097A23E3-3E48-42D8-9F4A-BC27B353707F">
+                <p class="- topic/p p">Motor control and diagnosis</p>
+            </li>
+            <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-F765E0CE-596E-4C32-ACB7-FBDB2A87D543" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-F765E0CE-596E-4C32-ACB7-FBDB2A87D543">
+                <p class="- topic/p p">Output Stage and diagnosis</p>
+            </li>
+            <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-F474E6F4-0F86-4E0A-8ED2-A04BF78AC4F7" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-F474E6F4-0F86-4E0A-8ED2-A04BF78AC4F7">
+                <p class="- topic/p p">Current measurement and diagnosis</p>
+            </li>
+            <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-A090D6B8-324D-426A-B949-5115B6870ED5" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-A090D6B8-324D-426A-B949-5115B6870ED5">
+                <p class="- topic/p p">Voltage measurement and diagnosis</p>
+            </li>
+            <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-1E598728-9EE0-4D1A-91C9-30C660A9B597" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-1E598728-9EE0-4D1A-91C9-30C660A9B597">
+                <p class="- topic/p p">Rotor position calculation and diagnosis</p>
+            </li>
+        </ul>
+        <p class="- topic/p p">Each of the above-mentioned modules has their own set of configuration options. The
+            following section describes the different configuration options for the software
+            modules.</p>
+        <section class="- topic/section section" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_P1C_GVR_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_P1C_GVR_SXB"><h2 class="- topic/title title sectiontitle">Start-up Configurator</h2>
+            
+            <p class="- topic/p p">The sensorless position estimation techniques based on back-EMF require a minimum
+                value of back EMF to estimate the electrical position of the rotor. The open-loop
+                start-up procedure drives the PMSM till its speed reaches the minimum value where
+                the back EMF values are large enough to estimate the rotor position. In the
+                open-loop start-up procedure, the speed loop is de-activated. The currents are
+                controlled directly in the dq reference frame by using assumed rotor position angles
+                for transformations. The complete start-up procedure can be divided into following
+                phases:</p>
+            <ul class="- topic/ul ul" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_CJW_11Q_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_CJW_11Q_SXB">
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-2D3728A6-9615-453C-9E17-008F9B72E35C" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-2D3728A6-9615-453C-9E17-008F9B72E35C">
+                    <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Initial Field Alignment</strong>. In this phase, the PMSM rotor is locked to a
+                        specified rotor position by keeping a fixed rotor position angle. The d-axis
+                        or q-axis current is gradually ramped to the a specified value to avoid any
+                        over-current issues.</p>
+                </li>
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-913F6505-0BC1-4388-9478-35498C466AD4" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-913F6505-0BC1-4388-9478-35498C466AD4">
+                    <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Open-loop Ramp</strong>. In this phase, the rotor position is constantly
+                        incremented based on user-defined ramp time to achieve the minimum required
+                        speed for the BEMF observer. The minimum ramp time and speed depend on PMSM
+                        drive electrical and mechanical parameters. This stage is the most critical
+                        step. Any mistuning of reference speed and acceleration can lead to start-up
+                        failure.</p>
+                </li>
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-75C84443-84AE-4D89-BD7F-326FB5408C01" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-75C84443-84AE-4D89-BD7F-326FB5408C01">
+                    <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Stabilization</strong>. In this phase, the PMSM is allowed to rotate at a
+                        constant open-loop speed. This step ensures a smooth transition to close
+                        loop mode.</p>
+                </li>
+            </ul>
+            <p class="- topic/p p"><a class="- topic/xref xref" href="#GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_OYB_M1Q_SXB"><span>Figure 1-17</span></a> shows a complete start-up procedure for a sensorless PMSM motor drive:</p>
+            <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_OYB_M1Q_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_OYB_M1Q_SXB"><figcaption class="- topic/title title figcap"><span class="figtitleprefix fig--title-label">Figure 1-17. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-4C0A637D-22F7-4900-8C8A-5CF5A2A56809" class="fig--title">Open-loop Start-up
+                    Procedure</span></span></figcaption>
+                
+                <div class="imagecenter"><img class="- topic/image image" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_PYB_M1Q_SXB" src="GUID-CE20D83A-AF12-4DD6-A2EC-C3A421223126-high.jpg" alt="Figure"/></div>
+            </figure>
+            <p class="- topic/p p">In <strong class="+ topic/ph hi-d/b ph b">Harmony Qspin</strong> the start-up configurator can be configured in following
+                simple steps:</p>
+            <ul class="- topic/ul ul" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_N4G_Y3Q_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_N4G_Y3Q_SXB">
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-B4CB82E1-0E55-4BB6-8AAB-55DF47B685B7" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-B4CB82E1-0E55-4BB6-8AAB-55DF47B685B7">
+                    <p class="- topic/p p">Click on the "Start-up Configurator" block as shown below.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_OVT_C2T_TXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_OVT_C2T_TXB"><figcaption class="- topic/title title figcap"><span class="figtitleprefix fig--title-label">Figure 1-18. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-6537BFA7-5F92-4BD0-97AF-20880E90EBDB" class="fig--title">Open loop start-up
+                            module</span></span></figcaption>
+                        
+                        <div class="imagecenter"><img class="- topic/image image" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_PVT_C2T_TXB" src="GUID-CF19B497-2CAC-4B82-A169-0F070762F0C4-high.jpg"/></div>
+                    </figure>
+                </li>
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-A1D98803-8AFB-432C-AAB4-B434A1637EF5" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-A1D98803-8AFB-432C-AAB4-B434A1637EF5">
+                    <p class="- topic/p p">Configure the open loop start.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_YW2_GPT_TXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_YW2_GPT_TXB"><figcaption class="- topic/title title figcap"><span class="figtitleprefix fig--title-label">Figure 1-19. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-3D74E15A-D65A-4A77-9C1C-E33FAAF58892" class="fig--title">Open-loop Start-up Configuration</span></span></figcaption>
+                        
+                        <div class="imagecenter"><img class="- topic/image image" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_ZW2_GPT_TXB" src="GUID-DD102674-7965-4622-BA78-79E8B7242C91-high.jpg"/></div>
+                    </figure>
+                </li>
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-41143702-6B5A-4CE4-B275-660A0D081DF9" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-41143702-6B5A-4CE4-B275-660A0D081DF9">
+                    <p class="- topic/p p">Configure flying start.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_GVF_DB5_TXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_GVF_DB5_TXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-20. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-4530D698-7533-49A5-A106-288F6E924D89" class="fig--title">Flying Start Configuration</span></span></figcaption>
+                        
+                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_HVF_DB5_TXB" src="GUID-F1F5EB53-04A5-4DAC-9DFA-3A4C5401605A-high.jpg"/></div></div>
+                    </figure>
+                </li>
+            </ul>
+        </section>
+        <p class="- topic/p p"></p>
+        <section class="- topic/section section" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_MK2_VVX_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_MK2_VVX_SXB"><h2 class="- topic/title title sectiontitle">Motor control and diagnosis</h2>
+            
+            <p class="- topic/p p">The <strong class="+ topic/ph hi-d/b ph b">Motor control and diagnosis</strong> module is responsible for the implementation
+                of core motor control algorithm. It implements the motor control state machine, and
+                the core control parameters. For details refer <a class="- topic/xref xref" href="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3.html" title="The generated code from the Harmony QSpin intends to achieve following goals:">Software
+                    Architecture</a>.</p>
+            <p class="- topic/p p">In <strong class="+ topic/ph hi-d/b ph b">Harmony Qspin</strong> the <strong class="+ topic/ph hi-d/b ph b">Motor control and diagnosis</strong> module can be
+                configured in following simple steps:</p>
+            <ul class="- topic/ul ul" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_YHR_RVR_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_YHR_RVR_SXB">
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-BF247ED7-726C-417D-B5D2-A5E79539C335" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-BF247ED7-726C-417D-B5D2-A5E79539C335">
+                    <p class="- topic/p p">Click on the "Motor control and diagnosis" block as shown below.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_GJL_LC5_TXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_GJL_LC5_TXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-21. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-1A0EFEFB-AA9A-485E-993E-18CBF4CA6EB1" class="fig--title">Motor Control and Diagnosis module</span></span></figcaption>
+                        
+                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_HJL_LC5_TXB" src="GUID-81F26D6D-7EF8-479E-8191-D0732DF7296B-high.jpg"/></div></div>
+                    </figure>
+                </li>
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-B318D0F5-02AF-4E63-B126-7564D170DBF5" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-B318D0F5-02AF-4E63-B126-7564D170DBF5">
+                    <p class="- topic/p p">Select the appropriate control type from dialog box.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_FM1_2D5_TXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_FM1_2D5_TXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-22. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-AC2C7549-0FD3-477B-8B65-F6A654E5E2E3" class="fig--title">Motor Control and Diagnosis module configuration</span></span></figcaption>
+                        
+                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_GM1_2D5_TXB" src="GUID-77E41346-2A02-437E-B193-15CAB6CE6F05-high.jpg"/></div></div>
+                    </figure>
+                </li>
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-7559C6D0-4195-403B-82EE-2DE3A9ECE806" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-7559C6D0-4195-403B-82EE-2DE3A9ECE806">
+                    <p class="- topic/p p">Click on the module blocks to configure the same.</p>
+                </li>
+            </ul>
+        </section>
+        <section class="- topic/section section" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_QNH_BWX_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_QNH_BWX_SXB"><h2 class="- topic/title title sectiontitle">Output Stage and diagnosis</h2>
+            
+            <ul class="- topic/ul ul" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_UDF_HWX_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_UDF_HWX_SXB">
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-3E7B13F2-0079-409E-A65C-63BA15F0AA17" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-3E7B13F2-0079-409E-A65C-63BA15F0AA17">
+                    <p class="- topic/p p">Click on the "Output stage and diagnosis" block as shown below.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_KHT_FF5_TXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_KHT_FF5_TXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-23. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-EDC236CA-EFF6-4FFD-844A-7B82EF66E6F2" class="fig--title">Output Stage and Diagnosis module</span></span></figcaption>
+                        
+                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_LHT_FF5_TXB" src="GUID-08DA4A02-0DD5-4818-80E4-34929D97015B-high.jpg"/></div></div>
+                    </figure>
+                </li>
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-AAD558BB-5F91-4D41-8D70-BC75B65C6E2A" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-AAD558BB-5F91-4D41-8D70-BC75B65C6E2A">
+                    <p class="- topic/p p">Configure output stage parameters.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_WYF_VWX_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_WYF_VWX_SXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-24. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-26E9F924-5600-4DBB-8113-68F689673290" class="fig--title">Output Stage and Diagnosis module configuration</span></span></figcaption>
+                        
+                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_XYF_VWX_SXB" src="GUID-F8E7A870-AB35-417D-B917-7B9943FC57F3-high.jpg"/></div></div>
+                    </figure>
+                    <p class="- topic/p p"></p>
+                </li>
+            </ul>
+        </section>
+        <section class="- topic/section section" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_YMM_XHY_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_YMM_XHY_SXB"><h2 class="- topic/title title sectiontitle">Current measurement and diagnosis</h2>
+            
+            <p class="- topic/p p">The <strong class="+ topic/ph hi-d/b ph b">Current measurement and diagnosis</strong> module is responsible for the
+                implementation of motor current measurement technique required for the motor control
+                application. For details refer <a class="- topic/xref xref" href="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3.html" title="The generated code from the Harmony QSpin intends to achieve following goals:">Software
+                    Architecture</a>.</p>
+            <p class="- topic/p p">In <strong class="+ topic/ph hi-d/b ph b">Harmony Qspin</strong> the <strong class="+ topic/ph hi-d/b ph b">Current measurement and diagnosis</strong> module can be
+                configured in following simple steps:</p>
+            <ul class="- topic/ul ul" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_TLP_FJY_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_TLP_FJY_SXB">
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-D90B0FA4-0520-4CDB-AEDA-D2512DAB3506" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-D90B0FA4-0520-4CDB-AEDA-D2512DAB3506">
+                    <p class="- topic/p p">Click on the "Current measurement and diagnosis" block as shown below.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_XYG_ZG5_TXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_XYG_ZG5_TXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-25. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-5CF60547-5C35-4EB4-AA40-FE4E8FCEBD11" class="fig--title">Current Measurement and Diagnosis module</span></span></figcaption>
+                        
+                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_YYG_ZG5_TXB" src="GUID-C580EA53-3ED1-4D04-94A4-3D406B4DA999-high.jpg"/></div></div>
+                    </figure>
+                </li>
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-8BABC075-510C-4C25-90E0-BF4382D15B4C" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-8BABC075-510C-4C25-90E0-BF4382D15B4C">
+                    <p class="- topic/p p">Configure current measurement parameters.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_KDF_WKY_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_KDF_WKY_SXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-26. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-57523A76-AE28-47AE-8531-A5510DE760AF" class="fig--title">Current Measurement and Diagnosis module configuration</span></span></figcaption>
+                        
+                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_LDF_WKY_SXB" src="GUID-DCB45BBA-C1AF-4747-91A8-A4BEF84B2517-high.jpg"/></div></div>
+                    </figure>
+                    <p class="- topic/p p"></p>
+                </li>
+            </ul>
+        </section>
+        <section class="- topic/section section" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_RN4_SKZ_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_RN4_SKZ_SXB"><h2 class="- topic/title title sectiontitle">Voltage measurement and diagnosis</h2>
+            
+            <p class="- topic/p p">The <strong class="+ topic/ph hi-d/b ph b">Voltage measurement and diagnosis</strong> module is responsible for the
+                implementation of motor voltage measurement technique required for the motor control
+                application.</p>
+            <p class="- topic/p p">In <strong class="+ topic/ph hi-d/b ph b">Harmony Qspin</strong> the <strong class="+ topic/ph hi-d/b ph b">Voltage measurement and diagnosis</strong> module can be
+                configured in following simple steps:</p>
+            <ul class="- topic/ul ul" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_DDX_FLZ_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_DDX_FLZ_SXB">
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-DB6F445B-3140-44EA-B57E-6AF8CAB3032C" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-DB6F445B-3140-44EA-B57E-6AF8CAB3032C">
+                    <p class="- topic/p p">Click on the "Voltage measurement and diagnosis" block as shown below.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_RT4_X35_TXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_RT4_X35_TXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-27. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-E5B8FD93-2E73-422B-8199-E5A11124F89F" class="fig--title">Voltage Measurement and Diagnosis module</span></span></figcaption>
+                        
+                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_ST4_X35_TXB" src="GUID-287A7D4B-852A-4085-BA80-64DDB51F139E-high.jpg"/></div></div>
+                    </figure>
+                </li>
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-490C1BCA-F3E3-42A9-A61D-8A8CD3AF8E26" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-490C1BCA-F3E3-42A9-A61D-8A8CD3AF8E26">
+                    <p class="- topic/p p">Configure voltage measurement parameters.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_QYD_BPZ_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_QYD_BPZ_SXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-28. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-4A6878E6-8A43-41F6-96B1-E57F5B6160F1" class="fig--title">Voltage Measurement and Diagnosis module configuration</span></span></figcaption>
+                        
+                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_RYD_BPZ_SXB" src="GUID-66BCF6E9-A737-4E2A-B80C-F187B91E230D-high.jpg"/></div></div>
+                    </figure>
+                    <p class="- topic/p p"></p>
+                </li>
+            </ul>
+        </section>
+        <section class="- topic/section section" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_BDK_FPZ_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_BDK_FPZ_SXB"><h2 class="- topic/title title sectiontitle">Rotor position calculation and diagnosis</h2>
+            
+            <p class="- topic/p p">The <strong class="+ topic/ph hi-d/b ph b">Rotor position calculation and diagnosis</strong> module is responsible for the
+                implementation of rotor position measurement technique required for the motor
+                control application. For details refer <a class="- topic/xref xref" href="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7.html" title="he rotor position information is crucial to control the torque of the motor of an electric drive with Field Oriented Control. The following section describes different rotor position measurement technique in an electric drive, and how it can be configured with Harmony QSpin.">Rotor Position
+                    Measurement</a>.</p>
+            <p class="- topic/p p">In <strong class="+ topic/ph hi-d/b ph b">Harmony Qspin</strong> the <strong class="+ topic/ph hi-d/b ph b">Rotor position calculation and diagnosis</strong> module
+                can be configured in following simple steps:</p>
+            <ul class="- topic/ul ul" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_SVS_QPZ_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__UL_SVS_QPZ_SXB">
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-F3E0299F-DE36-4604-85F3-EDA49195A3D9" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-F3E0299F-DE36-4604-85F3-EDA49195A3D9">
+                    <p class="- topic/p p">Click on the "Rotor position calculation and diagnosis" block as shown
+                        below.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_PVK_LJ5_TXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_PVK_LJ5_TXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-29. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-1C234C85-7E62-4913-8F0B-ACA429E59B73" class="fig--title">Rotor position calculation and diagnosis module</span></span></figcaption>
+                        
+                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_QVK_LJ5_TXB" src="GUID-BF5D73A0-F667-4A36-94AE-B268E3E9A2B4-high.jpg"/></div></div>
+                    </figure>
+                </li>
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-F33CC801-C89F-49AC-BADB-BE80B56D6025" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-F33CC801-C89F-49AC-BADB-BE80B56D6025">
+                    <p class="- topic/p p">Select the rotor position algorithm.</p>
+                    <figure class="- topic/fig fig fignone" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_K3X_5SZ_SXB" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__FIG_K3X_5SZ_SXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-30. <span id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-CF8AC3B6-8ED4-4554-94BD-8093AA97275A" class="fig--title">Rotor position calculation and diagnosis module configuration</span></span></figcaption>
+                        
+                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__IMAGE_L3X_5SZ_SXB" src="GUID-0EB8B4BC-59BB-4FD5-8DD5-F2906AEE7F20-high.jpg"/></div></div>
+                    </figure>
+                    <p class="- topic/p p"></p>
+                </li>
+                <li class="- topic/li li" id="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-2A1EE145-B3D1-4E85-ABBA-BD7E3084F23C" data-ofbid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__GUID-2A1EE145-B3D1-4E85-ABBA-BD7E3084F23C">
+                    <p class="- topic/p p">Configure the rotor position algorithm.</p>
+                </li>
+            </ul>
+        </section>
+</div>
+</article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                        <nav role="navigation" id="wh_topic_toc" aria-label="On this page" class="col-lg-2 d-none d-lg-block navbar d-print-none"> 
+                            <div id="wh_topic_toc_content">
+		                        
+	                            <div class=" wh_topic_toc "><div class="wh_topic_label">On this page</div><ul><li class="section-item"><div class="section-title"><a href="#GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_P1C_GVR_SXB" data-tocid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_P1C_GVR_SXB">Start-up Configurator</a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_MK2_VVX_SXB" data-tocid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_MK2_VVX_SXB">Motor control and diagnosis</a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_QNH_BWX_SXB" data-tocid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_QNH_BWX_SXB">Output Stage and diagnosis</a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_YMM_XHY_SXB" data-tocid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_YMM_XHY_SXB">Current measurement and diagnosis</a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_RN4_SKZ_SXB" data-tocid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_RN4_SKZ_SXB">Voltage measurement and diagnosis</a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_BDK_FPZ_SXB" data-tocid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076__SECTION_BDK_FPZ_SXB">Rotor position calculation and diagnosis</a></div></li></ul></div>
+	                        	
+                        	</div>
+                        </nav>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
+  
+  <script type="text/javascript">_satellite.pageBottom();</script><!-- Adobe Analytics -->
+  <script type="text/javascript" src="mchp-js/prepend.js"></script><!-- Package for viewing PDFs on mobile devices -->
+  
+</div>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+       
+        </body>
+</html>

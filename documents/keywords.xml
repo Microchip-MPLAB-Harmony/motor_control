@@ -1,0 +1,2578 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<keywords publicationid="GUID-0A4BC4EE-29F5-4736-8125-17139B84E7B5"
+          language="en-US"
+          version="2"
+          documenttitle="MPLAB® Harmony 3 Motor Control"
+          pubtype="Online Reference"
+          pubsubtype=""
+          pubuserguidesubtype=""
+          pubproducthierarchy=""
+          devices=""
+          revisiondate="12/08/2024 00:00:00"
+          revisionletter="2"
+          isbn=""
+          pubid=""
+          reachid=""
+          description="Streamlining existing QSpin documents, and adding new contents for QSpin modules and sub-modules"
+          lastmodified="13/09/2024 05:51:11"
+          covertitle="MPLAB® Harmony 3 Motor Control"
+          frontcover="">
+   <keyworditem topicid="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Harmony QSpin Motor Control</register>
+      <title>Harmony QSpin Motor Control</title>
+      <bitfield/>
+      <keyword>MH3_motor_control</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Supported Algorithms</register>
+      <title>Supported Algorithms</title>
+      <bitfield/>
+      <keyword>supported_algorithms</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Permanent Magnet Synchronous Motors</register>
+      <title>Permanent Magnet Synchronous Motors</title>
+      <bitfield/>
+      <keyword>permanent_magnet_synchronous_motors</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>PMSM FOC</register>
+      <title>PMSM FOC</title>
+      <bitfield/>
+      <keyword>pmsm_foc</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Field Oriented Control</register>
+      <title>Field Oriented Control</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_field_oriented_control</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Field Oriented Control</register>
+      <title>Field Oriented Control</title>
+      <bitfield/>
+      <keyword>motor_control_field_oriented_control</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Permanent Magnet Synchronous Motor</register>
+      <title>Permanent Magnet Synchronous Motor</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_pmsm_motor</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Permanent Magnet Synchronous Motor</register>
+      <title>Permanent Magnet Synchronous Motor</title>
+      <bitfield/>
+      <keyword>motor_control_pmsm_motor</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Current Measurement</register>
+      <title>Current Measurement</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_current_measurement</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Current Measurement</register>
+      <title>Current Measurement</title>
+      <bitfield/>
+      <keyword>motor_control_current_measurement</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Rotor Position Sensing</register>
+      <title>Rotor Position Sensing</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_rotor_position_measurement</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Rotor Position Sensing</register>
+      <title>Rotor Position Sensing</title>
+      <bitfield/>
+      <keyword>motor_control_rotor_position_measurement</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-81C3E3D7-9C52-4575-B330-AB618C657300"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Harmony QSpin: PMSM FOC</register>
+      <title>Harmony QSpin: PMSM FOC</title>
+      <bitfield/>
+      <keyword>harmony_qspin_pmsm_foc</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Getting Started</register>
+      <title>Getting Started</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_getting_started</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-0E28D069-94DC-4B85-967B-CBF9A45BE525"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Getting Started</register>
+      <title>Getting Started</title>
+      <bitfield/>
+      <keyword>motor_control_getting_started</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Create a new MPLAB® Harmony v3 project using
+        MCC</register>
+      <title>Create a new MPLAB® Harmony v3 project using MCC</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_create_mc_project_with_mcc</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-65E9E132-9999-4EAE-B258-B9FB4825CFC8"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Create a new MPLAB® Harmony v3 project using
+        MCC</register>
+      <title>Create a new MPLAB® Harmony v3 project using MCC</title>
+      <bitfield/>
+      <keyword>motor_control_create_mc_project_with_mcc</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Qspin Motor Control Configuration</register>
+      <title>Qspin Motor Control Configuration</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_qspin_motor_control_configuration</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-6EC2A9BD-E456-4FD8-ADDA-87FBC8023291"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Qspin Motor Control Configuration</register>
+      <title>Qspin Motor Control Configuration</title>
+      <bitfield/>
+      <keyword>motor_control_qspin_motor_control_configuration</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-ECF85ABD-803D-4969-8737-C0CA3DBC62EA"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Setting hardware modules</register>
+      <title>Setting hardware modules</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_hardware_modules</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-ECF85ABD-803D-4969-8737-C0CA3DBC62EA"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Setting hardware modules</register>
+      <title>Setting hardware modules</title>
+      <bitfield/>
+      <keyword>motor_control_hardware_modules</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5CB16768-D98D-45EA-805F-343C7E896621"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Configuring Peripheral Modules</register>
+      <title>Configuring Peripheral Modules</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_peripheral_modules</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5CB16768-D98D-45EA-805F-343C7E896621"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Configuring Peripheral Modules</register>
+      <title>Configuring Peripheral Modules</title>
+      <bitfield/>
+      <keyword>motor_control_peripheral_modules</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5CB16768-D98D-45EA-805F-343C7E896621"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Configuring Peripheral Modules</register>
+      <title>Configuring Peripheral Modules</title>
+      <bitfield/>
+      <keyword>peripheral_modules</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Configure software modules</register>
+      <title>Configure software modules</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_software_ modules</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Configure software modules</register>
+      <title>Configure software modules</title>
+      <bitfield/>
+      <keyword>motor_control_software_ modules</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-E5EED18A-CF3E-4DA4-B210-950FDB8FA076"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Configure software modules</register>
+      <title>Configure software modules</title>
+      <bitfield/>
+      <keyword>software_ modules</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-4DD19DCE-B6EF-408C-8574-5B2258EAA616"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Generate code with MCC</register>
+      <title>Generate code with MCC</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_generate_mc_code_with_mcc</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-4DD19DCE-B6EF-408C-8574-5B2258EAA616"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Generate code with MCC</register>
+      <title>Generate code with MCC</title>
+      <bitfield/>
+      <keyword>motor_control_generate_mc_code_with_mcc</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-35451F85-BBB3-4DF6-B3AC-00FB57657EFF"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Harmony QSpin: PMSM FOC Modules</register>
+      <title>Harmony QSpin: PMSM FOC Modules</title>
+      <bitfield/>
+      <keyword>harmony_qspin_pmsm_foc_modules</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-BE907C69-DC5C-4438-920A-48EE4B48DD9B"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Software Modules</register>
+      <title>Software Modules</title>
+      <bitfield/>
+      <keyword>software_modules</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-2E524004-ED37-4174-9ECC-3075003F70A7"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Start-up Configurator</register>
+      <title>Start-up Configurator</title>
+      <bitfield/>
+      <keyword>startup_configurator_module</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-1247DA32-16EE-410F-8821-9996138029EC"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Motor Control and Diagnosis</register>
+      <title>Motor Control and Diagnosis</title>
+      <bitfield/>
+      <keyword>motor_control_and_diagnosis_module</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-52CA4CA5-55BC-423F-B79E-B814E889984B"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Output Stage</register>
+      <title>Output Stage</title>
+      <bitfield/>
+      <keyword>output_stage_module</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-D30380EE-7150-40F0-8CD4-972379CEF307"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Current Measurement and Diagnosis</register>
+      <title>Current Measurement and Diagnosis</title>
+      <bitfield/>
+      <keyword>current_measurement_module</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-01B46490-213A-4272-8195-738256105928"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Voltage Measurement and Diagnosis</register>
+      <title>Voltage Measurement and Diagnosis</title>
+      <bitfield/>
+      <keyword>voltage_measurement_and_diag_module</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3FC371D1-5F20-4FD5-BE9C-5E735208822F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Position Measurement and Diagnosis</register>
+      <title>Position Measurement and Diagnosis</title>
+      <bitfield/>
+      <keyword>rotor_position_estimation_and_diag_module</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-04C38070-686B-47B2-92B4-277FB5A980FC"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Monitoring</register>
+      <title>Data Monitoring</title>
+      <bitfield/>
+      <keyword>data_monitoring</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-BB66D816-CABD-4083-B7D9-74C9FE9D061F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Hardware Modules</register>
+      <title>Hardware Modules</title>
+      <bitfield/>
+      <keyword>hardware_modules</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-0B134E27-482C-48C3-8895-2AF0AEAFBA99"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Motor Parameters</register>
+      <title>Motor Parameters</title>
+      <bitfield/>
+      <keyword>motor_parameters</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-EA06C12E-C4FB-45A7-B93F-D0B6BB2E181A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>pmsm_parameter_identification</register>
+      <title>pmsm_parameter_identification</title>
+      <bitfield/>
+      <keyword>pmsm_parameter_identification</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-989E7AA5-599B-44EF-B07B-92CF360E8489"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>ADC Module</register>
+      <title>ADC Module</title>
+      <bitfield/>
+      <keyword>analog_front_end_module</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-39CB4463-8D2C-49F3-8335-00B1A0426867"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Voltage Source</register>
+      <title>Voltage Source</title>
+      <bitfield/>
+      <keyword>voltage_source_module</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-C90EFA82-CF97-4B03-BC71-6FABB47DD468"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Peripheral Interface Modules</register>
+      <title>Peripheral Interface Modules</title>
+      <bitfield/>
+      <keyword>peripheral_modules</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-074A0B6E-2F55-48D4-9597-C94198261D9A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Setting PWM Interface</register>
+      <title>Setting PWM Interface</title>
+      <bitfield/>
+      <keyword>pwm_interface_module</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F357EFE7-06A7-410D-9D17-FBE6A6933412"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Setting Analog Interface</register>
+      <title>Setting Analog Interface</title>
+      <bitfield/>
+      <keyword>analog_interface_module</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-593B51D7-753B-4F45-907A-9A084230C6CB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Setting Position Interface</register>
+      <title>Setting Position Interface</title>
+      <bitfield/>
+      <keyword>position_interface_module</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Field Oriented Control Implementation</register>
+      <title>Field Oriented Control Implementation</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_software_architecture</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Field Oriented Control Implementation</register>
+      <title>Field Oriented Control Implementation</title>
+      <bitfield/>
+      <keyword>motor_control_software_architecture</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Harmony QSpin API Reference</register>
+      <title>Harmony QSpin API Reference</title>
+      <bitfield/>
+      <keyword>h3_qspin_api_reference</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-722DD900-7015-4646-B69F-20C19A60A801"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Application API Reference</register>
+      <title>Application API Reference</title>
+      <bitfield/>
+      <keyword>mc_application_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-D22C9F7D-1B8A-466D-999B-9966F5373A83"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcAppI_ApplicationInit</register>
+      <title>mcAppI_ApplicationInit</title>
+      <bitfield/>
+      <keyword>mcAppI_ApplicationInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F8004F01-8DE1-430D-81D2-60D9AB4412C1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcAppI_ApplicationReset</register>
+      <title>mcAppI_ApplicationReset</title>
+      <bitfield/>
+      <keyword>mcAppI_ApplicationReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5941780D-A35E-4340-B2B6-327A4499AB6E"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcAppI_AdcFinishedIsr</register>
+      <title>mcAppI_AdcFinishedIsr</title>
+      <bitfield/>
+      <keyword>mcAppI_AdcFinishedIsr</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-55B23CE1-53F4-4D3C-8843-2D3146234B06"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcAppI_AdcCalibrationIsr</register>
+      <title>mcAppI_AdcCalibrationIsr</title>
+      <bitfield/>
+      <keyword>mcAppI_AdcCalibrationIsr</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-6774DC6D-FDB0-4AA1-99F5-306B95F83298"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcAppI_1msTasksHandler</register>
+      <title>mcAppI_1msTasksHandler</title>
+      <bitfield/>
+      <keyword>mcAppI_1msTasksHandler</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-8F6EF3ED-5D9F-4C2E-A1B3-AE3AA14B920F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcAppI_DirectionReverse</register>
+      <title>mcAppI_DirectionReverse</title>
+      <bitfield/>
+      <keyword>mcAppI_DirectionReverse</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5045BCD8-FA9F-454C-94EF-F61ED7F98D7A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcAppI_MotorStartStop</register>
+      <title>mcAppI_MotorStartStop</title>
+      <bitfield/>
+      <keyword>mcAppI_MotorStartStop</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F403F854-AF20-455B-B252-A62874111430"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcAppI_NonISRTasks</register>
+      <title>mcAppI_NonISRTasks</title>
+      <bitfield/>
+      <keyword>mcAppI_NonISRTasks</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-4D6F6A93-87D1-4ADD-B77D-9A427C0E2FE4"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcAppI_OverCurrentReactionIsr</register>
+      <title>mcAppI_OverCurrentReactionIsr</title>
+      <bitfield/>
+      <keyword>mcAppI_OverCurrentReactionIsr</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-9305E76E-942D-44E6-9DD2-A6049ABE3323"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Current Measurement API Reference</register>
+      <title>Current Measurement API Reference</title>
+      <bitfield/>
+      <keyword>mc_current_measurement_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-578516D0-E8F5-40B9-AC07-AFD67B11773A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcCurI_CurrentCalculationInit</register>
+      <title>mcCurI_CurrentCalculationInit</title>
+      <bitfield/>
+      <keyword>mcCurI_CurrentCalculationInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5D2A8B6E-F51B-4AA3-ACB0-59340D90C6EE"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcCurI_CurrentOffsetCalculation</register>
+      <title>mcCurI_CurrentOffsetCalculation</title>
+      <bitfield/>
+      <keyword>mcCurI_CurrentOffsetCalculation</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-602BBD41-97CB-4BA2-9BAE-13C156799A9B"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcCurI_CurrentCalculation</register>
+      <title>mcCurI_CurrentCalculation</title>
+      <bitfield/>
+      <keyword>mcCurI_CurrentCalculation</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-E769C9AE-4561-49CF-AC66-F9D2AB4FB757"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcCurI_CurrentCalculationReset</register>
+      <title>mcCurI_CurrentCalculationReset</title>
+      <bitfield/>
+      <keyword>mcCurI_CurrentCalculationReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-BAC35AA9-FEA8-4ABC-AB00-FCDD25781FC3"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcCur_Input_s Struct</register>
+      <title>tmcCur_Input_s Struct</title>
+      <bitfield/>
+      <keyword>tmcCur_Input_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-FA97B252-9EBB-421C-BD36-03F1C9A30649"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcCur_Output_s Struct</register>
+      <title>tmcCur_Output_s Struct</title>
+      <bitfield/>
+      <keyword>tmcCur_Output_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-2FCB98D5-D91A-4C48-929B-F1CF00229184"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcCur_Parameters_s Struct</register>
+      <title>tmcCur_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcCur_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-52B92668-BB17-4CD7-9C7C-E1DC6A651633"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcCur_States_s Struct</register>
+      <title>tmcCur_States_s Struct</title>
+      <bitfield/>
+      <keyword>tmcCur_States_s Struct</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-05D415E6-5803-4A20-91D5-8693A823D50D"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcCur_ModuleData_s Struct</register>
+      <title>tmcCur_ModuleData_s Struct</title>
+      <bitfield/>
+      <keyword>tmcCur_ModuleData_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-29D06553-EE7F-4EDC-92DF-17C19EE36334"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Field Oriented Control API Reference</register>
+      <title>Field Oriented Control API Reference</title>
+      <bitfield/>
+      <keyword>mc_field_oriented_control_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-2109A4FB-BDA2-4CEF-8710-BAD27FA52143"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFocI_FieldOrientedControlInit</register>
+      <title>mcFocI_FieldOrientedControlInit</title>
+      <bitfield/>
+      <keyword>mcFocI_FieldOrientedControlInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-A282C66C-7BE1-4E91-9785-6D434C5A9B44"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFocI_FieldOrientedControlEnable</register>
+      <title>mcFocI_FieldOrientedControlEnable</title>
+      <bitfield/>
+      <keyword>mcFocI_FieldOrientedControlEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-63CC34B5-204B-4DAA-86A6-CD6E9EDFE07E"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFocI_FieldOrientedControlSlow</register>
+      <title>mcFocI_FieldOrientedControlSlow</title>
+      <bitfield/>
+      <keyword>mcFocI_FieldOrientedControlSlow</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-6C1A67BA-B382-4884-B661-AF3F0BA36D3E"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFocI_FieldOrientedControlFast</register>
+      <title>mcFocI_FieldOrientedControlFast</title>
+      <bitfield/>
+      <keyword>mcFocI_FieldOrientedControlFast</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-9B03A001-6B42-4830-A0A1-00C5F3312334"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFocI_FieldOrientedControlDisable</register>
+      <title>mcFocI_FieldOrientedControlDisable</title>
+      <bitfield/>
+      <keyword>mcFocI_FieldOrientedControlDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-585161BC-93F5-4453-8886-661AA9BED607"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFocI_FieldOrientedControlReset</register>
+      <title>mcFocI_FieldOrientedControlReset</title>
+      <bitfield/>
+      <keyword>mcFocI_FieldOrientedControlReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-EE6D438E-7394-453E-B326-B9C9CE72A2F6"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFocI_MotorDirectionChange</register>
+      <title>mcFocI_MotorDirectionChange</title>
+      <bitfield/>
+      <keyword>mcFocI_MotorDirectionChange</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-92ACB0C5-9954-44B5-8583-47F0E6960A32"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFoc_ClarkeTransformation</register>
+      <title>mcFoc_ClarkeTransformation</title>
+      <bitfield/>
+      <keyword>mcFoc_ClarkeTransformation</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-731D588E-F7D0-4AF2-B8DB-6FCE9DBEE75A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFoc_ParkTransformation</register>
+      <title>mcFoc_ParkTransformation</title>
+      <bitfield/>
+      <keyword>mcFoc_ParkTransformation</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-9B14E01D-A72F-4969-A64B-4A219642F3C7"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFoc_InverseParkTransformation</register>
+      <title>mcFoc_InverseParkTransformation</title>
+      <bitfield/>
+      <keyword>mcFoc_InverseParkTransformation</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F2BF521F-1F0B-4EF0-9C0B-CC80D86BA5B2"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFocI_ModuleData_s Struct</register>
+      <title>tmcFocI_ModuleData_s Struct</title>
+      <bitfield/>
+      <keyword>tmcFocI_ModuleData_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-DDC58770-5B56-48BC-845A-0F6B63F6BFEB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFoc_State_s Struct</register>
+      <title>tmcFoc_State_s Struct</title>
+      <bitfield/>
+      <keyword>tmcFoc_State_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-7C52AFC8-2412-42FB-8DDA-D1FB947D5EE0"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFoc_Parameters_s Struct</register>
+      <title>tmcFoc_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcFoc_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-CD3370BD-89F2-4A75-A768-08A01673762C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFoc_Output_s Struct</register>
+      <title>tmcFoc_Output_s Struct</title>
+      <bitfield/>
+      <keyword>tmcFoc_Output_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-EE60D071-FCED-4FD3-82C6-D03A5B366044"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFoc_Input_s Struct</register>
+      <title>tmcFoc_Input_s Struct</title>
+      <bitfield/>
+      <keyword>tmcFoc_Input_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-69AE6307-6B26-4028-96A6-DDD234BF3357"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFoc_FocState_e Enum</register>
+      <title>tmcFoc_FocState_e Enum</title>
+      <bitfield/>
+      <keyword>tmcFoc_FocState_e</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-163E3393-AEB0-47C7-B86B-C60C6D6D81E4"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>ROTOR_ANGLE_RAMP_RATE Macro</register>
+      <title>ROTOR_ANGLE_RAMP_RATE Macro</title>
+      <bitfield/>
+      <keyword>ROTOR_ANGLE_RAMP_RATE</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F2C7364C-E569-4174-871C-98C42227C68B"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Flux Control API Reference</register>
+      <title>Flux Control API Reference</title>
+      <bitfield/>
+      <keyword>mc_flux_control_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-07442475-DDE1-418E-BA0B-94B807789185"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_FluxControlInit</register>
+      <title>mcFlxI_FluxControlInit</title>
+      <bitfield/>
+      <keyword>mcFlxI_FluxControlInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-1CBBC594-C546-4B17-9D91-5B4C8C4F6FBC"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_FluxControlEnable</register>
+      <title>mcFlxI_FluxControlEnable</title>
+      <bitfield/>
+      <keyword>mcFlxI_FluxControlEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-7ACAC663-5EDA-4EB2-AAED-8C5B415E7BF7"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_FluxControlManual</register>
+      <title>mcFlxI_FluxControlManual</title>
+      <bitfield/>
+      <keyword>mcFlxI_FluxControlManual</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-0E2765C2-F3CB-4BAE-92EB-51E6D3054111"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_FluxControlAuto</register>
+      <title>mcFlxI_FluxControlAuto</title>
+      <bitfield/>
+      <keyword>mcFlxI_FluxControlAuto</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-2A7213F2-2D96-4D0D-984B-DABD731BC9A2"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_FluxControlDisable</register>
+      <title>mcFlxI_FluxControlDisable</title>
+      <bitfield/>
+      <keyword>mcFlxI_FluxControlDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-B5F89A81-EEFB-47A5-BFD0-D5B73BF13C53"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_FluxControlReset</register>
+      <title>mcFlxI_FluxControlReset</title>
+      <bitfield/>
+      <keyword>mcFlxI_FluxControlReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-C099E625-F92D-4904-BBFC-C2A70D9C8763"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_FluxWeakeningInit</register>
+      <title>mcFlxI_FluxWeakeningInit</title>
+      <bitfield/>
+      <keyword>mcFlxI_FluxWeakeningInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-61ABC3CE-FDB9-4F16-A372-751DEE786042"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_FluxWeakeningEnable</register>
+      <title>mcFlxI_FluxWeakeningEnable</title>
+      <bitfield/>
+      <keyword>mcFlxI_FluxWeakeningEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-C417A0D7-E2FF-46C4-8A75-AF3D5265DD6D"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_FluxWeakening</register>
+      <title>mcFlxI_FluxWeakening</title>
+      <bitfield/>
+      <keyword>mcFlxI_FluxWeakening</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-98F5FAD7-9104-401C-8CBC-19FA27773206"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_FluxWeakeningDisable</register>
+      <title>mcFlxI_FluxWeakeningDisable</title>
+      <bitfield/>
+      <keyword>mcFlxI_FluxWeakeningDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-B9A6FEA2-1E5E-49C9-A32A-55C790AE0DBD"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_FluxWeakeningReset</register>
+      <title>mcFlxI_FluxWeakeningReset</title>
+      <bitfield/>
+      <keyword>mcFlxI_FluxWeakeningReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-7E74DD83-5D19-472C-9AB6-6B036837082A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_MTPAInit</register>
+      <title>mcFlxI_MTPAInit</title>
+      <bitfield/>
+      <keyword>mcFlxI_MTPAInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5082D82A-C230-4792-80EE-E31AB4A9039D"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_MTPAEnable</register>
+      <title>mcFlxI_MTPAEnable</title>
+      <bitfield/>
+      <keyword>mcFlxI_MTPAEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-6AB765CD-3B0D-4A9D-9786-FAD686CEFF77"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_MTPA</register>
+      <title>mcFlxI_MTPA</title>
+      <bitfield/>
+      <keyword>mcFlxI_MTPA</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-9D230B6F-F9CC-439E-9E16-42AFD30EDB55"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_MTPADisable</register>
+      <title>mcFlxI_MTPADisable</title>
+      <bitfield/>
+      <keyword>mcFlxI_MTPADisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-D6FB7702-A7FC-422D-9833-923CDC87C6A4"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlxI_MTPAReset</register>
+      <title>mcFlxI_MTPAReset</title>
+      <bitfield/>
+      <keyword>mcFlxI_MTPAReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-0FB8D25F-8A50-40DF-86FC-C2629D39185C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFlx_State_s Draft</register>
+      <title>tmcFlx_State_s Draft</title>
+      <bitfield/>
+      <keyword>tmcFlx_State_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-FC3360CA-CEB3-454C-AAF3-75E267783933"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFlx_Parameters_s Struct</register>
+      <title>tmcFlx_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcFlx_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-EDCF7049-2274-45F2-9AC9-DC83A186F78D"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFlx_MTPA_s</register>
+      <title>tmcFlx_MTPA_s</title>
+      <bitfield/>
+      <keyword>tmcFlx_MTPA_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-ED65B907-1AE7-4826-B0B4-B2D868EEBC32"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFlx_FluxWeakening_s Struct</register>
+      <title>tmcFlx_FluxWeakening_s Struct</title>
+      <bitfield/>
+      <keyword>tmcFlx_FluxWeakening_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-93C92F24-67BF-47EF-9FC8-CB25B0448049"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Flying Start API Reference</register>
+      <title>Flying Start API Reference</title>
+      <bitfield/>
+      <keyword>mc_flying_start</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-AD04CE6C-AE48-4E08-9E9A-5C4C1E12CD9F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlyI_FlyingStartInit</register>
+      <title>mcFlyI_FlyingStartInit</title>
+      <bitfield/>
+      <keyword>mcFlyI_FlyingStartInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5677F685-AE70-4583-AC21-F8366E62CF09"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlyI_FlyingStartEnable</register>
+      <title>mcFlyI_FlyingStartEnable</title>
+      <bitfield/>
+      <keyword>mcFlyI_FlyingStartEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-123EA696-ED60-4BE0-AB63-1099B11EEC84"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlyI_FlyingStart</register>
+      <title>mcFlyI_FlyingStart</title>
+      <bitfield/>
+      <keyword>mcFlyI_FlyingStart</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-E3043FD6-1A8D-4CFA-8227-264EA1428F26"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlyI_FlyingStartDisable</register>
+      <title>mcFlyI_FlyingStartDisable</title>
+      <bitfield/>
+      <keyword>mcFlyI_FlyingStartDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-1F179160-4999-469E-B460-078F770CD36F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcFlyI_FlyingStartReset</register>
+      <title>mcFlyI_FlyingStartReset</title>
+      <bitfield/>
+      <keyword>mcFlyI_FlyingStartReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-FA231C97-219C-4281-A35E-B8D029A75B35"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFly_State_s Struct</register>
+      <title>tmcFly_State_s Struct</title>
+      <bitfield/>
+      <keyword>tmcFly_State_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-ADCD5EBE-C9FD-460C-89AE-A5004E4A6279"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFly_Parameters_s Struct</register>
+      <title>tmcFly_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcFly_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-7F83E1D9-118A-46C8-AA6C-0797E6E90BD0"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcFly_FlyingStartState_e Enum</register>
+      <title>tmcFly_FlyingStartState_e Enum</title>
+      <bitfield/>
+      <keyword>tmcFly_FlyingStartState_e</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-ABDB314F-3947-401B-AC7B-AE732C30ED8C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcMotI_MotorParametersInit</register>
+      <title>mcMotI_MotorParametersInit</title>
+      <bitfield/>
+      <keyword>mcMotI_MotorParametersInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-91452ED7-1AD8-4CAF-8CBD-51157DFB81A8"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcMot_PMSM_s Struct</register>
+      <title>tmcMot_PMSM_s Struct</title>
+      <bitfield/>
+      <keyword>tmcMot_PMSM_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-ADA9E733-D754-440C-870C-667F52B33F79"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Open Loop Startup API Reference</register>
+      <title>Open Loop Startup API Reference</title>
+      <bitfield/>
+      <keyword>mc_open_loop_startup_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5709463C-9692-4C32-849D-71ED7F9D6F92"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcSupI_OpenLoopStartupInit</register>
+      <title>mcSupI_OpenLoopStartupInit</title>
+      <bitfield/>
+      <keyword>mcSupI_OpenLoopStartupInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-209C065D-A933-4946-A07E-F402D69AF9BC"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcSupI_OpenLoopStartupEnable</register>
+      <title>mcSupI_OpenLoopStartupEnable</title>
+      <bitfield/>
+      <keyword>mcSupI_OpenLoopStartupEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-4D3536DD-A4DC-42D6-9151-675D0E6F93B9"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcSupI_OpenLoopStartup</register>
+      <title>mcSupI_OpenLoopStartup</title>
+      <bitfield/>
+      <keyword>mcSupI_OpenLoopStartup</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-DD95B01D-74C5-4333-ACFD-A1ACEB543D51"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcSupI_OpenLoopStartupDisable</register>
+      <title>mcSupI_OpenLoopStartupDisable</title>
+      <bitfield/>
+      <keyword>mcSupI_OpenLoopStartupDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-A8977F73-5082-4516-9680-A8ADBF1BB483"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcSupI_OpenLoopStartupReset</register>
+      <title>mcSupI_OpenLoopStartupReset</title>
+      <bitfield/>
+      <keyword>mcSupI_OpenLoopStartupReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-91AF22E7-8E45-42B4-B737-6FAE9C58BB49"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcSup_State_s Struct</register>
+      <title>tmcSup_State_s Struct</title>
+      <bitfield/>
+      <keyword>tmcSup_State_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-162593F8-1D14-4EC0-AD7E-24B255074CF7"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcSup_Parameters_s Struct</register>
+      <title>tmcSup_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcSup_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-735ED8C3-91B8-475D-A6EF-383D57B4D303"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcSup_State_e Enum</register>
+      <title>tmcSup_State_e Enum</title>
+      <bitfield/>
+      <keyword>tmcSup_State_e</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-62CA7E13-B0D2-4DF9-9DF0-ECFBECB01BAC"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>PWM API Reference</register>
+      <title>PWM API Reference</title>
+      <bitfield/>
+      <keyword>mc_pwm_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3F2D95F4-FAE8-41FE-9D00-C554008BDC48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcPwmI_PulseWidthModulationInit</register>
+      <title>mcPwmI_PulseWidthModulationInit</title>
+      <bitfield/>
+      <keyword>mcPwmI_PulseWidthModulationInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-37154732-4345-4D52-800B-5F1CE3C960CE"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcPwmI_PulseWidthModulationEnable</register>
+      <title>mcPwmI_PulseWidthModulationEnable</title>
+      <bitfield/>
+      <keyword>mcPwmI_PulseWidthModulationEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-BA7D6341-0C4C-4D61-AD07-932167CD8E87"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcPwmI_PulseWidthModulation</register>
+      <title>mcPwmI_PulseWidthModulation</title>
+      <bitfield/>
+      <keyword>mcPwmI_PulseWidthModulation</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-0B892C5C-D30A-4B74-92AE-B818623BD627"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcPwmI_PulseWidthModulationDisable</register>
+      <title>mcPwmI_PulseWidthModulationDisable</title>
+      <bitfield/>
+      <keyword>mcPwmI_PulseWidthModulationDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-00D908BD-39D6-4F9C-A3FA-F1B601130140"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcPwmI_PulseWidthModulationReset</register>
+      <title>mcPwmI_PulseWidthModulationReset</title>
+      <bitfield/>
+      <keyword>mcPwmI_PulseWidthModulationReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-E0E012F4-A6B5-4623-8752-EAD9048F8EB1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcPwm_IntegerScale</register>
+      <title>mcPwm_IntegerScale</title>
+      <bitfield/>
+      <keyword>mcPwm_IntegerScale</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-2096EBEA-DE6C-429A-83E1-31E22B84842B"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcPwm_State_s Struct</register>
+      <title>tmcPwm_State_s Struct</title>
+      <bitfield/>
+      <keyword>tmcPwm_State_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-49972E8B-70F4-4472-82E3-27EA85E1D5F4"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcPwm_Parameters_s Struct</register>
+      <title>tmcPwm_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcPwm_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-45C508CB-2E07-48E8-9266-D67C0A132EFD"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcPwm_Sector_e Enum</register>
+      <title>tmcPwm_Sector_e Enum</title>
+      <bitfield/>
+      <keyword>tmcPwm_Sector_e</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-82C7D359-5F86-41C6-8FBB-4E9AE7895961"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>DT_PADDING Macro</register>
+      <title>DT_PADDING Macro</title>
+      <bitfield/>
+      <keyword>DT_PADDING</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-7F47B1B7-2CB8-492F-B60E-E96EF6CAEDFA"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Reference Control API Reference</register>
+      <title>Reference Control API Reference</title>
+      <bitfield/>
+      <keyword>mc_reference_control_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-D492A071-9A07-4FBF-9A8E-AE818BCCCBC1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRefI_ReferenceControlInit</register>
+      <title>mcRefI_ReferenceControlInit</title>
+      <bitfield/>
+      <keyword>mcRefI_ReferenceControlInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-108A98BA-893C-48C6-ADCE-E92BE9677506"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRefI_ReferenceControlEnable</register>
+      <title>mcRefI_ReferenceControlEnable</title>
+      <bitfield/>
+      <keyword>mcRefI_ReferenceControlEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-224C2527-80C6-44A9-8F12-84C7B0C1C1C7"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRefI_ReferenceControl</register>
+      <title>mcRefI_ReferenceControl</title>
+      <bitfield/>
+      <keyword>mcRefI_ReferenceControl</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-38672EDD-FC31-4FB1-8134-5663F2B52855"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRefI_ReferenceControlDisable</register>
+      <title>mcRefI_ReferenceControlDisable</title>
+      <bitfield/>
+      <keyword>mcRefI_ReferenceControlDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-80FABEF4-F279-4CA0-8542-6C9EED85FE8D"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRefI_ReferenceControlReset</register>
+      <title>mcRefI_ReferenceControlReset</title>
+      <bitfield/>
+      <keyword>mcRefI_ReferenceControlReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3E501283-7BEC-46E9-BC00-37E1FB8CD9AC"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcRef_State_s Struct</register>
+      <title>tmcRef_State_s Struct</title>
+      <bitfield/>
+      <keyword>tmcRef_State_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F54FDC17-9A9D-444E-A7DC-EC4250E1BB0D"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcRef_Parameters_s Struct</register>
+      <title>tmcRef_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcRef_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-09303D23-D377-44CB-83E7-4709D2931CC2"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Speed Control API Reference</register>
+      <title>Speed Control API Reference</title>
+      <bitfield/>
+      <keyword>mc_speed_control_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-A767C164-C52A-4AAF-AD7D-E5D367EE3C6B"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcSpeI_SpeedControlInit</register>
+      <title>mcSpeI_SpeedControlInit</title>
+      <bitfield/>
+      <keyword>mcSpeI_SpeedControlInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-52B528A5-613B-4C5C-B918-BE622754B69E"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcSpeI_SpeedControlEnable</register>
+      <title>mcSpeI_SpeedControlEnable</title>
+      <bitfield/>
+      <keyword>mcSpeI_SpeedControlEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-2C0CD558-A51D-43D7-9879-6C05B2946BDE"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcSpeI_SpeedControlManual</register>
+      <title>mcSpeI_SpeedControlManual</title>
+      <bitfield/>
+      <keyword>mcSpeI_SpeedControlManual</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-ECAEE3D3-8897-42F2-87B1-415C15C736AC"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcSpeI_SpeedControlAuto</register>
+      <title>mcSpeI_SpeedControlAuto</title>
+      <bitfield/>
+      <keyword>mcSpeI_SpeedControlAuto</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-A1EB5A47-ADAF-4976-A185-30BC9E81CE39"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcSpeI_SpeedControlReset</register>
+      <title>mcSpeI_SpeedControlReset</title>
+      <bitfield/>
+      <keyword>mcSpeI_SpeedControlReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-61726369-80C4-446E-94CF-BF9876134B6F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcSpeI_SpeedControlDisable</register>
+      <title>mcSpeI_SpeedControlDisable</title>
+      <bitfield/>
+      <keyword>mcSpeI_SpeedControlDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-5E93609B-AF17-4BCD-B56C-EEF3490548B4"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcSpe_State_s Struct</register>
+      <title>tmcSpe_State_s Struct</title>
+      <bitfield/>
+      <keyword>tmcSpe_State_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-6D1964FA-2BB0-48EA-A331-B0B04102E7CB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcSpe_Parameters_s Struct</register>
+      <title>tmcSpe_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcSpe_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F87B6F26-5599-4975-BBD9-A17AF00B037A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Torque Control API Reference</register>
+      <title>Torque Control API Reference</title>
+      <bitfield/>
+      <keyword>mc_torque_control_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-AECEBEDD-CEA4-4BAA-BB38-642134FFFAFB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcTorI_TorqueControlInit</register>
+      <title>mcTorI_TorqueControlInit</title>
+      <bitfield/>
+      <keyword>mcTorI_TorqueControlInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-E71B6BE4-6000-4EC8-A9DC-25BE693E8EB5"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcTorI_TorqueControlEnable</register>
+      <title>mcTorI_TorqueControlEnable</title>
+      <bitfield/>
+      <keyword>mcTorI_TorqueControlEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-B0960401-F15D-4A2F-9BE3-B2E7A2552467"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcTorI_TorqueControlAuto</register>
+      <title>mcTorI_TorqueControlAuto</title>
+      <bitfield/>
+      <keyword>mcTorI_TorqueControlAuto</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-FDB2A596-C8F6-46A3-8D75-3AE3B60B195C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcTorI_TorqueControlManual</register>
+      <title>mcTorI_TorqueControlManual</title>
+      <bitfield/>
+      <keyword>mcTorI_TorqueControlManual</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-E04E56E2-4D2D-4BBA-ABF1-F7EAE2D83E04"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcTorI_TorqueControlDisable</register>
+      <title>mcTorI_TorqueControlDisable</title>
+      <bitfield/>
+      <keyword>mcTorI_TorqueControlDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-521990F2-BCFF-4400-AD82-493C1C19CE85"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcTorI_TorqueControlReset</register>
+      <title>mcTorI_TorqueControlReset</title>
+      <bitfield/>
+      <keyword>mcTorI_TorqueControlReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-B8660A41-B563-4003-B915-27BB6244A6A3"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcTor_State_s Struct</register>
+      <title>tmcTor_State_s Struct</title>
+      <bitfield/>
+      <keyword>tmcTor_State_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-29E88A9B-3CEF-4FD0-ABE9-FF9D734060A5"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcTor_Parameters_s Struct</register>
+      <title>tmcTor_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcTor_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-93DFD1DF-A5E8-4903-8826-F92C94F3EEF2"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Position Control API Reference</register>
+      <title>Position Control API Reference</title>
+      <bitfield/>
+      <keyword>mc_position_control_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-E0C15431-5B04-4C40-B4C1-A8818B405042"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcPosI_PositionControlInit</register>
+      <title>mcPosI_PositionControlInit</title>
+      <bitfield/>
+      <keyword>mcPosI_PositionControlInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-B9C69650-15E9-4E89-BEA9-8C1DB5BE7857"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcPosI_PositionControlEnable</register>
+      <title>mcPosI_PositionControlEnable</title>
+      <bitfield/>
+      <keyword>mcPosI_PositionControlEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-E9C802EF-0DA5-49C3-8B05-0B2375B11B0A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcPosI_PositionControlManual</register>
+      <title>mcPosI_PositionControlManual</title>
+      <bitfield/>
+      <keyword>mcPosI_PositionControlManual</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-ABE2EBC0-B26B-4A42-B45A-659D9AE3CC08"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcPosI_PositionControlAuto</register>
+      <title>mcPosI_PositionControlAuto</title>
+      <bitfield/>
+      <keyword>mcPosI_PositionControlAuto</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-A53CF31E-4DEB-4809-9CFD-62807A0A45DA"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcPosI_PositionControlDisable</register>
+      <title>mcPosI_PositionControlDisable</title>
+      <bitfield/>
+      <keyword>mcPosI_PositionControlDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3DC7124A-1783-446D-9B9F-01B07A3D5EAA"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcPosI_PositionControlReset</register>
+      <title>mcPosI_PositionControlReset</title>
+      <bitfield/>
+      <keyword>mcPosI_PositionControlReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-C25D79BD-A4F7-4399-AB03-5F1B07577255"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcPos_State_s Struct</register>
+      <title>tmcPos_State_s Struct</title>
+      <bitfield/>
+      <keyword>tmcPos_State_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-83442A0B-90E1-4DD3-B198-B28709B6E1E3"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcPos_Parameters_s Struct</register>
+      <title>tmcPos_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcPos_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-ADE7881E-AEEB-4EDC-B439-356982B16585"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Rotor Position Calculation API
+        Reference</register>
+      <title>Rotor Position Calculation API Reference</title>
+      <bitfield/>
+      <keyword>mc_rotor_position_calculation_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-47A969F5-FAE8-48B3-9EDC-AA05ADCAF95D"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpcI_RotorPositionCalcInit</register>
+      <title>mcRpcI_RotorPositionCalcInit</title>
+      <bitfield/>
+      <keyword>mcRpcI_RotorPositionCalcInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-0AD04A29-0AAD-4E91-86DB-BB865B50E8A5"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpcI_RotorPositionCalcEnable</register>
+      <title>mcRpcI_RotorPositionCalcEnable</title>
+      <bitfield/>
+      <keyword>mcRpcI_RotorPositionCalcEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-55B83109-5E0F-4799-A066-6CC19F8657BF"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpcI_RotorPositionCalc</register>
+      <title>mcRpcI_RotorPositionCalc</title>
+      <bitfield/>
+      <keyword>mcRpcI_RotorPositionCalc</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-064598B7-AEC5-4F55-B8FD-A08D073B9CBE"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpcI_RotorPositionCalcDisable</register>
+      <title>mcRpcI_RotorPositionCalcDisable</title>
+      <bitfield/>
+      <keyword>mcRpcI_RotorPositionCalcDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3E2FBF20-295D-4355-8861-09A6F326FADB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpcI_RotorPositionCalcReset</register>
+      <title>mcRpcI_RotorPositionCalcReset</title>
+      <bitfield/>
+      <keyword>mcRpcI_RotorPositionCalcReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-7B8B8A8A-B02D-4660-9558-E4734D8E7A35"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpcI_MechanicalAngleGet</register>
+      <title>mcRpcI_MechanicalAngleGet</title>
+      <bitfield/>
+      <keyword>mcRpcI_MechanicalAngleGet</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F4C1C653-264A-4B9D-96BA-67009B03D64F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcRpc_State_s Struct</register>
+      <title>tmcRpc_State_s Struct</title>
+      <bitfield/>
+      <keyword>tmcRpc_State_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F15B117E-87D5-4B61-AB1D-568BBABBCFD2"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcRpc_Parameters_s Struct</register>
+      <title>tmcRpc_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcRpc_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3F96E17E-B26E-46CD-BAA5-12BC3BD0A444"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcRpc_Output_s Struct</register>
+      <title>tmcRpc_Output_s Struct</title>
+      <bitfield/>
+      <keyword>tmcRpc_Output_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-2DDD2C10-61B4-4794-9312-5C5BFA43F2E6"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcRpc_ModuleData_s Struct</register>
+      <title>tmcRpc_ModuleData_s Struct</title>
+      <bitfield/>
+      <keyword>tmcRpc_ModuleData_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-D5A4A321-E0FE-4F02-8BCD-10E75827BA97"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcRpc_Input_s Struct</register>
+      <title>tmcRpc_Input_s Struct</title>
+      <bitfield/>
+      <keyword>tmcRpc_Input_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3E4B291B-E17C-47FD-B8B0-865F74C611ED"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Rotor Position Estimation API
+        Reference</register>
+      <title>Rotor Position Estimation API Reference</title>
+      <bitfield/>
+      <keyword>mc_rotor_position_estimation_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-0BA3B3DD-B3CF-40CB-999C-0D13BED79AFE"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpeI_RotorPositionEstimInit</register>
+      <title>mcRpeI_RotorPositionEstimInit</title>
+      <bitfield/>
+      <keyword>mcRpeI_RotorPositionEstimInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-144FAB56-2319-4EC8-B7C4-49C9351A39D1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpeI_RotorPositionReady</register>
+      <title>mcRpeI_RotorPositionReady</title>
+      <bitfield/>
+      <keyword>mcRpeI_RotorPositionReady</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-513B1473-8804-4954-A6A2-74A15B83D972"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpeI_RotorPositionEstimEnable</register>
+      <title>mcRpeI_RotorPositionEstimEnable</title>
+      <bitfield/>
+      <keyword>mcRpeI_RotorPositionEstimEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-2D8E3700-A5FA-4894-B9E9-CB42E98374B0"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpeI_ParametersSet</register>
+      <title>mcRpeI_ParametersSet</title>
+      <bitfield/>
+      <keyword>mcRpeI_ParametersSet</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-20614B72-FE37-4738-89D3-C0E4740BB4F4"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpeI_RotorPositionEstim</register>
+      <title>mcRpeI_RotorPositionEstim</title>
+      <bitfield/>
+      <keyword>mcRpeI_RotorPositionEstim</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-6823E2B6-2607-45AA-96B7-A8A902E0A5EE"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpe_RotorPostionOffsetCalc</register>
+      <title>mcRpe_RotorPostionOffsetCalc</title>
+      <bitfield/>
+      <keyword>mcRpe_RotorPostionOffsetCalc</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-37583C5E-D05D-4E96-8F6E-3C72BC407236"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpeI_MechanicalSpeedGet</register>
+      <title>mcRpeI_MechanicalSpeedGet</title>
+      <bitfield/>
+      <keyword>mcRpeI_MechanicalSpeedGet</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-9F0534F6-7369-445E-960E-419575EB2399"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpeI_MechanicalAngleGet</register>
+      <title>mcRpeI_MechanicalAngleGet</title>
+      <bitfield/>
+      <keyword>mcRpeI_MechanicalAngleGet</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-DAB212D4-35AC-4316-8B51-728B693A284C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpeI_ElectricalSpeedGet</register>
+      <title>mcRpeI_ElectricalSpeedGet</title>
+      <bitfield/>
+      <keyword>mcRpeI_ElectricalSpeedGet</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-D924D758-3530-47B1-B4B8-7D6D6362D28E"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpeI_ElectricalAngleGet</register>
+      <title>mcRpeI_ElectricalAngleGet</title>
+      <bitfield/>
+      <keyword>mcRpeI_ElectricalAngleGet</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-2CC7C7AD-A0B2-4FEF-8B9A-E4C20268EFF4"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpeI_CarrierSignalInjection</register>
+      <title>mcRpeI_CarrierSignalInjection</title>
+      <bitfield/>
+      <keyword>mcRpeI_CarrierSignalInjection</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-6B99ABD1-D79A-48A3-9E4E-8454083A026B"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpeI_RotorPositionEstimReset</register>
+      <title>mcRpeI_RotorPositionEstimReset</title>
+      <bitfield/>
+      <keyword>mcRpeI_RotorPositionEstimReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-DC1BD475-C96E-44E6-8DF0-5C92AEC92844"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcRpeI_RotorPositionEstimDisable</register>
+      <title>mcRpeI_RotorPositionEstimDisable</title>
+      <bitfield/>
+      <keyword>mcRpeI_RotorPositionEstimDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-C0F33F98-171D-4E8B-8C1B-C038FB5FF19B"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcRpe_TrackingLoopParams_s Struct</register>
+      <title>tmcRpe_TrackingLoopParams_s Struct</title>
+      <bitfield/>
+      <keyword>tmcRpe_TrackingLoopParams_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-A09367B3-9AF4-4388-8AE9-15D50E3C8FF8"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcRpe_State_s Struct</register>
+      <title>tmcRpe_State_s Struct</title>
+      <bitfield/>
+      <keyword>tmcRpe_State_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-4ACA687D-C6F6-422A-ACE3-C5EE61947232"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcRpe_Parameters_s Struct</register>
+      <title>tmcRpe_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcRpe_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-22299CE3-D3BD-4E0A-A2E3-3D10749DE067"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcRpe_IPCParameters_s Struct</register>
+      <title>tmcRpe_IPCParameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcRpe_IPCParameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-46094F12-D8C4-496E-9BBE-6F49A3C6C569"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcRpe_HFIParameters_s Struct</register>
+      <title>tmcRpe_HFIParameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcRpe_HFIParameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-D3037FB0-D2D8-4DAD-8982-9C3653254BE9"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>IPD API Reference</register>
+      <title>IPD API Reference</title>
+      <bitfield/>
+      <keyword>mc_ipd_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3D69606D-A927-4597-BED3-D2419BB3E737"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcIpdI_InitialPositionDetectInit</register>
+      <title>mcIpdI_InitialPositionDetectInit</title>
+      <bitfield/>
+      <keyword>mcIpdI_InitialPositionDetectInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-658E38E5-204B-43FA-A424-9DC600A5A250"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcIpdI_InitialPositionDetectEnable</register>
+      <title>mcIpdI_InitialPositionDetectEnable</title>
+      <bitfield/>
+      <keyword>mcIpdI_InitialPositionDetectEnable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-96E5605A-3822-4E52-8DBE-677FD2636AD9"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcIpdI_InitialPositionDetect</register>
+      <title>mcIpdI_InitialPositionDetect</title>
+      <bitfield/>
+      <keyword>mcIpdI_InitialPositionDetect</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-E398D557-DFBD-4AD1-9582-03934F04CD94"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcIpdI_InitialPositionDetectDisable</register>
+      <title>mcIpdI_InitialPositionDetectDisable</title>
+      <bitfield/>
+      <keyword>mcIpdI_InitialPositionDetectDisable</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-10EC98C6-3434-43A1-99AC-C04D3DB7E30F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcIpdI_InitialPositionDetectReset</register>
+      <title>mcIpdI_InitialPositionDetectReset</title>
+      <bitfield/>
+      <keyword>mcIpdI_InitialPositionDetectReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-A7E56BB4-8020-48F4-A513-5759BECBFC45"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcIpd_Input_s Struct</register>
+      <title>tmcIpd_Input_s Struct</title>
+      <bitfield/>
+      <keyword>tmcIpd_Input_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-0DEE5DE1-6F7B-42EC-BA03-DC4927186E7F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcIpd_Output_s Struct</register>
+      <title>tmcIpd_Output_s Struct</title>
+      <bitfield/>
+      <keyword>tmcIpd_Output_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-8EAA671A-9DCF-47E1-8B38-11D02115EC1F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcIpd_ModuleData_s Struct</register>
+      <title>tmcIpd_ModuleData_s Struct</title>
+      <bitfield/>
+      <keyword>tmcIpd_ModuleData_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F1F5D615-D875-4EFA-87FA-F2DB0F023128"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcIpd_Parameters_s Struct</register>
+      <title>tmcIpd_Parameters_s Struct</title>
+      <bitfield/>
+      <keyword>tmcIpd_Parameters_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-B6A3C0CD-E527-48B2-A454-3F3CCE8AEAF4"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Voltage Measurement API Reference</register>
+      <title>Voltage Measurement API Reference</title>
+      <bitfield/>
+      <keyword>mc_voltage_measurement_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-C6AA53AD-A122-475B-835F-3B48BD2E60B5"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcVolI_VoltageCalculationInit</register>
+      <title>mcVolI_VoltageCalculationInit</title>
+      <bitfield/>
+      <keyword>mcVolI_VoltageCalculationInit</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-6BC2E275-8D1B-447A-BE9B-CB58B890C838"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcVolI_VoltageCalculation</register>
+      <title>mcVolI_VoltageCalculation</title>
+      <bitfield/>
+      <keyword>mcVolI_VoltageCalculation</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-00F676BC-46FD-45DB-A1E6-CBAB14783EA7"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mcVolI_VoltageCalculationReset</register>
+      <title>mcVolI_VoltageCalculationReset</title>
+      <bitfield/>
+      <keyword>mcVolI_VoltageCalculationReset</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-654A5735-9049-41D4-B1E9-18E6B8C2337F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcVol_Input_s Struct</register>
+      <title>tmcVol_Input_s Struct</title>
+      <bitfield/>
+      <keyword>tmcVol_Input_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-0566FC8E-7C36-4B1A-BF0A-5CDD617118DF"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcVol_ModuleData_s Struct</register>
+      <title>tmcVol_ModuleData_s Struct</title>
+      <bitfield/>
+      <keyword>tmcVol_ModuleData_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-4100F7AC-8BEB-4CEC-B588-98903F783ADC"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>tmcVol_Output_s Struct</register>
+      <title>tmcVol_Output_s Struct</title>
+      <bitfield/>
+      <keyword>tmcVol_Output_s</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-C4F47DBF-B88F-4147-A7D9-D8C69DFCEC07"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mc_hardware_abstraction_api</register>
+      <title>mc_hardware_abstraction_api</title>
+      <bitfield/>
+      <keyword>mc_hardware_abstraction_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-A09E5182-84A4-40CB-9732-FE12DAC559EC"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mc_utilities_api</register>
+      <title>mc_utilities_api</title>
+      <bitfield/>
+      <keyword>mc_utilities_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F3037440-0B95-4A3A-8BBC-61A03B757556"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>mc_key_manager_api</register>
+      <title>mc_key_manager_api</title>
+      <bitfield/>
+      <keyword>mc_key_manager_api</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-42876005-92C2-4CC0-81FC-71368462D294"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Harmony QSpin Motor Control</register>
+      <title>Harmony QSpin Motor Control</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_introduction</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-42876005-92C2-4CC0-81FC-71368462D294"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Harmony QSpin Motor Control</register>
+      <title>Harmony QSpin Motor Control</title>
+      <bitfield/>
+      <keyword>motor_control_introduction</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Software Design</register>
+      <title>Software Design</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_software_design</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-7AA80154-50EF-428B-9AC0-598B6BCB3272"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Software Design</register>
+      <title>Software Design</title>
+      <bitfield/>
+      <keyword>motor_control_software_design</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Microchip MPLAB® Harmony 3 Release
+        Notes</register>
+      <title>Microchip MPLAB® Harmony 3 Release Notes</title>
+      <bitfield/>
+      <keyword>MH3_motor_control_release_notes</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Microchip MPLAB® Harmony 3 Release
+        Notes</register>
+      <title>Microchip MPLAB® Harmony 3 Release Notes</title>
+      <bitfield/>
+      <keyword>motor_control_release_notes</keyword>
+   </keyworditem>
+</keywords>

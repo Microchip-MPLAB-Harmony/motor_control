@@ -485,9 +485,9 @@ void mcAppI_AdcCalibrationIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
         /** For MISRA Compliance */
     }
 
-<#if MCPMSMFOC_X2CScope == "X2CScope">
+<#if MCPMSMFOC_X2CSCOPE == "X2Cscope">
     /** Calibration and monitoring update */
-    X2CScope_Update();
+    X2Cscope_Update();
 </#if>
 
      /** ADC end of conversion interrupt generation for FOC control */
@@ -564,9 +564,9 @@ void mcAppI_InitialPositionDetectIsr( ADCHS_CHANNEL_NUM channel, uintptr_t conte
     /** Increment interrupt counter */
     mcAppI_1msSyncCounter_gdu32++;
 
-<#if MCPMSMFOC_X2CScope == "X2CScope">
+<#if MCPMSMFOC_X2CSCOPE == "X2Cscope">
     /** Calibration and monitoring update */
-    X2CScope_Update();
+    X2Cscope_Update();
 </#if>
 
     /** ADC end of conversion interrupt generation for FOC control */
@@ -652,9 +652,9 @@ void mcAppI_AdcFinishedIsr( ADCHS_CHANNEL_NUM channel, uintptr_t context )
     mcHalI_AdcHardwareTriggerRenable();
 </#if>
 
-<#if MCPMSMFOC_X2CScope == "X2CScope">
+<#if MCPMSMFOC_X2CSCOPE == "X2Cscope">
     /** Calibration and monitoring update */
-    X2CScope_Update();
+    X2Cscope_Update();
 </#if>
 
     /** Increment interrupt counter */

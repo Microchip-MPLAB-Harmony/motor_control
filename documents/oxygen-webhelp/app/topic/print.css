@@ -1,0 +1,39 @@
+/*
+
+Oxygen WebHelp Plugin
+Copyright (c) 1998-2021 Syncro Soft SRL, Romania.  All rights reserved.
+
+*/
+
+@media print {
+  /**
+   * Hide header and footer
+   */
+  .nav,
+  .navheader,
+  .footer,
+  .navfooter,
+  #searchForm,
+  .wh_search_input,
+  .wh_header {
+    display: none !important;
+  }
+
+  /**
+   * Remove shadows when printing.
+   */
+  * {
+    text-shadow: none !important;
+  }
+
+  body {
+    margin: auto;
+  }
+  .container {
+    width: 100%;
+  }
+  *[class ^= "col-"],
+  *[class ^= " col-"] {
+    width: 100%;
+  }
+}

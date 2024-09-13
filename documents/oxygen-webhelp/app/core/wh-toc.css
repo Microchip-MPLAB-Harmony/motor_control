@@ -1,0 +1,373 @@
+/*
+ * ------------------------------------------------------------------
+ *  
+ * Tree TOC for the main page.
+ * 
+ */
+.wh_main_page_toc{
+    width: 80%;
+    margin: 1em auto 2em;
+}
+.wh_main_page_toc_entry{
+    padding: 0.5em;
+}
+.wh_main_page_toc_accordion_entries {
+    display: none;
+}
+
+/* The size of the tiltes should be larger, to standout more against the short descriptions. */
+.wh_main_page_toc a{
+    font-size:1.1em;
+}
+.wh_toc_shortdesc{
+    font-size:0.9em;
+    color:gray;
+}
+
+
+/* Padding for all children from the second level, but leave the shortdesc at the X as the header. */
+.wh_main_page_toc_accordion_entries > *{
+    margin-left:5em;
+}
+.wh_main_page_toc_accordion_entries > .wh_toc_shortdesc{
+    margin-left:3em;
+}
+
+
+.expanded + .wh_main_page_toc_accordion_entries {
+    display: block;
+}
+.wh_main_page_toc > .wh_main_page_toc_accordion_header,
+.wh_main_page_toc > .wh_main_page_toc_entry{
+    padding:0.5em;
+    padding-left:3em;
+    margin:0;
+}
+.wh_main_page_toc_accordion_entries .wh_main_page_toc_entry:last-child{
+    padding-bottom:0.7em
+}
+
+/* Expand / collapse symbols*/
+.wh_main_page_toc {
+    position:relative;
+}
+.wh_main_page_toc .wh_main_page_toc_accordion_header.expanded:before,
+.wh_main_page_toc .wh_main_page_toc_accordion_header:before{
+    display: inline-block;
+    font-weight: bold;
+    font-family:"oXygen WebHelp", serif;
+    position: absolute;
+    left: 1em;
+    cursor: pointer;
+}
+.wh_main_page_toc .wh_main_page_toc_accordion_header:before{
+    content: "q"; /* expand symbol */
+}
+.wh_main_page_toc .wh_main_page_toc_accordion_header.expanded:before{
+    content: "p"; /* collapse symbol */
+}
+
+/* Colors */
+.wh_main_page_toc{
+    border: 1px solid #c0c0c0;
+    background-color: #ffffff;
+}
+.wh_main_page_toc .wh_main_page_toc_accordion_header,
+.wh_main_page_toc > .wh_main_page_toc_entry {
+    border-bottom: 1px solid #c0c0c0;
+}
+.wh_main_page_toc>.wh_main_page_toc_entry:last-child {
+    border-bottom: none;
+}
+.wh_main_page_toc_accordion_entries{
+    background-color: #eeeeee;
+    border-bottom: 1px solid #c0c0c0;
+}
+.wh_main_page_toc .expanded {
+    background-color: #eeeeee;
+    border-bottom: 0;
+}
+.wh_main_page_toc .wh_main_page_toc_accordion_header:hover,
+.wh_main_page_toc>.wh_main_page_toc_entry:hover{
+    background-color: #eeeeee;
+}
+.wh_main_page_toc a {
+    color: #2874bd;
+}
+
+
+/**
+ * 
+ * Tiles
+ * 
+ */
+
+.wh_content_flex_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: stretch;
+    flex-wrap: nowrap;
+}
+
+.wh_tiles {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    align-content: stretch;
+    flex-wrap: wrap;
+}
+
+.wh_tile {
+    margin: 1em;
+    padding: 1em;
+    width: 30%;
+    min-width: 300px;
+    min-height: 140px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .wh_tile {
+        width: 45%;
+    }
+}
+
+
+@media only screen and (max-width: 767px) {
+    .wh_tile {
+        width: 100%;
+        min-width: 240px;
+    }
+}
+
+.wh_tile_image {
+    text-align: center;
+    padding-bottom: .5em;
+}
+
+/* Make the link from the tile the entire width */
+.wh_tile_text{
+    position:relative;
+    height:100%;
+    overflow:hidden;
+}
+
+.wh_tile_title span{
+    display: block;
+    width: 100%;
+    line-height: 1.2em;
+}
+
+.wh_tile_title a{
+    display: block;
+    width: 100%;
+}
+
+@media only screen and (max-width: 767px) {
+    .wh_tile_text:after{
+        display: none;
+    }
+}
+
+/**
+ *
+ * Remove outline border on focus
+ *
+ */
+input:focus{
+    outline:none;
+}
+
+.dd{
+    margin-bottom: .5em;
+    margin-left: 40px
+}
+
+/**
+ *
+ * Styles used for RTL pages
+ *
+ */
+html[dir='rtl'] * {
+	text-align: initial;
+}
+
+html[dir='rtl'] .title {
+    padding-right: .6em;
+}
+
+html[dir='rtl'] .wh_expand_btn {
+    right: .6em;
+}
+html[dir='rtl'] .wh_expand_btn:before,
+html[dir='rtl'] .wh-expand-btn{
+    transform: scaleX(-1);
+}
+
+html[dir='rtl'] .wh_breadcrumb li:not(:last-of-type):after {
+    content: "";
+}
+html[dir='rtl'] .wh_breadcrumb li:not(:first-of-type):before {
+    content: "/";
+    padding: 0 5px;
+}
+html[dir='rtl'] .wh_breadcrumb li:nth-child(2):before {
+    display: none;
+}
+
+ html[dir='rtl'] .wh_publication_toc ul ul{
+     padding-right: 1em;
+ }
+
+html[dir='rtl'] .wh_search_button{
+    left:0;
+    right: auto;
+    float:left;
+    border-radius: 5px 0 0 5px;
+}
+html[dir='rtl'] .wh_search_button:after{
+    left:-2px;
+}
+
+html[dir='rtl'] .wh_topic_toc {
+    border-right: 1px solid #cfe2f5;
+    border-left: none;
+    margin-right: 0;
+    padding-right: .5em;
+}
+
+html[dir='rtl'] .wh_publication_toc > ul {
+    border-left: none;
+    border-right: 2px solid #941e88;
+    margin-right: 1em;
+    padding-right: 1.5em;
+    position: relative;
+}
+
+html[dir='rtl'] .wh_publication_toc .active:before {
+    transform: scaleX(-1);
+    left: initial;
+    right: 1px;
+}
+
+html[dir='rtl'] .wh_right_tools {
+    right: auto;
+    left:0;
+}
+html[dir='rtl'] .wh_indexterms_link {
+    float: left;
+}
+html[dir='rtl'] .wh_toggle_button {
+    float:left;
+}
+html[dir='rtl'] .navprev, html[dir='rtl'] .navnext, html[dir='rtl'] .wh_print_link {
+    float:left;
+}
+
+@media only screen and (min-width: 768px){
+    html[dir='rtl'] .wh_logo_and_publication_title_container{
+        float:right;
+    }
+}
+@media only screen and (max-width: 767px) {
+    html[dir='rtl'] .wh_logo_and_publication_title {
+        float: right;
+    }
+    html[dir='rtl'] .wh_toggle_button {
+        margin-right: 0;
+        margin-left: 15px;
+    }
+}
+
+/* Render top_menu for devices larger than 767px */
+@media only screen and (min-width: 768px) {
+    html[dir='rtl'] .wh_top_menu {
+        float: left;
+    }
+
+    html[dir='rtl'] .wh_top_menu ul li {
+        float: right;
+    }
+
+    html[dir='rtl'] .wh_top_menu ul ul ul {
+        right: 100%;
+        left:auto;
+    }
+
+    /* Mark the items that have a submenu with a small double arrow. */
+    html[dir='rtl'] .wh_top_menu ul ul li.has-children > span > a{
+        padding-left: 0;
+        padding-right: 1em;
+    }
+    html[dir='rtl'] .wh_top_menu ul ul li.has-children:after{
+        left:5px;
+        right:auto;
+    }
+    html[dir='rtl'] .wh_top_menu:not(.activated-on-click) ul li:hover > ul,
+    html[dir='rtl'] .wh_top_menu.activated-on-click ul li.active > ul {
+        max-width: 210px;
+    }
+}
+
+/* WH-1485: A wide table overflows the topic content area in the Responsive output. */
+.tablenoborder,
+.table-container,
+.simpletable-container {
+    overflow-x: auto;
+}
+
+/* OSB-269 Bold publication toc selection. */
+.wh_publication_toc .active > .topicref a {
+    font-weight: bold;
+}
+
+/* WH-2482 Button to close the page toc. */
+.close-toc-button {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 4px 7px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16);
+    width: 21px;
+    height: 21px;
+}
+
+/* Hover style for the button to close the page toc. */
+.close-toc-button:hover {
+    background-color: #cfe2f5;
+    cursor: pointer
+}
+
+.close-toc-icon-container {
+    display: block;    
+    overflow: hidden; 
+    padding-left: 2px; 
+}
+
+.close-toc-icon {
+    display: block; 
+    border: 1px solid #343A40; 
+    width: 9px; 
+    height: 9px; 
+    transform: rotate(45deg);
+}
+
+#wh_close_publication_toc_button.clicked > .close-toc-icon-container {
+    transform: rotate(180deg);
+} 
+
+#wh_close_topic_toc_button > .close-toc-icon-container {
+    transform: rotate(180deg);
+}
+
+#wh_close_topic_toc_button.clicked > .close-toc-icon-container {
+    transform: rotate(0deg);
+}
+
+#wh_close_publication_toc_button {
+    z-index: 997;
+}

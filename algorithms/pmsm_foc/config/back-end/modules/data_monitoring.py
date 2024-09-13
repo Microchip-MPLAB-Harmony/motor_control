@@ -54,17 +54,15 @@ class mcFocI_DataMonitoringClass:
         # Data communication Enable
         self.sym_PROTOCOL = self.component.createBooleanSymbol("MCPMSMFOC_DATA_MONITOR_ENABLE", self.sym_NODE)
         self.sym_PROTOCOL.setLabel("Enable data monitoring")
-
         self.sym_PROTOCOL.setDefaultValue(False)
-
         self.sym_PROTOCOL.setDependencies(self.updateInstance, ["MCPMSMFOC_DATA_MONITOR_ENABLE"])
 
         #
-        # protocols = ['X2C Scope', 'XCP' ]
-        protocols = ['X2C Scope', 'X2C Model']
+        # protocols = ['X2Cscope', 'XCP' ]
+        protocols = ['X2Cscope', 'X2Cmodel']
         self.sym_PROTOCOL = self.component.createComboSymbol("MCPMSMFOC_DATA_MONITOR_PROTOCOL", self.sym_NODE, protocols)
         self.sym_PROTOCOL.setLabel("Protocol")
-        self.sym_PROTOCOL.setVisible(False)
+        #self.sym_PROTOCOL.setVisible(False)
         self.sym_PROTOCOL.setReadOnly(True)
         self.sym_PROTOCOL.setDependencies( self.showThisSymbol, ['MCPMSMFOC_DATA_MONITOR_ENABLE'])
 
@@ -112,7 +110,8 @@ class mcFocI_DataMonitoringClass:
         self.sym_TRANSMIT_PAD.setDependencies(self.updateTxPadList, ["MCPMSMFOC_DATA_MONITOR_PERIPHERAL", "MCPMSMFOC_DATA_MONITOR_TRANSMIT_PAD", "MCPMSMFOC_USED_PIN_LIST"])
         self.sym_DATA_MONITOR_CALLBACK = self.component.createMenuSymbol(None, None)
         self.sym_DATA_MONITOR_CALLBACK.setLabel("Data monitoring callback")
-        self.sym_DATA_MONITOR_CALLBACK.setDependencies(self.updateCommInterface, ["MCPMSMFOC_DATA_MONITOR_PERIPHERAL",
+        self.sym_DATA_MONITOR_CALLBACK.setDependencies(self.updateCommInterface, [
+                                                                      "MCPMSMFOC_DATA_MONITOR_PERIPHERAL",
                                                                       "MCPMSMFOC_DEBUG_TX_CHANNEL",
                                                                       "MCPMSMFOC_DEBUG_RX_CHANNEL",
                                                                       "MCPMSMFOC_DATA_MONITOR_RECEIVE_PAD",
@@ -120,7 +119,7 @@ class mcFocI_DataMonitoringClass:
         self.sym_DATA_MONITOR_CALLBACK.setVisible(False)
 
 
-        self.sym_X2CSCOPE = self.component.createStringSymbol("MCPMSMFOC_X2CScope", None)
+        self.sym_X2CSCOPE = self.component.createStringSymbol("MCPMSMFOC_X2CSCOPE", None)
         self.sym_X2CSCOPE.setVisible(False)
 
 
@@ -197,7 +196,10 @@ class mcFocI_DataMonitoringClass:
             autoConnectTable = [ module]
             res = Database.activateComponents(autoConnectTable)
 
-            autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE","X2CScope", "x2cScope_Scope"]]
+            if module == 'X2Cscope':
+                autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE","X2Cscope", "X2Cscope_Scope"]]
+            else:     # X2Cmodel
+                autoComponentIDTable = [[ self.component.getID(), "pmsmfoc_X2CSCOPE","X2Cmodel", "X2Cmodel"]]
             res = Database.connectDependencies(autoComponentIDTable)
         else:
 
@@ -219,7 +221,7 @@ class mcFocI_DataMonitoringClass:
 
     def handleMessage(self, ID, information):
         if( ID == "BSP_DATA_MONITORING"):
-            # Enable X2C Scope
+            # Enable X2Cscope
             instance = next(iter(information))
             Database.setSymbolValue("pmsm_foc", "MCPMSMFOC_DATA_MONITOR_ENABLE", True )
             Database.setSymbolValue("pmsm_foc", "MCPMSMFOC_DATA_MONITOR_PERIPHERAL", instance)
@@ -249,7 +251,7 @@ class mcFocI_DataMonitoringClass:
             self.sym_X2CSCOPE.setValue( target["component"].getID())
 
             # Get the X2C Communication peripheral
-            # commPeripheral = Database.getSymbolValue("X2CScope", "X2C_COMM_INSTANCE")
+            # commPeripheral = Database.getSymbolValue("X2Cscope", "X2C_COMM_INSTANCE")
             #
             # # Activate and connect peripheral
             # autoConnectTable = [commPeripheral]

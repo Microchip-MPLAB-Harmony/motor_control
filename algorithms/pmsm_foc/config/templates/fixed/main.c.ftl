@@ -75,8 +75,10 @@ int main ( void )
         /* Motor control main loop tasks */
         mcAppI_NonISRTasks();
 
+<#if MCPMSMFOC_X2CSCOPE == "X2Cscope">
         /* X2C Communication */
-        X2CScope_Communicate();
+        X2Cscope_Communicate();
+</#if>
 
     }
 

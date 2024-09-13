@@ -1,0 +1,75 @@
+@import url("mchp-css-overrides.css");
+
+.hl-json_key {
+	color: #7263B9
+}
+
+.hl-keyword {
+	color: #0000e6
+}
+
+.hl-string {
+	color: #ce7b00
+}
+
+.hl-comment {
+	color: #006400
+}
+
+.hl-directive {
+	color: #009b00
+}
+
+.hl-tag {
+	color: #000096
+}
+
+.hl-attribute {
+	color: #ff7935
+}
+
+.hl-value {
+	color: #993300
+}
+
+.hl-html {
+	color: navy;
+	font-weight: bold
+}
+
+.hl-xsl {
+	color: #0066FF
+}
+
+.hl-section {
+	
+}
+
+.hl-number {
+	
+}
+
+.hl-annotation {
+	color: gray
+}
+
+.hl-tag-doctype-comment {
+	color: #3f5fbf
+}
+
+.hl-tag-doctype {
+	color: #0000ff
+}
+
+.hl-defines {
+    color: #2e92c7;
+}
+
+.hl-functions {
+    color: #000000;
+    font-weight: bold;
+}
+
+.hl-includes {
+    color: #CE7B00;
+}

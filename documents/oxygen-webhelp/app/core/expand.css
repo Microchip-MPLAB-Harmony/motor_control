@@ -1,0 +1,30 @@
+@media screen{
+
+/* Expand / collapse */
+ table > caption,
+.topic > .title,
+.sectiontitle:not(.tasklabel),
+.wh_term_group > .wh_first_letter {
+    padding-left: .7em
+}
+
+.wh_expand_btn.expanded:before {
+    content:"p";
+}
+
+.wh_expand_btn:before {
+    content:"q";
+    font-family: "oXygen WebHelp", serif;
+    font-style: normal;
+    font-size: 0.6em;
+    font-weight: lighter;
+    display: inline-block;
+}
+
+.wh_expand_btn {
+    cursor: pointer;
+    position: relative;
+    left: -0.6em;
+}
+
+}

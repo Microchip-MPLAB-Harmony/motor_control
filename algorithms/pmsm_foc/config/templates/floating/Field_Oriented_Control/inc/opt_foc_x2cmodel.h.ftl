@@ -184,7 +184,7 @@ static inline void mcFoc_OutputPortsWrite( void  )
   #endif
 
   #if ( X2CMODEL_TYPE == FIXED_POINT_Q15_MODEL )
-    uint16_t duty[3U];
+    int16_t duty[3U];
     int16_t   periodCount;
 
     /* Get the period count from mcHalI_PwmPeriodGet() */
@@ -200,8 +200,6 @@ static inline void mcFoc_OutputPortsWrite( void  )
         mcRpcI_RotorPositionCalcEnable(&mcRpcI_ModuleData_gds);
         firsttime=1;
         }
-         
-       
     }
     else
     {

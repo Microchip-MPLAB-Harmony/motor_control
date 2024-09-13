@@ -1,0 +1,390 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="copyright" content="(C) Copyright 2024"/><meta name="generator" content="DITA-OT"/><meta name="description" content="The phase current information is crucial to control the torque of the motor of an electric drive with Field Oriented Control. The following section describes different current measurement principles in an electric drive, and how it can be configured with Harmony Qspin."/>        
+      <title>1.1.1.1.1.2 Current Measurement</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F-d1683e72"/><meta name="wh-source-relpath" content="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F.xml"/><meta name="wh-out-relpath" content="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
+    
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+    <script src="https://assets.adobedtm.com/6a72a357eb48/a636c708c7fe/launch-0b0023397020.min.js"></script><!-- Adobe Analytics -->
+</head>
+
+    <body id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony 3 Motor Control &#xA;    "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony 3 Motor Control 
+    </a></div>
+                    
+                </div>
+                
+                
+            </div>
+
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div class="d-flex justify-contents-around"><div class="flex-grow-1"></div><div class="position-relative flex-grow-1"><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div><div class="align-self-center flex-grow-1 ml-2"></div></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
+</div>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C"><div class="title"><a href="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Harmony QSpin Motor Control</a></div></div></li><li><div class="topicref" data-id="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60"><div class="title"><a href="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+<strong class="ph b">Supported Algorithms</strong></a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSPIN supported motor control algorithms.</p></div></div></div></li><li><div class="topicref" data-id="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F"><div class="title"><a href="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Permanent Magnet Synchronous Motors</a><div class="wh-tooltip"><p class="shortdesc">This section describes the field oriented control implementation of permanent magnet         synchronous motors (PMSM) and Harmony QSPIN configuration.</p></div></div></div></li><li><div class="topicref" data-id="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35"><div class="title"><a href="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1</ph>
+PMSM FOC</a></div></div></li><li><div class="topicref" data-id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71"><div class="title"><a href="GUID-5CCF6974-52BB-4407-9796-20C86F178C71.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1</ph>
+Field Oriented Control</a><div class="wh-tooltip"><p class="shortdesc">The Field Oriented Control (FOC) is the conventional control scheme for permanent-magnet         synchronous motors. It generally results in smoother torque, slightly higher efficiency, and         higher torque-speed curve, compared to six-step control, but requires a measurement or         estimate of rotor position, and is more computationally intensive.</p></div></div></div></li><li class="active"><div class="topicref" data-id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F"><div class="title"><a href="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1.2</ph>
+Current Measurement</a><div class="wh-tooltip"><p class="shortdesc">The phase current information is crucial to control the torque of the motor of an         electric drive with Field Oriented Control. The following section describes different         current measurement principles in an electric drive, and how it can be configured with         Harmony Qspin.</p></div></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            <div class="row" style="margin-top: -1em;"><div class="col-lg-7 col-md-7 col-sm-12 offset-lg-3 offset-md-3 text-right border-bottom mb-1"><h2 class="text-dark header_title">
+    </h2></div></div>
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d1683e11" class="topicref" data-id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d1683e11-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C.html" id="GUID-7BBD04D6-F959-4DB3-986C-62130FAEF07C-d1683e11-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Harmony QSpin Motor Control</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60-d1683e19" class="topicref" data-id="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60-d1683e19-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60.html" id="GUID-BC210DD6-B7A6-407F-A3EC-49CFE5DBAC60-d1683e19-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+<strong class="ph b">Supported Algorithms</strong></a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSPIN supported motor control algorithms.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F-d1683e31" class="topicref" data-id="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-85BE370F-0541-4589-AA23-E11A372DBE9F-d1683e31-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F.html" id="GUID-85BE370F-0541-4589-AA23-E11A372DBE9F-d1683e31-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Permanent Magnet Synchronous Motors</a><div class="wh-tooltip"><p class="shortdesc">This section describes the field oriented control implementation of permanent magnet         synchronous motors (PMSM) and Harmony QSPIN configuration.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42" class="topicref" data-id="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35.html" id="GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1</ph>
+PMSM FOC</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50" class="topicref" data-id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-5CCF6974-52BB-4407-9796-20C86F178C71.html" id="GUID-5CCF6974-52BB-4407-9796-20C86F178C71-d1683e50-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1</ph>
+Field Oriented Control</a><div class="wh-tooltip"><p class="shortdesc">The Field Oriented Control (FOC) is the conventional control scheme for permanent-magnet         synchronous motors. It generally results in smoother torque, slightly higher efficiency, and         higher torque-speed curve, compared to six-step control, but requires a measurement or         estimate of rotor position, and is more computationally intensive.</p></div></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E-d1683e61" class="topicref" data-id="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E.html" id="GUID-C1C929BC-0D12-40FB-B555-F28B23CB457E-d1683e61-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1.1</ph>
+Permanent Magnet Synchronous Motor</a><div class="wh-tooltip"><p class="shortdesc">The Permanent Magnet Synchronous Motor (PMSM) is the most preferred choice for motor         control applications. Due to their permanent magnet rotor, they also have higher torque with         smaller frame size and no rotor current, all of which are advantages over AC Induction         Motors (AICMs). With their high power-to-size ratio, PMSMs can help make the design smaller         without the loss of torque. These strengths enable the usage of PMSM in a broad range of         variable frequency drives (VFDs) applications.</p></div></div></div></li><li role="treeitem" class="active"><div data-tocid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F-d1683e72" class="topicref" data-id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F.html" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F-d1683e72-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1.2</ph>
+Current Measurement</a><div class="wh-tooltip"><p class="shortdesc">The phase current information is crucial to control the torque of the motor of an         electric drive with Field Oriented Control. The following section describes different         current measurement principles in an electric drive, and how it can be configured with         Harmony Qspin.</p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7-d1683e83" class="topicref" data-id="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7.html" id="GUID-85B9E278-D8AE-4132-9904-24D72A113AD7-d1683e83-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.1.3</ph>
+Rotor Position Sensing</a><div class="wh-tooltip"><p class="shortdesc">he rotor position information is crucial to control the torque of the motor of an         electric drive with Field Oriented Control. The following section describes different rotor         position measurement technique in an electric drive, and how it can be configured with         Harmony QSpin.</p></div></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-81C3E3D7-9C52-4575-B330-AB618C657300-d1683e94" class="topicref" data-id="GUID-81C3E3D7-9C52-4575-B330-AB618C657300" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-81C3E3D7-9C52-4575-B330-AB618C657300-d1683e94-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-81C3E3D7-9C52-4575-B330-AB618C657300.html" id="GUID-81C3E3D7-9C52-4575-B330-AB618C657300-d1683e94-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.2</ph>
+Harmony QSpin: PMSM FOC</a><div class="wh-tooltip"><p class="shortdesc"></p></div></div></div></li><li role="treeitem"><div data-tocid="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3-d1683e361" class="topicref" data-id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3.html" id="GUID-F8D4D059-6217-4066-BD8B-60DD5B0B9DF3-d1683e361-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.3</ph>
+Field Oriented Control Implementation</a><div class="wh-tooltip"><p class="shortdesc">The generated code from the Harmony QSpin intends to achieve following goals:</p></div></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8-d1683e372" class="topicref" data-id="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8-d1683e372-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8.html" id="GUID-5D9A13C4-45FC-4744-B788-8853716E4AD8-d1683e372-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1.1.4</ph>
+Harmony QSpin API Reference</a><div class="wh-tooltip"><p class="shortdesc">This section describes the Harmony QSpin API references for the motor control         application.</p></div></div></div></li></ul></li></ul></li></ul></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-42876005-92C2-4CC0-81FC-71368462D294-d1683e1861" class="topicref" data-id="GUID-42876005-92C2-4CC0-81FC-71368462D294" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-42876005-92C2-4CC0-81FC-71368462D294-d1683e1861-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-42876005-92C2-4CC0-81FC-71368462D294.html" id="GUID-42876005-92C2-4CC0-81FC-71368462D294-d1683e1861-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2</ph>
+Harmony QSpin Motor Control</a></div></div></li><li role="treeitem"><div data-tocid="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508-d1683e1894" class="topicref" data-id="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508.html" id="GUID-05FBE3B7-EA31-4FD0-BA88-715B91E2D508-d1683e1894-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">3</ph>
+Microchip MPLAB® Harmony 3 Release Notes</a></div></div></li><li role="treeitem"><div data-tocid="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183-d1683e1902" class="topicref" data-id="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183.html" id="GUID-5AE41BEF-D04E-41F6-AA77-5469CF13B183-d1683e1902-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">4</ph>
+License</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1683e1910" class="topicref backmatter backmatter_parent" data-id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1683e1910-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B.html" id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1683e1910-link">Microchip Information</a></div></div></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-7 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        <button id="wh_close_topic_toc_button" class="close-toc-button d-none" aria-label="Toggle topic table of content" aria-controls="wh_topic_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__GUID-935F1996-EFEE-4C87-93E7-22AC6AFCC4D9">
+<h1 class="- topic/title title topictitle1" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__GUID-935F1996-EFEE-4C87-93E7-22AC6AFCC4D9" style="">Current Measurement</h1>
+
+<div class="- topic/body body"><p class="- topic/shortdesc shortdesc">The phase current information is crucial to control the torque of the motor of an
+        electric drive with Field Oriented Control. The following section describes different
+        current measurement principles in an electric drive, and how it can be configured with
+        Harmony Qspin.</p>
+        <section class="- topic/section section" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__SECTION_VBJ_5MT_VXB" data-ofbid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__SECTION_VBJ_5MT_VXB"><h2 class="- topic/title title sectiontitle">Current Measurement Principles</h2>
+            
+            <p class="- topic/p p"><a class="- topic/xref xref" href="#GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__FIG_HTS_HNT_VXB"><span>Figure 1-6</span></a> shows different measurement principles used for phase current measurement in an
+                electric drive.</p>
+            <figure class="- topic/fig fig fignone" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__FIG_HTS_HNT_VXB" data-ofbid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__FIG_HTS_HNT_VXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-6. <span id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__GUID-03CB2716-7AEB-411F-AAEB-B0BD140D5B03" class="fig--title">Current Measurement Principles</span></span></figcaption>
+                
+                <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__IMAGE_ITS_HNT_VXB" src="GUID-37BAE3AD-6DFA-4DC3-98F8-152794A0A76D-high.jpg"/></div></div>
+            </figure>
+            <p class="- topic/p p">Each of the above shown measurement principles has its own pros and cons. Discussion
+                of all the measurement principles is beyond the scope on this section. Therefore,
+                this document focuses on resistive based current measurement principles which are by
+                far are the most sought after techniques.</p>
+        </section>
+        <section class="- topic/section section" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__SECTION_HYQ_2NT_VXB" data-ofbid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__SECTION_HYQ_2NT_VXB"><h2 class="- topic/title title sectiontitle">Resistive based</h2>
+            
+            <p class="- topic/p p">This technique places specially designed resistors usually referred as shunt
+                resistors along the path of the current which has to be measured. The voltage drop
+                across these shunt resistors is used to calculate the current values using Ohm's law
+                as follows:</p>
+            <figure class="+ topic/fig equation-d/equation-figure fig equation-figure fignone" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__EQUATION-FIGURE_EDK_D4T_VXB" data-ofbid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__EQUATION-FIGURE_EDK_D4T_VXB">
+                <div class="+ topic/div equation-d/equation-block  eqn-block "><math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:mchp="http://microchip.com" xmlns:table="http://dita-ot.sourceforge.net/ns/201007/dita-ot/table">
+                            <mrow>
+                                <mi>i</mi>
+                                <mo>=</mo>
+                                <mrow>
+                                    <mfrac>
+                                        <mrow>
+                                            <mi>V</mi>
+                                        </mrow>
+                                        <mrow>
+                                            <mi>R</mi>
+                                        </mrow>
+                                    </mfrac>
+                                </mrow>
+                            </mrow>
+                        </math></div>
+            </figure>
+            <p class="- topic/p p">Based on where number shunts and their respective location for measuring current in
+                an electric drive, the resistive based techniques can be classified into three
+                categories:</p>
+            <ol class="- topic/ol ol" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__OL_RFZ_VNT_VXB" data-ofbid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__OL_RFZ_VNT_VXB">
+                <li class="- topic/li li" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__GUID-F31BDD2D-4497-4E85-B6F4-268378F6AA10" data-ofbid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__GUID-F31BDD2D-4497-4E85-B6F4-268378F6AA10">
+                    <p class="- topic/p p">Three shunt</p>
+                </li>
+                <li class="- topic/li li" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__GUID-782972CB-6F44-4FF8-92CA-7986371656D5" data-ofbid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__GUID-782972CB-6F44-4FF8-92CA-7986371656D5">
+                    <p class="- topic/p p">Dual shunt</p>
+                </li>
+                <li class="- topic/li li" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__GUID-4EA6C39D-7C2C-434B-A591-088BFE38484B" data-ofbid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__GUID-4EA6C39D-7C2C-434B-A591-088BFE38484B">
+                    <p class="- topic/p p">Single shunt</p>
+                </li>
+            </ol>
+            <div class="- topic/div div"><strong class="+ topic/ph hi-d/b ph b">Three shunt</strong><p class="- topic/p p"><a class="- topic/xref xref" href="#GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__FIG_KKP_K4T_VXB"><span>Figure 1-7</span></a> shows a three shunt phase current measurement
+                    technique.</p><figure class="- topic/fig fig fignone" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__FIG_KKP_K4T_VXB" data-ofbid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__FIG_KKP_K4T_VXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-7. <span id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__GUID-1BC89A98-2075-42C2-AF4B-06C50F7A7E3A" class="fig--title">Three shunt current
+                        measurement</span></span></figcaption>
+                    
+                    <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__IMAGE_LKP_K4T_VXB" src="GUID-13DA65F1-7B64-40B3-BF08-6019C19627DB-high.jpg"/></div></div>
+                </figure><p class="- topic/p p">This technique employs three shunt resistors along the three inverter legs.
+                    At each modulation cycle, when the low side FETs are switched on, the phase
+                    currents are measured.</p><p class="- topic/p p">The three shunt current measurement has some
+                    advantages. The three shunt technique generally selects the two samples for
+                    which the low side FET were switched on for a longer duration, and the third
+                    current is calculated from Kirchhoff's current law (KCL). Hence, a lower
+                    bandwidth amplifiers can be used to measure the voltages. Additionally, this
+                    makes over-modulation simpler.</p></div>
+            <div class="- topic/div div"><strong class="+ topic/ph hi-d/b ph b">Dual shunt</strong><p class="- topic/p p"><a class="- topic/xref xref" href="#GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__FIG_PW2_FPT_VXB"><span>Figure 1-8</span></a> shows a typical dual current measurement technique.</p><figure class="- topic/fig fig fignone" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__FIG_PW2_FPT_VXB" data-ofbid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__FIG_PW2_FPT_VXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-8. <span id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__GUID-821726B3-924C-406F-9CE0-F1B65D6F0A26" class="fig--title">Dual shunt current
+                        measurement</span></span></figcaption>
+                    
+                    <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__IMAGE_QW2_FPT_VXB" src="GUID-FE4BCB2E-8466-481A-82D7-F0D0CEBFE386-high.jpg"/></div></div>
+                </figure><p class="- topic/p p">This technique employs two shunt resistors along the three inverter legs.
+                    At each modulation cycle, when the low side FETs are switched on, the phase
+                    currents of the two respective legs are then measured. The third current is
+                    calculated from Kirchhoff's current law (KCL).</p></div>
+            <div class="- topic/sectiondiv sectiondiv"><strong class="+ topic/ph hi-d/b ph b">Single shunt</strong><p class="- topic/p p"><a class="- topic/xref xref" href="#GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__FIG_IGP_SPT_VXB"><span>Figure 1-9</span></a> shows
+                    a typical single current measurement technique.</p><figure class="- topic/fig fig fignone" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__FIG_IGP_SPT_VXB" data-ofbid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__FIG_IGP_SPT_VXB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 1-9. <span id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__GUID-C5EAA595-0E27-4C18-A42C-CC16A50D1474" class="fig--title">Single shunt current
+                        measurement</span></span></figcaption>
+                    
+                    <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__IMAGE_JGP_SPT_VXB" src="GUID-E934F7C0-21B9-459B-8561-0FEB2B97A8B0-high.jpg"/></div></div>
+                </figure><p class="- topic/p p">This technique measures the DC link current and, with knowledge of the
+                    switching states, reconstructs each of the three-phase currents. For more
+                    technical details refer <a class="- topic/xref xref" href="https://ww1.microchip.com/downloads/en/Appnotes/01299A.pdf" target="_blank" rel="external noopener">AN1299</a>.</p></div>
+        </section>
+    </div>
+</article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                        <nav role="navigation" id="wh_topic_toc" aria-label="On this page" class="col-lg-2 d-none d-lg-block navbar d-print-none"> 
+                            <div id="wh_topic_toc_content">
+		                        
+	                            <div class=" wh_topic_toc "><div class="wh_topic_label">On this page</div><ul><li class="section-item"><div class="section-title"><a href="#GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__SECTION_VBJ_5MT_VXB" data-tocid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__SECTION_VBJ_5MT_VXB">Current Measurement Principles</a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__SECTION_HYQ_2NT_VXB" data-tocid="GUID-B0B753AB-03CF-4363-9DF4-3CC3CEF4D84F__SECTION_HYQ_2NT_VXB">Resistive based</a></div></li></ul></div>
+	                        	
+                        	</div>
+                        </nav>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
+  
+  <script type="text/javascript">_satellite.pageBottom();</script><!-- Adobe Analytics -->
+  <script type="text/javascript" src="mchp-js/prepend.js"></script><!-- Package for viewing PDFs on mobile devices -->
+  
+</div>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+       
+        </body>
+</html>
