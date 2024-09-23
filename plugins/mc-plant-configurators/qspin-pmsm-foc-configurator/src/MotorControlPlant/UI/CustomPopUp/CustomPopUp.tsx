@@ -1,5 +1,5 @@
 import { Dialog } from 'primereact/dialog';
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { confirmDialog } from 'primereact/confirmdialog';
 import { Button } from 'primereact/button';
 import MotorControlDiagnosis, {
   SetMotorControlDiagnosisDefaultWindowView
@@ -36,7 +36,8 @@ import {
   positionInterfaceText,
   voltageSourceText,
   dataMonitoringText,
-  quickSettingsText
+  quickSettingsText,
+  portNumber
 } from '../../UI/MainView/MainBlock';
 import { PluginConfigContext, symbolUtilApi } from '@mplab_harmony/harmony-plugin-client-lib';
 import { StoreSymbolArrayToMap, UpdateArrayofSymbolsResetAction } from '../../Tools/CommonUtil';
@@ -68,7 +69,7 @@ export function SetResetStatus(value: boolean) {
 
 const GenericPopUp = (props: {
   Id: string;
-  helpLink?: string;
+  helpLink: string;
   widthValue: string;
   heightValue: string;
   dialogVisibleStatus: boolean;
@@ -173,9 +174,11 @@ const GenericPopUp = (props: {
             className='p-button-raised p-button-rounded'
             label='Help'
             icon='pi pi-search'
+            tooltip={'View ' + props.Id + ' help'}
+            tooltipOptions={{ position: 'bottom' }}
             style={{ height: '1.85rem', fontSize: '14px', marginRight: '20px' }}
             onClick={() =>
-              props.helpLink
+              props.helpLink !== ''
                 ? onHelp(props.helpLink)
                 : toastRef.current.show({
                     severity: 'error',
@@ -190,7 +193,13 @@ const GenericPopUp = (props: {
     );
   };
 
-  const onHelp = (helpLink: string) => {};
+  const onHelp = (helpLink: string) => {
+    window.open(
+      'http://localhost:' + portNumber + '/motor_control/documents/' + helpLink,
+      '_blank',
+      'toolbar=0,location=0,menubar=0'
+    );
+  };
 
   const LoadMotorDiagnosis = () => {
     SetMotorControlDiagnosisDefaultWindowView();
@@ -271,7 +280,7 @@ const GenericPopUp = (props: {
 
   return (
     <div className='dialog-demo'>
-      <ConfirmDialog />
+      {/* <ConfirmDialog /> */}
       <Toast
         ref={toastRef}
         position='bottom-right'></Toast>

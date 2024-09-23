@@ -99,9 +99,6 @@ class mcMotI_MotorParametersClass:
         self.sym_METADATA_PART_NO.setLabel('Manufaturer part number')
         self.sym_METADATA_PART_NO.setDependencies(self.make_read_only, ['MCPMSMFOC_MOTOR_SEL'])
 
-        self.sym_WARNING = self.component.createCommentSymbol("MCPMSMFOC_CUSTOM_MOTOR_WARNING", self.sym_METADATA_MENU )
-        self.sym_WARNING.setLabel('No Warning')
-        self.sym_WARNING.setVisible(False)
 
         #   Custom motor parameters
         self.sym_CUSTOM_MOTOR_PARAMS = self.component.createStringSymbol("MCPMSMFOC_CUSTOM_MOTOR_PARAMS", self.sym_METADATA_MENU )
@@ -341,7 +338,8 @@ class mcMotI_MotorParametersClass:
         self.sym_CUSTOM_MOTOR_PARAMS.setValue(str(existing_custom_motors))
 
     def save_custom_motor_params( self ):
-        self.sym_WARNING.setVisible(False)
+        error_data = {'type': 'none', 'message': ''}
+
         custom_motor_name = str(self.sym_METADATA_NAME.getValue())
         if  self.sym_CUSTOM_MOTOR_PARAMS.getValue() != '':
             existing_custom_motors = eval(self.sym_CUSTOM_MOTOR_PARAMS.getValue())
@@ -349,21 +347,18 @@ class mcMotI_MotorParametersClass:
             existing_custom_motors = {}
 
         if custom_motor_name  in existing_custom_motors:
-            self.sym_WARNING.setVisible(True)
-            self.sym_WARNING.setLabel('The motor already exists. Change motor name and save again')
-            return
+            error_data['type'] = 'warning'
+            error_data['message'] = 'The motor already exists. Change motor name and save again'
+            return error_data
 
         if custom_motor_name != ''  and custom_motor_name:
             input_file = os.path.join(Module.getPath(), 'config', 'sample-motors', 'templates', 'custom_motor.yaml.template')
 
             prospective_out_file = os.path.join(Module.getPath(), 'config', 'sample-motors', 'custom-motors', custom_motor_name + '.yaml')
             if os.path.exists(prospective_out_file):
-                self.sym_WARNING.setVisible(True)
-                self.sym_WARNING.setLabel('The motor file already exists. Change motor name and re-enable')
-                return
-
-            self.sym_WARNING.setVisible(False)
-            self.sym_WARNING.setLabel('No Warning')
+                error_data['type'] = 'warning'
+                error_data['message'] = 'The motor already exists. Change motor name and save again'
+                return error_data
 
             # Load the YAML template file
             with open(input_file, 'r') as file:
@@ -423,6 +418,10 @@ class mcMotI_MotorParametersClass:
             new_custom_motor = { custom_motor_name: yaml_data['motor'] }
             existing_custom_motors.update(new_custom_motor)
             self.sym_CUSTOM_MOTOR_PARAMS.setValue(str(existing_custom_motors))
+            
+            error_data['type'] = 'success'
+            error_data['message'] = 'Motor has been added successfully!'
+        return error_data
 
     def numeric_value_get(self, value_str):
         # Split the string by whitespace to separate the numeric value from the unit
@@ -601,9 +600,12 @@ class mcMotI_MotorParametersClass:
         self.sym_SELECT_MOTOR.setRange( ['Custom'] + self.motors.keys())
 
     def handle_message( self, message_id, args ):
+        return_data =  {}
         if message_id == 'MESSAGE_FROM_QSPIN_GUI':
+            return_data = {'type': 'none', 'message': '' }
             if args['custom_motor_set'] == True:
-                self.save_custom_motor_params()
+                return_data =  self.save_custom_motor_params()
+        return return_data
 
     def __call__( self ):
 

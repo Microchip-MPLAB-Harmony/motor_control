@@ -1,13 +1,12 @@
 import { ShowConfigProps } from '../../../Tools/NodeUtils';
+import MetaDataInfo from './MetaDataInfo';
 import { electrical, mechanical, metaDataName, namePlate, sensor } from './MotorParameters';
 
 let metaDataSymbolArray = [
   'MCPMSMFOC_METADATA_MOTOR_FILE_NAME',
   'MCPMSMFOC_METADATA_MOTOR_NAME_MANUFACTURER',
   'MCPMSMFOC_METADATA_MOTOR_MANUFACTURER',
-  'MCPMSMFOC_METADATA_MOTOR_PART_NO',
-  'MCPMSMFOC_CUSTOM_MOTOR_SAVE',
-  'MCPMSMFOC_CUSTOM_MOTOR_WARNING'
+  'MCPMSMFOC_METADATA_MOTOR_PART_NO'
 ];
 
 let namePlateSymbols = [
@@ -48,7 +47,7 @@ const DisplayMotorParameters = (props: {
     case metaDataName:
       return (
         <div>
-          <ShowConfigProps
+          <MetaDataInfo
             title={props.headdingName}
             componentId={props.componentId}
             symbolsArray={metaDataSymbolArray}

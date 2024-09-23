@@ -49,13 +49,15 @@ export let dataMonitoringText = 'Data Monitoring';
 export let outputStageDignosisText = 'Output Stage Diagnosis';
 
 const cx = createClassResolver(mainBlockCss);
-let portNumber = (window as any).javaConnector.getPortNumber();
+let popUpHelp = '';
+export let portNumber = (window as any).javaConnector.getPortNumber();
 const MainBlock = () => {
   const { componentId = 'pmsm_foc' } = useContext(PluginConfigContext);
   const [summaryDialogVisible, setSummaryDialogVisible] = useState(false);
   const [genericPopupVisible, setGenericPopupVisible] = useState(false);
   const [messagePopup, setMessagePopup] = useState(false);
   const [actionId, setActionId] = useState('');
+
   const [dialogWidth, setDialogWidth] = useState('');
   const [dialogHeight, setDialogHeight] = useState('');
   const [messageText, setMessageText] = useState('');
@@ -105,7 +107,7 @@ const MainBlock = () => {
 
   const LoadHelp = () => {
     window.open(
-      'http://localhost:' + portNumber + '/motor_control/docs/index.html',
+      'http://localhost:' + portNumber + '/motor_control/documents/index.html',
       '_blank',
       'toolbar=0,location=0,menubar=0'
     );
@@ -204,11 +206,16 @@ const MainBlock = () => {
     CallMouseLeave(evt, toolTipObject);
   }
 
-  function updateDialogInfo(actionId: string, width: string, height: string) {
+  function updateDialogInfo(actionId: string, width: string, height: string, helpUrl: string) {
     setGenericPopupVisible(true);
     setActionId(actionId);
     setDialogWidth(width);
     setDialogHeight(height);
+    if (helpUrl !== '') {
+      popUpHelp = helpUrl;
+    } else {
+      popUpHelp = '';
+    }
   }
 
   function udpateMessageDialogInfo(
@@ -230,32 +237,57 @@ const MainBlock = () => {
 
     switch (target.value) {
       case motorControlDiagnosisText: {
-        updateDialogInfo(target.value, '102rem', '60rem');
-        // RegisterMotorDiagnosisSVGActions();
+        updateDialogInfo(
+          target.value,
+          '102rem',
+          '60rem',
+          'GUID-1247DA32-16EE-410F-8821-9996138029EC.html'
+        );
         return;
       }
       case positionMeasurementCalculationText: {
-        updateDialogInfo(target.value, '102rem', '50rem');
-        // RegisterPositionControlDiagnosisSVGActions();
+        updateDialogInfo(
+          target.value,
+          '102rem',
+          '50rem',
+          'GUID-3FC371D1-5F20-4FD5-BE9C-5E735208822F.html'
+        );
         return;
       }
       case analogFrontEndText: {
-        updateDialogInfo(target.value, '75rem', '40rem');
-        // RegisterAnalogFrontEndSVGActions();
+        updateDialogInfo(
+          target.value,
+          '75rem',
+          '40rem',
+          'GUID-989E7AA5-599B-44EF-B07B-92CF360E8489.html'
+        );
         return;
       }
       case analogInterfaceText: {
-        updateDialogInfo(target.value, '70rem', '42rem');
+        updateDialogInfo(
+          target.value,
+          '70rem',
+          '42rem',
+          'GUID-F357EFE7-06A7-410D-9D17-FBE6A6933412.html'
+        );
         return;
       }
       case voltageMeasurementAndDiagnosisText: {
-        updateDialogInfo(target.value, '80rem', '35rem');
-        // RegisterVoltageMesasurementSVGActions();
+        updateDialogInfo(
+          target.value,
+          '80rem',
+          '35rem',
+          'GUID-01B46490-213A-4272-8195-738256105928.html'
+        );
         return;
       }
       case currentMeasurementAndDiagnosisText: {
-        updateDialogInfo(target.value, '85rem', '40rem');
-        // RegisterCurrentMesasurementSVGActions();
+        updateDialogInfo(
+          target.value,
+          '85rem',
+          '40rem',
+          'GUID-D30380EE-7150-40F0-8CD4-972379CEF307.html'
+        );
         return;
       }
       case 'Clock Manager': {
@@ -295,40 +327,75 @@ const MainBlock = () => {
         return;
       }
       case motorParameters: {
-        updateDialogInfo(target.value, '70rem', '50rem');
+        updateDialogInfo(
+          target.value,
+          '70rem',
+          '50rem',
+          'GUID-0B134E27-482C-48C3-8895-2AF0AEAFBA99.html'
+        );
         return;
       }
       case pulseWidthModulatorText: {
-        updateDialogInfo(target.value, '70rem', '45rem');
+        updateDialogInfo(
+          target.value,
+          '70rem',
+          '45rem',
+          'GUID-074A0B6E-2F55-48D4-9597-C94198261D9A.html'
+        );
         return;
       }
       case positionInterfaceText: {
-        updateDialogInfo(target.value, '30rem', '30rem');
+        updateDialogInfo(
+          target.value,
+          '30rem',
+          '30rem',
+          'GUID-593B51D7-753B-4F45-907A-9A084230C6CB.html'
+        );
         return;
       }
       case outputStageDignosisText: {
-        updateDialogInfo(target.value, '45rem', '20rem');
+        updateDialogInfo(
+          target.value,
+          '45rem',
+          '20rem',
+          'GUID-52CA4CA5-55BC-423F-B79E-B814E889984B.html'
+        );
         return;
       }
       case startupConfiguratorText: {
-        updateDialogInfo(target.value, '105rem', '60rem');
+        updateDialogInfo(
+          target.value,
+          '105rem',
+          '60rem',
+          'GUID-2E524004-ED37-4174-9ECC-3075003F70A7.html'
+        );
         return;
       }
       case quickSettingsText: {
-        updateDialogInfo(target.value, '40rem', '25rem');
+        updateDialogInfo(target.value, '40rem', '25rem', '');
         return;
       }
       case dataMonitoringText: {
-        updateDialogInfo(target.value, '35rem', '20rem');
+        updateDialogInfo(
+          target.value,
+          '35rem',
+          '20rem',
+          'GUID-04C38070-686B-47B2-92B4-277FB5A980FC.html'
+        );
         return;
       }
       case voltageSourceText: {
-        updateDialogInfo(target.value, '35rem', '20rem');
+        updateDialogInfo(
+          target.value,
+          '35rem',
+          '20rem',
+          'GUID-39CB4463-8D2C-49F3-8335-00B1A0426867.html'
+        );
         return;
       }
     }
     if (target.value) {
-      updateDialogInfo(target.value, '80rem', '70rem');
+      updateDialogInfo(target.value, '80rem', '70rem', '');
       return;
     }
     let value: string = childKeyAndGroupIdValue.get(target.id) || '';
@@ -387,6 +454,7 @@ const MainBlock = () => {
           Id={actionId}
           widthValue={dialogWidth}
           heightValue={dialogHeight}
+          helpLink={popUpHelp}
           dialogVisibleStatus={genericPopupVisible}
           setGenericPopupVisible={setGenericPopupVisible}
         />

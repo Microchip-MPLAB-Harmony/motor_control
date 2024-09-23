@@ -1,5 +1,8 @@
-import { ConfigSymbol, symbolUtilApi } from '@mplab_harmony/harmony-plugin-client-lib';
-import { UpdateSymbolValue } from '@mplab_harmony/harmony-plugin-core-service';
+import {
+  ConfigSymbol,
+  configSymbolApi,
+  symbolUtilApi
+} from '@mplab_harmony/harmony-plugin-client-lib';
 
 /*
  * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries.
@@ -56,13 +59,15 @@ const StoreSymbolArrayToMap = async (
 };
 
 function UpdateArrayofSymbolsResetAction(
-  map: Map<String, Object>,
+  symbolValues: Map<String, Object>,
   componentId: any,
   symbols: string[]
 ) {
-  for (let index in symbols) {
-    UpdateSymbolValue(componentId, symbols[index], map.get(symbols[index]));
-  }
+  const updateValues = symbols.map((symbolId) => ({
+    symbolId,
+    value: symbolValues.get(symbolId) as string | number | boolean
+  }));
+  symbolUtilApi.setValues(componentId, updateValues);
 }
 
 export {

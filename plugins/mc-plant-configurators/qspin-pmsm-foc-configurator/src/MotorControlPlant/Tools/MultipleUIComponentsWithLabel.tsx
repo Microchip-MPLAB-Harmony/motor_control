@@ -47,7 +47,9 @@ const MultipleUIComponentsWithLabel = (props: { componentId: any; symbolsArray: 
     const labelName = e.label;
     const isComponentVisible = e.visible;
     if (labelName !== null && symbols.length !== 0 && isComponentVisible) {
-      symbolsComponent.push(<label>{e.label}</label>);
+      symbolsComponent.push(
+        isComponentVisible && <label hidden={!isComponentVisible}>{e.label}</label>
+      );
       symbolsComponent.push(
         <DefaultControl
           key={e.symbolId}

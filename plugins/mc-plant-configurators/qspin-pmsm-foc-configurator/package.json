@@ -1,13 +1,13 @@
 {
   "name": "qspin-pmsm-foc-configurator",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "private": true,
   "homepage": ".",
   "headers": {
     "Access-Control-Allow-Origin": "*"
   },
   "dependencies": {
-    "@mplab_harmony/harmony-plugin-client-lib": "^1.0.0",
+    "@mplab_harmony/harmony-plugin-client-lib": "1.1.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",

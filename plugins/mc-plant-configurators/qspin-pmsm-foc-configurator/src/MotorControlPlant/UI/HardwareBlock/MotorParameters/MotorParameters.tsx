@@ -1,12 +1,16 @@
-import { PluginConfigContext, useComboSymbol } from '@mplab_harmony/harmony-plugin-client-lib';
-import { useContext, useState } from 'react';
+import {
+  ComboBoxDefault,
+  PluginConfigContext,
+  useComboSymbol
+} from '@mplab_harmony/harmony-plugin-client-lib';
+import { useContext, useEffect, useState } from 'react';
 import { ListBox } from 'primereact/listbox';
 import DisplayMotorParameters from './DisplayMotorParameters';
-import MotorSelection, { motorSelectSymbol } from './MotorSelection';
 interface Tab {
   name: string;
   status: string;
 }
+export let motorSelectSymbol = 'MCPMSMFOC_MOTOR_SEL';
 export let metaDataName = 'Meta Data Parameters';
 export let namePlate = 'Nameplate Parameters';
 export let electrical = 'Electrical Parameters';
@@ -19,6 +23,12 @@ const MotorParameters = (props: { showToast: (arg0: any) => void }) => {
     initArgs.motor_paramteters !== null && initArgs.motor_paramteters !== undefined
       ? initArgs.motor_paramteters
       : 'pmsm_motor';
+
+  const motorSelection = useComboSymbol({
+    componentId: comp,
+    symbolId: motorSelectSymbol
+  });
+  useEffect(() => {}, [motorSelection.value]);
 
   // const tabTemplate = (option: any) => {
   //   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -65,7 +75,19 @@ const MotorParameters = (props: { showToast: (arg0: any) => void }) => {
 
   return (
     <div>
-      <MotorSelection componentId={comp} />
+      <div style={{ paddingBottom: '20px' }}>
+        <div className='flex'>
+          <div className='m-2'>
+            <label> {motorSelection.label} </label>
+          </div>
+          <div>
+            <ComboBoxDefault
+              componentId={comp}
+              symbolId={motorSelectSymbol}
+            />
+          </div>
+        </div>
+      </div>
       <div className='flex'>
         <ListBox
           style={{ height: '35rem', fontSize: '16px' }}

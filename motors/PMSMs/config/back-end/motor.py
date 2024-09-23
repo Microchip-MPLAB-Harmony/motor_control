@@ -51,5 +51,5 @@ def instantiateComponent(component):
     motor_class()
 
 def handleMessage(message_id, args):
-    motor_class.handle_message( message_id, args)
+    return motor_class.handle_message( message_id, args)
 

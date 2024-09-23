@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { DialogCommonInitilizeCode } from '../../CustomPopUp/CustomPopUp';
-import { InputNumberDefault, useFloatSymbol } from '@mplab_harmony/harmony-plugin-client-lib';
+import {
+  InputNumberDefault,
+  useBooleanSymbol,
+  useFloatSymbol
+} from '@mplab_harmony/harmony-plugin-client-lib';
 import MultipleUIComponentsWithLabel from '../../../Tools/MultipleUIComponentsWithLabel';
 
 let fieldWeakeningSymbols = [
@@ -11,14 +15,11 @@ let fieldWeakeningSymbols = [
   'MCPMSMFOC_MTPA_TUNING_PARAMETER'
 ];
 const EnableFIeldWeaking = (props: { componentId: string; showToast: (arg0: any) => void }) => {
-  const maxNegativeCurrent = useFloatSymbol({
+  const boole = useBooleanSymbol({
     componentId: props.componentId,
-    symbolId: 'MCPMSMFOC_FW_MAX_NEGATIVE_ID'
+    symbolId: 'MCPMSMFOC_ENABLE_FW'
   });
-  const [state, setState] = useState(maxNegativeCurrent.visible);
-  useEffect(() => {
-    setState(maxNegativeCurrent.visible);
-  }, [maxNegativeCurrent.visible]);
+
   DialogCommonInitilizeCode(props.showToast, props.componentId, fieldWeakeningSymbols);
   return (
     <div>
@@ -29,12 +30,7 @@ const EnableFIeldWeaking = (props: { componentId: string; showToast: (arg0: any)
           componentId={props.componentId}
           symbolsArray={fieldWeakeningSymbols}
         />
-        <InputNumberDefault
-          componentId={props.componentId}
-          symbolId={'MCPMSMFOC_FW_MAX_NEGATIVE_ID'}
-        />
       </div>
-      {state}
     </div>
   );
 };
