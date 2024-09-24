@@ -62,7 +62,11 @@
 #include "mc_position_control.h"
 </#if>
 #include "mc_reference_control.h"
+<#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER' )>
 #include "mc_rotor_position_calculation.h"
+<#else>
+#include "mc_rotor_position_estimation.h"
+</#if>
 <#if 'IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS >
 #include "mc_initial_position_detection.h"
 </#if>

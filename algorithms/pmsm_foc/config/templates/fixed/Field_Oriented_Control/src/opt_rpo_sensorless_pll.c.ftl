@@ -47,49 +47,60 @@
 Headers inclusions
 *******************************************************************************/
 #include "mc_rotor_position_estimation.h"
-
-/*******************************************************************************
-Constants
-*******************************************************************************/
-#define ENABLE_PHI_OFFSET_COMPENSATION
-#define SQUARE_ROOT_THREE_OVER_TWO     (float32_t)1.224744871
+#include "mc_fir_filter.h"
+#include "mc_iir_filter.h"
 
 /*******************************************************************************
 Local configuration options
 *******************************************************************************/
+#undef SRF_PLL
+#define ENABLE_PHI_OFFSET_COMPENSATION
+#undef ENABLE_FIR_FILTER_STAGE
+#undef ENABLE_IIR_FILTER_STAGE
 
 /*******************************************************************************
  Private data types
 *******************************************************************************/
 typedef struct
 {
-   /** States */
-   bool enable;
-   bool initDone;
-   float32_t  eAlpha;
-   float32_t  eBeta;
-   float32_t  eD;
-   float32_t  eQ;
-   float32_t  uAlpha;
-   float32_t  uBeta;
-   float32_t  iAlpha;
-   float32_t  iBeta;
-   float32_t  n;
-   float32_t  phi;
+    bool enable;
+    bool initDone;
+    int16_t Rs;
+    int16_t LsFs;
+    int16_t speedToAngle;
+    int16_t eAlpha;
+    int16_t eBeta;
+    int16_t eD;
+    int16_t eQ;
+    int16_t iAlphaLast;
+    int16_t iBetaLast;
+    int16_t uAlphaLast;
+    int16_t uBetaLast;
+    uint16_t phi;
+    int16_t speed;
 
-   /** Parameters */
-   float32_t   dt;
-   float32_t   Rs;
-   float32_t   dLsByDt;
-   float32_t   eABFilterParameter;
-   float32_t   eDQFilterParameter;
-   float32_t   nFilterParameter;
-   float32_t   oneByKe;
-   float32_t   speedToAngle;
+#if defined ENABLE_FIR_FILTER_STAGE
+    int16_t firTapNumbers;
+    int16_t firCoefficients[4U];
+    FIRFilter  firFilter;
+#endif
 
-   float32_t phiOffset;
-   uint16_t calibCounter;
-   uint16_t calibTimeinCounts;
+#if defined ENABLE_IIR_FILTER_STAGE
+    int16_t  iirStages;
+    int16_t  iirACoefficients[3U];
+    int16_t  iirBCoefficients[3U];
+    IIRFilter  iirFilter;
+#endif
+
+#if defined SRF_PLL
+    tmcUtils_PiControl_s bPIController;
+#else
+    int16_t phiOffset;
+    uint16_t calibCounter;
+    uint16_t calibTimeinCounts;
+    int16_t oneByKeVal;
+    uint16_t oneByKeShift;
+#endif
 }tmcRpe_State_s;
 
 /*******************************************************************************
@@ -104,10 +115,6 @@ Interface  variables
 /*******************************************************************************
 Macro Functions
 *******************************************************************************/
-/**
- * Low pass filter: y = y + a* ( x - y )
- */
-#define LPF(x,y ,a)  (y) = (y) + (a) * ( (x) - (y))
 
 /*******************************************************************************
 Private Functions
@@ -128,6 +135,8 @@ Private Functions
  */
 void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
 {
+    float32_t f32a;
+
     /** Link state variable structure to the module */
     pParameters->pStatePointer = (void *)&mcRpe_State_mds;
     tmcRpe_State_s * pState = &mcRpe_State_mds;
@@ -135,43 +144,59 @@ void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
     /** Set parameters */
     mcRpeI_ParametersSet(pParameters);
 
-    /** Set state parameters  */
-    pState->Rs =  pParameters->pMotorParameters->RsInOhms;
-    pState->dt = pParameters->dt;
-    pState->dLsByDt = pParameters->pMotorParameters->LdInHenry / pState->dt;
+    /** Calculate scaled values  */
+    f32a = pParameters->pMotorParameters->RsInOhms/ BASE_IMPEDENCE_IN_OHMS;
 
-    /**
-         *  Calculate filter parameters:
-         *  Assumption: The frequency of alpha and beta axis is restrained by the maximum
-         *  speed of the motor
-         *      Nmax (in Hertz ) = Zp * Nrpm / 60
-         *
-         *  Considering cut-off frequency as twice the value of Nmax
-         *      Fo ( in Hertz ) = 2 * Nmax
-         *
-         *      Tau = 1/( 2* Pi * Fo )
-         *
-         *  For a discrete first order forward euler filter, the filter parameter can be
-         *  calculated as follows:
-         *
-         *      a = ts/( ts + Tau ), where ts is the sampling time
-         */
-    float32_t temp;
-    temp = pParameters->pMotorParameters->PolePairs;
-    temp = temp * pParameters->pMotorParameters->NmaxInRpm;
-    temp = 2.0f * temp/ 60.0f;
-    temp = 1.0f/( TWO_PI * temp );
-    pState->eABFilterParameter = pState->dt/(pState->dt + temp );
+    pState->Rs = Q_SCALE( f32a );
 
-    /** ToDO: Remove magic numbers */
-    pState->oneByKe = ( SQUARE_ROOT_THREE_OVER_TWO * 1000.0f )/ ( pParameters->Ke );
-    pState->speedToAngle = TWO_PI * pParameters->pMotorParameters->PolePairs * pState->dt/ 60.0f;
+    f32a = pParameters->pMotorParameters->LdInHenry / ( BASE_IMPEDENCE_IN_OHMS * pParameters->dt );
+    pState->LsFs = Q_SCALE( f32a );
 
-    pState->eDQFilterParameter = 1.0f;
-    pState->nFilterParameter = 1.0f;
+#if defined SRF_PLL
+    float32_t zeta = 0.7f;
+    float32_t radPerSecToRpm = 30.0f / ( pParameters->pMotorParameters->PolePairs * ONE_PI );
+
+    KpSpeed = zeta * radPerSecToRpm *  pParameters->foInHertz;
+    KiSpeed = radPerSecToRpm *  pParameters->foInHertz *  pParameters->foInHertz /2.0f;
+
+    mcUtils_PiControlInit( KpSpeed, KiSpeed, pParameters->dt, &pState->bPIController );
+    mcUtils_PiLimitUpdate( -Q_SCALE(1.0), Q_SCALE(1.0), &pState->bPIController );
+#else
+    /** ToDO: Remove hard coded numeric value */
+    f32a = 1225.0f * (BASE_VOLTAGE_IN_VOLTS/ BASE_SPEED_IN_RPM )/ pParameters->pMotorParameters->KeInVrmsPerKrpm;
+    mcUtils_FloatToValueShiftPair( f32a, &pState->oneByKeVal, &pState->oneByKeShift );
 
     /** Rotor position calibration time */
     pState->calibTimeinCounts = pParameters->calibTimeInSec / pParameters->dt;
+#endif
+
+    /** Speed to angle conversion factor calculation */
+    f32a = (float32_t)K_TIME;
+    pState->speedToAngle = Q_SCALE( f32a);
+
+#if defined ENABLE_FIR_FILTER_STAGE
+    pState->firTapNumbers = 4U;
+    for( int8_t tap = 0; tap < pState->firTapNumbers; tap++ )
+    {
+        pState->firCoefficients[tap] = Q_SCALE(0.25);
+    }
+
+    // Initialize the filter
+    FIRFilter_FilterInitialize(&pState->firFilter, pState->firCoefficients, pState->firTapNumbers );
+#endif
+
+#if defined ENABLE_IIR_FILTER_STAGE
+    // Example coefficients for each stage (a = 0.9, b = 0.1 in Q15 format)
+    pState->iirStages = 3;
+    for( int8_t stage = 0; stage < pState->iirStages; stage++ )
+    {
+        pState->iirACoefficients[stage] = Q_SCALE(0.5);
+        pState->iirBCoefficients[stage] = Q_SCALE(0.5);
+    }
+
+    // Initialize the filter
+    IIRFilter_FilterInitialize(&pState->iirFilter, pState->iirACoefficients, pState->iirBCoefficients, pState->iirStages );
+#endif
 
     /** Set initialization flag to true */
     pState->initDone = true;
@@ -237,7 +262,7 @@ void  mcRpeI_RotorPositionEstimDisable( tmcRpe_Parameters_s * const pParameters 
     pState->enable = false;
 }
 
-#if defined  ENABLE_PHI_OFFSET_COMPENSATION
+#if defined  ENABLE_PHI_OFFSET_COMPENSATION  && !defined SRF_PLL
 /*! 
  * @brief Disable rotor position estimation module
  *
@@ -250,7 +275,7 @@ void  mcRpeI_RotorPositionEstimDisable( tmcRpe_Parameters_s * const pParameters 
  * @return None
  */
 __STATIC_INLINE  void mcRpe_RotorPostionOffsetCalc( const tmcRpe_Parameters_s * const pParameters, 
-                                                    float32_t * const pF32Offset ) 
+                                                    int16_t * const pS16Offset ) 
 {
     /** Get the linked state variable */
     tmcRpe_State_s * pState;
@@ -263,21 +288,21 @@ __STATIC_INLINE  void mcRpe_RotorPostionOffsetCalc( const tmcRpe_Parameters_s * 
     }
 
     /** Integrator drift  tracking and compensation based on speed direction */
-    if( 0 < pState->n )     {
-        if( UTIL_AbsLessThanEqual( pState->eAlpha,  0.001 ))
+    if( 0 < pState->speed )     {
+        if( UTIL_AbsLessThanEqual( pState->eAlpha,  10 ))
         {
             if( pState->eBeta > 0 )
             {
-                *pF32Offset = pState->phi;
+                *pS16Offset = pState->phi;
             }
         }
     }
     else      {
-        if( UTIL_AbsLessThanEqual( pState->eAlpha,  0.001 ))
+        if( UTIL_AbsLessThanEqual( pState->eAlpha,  10 ))
         {
             if( pState->eBeta < 0 ) 
             {
-                *pF32Offset = pState->phi;
+                *pS16Offset = pState->phi;
             }
         }
     }
@@ -298,11 +323,19 @@ __STATIC_INLINE  void mcRpe_RotorPostionOffsetCalc( const tmcRpe_Parameters_s * 
  *
  * @return None
  */
+#ifdef RAM_EXECUTE
+void __ramfunc__  mcRpeI_RotorPositionEstim( const tmcRpe_Parameters_s * const pParameters,
+                                          const tmcTypes_AlphaBeta_s * pIAlphaBeta,
+                                          const tmcTypes_AlphaBeta_s * pUAlphaBeta,
+                                          tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                                          uint16_t * pAngle, int16_t * pSpeed  )
+#else
 void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
-                                                     const tmcTypes_AlphaBeta_s * pIAlphaBeta,
-                                                     const tmcTypes_AlphaBeta_s * pUAlphaBeta,
-                                                     tmcTypes_AlphaBeta_s * pEAlphaBeta,
-                                                     float32_t * pAngle, float32_t * pSpeed )
+                              const tmcTypes_AlphaBeta_s * pIAlphaBeta,
+                              const tmcTypes_AlphaBeta_s * pUAlphaBeta,
+                              tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                              uint16_t * pAngle, int16_t * pSpeed )
+#endif
 {
     /** Get the linked state variable */
     tmcRpe_State_s * pState;
@@ -310,60 +343,98 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
 
     if( pState->enable )
     {
-        float32_t temp = 0.0f;
-        float32_t sine = 0.0f;
-        float32_t cosine= 0.0f;
+        /** Calculate alpha-axis back EMF  */
+        int16_t s16a = 0;
+        int16_t s16b = 0;
+        int16_t sine = 0;
+        int16_t cosine = 0;
 
-        /** Calculate back EMF along alpha and beta axis */
-        temp = pState->uAlpha;
-        temp -= ( pIAlphaBeta->alpha * pState->Rs );
-        temp -= ( pIAlphaBeta->alpha - pState->iAlpha ) * pState->dLsByDt;
-        LPF( temp, pState->eAlpha, pState->eABFilterParameter );
+        s16a = Q_MULTIPLY( pIAlphaBeta->alpha, pState->Rs );
+        s16b = Q_MULTIPLY( ( pIAlphaBeta->alpha - pState->iAlphaLast ), pState->LsFs );
+        pState->iAlphaLast = pIAlphaBeta->alpha;
 
-        temp  =  pState->uBeta;
-        temp -= ( pIAlphaBeta->beta * pState->Rs );
-        temp -= ( pIAlphaBeta->beta - pState->iBeta ) * pState->dLsByDt;
-        LPF( temp, pState->eBeta, pState->eABFilterParameter);
+        pState->eAlpha = pState->uAlphaLast - s16a - s16b;
+        pState->uAlphaLast = pUAlphaBeta->alpha;
 
-        /** Update state variables for next cycle calculation */
-        pState->uAlpha  = pUAlphaBeta->alpha;
-        pState->uBeta  =  pUAlphaBeta->beta;
-        pState->iAlpha  =  pIAlphaBeta->alpha ;
-        pState->iBeta   =  pIAlphaBeta->beta;
+        /** Calculate beta-back EMF  */
+        s16a = Q_MULTIPLY( pIAlphaBeta->beta, pState->Rs );
+        s16b = Q_MULTIPLY( ( pIAlphaBeta->beta - pState->iBetaLast ), pState->LsFs );
+        pState->iBetaLast = pIAlphaBeta->beta;
 
-        /** Determine back EMF along direct and quadrature axis using estimated angle */
+        pState->eBeta = pState->uBetaLast - s16a - s16b;
+        pState->uBetaLast = pUAlphaBeta->beta;
+
+        /** Calculate sine and cosine values */
         mcUtils_SineCosineCalculation( pState->phi, &sine, &cosine );
 
-        temp  =     pState->eAlpha * cosine;
-        temp +=  ( pState->eBeta * sine );
-        LPF( temp, pState->eD, pState->eDQFilterParameter);
+        /** Calculate q-axis back EMF */
+        s16a = Q_MULTIPLY( pState->eBeta, cosine );
+        s16b = Q_MULTIPLY( pState->eAlpha, sine );
+        pState->eQ = s16a - s16b;
 
-        temp  =    -pState->eAlpha * sine;
-        temp +=  ( pState->eBeta * cosine );
-        LPF( temp, pState->eQ, pState->eDQFilterParameter);
+#if defined SRF_PLL
+        /** Execute PI controller */
+        mcUtils_PiControl( pState->eQ, &pState->bPIController );
+        pState->speed = pState->bPIController.Yo;
 
-        /** Determine speed  */
-        if( pState->eQ > 0.0f ) {
-            temp  = pState->oneByKe * ( pState->eQ - pState->eD );
+        int16_t filterOutput = pState->speed;
+    #if defined ENABLE_FIR_FILTER_STAGE
+        filterOutput  =  FIRFilter_FilterApply(&pState->firFilter, pState->speed );
+    #endif
+    #if defined ENABLE_IIR_FILTER_STAGE
+        filterOutput = IIRFilter_FilterApply(&pState->iirFilter, filterOutput );
+    #endif
+        /** Update electrical speed  */
+        *pSpeed = filterOutput;
+
+        pState->phi += (uint16_t)Q_MULTIPLY( pState->speed, pState->speedToAngle );
+        if( 0 < pState->speed )     {
+             /** Update electrical angle  */
+             *pAngle  = pState->phi - Q15_ANGLE( PI_OVER_TWO );
         }
-        else  {
-            temp  = pState->oneByKe * ( pState->eQ + pState->eD );
+        else      {
+             /** Update electrical angle  */
+             *pAngle  = pState->phi + Q15_ANGLE( PI_OVER_TWO );
         }
+#else
+        /** Calculate d-axis back EMF  */
+        s16a = Q_MULTIPLY( pState->eAlpha, cosine );
+        s16b = Q_MULTIPLY( pState->eBeta, sine );
+        pState->eD = s16a + s16b;
 
-        LPF( temp, pState->n, pState->nFilterParameter);
+        /** Calculate speed */
+        if( 0 < pState->eQ  )      {
+            s16a = pState->eQ - pState->eD;
+        }
+       else      {
+           s16a = pState->eQ + pState->eD;
+       }
 
-        /** Determine phase angle */
-        pState->phi += ( pState->speedToAngle * pState->n );
-        mcUtils_TruncateAngle0To2Pi( &pState->phi );
+        pState->speed = ( (int32_t)s16a *  (int32_t)pState->oneByKeVal ) >> pState->oneByKeShift;
+
+        /** Calculate angle from speed */
+        pState->phi += (uint16_t)Q_MULTIPLY( pState->speed, pState->speedToAngle );
 
 #if defined  ENABLE_PHI_OFFSET_COMPENSATION
         mcRpe_RotorPostionOffsetCalc( pParameters, &pState->phiOffset );
 #endif
 
+        int16_t filterOutput = pState->speed;
+#if defined ENABLE_FIR_FILTER_STAGE
+        filterOutput  =  FIRFilter_FilterApply(&pState->firFilter, pState->speed );
+#endif
+#if defined ENABLE_IIR_FILTER_STAGE
+        filterOutput = IIRFilter_FilterApply(&pState->iirFilter, filterOutput );
+#endif
+
+        /** Update back-emf voltage */
+        pEAlphaBeta->alpha = pState->eAlpha;
+        pEAlphaBeta->beta = pState->eBeta;
+
         /** Update output */
-        *pSpeed = pState->n;
+        *pSpeed = filterOutput;
         *pAngle = pState->phi - pState->phiOffset;
-         mcUtils_TruncateAngle0To2Pi( pAngle );
+#endif
     }
     else
     {
@@ -371,13 +442,11 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
         mcRpeI_RotorPositionEstimReset( pParameters );
 
         /** Update output */
-        *pSpeed = 0.0f;
-        *pAngle = 0.0f;
+        *pSpeed = 0;
+        *pAngle = 0u;
     }
-
-    pEAlphaBeta->alpha = pState->eAlpha;
-    pEAlphaBeta->beta = pState->eBeta;
 }
+
 
 /*! 
  * @brief Reset rotor position estimation module
@@ -395,9 +464,15 @@ void mcRpeI_RotorPositionEstimReset( const tmcRpe_Parameters_s * const pParamete
     tmcRpe_State_s * pState;
     pState = (tmcRpe_State_s *)pParameters->pStatePointer;
 
+#if defined SRF_PLL
+    mcUtils_PiControlReset(0, &pState->bPIController);
+#else
     /** Reset state variables  */
-    pState->iAlpha = 0.0f;
-    pState->iBeta = 0.0f;
-    pState->uAlpha = 0.0f;
-    pState->uBeta = 0.0f;
+    pState->calibCounter = 0u;
+    pState->phiOffset = 0;
+#endif
+    pState->iAlphaLast = 0;
+    pState->iBetaLast = 0;
+    pState->uAlphaLast = 0;
+    pState->uBetaLast = 0;
 }

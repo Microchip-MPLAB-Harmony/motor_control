@@ -47,6 +47,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
         self.sym_ALGORITHM.setLabel("Select Position Feedback")
         if (("SAMC2" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
             self.sym_ALGORITHM.addKey("SENSORLESS_PLL", "0", "Equation based PLL")
+            # self.sym_ALGORITHM.addKey("SENSORLESS_ROLO", "2", "Reduced Order Luenberger Observer (Beta)")
         else:
             self.sym_ALGORITHM.addKey("SENSORLESS_PLL", "0", "Equation based PLL")
             self.sym_ALGORITHM.addKey("SENSORED_ENCODER", "1", "Quadrature Encoder")

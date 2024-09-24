@@ -59,7 +59,11 @@
 #include "mc_torque_control.h"
 #include "mc_speed_control.h"
 #include "mc_reference_control.h"
+<#if ( MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER' )>
+#include "mc_rotor_position_calculation.h"
+<#else>
 #include "mc_rotor_position_estimation.h"
+</#if>
 
 /*******************************************************************************
  Default Module configuration parameters

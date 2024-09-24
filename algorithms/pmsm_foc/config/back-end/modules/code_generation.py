@@ -350,7 +350,7 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
                 elif filename.startswith("opt_rpo"):
                     mcPmsmFocSourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
                     mcPmsmFocSourceFile.setSourcePath(modulePath + "src/" + filename)
-                    mcPmsmFocSourceFile.setOutputName("mc_rotor_position_calculation.c")
+                    mcPmsmFocSourceFile.setOutputName("mc_rotor_position_estimation.c")
                     mcPmsmFocSourceFile.setDestPath("QSpin/Field_Oriented_Control")
                     mcPmsmFocSourceFile.setProjectPath(projectPath)
                     mcPmsmFocSourceFile.setType("SOURCE")
@@ -393,7 +393,7 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
                 elif filename.startswith("opt_rpo"):
                     mcPmsmFocHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
                     mcPmsmFocHeaderFile.setSourcePath(modulePath + "inc/" + filename)
-                    mcPmsmFocHeaderFile.setOutputName("mc_rotor_position_calculation.h")
+                    mcPmsmFocHeaderFile.setOutputName("mc_rotor_position_estimation.h")
                     mcPmsmFocHeaderFile.setDestPath("QSpin/Field_Oriented_Control")
                     mcPmsmFocHeaderFile.setProjectPath(projectPath)
                     mcPmsmFocHeaderFile.setType("HEADER")
