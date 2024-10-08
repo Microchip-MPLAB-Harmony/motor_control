@@ -103,7 +103,7 @@ __STATIC_INLINE void mcRpeI_ParametersSet( tmcRpe_Parameters_s * const pParamete
     pParameters->calibTimeInSec = (float32_t)(1.0);
 
     /** PLL parameters */
-    pParameters->foInHertz = (float32_t)10;
+    pParameters->foInHertz = (float32_t)40;
 }
 
 /*******************************************************************************

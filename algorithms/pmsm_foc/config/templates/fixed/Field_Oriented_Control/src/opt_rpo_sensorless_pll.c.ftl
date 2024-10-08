@@ -53,7 +53,7 @@ Headers inclusions
 /*******************************************************************************
 Local configuration options
 *******************************************************************************/
-#undef SRF_PLL
+#define SRF_PLL
 #define ENABLE_PHI_OFFSET_COMPENSATION
 #undef ENABLE_FIR_FILTER_STAGE
 #undef ENABLE_IIR_FILTER_STAGE
@@ -153,17 +153,12 @@ void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
     pState->LsFs = Q_SCALE( f32a );
 
 #if defined SRF_PLL
-    float32_t zeta = 0.7f;
-    float32_t radPerSecToRpm = 30.0f / ( pParameters->pMotorParameters->PolePairs * ONE_PI );
-
-    KpSpeed = zeta * radPerSecToRpm *  pParameters->foInHertz;
-    KiSpeed = radPerSecToRpm *  pParameters->foInHertz *  pParameters->foInHertz /2.0f;
-
-    mcUtils_PiControlInit( KpSpeed, KiSpeed, pParameters->dt, &pState->bPIController );
+    /** ToDO: Calculate Kp and Ki based on the cut-off frequency */
+    mcUtils_PiControlInit( 0.5, 100, pParameters->dt, &pState->bPIController );
     mcUtils_PiLimitUpdate( -Q_SCALE(1.0), Q_SCALE(1.0), &pState->bPIController );
 #else
     /** ToDO: Remove hard coded numeric value */
-    f32a = 1225.0f * (BASE_VOLTAGE_IN_VOLTS/ BASE_SPEED_IN_RPM )/ pParameters->pMotorParameters->KeInVrmsPerKrpm;
+    f32a = 1225.0f * ( BASE_VOLTAGE_IN_VOLTS/ BASE_SPEED_IN_RPM )/ pParameters->pMotorParameters->KeInVrmsPerKrpm;
     mcUtils_FloatToValueShiftPair( f32a, &pState->oneByKeVal, &pState->oneByKeShift );
 
     /** Rotor position calibration time */
