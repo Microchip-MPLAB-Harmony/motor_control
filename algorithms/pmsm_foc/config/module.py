@@ -122,3 +122,6 @@ def loadModule():
 
         # Add dependency symbol for DSCI peripheral
         mcPmsmFocComponent.addDependency("pmsmfoc_MOTOR", "PMSM", False, True)
+
+        # Set help key-word for MCC Access to Online Help
+        mcPmsmFocComponent.setHelpKeyword("MH3_motor_control")

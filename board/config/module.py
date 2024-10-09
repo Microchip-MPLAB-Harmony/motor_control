@@ -103,4 +103,8 @@ def loadModule():
             encoderPresent = True
 
     if (pwmPresent and adcPresent):
+        # Create Custom Board component
         mcPmsmFocComponent = Module.CreateComponent("custom_mc_board", "Custom MC Board","/Motor Control/Custom Boards/", "config/back-end/board.py")
+
+        # Set help key-word for MCC Access to Online Help
+        mcPmsmFocComponent.setHelpKeyword("MH3_custom_board")

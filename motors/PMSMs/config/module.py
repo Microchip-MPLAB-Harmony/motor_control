@@ -103,5 +103,11 @@ def loadModule():
             encoderPresent = True
 
     if (pwmPresent and adcPresent):
+        # Create Permanent Magnet Synchronous Motor component
         motor_component = Module.CreateComponent("pmsm_motor", "Permanent Magnet Synchronous Motor","/Motor Control/Motors/", "config/back-end/motor.py")
+
+        # Add capability symbol for PMSM component
         motor_component.addCapability("motortype_PMSM", "PMSM")
+
+        # Set help key-word for MCC Access to Online Help
+        motor_component.setHelpKeyword("MH3_pmsm_motor")
