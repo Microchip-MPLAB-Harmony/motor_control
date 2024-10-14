@@ -164,6 +164,10 @@ static tmcFoc_TuningSettings_s  mcFoc_TuningSettings_mds;
 /*******************************************************************************
 Interface  variables
 *******************************************************************************/
+<#if ( MCPMSMFOC_CONTROL_TYPE == 'TORQUE_LOOP' ) >
+float32_t mcFoc_FocOverrideCurrent_gdf32 = 0.0f;
+</#if>
+
 tmcFocI_ModuleData_s mcFocI_ModuleData_gds;
 
 /*******************************************************************************

@@ -136,6 +136,10 @@ typedef struct
 *******************************************************************************/
 extern tmcFocI_ModuleData_s mcFocI_ModuleData_gds;
 
+<#if ( MCPMSMFOC_CONTROL_TYPE == 'TORQUE_LOOP' ) >
+extern float32_t mcFoc_FocOverrideCurrent_gdf32;
+</#if>
+
 /*******************************************************************************
  Static Interface Functions
 *******************************************************************************/

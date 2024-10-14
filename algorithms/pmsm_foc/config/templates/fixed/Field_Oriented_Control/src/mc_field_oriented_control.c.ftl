@@ -127,6 +127,10 @@ static tmcFoc_State_s mcFoc_State_mds;
  *******************************************************************************/
 tmcFocI_ModuleData_s mcFocI_ModuleData_gds;
 
+<#if ( MCPMSMFOC_CONTROL_TYPE == 'TORQUE_LOOP' ) >
+int16_t mcFoc_FocOverrideCurrent_gds16 = 0;
+</#if>
+
 /*******************************************************************************
  * Macro Functions
  *******************************************************************************/
@@ -529,7 +533,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
             mcSpeI_SpeedControlAuto(&pState->bSpeedController, pState->nRef,
                                                pOutput->elecSpeed, &pState->iQref );
 <#else>
-            pState->iQref = 1000;
+            pState->iQref = mcFoc_FocOverrideCurrent_gds16;
 </#if>
             break;
         }
@@ -547,7 +551,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
             mcSpeI_SpeedControlAuto(&pState->bSpeedController, pState->nRef,
                                                   pOutput->elecSpeed, &pState->iQref );
 <#else>
-            pState->iQref = 1000;
+            pState->iQref = mcFoc_FocOverrideCurrent_gds16;
 </#if>
             break;
         }
