@@ -105,7 +105,7 @@ class mcFocI_DigitalInterfaceClass:
         pad  = self.component.createComboSymbol( pad_id, node, self.information)
         pad.setLabel("Pin Number")
         pad.setDefaultValue("** Select **")
-        pad.setVisible(False)
+        #pad.setVisible(False)
         pad.setDependencies(updateButtonPad, [ pad_id, "MCPMSMFOC_USED_PIN_LIST"])
 
         old_pad_id = "MCPMSMFOC_BUTTON_"+ str(index)+"_OLD_NUMBER"
@@ -161,6 +161,8 @@ class mcFocI_DigitalInterfaceClass:
 
         idx_id = "MCPMSMFOC_LED_"+ str(index) + "_INDEX"
         idx = self.component.createIntegerSymbol( idx_id, node)
+        idx.setLabel("Index")
+        idx.setVisible(False)
         idx.setDefaultValue(int(index))
 
         name_id = "MCPMSMFOC_LED_"+ str(index) +"_NAME"
@@ -178,7 +180,7 @@ class mcFocI_DigitalInterfaceClass:
         pad  = self.component.createComboSymbol( pad_id, node, self.information)
         pad.setLabel("Pin Number")
         pad.setDefaultValue("** Select **")
-        pad.setVisible(False)
+        #pad.setVisible(False)
         pad.setDependencies(updateLedPad, [ pad_id, "MCPMSMFOC_USED_PIN_LIST"])
 
         old_pad_id = "MCPMSMFOC_LED_"+ str(index)+"_OLD_NUMBER"
@@ -196,6 +198,32 @@ class mcFocI_DigitalInterfaceClass:
     def createSymbols(self):
         self.sym_NODE = self.component.createMenuSymbol(None, None)
         self.sym_NODE.setLabel("Digital Interface")
+
+        self.supported_gpio_ips = {
+            "GPIO" : [
+                      { "name": "PIO", "id": "11004"},
+                      { "name": "PIO", "id": "11264"},
+                      { "name": "PORT", "id": "U2210", "version":"2.2.0"},
+                      { "name": "PORT", "id": "U2210", "version":"2.1.1"},
+                      { "name": "GPIO", "id": "02467"},
+              ]
+         }
+
+        # Get the available modules from ATDF file
+        periphNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
+        modules = periphNode.getChildren()
+
+        gpio_ip_id = ""
+        for module in modules:
+            for entry in self.supported_gpio_ips.get( "GPIO", [] ):
+                if ( str(entry["name"]) == str(module.getAttribute("name")) and str(entry["id"]) == str(module.getAttribute("id")) ):
+                    gpio_ip_id = str(entry["name"] )+ "_" + str(entry["id"])
+                    break
+
+        self.sym_GPIO_IP = self.component.createStringSymbol("MCPMSMFOC_GPIO_IP", self.sym_NODE)
+        self.sym_GPIO_IP.setLabel("GPIO IP")
+        self.sym_GPIO_IP.setDefaultValue( gpio_ip_id )
+        self.sym_GPIO_IP.setVisible(False)
 
         self.max_NUMBER_OF_BUTTONS = 2
         self.sym_BUTTON_NODE = self.component.createMenuSymbol(None, self.sym_NODE)
@@ -236,28 +264,7 @@ class mcFocI_DigitalInterfaceClass:
             print("Checkpoint. The symbol " + id + " could not be updated")
 
     def handleMessage(self, ID, information):
-        # if ("BSP_DIGITAL_INTERFACE" == ID) and (None != information):
-        #     index = 0
-        #     for key, value in information["BUTTONS"].items():
-        #         self.sym_BUTTON_INDEX[index].setVisible(True)
-        #         self.sym_BUTTON_NAME[index].setValue(key)
-        #         self.sym_BUTTON_PIN[index].setValue(value["PAD"])
-        #         index += 1
-
-        #     self.sym_AVAILABLE_BUTTONS.setValue(index)
-
-        #     index = 0
-        #     for key, value in information["LEDS"].items():
-        #         self.sym_LED_INDEX[index].setVisible(True)
-        #         self.sym_LED_NAME[index].setValue(key)
-        #         self.sym_LED_PIN[index].setValue(value["PAD"])
-        #         index += 1
-
-        #     self.sym_AVAILABLE_LEDS.setValue(index)
-
         if ("BSP_DIGITAL_INTERFACE" == ID) and (None != information):
-            print("Digital information", information)
-
             index = 0
             for key, value in information["BUTTONS"].items():
                 # Set the node value as true
@@ -271,6 +278,10 @@ class mcFocI_DigitalInterfaceClass:
                 # Set the interface name
                 name_id = "MCPMSMFOC_BUTTON_"+ str(index) +"_NAME"
                 self.setDatabaseSymbol("pmsm_foc", name_id, key)
+
+                # Set the interface number
+                pad_id = "MCPMSMFOC_BUTTON_"+ str(index) +"_NUMBER"
+                self.setDatabaseSymbol("pmsm_foc", pad_id, value['PAD'])
 
                 # Set the type
                 types_id = "MCPMSMFOC_BUTTON_"+ str(index)+"_TYPE"
@@ -296,6 +307,10 @@ class mcFocI_DigitalInterfaceClass:
                 name_id = "MCPMSMFOC_LED_"+ str(index) +"_NAME"
                 self.setDatabaseSymbol("pmsm_foc", name_id, key)
 
+                # Set the interface number
+                pad_id = "MCPMSMFOC_LED_"+ str(index) + "_NUMBER"
+                self.setDatabaseSymbol("pmsm_foc", pad_id, value['PAD'])
+
                 # Set the type
                 types_id = "MCPMSMFOC_LED_"+ str(index)+"_TYPE"
                 self.setDatabaseSymbol("pmsm_foc", types_id, "Physical")
@@ -306,6 +321,12 @@ class mcFocI_DigitalInterfaceClass:
                 # Set the number of buttons
                 self.setDatabaseSymbol("pmsm_foc", "MCPMSMFOC_LEDS_AVAILABLE", index)
 
+    def get_gpio_ip( self, module, ip ):
+        for entry in self.supported_gpio_ips.get( ip, [] ):
+            print('GPIO IP_', entry["name"], module.getAttribute("name"),  entry["id"], module.getAttribute("id") )
+            if ( str(entry["name"]) == str(module.getAttribute("name")) and str(entry["id"]) == str(module.getAttribute("id")) ):
+                return entry["name"] + "_" + entry["id"]
+        return ""
 
     def __call__(self):
         self.createSymbols()

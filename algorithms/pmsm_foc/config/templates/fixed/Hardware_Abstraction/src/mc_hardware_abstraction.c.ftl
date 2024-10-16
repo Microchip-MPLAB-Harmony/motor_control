@@ -128,9 +128,9 @@ void mcHalI_InverterPwmDisable( void )
 <#--  Get button name  -->
 <#function ledName index>
 <#if 0 == index>
-<#return MCPMSMFOC_LED_0_NAME>
+<#return MCPMSMFOC_LED_0_NUMBER>
 <#elseif 1 == index>
-<#return MCPMSMFOC_LED_1_NAME>
+<#return MCPMSMFOC_LED_1_NUMBER>
 <#else>
 <#return "Error">
 </#if>
@@ -158,7 +158,15 @@ void mcHalI_InverterPwmDisable( void )
  */
 void mcHal_DirectionIndication( void )
 {
-    ${ledName(index)}_Toggle();
+<#if "GPIO_02467" == MCPMSMFOC_GPIO_IP>
+    GPIO_PinToggle(GPIO_PIN_${ledName(index)});
+<#elseif "PORT_U2210" == MCPMSMFOC_GPIO_IP>
+    PORT_PinToggle( PORT_PIN_${ledName(index)});
+<#elseif "PIO_11004" == MCPMSMFOC_GPIO_IP>
+    PIO_PinToggle( PIO_PIN_${ledName(index)});
+<#elseif "PIO_11264" == MCPMSMFOC_GPIO_IP>
+    PIO_PinToggle( PIO_PIN_${ledName(index)});
+</#if>
 }
 <#break>
 </#if>
@@ -176,7 +184,15 @@ void mcHal_DirectionIndication( void )
  */
 void mcHal_FaultIndicationSet( void )
 {
-   ${ledName(index)}_Set();
+<#if "GPIO_02467" == MCPMSMFOC_GPIO_IP>
+    GPIO_PinSet(GPIO_PIN_${ledName(index)});
+<#elseif "PORT_U2210" == MCPMSMFOC_GPIO_IP>
+    PORT_PinSet( PORT_PIN_${ledName(index)});
+<#elseif "PIO_11004" == MCPMSMFOC_GPIO_IP>
+    PIO_PinSet( PIO_PIN_${ledName(index)});
+<#elseif "PIO_11264" == MCPMSMFOC_GPIO_IP>
+    PIO_PinSet( PIO_PIN_${ledName(index)});
+</#if>
 }
 <#break>
 </#if>
@@ -313,9 +329,9 @@ void mcHalI_PwmCallbackRegister( MCPWM_CH_CALLBACK callback, uintptr_t context )
 <#--  Get button name  -->
 <#function buttonName index>
 <#if 0 == index>
-<#return MCPMSMFOC_BUTTON_0_NAME>
+<#return MCPMSMFOC_BUTTON_0_NUMBER>
 <#elseif 1 == index>
-<#return MCPMSMFOC_BUTTON_1_NAME>
+<#return MCPMSMFOC_BUTTON_1_NUMBER>
 <#else>
 <#return "Error">
 </#if>
@@ -345,7 +361,15 @@ void mcHalI_PwmCallbackRegister( MCPWM_CH_CALLBACK callback, uintptr_t context )
  */
 bool mcHalI_StartStopButtonState( void )
 {
-    return (bool)${buttonName(index)}_Get();
+<#if "GPIO_02467" == MCPMSMFOC_GPIO_IP>
+    return GPIO_PinRead( GPIO_PIN_${buttonName(index)});
+<#elseif "PORT_U2210" == MCPMSMFOC_GPIO_IP>
+    return  PORT_PinRead( PORT_PIN_${buttonName(index)});
+<#elseif "PIO_11004" == MCPMSMFOC_GPIO_IP>
+    return  PIO_PinRead( PIO_PIN_${buttonName(index)});
+<#elseif "PIO_11264" == MCPMSMFOC_GPIO_IP>
+    return  PIO_PinRead( PIO_PIN_${buttonName(index)});
+</#if>
 }
 <#break>
 </#if>
@@ -365,7 +389,15 @@ bool mcHalI_StartStopButtonState( void )
  */
 bool mcHalI_DirectionButtonState( void )
 {
-     return (bool)${buttonName(index)}_Get();
+<#if "GPIO_02467" == MCPMSMFOC_GPIO_IP>
+    return GPIO_PinRead( GPIO_PIN_${buttonName(index)});
+<#elseif "PORT_U2210" == MCPMSMFOC_GPIO_IP>
+    return  PORT_PinRead( PORT_PIN_${buttonName(index)});
+<#elseif "PIO_11004" == MCPMSMFOC_GPIO_IP>
+    return  PIO_PinRead( PIO_PIN_${buttonName(index)});
+<#elseif "PIO_11264" == MCPMSMFOC_GPIO_IP>
+    return  PIO_PinRead( PIO_PIN_${buttonName(index)});
+</#if>
 }
 <#break>
 </#if>

@@ -156,7 +156,6 @@ void  mcRpeI_RotorPositionEstimDisable( tmcRpe_Parameters_s * const pParameters 
  * @return None
  */
 void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
-                                                     const float32_t refSpeed,
                                                      const tmcTypes_AlphaBeta_s * pIAlphaBeta,
                                                      const tmcTypes_AlphaBeta_s * pUAlphaBeta,
                                                      tmcTypes_AlphaBeta_s * pEAlphaBeta,

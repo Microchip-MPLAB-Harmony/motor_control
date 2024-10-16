@@ -113,7 +113,7 @@ typedef struct
    float32_t zBeta;
 
    /** Angle tracking loop */
-   float32_t edError;
+   float32_t eqError;
    tmcRpe_PhaseDetector_s  phaseDetector;
 }tmcRpe_State_s;
 
@@ -462,7 +462,6 @@ void  mcRpeI_RotorPositionEstimDisable( tmcRpe_Parameters_s * const pParameters 
  * @return None
  */
 void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
-                                                     const float32_t refSpeed,
                                                      const tmcTypes_AlphaBeta_s * pIAlphaBeta,
                                                      const tmcTypes_AlphaBeta_s * pUAlphaBeta,
                                                      tmcTypes_AlphaBeta_s * pEAlphaBeta,
@@ -481,7 +480,7 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
      if( pState->enable )
      {
          /** Determine speed dependent back EMF observer coefficients */
-         wel = UTIL_RpmToElecRadPerSec( pState->PolePairs, refSpeed );
+         wel = UTIL_RpmToElecRadPerSec( pState->PolePairs, *pSpeed );
          weTs = wel * pState->dt;
 
          /** Determine zAlpha */
@@ -503,21 +502,22 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
 
          /** Determine tracking error */
          mcUtils_SineCosineCalculation( pState->phaseDetector.angle, &sine, &cosine);
+         pState->eqError = (  -pState->eAlphaHat * sine ) + ( pState->eBetaHat * cosine );
 
-         if( wel < 0.0f )      {
-                     /** Tracking error */
-                     pState->edError = (  pState->eAlphaHat * cosine ) + ( pState->eBetaHat * sine );
+         mcRpe_AngleTrackingLoop( 0.0f, pState->eqError );
+
+         /** Update output */
+         *pSpeed = pState->phaseDetector.speed;
+
+          if( *pSpeed > 0.0f )
+          {
+                *pAngle = pState->phaseDetector.angle - ONE_PI_BY_TWO;
           }
-          else      {
-               /** Tracking error */
-               pState->edError = - ( pState->eAlphaHat * cosine ) - ( pState->eBetaHat * sine );
-           }
-
-           mcRpe_AngleTrackingLoop(0.0f, pState->edError );
-
-           /** Update output */
-           *pSpeed = pState->phaseDetector.speed;
-           *pAngle = pState->phaseDetector.angle;
+          else
+          {
+              *pAngle = pState->phaseDetector.angle + ONE_PI_BY_TWO;
+          }
+          UTILS_LimitAngle0To2Pi(pAngle);
      }
      else
      {

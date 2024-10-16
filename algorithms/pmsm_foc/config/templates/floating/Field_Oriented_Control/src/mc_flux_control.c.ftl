@@ -73,7 +73,7 @@ typedef struct
     tmcUtils_PiControl_s bPIController;
     float32_t feedForwardTerm;
     float32_t feedbackTerm;
-    float32_t idref;
+    float32_t fluxWeakIdRef;
 }tmcFlx_FluxWeakening_s;
 </#if>
 
@@ -87,7 +87,7 @@ typedef struct
 
     float32_t psi;
     float32_t ldMinusLq;
-    float32_t idref;
+    float32_t   mtpaIdRef;
 }tmcFlx_MTPA_s;
 </#if>
 
@@ -122,6 +122,447 @@ Macro Functions
 Private Functions
 *******************************************************************************/
 
+
+<#if ( MCPMSMFOC_ENABLE_FW == true ) >
+
+/*! 
+ * @brief Initialize flux weakening module
+ *
+ * Initializes the flux weakening module.
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_FluxWeakeningInit( tmcFlx_Parameters_s * const pParameters )
+{
+    /** Get the linked state variable */
+    tmcFlx_FluxWeakening_s * pState;
+    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bFluxWeakening;
+
+    /** Set parameters */
+    mcFlxI_ParametersSet(pParameters);
+
+    pState->rs = pParameters->pMotorParameters->RsInOhms ;
+    pState->ld = pParameters->pMotorParameters->LdInHenry;
+
+    float32_t zp = pParameters->pMotorParameters->PolePairs ;
+    pState->mechRpmToElecRadPerSec = TWO_PI * zp / 60.0f;
+
+    /** ToDO: Recheck the formula */
+    float32_t ke = pParameters->pMotorParameters->KeInVrmsPerKrpm * ONE_BY_SQRT3/ 1000.0f;
+    pState->ke = ke;
+
+    /** ToDO: Revisit. Set the maximum field weakening current to 50 % of maximum motor current */
+    pState->idmax = -0.5f * pParameters->pMotorParameters->IrmsMaxInAmps;
+
+
+    /** Enable feed-forward term */
+    pState->feedForwardEnable = true;
+
+    /** ToDO: Compute Kp and Ki value from linear PMSM model */
+    float32_t Kp = 0.0001f;
+    float32_t Ki = 0.000001f;
+
+    /** Set PI controller parameters */
+    mcUtils_PiControlInit( Kp, Ki, pParameters->dt, &pState->bPIController );
+
+    /** Set initialization flag as true */
+    pState->initDone = true;
+
+}
+
+/*! 
+ * @brief Reset flux weakening module
+ *
+ * Resets the flux weakening module.
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void mcFlx_FluxWeakeningReset( const tmcFlx_Parameters_s * const pParameters )
+{
+    /** Get the linked state variable */
+    tmcFlx_FluxWeakening_s * pState;
+    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bFluxWeakening;
+
+    /** Reset PI Controller */
+    mcUtils_PiControlReset( 0.0f, &pState->bPIController );
+}
+
+/*! 
+ * @brief Enable flux weakening module
+ *
+ * Enables the flux weakening module.
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_FluxWeakeningEnable( tmcFlx_Parameters_s * const pParameters )
+{
+    /** Get the linked state variable */
+    tmcFlx_FluxWeakening_s * pState;
+    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bFluxWeakening;
+
+    if( ( NULL == pState ) || ( !pState->initDone ))
+    {
+         /** Initialize parameters */
+        mcFlx_FluxWeakeningInit(pParameters);
+    }
+    else
+    {
+         /** For MISRA Compliance */
+    }
+
+    /** Set enable flag as true */
+    pState->enable = true;
+}
+
+/*! 
+ * @brief Disable flux weakening module
+ *
+ * Disables the flux weakening module.
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_FluxWeakeningDisable( tmcFlx_Parameters_s * const pParameters )
+{
+    /** Get the linked state variable */
+    tmcFlx_FluxWeakening_s * pState;
+    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bFluxWeakening;
+
+    if( NULL != pState)
+    {
+        /** Reset state variables  */
+        mcFlx_FluxWeakeningReset(pParameters);
+    }
+    else
+    {
+        /** For MISRA Compliance */
+    }
+
+    /** Set enable flag as true */
+    pState->enable = false;
+
+}
+
+
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
+/*! 
+ * @brief Flux weakening control
+ *
+ * Performs flux weakening control using other algorithms.
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pUDQ Pointer to DQ voltage vector
+ * @param[in] uBus DC bus voltage
+ * @param[in] wmechRPM Mechanical speed in RPM
+ * @param[out] pIDQ Pointer to output DQ current vector
+ * @param[out] pIdref Pointer to output reference ID current
+ * @return None
+ */
+float32_t mcFlx_FluxWeakening(  tmcFlx_FluxWeakening_s * const pFieldWeakening,
+                                               const tmcTypes_DQ_s * const pUDQ,
+                                               const tmcTypes_DQ_s * const pIDQ,
+                                               const float32_t wmechRPM,
+                                               const float32_t uBus )
+{
+    float32_t uQref;
+    float32_t umax = ONE_BY_SQRT3 * uBus;
+
+    if( !pFieldWeakening->enable )    {
+        return 0.0f;
+    }
+
+    if( pUDQ->d  <= umax )
+    {
+        uQref = UTIL_SquareRootFloat( UTIL_SquareFloat( umax ) - UTIL_SquareFloat( pUDQ->d ) );
+    }
+    else
+    {
+        uQref = 0.0f;
+    }
+
+    /** Compute feed-forward term */
+    if( pFieldWeakening->feedForwardEnable )
+    {
+        float32_t eMag;
+
+        /** Calculate back-EMF magnitude from mechanical speed of the motor */
+        eMag = pFieldWeakening->ke * wmechRPM;
+
+        pFieldWeakening->welLdId = uQref - UTIL_AbsoluteFloat( pIDQ->q  * pFieldWeakening->rs ) - eMag;
+        pFieldWeakening->welLd = UTIL_AbsoluteFloat( wmechRPM ) * pFieldWeakening->mechRpmToElecRadPerSec * pFieldWeakening->ld;
+
+        /** Compute the reference flux weakening current */
+        pFieldWeakening->feedForwardTerm = UTIL_DivisionFloat( pFieldWeakening->welLdId, pFieldWeakening->welLd );
+
+        /** Saturate d-axis current  */
+        UTIL_SaturateFloat( &pFieldWeakening->feedForwardTerm, pFieldWeakening->idmax, 0.0f );
+    }
+    else
+    {
+        pFieldWeakening->feedForwardTerm = 0.0f;
+    }
+
+    /** Compute feed-forward term */
+    if( pFieldWeakening->feedbackEnable )
+    {
+        float32_t error = uQref - pUDQ->q;
+
+        /** Limit update for PI controller */
+        mcUtils_PiLimitUpdate( pFieldWeakening->idmax, 0.0f, &pFieldWeakening->bPIController );
+
+        /** Execute PI controller */
+        mcUtils_PiControl( error, &pFieldWeakening->bPIController );
+        pFieldWeakening->feedbackTerm = pFieldWeakening->bPIController.Yo;
+    }
+    else
+    {
+        pFieldWeakening->feedbackTerm = 0.0f;
+    }
+
+    /** Compute reference d-axis current */
+    pFieldWeakening->fluxWeakIdRef = pFieldWeakening->feedForwardTerm + pFieldWeakening->feedbackTerm;
+
+
+    return  pFieldWeakening->fluxWeakIdRef;
+}
+<#else>
+/*! 
+ * @brief Flux weakening control
+ *
+ * Performs flux weakening control using other algorithms.
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pUDQ Pointer to DQ voltage vector
+ * @param[in] pEAlphaBeta Pointer to Alpha-Beta voltage vector
+ * @param[in] uBus DC bus voltage
+ * @param[in] wmechRPM Mechanical speed in RPM
+ * @param[out] pIDQ Pointer to output DQ current vector
+ * @param[out] pIdref Pointer to output reference ID current
+ * @return None
+ */
+float32_t mcFlx_FluxWeakening(  tmcFlx_FluxWeakening_s * const pFieldWeakening,
+                                               const tmcTypes_DQ_s * const pUDQ,
+                                               const tmcTypes_DQ_s * const pIDQ,
+                                               const tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                                               const float32_t wmechRPM,
+                                               const float32_t uBus )
+{
+    float32_t uQref;
+    float32_t umax = ONE_BY_SQRT3 * uBus;
+
+    if( !pFieldWeakening->enable )    {
+        return 0.0f;
+    }
+
+    if( pUDQ->d  <= umax )
+    {
+        uQref = UTIL_SquareRootFloat( UTIL_SquareFloat( umax ) - UTIL_SquareFloat( pUDQ->d ) );
+    }
+    else
+    {
+        uQref = 0.0f;
+    }
+
+    /** Compute feed-forward term */
+    if( pFieldWeakening->feedForwardEnable )
+    {
+        float32_t eMag;
+
+        eMag = UTIL_MagnitudeFloat( pEAlphaBeta->alpha, pEAlphaBeta->beta );
+
+        pFieldWeakening->welLdId = uQref - UTIL_AbsoluteFloat( pIDQ->q  * pFieldWeakening->rs ) - eMag;
+        pFieldWeakening->welLd = UTIL_AbsoluteFloat( wmechRPM ) * pFieldWeakening->mechRpmToElecRadPerSec * pFieldWeakening->ld;
+
+        /** Compute the reference flux weakening current */
+        pFieldWeakening->feedForwardTerm = UTIL_DivisionFloat( pFieldWeakening->welLdId, pFieldWeakening->welLd );
+
+        /** Saturate d-axis current  */
+        UTIL_SaturateFloat( &pFieldWeakening->feedForwardTerm, pFieldWeakening->idmax, 0.0f );
+    }
+    else
+    {
+        pFieldWeakening->feedForwardTerm = 0.0f;
+    }
+
+    /** Compute feed-forward term */
+    if( pFieldWeakening->feedbackEnable )
+    {
+        float32_t error = uQref - pUDQ->q;
+
+        /** Limit update for PI controller */
+        mcUtils_PiLimitUpdate( pFieldWeakening->idmax, 0.0f, &pFieldWeakening->bPIController );
+
+        /** Execute PI controller */
+        mcUtils_PiControl( error, &pFieldWeakening->bPIController );
+        pFieldWeakening->feedbackTerm = pFieldWeakening->bPIController.Yo;
+    }
+    else
+    {
+        pFieldWeakening->feedbackTerm = 0.0f;
+    }
+
+    /** Compute reference d-axis current */
+    pFieldWeakening->fluxWeakIdRef = pFieldWeakening->feedForwardTerm + pFieldWeakening->feedbackTerm;
+
+    return  pFieldWeakening->fluxWeakIdRef;
+}
+</#if>
+
+</#if>
+
+<#if MCPMSMFOC_ENABLE_MTPA == true >
+
+
+/*! 
+ * @brief Initialize MTPA module
+ *
+ * Initializes the MTPA module.
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_MTPAInit( tmcFlx_Parameters_s * const pParameters )
+{
+    /** Declare intermediate variables */
+    float32_t temp;
+    uint8_t  samplePoints;
+    tmcFlx_MTPA_s * pState;
+
+    /** Initialize plots */
+    tUTIL_2DPoints_s LdLqDiffArray[] = LDMINUSLQ_VS_IS;
+
+    /** Get the linked state variable */
+    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
+
+    /** Initialize Ld plot */
+    samplePoints = (uint8_t)(sizeof(LdLqDiffArray)/ sizeof(LdLqDiffArray[0u] ));
+    UTIL_2DPlotInitialize(&pState->LdLqDiffPlot, samplePoints, LdLqDiffArray );
+
+    /** Set parameters */
+    mcFlxI_ParametersSet(pParameters);
+
+    /** Calculate per phase KEMF */
+    temp = ONE_BY_SQRT3 * pParameters->pMotorParameters->KeInVrmsPerKrpm;
+
+    /** Calculate in radian/s */
+    temp = temp * 60.0f / ( TWO_PI * 1000.0f );
+    pState->psi = temp * pParameters->pMotorParameters->PolePairs;
+
+    /** Set enable flag as true */
+    pState->initDone = true;
+}
+
+/*! 
+ * @brief Reset MTPA module
+ *
+ * Resets the MTPA module.
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_MTPAReset( const tmcFlx_Parameters_s * const pParameters )
+{
+
+}
+
+/*! 
+ * @brief Enable MTPA module
+ *
+ * Enables the Maximum Torque per Ampere (MTPA) module.
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_MTPAEnable( tmcFlx_Parameters_s * const pParameters )
+{
+    /** Get the linked state variable */
+     tmcFlx_MTPA_s * pState;
+     pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
+
+     if( ( NULL == pState ) || ( !pState->initDone ))
+     {
+          /** Initialize parameters */
+         mcFlx_MTPAInit(pParameters);
+     }
+     else
+     {
+          /** For MISRA Compliance */
+     }
+
+     /** Set enable flag as true */
+     pState->enable = true;
+}
+
+/*! 
+ * @brief Disable MTPA module
+ *
+ * Disables the MTPA module.
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void  mcFlx_MTPADisable( tmcFlx_Parameters_s * const pParameters )
+{
+     /** Get the linked state variable */
+     tmcFlx_MTPA_s * pState;
+     pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
+
+     if( NULL != pState)
+     {
+         /** Reset state variables  */
+         mcFlx_MTPAReset(pParameters);
+     }
+     else
+     {
+         /** For MISRA Compliance */
+     }
+
+     /** Set enable flag as true */
+     pState->enable = false;
+}
+
+/*! 
+ * @brief MTPA control
+ *
+ * Performs Maximum Torque per Ampere (MTPA) control.
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pIdq Pointer to DQ current vector
+ * @param[out] pIdref Pointer to output reference ID current
+ * @return None
+ */
+float32_t  mcFlx_MTPA( tmcFlx_MTPA_s * const pMTPA,
+                   const tmcTypes_DQ_s * const pIdq )
+{
+     /** Intermediate variables */
+     float32_t Is;
+     float32_t temp;
+     float32_t LdLqDiff;
+
+    if( !pMTPA->enable ) {
+        return 0.0f;
+    }
+
+    /** Get the stator current magnitude */
+    Is = UTIL_MagnitudeFloat( pIdq->d, pIdq->q );
+
+    /** Get Ld value from characteristic curve  */
+    LdLqDiff =UTIL_2DPlotRead( &pMTPA->LdLqDiffPlot, Is );
+
+    /** Determine intermediate value of MTPA equation */
+    temp = 0.5f * pMTPA->psi/ LdLqDiff;
+
+    /** Calculate d-axis reference current for MTPA */
+    pMTPA->mtpaIdRef = temp - UTIL_SquareRootFloat(( temp * temp ) + (  pIdq->q *  pIdq->q ));
+
+     return pMTPA->mtpaIdRef;
+}
+
+</#if>
+
 /*******************************************************************************
  * Interface Functions
 *******************************************************************************/
@@ -143,6 +584,16 @@ void  mcFlxI_FluxControlInit( tmcFlx_Parameters_s * const pParameters )
 
     /** Set PI controller parameters */
     mcUtils_PiControlInit( pParameters->Kp, pParameters->Ki, pParameters->dt, &mcFlx_State_mds.bPIController );
+
+<#if MCPMSMFOC_ENABLE_FW == true >
+    /** Enable flux weakening by default */
+    mcFlx_FluxWeakeningEnable( pParameters );
+</#if>
+
+<#if MCPMSMFOC_ENABLE_MTPA == true >
+    /** Enable MTPA by default */
+    mcFlx_MTPAEnable( pParameters );
+</#if>
 
     /** Set initialization flag as true */
     mcFlx_State_mds.initDone = true;
@@ -290,443 +741,118 @@ void mcFlxI_FluxControlReset( const tmcFlx_Parameters_s * const pParameters )
 
     /** Reset PI Controller */
     mcUtils_PiControlReset( 0.0f, &pState->bPIController );
-}
-
-<#if ( MCPMSMFOC_ENABLE_FW == true ) >
-/*! 
- * @brief Enable flux weakening module
- *
- * Enables the flux weakening module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void  mcFlxI_FluxWeakeningEnable( tmcFlx_Parameters_s * const pParameters )
-{
-    /** Get the linked state variable */
-    tmcFlx_FluxWeakening_s * pState;
-    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bFluxWeakening;
-
-    if( ( NULL == pState ) || ( !pState->initDone ))
-    {
-         /** Initialize parameters */
-        mcFlxI_FluxWeakeningInit(pParameters);
-    }
-    else
-    {
-         /** For MISRA Compliance */
-    }
-
-    /** Set enable flag as true */
-    pState->enable = true;
-}
-
-/*! 
- * @brief Disable flux weakening module
- *
- * Disables the flux weakening module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void  mcFlxI_FluxWeakeningDisable( tmcFlx_Parameters_s * const pParameters )
-{
-    /** Get the linked state variable */
-    tmcFlx_FluxWeakening_s * pState;
-    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bFluxWeakening;
-
-    if( NULL != pState)
-    {
-        /** Reset state variables  */
-        mcFlxI_FluxWeakeningReset(pParameters);
-    }
-    else
-    {
-        /** For MISRA Compliance */
-    }
-
-    /** Set enable flag as true */
-    pState->enable = false;
-
-}
-
-/*! 
- * @brief Initialize flux weakening module
- *
- * Initializes the flux weakening module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void  mcFlxI_FluxWeakeningInit( tmcFlx_Parameters_s * const pParameters )
-{
-    /** Get the linked state variable */
-    tmcFlx_FluxWeakening_s * pState;
-    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bFluxWeakening;
-
-    /** Set parameters */
-    mcFlxI_ParametersSet(pParameters);
-
-    pState->rs = pParameters->pMotorParameters->RsInOhms ;
-    pState->ld = pParameters->pMotorParameters->LdInHenry;
-
-    float32_t zp = pParameters->pMotorParameters->PolePairs ;
-    pState->mechRpmToElecRadPerSec = TWO_PI * zp / 60.0f;
-
-    /** ToDO: Recheck the formula */
-    float32_t ke = pParameters->pMotorParameters->KeInVrmsPerKrpm * ONE_BY_SQRT3/ 1000.0f;
-    pState->ke = ke;
-
-    /** ToDO: Revisit. Set the maximum field weakening current to 50 % of maximum motor current */
-    pState->idmax = -0.5f * pParameters->pMotorParameters->IrmsMaxInAmps;
-
-
-    /** Enable feed-forward term */
-    pState->feedForwardEnable = true;
-
-    /** ToDO: Compute Kp and Ki value from linear PMSM model */
-    float32_t Kp = 0.0001f;
-    float32_t Ki = 0.000001f;
-
-    /** Set PI controller parameters */
-    mcUtils_PiControlInit( Kp, Ki, pParameters->dt, &pState->bPIController );
-
-    /** Set initialization flag as true */
-    pState->initDone = true;
-
-}
-
-<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORED_ENCODER'>
-/*! 
- * @brief Flux weakening control
- *
- * Performs flux weakening control using other algorithms.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @param[in] pUDQ Pointer to DQ voltage vector
- * @param[in] pEAlphaBeta Pointer to Alpha-Beta voltage vector
- * @param[in] uBus DC bus voltage
- * @param[in] wmechRPM Mechanical speed in RPM
- * @param[out] pIDQ Pointer to output DQ current vector
- * @param[out] pIdref Pointer to output reference ID current
- * @return None
- */
-void mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
-                                               const tmcTypes_DQ_s * const pUDQ,
-                                               const float32_t uBus,
-                                               const float32_t wmechRPM,
-                                               tmcTypes_DQ_s * const pIDQ,
-                                               float32_t * const pIdref )
-{
-    /** Get the linked state variable */
-    tmcFlx_FluxWeakening_s * pState;
-    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bFluxWeakening;
-
-    float32_t uQref;
-    float32_t umax = ONE_BY_SQRT3 * uBus;
-
-    if( pUDQ->d  <= umax )
-    {
-        uQref = UTIL_SquareRootFloat( UTIL_SquareFloat( umax ) - UTIL_SquareFloat( pUDQ->d ) );
-    }
-    else
-    {
-        uQref = 0.0f;
-    }
-
-    /** Compute feed-forward term */
-    if( pState->feedForwardEnable )
-    {
-        float32_t eMag;
-
-        /** Calculate back-EMF magnitude from mechanical speed of the motor */
-        eMag = pState->ke * wmechRPM;
-
-        pState->welLdId = uQref - UTIL_AbsoluteFloat( pIDQ->q  * pState->rs ) - eMag;
-        pState->welLd = UTIL_AbsoluteFloat( wmechRPM ) * pState->mechRpmToElecRadPerSec * pState->ld;
-
-        /** Compute the reference flux weakening current */
-        pState->feedForwardTerm = UTIL_DivisionFloat( pState->welLdId, pState->welLd );
-
-        /** Saturate d-axis current  */
-        UTIL_SaturateFloat( &pState->feedForwardTerm, pState->idmax, 0.0f );
-    }
-    else
-    {
-        pState->feedForwardTerm = 0.0f;
-    }
-
-    /** Compute feed-forward term */
-    if( pState->feedbackEnable )
-    {
-        float32_t error = uQref - pUDQ->q;
-
-        /** Limit update for PI controller */
-        mcUtils_PiLimitUpdate( pState->idmax, 0.0f, &pState->bPIController );
-
-        /** Execute PI controller */
-        mcUtils_PiControl( error, &pState->bPIController );
-        pState->feedbackTerm = pState->bPIController.Yo;
-    }
-    else
-    {
-        pState->feedbackTerm = 0.0f;
-    }
-
-    /** Compute reference d-axis current */
-    *pIdref = pState->feedForwardTerm + pState->feedbackTerm;
-
-}
-<#else>
-/*! 
- * @brief Flux weakening control
- *
- * Performs flux weakening control using other algorithms.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @param[in] pUDQ Pointer to DQ voltage vector
- * @param[in] pEAlphaBeta Pointer to Alpha-Beta voltage vector
- * @param[in] uBus DC bus voltage
- * @param[in] wmechRPM Mechanical speed in RPM
- * @param[out] pIDQ Pointer to output DQ current vector
- * @param[out] pIdref Pointer to output reference ID current
- * @return None
- */
-void mcFlxI_FluxWeakening(  const tmcFlx_Parameters_s * const pParameters,
-                                               const tmcTypes_DQ_s * const pUDQ,
-                                               const tmcTypes_AlphaBeta_s * const pEAlphaBeta,
-                                               const float32_t uBus,
-                                               const float32_t wmechRPM,
-                                               tmcTypes_DQ_s * const pIDQ,
-                                               float32_t * const pIdref )
-{
-    /** Get the linked state variable */
-    tmcFlx_FluxWeakening_s * pState;
-    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bFluxWeakening;
-
-    float32_t uQref;
-    float32_t umax = ONE_BY_SQRT3 * uBus;
-
-    if( pUDQ->d  <= umax )
-    {
-        uQref = UTIL_SquareRootFloat( UTIL_SquareFloat( umax ) - UTIL_SquareFloat( pUDQ->d ) );
-    }
-    else
-    {
-        uQref = 0.0f;
-    }
-
-    /** Compute feed-forward term */
-    if( pState->feedForwardEnable )
-    {
-        float32_t eMag;
-
-        eMag = UTIL_MagnitudeFloat( pEAlphaBeta->alpha, pEAlphaBeta->beta );
-
-        pState->welLdId = uQref - UTIL_AbsoluteFloat( pIDQ->q  * pState->rs ) - eMag;
-        pState->welLd = UTIL_AbsoluteFloat( wmechRPM ) * pState->mechRpmToElecRadPerSec * pState->ld;
-
-        /** Compute the reference flux weakening current */
-        pState->feedForwardTerm = UTIL_DivisionFloat( pState->welLdId, pState->welLd );
-
-        /** Saturate d-axis current  */
-        UTIL_SaturateFloat( &pState->feedForwardTerm, pState->idmax, 0.0f );
-    }
-    else
-    {
-        pState->feedForwardTerm = 0.0f;
-    }
-
-    /** Compute feed-forward term */
-    if( pState->feedbackEnable )
-    {
-        float32_t error = uQref - pUDQ->q;
-
-        /** Limit update for PI controller */
-        mcUtils_PiLimitUpdate( pState->idmax, 0.0f, &pState->bPIController );
-
-        /** Execute PI controller */
-        mcUtils_PiControl( error, &pState->bPIController );
-        pState->feedbackTerm = pState->bPIController.Yo;
-    }
-    else
-    {
-        pState->feedbackTerm = 0.0f;
-    }
-
-    /** Compute reference d-axis current */
-    *pIdref = pState->feedForwardTerm + pState->feedbackTerm;
-
-}
-</#if>
-
-/*! 
- * @brief Reset flux weakening module
- *
- * Resets the flux weakening module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void mcFlxI_FluxWeakeningReset( const tmcFlx_Parameters_s * const pParameters )
-{
-    /** Get the linked state variable */
-    tmcFlx_FluxWeakening_s * pState;
-    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bFluxWeakening;
-
-    /** Reset PI Controller */
-    mcUtils_PiControlReset( 0.0f, &pState->bPIController );
-}
-</#if>
 
 <#if MCPMSMFOC_ENABLE_MTPA == true >
-/*! 
- * @brief Enable MTPA module
+    /** Reset max-torque per ampere ( MTPA ) */
+    mcFlx_MTPAReset( pParameters );
+</#if>
+
+<#if MCPMSMFOC_ENABLE_FW == true >
+    /** Reset Flux weakening */
+    mcFlx_FluxWeakeningReset( pParameters );
+</#if>
+}
+
+<#if ( MCPMSMFOC_ENABLE_MTPA == true ) || ( MCPMSMFOC_ENABLE_FW == true ) >
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
+/*!
+ * @brief Get reference flux
  *
- * Enables the Maximum Torque per Ampere (MTPA) module.
+ * Get reference flux
  *
  * @param[in] pParameters Pointer to module parameters structure
  * @return None
  */
-void  mcFlxI_MTPAEnable( tmcFlx_Parameters_s * const pParameters )
+#ifdef RAM_EXECUTE
+void __ramfunc__ mcFlxI_FluxReferenceGet(  const tmcFlx_Parameters_s * const pParameters,
+                                        const tmcTypes_DQ_s * const pUDQ,
+                                        tmcTypes_DQ_s * const pIDQ,
+                                        tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                                        const float32_t wmechRPM,
+                                        const float32_t uBus,
+                                        float32_t * const pIdref )
+#else
+void  mcFlxI_FluxReferenceGet(  const tmcFlx_Parameters_s * const pParameters,
+                                        const tmcTypes_DQ_s * const pUDQ,
+                                        tmcTypes_DQ_s * const pIDQ,
+                                        tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                                        const float32_t wmechRPM,
+                                        const float32_t uBus,
+                                        float32_t * const pIdref )
+#endif
 {
     /** Get the linked state variable */
-     tmcFlx_MTPA_s * pState;
-     pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
+    tmcFlx_State_s * pState;
+    pState = (tmcFlx_State_s *)pParameters->pStatePointer;
 
-     if( ( NULL == pState ) || ( !pState->initDone ))
-     {
-          /** Initialize parameters */
-         mcFlxI_MTPAInit(pParameters);
-     }
-     else
-     {
-          /** For MISRA Compliance */
-     }
+<#if ( MCPMSMFOC_ENABLE_MTPA == true ) && ( MCPMSMFOC_ENABLE_FW == true ) >
+  <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
+    float32_t idrefFW = mcFlx_FluxWeakening( &pState->bFluxWeakening, pUDQ, pIDQ, pEAlphaBeta, wmechRPM, uBus );
+  <#else>
+    float32_t idrefFW = mcFlx_FluxWeakening( &pState->bFluxWeakening, pUDQ, pIDQ, wmechRPM, uBus );
+  </#if>
+    float32_t idrefMTPA = mcFlx_MTPA(&pState->bMTPA, pIDQ );
 
-     /** Set enable flag as true */
-     pState->enable = true;
+    if( idrefFW < idrefMTPA ) {
+        *pIdref = idrefFW;
+    }
+    else {
+        *pIdref = idrefMTPA;
+    }
+<#elseif MCPMSMFOC_ENABLE_MTPA == true >
+    *pIdref = mcFlx_MTPA(&pState->bMTPA, pIDQ );
+<#else>
+    *pIdref = mcFlx_FluxWeakening( &pState->bFluxWeakening, pUDQ, pIDQ, pEAlphaBeta, wmechRPM, uBus );
+</#if>
 }
-
-/*! 
- * @brief Disable MTPA module
+<#else>
+/*!
+ * @brief Get reference flux
  *
- * Disables the MTPA module.
+ * Get reference flux
  *
  * @param[in] pParameters Pointer to module parameters structure
  * @return None
  */
-void  mcFlxI_MTPADisable( tmcFlx_Parameters_s * const pParameters )
+#ifdef RAM_EXECUTE
+void __ramfunc__ mcFlxI_FluxReferenceGet(  const tmcFlx_Parameters_s * const pParameters,
+                                        const tmcTypes_DQ_s * const pUDQ,
+                                        tmcTypes_DQ_s * const pIDQ,
+                                        const float32_t wmechRPM,
+                                        const float32_t uBus,
+                                        float32_t * const pIdref )
+#else
+void  mcFlxI_FluxReferenceGet(  const tmcFlx_Parameters_s * const pParameters,
+                                        const tmcTypes_DQ_s * const pUDQ,
+                                        tmcTypes_DQ_s * const pIDQ,
+                                        const float32_t wmechRPM,
+                                        const float32_t uBus,
+                                        float32_t * const pIdref )
+#endif
 {
-     /** Get the linked state variable */
-     tmcFlx_MTPA_s * pState;
-     pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
-
-     if( NULL != pState)
-     {
-         /** Reset state variables  */
-         mcFlxI_MTPAReset(pParameters);
-     }
-     else
-     {
-         /** For MISRA Compliance */
-     }
-
-     /** Set enable flag as true */
-     pState->enable = false;
-}
-
-/*! 
- * @brief Initialize MTPA module
- *
- * Initializes the MTPA module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void  mcFlxI_MTPAInit( tmcFlx_Parameters_s * const pParameters )
-{
-    /** Declare intermediate variables */
-    float32_t temp;
-    uint8_t  samplePoints;
-    tmcFlx_MTPA_s * pState;
-
-    /** Initialize plots */
-    tUTIL_2DPoints_s LdLqDiffArray[] = LDMINUSLQ_VS_IS;
-
     /** Get the linked state variable */
-    pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
+    tmcFlx_State_s * pState;
+    pState = (tmcFlx_State_s *)pParameters->pStatePointer;
 
-    /** Initialize Ld plot */
-    samplePoints = (uint8_t)(sizeof(LdLqDiffArray)/ sizeof(LdLqDiffArray[0u] ));
-    UTIL_2DPlotInitialize(&pState->LdLqDiffPlot, samplePoints, LdLqDiffArray );
+<#if ( MCPMSMFOC_ENABLE_MTPA == true ) && ( MCPMSMFOC_ENABLE_FW == true ) >
+  <#if MCPMSMFOC_POSITION_CALC_ALGORITHM != 'SENSORED_ENCODER'>
+    float32_t idrefFW = mcFlx_FluxWeakening( &pState->bFluxWeakening, pUDQ, pIDQ, pEAlphaBeta, wmechRPM, uBus );
+  <#else>
+    float32_t idrefFW = mcFlx_FluxWeakening( &pState->bFluxWeakening, pUDQ, pIDQ, wmechRPM, uBus );
+  </#if>
+    float32_t idrefMTPA = mcFlx_MTPA(&pState->bMTPA, pIDQ );
 
-    /** Set parameters */
-    mcFlxI_ParametersSet(pParameters);
-
-    /** Calculate per phase KEMF */
-    temp = ONE_BY_SQRT3 * pParameters->pMotorParameters->KeInVrmsPerKrpm;
-
-    /** Calculate in radian/s */
-    temp = temp * 60.0f / ( TWO_PI * 1000.0f );
-    pState->psi = temp * pParameters->pMotorParameters->PolePairs;
-
-    /** Set enable flag as true */
-    pState->initDone = true;
+    if( idrefFW < idrefMTPA ) {
+        *pIdref = idrefFW;
+    }
+    else {
+        *pIdref = idrefMTPA;
+    }
+<#elseif MCPMSMFOC_ENABLE_MTPA == true >
+    *pIdref = mcFlx_MTPA(&pState->bMTPA, pIDQ );
+<#else>
+    *pIdref = mcFlx_FluxWeakening( &pState->bFluxWeakening, pUDQ, pIDQ, wmechRPM, uBus );
+</#if>
 }
-
-/*! 
- * @brief MTPA control
- *
- * Performs Maximum Torque per Ampere (MTPA) control.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @param[in] pIdq Pointer to DQ current vector
- * @param[out] pIdref Pointer to output reference ID current
- * @return None
- */
-void  mcFlxI_MTPA( tmcFlx_Parameters_s * const pParameters,
-                   const tmcTypes_DQ_s * const pIdq, float32_t * const pIdref )
-{
-     /** Intermediate variables */
-     float32_t Is;
-     float32_t temp;
-     float32_t LdLqDiff;
-
-     /** Get the linked state variable */
-     tmcFlx_MTPA_s * pState;
-     pState = &((tmcFlx_State_s *)pParameters->pStatePointer)->bMTPA;
-
-     if( pState->enable )
-     {
-         /** Get the stator current magnitude */
-         Is = UTIL_MagnitudeFloat( pIdq->d, pIdq->q );
-
-         /** Get Ld value from characteristic curve  */
-         LdLqDiff =UTIL_2DPlotRead( &pState->LdLqDiffPlot, Is );
-
-         /** Determine intermediate value of MTPA equation */
-         temp = 0.5f * pState->psi/ LdLqDiff;
-
-         /** Calculate d-axis reference current for MTPA */
-         *pIdref = temp - UTIL_SquareRootFloat(( temp * temp ) + (  pIdq->q *  pIdq->q ));
-     }
-     else
-     {
-         mcFlxI_MTPAReset(pParameters);
-     }
-}
-
-/*! 
- * @brief Reset MTPA module
- *
- * Resets the MTPA module.
- *
- * @param[in] pParameters Pointer to module parameters structure
- * @return None
- */
-void  mcFlxI_MTPAReset( tmcFlx_Parameters_s * const pParameters )
-{
-
-}
+</#if>
 </#if>

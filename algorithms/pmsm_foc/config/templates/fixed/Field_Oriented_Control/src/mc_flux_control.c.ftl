@@ -86,7 +86,7 @@ typedef struct {
     int16_t omegaLdId;
     int16_t omegaLd;
     int16_t fluxWeakIdRef;
-}tmcFlx_FieldWeakening_s;
+}tmcFlx_FluxWeakening_s;
 </#if>
 
 /**
@@ -100,7 +100,7 @@ typedef struct
     tmcFlx_MTPA_s bMTPA;            /*!< MTPA module state structure */
 </#if>
 <#if MCPMSMFOC_ENABLE_FW == true >
-    tmcFlx_FieldWeakening_s bFieldWeakening;  /*!< Flux weakening module state structure */
+    tmcFlx_FluxWeakening_s bFluxWeakening;  /*!< Flux weakening module state structure */
 </#if>
     tmcUtils_PiControl_s bPIController; /*!< PI controller state structure */
 } tmcFlx_State_s;
@@ -266,7 +266,7 @@ void  mcFlx_MTPADisable( tmcFlx_Parameters_s * const pParameters )
  * @param[in] pParameters Pointer to module parameters structure
  * @return None
  */
-void  mcFlx_FieldWeakeningInit( tmcFlx_Parameters_s * const pParameters )
+void  mcFlx_FluxWeakeningInit( tmcFlx_Parameters_s * const pParameters )
 {
     float32_t f32a;
 
@@ -276,17 +276,17 @@ void  mcFlx_FieldWeakeningInit( tmcFlx_Parameters_s * const pParameters )
 
     /** Calculate scaled values  */
     f32a = pParameters->pMotorParameters->RsInOhms/ BASE_IMPEDENCE_IN_OHMS;
-    mcUtils_FloatToValueShiftPair( f32a, &pState->bFieldWeakening.RsValue, &pState->bFieldWeakening.RsShift );
+    mcUtils_FloatToValueShiftPair( f32a, &pState->bFluxWeakening.RsValue, &pState->bFluxWeakening.RsShift );
 
     f32a = pParameters->pMotorParameters->LdInHenry * BASE_SPEED_IN_RPM / ( pParameters->fwTuneFactor * BASE_IMPEDENCE_IN_OHMS );
-    mcUtils_FloatToValueShiftPair( f32a, &pState->bFieldWeakening.LdValue, &pState->bFieldWeakening.LdShift );
+    mcUtils_FloatToValueShiftPair( f32a, &pState->bFluxWeakening.LdValue, &pState->bFluxWeakening.LdShift );
 
     /** BEMF constant values  */
     f32a = pParameters->pMotorParameters->KeInVrmsPerKrpm / ( 1225.0f * (BASE_VOLTAGE_IN_VOLTS/ BASE_SPEED_IN_RPM ));
-    mcUtils_FloatToValueShiftPair( f32a, &pState->bFieldWeakening.KeValue, &pState->bFieldWeakening.KeShift );
+    mcUtils_FloatToValueShiftPair( f32a, &pState->bFluxWeakening.KeValue, &pState->bFluxWeakening.KeShift );
 
     /** Set initialization flag */
-    pState->bFieldWeakening.initDone = true;
+    pState->bFluxWeakening.initDone = true;
 }
 
 /*!
@@ -302,14 +302,14 @@ void  mcFlx_FieldWeakeningInit( tmcFlx_Parameters_s * const pParameters )
  * @return None
  */
 #ifdef RAM_EXECUTE
-int16_t __ramfunc__ mcFlx_FieldWeakening( tmcFlx_FieldWeakening_s * const pFieldWeakening,
+int16_t __ramfunc__ mcFlx_FluxWeakening( tmcFlx_FluxWeakening_s * const pFieldWeakening,
                                         const tmcTypes_DQ_s * const pUDQ,
                                         tmcTypes_DQ_s * const pIDQ,
                                         tmcTypes_AlphaBeta_s * const pEAlphaBeta,
                                         const int16_t wmechRPM,
                                         const int16_t uBus )
 #else
-int16_t  mcFlx_FieldWeakening(  tmcFlx_FieldWeakening_s * const pFieldWeakening,
+int16_t  mcFlx_FluxWeakening(  tmcFlx_FluxWeakening_s * const pFieldWeakening,
                                         const tmcTypes_DQ_s * const pUDQ,
                                         tmcTypes_DQ_s * const pIDQ,
                                         tmcTypes_AlphaBeta_s * const pEAlphaBeta,
@@ -365,14 +365,14 @@ int16_t  mcFlx_FieldWeakening(  tmcFlx_FieldWeakening_s * const pFieldWeakening,
  * @param[in] pParameters Pointer to module parameters structure
  * @return None
  */
-void  mcFlx_FieldWeakeningReset( const tmcFlx_Parameters_s * const pParameters )
+void  mcFlx_FluxWeakeningReset( const tmcFlx_Parameters_s * const pParameters )
 {
     /** Get the linked state variable */
     tmcFlx_State_s * pState;
     pState = (tmcFlx_State_s *)pParameters->pStatePointer;
 
     /** Calculate scaled values  */
-    pState->bFieldWeakening.fluxWeakIdRef = 0;
+    pState->bFluxWeakening.fluxWeakIdRef = 0;
 }
 
 
@@ -384,16 +384,16 @@ void  mcFlx_FieldWeakeningReset( const tmcFlx_Parameters_s * const pParameters )
  * @param[in] pParameters Pointer to module parameters structure
  * @return None
  */
-void  mcFlx_FieldWeakeningEnable( tmcFlx_Parameters_s * const pParameters )
+void  mcFlx_FluxWeakeningEnable( tmcFlx_Parameters_s * const pParameters )
 {
     /** Get the linked state variable */
     tmcFlx_State_s * pState;
     pState = (tmcFlx_State_s *)pParameters->pStatePointer;
 
-    if( ( NULL == pState ) || ( !pState->bFieldWeakening.initDone ))
+    if( ( NULL == pState ) || ( !pState->bFluxWeakening.initDone ))
     {
         /** Initialize parameters */
-        mcFlx_FieldWeakeningInit(pParameters);
+        mcFlx_FluxWeakeningInit(pParameters);
     }
     else
     {
@@ -401,7 +401,7 @@ void  mcFlx_FieldWeakeningEnable( tmcFlx_Parameters_s * const pParameters )
     }
 
     /** Set enable flag as true */
-    pState->bFieldWeakening.enable = true;
+    pState->bFluxWeakening.enable = true;
 }
 
 /*!
@@ -412,7 +412,7 @@ void  mcFlx_FieldWeakeningEnable( tmcFlx_Parameters_s * const pParameters )
  * @param[in] pParameters Pointer to module parameters structure
  * @return None
  */
-void  mcFlx_FieldWeakeningDisable( tmcFlx_Parameters_s * const pParameters )
+void  mcFlx_FluxWeakeningDisable( tmcFlx_Parameters_s * const pParameters )
 {
     /** Get the linked state variable */
     tmcFlx_State_s * pState;
@@ -421,7 +421,7 @@ void  mcFlx_FieldWeakeningDisable( tmcFlx_Parameters_s * const pParameters )
     if( NULL != pState)
     {
         /** Reset state variables  */
-        mcFlx_FieldWeakeningReset(pParameters);
+        mcFlx_FluxWeakeningReset(pParameters);
     }
     else
     {
@@ -429,7 +429,7 @@ void  mcFlx_FieldWeakeningDisable( tmcFlx_Parameters_s * const pParameters )
     }
 
     /** Set enable flag as true */
-    pState->bFieldWeakening.enable = false;
+    pState->bFluxWeakening.enable = false;
 }
 </#if>
 
@@ -487,7 +487,7 @@ void  mcFlxI_FluxControlEnable( tmcFlx_Parameters_s * const pParameters )
 
 <#if MCPMSMFOC_ENABLE_FW == true >
     /** Enable flux weakening by default */
-    mcFlx_FieldWeakeningEnable( pParameters );
+    mcFlx_FluxWeakeningEnable( pParameters );
 </#if>
 
 <#if MCPMSMFOC_ENABLE_MTPA == true >
@@ -659,7 +659,7 @@ void  mcFlxI_FluxReferenceGet(  const tmcFlx_Parameters_s * const pParameters,
     pState = (tmcFlx_State_s *)pParameters->pStatePointer;
 
 <#if ( MCPMSMFOC_ENABLE_MTPA == true ) && ( MCPMSMFOC_ENABLE_FW == true ) >
-    int16_t idrefFW = mcFlx_FieldWeakening( &pState->bFieldWeakening, pUDQ, pIDQ, pEAlphaBeta, wmechRPM, uBus );
+    int16_t idrefFW = mcFlx_FluxWeakening( &pState->bFluxWeakening, pUDQ, pIDQ, pEAlphaBeta, wmechRPM, uBus );
     int16_t idrefMTPA = mcFlx_MTPA(&pState->bMTPA, pIDQ );
 
     if( idrefFW < idrefMTPA ) {
@@ -671,7 +671,7 @@ void  mcFlxI_FluxReferenceGet(  const tmcFlx_Parameters_s * const pParameters,
 <#elseif MCPMSMFOC_ENABLE_MTPA == true >
     *pIdref = mcFlx_MTPA(&pState->bMTPA, pIDQ );
 <#else>
-    *pIdref = mcFlx_FieldWeakening( &pState->bFieldWeakening, pUDQ, pIDQ, pEAlphaBeta, wmechRPM, uBus );
+    *pIdref = mcFlx_FluxWeakening( &pState->bFluxWeakening, pUDQ, pIDQ, pEAlphaBeta, wmechRPM, uBus );
 </#if>
 }
 </#if>
