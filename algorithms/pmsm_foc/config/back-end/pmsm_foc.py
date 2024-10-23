@@ -149,7 +149,7 @@ This function performs tasks when the corresponding modules are connected
 """
 def onAttachmentConnected( source, target ):
     # ADC Peripheral
-    analog_Interface.onAttachmentConnected( source, target )
+    #analog_Interface.onAttachmentConnected( source, target )
 
     # PWM Peripheral
     pwm_Interface.onAttachmentConnected( source, target )
@@ -171,7 +171,7 @@ This function performs tasks when the corresponding modules are disconnected
 """
 def onAttachmentDisconnected( source, target ):
     # ADC Peripheral
-    analog_Interface.onAttachmentDisconnected( source, target )
+    #analog_Interface.onAttachmentDisconnected( source, target )
 
     # PWM Peripheral
     pwm_Interface.onAttachmentDisconnected( source, target )

@@ -323,7 +323,6 @@ class mcFocI_DigitalInterfaceClass:
 
     def get_gpio_ip( self, module, ip ):
         for entry in self.supported_gpio_ips.get( ip, [] ):
-            print('GPIO IP_', entry["name"], module.getAttribute("name"),  entry["id"], module.getAttribute("id") )
             if ( str(entry["name"]) == str(module.getAttribute("name")) and str(entry["id"]) == str(module.getAttribute("id")) ):
                 return entry["name"] + "_" + entry["id"]
         return ""

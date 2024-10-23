@@ -47,7 +47,7 @@ class mcRpoI_PositionCalculationAndDiagnosis:
         self.sym_ALGORITHM.setLabel("Select Position Feedback")
         if (("SAMC2" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
             self.sym_ALGORITHM.addKey("SENSORLESS_PLL", "0", "Equation based PLL")
-            # self.sym_ALGORITHM.addKey("SENSORLESS_ROLO", "2", "Reduced Order Luenberger Observer (Beta)")
+            self.sym_ALGORITHM.addKey("SENSORLESS_ROLO", "2", "Reduced Order Luenberger Observer")
         else:
             self.sym_ALGORITHM.addKey("SENSORLESS_PLL", "0", "Equation based PLL")
             self.sym_ALGORITHM.addKey("SENSORED_ENCODER", "1", "Quadrature Encoder")
@@ -415,7 +415,6 @@ class mcRpoI_PositionCalculationAndDiagnosis:
         symbol.setValue(pll_cut_off_freq)
 
     def getDependentLibrary(self, symbol, event):
-        print('Debug encoder', symbol.getSelectedKey() )
         if "SENSORED_ENCODER" == str(symbol.getSelectedKey()):
             symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", True)
 
@@ -426,16 +425,12 @@ class mcRpoI_PositionCalculationAndDiagnosis:
 
             autoComponentIDTable = [[ "pmsm_foc", "pmsmfoc_QDEC", module.lower(), module.upper() + "_QDEC"]]
             res = Database.connectDependencies(autoComponentIDTable)
-            
-            print( 'Debug encoder', autoComponentIDTable )
 
         else:
             # Deactivate and connect the default  peripheral for quadrature decoder
             module = str( Database.getSymbolValue("pmsm_foc", "MCPMSMFOC_ENCODER_PERIPHERAL_ID"))
             autoConnectTable = [ module]
             res = Database.deactivateComponents(autoConnectTable)
-            print( 'Debug encoder', 'Failed' )
-
             symbol.getComponent().setDependencyEnabled("pmsmfoc_QDEC", False)
 
     # def symbolUpdate( self, symbol, event ):
