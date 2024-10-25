@@ -445,8 +445,8 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
 
     if( ("SAME7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR"))):
         smoLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_SMO_LIB_A", None)
-        smoLibraryFile.setSourcePath( modulePath + "lib/CortexM7-ATSAM_MCHP_ZSMT.a")
-        smoLibraryFile.setOutputName("libCortexM7-ATSAM_SMO_ZSMT.a")
+        smoLibraryFile.setSourcePath( modulePath + "lib/libCortexM7-ATSAM_MCHP_SMO.a")
+        smoLibraryFile.setOutputName("libCortexM7-ATSAM_MCHP_SMO.a")
         smoLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/")
         smoLibraryFile.setEnabled(False)
 
