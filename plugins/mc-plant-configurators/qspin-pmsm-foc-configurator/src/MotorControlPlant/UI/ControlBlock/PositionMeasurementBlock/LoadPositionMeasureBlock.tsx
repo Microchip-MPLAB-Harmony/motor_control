@@ -12,12 +12,11 @@ export default function LoadPositionMeasureBlock(props: {
     componentId: props.componentId,
     symbolId: 'MCPMSMFOC_POSITION_CALC_ALGORITHM'
   });
-  SetPositionControlDiagnosisDefaultWindowView(positionSelection.value);
+  SetPositionControlDiagnosisDefaultWindowView(positionSelection.selectedOption);
   return (
     <div>
       <PositionMesurementAndDiagnosis
         componentId={props.componentId}
-        positionSelection={positionSelection}
         showToast={props.showToast}
         dialogVisibleStatus={props.dialogVisibleStatus}
       />

@@ -1,7 +1,6 @@
 import { KeyValueSetSymbolHook } from '@mplab_harmony/harmony-plugin-client-lib';
 import { getIndex } from '../../../Tools/CommonUtil';
 import { ReactComponent as PMDEB } from '../../../../Resources/Svgs/ControlBlock/Position_Measurement_and_Diagnosis-Equation_based.svg';
-import PositionControlSelection from './PositionControlSelection';
 import { Divider } from 'primereact/divider';
 import { ShowConfigProps } from '../../../Tools/NodeUtils';
 

@@ -1,70 +1,77 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import ProjectSupportMessage from './ProjectSupportMessage';
-import { error, info, PluginConfigContext } from '@mplab_harmony/harmony-plugin-client-lib';
 import {
-  ActivateComponent,
-  IsComponentActive,
-  IsComponentAvailable
-} from '@mplab_harmony/harmony-plugin-core-service';
+  Component,
+  componentApi,
+  componentUtilApi,
+  error,
+  info,
+  PluginConfigContext
+} from '@mplab_harmony/harmony-plugin-client-lib';
+
 import MainBlock from './MainBlock';
 import { Dialog } from 'primereact/dialog';
 
-let IsOldHarmonyServices = false;
-let PMSMComponentActiveStatus = false;
 const Launcher = () => {
   const { componentId = 'pmsm_foc' } = useContext(PluginConfigContext);
   const [popUpStatus, setPopUpStatus] = useState(false);
-  useEffect(() => {
-    if (IsOldHarmonyServices) {
-      setPopUpStatus(true);
-    }
-  }, []);
+  const [PMSMComponentActiveStatus, setPMSMComponentActiveStatus] = useState(false);
+  const [notSupproted, setNotSupported] = useState(false);
 
-  const AddComponent = (componenentId: string) => {
+  const updateComponentSupportStatus = (status: boolean) => {
+    setPMSMComponentActiveStatus(status);
+    setNotSupported(!status);
+  };
+  const addComponent = (componenentId: string) => {
     info(
       'Motor Control Plant',
       componenentId + ' component is not active. Checking component available status'
     );
-    let isComponentAvailable = IsComponentAvailable(componenentId);
-    if (isComponentAvailable) {
-      info(
-        'Motor Control Plant',
-        componenentId + ' component is available to activate. So activating the component.'
-      );
-      ActivateComponent(componenentId);
-      return true;
-    } else {
-      return false;
-    }
-  };
-  PMSMComponentActiveStatus = IsComponentActive(componentId);
-
-  if (PMSMComponentActiveStatus === undefined) {
-    error(
-      'Motor Control Plant',
-      'Please update your harmony-services repository to latest version!'
-    );
-    IsOldHarmonyServices = true;
-    PMSMComponentActiveStatus = true;
-  } else {
-    if (!PMSMComponentActiveStatus) {
-      PMSMComponentActiveStatus = AddComponent(componentId);
-      if (!PMSMComponentActiveStatus) {
+    componentUtilApi.getAvailableComponents().then((values: Component[]) => {
+      let isComponentAvailable = values.map((value: Component) => {
+        return value.componentId === componenentId;
+      });
+      if (isComponentAvailable) {
+        info(
+          'Motor Control Plant',
+          componenentId + ' component is available to activate. So activating the component.'
+        );
+        componentUtilApi.activateComponents([componenentId]).then((value) => {
+          updateComponentSupportStatus(true);
+        });
+      } else {
+        updateComponentSupportStatus(false);
         error(
           'MC Plant',
           componentId +
             ' component is not available to activate. So this project does not support mc plant configurator.'
         );
       }
+    });
+  };
+  componentApi.isActive(componentId).then((value) => {
+    if (value === undefined) {
+      error(
+        'Motor Control Plant',
+        'Please update your harmony-services repository to latest version!'
+      );
+      setPopUpStatus(true);
+      setPMSMComponentActiveStatus(false);
+      setNotSupported(false);
     } else {
-      info('MC Plant', componentId + ' component is active.');
+      if (!value) {
+        addComponent(componentId);
+      } else {
+        updateComponentSupportStatus(true);
+        info('MC Plant', componentId + ' component is active.');
+      }
     }
-  }
+  });
 
   return (
-    <div className='card'>
+    <div>
       {PMSMComponentActiveStatus && <MainBlock />}
-      {!PMSMComponentActiveStatus && <ProjectSupportMessage />}
+      {notSupproted && <ProjectSupportMessage />}
       <Dialog
         visible={popUpStatus}
         maximizable={true}

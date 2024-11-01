@@ -7,8 +7,8 @@ export default function PositionControlSelection(props: {
   positionSelection: KeyValueSetSymbolHook;
 }) {
   useEffect(() => {
-    ResetDefaultView(props.positionSelection.value);
-  }, [props.positionSelection]);
+    ResetDefaultView(props.positionSelection.selectedOption);
+  }, [props.positionSelection.selectedOption]);
   return (
     <div>
       <div className='flex'>

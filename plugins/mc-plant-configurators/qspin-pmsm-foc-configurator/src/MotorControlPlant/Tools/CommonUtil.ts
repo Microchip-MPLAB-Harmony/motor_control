@@ -1,8 +1,4 @@
-import {
-  ConfigSymbol,
-  configSymbolApi,
-  symbolUtilApi
-} from '@mplab_harmony/harmony-plugin-client-lib';
+import { ConfigSymbol, symbolUtilApi } from '@mplab_harmony/harmony-plugin-client-lib';
 
 /*
  * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries.

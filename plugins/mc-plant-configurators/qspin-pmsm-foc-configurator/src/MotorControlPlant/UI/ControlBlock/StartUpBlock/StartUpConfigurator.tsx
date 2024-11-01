@@ -23,9 +23,15 @@ const StartUpConfigurator = (props: { componentId: string; showToast: (arg0: any
           <TabPanel header='Start-up'>
             <div className='flex'>
               <div className='flex-column'>
-                {rotorRotation.value === 0 && <LoadImage file={StartupForcedAlignQAxis} />}
-                {rotorRotation.value === 1 && <LoadImage file={StartupForcedAlignDAxis} />}
-                {rotorRotation.value === 2 && <LoadImage file={StartupInitialPosition} />}
+                {rotorRotation.selectedOption.startsWith('Force Q-axis alignment') && (
+                  <LoadImage file={StartupForcedAlignQAxis} />
+                )}
+                {rotorRotation.selectedOption.startsWith('Force D-axis alignment') && (
+                  <LoadImage file={StartupForcedAlignDAxis} />
+                )}
+                {rotorRotation.selectedOption.startsWith('Initial Position Detection') && (
+                  <LoadImage file={StartupInitialPosition} />
+                )}
               </div>
               <Divider layout='vertical' />
               <div className='p-fluid'>

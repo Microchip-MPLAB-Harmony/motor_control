@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.bd000c23.css",
-    "main.js": "./static/js/main.0747d81e.js",
+    "main.css": "./static/css/main.5d8ce93e.css",
+    "main.js": "./static/js/main.bec3caea.js",
     "static/media/primeicons.svg": "./static/media/primeicons.c6e2053303524e39530c.svg",
     "static/media/primeicons.eot": "./static/media/primeicons.7fc4d8e224d1ff1b9c62.eot",
     "static/media/primeicons.woff": "./static/media/primeicons.449aa8c65cdc5c2a8686.woff",
@@ -10,12 +10,12 @@
     "static/media/Motor_Control_and_Diagnosis-main_diagram.svg": "./static/media/Motor_Control_and_Diagnosis-main_diagram.ae24277075dab7b8b7f755b6732246df.svg",
     "static/media/StartupConfigurator-ForcedAlign-D-Axis.svg": "./static/media/StartupConfigurator-ForcedAlign-D-Axis.478810548277b159dd2a748b3f3f3d75.svg",
     "static/media/StartupConfigurator-ForcedAlign-Q-Axis.svg": "./static/media/StartupConfigurator-ForcedAlign-Q-Axis.5219939e1884c9b85ef56a48313c3afb.svg",
-    "static/media/StartupConfigurator-Initial_Position_Detection.svg": "./static/media/StartupConfigurator-Initial_Position_Detection.227676aaf82353df9026776760118561.svg",
+    "static/media/StartupConfigurator-Initial_Position_Detection.svg": "./static/media/StartupConfigurator-Initial_Position_Detection.ee7c0f636c8d314a6533f669d8db3533.svg",
     "static/media/StartupConfigurator-FlyingStart.svg": "./static/media/StartupConfigurator-FlyingStart.f172529462c3a064eb27d26ea8cc3c49.svg",
     "static/media/Position_Measurement_and_Diagnosis-Equation_based.svg": "./static/media/Position_Measurement_and_Diagnosis-Equation_based.2f53e563460adec56af4e4b94094d81e.svg",
     "static/media/Motor_Control_and_Diagnosis-PI_parameters-Back_Calculation.svg": "./static/media/Motor_Control_and_Diagnosis-PI_parameters-Back_Calculation.db6c05530ea1266735185527508f1036.svg",
     "static/media/Current_Measurement_and_Diagnosis-Dual_Shunt.svg": "./static/media/Current_Measurement_and_Diagnosis-Dual_Shunt.572705e71c9eb26dca661f2f3b3ec982.svg",
-    "static/media/Position_Measurement_and_Diagnosis_ROLO.svg": "./static/media/Position_Measurement_and_Diagnosis_ROLO.ca77fee70a885ef3cba86d1e52f7e271.svg",
+    "static/media/Position_Measurement_and_Diagnosis_ROLO.svg": "./static/media/Position_Measurement_and_Diagnosis_ROLO.0e628754793203989bb22a6c789b437c.svg",
     "static/media/Position_Measurement_and_Diagnosis_SMO.svg": "./static/media/Position_Measurement_and_Diagnosis_SMO.2acd3bc29e1393e4dceea6beb3acc847.svg",
     "static/media/Position_Measurement_and_Diagnosis-Quadrature_decoder.svg": "./static/media/Position_Measurement_and_Diagnosis-Quadrature_decoder.0c016f468db4200d7537f0012fe27a67.svg",
     "static/media/Position_Measurement_and_Diagnosis_ZSMT_Hybrid.svg": "./static/media/Position_Measurement_and_Diagnosis_ZSMT_Hybrid.8c73b19ef0c4e85b72f9da7631f4c1b4.svg",
@@ -29,11 +29,11 @@
     "static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-Step.svg": "./static/media/Motor_Control_and_Diagnosis-Ramp_Profiler-Step.633ee22ee3de33bdf128c19cb4b664dd.svg",
     "static/media/Tooltip.svg": "./static/media/Tooltip.8611f8d24a7401824069d461119c1aa6.svg",
     "index.html": "./index.html",
-    "main.bd000c23.css.map": "./static/css/main.bd000c23.css.map",
-    "main.0747d81e.js.map": "./static/js/main.0747d81e.js.map"
+    "main.5d8ce93e.css.map": "./static/css/main.5d8ce93e.css.map",
+    "main.bec3caea.js.map": "./static/js/main.bec3caea.js.map"
   },
   "entrypoints": [
-    "static/css/main.bd000c23.css",
-    "static/js/main.0747d81e.js"
+    "static/css/main.5d8ce93e.css",
+    "static/js/main.bec3caea.js"
   ]
 }

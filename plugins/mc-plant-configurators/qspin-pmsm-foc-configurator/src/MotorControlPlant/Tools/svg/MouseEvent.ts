@@ -21,9 +21,12 @@
  * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  */
 function CallMouseMove(evt: { target: any }, svgdoc: any, toolTipObject: any) {
-  document.body.style.cursor = 'pointer';
+  // document.body.style.cursor = 'pointer';
+  document.body.className = 'hand';
   var target = evt.target;
-  if (target.correspondingUseElement) target = target.correspondingUseElement;
+  if (target.correspondingUseElement) {
+    target = target.correspondingUseElement;
+  }
   showTooltip(evt, target.toolTip, svgdoc, toolTipObject);
 }
 
@@ -32,7 +35,8 @@ function hideTooltip(toolTipObject: any) {
 }
 
 export function CallMouseLeave(evt: { target: any }, toolTipObject: any) {
-  document.body.style.cursor = 'auto';
+  // document.body.style.cursor = 'auto';
+  document.body.className = 'normal';
   hideTooltip(toolTipObject);
 }
 
@@ -50,11 +54,7 @@ function showTooltip(
   toolTipObject.setAttributeNS(null, 'visibility', 'visible');
   var x = (evt.clientX - CTM.e + 6) / CTM.a;
   var y = (evt.clientY - CTM.f + 20) / CTM.d;
-  toolTipObject.setAttributeNS(
-    null,
-    'transform',
-    'translate(' + x + ' ' + y + ')'
-  );
+  toolTipObject.setAttributeNS(null, 'transform', 'translate(' + x + ' ' + y + ')');
 
   var tooltipText = toolTipObject.getElementsByTagName('text')[0];
   tooltipText.firstChild.data = text;

@@ -13,3 +13,9 @@ input {
   width: 20px;
   height: 20px;
 }
+body.hand * {
+  cursor: pointer;
+}
+body.normal * {
+  cursor: auto;
+}

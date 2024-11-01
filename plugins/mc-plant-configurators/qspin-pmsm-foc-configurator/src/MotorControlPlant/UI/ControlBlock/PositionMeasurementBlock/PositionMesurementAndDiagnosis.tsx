@@ -5,7 +5,7 @@ import {
   GetResetToDefaultStatus,
   ResetDialogSettings
 } from '../../CustomPopUp/CustomPopUp';
-import { KeyValueSetSymbolHook } from '@mplab_harmony/harmony-plugin-client-lib';
+import { useKeyValueSetSymbol } from '@mplab_harmony/harmony-plugin-client-lib';
 import { addEventListeners } from '../../../Tools/svg/Svgscripts';
 import ShowEB from './ShowEB';
 import ShowQD from './ShowQD';
@@ -37,13 +37,20 @@ let roloIds = ['box-bemf-observer', 'box-flux-angle-calculation'];
 
 let actionIds = [...ebIds, ...qdIds, ...roloIds, ...zsmtIds, ...smoIds];
 let defaultViewGlobal = actionIds[0];
-
+let equactionBasedPLL = 'Equation based PLL';
+let quadratureEncoder = 'Quadrature Encoder';
+let reducedOrderLuenbergerObserver = 'Reduced Order Luenberger Observer';
+let slidingModeObserver = 'Sliding Mode Observer';
+let zsmtObserver = 'ZSMT Hybrid';
 const PositionMesurementAndDiagnosis = (props: {
   componentId: string;
   showToast: (arg0: any) => void;
   dialogVisibleStatus: boolean;
-  positionSelection: KeyValueSetSymbolHook;
 }) => {
+  const positionSelection = useKeyValueSetSymbol({
+    componentId: props.componentId,
+    symbolId: 'MCPMSMFOC_POSITION_CALC_ALGORITHM'
+  });
   useEffect(() => {
     if (!props.dialogVisibleStatus) {
       svgObj = null;
@@ -53,41 +60,41 @@ const PositionMesurementAndDiagnosis = (props: {
       return;
     }
     if (svgObj === null) {
-      RegisterPositionControlDiagnosisSVGActions(props.positionSelection.value);
+      RegisterPositionControlDiagnosisSVGActions(positionSelection.selectedOption);
       return;
     }
   });
   useEffect(() => {
-    RegisterPositionControlDiagnosisSVGActions(props.positionSelection.value);
-    ResetDefaultView(props.positionSelection.value);
-  }, [props.positionSelection.value]);
+    RegisterPositionControlDiagnosisSVGActions(positionSelection.selectedOption);
+    ResetDefaultView(positionSelection.selectedOption);
+  }, [positionSelection.selectedOption]);
 
   const [currentView, setCurrentView] = useState(defaultViewGlobal);
 
-  function RegisterPositionControlDiagnosisSVGActions(selectedIndex: any) {
-    if (selectedIndex === 0) {
+  function RegisterPositionControlDiagnosisSVGActions(selectedValue: string) {
+    if (selectedValue.startsWith(equactionBasedPLL)) {
       AddEvents(ebIds, 'PositionMesurementAndDiagnosisEB');
-    } else if (selectedIndex === 1) {
+    } else if (selectedValue.startsWith(quadratureEncoder)) {
       AddEvents(qdIds, 'PositionMesurementAndDiagnosisQD');
-    } else if (selectedIndex === 2) {
+    } else if (selectedValue.startsWith(reducedOrderLuenbergerObserver)) {
       AddEvents(roloIds, 'PositionMesurementAndDiagnosisROLO');
-    } else if (selectedIndex === 3) {
+    } else if (selectedValue.startsWith(slidingModeObserver)) {
       AddEvents(smoIds, 'PositionMesurementAndDiagnosisSMO');
-    } else if (selectedIndex === 4) {
+    } else if (selectedValue.startsWith(zsmtObserver)) {
       AddEvents(zsmtIds, 'PositionMesurementAndDiagnosisZSMTHybrid');
     }
   }
 
-  function ResetDefaultView(selectedIndex: any) {
-    if (selectedIndex === 0) {
+  function ResetDefaultView(selectedValue: string) {
+    if (selectedValue.startsWith(equactionBasedPLL)) {
       setCurrentView(ebIds[0]);
-    } else if (selectedIndex === 1) {
+    } else if (selectedValue.startsWith(quadratureEncoder)) {
       setCurrentView(qdIds[0]);
-    } else if (selectedIndex === 2) {
+    } else if (selectedValue.startsWith(reducedOrderLuenbergerObserver)) {
       setCurrentView(roloIds[0]);
-    } else if (selectedIndex === 3) {
+    } else if (selectedValue.startsWith(slidingModeObserver)) {
       setCurrentView(smoIds[0]);
-    } else if (selectedIndex === 4) {
+    } else if (selectedValue.startsWith(zsmtObserver)) {
       setCurrentView(zsmtIds[0]);
     }
   }
@@ -131,57 +138,56 @@ const PositionMesurementAndDiagnosis = (props: {
       return;
     }
   }
-
   return (
     <div>
       <div className='flex-column'>
         <div className='flex justify-content-start column-gap-4 row-gap-6'>
           <PositionControlSelection
             componentId={props.componentId}
-            positionSelection={props.positionSelection}
+            positionSelection={positionSelection}
           />
         </div>
-        {props.positionSelection.value === 0 && (
+        {positionSelection.selectedOption.startsWith(equactionBasedPLL) && (
           <ShowEB
             componentId={props.componentId}
             showToast={props.showToast}
-            positionSelection={props.positionSelection}
+            positionSelection={positionSelection}
             currentView={currentView}
             ebIds={ebIds}
           />
         )}
-        {props.positionSelection.value === 1 && (
+        {positionSelection.selectedOption.startsWith(quadratureEncoder) && (
           <ShowQD
             componentId={props.componentId}
             showToast={props.showToast}
-            positionSelection={props.positionSelection}
+            positionSelection={positionSelection}
             currentView={currentView}
             qdIds={qdIds}
           />
         )}
-        {props.positionSelection.value === 2 && (
+        {positionSelection.selectedOption.startsWith(reducedOrderLuenbergerObserver) && (
           <ShowReducedOrderLuenberger
             componentId={props.componentId}
             showToast={props.showToast}
-            positionSelection={props.positionSelection}
+            positionSelection={positionSelection}
             currentView={currentView}
             roloIds={roloIds}
           />
         )}
-        {props.positionSelection.value === 3 && (
+        {positionSelection.selectedOption.startsWith(slidingModeObserver) && (
           <ShowSMO
             componentId={props.componentId}
             showToast={props.showToast}
-            positionSelection={props.positionSelection}
+            positionSelection={positionSelection}
             currentView={currentView}
             smoIds={smoIds}
           />
         )}
-        {props.positionSelection.value === 4 && (
+        {positionSelection.selectedOption.startsWith(zsmtObserver) && (
           <ShowZSMTHybrid
             componentId={props.componentId}
             showToast={props.showToast}
-            positionSelection={props.positionSelection}
+            positionSelection={positionSelection}
             currentView={currentView}
             zsmtIds={zsmtIds}
           />
@@ -192,22 +198,22 @@ const PositionMesurementAndDiagnosis = (props: {
 };
 export default PositionMesurementAndDiagnosis;
 
-export function SetPositionControlDiagnosisDefaultWindowView(positionSelectedIndex: number) {
+export function SetPositionControlDiagnosisDefaultWindowView(positionSelectedValue: string) {
   if (GetResetToDefaultStatus() || GetResetStatus()) {
     return;
   }
-  ResetDefaultView(positionSelectedIndex);
+  ResetDefaultView(positionSelectedValue);
 }
-export function ResetDefaultView(selectedIndex: any) {
-  if (selectedIndex === 0) {
+export function ResetDefaultView(selectedValue: string) {
+  if (selectedValue.startsWith(equactionBasedPLL)) {
     defaultViewGlobal = ebIds[0];
-  } else if (selectedIndex === 1) {
+  } else if (selectedValue.startsWith(quadratureEncoder)) {
     defaultViewGlobal = qdIds[0];
-  } else if (selectedIndex === 2) {
+  } else if (selectedValue.startsWith(reducedOrderLuenbergerObserver)) {
     defaultViewGlobal = roloIds[0];
-  } else if (selectedIndex === 3) {
+  } else if (selectedValue.startsWith(slidingModeObserver)) {
     defaultViewGlobal = smoIds[0];
-  } else if (selectedIndex === 4) {
+  } else if (selectedValue.startsWith(zsmtObserver)) {
     defaultViewGlobal = zsmtIds[0];
   }
 }

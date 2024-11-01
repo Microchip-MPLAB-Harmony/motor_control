@@ -1,4 +1,3 @@
-import { GetSymbolValue } from '@mplab_harmony/harmony-plugin-core-service/build/database-access/SymbolAccess';
 import { Panel } from 'primereact/panel';
 // import { mc_component_id } from '../MainView/MainBlock';
 

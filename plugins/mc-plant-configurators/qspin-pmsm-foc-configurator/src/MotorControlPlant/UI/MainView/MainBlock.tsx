@@ -72,11 +72,11 @@ const MainBlock = () => {
   });
 
   const items: MenuItem[] = [
-    {
-      label: 'Summary',
-      icon: 'pi pi-fw pi-chart-bar',
-      command: () => setSummaryDialogVisible(true)
-    },
+    // {
+    //   label: 'Summary',
+    //   icon: 'pi pi-fw pi-chart-bar',
+    //   command: () => setSummaryDialogVisible(true)
+    // },
     {
       label: 'Help',
       icon: 'pi pi-search',

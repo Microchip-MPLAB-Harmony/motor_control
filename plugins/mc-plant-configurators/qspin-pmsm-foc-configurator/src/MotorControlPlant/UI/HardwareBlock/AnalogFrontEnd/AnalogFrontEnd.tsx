@@ -8,7 +8,6 @@ import {
   ResetDialogSettings
 } from '../../CustomPopUp/CustomPopUp';
 import { getIndex } from '../../../Tools/CommonUtil';
-import { CallMouseLeave, CallMouseMove } from '../../../Tools/svg/MouseEvent';
 import { useEffect, useState } from 'react';
 import DefaultICON11 from './DefaultICON11';
 import DefaultICON12 from './DefaultICON12';
