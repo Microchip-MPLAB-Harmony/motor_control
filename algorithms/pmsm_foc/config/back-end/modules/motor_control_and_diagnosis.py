@@ -62,6 +62,8 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_X2C_ENABLE = self.component.createBooleanSymbol("MCPMSMFOC_FOC_X2C_ENABLE", self.sym_NODE )
         self.sym_X2C_ENABLE.setLabel("Enable X2C model based generation ")
         self.sym_X2C_ENABLE.setDefaultValue(False)
+        if self.architecture == "CORTEX-M0PLUS":
+            self.sym_X2C_ENABLE.setReadOnly(True)
         self.sym_X2C_ENABLE.setDependencies(self.updateProjectGraph, ["MCPMSMFOC_FOC_X2C_ENABLE"])
 
         self.sym_X2C_ID = self.component.createStringSymbol("MCPMSMFOC_FOC_X2C_ID", None)
@@ -76,10 +78,12 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_CONTROL_TYPE.addKey("SPEED_LOOP", "0", "Speed control")
         self.sym_CONTROL_TYPE.addKey("TORQUE_LOOP", "1", "Torque control")
         self.sym_CONTROL_TYPE.addKey("OPEN_LOOP", "2", "Open loop control")
-        self.sym_CONTROL_TYPE.addKey("POSITION_LOOP", "3", "Position control")
+        if self.architecture != "CORTEX-M0PLUS":
+            self.sym_CONTROL_TYPE.addKey("POSITION_LOOP", "3", "Position control")
+
         self.sym_CONTROL_TYPE.setOutputMode("Key")
         self.sym_CONTROL_TYPE.setDisplayMode("Description")
-        
+
         self.sym_CONTROL_TYPE_COMMENT = self.component.createCommentSymbol("MCPMSMFOC_CONTROL_TYPE_COMMENT", self.sym_NODE )
         self.sym_CONTROL_TYPE_COMMENT.setLabel('**Kindly ensure that any sensored method is selected for position estimation **')
         self.sym_CONTROL_TYPE_COMMENT.setDependencies( self.updateComment, [ 'MCPMSMFOC_CONTROL_TYPE'] )
@@ -352,9 +356,9 @@ class mcMocI_MotorControlAndDiagnosis:
         self.sym_DECOUPLING_NETWORK = self.component.createMenuSymbol("MCPMSMFOC_DECOUPLING_NETWORK", self.sym_NODE)
         self.sym_DECOUPLING_NETWORK.setLabel("Decoupling Network")
 
-        # Over-modulation enable
         self.sym_DECOUPLING_ENABLE = self.component.createBooleanSymbol("MCPMSMFOC_ENABLE_DECOUPLING", self.sym_DECOUPLING_NETWORK)
         self.sym_DECOUPLING_ENABLE.setLabel("Enable Inductive Decoupling")
+        self.sym_DECOUPLING_ENABLE.setReadOnly(True)
 
     def updateComment( self, symbol, event ):
          if "POSITION_LOOP" == event["symbol"].getSelectedKey():

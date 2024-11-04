@@ -206,12 +206,25 @@ def mcGen_GenerateCodeUpdate(symbol, event):
             # component.getSymbolByID("MCPMSMFOC_IPD_SOURCE").setEnabled(True)
             # component.getSymbolByID("MCPMSMFOC_IPD_HEADER").setEnabled(True)
 
-            # Disable
-            component.getSymbolByID(str("opt_foc.h.ftl")).setEnabled(True)
-            component.getSymbolByID(str("opt_foc.c.ftl")).setEnabled(True)
-            component.getSymbolByID(str("opt_foc_x2cmodel.h.ftl")).setEnabled(False)
-            component.getSymbolByID(str("opt_foc_x2cmodel.c.ftl")).setEnabled(False)
+            try:
+                component.getSymbolByID(str("opt_foc.h.ftl")).setEnabled(True)
+            except Exception as e:
+                print("An error occurred while enabling 'opt_foc.h.ftl': {}".format(e))
 
+            try:
+                component.getSymbolByID(str("opt_foc.c.ftl")).setEnabled(True)
+            except Exception as e:
+                print("An error occurred while enabling 'opt_foc.c.ftl': {}".format(e))
+
+            try:
+                component.getSymbolByID(str("opt_foc_x2cmodel.h.ftl")).setEnabled(False)
+            except Exception as e:
+                print("An error occurred while disabling 'opt_foc_x2cmodel.h.ftl': {}".format(e))
+
+            try:
+                component.getSymbolByID(str("opt_foc_x2cmodel.c.ftl")).setEnabled(False)
+            except Exception as e:
+                print("An error occurred while disabling 'opt_foc_x2cmodel.c.ftl': {}".format(e))
 
 def mcGen_GenerateCode(mcPmsmFocComponent):
     coreComponent = Database.getComponentByID("core")

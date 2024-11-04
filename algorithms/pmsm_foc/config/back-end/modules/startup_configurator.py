@@ -48,12 +48,15 @@ class mcSupI_StartupConfigurator:
         self.sym_ALIGN = self.component.createBooleanSymbol( "MCPMSMFOC_ENABLE_ALIGN_OR_DETECT", self.sym_STARTUP )
         self.sym_ALIGN.setLabel("Field Alignment/ Detection")
         self.sym_ALIGN.setDefaultValue(True)
+        self.sym_ALIGN.setReadOnly(True)
 
         self.sym_ALGORITHM = self.component.createKeyValueSetSymbol("MCPMSMFOC_ALIGN_OR_DETECT_AXIS", self.sym_ALIGN )
         self.sym_ALGORITHM.setLabel("Select algorithm")
         self.sym_ALGORITHM.addKey("Q_AXIS", "0", "Force Q-axis alignment")
         self.sym_ALGORITHM.addKey("D_AXIS", "1", "Force D-axis alignment")
-        self.sym_ALGORITHM.addKey("IPD", "2", "Initial Position Detection")
+        if self.architecture != "CORTEX-M0PLUS":
+            self.sym_ALGORITHM.addKey("IPD", "2", "Initial Position Detection")
+
         self.sym_ALGORITHM.setOutputMode("Key")
         self.sym_ALGORITHM.setDisplayMode("Description")
         self.sym_ALGORITHM.setDependencies( self.showThisSymbol, ['MCPMSMFOC_ENABLE_ALIGN_OR_DETECT'])

@@ -23,7 +23,7 @@ motor:
           continuous: 4.53
       pole_pairs: 5
       velocity:
-        maximum: 3600
+        maximum: 3400
         nominal: 2804
       voltage:
         nominal: 24.0

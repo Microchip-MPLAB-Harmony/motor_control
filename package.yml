@@ -1,7 +1,7 @@
 package:
   format-version: "1.0.0"
   name: "motor_control"
-  version: "v3.10.1"
+  version: "v3.11.0"
   type: "api"
   status: "production"
   required: false
@@ -9,13 +9,13 @@ package:
   dependencies:
     - name: "csp"
       type: "package"
-      version: "v3.17.0"
+      version: "release_v3.19.7"
     - name: "x2c"
       type: "package"
-      version: "v1.4.0"
+      version: "misra_fix"
     - name: "bsp"
       type: "package"
-      version: "v3.16.1" 
+      version: "dev" 
     - name: "harmony-services"
       type: "package"
-      version: "v1.3.1" 
+      version: "v1.5.0" 

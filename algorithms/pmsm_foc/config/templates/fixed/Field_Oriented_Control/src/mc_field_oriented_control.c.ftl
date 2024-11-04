@@ -128,7 +128,7 @@ static tmcFoc_State_s mcFoc_State_mds;
 tmcFocI_ModuleData_s mcFocI_ModuleData_gds;
 
 <#if ( MCPMSMFOC_CONTROL_TYPE == 'TORQUE_LOOP' ) >
-int16_t mcFoc_FocOverrideCurrent_gds16 = 0;
+int16_t mcFoc_FocOverrideCurrent_gds16 = 1000;
 </#if>
 
 /*******************************************************************************
@@ -527,13 +527,13 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
                 /** Set FOC state machine to CloseLoop */
                 pState->FocState = FocState_CloseLoop;
             }
-
+            pState->iDref = 0;
 <#if ( MCPMSMFOC_CONTROL_TYPE != 'TORQUE_LOOP' ) >
             /** Execute speed controller */
             mcSpeI_SpeedControlAuto(&pState->bSpeedController, pState->nRef,
                                                pOutput->elecSpeed, &pState->iQref );
 <#else>
-            pState->iQref = mcFoc_FocOverrideCurrent_gds16;
+            pState->iQref = pState->commandDirection * mcFoc_FocOverrideCurrent_gds16;
 </#if>
             break;
         }
@@ -551,7 +551,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
             mcSpeI_SpeedControlAuto(&pState->bSpeedController, pState->nRef,
                                                   pOutput->elecSpeed, &pState->iQref );
 <#else>
-            pState->iQref = mcFoc_FocOverrideCurrent_gds16;
+            pState->iQref = pState->commandDirection * mcFoc_FocOverrideCurrent_gds16;
 </#if>
             break;
         }

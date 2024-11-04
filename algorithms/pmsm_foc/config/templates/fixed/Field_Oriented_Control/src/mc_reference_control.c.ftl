@@ -108,10 +108,9 @@ void  mcRefI_ReferenceControlInit( tmcRef_Parameters_s * const pParameters )
     /** Set parameters */
     mcRefI_ParametersSet(pParameters);
 
+<#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
     mcRef_State_mds.lowerLimit = K_SPEED * pParameters->minimumRpm;
     mcRef_State_mds.upperLimit = K_SPEED * pParameters->maximumRpm;
-
-<#if ( MCPMSMFOC_CONTROL_TYPE == 'SPEED_LOOP' ) >
 <#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     mcRef_State_mds.scaledLowerLimit = mcRef_State_mds.lowerLimit << 15U;
     mcRef_State_mds.scaledUpperLimit = mcRef_State_mds.upperLimit << 15U;
@@ -258,10 +257,19 @@ void mcRefI_ReferenceControl(  tmcRef_Parameters_s * const pParameters,
  */
 void mcRefI_ReferenceControlReset( tmcRef_Parameters_s * const pParameters )
 {
+<#if MCPMSMFOC_RAMP_PROFILES == 'Linear'>
     /** Get the linked state variable */
     tmcRef_State_s * pState;
     pState = (tmcRef_State_s *)pParameters->pStatePointer;
 
-    pState->reference = 0;
-    pState->scaledReference = 0;
+<#if MCPMSMFOC_POSITION_CALC_ALGORITHM == 'SENSORLESS_ZSMT_HYBRID'>
+    /** Reset reference control state variables  */
+    pState->reference = 0.0f;
+    pState->scaledReference = 0u;
+<#else>
+    /** Reset reference control state variables  */
+    pState->reference = pState->lowerLimit;
+    pState->scaledReference = pState->lowerLimit << 15u;
+</#if>
+</#if>
 }

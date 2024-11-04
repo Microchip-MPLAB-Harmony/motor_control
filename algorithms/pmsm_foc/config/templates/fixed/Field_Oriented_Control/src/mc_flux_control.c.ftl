@@ -85,6 +85,7 @@ typedef struct {
     int16_t eMagnitude;
     int16_t omegaLdId;
     int16_t omegaLd;
+    int16_t maxFluxWeakIdref;
     int16_t fluxWeakIdRef;
 }tmcFlx_FluxWeakening_s;
 </#if>
@@ -285,6 +286,11 @@ void  mcFlx_FluxWeakeningInit( tmcFlx_Parameters_s * const pParameters )
     f32a = pParameters->pMotorParameters->KeInVrmsPerKrpm / ( 1225.0f * (BASE_VOLTAGE_IN_VOLTS/ BASE_SPEED_IN_RPM ));
     mcUtils_FloatToValueShiftPair( f32a, &pState->bFluxWeakening.KeValue, &pState->bFluxWeakening.KeShift );
 
+    /** Calculate maximum reference current */
+    f32a = pParameters->maxNegativeCurrentInAmps / BASE_CURRENT_IN_AMPS;
+    pState->bFluxWeakening.maxFluxWeakIdref = Q_SCALE( f32a );
+
+
     /** Set initialization flag */
     pState->bFluxWeakening.initDone = true;
 }
@@ -352,6 +358,11 @@ int16_t  mcFlx_FluxWeakening(  tmcFlx_FluxWeakening_s * const pFieldWeakening,
     else
     {
         pFieldWeakening->fluxWeakIdRef = 0;
+    }
+
+    if( pFieldWeakening->maxFluxWeakIdref > pFieldWeakening->fluxWeakIdRef )
+    {
+        pFieldWeakening->fluxWeakIdRef = pFieldWeakening->maxFluxWeakIdref;
     }
 
     return pFieldWeakening->fluxWeakIdRef;
