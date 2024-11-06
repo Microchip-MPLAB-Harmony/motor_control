@@ -194,7 +194,8 @@ class AnalogGroup:
         else:
             # Remove old peripheral from the list
             if len(self.parent.connectedPLibs) == 4 and symbol.getValue() != event["value"]:
-                self.parent.connectedPLibs.remove(symbol.getValue().lower())
+                if symbol.getValue().lower() in self.parent.connectedPLibs:
+                    self.parent.connectedPLibs.remove(symbol.getValue().lower())
 
                 # De-activate the peripheral if no analog channel uses it
                 if symbol.getValue().lower() not in self.parent.connectedPLibs:

@@ -117,7 +117,7 @@ void mcVolI_VoltageCalculation( tmcVol_ModuleData_s * const pModule )
 
     /** Calculate DC bus voltage */
     int16_t  temp = Qx_NORMALIZE( Q12, pInput->sensorInput);
-    pModule->dOutput.uBus =  ( (int32_t)temp * (int32_t)mcVol_State_mds.adcToVoltFactorValue ) >> mcVol_State_mds.adcToVoltFactorShift;
+    pModule->dOutput.uBus =  (uint16_t)Q_RIGHT_SHIFT( (int32_t)( (int32_t)temp * (int32_t)mcVol_State_mds.adcToVoltFactorValue ), mcVol_State_mds.adcToVoltFactorShift );
 
     /** Write output ports */
     mcVol_OutputPortsWrite(&pModule->dOutput);

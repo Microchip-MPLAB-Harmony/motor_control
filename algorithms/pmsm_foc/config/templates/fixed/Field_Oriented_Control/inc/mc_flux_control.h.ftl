@@ -60,18 +60,53 @@
 /*******************************************************************************
  * Type Definitions
 *******************************************************************************/
+<#if MCPMSMFOC_ENABLE_MTPA == true >
+/**
+ * @brief Structure defining MTPA module state
+ */
+typedef struct
+{
+    bool enable;         /*!< Flag indicating if MTPA module is enabled */
+    bool initDone;       /*!< Flag indicating if MTPA module initialization is done */
+
+    int32_t K1;          /*!< K1 parameter */
+    int32_t K2;          /*!< K2 parameter */
+    int16_t mtpaIdRef;   /*!< Reference id current */
+} tmcFlx_MTPA_s;
+</#if>
+
+<#if MCPMSMFOC_ENABLE_FW == true >
+typedef struct {
+    bool enable;
+    bool initDone;
+    int16_t RsValue;
+    uint16_t RsShift;
+    int16_t LdValue;
+    uint16_t LdShift;
+    int16_t KeValue;
+    uint16_t KeShift;
+    int16_t uqrefLimit;
+    int16_t absIqRs;
+    int16_t eMagnitude;
+    int16_t omegaLdId;
+    int16_t omegaLd;
+    int16_t maxFluxWeakIdref;
+    int16_t fluxWeakIdRef;
+}tmcFlx_FluxWeakening_s;
+</#if>
+
 typedef struct
 {
     float32_t Kp;                    /**< Proportional gain for PI controller */
     float32_t Ki;                    /**< Integral gain for PI controller */
     float32_t dt;                    /**< Sampling time */
 
-<#if ( MCPMSMFOC_ENABLE_MTPA == true ) || ( MCPMSMFOC_ENABLE_FW == true) >
+<#if (MCPMSMFOC_ENABLE_MTPA == true) || (MCPMSMFOC_ENABLE_FW == true)>
     tmcMot_PMSM_s * pMotorParameters; /**< Pointer to motor parameters */
     float32_t maxNegativeCurrentInAmps;  /**< Maximum negative current  */
 </#if>
 
-<#if ( MCPMSMFOC_ENABLE_FW == true) >
+<#if (MCPMSMFOC_ENABLE_FW == true)>
     float32_t fwTuneFactor;  /**< Field weakening tuning factor  */
 </#if>
 
@@ -99,11 +134,11 @@ __STATIC_INLINE void mcFlxI_ParametersSet(tmcFlx_Parameters_s * const pParameter
     pParameters->Ki = (float32_t)${MCPMSMFOC_ID_PID_KI};
     pParameters->dt = (float32_t)${MCPMSMFOC_PWM_PERIOD};
 
-<#if MCPMSMFOC_ENABLE_MTPA == true >
+<#if MCPMSMFOC_ENABLE_MTPA == true>
     pParameters->pMotorParameters = &mcMotI_PMSM_gds;
 </#if>
 
-<#if MCPMSMFOC_ENABLE_FW == true >
+<#if MCPMSMFOC_ENABLE_FW == true>
     pParameters->pMotorParameters = &mcMotI_PMSM_gds;
     pParameters->maxNegativeCurrentInAmps = (float)(${MCPMSMFOC_FW_MAX_NEGATIVE_ID});
     pParameters->fwTuneFactor = (float)(1.30f);
@@ -173,8 +208,8 @@ void mcFlxI_FluxControlManual(const tmcFlx_Parameters_s * const pParameters, con
 void __ramfunc__  mcFlxI_FluxControlAuto( const tmcFlx_Parameters_s * const pParameters,
                                         const int16_t iDref, const int16_t iDact, int16_t iDmax, int16_t * const pOut );
 #else
-void __ramfunc__  mcFlxI_FluxControlAuto( const tmcFlx_Parameters_s * const pParameters,
-                                        const int16_t iDref, const int16_t iDact, int16_t iDmax, int16_t * const pOut   );
+void mcFlxI_FluxControlAuto( const tmcFlx_Parameters_s * const pParameters,
+                                        const int16_t iDref, const int16_t iDact, int16_t iDmax, int16_t * const pOut );
 #endif
 
 /*! 
@@ -187,7 +222,7 @@ void __ramfunc__  mcFlxI_FluxControlAuto( const tmcFlx_Parameters_s * const pPar
  */
 void mcFlxI_FluxControlReset(const tmcFlx_Parameters_s * const pParameters);
 
-<#if ( MCPMSMFOC_ENABLE_MTPA == true ) || ( MCPMSMFOC_ENABLE_FW == true ) >
+<#if (MCPMSMFOC_ENABLE_MTPA == true) || (MCPMSMFOC_ENABLE_FW == true)>
 /*!
  * @brief Get reference flux
  *
@@ -205,7 +240,7 @@ void __ramfunc__ mcFlxI_FluxReferenceGet(  const tmcFlx_Parameters_s * const pPa
                                         const int16_t uBus,
                                         int16_t * const pIdref );
 #else
-void  mcFlxI_FluxReferenceGet(  const tmcFlx_Parameters_s * const pParameters,
+void mcFlxI_FluxReferenceGet(  const tmcFlx_Parameters_s * const pParameters,
                                         const tmcTypes_DQ_s * const pUDQ,
                                         tmcTypes_DQ_s * const pIDQ,
                                         tmcTypes_AlphaBeta_s * const pEAlphaBeta,
@@ -213,6 +248,136 @@ void  mcFlxI_FluxReferenceGet(  const tmcFlx_Parameters_s * const pParameters,
                                         const int16_t uBus,
                                         int16_t * const pIdref );
 #endif
+</#if>
+
+<#if MCPMSMFOC_ENABLE_MTPA == true>
+/*!
+ * @brief MTPA parameters initialization
+ *
+ *  MTPA parameters initialization
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void mcFlx_MTPAInit(tmcFlx_Parameters_s * const pParameters);
+
+/*!
+ * @brief Get MTPA current
+ *
+ * Get MTPA current
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pUDQ Pointer to DQ axis voltage
+ * @param[in] pIDQ Pointer to DQ axis current
+ * @param[in] wmechRPM Mechanical speed of motor
+ * @param[in] uBus Bus voltage
+ * @return None
+ */
+#ifdef RAM_EXECUTE
+int16_t __ramfunc__ mcFlx_MTPA(tmcFlx_MTPA_s * const pMTPA, tmcTypes_DQ_s * const pIDQ);
+#else
+int16_t mcFlx_MTPA(tmcFlx_MTPA_s * const pMTPA, tmcTypes_DQ_s * const pIDQ);
+#endif
+
+/*!
+ * @brief MTPA reset
+ *
+ * Get MTPA current
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void mcFlx_MTPAReset(const tmcFlx_Parameters_s * const pParameters);
+
+/*!
+ * @brief MTPA parameters enable
+ *
+ *  MTPA parameters enable
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void mcFlx_MTPAEnable(tmcFlx_Parameters_s * const pParameters);
+
+/*!
+ * @brief MTPA parameters disable
+ *
+ *  MTPA parameters disable
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void mcFlx_MTPADisable(tmcFlx_Parameters_s * const pParameters);
+</#if>
+
+<#if MCPMSMFOC_ENABLE_FW == true>
+/*!
+ * @brief Field weakening parameters initialization
+ *
+ * Get field weakening current
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void mcFlx_FluxWeakeningInit(tmcFlx_Parameters_s * const pParameters);
+
+/*!
+ * @brief Get field weakening current
+ *
+ * Get field weakening current
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @param[in] pUDQ Pointer to DQ axis voltage
+ * @param[in] pIDQ Pointer to DQ axis current
+ * @param[in] wmechRPM Mechanical speed of motor
+ * @param[in] uBus Bus voltage
+ * @return None
+ */
+#ifdef RAM_EXECUTE
+int16_t __ramfunc__ mcFlx_FluxWeakening(tmcFlx_FluxWeakening_s * const pFieldWeakening,
+                                        const tmcTypes_DQ_s * const pUDQ,
+                                        tmcTypes_DQ_s * const pIDQ,
+                                        tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                                        const int16_t wmechRPM,
+                                        const int16_t uBus);
+#else
+int16_t mcFlx_FluxWeakening(tmcFlx_FluxWeakening_s * const pFieldWeakening,
+                                        const tmcTypes_DQ_s * const pUDQ,
+                                        tmcTypes_DQ_s * const pIDQ,
+                                        tmcTypes_AlphaBeta_s * const pEAlphaBeta,
+                                        const int16_t wmechRPM,
+                                        const int16_t uBus);
+#endif
+
+/*!
+ * @brief Field weakening reset
+ *
+ * Get field weakening current
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void mcFlx_FluxWeakeningReset(const tmcFlx_Parameters_s * const pParameters);
+
+/*!
+ * @brief Field weakening enable
+ *
+ *  Field weakening enable
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void mcFlx_FluxWeakeningEnable(tmcFlx_Parameters_s * const pParameters);
+
+/*!
+ * @brief Field weakening disable
+ *
+ *  Field weakening disable
+ *
+ * @param[in] pParameters Pointer to module parameters structure
+ * @return None
+ */
+void mcFlx_FluxWeakeningDisable(tmcFlx_Parameters_s * const pParameters);
 </#if>
 
 #endif // MCFLX_H

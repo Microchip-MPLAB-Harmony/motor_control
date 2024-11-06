@@ -118,24 +118,26 @@ def mcGen_GenerateCodeUpdate(symbol, event):
                         component.getSymbolByID(filename).setEnabled(False)
 
 
-        if "sensorless_smo" in key:
-            component.getSymbolByID("MCPMSMFOC_SMO_LIB_A").setEnabled(True)
-            component.getSymbolByID("MCPMSMFOC_ZSMT_LIB").setEnabled(False)
+        processor = Variables.get("__PROCESSOR")
+        if not (("SAMC2" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
+            if "sensorless_smo" in key:
+                component.getSymbolByID("MCPMSMFOC_SMO_LIB_A").setEnabled(True)
+                component.getSymbolByID("MCPMSMFOC_ZSMT_LIB").setEnabled(False)
 
-        elif "sensorless_zsmt" in key:
-            # component.getSymbolByID("MCPMSMFOC_ENABLE_ALIGN_OR_DETECT").setValue(False)
-            # component.getSymbolByID("MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP").setValue(False)
-            # component.getSymbolByID("mc_open_loop_startup.h.ftl").setEnabled(False)
-            # component.getSymbolByID("mc_open_loop_startup.c.ftl").setEnabled(False)
-            component.getSymbolByID("MCPMSMFOC_ZSMT_LIB").setEnabled(True)
-            component.getSymbolByID("MCPMSMFOC_SMO_LIB_A").setEnabled(False)
-        else:
-            # component.getSymbolByID("MCPMSMFOC_ENABLE_ALIGN_OR_DETECT").setValue(True)
-            # component.getSymbolByID("MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP").setValue(True)
-            # component.getSymbolByID("mc_open_loop_startup.c.ftl").setEnabled(True)
-            # component.getSymbolByID("mc_open_loop_startup.h.ftl").setEnabled(True)
-            component.getSymbolByID("MCPMSMFOC_ZSMT_LIB").setEnabled(False)
-            component.getSymbolByID("MCPMSMFOC_SMO_LIB_A").setEnabled(False)
+            elif "sensorless_zsmt" in key:
+                # component.getSymbolByID("MCPMSMFOC_ENABLE_ALIGN_OR_DETECT").setValue(False)
+                # component.getSymbolByID("MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP").setValue(False)
+                # component.getSymbolByID("mc_open_loop_startup.h.ftl").setEnabled(False)
+                # component.getSymbolByID("mc_open_loop_startup.c.ftl").setEnabled(False)
+                component.getSymbolByID("MCPMSMFOC_ZSMT_LIB").setEnabled(True)
+                component.getSymbolByID("MCPMSMFOC_SMO_LIB_A").setEnabled(False)
+            else:
+                # component.getSymbolByID("MCPMSMFOC_ENABLE_ALIGN_OR_DETECT").setValue(True)
+                # component.getSymbolByID("MCPMSMFOC_ENABLE_OPEN_LOOP_STARTUP").setValue(True)
+                # component.getSymbolByID("mc_open_loop_startup.c.ftl").setEnabled(True)
+                # component.getSymbolByID("mc_open_loop_startup.h.ftl").setEnabled(True)
+                component.getSymbolByID("MCPMSMFOC_ZSMT_LIB").setEnabled(False)
+                component.getSymbolByID("MCPMSMFOC_SMO_LIB_A").setEnabled(False)
 
     elif  ( str( event["id"] ) == "MCPMSMFOC_FOC_X2C_ENABLE"):
         if (True == event["value"]):
@@ -279,45 +281,48 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
     appHeaderFile.setType("HEADER")
     appHeaderFile.setMarkup(True)
 
-    filename = "mc_userparams.h.ftl"
-    projectPath = "config/" + configName + "/QSpin"
-    appHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
-    appHeaderFile.setSourcePath(templatePath + filename)
-    if (filename.endswith(".ftl")):
-        filename = filename[:-4]
-    appHeaderFile.setOutputName(filename)
-    appHeaderFile.setDestPath("QSpin")
-    appHeaderFile.setProjectPath(projectPath)
-    appHeaderFile.setType("HEADER")
-    appHeaderFile.setMarkup(True)
+    processor = Variables.get("__PROCESSOR")
+    if (("SAMC2" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
+        filename = "mc_userparams.h.ftl"
+        projectPath = "config/" + configName + "/QSpin"
+        appHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+        appHeaderFile.setSourcePath(templatePath + filename)
+        if (filename.endswith(".ftl")):
+            filename = filename[:-4]
+        appHeaderFile.setOutputName(filename)
+        appHeaderFile.setDestPath("QSpin")
+        appHeaderFile.setProjectPath(projectPath)
+        appHeaderFile.setType("HEADER")
+        appHeaderFile.setMarkup(True)
 
     #-----------------------------------------------------------------------------------------------------------------------
     #     Application source and header file
     #-----------------------------------------------------------------------------------------------------------------------
-    filename = "mc_key_manager.c.ftl"
-    projectPath = "config/" + configName + "/QSpin"
+    if not (("SAMC2" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
+        filename = "mc_key_manager.c.ftl"
+        projectPath = "config/" + configName + "/QSpin"
 
-    keySourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
-    keySourceFile.setSourcePath(templatePath + filename)
-    if (filename.endswith(".ftl")):
-        filename = filename[:-4]
-    keySourceFile.setOutputName(filename)
-    keySourceFile.setDestPath("QSpin")
-    keySourceFile.setProjectPath(projectPath)
-    keySourceFile.setType("SOURCE")
-    keySourceFile.setMarkup(True)
+        keySourceFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+        keySourceFile.setSourcePath(templatePath + filename)
+        if (filename.endswith(".ftl")):
+            filename = filename[:-4]
+        keySourceFile.setOutputName(filename)
+        keySourceFile.setDestPath("QSpin")
+        keySourceFile.setProjectPath(projectPath)
+        keySourceFile.setType("SOURCE")
+        keySourceFile.setMarkup(True)
 
-    filename = "mc_key_manager.h.ftl"
-    projectPath = "config/" + configName + "/QSpin"
-    keyHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
-    keyHeaderFile.setSourcePath(templatePath + filename)
-    if (filename.endswith(".ftl")):
-        filename = filename[:-4]
-    keyHeaderFile.setOutputName(filename)
-    keyHeaderFile.setDestPath("QSpin")
-    keyHeaderFile.setProjectPath(projectPath)
-    keyHeaderFile.setType("HEADER")
-    keyHeaderFile.setMarkup(True)
+        filename = "mc_key_manager.h.ftl"
+        projectPath = "config/" + configName + "/QSpin"
+        keyHeaderFile = mcPmsmFocComponent.createFileSymbol(str(filename), None)
+        keyHeaderFile.setSourcePath(templatePath + filename)
+        if (filename.endswith(".ftl")):
+            filename = filename[:-4]
+        keyHeaderFile.setOutputName(filename)
+        keyHeaderFile.setDestPath("QSpin")
+        keyHeaderFile.setProjectPath(projectPath)
+        keyHeaderFile.setType("HEADER")
+        keyHeaderFile.setMarkup(True)
 
     #-----------------------------------------------------------------------------------------------------------------------
     #     Types File
@@ -456,21 +461,22 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
     mcPmsmFocSourceFile.setMarkup(True)
     mcPmsmFocSourceFile.setEnabled(False)
 
-    if( ("SAME7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR"))):
+    processor = Variables.get("__PROCESSOR")
+    if( ("SAME7" in processor) or ("SAMS7" in processor) or ("SAMV7" in processor) or ("SAMRH" in processor) ):
         smoLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_SMO_LIB_A", None)
         smoLibraryFile.setSourcePath( modulePath + "lib/libCortexM7-ATSAM_MCHP_SMO.a")
         smoLibraryFile.setOutputName("libCortexM7-ATSAM_MCHP_SMO.a")
         smoLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/")
         smoLibraryFile.setEnabled(False)
 
-    elif( ("SAMD5" in Variables.get("__PROCESSOR")) or ("SAME5" in Variables.get("__PROCESSOR"))):
+    elif( ("SAMD5" in processor) or ("SAME5" in processor)):
         smoLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_SMO_LIB_A", None)
         smoLibraryFile.setSourcePath( modulePath + "lib/libCortexM4-ATSAM_MCHP_SMO.a")
         smoLibraryFile.setOutputName("libCortexM4-ATSAM_MCHP_SMO.a")
         smoLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/")
         smoLibraryFile.setEnabled(False)
 
-    elif("PIC32MK" in Variables.get("__PROCESSOR")):
+    elif("PIC32MK" in processor):
         smoLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_SMO_LIB_A", None)
         smoLibraryFile.setSourcePath( modulePath + "lib/libPIC32MK_MCHP_SMO.a")
         smoLibraryFile.setOutputName("libPIC32MK_MCHP_SMO.a")
@@ -494,7 +500,8 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
     ipdHeaderFile.setMarkup(True)
     ipdHeaderFile.setEnabled(False)
 
-    if( ("SAME7" in Variables.get("__PROCESSOR")) or ("SAMS7" in Variables.get("__PROCESSOR")) or ("SAMV7" in Variables.get("__PROCESSOR"))):
+    processor = Variables.get("__PROCESSOR")
+    if( ("SAME7" in processor) or ("SAMS7" in processor) or ("SAMV7" in processor) or ("SAMRH" in processor) ):
         zsmtLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_ZSMT_LIB", None)
         zsmtLibraryFile.setSourcePath(modulePath + "lib/libCortexM7-ATSAM_MCHP_ZSMT.a")
         zsmtLibraryFile.setOutputName("libCortexM7-ATSAM_MCHP_ZSMT.a")
@@ -508,7 +515,7 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
         ipdLibraryFile.setEnabled(False)
 
 
-    elif("SAME5" in Variables.get("__PROCESSOR")):
+    elif("SAME5" in processor):
         zsmtLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_ZSMT_LIB", None)
         zsmtLibraryFile.setSourcePath(modulePath + "lib/libCortexM4-ATSAM_MCHP_ZSMT.a")
         zsmtLibraryFile.setOutputName("libCortexM4-ATSAM_MCHP_ZSMT.a")
@@ -521,7 +528,7 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
         ipdLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/")
         ipdLibraryFile.setEnabled(False)
 
-    elif( "PIC32MK" in Variables.get("__PROCESSOR")):
+    elif( "PIC32MK" in processor):
         zsmtLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_ZSMT_LIB", None)
         zsmtLibraryFile.setSourcePath(modulePath + "lib/libPIC32MK_MCHP_ZSMT.a")
         zsmtLibraryFile.setOutputName("libPIC32MK_MCHP_ZSMT.a")
@@ -531,6 +538,19 @@ def mcGen_GenerateCode(mcPmsmFocComponent):
         ipdLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_IPD_LIB", None)
         ipdLibraryFile.setSourcePath(modulePath + "lib/libPIC32MK_MCHP_IPD.a")
         ipdLibraryFile.setOutputName("libPIC32MK_MCHP_IPD.a")
+        ipdLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/")
+        ipdLibraryFile.setEnabled(False)
+
+    elif (("SAMC2" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
+        zsmtLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_ZSMT_LIB", None)
+        zsmtLibraryFile.setSourcePath(modulePath + "lib/libCortexM0PLUS-ATSAM_MCHP_ZSMT.a")
+        zsmtLibraryFile.setOutputName("libCortexM0PLUS-ATSAM_MCHP_ZSMT.a")
+        zsmtLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/")
+        zsmtLibraryFile.setEnabled(False)
+
+        ipdLibraryFile = mcPmsmFocComponent.createLibrarySymbol("MCPMSMFOC_IPD_LIB", None)
+        ipdLibraryFile.setSourcePath(modulePath + "lib/libCortexM0PLUS-ATSAM_MCHP_IPD.a")
+        ipdLibraryFile.setOutputName("libCortexM0PLUS-ATSAM_MCHP_IPD.a")
         ipdLibraryFile.setDestPath("/QSpin/Field_Oriented_Control/")
         ipdLibraryFile.setEnabled(False)
 

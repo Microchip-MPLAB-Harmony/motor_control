@@ -99,47 +99,184 @@
 #define Q31  31U
 #define Q32  32U
 
-#define  Q14_FORMAT        0U
-#define  Q15_FORMAT        1U
+#define Q_SCALE_FACTOR            32767
 
-#define  GLOBAL_Q_FORMAT           Q15_FORMAT
-#define Q15_SCALE_FACTOR            (1 << 15)
-#define Q14_SCALE_FACTOR            (1 << 14)
+static inline int32_t Q_RIGHT_SHIFT( int32_t operand, uint16_t shift )
+{
+#if defined ENABLE_SIGN_INTEGER_SHIFT
+    /* MISRA C-2012 Rule 10.1 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_10_1_DR_1 */
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wunknown-pragmas"
+    #pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 10.1" H3_MISRAC_2012_R_10_1_DR_1
+    return ( operand >> shift );
+    #pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+    #pragma GCC diagnostic pop
+    /* MISRAC 2012 deviation block end */
+#else
+    int32_t result;
+    uint32_t u32a;
 
-
-#define   Q15_MULTIPLY(x, y )   (int16_t)(( (int32_t)(x)  * (int32_t)(y)) >> 15U )
-#define   Q15_MULTIPLY_SAT(x, y) ({                \
-    int32_t result = ((int32_t)(x) * (int32_t)(y)) >> 15U; \
-    if (result > INT16_MAX) result = INT16_MAX;            \
-    else if (result < INT16_MIN) result = INT16_MIN;       \
-    (int16_t)result;                                       \
-})
-
-#define   Q15_DIVISION( x, y)      (int16_t)(((int32_t)x * (int32_t)Q15_SCALE_FACTOR ) / y )
-#define   Q15_RIGHT_SHIFT( x, y)   (int16_t)( x  >> y )
-#define   Q15_SCALE(value)         (int16_t)( value * (float32_t)Q15_SCALE_FACTOR)
-
-#define   Q14_DIVISION( x, y)      (int16_t)(((int32_t)x * (int32_t)Q14_SCALE_FACTOR ) / y )
-#define   Q14_SCALE(value)         (int16_t)( value * (float32_t)Q14_SCALE_FACTOR)
-#define   Q14_MULTIPLY(x, y )   (int16_t)(( (int32_t)(x)  * (int32_t)(y)) >> 14U )
-#define   Q14_RIGHT_SHIFT( x, y)   (int16_t)( x  >> y )
-
-#define   Q15_ANGLE(value)         (int16_t)( value * (float32_t)Q15_SCALE_FACTOR / (float32_t)ONE_PI)
-
-#if ( GLOBAL_Q_FORMAT == Q15_FORMAT )
-#define  Q_SCALE_FACTOR                   Q15_SCALE_FACTOR
-// #define  Q_MULTIPLY                            Q15_MULTIPLY
-#define  Q_MULTIPLY                            Q15_MULTIPLY_SAT
-#define  Q_DIVISION                            Q15_DIVISION
-#define  Q_SCALE                                  Q15_SCALE
-#define  Q_RIGHT_SHIFT                     Q15_RIGHT_SHIFT
-#define  Qx_NORMALIZE( x, value )       (int16_t)( value << ( 15U - x ))
-#elif  ( GLOBAL_Q_FORMAT == Q14_FORMAT )
-#define  Q_SCALE_FACTOR                   Q14_SCALE_FACTOR
-#define  Q_MULTIPLY                            Q14_MULTIPLY
-#define  Q_SCALE                                  Q14_SCALE
-#define  Q_RIGHT_SHIFT                     Q14_RIGHT_SHIFT
-#define  Qx_NORMALIZE( x, value )       (int16_t)( value << ( 14U - x ))
+    if( 0 > operand )
+    {
+        u32a = ((uint32_t)(-operand ) >> shift );
+        result = -(int32_t)u32a;
+    }
+    else
+    {
+        u32a = ((uint32_t)operand >> shift);
+        result = (int32_t)u32a;
+    }
+    return result;
 #endif
+}
+
+static inline int32_t Q_LEFT_SHIFT(int32_t operand, uint16_t shift )
+{
+#if defined ENABLE_SIGN_INTEGER_SHIFT
+    /* MISRA C-2012 Rule 10.1 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_10_1_DR_1 */
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wunknown-pragmas"
+    #pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 10.1" H3_MISRAC_2012_R_10_1_DR_1
+    return ( operand << shift );
+    #pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+    #pragma GCC diagnostic pop
+    /* MISRAC 2012 deviation block end */
+#else
+    int32_t result;
+    uint32_t u32a;
+
+    if(0 > operand )
+    {
+        u32a = ((uint32_t)(-operand ) << shift );
+        result = -(int32_t)u32a;
+    }
+    else
+    {
+        u32a = ((uint32_t)operand << shift);
+        result = (int32_t)u32a;
+    }
+    return (result);
+#endif
+}
+
+static inline uint16_t Q15_ANGLE( float radians )
+{
+    float result = radians * (float)Q_SCALE_FACTOR / (float)ONE_PI;
+    return (uint16_t)result;
+}
+
+
+static inline int16_t Q_MULTIPLY( int32_t operand1, int32_t operand2  )
+{
+#if defined ENABLE_SIGN_INTEGER_SHIFT
+    /* MISRAC 2012 deviation block start */
+    /* MISRA C-2012 Rule 10.1 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_10_1_DR_1 */
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wunknown-pragmas"
+    #pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 10.1" H3_MISRAC_2012_R_10_1_DR_1
+    return (int16_t)(( (int32_t)operand1 * (int32_t)operand2)  >> 15u );
+    #pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+    #pragma GCC diagnostic pop
+    /* MISRAC 2012 deviation block end */
+#else
+    return (int16_t)Q_RIGHT_SHIFT((int32_t)((int32_t)operand1 * (int32_t)operand2 ), 15u );
+#endif
+}
+
+static inline int16_t Q_DIVISION( int32_t x, int32_t y )
+{
+    return (int16_t)(((int32_t)x * (int32_t)Q_SCALE_FACTOR) / y );
+}
+
+
+/**
+ * @brief Scales the given value by the Q_SCALE_FACTOR.
+ *
+ * @param value The value to be scaled.
+ * @return The scaled value as an int16_t.
+ */
+static inline int16_t Q_SCALE(float value) {
+    float temp = value * (float)Q_SCALE_FACTOR;
+    return (int16_t)temp;
+}
+
+/**
+ * @brief Normalizes the given value by shifting it left by (15 - x) bits.
+ *
+ * @param x The number of bits to shift.
+ * @param value The value to be normalized.
+ * @return The normalized value as an int16_t.
+ */
+static inline int16_t Qx_NORMALIZE(uint8_t x, uint16_t value) {
+    return (int16_t)Q_LEFT_SHIFT( (int32_t)value, (uint16_t)(15u - (uint16_t)x));
+}
+
+/*! \brief Right shift  for 32-bit signed integer
+ *
+ * Details
+ * Right shift  for 32-bit signed integer
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+__STATIC_FORCEINLINE int32_t mcUtils_RightShiftS32(int32_t operand, uint16_t shift )
+{
+#if defined ENABLE_SIGN_INTEGER_SHIFT
+    /* MISRA C-2012 Rule 10.1 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_10_1_DR_1 */
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wunknown-pragmas"
+    #pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 10.1" H3_MISRAC_2012_R_10_1_DR_1
+    return ( operand >> shift );
+    #pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+    #pragma GCC diagnostic pop
+    /* MISRAC 2012 deviation block end */
+#else
+    int32_t result;
+    uint32_t u32a;
+
+    if( 0 > operand )
+    {
+        u32a = ((uint32_t)(-operand ) >> shift );
+        result = -(int32_t)u32a;
+    }
+    else
+    {
+        u32a = ((uint32_t)operand >> shift);
+        result = (int32_t)u32a;
+    }
+    return result;
+#endif
+}
+
+/*! \brief Left shift  for 16-bit signed short
+ *
+ * Details
+ * Left shift  for 16-bit signed short
+ *
+ * @param[in]:
+ * @param[in/out]:
+ * @param[out]:
+ * @return:
+ */
+__STATIC_FORCEINLINE int16_t mcUtils_MultAndRightShiftS16(int16_t operand1, int16_t operand2, uint16_t shift )
+{
+#if defined ENABLE_SIGN_INTEGER_SHIFT
+    /* MISRA C-2012 Rule 10.1 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_10_1_DR_1 */
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wunknown-pragmas"
+    #pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 10.1" H3_MISRAC_2012_R_10_1_DR_1 
+
+    return (int16_t)(( (int32_t)operand1 * (int32_t)operand2)  >> shift );
+
+    #pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+    #pragma GCC diagnostic pop
+    /* MISRAC 2012 deviation block end */
+#else
+    return (int16_t)mcUtils_RightShiftS32((int32_t)((int32_t)operand1 * (int32_t)operand2 ), shift );
+#endif
+}
+
 
 #endif // MC_CONSTANTS_H

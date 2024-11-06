@@ -87,8 +87,8 @@ typedef struct
 
 <#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
     uint8_t gearFactor;
-    int8_t electricalRotationsPositive;
-    int8_t electricalRotationsNegative;
+    uint8_t electricalRotationsPositive;
+    uint8_t electricalRotationsNegative;
     float32_t accumElectricalAngle;
     float32_t mechanicalAngle;
 </#if>
@@ -133,7 +133,7 @@ void  mcRpcI_RotorPositionCalcInit( tmcRpc_ModuleData_s * const pModule )
 
     /** Set state parameters  */
 <#if MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' >
-    pState->gearFactor = pParameters->pMotorParameters->PolePairs * pParameters->gearRatio;
+    pState->gearFactor = (uint8_t)((uint8_t)pParameters->pMotorParameters->PolePairs * pParameters->gearRatio );
 </#if>
     pState->encPulsesPerElecRev =  pParameters->encPulsesPerElecRev;
     pState->velocityCountPrescaler = pParameters->velocityCountPrescaler;
@@ -272,10 +272,10 @@ void mcRpcI_RotorPositionCalc(  tmcRpc_ModuleData_s * const pModule )
             }
         }
 
-        int8_t electricalRotations = pState->electricalRotationsPositive - pState->electricalRotationsNegative;
+        int16_t electricalRotations = (int16_t)((int16_t)pState->electricalRotationsPositive - (int16_t)pState->electricalRotationsNegative );
 
-        pState->accumElectricalAngle = newAngle + TWO_PI * electricalRotations;
-        pState->mechanicalAngle = pState->accumElectricalAngle/ pState->gearFactor;
+        pState->accumElectricalAngle = newAngle + TWO_PI * (float32_t)electricalRotations;
+        pState->mechanicalAngle = pState->accumElectricalAngle/ (float32_t)pState->gearFactor;
         mcUtils_TruncateAngle0To2Pi( &pState->mechanicalAngle  );
 </#if>
 
@@ -532,10 +532,10 @@ void mcRpcI_RotorPositionCalc(   tmcRpc_ModuleData_s * const pModule )
             }
         }
 
-        int8_t electricalRotations = pState->electricalRotationsPositive - pState->electricalRotationsNegative;
+        int16_t electricalRotations = (int16_t)((int16_t)pState->electricalRotationsPositive - (int16_t)pState->electricalRotationsNegative);
 
         pState->accumElectricalAngle = newAngle + TWO_PI * electricalRotations;
-        pState->mechanicalAngle = pState->accumElectricalAngle/ pState->gearFactor;
+        pState->mechanicalAngle = pState->accumElectricalAngle/ (float32_t)pState->gearFactor;
         mcUtils_TruncateAngle0To2Pi( &pState->mechanicalAngle  );
 </#if>
 

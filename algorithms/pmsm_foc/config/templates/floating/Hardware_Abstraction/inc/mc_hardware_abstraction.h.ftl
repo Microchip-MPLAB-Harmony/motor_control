@@ -70,8 +70,13 @@ extern int16_t mcPwmI_Duty_gau16[3u];  /**< PWM duty cycle array */
       <#assign numericString += alphanumericString[i]>
     </#if>
   </#list>
-  <#return numericString?number>
+  <#if numericString?length == 0>
+    <#return 0>
+  <#else>
+    <#return numericString?number>
+  </#if>
 </#function>
+
 
 /*******************************************************************************
  * Static interface Functions

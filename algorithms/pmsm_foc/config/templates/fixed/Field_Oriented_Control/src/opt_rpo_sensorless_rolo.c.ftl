@@ -167,7 +167,6 @@ __STATIC_INLINE void UTILS_QNumberMultiply( tRpc_Qnum_s QNum, int16_t integerNum
  * 
  * @return None
  */
- float32_t KpSpeed, KiSpeed;
 void mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
 {
     float32_t f32a;
@@ -209,7 +208,7 @@ void mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
     mcUtils_FloatToValueShiftPair( f32a, &pROLOCoeff->k11.val, &pROLOCoeff->k11.shr );
 
  #ifdef CROSS_COUPLING_ENABLED
-    float32_t kSpeed = Q_SCALE( 1.0f / BASE_SPEED_IN_RPM );
+    float32_t kSpeed = (float32_t)Q_SCALE( 1.0f / BASE_SPEED_IN_RPM );
 
     /** hhh coefficient calculation */
     f32a = C1 * invBasePower;
@@ -228,11 +227,12 @@ void mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
     float32_t zeta = 0.7f;
     float32_t radPerSecToRpm = 30.0f / ( pParameters->pMotorParameters->PolePairs * ONE_PI );
 
+    float32_t KpSpeed, KiSpeed;
     KpSpeed = zeta * radPerSecToRpm *  pParameters->foInHertz;
     KiSpeed = radPerSecToRpm *  pParameters->foInHertz *  pParameters->foInHertz /2.0f;
 
     mcUtils_PiControlInit( KpSpeed, KiSpeed, pParameters->dt, &pState->bPIController );
-    mcUtils_PiLimitUpdate( -Q_SCALE(1.0), Q_SCALE(1.0), &pState->bPIController );
+    mcUtils_PiLimitUpdate( -Q_SCALE(1.0f), Q_SCALE(1.0f), &pState->bPIController );
 #else
     /** ToDO: Remove hard coded numeric value */
     f32a = 1225.0f * (BASE_VOLTAGE_IN_VOLTS/ BASE_SPEED_IN_RPM )/ pParameters->pMotorParameters->KeInVrmsPerKrpm;
@@ -379,7 +379,7 @@ __STATIC_INLINE void mcRpe_ROLOCoefficientsCalc(tmcRpe_State_s * const pState )
     {
         saturatedSpeed = pState->minSpeedInRpm;
     }
-    else if ( pState->speed > 0.0f )
+    else if ( pState->speed > 0 )
     {
         saturatedSpeed = (int16_t)pState->speed;
     }

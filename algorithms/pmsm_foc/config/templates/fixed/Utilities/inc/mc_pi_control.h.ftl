@@ -144,6 +144,6 @@ void mcUtils_PiControl(const int16_t error, tmcUtils_PiControl_s  * const pContr
  * @param[out]:
  * @return:
  */
-void mcUtils_PiControlReset(const int32_t integral, tmcUtils_PiControl_s  * const pControl);
+void mcUtils_PiControlReset(const int32_t out, tmcUtils_PiControl_s  * const pControl);
 
 #endif // MC_PI_CONTROL

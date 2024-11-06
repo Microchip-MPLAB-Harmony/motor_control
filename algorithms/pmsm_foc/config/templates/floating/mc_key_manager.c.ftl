@@ -105,7 +105,7 @@ __attribute__((noinline)) char * mcKeyI_ValidationKeyGet( const tmcKey_IPs_s ip)
  */
 void mcKeyI_KeyManagerInit(void)
 {
-    char * result;
+    char * result = NULL;
 
 <#if ('IPD' == MCPMSMFOC_ALIGN_OR_DETECT_AXIS )>
     /** Initialize IPD key  */

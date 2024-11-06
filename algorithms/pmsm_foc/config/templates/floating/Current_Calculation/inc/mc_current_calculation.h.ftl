@@ -125,8 +125,8 @@ extern tmcCur_ModuleData_s mcCurI_ModuleData_gds;
  */
 __STATIC_INLINE void mcCur_InputsRead( tmcCur_Input_s * const pInput )
 {
-    pInput->iaAdcInput = (uint16_t)mcHalI_IaAdcInput_gdu16;
-    pInput->ibAdcInput = (uint16_t)mcHalI_IbAdcInput_gdu16;
+    pInput->iaAdcInput = (int16_t)mcHalI_IaAdcInput_gdu16;
+    pInput->ibAdcInput = (int16_t)mcHalI_IbAdcInput_gdu16;
 }
 
 /**

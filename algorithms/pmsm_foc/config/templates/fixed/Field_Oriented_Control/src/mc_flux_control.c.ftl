@@ -55,41 +55,6 @@ Headers inclusions
 /*******************************************************************************
  * Private data types
 *******************************************************************************/
-<#if MCPMSMFOC_ENABLE_MTPA == true >
-/**
- * @brief Structure defining MTPA module state
- */
-typedef struct
-{
-    bool enable;         /*!< Flag indicating if MTPA module is enabled */
-    bool initDone;       /*!< Flag indicating if MTPA module initialization is done */
-
-    int32_t K1;          /*!< K1 parameter */
-    int32_t K2;          /*!< K2 parameter */
-    int16_t mtpaIdRef;   /*!< Reference id current */
-} tmcFlx_MTPA_s;
-</#if>
-
-<#if MCPMSMFOC_ENABLE_FW == true >
-typedef struct {
-    bool enable;
-    bool initDone;
-    int16_t RsValue;
-    uint16_t RsShift;
-    int16_t LdValue;
-    uint16_t LdShift;
-    int16_t KeValue;
-    uint16_t KeShift;
-    int16_t uqrefLimit;
-    int16_t absIqRs;
-    int16_t eMagnitude;
-    int16_t omegaLdId;
-    int16_t omegaLd;
-    int16_t maxFluxWeakIdref;
-    int16_t fluxWeakIdRef;
-}tmcFlx_FluxWeakening_s;
-</#if>
-
 /**
  * @brief Structure defining flux control state
  */
@@ -141,15 +106,15 @@ void  mcFlx_MTPAInit( tmcFlx_Parameters_s * const pParameters )
 
     /** Calculate air-gap flux */
     f32a = pParameters->pMotorParameters->KeInVrmsPerKrpm;
-    float32_t airGapFlux = (float32_t)(  60.0f * f32a / ( 1.414f * 1000 * ONE_PI ));
+    float32_t airGapFlux = (float32_t)(  60.0f * f32a / ( 1.414f * 1000.0f * ONE_PI ));
 
     /** Calculate inductance difference  */
     float32_t ldLqDiff = pParameters->pMotorParameters->LdInHenry - pParameters->pMotorParameters->LqInHenry;
 
     /** Calculate intermediate coefficients for MTPA current calculation */
-    f32a = -(float32_t)( 0.5f * airGapFlux / ldLqDiff );
-    pState->bMTPA.K1 = f32a * K_CURRENT;
-    pState->bMTPA.K2 = ( pState->bMTPA.K1 * pState->bMTPA.K1 ) >> 2u;
+    f32a = -(float32_t)( 0.5f * (float32_t)K_CURRENT * airGapFlux / ldLqDiff );
+    pState->bMTPA.K1 = (int32_t)f32a;
+    pState->bMTPA.K2 = (int32_t)Q_RIGHT_SHIFT((int32_t)( pState->bMTPA.K1 * pState->bMTPA.K1 ),  2u );
 
     /** Set initialization flag */
     pState->bMTPA.initDone = true;
@@ -177,9 +142,10 @@ int16_t mcFlx_MTPA( tmcFlx_MTPA_s * const pMTPA, tmcTypes_DQ_s * const pIDQ )
         return 0;
     }
 
-    int32_t  iqSquareBy4;
-    iqSquareBy4 = ((int32_t)pIDQ->q * (int32_t)pIDQ->q ) >> 2u;
-    pMTPA->mtpaIdRef = (int32_t)pMTPA->K1 - ((int32_t)mcUtils_SquareRoot( (uint32_t)pMTPA->K2 + (uint32_t)iqSquareBy4 ) << 1u );
+    int32_t  temp;
+    temp = (int32_t)Q_RIGHT_SHIFT((int32_t)((int32_t)pIDQ->q * (int32_t)pIDQ->q ), 2u );
+    temp = (int32_t)pMTPA->K1 - (int32_t)Q_LEFT_SHIFT((int32_t)mcUtils_SquareRoot( (uint32_t)pMTPA->K2 + (uint32_t)temp ), 1u );
+    pMTPA->mtpaIdRef = (int16_t)temp;
 
     return pMTPA->mtpaIdRef;
 }
@@ -334,21 +300,22 @@ int16_t  mcFlx_FluxWeakening(  tmcFlx_FluxWeakening_s * const pFieldWeakening,
 
     /** Calculate maximum q-axis reference voltage */
     uqrefLimitSquare = ( (int32_t)uBus * (int32_t)uBus) - ((int32_t)pUDQ->d * (int32_t)pUDQ->d);
-    pFieldWeakening->uqrefLimit = mcUtils_SquareRoot( uqrefLimitSquare );
+    pFieldWeakening->uqrefLimit = (int16_t)mcUtils_SquareRoot( (uint32_t)uqrefLimitSquare );
 
     /** Calculate BEMF voltage magnitude from mechanical RPM */
-    pFieldWeakening->eMagnitude = mcUtils_SquareRoot(( pEAlphaBeta->alpha * pEAlphaBeta->alpha ) + ( pEAlphaBeta->beta * pEAlphaBeta->beta ));
+    int32_t temp = (int32_t)(( (int32_t)pEAlphaBeta->alpha * (int32_t)pEAlphaBeta->alpha ) + ( (int32_t)pEAlphaBeta->beta * (int32_t)pEAlphaBeta->beta ));
+    pFieldWeakening->eMagnitude = (int16_t)mcUtils_SquareRoot((uint32_t)temp);
 
     /** Calculate resistive drop  */
     absIq = UTIL_Abs16( pIDQ->q );
-    pFieldWeakening->absIqRs =  ((int32_t)pFieldWeakening->RsValue *  (int32_t)absIq ) >> pFieldWeakening->RsShift;
+    pFieldWeakening->absIqRs =  (int16_t)Q_RIGHT_SHIFT((int32_t)((int32_t)pFieldWeakening->RsValue *  (int32_t)absIq ), pFieldWeakening->RsShift );
 
     /** Calculate numerator */
     pFieldWeakening->omegaLdId = pFieldWeakening->uqrefLimit - pFieldWeakening->absIqRs - pFieldWeakening->eMagnitude;
 
     /** Calculate numerator */
     absRPM = UTIL_Abs16( wmechRPM );
-    pFieldWeakening->omegaLd = ( (int32_t)absRPM *  (int32_t)pFieldWeakening->LdValue ) >>  pFieldWeakening->LdShift;
+    pFieldWeakening->omegaLd = (int16_t)Q_RIGHT_SHIFT((int32_t)( (int32_t)absRPM *  (int32_t)pFieldWeakening->LdValue ),  pFieldWeakening->LdShift );
 
     /** Calculate reference */
     if( pFieldWeakening->omegaLdId < 0 && pFieldWeakening->omegaLd != 0)

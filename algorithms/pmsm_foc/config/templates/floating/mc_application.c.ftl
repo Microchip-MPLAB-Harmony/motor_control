@@ -302,16 +302,21 @@ void mcAppI_ApplicationInit( void )
 <#if "TCC_U2213" == MCPMSMFOC_PWM_IP>
     /** Enable interrupt for fault detection */
     mcHalI_PwmCallbackRegister( (TCC_CALLBACK)mcAppI_OverCurrentReactionIsr, (uintptr_t)dummyForMisra );
+
+    /** Enable PWM interrupt to detect fault */
+    mcHalI_PwmInterruptEnable( );
+
 <#elseif "PWM_6343" == MCPMSMFOC_PWM_IP>
     /** Enable interrupt for fault detection */
     mcHalI_PwmCallbackRegister( (PWM_CALLBACK)mcAppI_OverCurrentReactionIsr, (uintptr_t)dummyForMisra );
+
+    /** Enable PWM interrupt to detect fault */
+    mcHalI_PwmInterruptEnable( );
+
 <#elseif "MCPWM_01477" == MCPMSMFOC_PWM_IP>
     /** Enable interrupt for fault detection */
     mcHalI_PwmCallbackRegister( (MCPWM_CH_CALLBACK)mcAppI_OverCurrentReactionIsr, (uintptr_t)dummyForMisra );
 </#if>
-
-    /** Enable PWM interrupt to detect fault */
-    mcHalI_PwmInterruptEnable( );
 
     /** Enables PWM channels. */
     mcHalI_PwmTimerStart( );

@@ -189,12 +189,12 @@ void  mcPwmI_PulseWidthModulationDisable( tmcPwm_Parameters_s * const pParameter
  */
 #ifdef RAM_EXECUTE
 void __ramfunc__  mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
-                                        const float32_t uBus,
+                                        const int32_t uBus,
                                         const tmcTypes_AlphaBeta_s * const pUalphaBeta,
                                         int16_t * const pDuty )
 #else
 void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
-                            const float32_t uBus,
+                            const int32_t uBus,
                             const tmcTypes_AlphaBeta_s * const pUalphaBeta,
                             int16_t * const pDuty )
 #endif
@@ -266,7 +266,7 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
                 int16_t t2 = Q_MULTIPLY( -uC, pState->pwmPeriodCount );
 
                 /** PWM timings */
-                pDuty[2u] = Q_RIGHT_SHIFT((pState->pwmPeriodCount  - t1 - t2 ), 1u );
+                pDuty[2u] =  (int16_t)Q_RIGHT_SHIFT((int32_t)( (int32_t)pState->pwmPeriodCount  - (int32_t)t1 - (int32_t)t2 ), 1u );
                 pDuty[0u] = pDuty[2u] + t2;
                 pDuty[1u] = pDuty[0u] + t1;
 
@@ -280,7 +280,7 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
                 int16_t t2 = Q_MULTIPLY( -uA, pState->pwmPeriodCount );
 
                 /** PWM timings */
-                pDuty[1u] = Q_RIGHT_SHIFT((pState->pwmPeriodCount  - t1 - t2 ), 1u );
+                pDuty[1u] = (int16_t)Q_RIGHT_SHIFT((int32_t)( (int32_t)pState->pwmPeriodCount  - (int32_t)t1 - (int32_t)t2 ), 1u );
                 pDuty[2u] = pDuty[1u] + t2;
                 pDuty[0u] = pDuty[2u] + t1;
 
@@ -294,7 +294,7 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
                 int16_t t2 = Q_MULTIPLY( uA, pState->pwmPeriodCount );
 
                 /** PWM timings */
-                pDuty[2u] = Q_RIGHT_SHIFT((pState->pwmPeriodCount  - t1 - t2 ), 1u );
+                pDuty[2u] = (int16_t)Q_RIGHT_SHIFT((int32_t)( (int32_t)pState->pwmPeriodCount  - (int32_t)t1 - (int32_t)t2 ), 1u );
                 pDuty[1u] = pDuty[2u] + t2;
                 pDuty[0u] = pDuty[1u] + t1;
 
@@ -308,7 +308,7 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
                 int16_t t2 = Q_MULTIPLY( -uB, pState->pwmPeriodCount );
 
                 /** PWM timings */
-                pDuty[0u] = Q_RIGHT_SHIFT((pState->pwmPeriodCount  - t1 - t2 ), 1u );
+                pDuty[0u] = (int16_t)Q_RIGHT_SHIFT((int32_t)( (int32_t)pState->pwmPeriodCount  - (int32_t)t1 - (int32_t)t2 ), 1u );
                 pDuty[1u] = pDuty[0u] + t2;
                 pDuty[2u] = pDuty[1u] + t1;
 
@@ -322,7 +322,7 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
                 int16_t t2 = Q_MULTIPLY( uC, pState->pwmPeriodCount );
 
                 /** PWM timings */
-                pDuty[0u] = Q_RIGHT_SHIFT((pState->pwmPeriodCount  - t1 - t2 ), 1u );
+                pDuty[0u] = (int16_t)Q_RIGHT_SHIFT((int32_t)( (int32_t)pState->pwmPeriodCount  - (int32_t)t1 - (int32_t)t2 ), 1u );
                 pDuty[2u] = pDuty[0u] + t2;
                 pDuty[1u] = pDuty[2u] + t1;
 
@@ -336,7 +336,7 @@ void mcPwmI_PulseWidthModulation( const tmcPwm_Parameters_s * const pParameters,
                 int16_t t2 = Q_MULTIPLY( uB, pState->pwmPeriodCount );
 
                 /** PWM timings */
-                pDuty[1u] = Q_RIGHT_SHIFT(( pState->pwmPeriodCount  - t1 - t2 ), 1u );
+                pDuty[1u] = (int16_t)Q_RIGHT_SHIFT((int32_t)( (int32_t)pState->pwmPeriodCount  - (int32_t)t1 - (int32_t)t2 ), 1u );
                 pDuty[0u] = pDuty[1u] + t2;
                 pDuty[2u] = pDuty[0u] + t1;
                 break;

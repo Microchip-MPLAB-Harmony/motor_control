@@ -205,7 +205,7 @@ void mcHalI_AdcEnable( void )
 <#elseif "AFEC_11147" == MCPMSMFOC_ADC_IP>
     /** Nothing to do */
     __NOP();
-<#elseif "ADC_44703" == MCPMSMFOC_ADC_IP>
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
     /** Nothing to do */
     __NOP();
 <#elseif "ADCHS_02508" == MCPMSMFOC_ADC_IP>
@@ -281,7 +281,7 @@ void mcHalI_AdcCallBackRegister( ADCHS_CALLBACK callback, uintptr_t context )
 </#if>
 }
 
-<#elseif "ADCHS_44073" == MCPMSMFOC_ADC_IP>
+<#elseif "ADC_44073" == MCPMSMFOC_ADC_IP>
 void mcHalI_AdcCallBackRegister( ADC_CALLBACK callback, uintptr_t context )
 {
     ADC_CallbackRegister(callback, context);

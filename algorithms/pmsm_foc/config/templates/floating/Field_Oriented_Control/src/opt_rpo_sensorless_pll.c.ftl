@@ -171,7 +171,8 @@ void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
     pState->nFilterParameter = 1.0f;
 
     /** Rotor position calibration time */
-    pState->calibTimeinCounts = pParameters->calibTimeInSec / pParameters->dt;
+    temp = ( pParameters->calibTimeInSec / pParameters->dt ) + 0.5f;
+    pState->calibTimeinCounts = (uint16_t)temp;
 
     /** Set initialization flag to true */
     pState->initDone = true;
@@ -263,19 +264,19 @@ __STATIC_INLINE  void mcRpe_RotorPostionOffsetCalc( const tmcRpe_Parameters_s * 
     }
 
     /** Integrator drift  tracking and compensation based on speed direction */
-    if( 0 < pState->n )     {
-        if( UTIL_AbsLessThanEqual( pState->eAlpha,  0.001 ))
+    if( 0.0f < pState->n )     {
+        if( UTIL_AbsLessThanEqual( pState->eAlpha,  0.001f ))
         {
-            if( pState->eBeta > 0 )
+            if( pState->eBeta > 0.0f )
             {
                 *pF32Offset = pState->phi;
             }
         }
     }
     else      {
-        if( UTIL_AbsLessThanEqual( pState->eAlpha,  0.001 ))
+        if( UTIL_AbsLessThanEqual( pState->eAlpha,  0.001f ))
         {
-            if( pState->eBeta < 0 ) 
+            if( pState->eBeta < 0.0f ) 
             {
                 *pF32Offset = pState->phi;
             }

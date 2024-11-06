@@ -47,16 +47,12 @@
 Headers inclusions
 *******************************************************************************/
 #include "mc_rotor_position_estimation.h"
-#include "mc_fir_filter.h"
-#include "mc_iir_filter.h"
 
 /*******************************************************************************
 Local configuration options
 *******************************************************************************/
 #define SRF_PLL
 #define ENABLE_PHI_OFFSET_COMPENSATION
-#undef ENABLE_FIR_FILTER_STAGE
-#undef ENABLE_IIR_FILTER_STAGE
 
 /*******************************************************************************
  Private data types
@@ -78,19 +74,6 @@ typedef struct
     int16_t uBetaLast;
     uint16_t phi;
     int16_t speed;
-
-#if defined ENABLE_FIR_FILTER_STAGE
-    int16_t firTapNumbers;
-    int16_t firCoefficients[4U];
-    FIRFilter  firFilter;
-#endif
-
-#if defined ENABLE_IIR_FILTER_STAGE
-    int16_t  iirStages;
-    int16_t  iirACoefficients[3U];
-    int16_t  iirBCoefficients[3U];
-    IIRFilter  iirFilter;
-#endif
 
 #if defined SRF_PLL
     tmcUtils_PiControl_s bPIController;
@@ -148,14 +131,13 @@ void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
     f32a = pParameters->pMotorParameters->RsInOhms/ BASE_IMPEDENCE_IN_OHMS;
 
     pState->Rs = Q_SCALE( f32a );
-
     f32a = pParameters->pMotorParameters->LdInHenry / ( BASE_IMPEDENCE_IN_OHMS * pParameters->dt );
     pState->LsFs = Q_SCALE( f32a );
 
 #if defined SRF_PLL
     /** ToDO: Calculate Kp and Ki based on the cut-off frequency */
-    mcUtils_PiControlInit( 0.5, 100, pParameters->dt, &pState->bPIController );
-    mcUtils_PiLimitUpdate( -Q_SCALE(1.0), Q_SCALE(1.0), &pState->bPIController );
+    mcUtils_PiControlInit( 0.5f, 100.0f, pParameters->dt, &pState->bPIController );
+    mcUtils_PiLimitUpdate( -Q_SCALE(1.0f), Q_SCALE(1.0f), &pState->bPIController );
 #else
     /** ToDO: Remove hard coded numeric value */
     f32a = 1225.0f * ( BASE_VOLTAGE_IN_VOLTS/ BASE_SPEED_IN_RPM )/ pParameters->pMotorParameters->KeInVrmsPerKrpm;
@@ -168,30 +150,6 @@ void  mcRpeI_RotorPositionEstimInit( tmcRpe_Parameters_s * const pParameters )
     /** Speed to angle conversion factor calculation */
     f32a = (float32_t)K_TIME;
     pState->speedToAngle = Q_SCALE( f32a);
-
-#if defined ENABLE_FIR_FILTER_STAGE
-    pState->firTapNumbers = 4U;
-    for( int8_t tap = 0; tap < pState->firTapNumbers; tap++ )
-    {
-        pState->firCoefficients[tap] = Q_SCALE(0.25);
-    }
-
-    // Initialize the filter
-    FIRFilter_FilterInitialize(&pState->firFilter, pState->firCoefficients, pState->firTapNumbers );
-#endif
-
-#if defined ENABLE_IIR_FILTER_STAGE
-    // Example coefficients for each stage (a = 0.9, b = 0.1 in Q15 format)
-    pState->iirStages = 3;
-    for( int8_t stage = 0; stage < pState->iirStages; stage++ )
-    {
-        pState->iirACoefficients[stage] = Q_SCALE(0.5);
-        pState->iirBCoefficients[stage] = Q_SCALE(0.5);
-    }
-
-    // Initialize the filter
-    IIRFilter_FilterInitialize(&pState->iirFilter, pState->iirACoefficients, pState->iirBCoefficients, pState->iirStages );
-#endif
 
     /** Set initialization flag to true */
     pState->initDone = true;
@@ -344,16 +302,16 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
         int16_t sine = 0;
         int16_t cosine = 0;
 
-        s16a = Q_MULTIPLY( pIAlphaBeta->alpha, pState->Rs );
-        s16b = Q_MULTIPLY( ( pIAlphaBeta->alpha - pState->iAlphaLast ), pState->LsFs );
+        s16a = (int16_t)Q_MULTIPLY( pIAlphaBeta->alpha, pState->Rs );
+        s16b = (int16_t)Q_MULTIPLY( ( (int32_t)pIAlphaBeta->alpha - (int32_t)pState->iAlphaLast ), pState->LsFs );
         pState->iAlphaLast = pIAlphaBeta->alpha;
 
         pState->eAlpha = pState->uAlphaLast - s16a - s16b;
         pState->uAlphaLast = pUAlphaBeta->alpha;
 
         /** Calculate beta-back EMF  */
-        s16a = Q_MULTIPLY( pIAlphaBeta->beta, pState->Rs );
-        s16b = Q_MULTIPLY( ( pIAlphaBeta->beta - pState->iBetaLast ), pState->LsFs );
+        s16a = (int16_t)Q_MULTIPLY( pIAlphaBeta->beta, pState->Rs );
+        s16b = (int16_t)Q_MULTIPLY( ( (int32_t)pIAlphaBeta->beta - (int32_t)pState->iBetaLast ), pState->LsFs );
         pState->iBetaLast = pIAlphaBeta->beta;
 
         pState->eBeta = pState->uBetaLast - s16a - s16b;
@@ -363,8 +321,8 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
         mcUtils_SineCosineCalculation( pState->phi, &sine, &cosine );
 
         /** Calculate q-axis back EMF */
-        s16a = Q_MULTIPLY( pState->eBeta, cosine );
-        s16b = Q_MULTIPLY( pState->eAlpha, sine );
+        s16a = (int16_t)Q_MULTIPLY( pState->eBeta, cosine );
+        s16b = (int16_t)Q_MULTIPLY( pState->eAlpha, sine );
         pState->eQ = s16a - s16b;
 
 #if defined SRF_PLL
@@ -373,12 +331,7 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
         pState->speed = pState->bPIController.Yo;
 
         int16_t filterOutput = pState->speed;
-    #if defined ENABLE_FIR_FILTER_STAGE
-        filterOutput  =  FIRFilter_FilterApply(&pState->firFilter, pState->speed );
-    #endif
-    #if defined ENABLE_IIR_FILTER_STAGE
-        filterOutput = IIRFilter_FilterApply(&pState->iirFilter, filterOutput );
-    #endif
+
         /** Update electrical speed  */
         *pSpeed = filterOutput;
 
@@ -405,7 +358,7 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
            s16a = pState->eQ + pState->eD;
        }
 
-        pState->speed = ( (int32_t)s16a *  (int32_t)pState->oneByKeVal ) >> pState->oneByKeShift;
+        pState->speed = (int16_t)mcUtils_RightShiftS32(((int32_t)s16a *  (int32_t)pState->oneByKeVal ), pState->oneByKeShift );
 
         /** Calculate angle from speed */
         pState->phi += (uint16_t)Q_MULTIPLY( pState->speed, pState->speedToAngle );
@@ -415,12 +368,6 @@ void mcRpeI_RotorPositionEstim(  const tmcRpe_Parameters_s * const pParameters,
 #endif
 
         int16_t filterOutput = pState->speed;
-#if defined ENABLE_FIR_FILTER_STAGE
-        filterOutput  =  FIRFilter_FilterApply(&pState->firFilter, pState->speed );
-#endif
-#if defined ENABLE_IIR_FILTER_STAGE
-        filterOutput = IIRFilter_FilterApply(&pState->iirFilter, filterOutput );
-#endif
 
         /** Update back-emf voltage */
         pEAlphaBeta->alpha = pState->eAlpha;

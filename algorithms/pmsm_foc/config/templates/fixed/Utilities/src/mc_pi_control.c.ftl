@@ -119,7 +119,7 @@ void __ramfunc__ mcUtils_PiIntegralUpdate( const int16_t value, tmcUtils_PiContr
 void mcUtils_PiIntegralUpdate( const int16_t value, tmcUtils_PiControl_s  * const pControl )
 #endif
 {
-    pControl->Yint = value << pControl->KpShift;
+    pControl->Yint = Q_LEFT_SHIFT( (int32_t)value, pControl->KpShift );
 }
 
 /*! \brief
@@ -152,7 +152,7 @@ void mcUtils_PiControl(const int16_t error, tmcUtils_PiControl_s  * const pContr
      pControl->Yp = yp;
 
      /** Sum */
-     y = ( yp +  pControl->Yint ) >> pControl->KpShift;
+     y =  Q_RIGHT_SHIFT((int32_t)( yp +  pControl->Yint ), pControl->KpShift );
 
      /** Output limitation and anti wind-up */
      if ( y > pControl->Ymax )
@@ -165,7 +165,7 @@ void mcUtils_PiControl(const int16_t error, tmcUtils_PiControl_s  * const pContr
           {
               yp = pControl->Ymax;
           }
-          pControl->Yint =  ((int32_t)pControl->Ymax << pControl->KpShift ) - yp;
+          pControl->Yint =   (int32_t)( Q_LEFT_SHIFT( (int32_t)pControl->Ymax, pControl->KpShift ) - yp );
      }
      else if (y < pControl->Ymin )
      {
@@ -177,12 +177,12 @@ void mcUtils_PiControl(const int16_t error, tmcUtils_PiControl_s  * const pContr
           {
                yp = pControl->Ymin;
           }
-          pControl->Yint =  ((int32_t)pControl->Ymin << pControl->KpShift ) - yp;
+          pControl->Yint =  (int32_t)( Q_LEFT_SHIFT( (int32_t)pControl->Ymin, pControl->KpShift ) - yp );
      }
      else
      {
           /** No output limitation -> no limitation of integral term */
-          pControl->Yint += (((int32_t)pControl->KiVal * (int32_t) pControl->error ) >> pControl->KiShift );
+          pControl->Yint +=  Q_RIGHT_SHIFT( (int32_t)((int32_t)pControl->KiVal * (int32_t) pControl->error ), pControl->KiShift );
      }
 
      pControl->Yo = (int16_t)y;
@@ -200,6 +200,6 @@ void mcUtils_PiControl(const int16_t error, tmcUtils_PiControl_s  * const pContr
  */
 void mcUtils_PiControlReset(const int32_t out, tmcUtils_PiControl_s  * const pControl)
 {
-    pControl->Yint = out << pControl->KpShift;
+    pControl->Yint = Q_LEFT_SHIFT( out, pControl->KpShift );
 }
 

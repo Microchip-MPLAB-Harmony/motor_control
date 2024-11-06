@@ -625,7 +625,7 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
                 mcRefI_ReferenceControl( &mcFoc_State_mds.bReferenceController, pModule->dInput.reference, &pState->nRef );
 
 <#if ( MCPMSMFOC_CONTROL_TYPE == 'POSITION_LOOP' ) >
-                float32_t referenceSpeed = 0;
+                float32_t referenceSpeed = 0.0f;
                 mcPosI_PositionControlAuto(&pState->bPositionController,  pState->nRef, pInput->mechanicalAngle,
                                                           &referenceSpeed );
 

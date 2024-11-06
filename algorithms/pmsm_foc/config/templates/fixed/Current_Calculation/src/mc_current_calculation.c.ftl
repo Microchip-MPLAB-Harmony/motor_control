@@ -231,11 +231,11 @@ void mcCurI_CurrentCalculation(tmcCur_ModuleData_s * const pModule)
 
     /** Phase A current measurement */
     int16_t   temp  = pState->iaOffset - pInput->iaAdcInput;
-    pOutput->iABC.a = ((int32_t)temp * (int32_t)pState->convFactorValue ) >> pState->convFactorShift;
+    pOutput->iABC.a = (int16_t)Q_RIGHT_SHIFT(((int32_t)temp * (int32_t)pState->convFactorValue ), pState->convFactorShift );
 
     /** Phase B current measurement */
     temp  = pState->ibOffset - pInput->ibAdcInput;
-    pOutput->iABC.b =  ((int32_t)temp  * (int32_t)pState->convFactorValue ) >> pState->convFactorShift;
+    pOutput->iABC.b = (int16_t)Q_RIGHT_SHIFT(((int32_t)temp * (int32_t)pState->convFactorValue ), pState->convFactorShift );
 
     mcCur_OutputPortsWrite( &pModule->dOutput );
 }

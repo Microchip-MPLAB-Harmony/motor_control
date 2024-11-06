@@ -57,14 +57,14 @@ Headers inclusions
  * This constant defines the step size for transitioning from an open loop to a closed 
  * loop control in the angle calculation.
  */
-#define OPEN_TO_CLOSE_ANGLE_STEP_SIZE   (uint16_t)(4)
+#define OPEN_TO_CLOSE_ANGLE_STEP_SIZE   (int16_t)(4)
 
 /** 
  * @brief DC bus voltage limit
  * 
  * This constant defines  DC bus voltage limit.
  */
-#define  DC_BUS_VOLTAGE_LIMIT     Q_SCALE( 0.5658032638 )
+#define  DC_BUS_VOLTAGE_LIMIT     Q_SCALE( 0.5658032638f )
 
 /*******************************************************************************
  * Private Data Types
@@ -513,16 +513,16 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
 
         case FocState_ClosingLoop:
         {
-            pOutput->elecAngle = pOutput->elecAngle + pState->angleDifference;
+            pOutput->elecAngle = pOutput->elecAngle + (uint16_t)pState->angleDifference;
 
             /** Sine-cosine calculation */
             mcUtils_SineCosineCalculation( pOutput->elecAngle, &sine, &cosine );
 
             /** Linear ramp */
-            UTILS_LinearRamp(&pState->angleDifference, OPEN_TO_CLOSE_ANGLE_STEP_SIZE, 0u);
+            UTILS_LinearRamp(&pState->angleDifference, OPEN_TO_CLOSE_ANGLE_STEP_SIZE, 0 );
 
             /** Switch the FOC state to close loop if angle difference is zero */
-            if( pState->angleDifference == 0u )
+            if( pState->angleDifference == 0 )
             {
                 /** Set FOC state machine to CloseLoop */
                 pState->FocState = FocState_CloseLoop;
@@ -566,16 +566,16 @@ void mcFocI_FieldOrientedControlFast( tmcFocI_ModuleData_s * const pModule )
     mcFoc_ParkTransformation( &pOutput->iAlphaBeta, sine, cosine, &pOutput->iDQ );
 
     /** Execute flux control. Note. Implied rescale of 0.636619 * Vdc  to 1 */
-    int16_t  maxBusVoltage = Q_MULTIPLY( pModule->dInput.uBus, DC_BUS_VOLTAGE_LIMIT );
+    int16_t  maxBusVoltage = Q_MULTIPLY( (int32_t)pModule->dInput.uBus, (int32_t)DC_BUS_VOLTAGE_LIMIT );
     mcFlxI_FluxControlAuto( &pState->bFluxController, pState->iDref, pOutput->iDQ.d, maxBusVoltage, &pState->uDQ.d );
 
     /** Calculate maximum allowed Q-axis voltage   */
-    int32_t uqLimitSquare =((int32_t)maxBusVoltage * (int32_t)maxBusVoltage) - ( (int32_t)pState->uDQ.d * (int32_t)pState->uDQ.d );
-    int16_t uqLimit = mcUtils_SquareRoot( uqLimitSquare );
+    int32_t uqLimitSquare =(int32_t)((int32_t)maxBusVoltage * (int32_t)maxBusVoltage) - ( (int32_t)pState->uDQ.d * (int32_t)pState->uDQ.d );
+    int16_t uqLimit = (int16_t)mcUtils_SquareRoot((uint32_t) uqLimitSquare );
 
     /** Calculate the maximum allowed Q-axis reference current  */
-    int32_t iqrefLimitSquare = ((int32_t)Q_SCALE(1.0) * (int32_t)Q_SCALE(1.0)) - ( (int32_t)pState->iDref * (int32_t)pState->iDref );
-    int16_t iqrefLimit = mcUtils_SquareRoot( iqrefLimitSquare );
+    int32_t iqrefLimitSquare = (int32_t)((int32_t)Q_SCALE(1.0f) * (int32_t)Q_SCALE(1.0f)) - ( (int32_t)pState->iDref * (int32_t)pState->iDref );
+    int16_t iqrefLimit = (int16_t)mcUtils_SquareRoot((uint32_t)iqrefLimitSquare );
 
     UTIL_ApplyClampS16( &pState->iQref, iqrefLimit, -iqrefLimit );
 

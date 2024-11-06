@@ -52,7 +52,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "mc_userparams.h"
-#include "mc_Types.h"
+#include "mc_types.h"
 /*******************************************************************************
  Parameters
  *******************************************************************************/

@@ -78,7 +78,7 @@ Type Definition
 typedef struct
 {
     tmcTypes_ABC_s  iABC;       /**< Motor phase currents */
-    int16_t uBus;               /**< Bus voltage */
+    uint16_t uBus;               /**< Bus voltage */
     int16_t reference;          /**< Reference value for control (e.g., speed or torque) */
 } tmcFoc_Input_s;
 

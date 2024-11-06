@@ -283,7 +283,7 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
                 *pIQref = 0;
                 *pIDref = pState->alignmentCurrent;
 
-                *pAngle = 0;
+                *pAngle = 0u;
 </#if>
                 break;
             }
@@ -291,15 +291,15 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
             {
                 ++pState->zCounter;
 
-                pState->openLoopSpeed = (int16_t)Q_MULTIPLY( pState->zCounter, pState->speedRampRate );
+                pState->openLoopSpeed = (int16_t)Q_MULTIPLY( (int32_t)pState->zCounter, pState->speedRampRate );
 
                 if( pState->openLoopFinalSpeed < pState->openLoopSpeed )
                 {
                     pState->zCounter = 0u;
                     pState->StartupState = startupState_Stabilize;
                 }
-                uint16_t delAngle = (uint16_t)Q_MULTIPLY( pState->openLoopSpeed, pState->speedToAngle );
-                *pAngle += ( direction * (int16_t)delAngle );
+                 int16_t delAngle = direction * (int16_t)Q_MULTIPLY( pState->openLoopSpeed, pState->speedToAngle );
+                *pAngle += (uint16_t)delAngle;
 
                 *pIDref = 0;
                 *pIQref = direction * pState->alignmentCurrent;
@@ -316,8 +316,8 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
                     openLoopStatus = StdReturn_Complete;
                 }
 </#if>
-                uint16_t delAngle = (uint16_t)Q_MULTIPLY(pState->openLoopSpeed, pState->speedToAngle );
-                *pAngle += ( direction * (int16_t)delAngle );
+                int16_t delAngle =  direction *  (int16_t)Q_MULTIPLY(pState->openLoopSpeed, pState->speedToAngle );
+                *pAngle += (uint16_t)delAngle;
                 *pIDref = 0;
                 *pIQref = direction * pState->alignmentCurrent;
 
@@ -338,7 +338,7 @@ tmcTypes_StdReturn_e mcSupI_OpenLoopStartup( const tmcSup_Parameters_s * const p
         /** Reset pen loop start-up */
         mcSupI_OpenLoopStartupReset( pParameters );
 
-        *pAngle = 0;
+        *pAngle = 0u;
         *pSpeed = 0;
     }
 
