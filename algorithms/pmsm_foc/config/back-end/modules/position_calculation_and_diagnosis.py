@@ -48,6 +48,11 @@ class mcRpoI_PositionCalculationAndDiagnosis:
         if (("SAMC2" in processor) or all(x in processor for x in ["PIC32CM", "MC"])):
             self.sym_ALGORITHM.addKey("SENSORLESS_PLL", "0", "Equation based PLL")
             self.sym_ALGORITHM.addKey("SENSORLESS_ROLO", "2", "Reduced Order Luenberger Observer")
+        elif (("SAME7" in processor) or ("SAMV7" in processor) or ("SAMS7" in processor)):
+            self.sym_ALGORITHM.addKey("SENSORLESS_PLL", "0", "Equation based PLL")
+            self.sym_ALGORITHM.addKey("SENSORED_ENCODER", "1", "Quadrature Encoder")
+            self.sym_ALGORITHM.addKey("SENSORLESS_ROLO", "2", "Reduced Order Luenberger Observer (Beta)")
+            self.sym_ALGORITHM.addKey("SENSORLESS_SMO", "3", "Sliding Mode Observer ")
         else:
             self.sym_ALGORITHM.addKey("SENSORLESS_PLL", "0", "Equation based PLL")
             self.sym_ALGORITHM.addKey("SENSORED_ENCODER", "1", "Quadrature Encoder")
