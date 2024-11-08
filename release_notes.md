@@ -9,6 +9,40 @@ has_children: true
 
 # Microchip MPLAB Harmony 3 Release Notes
 
+## Motor Control Release v3.11.0
+
+### Features
+- Harmony QSpin Updates
+- Motor Module GUI Update in QSpin
+- Enhanced graphical interface for improved usability and efficiency.
+- Revised and extended module documentation for better clarity
+- Added support for SAMC2x, PIC32CM MC, and SAMRH707 devices in QSpin
+- Position control is now available for SAME5x, SAME7x, SAMRH707, and PIC32MK MCM/MCA devices
+- New Stand-alone projects
+- Added a new example project using PIC32MK MCM for Field Oriented Control (FOC) with single shunt current reconstruction.
+- New example project using PIC32CM MC for sensorless block commutation (BC).
+
+### Known Issues
+
+- **QSpin Pin Manager Issue**
+     - When using QSpin, ensure you select the board from the drop-down menu before launching the Pin Manager. If the Pin Manager is
+launched before selecting the board, the configuration will fail. To avoid improper pin configuration, always select the board first.
+
+     - After completing the project configuration with QSpin, launch the Pin Manager to verify and ensure the correct pin configuration.
+### Required MPLAB Harmony v3 Modules
+* csp v3.19.7
+* bsp v3.21.0
+* x2c v1.5.0
+* harmony-services v1.5.0
+
+### Development Tools
+* [MPLAB X IDE v6.20](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB XC32 C/C++ Compiler v4.45](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Code Configurator (MCC) v5.7.1
+  * X2CScope v1.6.6
+
+
 ## Motor Control Release v3.10.1
 
 ### Bug Fix

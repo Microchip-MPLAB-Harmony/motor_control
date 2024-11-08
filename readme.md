@@ -24,8 +24,12 @@ This repository serves as the home for Harmony QSpin, a GUI-based motor control 
         <figcaption align= "center"> Harmony QSpin </figcaption>
     </p>
 
-For a detailed understanding of the tool's various features, consult the [Harmony QSpin Quick Guide](./docs/mc_plant_docs/introduction.md)
+For a detailed understanding of the tool's various features, consult the [Harmony QSpin Quick Guide](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MH3_motor_control&redirect=true) to view the online documentation
 
+To view the documentation offline, follow these steps:
+ - Download the publication as a zip file from [here](https://onlinedocs.microchip.com/download/GUID-0A4BC4EE-29F5-4736-8125-17139B84E7B5?type=webhelp).
+ - Extract the zip file into a folder.
+ - Navigate to the folder and open **index.html** in a web browser of your choice
 Additionally, keep yourself informed with the latest updates and improvements by checking out our release notes:
  - [Release Notes](./release_notes.md)
 
@@ -61,7 +65,7 @@ Harmony QSpin integrates advanced algorithms tailored for different microcontrol
 |-----------------------------------------------|------------|--------------------|---------------------|----------------------------------------|
 | Classical PLL based Estimator                   | Yes        | Yes                | Yes                 | Yes                                    |
 | Sliding mode observer                           | Yes        | Yes                | No                  | Yes                                    |
-| Reduced Order Luenberger Observer               | Yes        | Yes                | No                  | Yes                                    |
+| Reduced Order Luenberger Observer               | Yes        | Yes                | Yes                  | Yes                                    |
 | Encoder based position calculation              | Yes        | Yes                | No                  | Yes                                    |
 | ZSMT-HF Hybrid                                   | Yes        | No                 | No                  | Yes                                    |
 | Flux weakening                                   | Yes        | Yes                | No                  | Yes                                    |
@@ -75,13 +79,13 @@ Explore a variety of example application projects generated from QSpin and disco
 
 | Repository Name | Description | Help Document | 
 | ----------------- | ------------------- | ---------------- |
-| [mc_apps_pic32cm_mc](https://github.com/Microchip-MPLAB-Harmony/mc_apps_pic32cm_mc) | Motor Control Applications for PIC32CM MC family | [mc_apps_pic32cm_mc help](https://microchip-mplab-harmony.github.io/mc_apps_pic32cm_mc/) |
-| [mc_apps_pic32mk](https://github.com/Microchip-MPLAB-Harmony/mc_apps_pic32mk) | Motor Control Applications for PIC32MK family | [mc_apps_pic32mk help](https://microchip-mplab-harmony.github.io/mc_apps_pic32mk/) |
-| [mc_apps_sam_c2x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_c2x) | Motor Control Applications for SAM C2x family | [mc_apps_sam_c2x help](https://microchip-mplab-harmony.github.io/mc_apps_sam_c2x/) |
-| [mc_apps_sam_d5x_e5x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_d5x_e5x) | Motor Control Applications for SAM E5x family | [mc_apps_sam_d5x_e5x help](https://microchip-mplab-harmony.github.io/mc_apps_sam_d5x_e5x/) |
-| [mc_apps_sam_e7x_s7x_v7x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_e7x_s7x_v7x) | Motor Control Applications for SAM E7x family | [mc_apps_sam_e7x_s7x_v7x help](https://microchip-mplab-harmony.github.io/mc_apps_sam_e7x_s7x_v7x/) |
-| [mc_apps_sam_rh71](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_rh71) | Motor Control Applications for SAM RH71 family | [mc_apps_sam_rh71 help](https://microchip-mplab-harmony.github.io/mc_apps_sam_rh71/) |
-[mc_apps_sam_rh707](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_rh707) | Motor Control Applications for SAM RH707 family | [mc_apps_sam_rh707 help](https://microchip-mplab-harmony.github.io/mc_apps_sam_rh707/) |
+| [mc_apps_pic32cm_mc](https://github.com/Microchip-MPLAB-Harmony/mc_apps_pic32cm_mc) | Motor Control Applications for PIC32CM MC family | [mc_apps_pic32cm_mc help](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MC_APPS_PIC32CM_MC_INTRODUCTION&redirect=true) |
+| [mc_apps_pic32mk](https://github.com/Microchip-MPLAB-Harmony/mc_apps_pic32mk) | Motor Control Applications for PIC32MK family | [mc_apps_pic32mk help](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MC_APPS_PIC32MK_INTRODUCTION&redirect=true) |
+| [mc_apps_sam_c2x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_c2x) | Motor Control Applications for SAM C2x family | [mc_apps_sam_c2x help](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MC_APPS_SAM_C2X_INTRODUCTION&redirect=true) |
+| [mc_apps_sam_d5x_e5x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_d5x_e5x) | Motor Control Applications for SAM E5x family | [mc_apps_sam_d5x_e5x help](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MC_APPS_SAM_D5X_E5X_INTRODUCTION&redirect=true) |
+| [mc_apps_sam_e7x_s7x_v7x](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_e7x_s7x_v7x) | Motor Control Applications for SAM E7x family | [mc_apps_sam_e7x_s7x_v7x help](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MC_APPS_SAM_E7X_S7X_V7X_INTRODUCTION&redirect=true) |
+| [mc_apps_sam_rh71](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_rh71) | Motor Control Applications for SAM RH71 family | [mc_apps_sam_rh71 help](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MC_APPS_SAM_RH71_INTRODUCTION&redirect=true) |
+[mc_apps_sam_rh707](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_rh707) | Motor Control Applications for SAM RH707 family | [mc_apps_sam_rh707 help](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MC_APPS_SAM_RH707_INTRODUCTION&redirect=true) |
 
 ____
 

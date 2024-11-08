@@ -1,0 +1,1 @@
+define({"topics":[{"title":"<ph>2.2.1.2.1.1<\/ph>\nInstalling X2C Library","shortdesc":"<p class=\"shortdesc\"\/>","href":"GUID-B29F400A-E501-4598-BF31-BE7C7EC28F31.html","attributes":{"data-id":"GUID-B29F400A-E501-4598-BF31-BE7C7EC28F31"},"menu":{"hasChildren":false},"tocID":"GUID-B29F400A-E501-4598-BF31-BE7C7EC28F31-d1956e144","topics":[]}]});

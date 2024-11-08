@@ -616,10 +616,13 @@ td.rowsep-0 {
   border-bottom: 0;
 }
 
-table.headercolumn > tbody tr > td:first-child {
+td.header-cell-bg {
     background: #585858;
     color: #fff;
     font-weight: bold;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ffffff;
 }
 
 .no-cell-bg{

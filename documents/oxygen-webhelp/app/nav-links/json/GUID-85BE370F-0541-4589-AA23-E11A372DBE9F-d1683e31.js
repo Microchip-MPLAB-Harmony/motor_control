@@ -1,1 +1,0 @@
-define({"topics":[{"title":"<ph>1.1.1.1<\/ph>\nPMSM FOC","href":"GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35.html","attributes":{"data-id":"GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35"},"menu":{"hasChildren":false},"tocID":"GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42","next":"GUID-60DDB34A-7CBA-4DE1-814C-88D432196E35-d1683e42"}]});

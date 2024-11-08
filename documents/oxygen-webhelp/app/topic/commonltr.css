@@ -135,6 +135,7 @@
 
 .codeblock {
 	font-family: monospace;
+	position: relative;
 }
 
 .syntaxdiagram {

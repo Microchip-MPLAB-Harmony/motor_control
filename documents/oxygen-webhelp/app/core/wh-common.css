@@ -6,10 +6,11 @@
     background-size: 15px;
     width: 68px;
     height: 32px;
-    margin-top: -7px;
+    margin-top: 0px;
     color: #888;
     border:1px solid #CCCCCC;
-    right: 15px;
+    right: 0px;
+    top: 0px;
     position: absolute;
     cursor: pointer;
     opacity: 0.5;
